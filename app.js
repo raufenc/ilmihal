@@ -712,10 +712,18 @@ async function openKavram(slug, fromRoute) {
     }
   });
 
-  // Find related concepts (same category, or mentioned in same maddes)
-  const iliskiliKavramlar = window.sozlukData
-    .filter(s => s.kelime !== entry.kelime && s.kategori === entry.kategori)
-    .slice(0, 12);
+  // Find related tables from maddes where this kavram appears
+  const iliskiliTablolar = [];
+  if (window.tablolarData) {
+    gectigiMaddeler.forEach(m => {
+      const ref = `K${m.kisim}/M${m.madde_no}`;
+      window.tablolarData.forEach(t => {
+        if (t.kaynak_madde === ref && !iliskiliTablolar.find(x => x.id === t.id)) {
+          iliskiliTablolar.push(t);
+        }
+      });
+    });
+  }
 
   const katLabels = {
     akaid: 'Ak\u00e2id/Kel\u00e2m', ibadet: '\u0130badet/Taharet', tasavvuf: 'Tasavvuf/Ahl\u00e2k',
@@ -772,14 +780,17 @@ async function openKavram(slug, fromRoute) {
     </div>`;
   }
 
-  if (iliskiliKavramlar.length > 0) {
+  if (iliskiliTablolar.length > 0) {
+    const tipIcons = {tablo:'\u25A6', liste:'\u25A4', iki_liste:'\u21C4', flowchart:'\u25A5', agac:'\u25C8'};
     html += `<div class="kavram-detail-section">
-      <h4>\u0130li\u015fkili Kavramlar</h4>
-      <div class="kavram-related-grid">
-        ${iliskiliKavramlar.map(k => {
-          const kSlug = slugify(k.kelime);
-          return `<a href="#kavram/${kSlug}" onclick="event.preventDefault();openKavram('${kSlug}')" class="kavram-related-tag">${k.kelime}</a>`;
-        }).join('')}
+      <h4>\u0130lgili Tablolar <span class="kavram-count-badge">${iliskiliTablolar.length}</span></h4>
+      <div class="kavram-madde-list">
+        ${iliskiliTablolar.map(t => `
+          <a href="#" onclick="closeKavram();navigateTo('tablolar');setTimeout(()=>{document.getElementById('tablo-${t.id}')?.scrollIntoView({behavior:'smooth'})},300);return false" class="kavram-madde-link">
+            <span class="rm-badge">${tipIcons[t.tip] || '\u25A6'}</span>
+            <span>${t.baslik}</span>
+          </a>
+        `).join('')}
       </div>
     </div>`;
   }
