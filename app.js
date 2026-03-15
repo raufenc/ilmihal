@@ -1,6 +1,77 @@
 // ===== Se'âdet-i Ebediyye - İnteraktif İlmihâl =====
 const PDF_URL = 'https://www.hakikatkitabevi.net/downloads/001.pdf';
 
+// ===== URL ROUTING =====
+let routingSilent = false;
+
+function updateHash(hash) {
+  routingSilent = true;
+  location.hash = hash;
+  setTimeout(() => { routingSilent = false; }, 50);
+}
+
+function handleRoute() {
+  if (routingSilent) return;
+  const hash = (location.hash || '#anasayfa').slice(1);
+  const parts = hash.split('/');
+  const route = parts[0];
+
+  if (route === 'madde' && parts.length >= 3) {
+    const kisim = parseInt(parts[1]);
+    const maddeNo = parseInt(parts[2]);
+    if (kisim && maddeNo) {
+      navigateTo('icerik', true);
+      openMadde(kisim, maddeNo, true);
+      return;
+    }
+  }
+
+  if (route === 'kavram' && parts[1]) {
+    navigateTo('kavramlar', true);
+    setTimeout(() => openKavram(decodeURIComponent(parts[1]), true), 150);
+    return;
+  }
+
+  if (route === 'sahis' && parts[1]) {
+    navigateTo('sahislar', true);
+    setTimeout(() => openSahis(decodeURIComponent(parts[1]), true), 150);
+    return;
+  }
+
+  if (route === 'arama' && parts[1]) {
+    navigateTo('arama', true);
+    const query = decodeURIComponent(parts.slice(1).join('/'));
+    document.getElementById('full-search').value = query;
+    setTimeout(() => doFullSearch(true), 150);
+    return;
+  }
+
+  const validPages = ['anasayfa','icerik','tablolar','sozluk','arama','kavramlar','sahislar'];
+  if (validPages.includes(route)) {
+    navigateTo(route, true);
+  } else {
+    navigateTo('anasayfa', true);
+  }
+}
+
+window.addEventListener('hashchange', handleRoute);
+
+// ===== DARK MODE =====
+function initDarkMode() {
+  const saved = localStorage.getItem('ilmihal-theme');
+  if (saved === 'dark') {
+    document.documentElement.classList.add('dark');
+  }
+}
+
+function toggleDarkMode() {
+  const isDark = document.documentElement.classList.toggle('dark');
+  localStorage.setItem('ilmihal-theme', isDark ? 'dark' : 'light');
+}
+
+initDarkMode();
+
+// ===== HELPERS =====
 function sayfaLink(sayfa, label) {
   if (!label) label = 's. ' + sayfa;
   return `<a href="#" onclick="openSayfa(${sayfa});return false" class="sayfa-link" title="Kitabın bu sayfasını aç">${label}</a>`;
@@ -13,12 +84,29 @@ function sayfaLabel(madde) {
   return 'Sayfa ' + madde.sayfa_no;
 }
 
-// Madde detayı içindeki sayfa linki: PDF gösterir
 function sayfaLinkPdf(sayfa, label) {
   if (!label) label = 'Sayfa ' + sayfa;
   return `<a href="#" onclick="showPdfPage(${sayfa});return false" class="sayfa-link" title="PDF sayfasını göster">${label}</a>`;
 }
 
+function escapeHtml(str) {
+  return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
+function escapeRegex(str) {
+  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function slugify(text) {
+  return text.toLowerCase()
+    .replace(/[âÂ]/g,'a').replace(/[çÇ]/g,'c').replace(/[êÊ]/g,'e')
+    .replace(/[ğĞ]/g,'g').replace(/[ıİ]/g,'i').replace(/[îÎ]/g,'i')
+    .replace(/[öÖ]/g,'o').replace(/[şŞ]/g,'s').replace(/[üÜ]/g,'u')
+    .replace(/[ûÛ]/g,'u').replace(/[''\u2018\u2019]/g,'')
+    .replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+}
+
+// ===== PDF VIEWER =====
 function openSayfa(sayfa) {
   const madde = window.tocData?.find(m =>
     m.sayfa_no <= sayfa && (m.sayfa_bitis || m.sayfa_no) >= sayfa
@@ -29,7 +117,6 @@ function openSayfa(sayfa) {
 }
 
 function showPdfPage(sayfa) {
-  // Mevcut PDF viewer varsa kapat
   let viewer = document.getElementById('pdf-viewer');
   if (viewer) viewer.remove();
 
@@ -39,11 +126,11 @@ function showPdfPage(sayfa) {
     <div class="pdf-viewer-header">
       <span>Sayfa ${sayfa}</span>
       <div class="pdf-nav">
-        <button onclick="changePdfPage(-1)">◀</button>
+        <button onclick="changePdfPage(-1)">\u25C0</button>
         <span id="pdf-page-num">${sayfa}</span>
-        <button onclick="changePdfPage(1)">▶</button>
+        <button onclick="changePdfPage(1)">\u25B6</button>
       </div>
-      <button onclick="document.getElementById('pdf-viewer').remove()" class="pdf-close">✕</button>
+      <button onclick="document.getElementById('pdf-viewer').remove()" class="pdf-close">\u2715</button>
     </div>
     <iframe src="${PDF_URL}#page=${sayfa}" id="pdf-iframe"></iframe>
   `;
@@ -60,12 +147,12 @@ function changePdfPage(delta) {
   iframe.src = `${PDF_URL}#page=${newPage}`;
 }
 
-// Navigation
+// ===== NAVIGATION =====
 document.querySelectorAll('.nav-btn').forEach(btn => {
   btn.addEventListener('click', () => navigateTo(btn.dataset.page));
 });
 
-function navigateTo(page) {
+function navigateTo(page, fromRoute) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
   const target = document.getElementById('page-' + page);
@@ -76,10 +163,15 @@ function navigateTo(page) {
   document.querySelector('.main-nav')?.classList.remove('open');
   window.scrollTo(0, 0);
 
+  // Update hash
+  if (!fromRoute) updateHash(page);
+
   // Lazy load content
   if (page === 'icerik' && !icerikLoaded) loadIcerik();
   if (page === 'sozluk' && !sozlukLoaded) loadSozluk();
   if (page === 'tablolar' && !tablolarLoaded) loadTablolar();
+  if (page === 'kavramlar' && !kavramlarLoaded) loadKavramlar();
+  if (page === 'sahislar' && !sahislarLoaded) loadSahislar();
 }
 
 // Mobile menu
@@ -102,7 +194,7 @@ function loadIcerik(filterKisim, filterText) {
   if (kisimFilter !== 'all') filtered = filtered.filter(m => m.kisim == kisimFilter);
   if (searchText) filtered = filtered.filter(m => m.baslik.toLowerCase().includes(searchText));
 
-  const kisimLabels = { 1: 'Birinci Kısım', 2: 'İkinci Kısım', 3: 'Üçüncü Kısım' };
+  const kisimLabels = { 1: 'Birinci K\u0131s\u0131m', 2: '\u0130kinci K\u0131s\u0131m', 3: '\u00dc\u00e7\u00fcnc\u00fc K\u0131s\u0131m' };
   let currentKisim = 0;
   let html = '';
 
@@ -116,27 +208,25 @@ function loadIcerik(filterKisim, filterText) {
         <div class="madde-badge">${m.madde_no}</div>
         <div class="madde-info">
           <div class="madde-title">${m.baslik}</div>
-          <div class="madde-meta">${kisimLabels[m.kisim]}${m.mektup_ref ? ' · Mektup: ' + m.mektup_ref : ''}</div>
+          <div class="madde-meta">${kisimLabels[m.kisim]}${m.mektup_ref ? ' \u00B7 Mektup: ' + m.mektup_ref : ''}</div>
         </div>
         <div class="madde-sayfa">${sayfaLink(m.sayfa_no)}</div>
       </div>
     `;
   });
 
-  list.innerHTML = html || '<p style="text-align:center;color:var(--text-muted);padding:40px;">Sonuç bulunamadı.</p>';
+  list.innerHTML = html || '<p style="text-align:center;color:var(--text-muted);padding:40px;">Sonu\u00e7 bulunamad\u0131.</p>';
 }
 
 document.getElementById('kisim-filter')?.addEventListener('change', () => loadIcerik());
 document.getElementById('icerik-search')?.addEventListener('input', () => loadIcerik());
 
-// Kısım filtresi shortcut
 function showKisim(k) {
   navigateTo('icerik');
   document.getElementById('kisim-filter').value = k;
   loadIcerik();
 }
 
-// Kategori filtresi
 function filterByCategory(cat) {
   navigateTo('icerik');
   const categoryMap = {
@@ -152,14 +242,12 @@ function filterByCategory(cat) {
     'cenaze': []
   };
 
-  // Konu haritasından filtrele
   if (window.tablolarData) {
     const konuHaritasi = window.tablolarData.find(t => t.id === 'konu_haritasi');
     if (konuHaritasi && konuHaritasi.veriler) {
       const kategori = konuHaritasi.veriler.find(v => v.id === cat);
       if (kategori) {
         const maddeler = kategori.maddeler || [];
-        const list = document.getElementById('icerik-list');
         const filtered = window.tocData.filter(m => {
           const key = `K${m.kisim}/M${m.madde_no}`;
           return maddeler.includes(key);
@@ -170,11 +258,10 @@ function filterByCategory(cat) {
     }
   }
 
-  // Fallback: search based
   const searchTerms = {
-    'iman': 'îmân', 'temizlik': 'abdest', 'namaz': 'nemâz',
-    'oruc': 'oruc', 'zekat': 'zekât', 'hac': 'hac',
-    'ticaret': 'ticâret', 'aile': 'nikâh', 'ahlak': 'ahlâk', 'cenaze': 'cenâze'
+    'iman': '\u00eem\u00e2n', 'temizlik': 'abdest', 'namaz': 'nem\u00e2z',
+    'oruc': 'oruc', 'zekat': 'zek\u00e2t', 'hac': 'hac',
+    'ticaret': 'tic\u00e2ret', 'aile': 'nik\u00e2h', 'ahlak': 'ahl\u00e2k', 'cenaze': 'cen\u00e2ze'
   };
   document.getElementById('icerik-search').value = searchTerms[cat] || cat;
   loadIcerik();
@@ -182,7 +269,7 @@ function filterByCategory(cat) {
 
 function renderFilteredMaddeler(filtered) {
   const list = document.getElementById('icerik-list');
-  const kisimLabels = { 1: 'Birinci Kısım', 2: 'İkinci Kısım', 3: 'Üçüncü Kısım' };
+  const kisimLabels = { 1: 'Birinci K\u0131s\u0131m', 2: '\u0130kinci K\u0131s\u0131m', 3: '\u00dc\u00e7\u00fcnc\u00fc K\u0131s\u0131m' };
   let html = '';
   filtered.forEach(m => {
     html += `
@@ -190,17 +277,16 @@ function renderFilteredMaddeler(filtered) {
         <div class="madde-badge">${m.madde_no}</div>
         <div class="madde-info">
           <div class="madde-title">${m.baslik}</div>
-          <div class="madde-meta">${kisimLabels[m.kisim]}${m.mektup_ref ? ' · Mektup: ' + m.mektup_ref : ''}</div>
+          <div class="madde-meta">${kisimLabels[m.kisim]}${m.mektup_ref ? ' \u00B7 Mektup: ' + m.mektup_ref : ''}</div>
         </div>
         <div class="madde-sayfa">${sayfaLink(m.sayfa_no)}</div>
       </div>
     `;
   });
-  list.innerHTML = html || '<p style="text-align:center;color:var(--text-muted);padding:40px;">Sonuç bulunamadı.</p>';
+  list.innerHTML = html || '<p style="text-align:center;color:var(--text-muted);padding:40px;">Sonu\u00e7 bulunamad\u0131.</p>';
 }
 
 // ===== MADDE DETAY =====
-// Cache for loaded kisim texts
 const kisimTextsCache = {};
 
 async function loadKisimTexts(kisim) {
@@ -211,17 +297,20 @@ async function loadKisimTexts(kisim) {
     kisimTextsCache[kisim] = data;
     return data;
   } catch (e) {
-    console.error(`Kısım ${kisim} metinleri yüklenemedi:`, e);
+    console.error(`K\u0131s\u0131m ${kisim} metinleri y\u00fcklenemedi:`, e);
     return null;
   }
 }
 
-async function openMadde(kisim, maddeNo) {
+async function openMadde(kisim, maddeNo, fromRoute) {
   const madde = window.maddelerData?.find(m => m.kisim === kisim && m.madde_no === maddeNo);
   if (!madde) return;
 
-  const kisimLabels = { 1: 'Birinci Kısım', 2: 'İkinci Kısım', 3: 'Üçüncü Kısım' };
+  const kisimLabels = { 1: 'Birinci K\u0131s\u0131m', 2: '\u0130kinci K\u0131s\u0131m', 3: '\u00dc\u00e7\u00fcnc\u00fc K\u0131s\u0131m' };
   const body = document.getElementById('madde-body');
+
+  // Update URL
+  if (!fromRoute) updateHash(`madde/${kisim}/${maddeNo}`);
 
   // Show modal immediately with loading state
   document.getElementById('madde-detay').style.display = 'flex';
@@ -236,12 +325,12 @@ async function openMadde(kisim, maddeNo) {
         ${madde.mektup_ref ? `<span>Mektup: ${madde.mektup_ref}</span>` : ''}
       </div>
     </div>
-    <div class="madde-text" style="text-align:center;padding:40px;color:var(--text-muted);">Metin yükleniyor...</div>
+    <div class="madde-text" style="text-align:center;padding:40px;color:var(--text-muted);">Metin y\u00fckleniyor...</div>
   `;
 
   // Load full text from kisim file
   const texts = await loadKisimTexts(kisim);
-  let metin = texts?.[String(maddeNo)] || madde.metin || '(Metin bulunamadı)';
+  let metin = texts?.[String(maddeNo)] || madde.metin || '(Metin bulunamad\u0131)';
 
   // Zor kelimeleri işaretle
   if (window.sozlukData) {
@@ -258,6 +347,8 @@ async function openMadde(kisim, maddeNo) {
       </div>
     </div>
     <div class="madde-text">${metin}</div>
+    ${getRelatedMaddes(kisim, maddeNo)}
+    ${getRelatedSahislar(kisim, maddeNo)}
     ${getRelatedTables(kisim, maddeNo)}
   `;
 
@@ -268,20 +359,67 @@ async function openMadde(kisim, maddeNo) {
   });
 }
 
+// ===== ÇAPRAZ REFERANS =====
+function getRelatedMaddes(kisim, maddeNo) {
+  if (!window.crossRefData) return '';
+  const key = `${kisim}/${maddeNo}`;
+  const refs = window.crossRefData[key];
+  if (!refs || refs.length === 0) return '';
+
+  const kisimLabels = { 1: 'I', 2: 'II', 3: 'III' };
+  const items = refs.map(ref => {
+    const m = window.tocData?.find(t => t.kisim === ref.kisim && t.madde_no === ref.madde_no);
+    if (!m) return '';
+    return `<a href="#" onclick="openMadde(${ref.kisim}, ${ref.madde_no});return false" class="related-madde-link">
+      <span class="rm-badge">${kisimLabels[ref.kisim]}-${ref.madde_no}</span>
+      <span class="rm-title">${m.baslik}</span>
+      ${ref.neden ? `<span class="rm-neden">${ref.neden}</span>` : ''}
+    </a>`;
+  }).filter(Boolean).join('');
+
+  if (!items) return '';
+  return `<div class="related-maddeler">
+    <div class="related-maddeler-title">\u0130lgili Maddeler</div>
+    ${items}
+  </div>`;
+}
+
+// ===== İLGİLİ ŞAHİSLAR (madde içinde) =====
+function getRelatedSahislar(kisim, maddeNo) {
+  if (!window.sahislarData) return '';
+  const key = `${kisim}/${maddeNo}`;
+  const related = window.sahislarData.filter(s =>
+    s.gectigiMaddeler && s.gectigiMaddeler.includes(key)
+  );
+  if (related.length === 0) return '';
+
+  const items = related.slice(0, 12).map(s => {
+    return `<a href="#sahis/${s.slug}" onclick="event.preventDefault();closeMadde();navigateTo('sahislar');setTimeout(()=>openSahis('${s.slug}'),200)" class="related-sahis-link">
+      <span class="rs-icon">${s.kategori === 'sahabi' ? '\u2739' : '\u2605'}</span>
+      <span class="rs-isim">${s.isim}</span>
+    </a>`;
+  }).join('');
+
+  return `<div class="related-sahislar">
+    <div class="related-sahislar-title">Bu Maddede Geçen Şahıslar <span class="kavram-count-badge">${related.length}</span></div>
+    ${items}
+  </div>`;
+}
+
 function getRelatedTables(kisim, maddeNo) {
   if (!window.tablolarData) return '';
   const ref = `K${kisim}/M${maddeNo}`;
   const related = window.tablolarData.filter(t => t.kaynak_madde === ref);
   if (related.length === 0) return '';
-  const tipIcons = {tablo:'▦', liste:'▤', iki_liste:'⇄', flowchart:'▥', agac:'◈'};
+  const tipIcons = {tablo:'\u25A6', liste:'\u25A4', iki_liste:'\u21C4', flowchart:'\u25A5', agac:'\u25C8'};
   const items = related.map(t =>
     `<a href="#" onclick="navigateTo('tablolar');setTimeout(()=>{document.getElementById('tablo-${t.id}')?.scrollIntoView({behavior:'smooth'})},300);closeMadde();return false" class="related-tablo-link">
-      <span class="rt-icon">${tipIcons[t.tip] || '▦'}</span>
+      <span class="rt-icon">${tipIcons[t.tip] || '\u25A6'}</span>
       <span>${t.baslik}</span>
     </a>`
   ).join('');
   return `<div class="related-tablolar">
-    <div class="related-tablolar-title">İlgili Tablo ve Diyagramlar</div>
+    <div class="related-tablolar-title">\u0130lgili Tablo ve Diyagramlar</div>
     ${items}
   </div>`;
 }
@@ -289,14 +427,25 @@ function getRelatedTables(kisim, maddeNo) {
 function closeMadde() {
   document.getElementById('madde-detay').style.display = 'none';
   document.body.style.overflow = '';
+  // Restore hash to parent page
+  const activePage = document.querySelector('.page.active');
+  if (activePage) {
+    updateHash(activePage.id.replace('page-', ''));
+  }
 }
 
-// ESC ile kapat
 document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') closeMadde();
+  if (e.key === 'Escape') {
+    if (document.getElementById('kavram-detay')?.style.display === 'flex') {
+      closeKavram();
+    } else if (document.getElementById('sahis-detay')?.style.display === 'flex') {
+      closeSahis();
+    } else {
+      closeMadde();
+    }
+  }
 });
 
-// Overlay dışına tıklayınca kapat
 document.getElementById('madde-detay')?.addEventListener('click', e => {
   if (e.target === document.getElementById('madde-detay')) closeMadde();
 });
@@ -305,12 +454,10 @@ document.getElementById('madde-detay')?.addEventListener('click', e => {
 function highlightWords(text) {
   if (!window.sozlukData || window.sozlukData.length === 0) return escapeHtml(text);
 
-  // Ana harita + alternatif yazımlar haritası
   const sozlukMap = new Map();
-  const altMap = new Map(); // alternatif yazım -> ana entry
+  const altMap = new Map();
   window.sozlukData.forEach(entry => {
     sozlukMap.set(entry.kelime.toLowerCase(), entry);
-    // Alternatif yazımları da ekle
     if (entry.alternatif) {
       entry.alternatif.forEach(alt => {
         altMap.set(alt.toLowerCase(), entry);
@@ -328,7 +475,6 @@ function highlightWords(text) {
     const clean = part.replace(/^[.,;:!?()\[\]"']+|[.,;:!?()\[\]"']+$/g, '');
     const lower = clean.toLowerCase();
 
-    // Önce ana haritada ara, sonra alternatif yazımlarda
     let entry = sozlukMap.get(lower) || altMap.get(lower);
     if (entry) {
       const trackKey = entry.kelime.toLowerCase();
@@ -339,24 +485,16 @@ function highlightWords(text) {
         const suffix = part.substring(part.indexOf(clean) + clean.length);
         const safeAnlam = entry.anlam.replace(/["\u201C\u201D]/g, '&quot;').replace(/['\u2018\u2019]/g, '&#39;');
         const osmAttr = entry.osmanli ? ` data-osmanli="${entry.osmanli}"` : '';
-        // Bağlam bilgisi varsa data attribute olarak ekle
         const baglamAttr = entry.baglamlar ? ` data-baglamlar="${escapeHtml(JSON.stringify(entry.baglamlar))}"` : '';
         const altAttr = entry.alternatif ? ` data-alternatif="${entry.alternatif.join(', ')}"` : '';
-        return `${prefix}<span class="zor-kelime" data-anlam="${safeAnlam}" data-kat="${entry.kategori}"${osmAttr}${baglamAttr}${altAttr}>${clean}</span>${suffix}`;
+        const kelimeAttr = ` data-kelime="${entry.kelime}"`;
+        return `${prefix}<span class="zor-kelime" data-anlam="${safeAnlam}" data-kat="${entry.kategori}"${osmAttr}${baglamAttr}${altAttr}${kelimeAttr}>${clean}</span>${suffix}`;
       }
     }
     return part;
   });
 
   return result.join('');
-}
-
-function escapeHtml(str) {
-  return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-}
-
-function escapeRegex(str) {
-  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
 // ===== TOOLTIP =====
@@ -373,16 +511,14 @@ function showTooltip(e) {
   }
   html += anlam;
 
-  // Alternatif yazımlar
   if (el.dataset.alternatif) {
-    html += '<div class="tooltip-alt">Diğer yazımlar: ' + el.dataset.alternatif + '</div>';
+    html += '<div class="tooltip-alt">Di\u011fer yaz\u0131mlar: ' + el.dataset.alternatif + '</div>';
   }
 
-  // Bağlama göre anlamlar (çok anlamlı kelimeler)
   if (el.dataset.baglamlar) {
     try {
       const baglamlar = JSON.parse(el.dataset.baglamlar.replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>'));
-      html += '<div class="tooltip-baglamlar"><strong>Bağlama göre:</strong>';
+      html += '<div class="tooltip-baglamlar"><strong>Ba\u011flama g\u00f6re:</strong>';
       baglamlar.forEach(b => {
         html += '<div class="tooltip-baglam"><em>' + b.baglam + ':</em> ' + b.anlam + '</div>';
       });
@@ -390,11 +526,16 @@ function showTooltip(e) {
     } catch(e) {}
   }
 
+  // Kavram sayfasına link
+  if (el.dataset.kelime) {
+    const slug = slugify(el.dataset.kelime);
+    html += `<div class="tooltip-link"><a href="#kavram/${slug}" onclick="event.stopPropagation()">Kavram sayfas\u0131na git \u2192</a></div>`;
+  }
+
   tooltip.innerHTML = html;
   tooltip.style.display = 'block';
 
   const rect = el.getBoundingClientRect();
-  // Tooltip boyutunu ölç
   tooltip.style.visibility = 'hidden';
   tooltip.style.top = '0';
   tooltip.style.left = '0';
@@ -402,14 +543,11 @@ function showTooltip(e) {
   const tipW = tooltip.offsetWidth;
   tooltip.style.visibility = '';
 
-  // Yatay: kelimeyi ortala, ekrandan taşmasın
   let left = rect.left + rect.width/2 - tipW/2;
   left = Math.max(8, Math.min(left, window.innerWidth - tipW - 8));
   tooltip.style.left = left + 'px';
 
-  // Dikey: yukarıda yer varsa yukarı, yoksa aşağı
   const spaceAbove = rect.top;
-  const spaceBelow = window.innerHeight - rect.bottom;
   if (spaceAbove > tipH + 8) {
     tooltip.style.top = (rect.top - tipH - 6) + 'px';
     tooltip.classList.remove('tooltip-below');
@@ -432,7 +570,7 @@ function loadSozluk(filterKat, filterText) {
   sozlukLoaded = true;
   const list = document.getElementById('sozluk-list');
   const countEl = document.getElementById('sozluk-count');
-  if (!window.sozlukData) { list.innerHTML = '<div class="loading">Sözlük yükleniyor...</div>'; return; }
+  if (!window.sozlukData) { list.innerHTML = '<div class="loading">S\u00f6zl\u00fck y\u00fckleniyor...</div>'; return; }
 
   const katFilter = filterKat || 'all';
   const searchText = (filterText || document.getElementById('sozluk-search')?.value || '').toLowerCase();
@@ -444,30 +582,30 @@ function loadSozluk(filterKat, filterText) {
     (s.alternatif && s.alternatif.some(a => a.toLowerCase().includes(searchText)))
   );
 
-  // Alfabetik sırala
   filtered.sort((a, b) => a.kelime.localeCompare(b.kelime, 'tr'));
 
   const katLabels = {
-    akaid: 'Akâid/Kelâm', ibadet: 'İbadet/Taharet', tasavvuf: 'Tasavvuf/Ahlâk',
-    fikih: 'Fıkıh/Usûl', muamelat: 'Muâmelât/Ticaret', siyer: 'Siyer/Tarih',
-    hadis: 'Hadis/Sünnet', kuran: "Kur'an/Tefsir", mezhepler: 'Mezhepler/Fırkalar',
-    aile: 'Aile/Nikâh', dil: 'Dil/Edebiyat', miras: 'Miras/Ferâiz', osmanli: 'Osmanlı/Kurumlar'
+    akaid: 'Ak\u00e2id/Kel\u00e2m', ibadet: '\u0130badet/Taharet', tasavvuf: 'Tasavvuf/Ahl\u00e2k',
+    fikih: 'F\u0131k\u0131h/Us\u00fbl', muamelat: 'Mu\u00e2mel\u00e2t/Ticaret', siyer: 'Siyer/Tarih',
+    hadis: 'Hadis/S\u00fcnnet', kuran: "Kur'an/Tefsir", mezhepler: 'Mezhepler/F\u0131rkalar',
+    aile: 'Aile/Nik\u00e2h', dil: 'Dil/Edebiyat', miras: 'Miras/Fer\u00e2iz', osmanli: 'Osmanl\u0131/Kurumlar'
   };
   let html = '';
   filtered.forEach(s => {
     const osmanli = s.osmanli ? `<div class="sozluk-osmanli">${s.osmanli}</div>` : '';
     const katLabel = katLabels[s.kategori] || s.kategori;
-    const altHtml = s.alternatif ? `<div class="sozluk-alt">Diğer yazımlar: ${s.alternatif.join(', ')}</div>` : '';
+    const altHtml = s.alternatif ? `<div class="sozluk-alt">Di\u011fer yaz\u0131mlar: ${s.alternatif.join(', ')}</div>` : '';
     let baglamHtml = '';
     if (s.baglamlar && s.baglamlar.length > 0) {
-      baglamHtml = '<div class="sozluk-baglamlar"><span class="baglam-label">Bağlama göre:</span>';
+      baglamHtml = '<div class="sozluk-baglamlar"><span class="baglam-label">Ba\u011flama g\u00f6re:</span>';
       s.baglamlar.forEach(b => {
         baglamHtml += `<div class="sozluk-baglam"><em>${b.baglam}:</em> ${b.anlam}</div>`;
       });
       baglamHtml += '</div>';
     }
+    const slug = slugify(s.kelime);
     html += `
-      <div class="sozluk-item">
+      <div class="sozluk-item" onclick="navigateTo('kavramlar');setTimeout(()=>openKavram('${slug}'),150)" style="cursor:pointer">
         <div class="sozluk-kelime-row">
           <div class="sozluk-kelime">${s.kelime}</div>
           ${osmanli}
@@ -480,8 +618,8 @@ function loadSozluk(filterKat, filterText) {
     `;
   });
 
-  list.innerHTML = html || '<p style="text-align:center;color:var(--text-muted);padding:40px;">Kelime bulunamadı.</p>';
-  countEl.textContent = `${filtered.length} kelime gösteriliyor`;
+  list.innerHTML = html || '<p style="text-align:center;color:var(--text-muted);padding:40px;">Kelime bulunamad\u0131.</p>';
+  countEl.textContent = `${filtered.length} kelime g\u00f6steriliyor`;
 }
 
 document.getElementById('sozluk-search')?.addEventListener('input', () => {
@@ -497,13 +635,317 @@ document.querySelectorAll('.kat-btn').forEach(btn => {
   });
 });
 
+// ===== KAVRAMLAR (Concept Pages) =====
+let kavramlarLoaded = false;
+
+function loadKavramlar() {
+  kavramlarLoaded = true;
+  const list = document.getElementById('kavramlar-list');
+  const countEl = document.getElementById('kavram-count');
+  if (!window.sozlukData) { list.innerHTML = '<div class="loading">Kavramlar y\u00fckleniyor...</div>'; return; }
+
+  const searchText = (document.getElementById('kavram-search')?.value || '').toLowerCase();
+  const katFilter = document.querySelector('.kavram-kat-btn.active')?.dataset.kat || 'all';
+
+  let filtered = window.sozlukData;
+  if (katFilter !== 'all') filtered = filtered.filter(s => s.kategori === katFilter);
+  if (searchText) filtered = filtered.filter(s =>
+    s.kelime.toLowerCase().includes(searchText) || s.anlam.toLowerCase().includes(searchText)
+  );
+
+  filtered.sort((a, b) => a.kelime.localeCompare(b.kelime, 'tr'));
+
+  const katLabels = {
+    akaid: 'Ak\u00e2id/Kel\u00e2m', ibadet: '\u0130badet/Taharet', tasavvuf: 'Tasavvuf/Ahl\u00e2k',
+    fikih: 'F\u0131k\u0131h/Us\u00fbl', muamelat: 'Mu\u00e2mel\u00e2t/Ticaret', siyer: 'Siyer/Tarih',
+    hadis: 'Hadis/S\u00fcnnet', kuran: "Kur'an/Tefsir", mezhepler: 'Mezhepler/F\u0131rkalar',
+    aile: 'Aile/Nik\u00e2h', dil: 'Dil/Edebiyat', miras: 'Miras/Fer\u00e2iz', osmanli: 'Osmanl\u0131/Kurumlar'
+  };
+
+  let html = '';
+  filtered.forEach(s => {
+    const slug = slugify(s.kelime);
+    const katLabel = katLabels[s.kategori] || s.kategori;
+    const osmanli = s.osmanli ? `<span class="kavram-osmanli">${s.osmanli}</span>` : '';
+    html += `
+      <div class="kavram-card" onclick="openKavram('${slug}')">
+        <div class="kavram-card-header">
+          <span class="kavram-card-kelime">${s.kelime}</span>
+          ${osmanli}
+        </div>
+        <div class="kavram-card-anlam">${s.anlam.substring(0, 120)}${s.anlam.length > 120 ? '...' : ''}</div>
+        <span class="sozluk-kat kat-${s.kategori}">${katLabel}</span>
+      </div>
+    `;
+  });
+
+  list.innerHTML = html || '<p style="text-align:center;color:var(--text-muted);padding:40px;">Kavram bulunamad\u0131.</p>';
+  countEl.textContent = `${filtered.length} kavram`;
+}
+
+document.getElementById('kavram-search')?.addEventListener('input', () => loadKavramlar());
+document.querySelectorAll('.kavram-kat-btn')?.forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.kavram-kat-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    loadKavramlar();
+  });
+});
+
+async function openKavram(slug, fromRoute) {
+  if (!window.sozlukData) return;
+
+  const entry = window.sozlukData.find(s => slugify(s.kelime) === slug);
+  if (!entry) return;
+
+  if (!fromRoute) updateHash(`kavram/${slug}`);
+
+  // Find maddes where this word appears
+  await Promise.all([loadKisimTexts(1), loadKisimTexts(2), loadKisimTexts(3)]);
+
+  const gectigiMaddeler = [];
+  const searchTerms = [entry.kelime.toLowerCase()];
+  if (entry.alternatif) entry.alternatif.forEach(a => searchTerms.push(a.toLowerCase()));
+
+  window.maddelerData?.forEach(m => {
+    const fullText = (kisimTextsCache[m.kisim]?.[String(m.madde_no)] || m.metin || '').toLowerCase();
+    const baslik = (m.baslik || '').toLowerCase();
+    for (const term of searchTerms) {
+      if (fullText.includes(term) || baslik.includes(term)) {
+        gectigiMaddeler.push(m);
+        break;
+      }
+    }
+  });
+
+  // Find related concepts (same category, or mentioned in same maddes)
+  const iliskiliKavramlar = window.sozlukData
+    .filter(s => s.kelime !== entry.kelime && s.kategori === entry.kategori)
+    .slice(0, 12);
+
+  const katLabels = {
+    akaid: 'Ak\u00e2id/Kel\u00e2m', ibadet: '\u0130badet/Taharet', tasavvuf: 'Tasavvuf/Ahl\u00e2k',
+    fikih: 'F\u0131k\u0131h/Us\u00fbl', muamelat: 'Mu\u00e2mel\u00e2t/Ticaret', siyer: 'Siyer/Tarih',
+    hadis: 'Hadis/S\u00fcnnet', kuran: "Kur'an/Tefsir", mezhepler: 'Mezhepler/F\u0131rkalar',
+    aile: 'Aile/Nik\u00e2h', dil: 'Dil/Edebiyat', miras: 'Miras/Fer\u00e2iz', osmanli: 'Osmanl\u0131/Kurumlar'
+  };
+  const kisimLabels = { 1: 'I', 2: 'II', 3: 'III' };
+
+  const body = document.getElementById('kavram-body');
+  document.getElementById('kavram-detay').style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+
+  let html = `
+    <div class="kavram-detail-header">
+      <h3>${entry.kelime}</h3>
+      ${entry.osmanli ? `<div class="kavram-detail-osmanli">${entry.osmanli}</div>` : ''}
+      <span class="sozluk-kat kat-${entry.kategori}">${katLabels[entry.kategori] || entry.kategori}</span>
+    </div>
+    <div class="kavram-detail-anlam">
+      <h4>Tan\u0131m</h4>
+      <p>${entry.anlam}</p>
+    </div>
+  `;
+
+  if (entry.alternatif && entry.alternatif.length > 0) {
+    html += `<div class="kavram-detail-section">
+      <h4>Di\u011fer Yaz\u0131mlar</h4>
+      <div class="kavram-alt-list">${entry.alternatif.map(a => `<span class="kavram-alt-tag">${a}</span>`).join('')}</div>
+    </div>`;
+  }
+
+  if (entry.baglamlar && entry.baglamlar.length > 0) {
+    html += `<div class="kavram-detail-section">
+      <h4>Ba\u011flama G\u00f6re Anlamlar</h4>
+      <div class="kavram-baglamlar">
+        ${entry.baglamlar.map(b => `<div class="kavram-baglam"><strong>${b.baglam}:</strong> ${b.anlam}</div>`).join('')}
+      </div>
+    </div>`;
+  }
+
+  if (gectigiMaddeler.length > 0) {
+    html += `<div class="kavram-detail-section">
+      <h4>Ge\u00e7ti\u011fi Maddeler <span class="kavram-count-badge">${gectigiMaddeler.length}</span></h4>
+      <div class="kavram-madde-list">
+        ${gectigiMaddeler.slice(0, 20).map(m => `
+          <a href="#" onclick="closeKavram();openMadde(${m.kisim},${m.madde_no});return false" class="kavram-madde-link">
+            <span class="rm-badge">${kisimLabels[m.kisim]}-${m.madde_no}</span>
+            <span>${m.baslik}</span>
+          </a>
+        `).join('')}
+        ${gectigiMaddeler.length > 20 ? `<p class="kavram-more">ve ${gectigiMaddeler.length - 20} madde daha...</p>` : ''}
+      </div>
+    </div>`;
+  }
+
+  if (iliskiliKavramlar.length > 0) {
+    html += `<div class="kavram-detail-section">
+      <h4>\u0130li\u015fkili Kavramlar</h4>
+      <div class="kavram-related-grid">
+        ${iliskiliKavramlar.map(k => {
+          const kSlug = slugify(k.kelime);
+          return `<a href="#kavram/${kSlug}" onclick="event.preventDefault();openKavram('${kSlug}')" class="kavram-related-tag">${k.kelime}</a>`;
+        }).join('')}
+      </div>
+    </div>`;
+  }
+
+  body.innerHTML = html;
+}
+
+function closeKavram() {
+  document.getElementById('kavram-detay').style.display = 'none';
+  document.body.style.overflow = '';
+  updateHash('kavramlar');
+}
+
+document.getElementById('kavram-detay')?.addEventListener('click', e => {
+  if (e.target === document.getElementById('kavram-detay')) closeKavram();
+});
+
+// ===== ŞAHİSLAR =====
+let sahislarLoaded = false;
+
+function loadSahislar() {
+  sahislarLoaded = true;
+  const list = document.getElementById('sahislar-list');
+  const countEl = document.getElementById('sahis-count');
+  if (!window.sahislarData || window.sahislarData.length === 0) {
+    list.innerHTML = '<p style="text-align:center;color:var(--text-muted);padding:60px;">Şahıs verileri yükleniyor...</p>';
+    countEl.textContent = '';
+    return;
+  }
+
+  const searchText = (document.getElementById('sahis-search')?.value || '').toLowerCase();
+  const activeKat = document.querySelector('.sahis-kat-btn.active')?.dataset.kat || 'all';
+
+  let filtered = window.sahislarData;
+
+  if (activeKat !== 'all') {
+    filtered = filtered.filter(s => s.kategori === activeKat);
+  }
+
+  if (searchText) filtered = filtered.filter(s =>
+    s.isim.toLowerCase().includes(searchText) ||
+    (s.unvan || '').toLowerCase().includes(searchText) ||
+    (s.biyografi || '').toLowerCase().includes(searchText)
+  );
+
+  filtered.sort((a, b) => a.isim.localeCompare(b.isim, 'tr'));
+
+  const katIcons = { sahabi: '\u2739', alim: '\u2605', diger: '\u2726' };
+  const katLabels = { sahabi: 'Sahâbî', alim: 'Âlim / Evliyâ', diger: '' };
+
+  let html = '';
+  filtered.forEach(s => {
+    const icon = katIcons[s.kategori] || '\u2605';
+    const katLabel = katLabels[s.kategori] || '';
+    const shortBio = s.biyografi ? s.biyografi.substring(0, 100) + (s.biyografi.length > 100 ? '...' : '') : '';
+    html += `
+      <div class="sahis-card" onclick="openSahis('${s.slug}')">
+        <div class="sahis-card-icon">${icon}</div>
+        <div class="sahis-card-body">
+          <div class="sahis-card-isim">${s.isim}</div>
+          ${s.unvan ? `<div class="sahis-card-unvan">${s.unvan}</div>` : (katLabel ? `<div class="sahis-card-unvan">${katLabel}</div>` : '')}
+          ${shortBio ? `<div class="sahis-card-bio">${shortBio}</div>` : ''}
+        </div>
+      </div>
+    `;
+  });
+
+  list.innerHTML = html || '<p style="text-align:center;color:var(--text-muted);padding:40px;">Şahıs bulunamadı.</p>';
+  countEl.textContent = `${filtered.length} şahıs`;
+}
+
+document.getElementById('sahis-search')?.addEventListener('input', () => loadSahislar());
+
+document.querySelectorAll('.sahis-kat-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.sahis-kat-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    loadSahislar();
+  });
+});
+
+function openSahis(slug, fromRoute) {
+  if (!window.sahislarData) return;
+
+  const sahis = window.sahislarData.find(s => s.slug === slug);
+  if (!sahis) return;
+
+  if (!fromRoute) updateHash(`sahis/${slug}`);
+
+  const body = document.getElementById('sahis-body');
+  document.getElementById('sahis-detay').style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+
+  const kisimLabels = { 1: 'I', 2: 'II', 3: 'III' };
+  const katIcons = { sahabi: '\u2739', alim: '\u2605', diger: '\u2726' };
+  const katLabels = { sahabi: 'Sahâbe-i Kirâm', alim: 'İslâm Âlimi / Evliyâ', diger: '' };
+
+  const icon = katIcons[sahis.kategori] || '\u2605';
+  const katLabel = katLabels[sahis.kategori] || '';
+
+  let html = `
+    <div class="sahis-detail-header">
+      <div class="sahis-detail-icon">${icon}</div>
+      <div>
+        <h3>${sahis.isim}</h3>
+        ${sahis.unvan ? `<div class="sahis-detail-unvan">${sahis.unvan}</div>` : (katLabel ? `<div class="sahis-detail-unvan">${katLabel}</div>` : '')}
+      </div>
+    </div>
+  `;
+
+  if (sahis.biyografi) {
+    html += `<div class="sahis-detail-section">
+      <h4>Hâl Tercemesi</h4>
+      <div class="sahis-biyografi">${sahis.biyografi}</div>
+    </div>`;
+  }
+
+  if (sahis.gectigiMaddeler && sahis.gectigiMaddeler.length > 0) {
+    html += `<div class="sahis-detail-section">
+      <h4>Geçtiği Maddeler <span class="kavram-count-badge">${sahis.gectigiMaddeler.length}</span></h4>
+      <div class="kavram-madde-list">
+        ${sahis.gectigiMaddeler.map(ref => {
+          const parts = ref.split('/');
+          const kisim = parseInt(parts[0]);
+          const maddeNo = parseInt(parts[1]);
+          const m = window.tocData?.find(t => t.kisim === kisim && t.madde_no === maddeNo);
+          if (!m) return '';
+          return `<a href="#" onclick="closeSahis();openMadde(${kisim},${maddeNo});return false" class="kavram-madde-link">
+            <span class="rm-badge">${kisimLabels[kisim]}-${maddeNo}</span>
+            <span>${m.baslik}</span>
+          </a>`;
+        }).filter(Boolean).join('')}
+      </div>
+    </div>`;
+  }
+
+  html += `<div class="sahis-kaynak">
+    <strong>Kaynak:</strong> ${sahis.kaynak}
+  </div>`;
+
+  body.innerHTML = html;
+}
+
+function closeSahis() {
+  document.getElementById('sahis-detay').style.display = 'none';
+  document.body.style.overflow = '';
+  updateHash('sahislar');
+}
+
+document.getElementById('sahis-detay')?.addEventListener('click', e => {
+  if (e.target === document.getElementById('sahis-detay')) closeSahis();
+});
+
 // ===== TABLOLAR =====
 let tablolarLoaded = false;
 
 const tabloKatLabels = {
-  itikat: 'İman ve İtikat', temizlik: 'Temizlik', namaz: 'Namaz',
-  oruc: 'Oruç', zekat: 'Zekât', hac: 'Hac ve Umre',
-  aile: 'Aile Hukuku', tasavvuf: 'Tasavvuf', genel: 'Diğer Konular'
+  itikat: '\u0130man ve \u0130tikat', temizlik: 'Temizlik', namaz: 'Namaz',
+  oruc: 'Oru\u00e7', zekat: 'Zek\u00e2t', hac: 'Hac ve Umre',
+  aile: 'Aile Hukuku', tasavvuf: 'Tasavvuf', genel: 'Di\u011fer Konular'
 };
 const tabloKatOrder = ['itikat','temizlik','namaz','oruc','zekat','hac','aile','tasavvuf','genel'];
 
@@ -514,7 +956,7 @@ function loadTablolar(filterKat, filterText) {
   tablolarLoaded = true;
   const grid = document.getElementById('tablolar-grid');
   const countEl = document.getElementById('tablo-count');
-  if (!window.tablolarData) { grid.innerHTML = '<div class="loading">Tablolar yükleniyor...</div>'; return; }
+  if (!window.tablolarData) { grid.innerHTML = '<div class="loading">Tablolar y\u00fckleniyor...</div>'; return; }
 
   const katFilter = filterKat || tabloActiveKat || 'all';
   const searchText = (filterText !== undefined ? filterText : tabloSearchText || '').toLowerCase();
@@ -531,7 +973,6 @@ function loadTablolar(filterKat, filterText) {
 
   let html = '';
   if (katFilter === 'all') {
-    // Kategoriye göre grupla
     for (const kat of tabloKatOrder) {
       const items = allItems.filter(t => t.kategori === kat);
       if (items.length === 0) continue;
@@ -544,16 +985,15 @@ function loadTablolar(filterKat, filterText) {
 
   const total = allItems.length;
   countEl.textContent = searchText ? `${total} tablo bulundu` : `${total} tablo`;
-  grid.innerHTML = html || '<p style="text-align:center;color:var(--text-muted);padding:40px;">Tablo bulunamadı.</p>';
+  grid.innerHTML = html || '<p style="text-align:center;color:var(--text-muted);padding:40px;">Tablo bulunamad\u0131.</p>';
 }
 
 function renderTabloCard(tablo) {
-  const tipIcons = {tablo:'▦', liste:'▤', iki_liste:'⇄', flowchart:'▥', agac:'◈'};
-  const tipLabels = {tablo:'Tablo', liste:'Liste', iki_liste:'Karşılaştırma', flowchart:'Adımlar', agac:'Ağaç'};
+  const tipIcons = {tablo:'\u25A6', liste:'\u25A4', iki_liste:'\u21C4', flowchart:'\u25A5', agac:'\u25C8'};
   return `
     <div class="tablo-card tablo-kat-${tablo.kategori}" id="tablo-${tablo.id}">
       <div class="tablo-card-header">
-        <h4>${tipIcons[tablo.tip] || '▦'} ${tablo.baslik}</h4>
+        <h4>${tipIcons[tablo.tip] || '\u25A6'} ${tablo.baslik}</h4>
         <div class="tablo-card-ref">
           <span class="tablo-ref-madde">${tablo.kaynak_madde}</span>
           <span class="tablo-ref-sayfa">${sayfaLink(tablo.sayfa_no, 's. ' + tablo.sayfa_no)}</span>
@@ -569,7 +1009,6 @@ function renderTabloCard(tablo) {
   `;
 }
 
-// Tablo filtre event'leri
 document.getElementById('tablo-search')?.addEventListener('input', (e) => {
   loadTablolar(tabloActiveKat, e.target.value);
 });
@@ -583,19 +1022,11 @@ document.querySelectorAll('.tablo-filter-btn').forEach(btn => {
 });
 
 function renderTabloBody(tablo) {
-  if (tablo.tip === 'tablo' && tablo.veriler) {
-    return renderTable(tablo.veriler, tablo.kolonlar);
-  }
-  if (tablo.tip === 'flowchart' && tablo.veriler) {
-    return renderFlowchart(tablo.veriler);
-  }
-  if (tablo.tip === 'liste' && tablo.veriler) {
-    return renderListe(tablo.veriler);
-  }
-  if (tablo.tip === 'iki_liste' && tablo.veriler) {
-    return renderIkiListe(tablo.veriler);
-  }
-  return '<p>Tablo verisi yükleniyor...</p>';
+  if (tablo.tip === 'tablo' && tablo.veriler) return renderTable(tablo.veriler, tablo.kolonlar);
+  if (tablo.tip === 'flowchart' && tablo.veriler) return renderFlowchart(tablo.veriler);
+  if (tablo.tip === 'liste' && tablo.veriler) return renderListe(tablo.veriler);
+  if (tablo.tip === 'iki_liste' && tablo.veriler) return renderIkiListe(tablo.veriler);
+  return '<p>Tablo verisi y\u00fckleniyor...</p>';
 }
 
 function renderTable(veriler, kolonlar) {
@@ -644,48 +1075,45 @@ function renderListe(veriler) {
 
 function renderIkiListe(veriler) {
   let html = '<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">';
-
   if (veriler.bozanlar) {
-    html += '<div><h5 style="color:#c62828;margin-bottom:8px;">Orucu Bozan Şeyler</h5><ul class="check-list">';
+    html += '<div><h5 style="color:#c62828;margin-bottom:8px;">Orucu Bozan \u015eeyler</h5><ul class="check-list">';
     veriler.bozanlar.forEach(item => {
       html += `<li><span class="check-icon check-no">&#10007;</span> <span>${item}</span></li>`;
     });
     html += '</ul></div>';
   }
-
   if (veriler.bozmayalar) {
-    html += '<div><h5 style="color:#2e7d32;margin-bottom:8px;">Orucu Bozmayan Şeyler</h5><ul class="check-list">';
+    html += '<div><h5 style="color:#2e7d32;margin-bottom:8px;">Orucu Bozmayan \u015eeyler</h5><ul class="check-list">';
     veriler.bozmayalar.forEach(item => {
       html += `<li><span class="check-icon check-yes">&#10003;</span> <span>${item}</span></li>`;
     });
     html += '</ul></div>';
   }
-
   html += '</div>';
   return html;
 }
 
 // ===== ARAMA =====
-async function doFullSearch() {
+async function doFullSearch(fromRoute) {
   const query = document.getElementById('full-search').value.trim().toLowerCase();
   if (!query || query.length < 2) return;
 
+  if (!fromRoute) updateHash(`arama/${encodeURIComponent(query)}`);
+
   const results = document.getElementById('arama-results');
   if (!window.maddelerData) {
-    results.innerHTML = '<p>Veriler yükleniyor...</p>';
+    results.innerHTML = '<p>Veriler y\u00fckleniyor...</p>';
     return;
   }
 
-  results.innerHTML = '<p style="text-align:center;color:var(--text-muted);padding:20px;">Tam metin aranıyor...</p>';
+  results.innerHTML = '<p style="text-align:center;color:var(--text-muted);padding:20px;">Tam metin aran\u0131yor...</p>';
 
-  // Load all kisim texts for full search
   await Promise.all([loadKisimTexts(1), loadKisimTexts(2), loadKisimTexts(3)]);
 
-  const kisimLabels = { 1: 'Birinci Kısım', 2: 'İkinci Kısım', 3: 'Üçüncü Kısım' };
+  const kisimLabels = { 1: 'Birinci K\u0131s\u0131m', 2: '\u0130kinci K\u0131s\u0131m', 3: '\u00dc\u00e7\u00fcnc\u00fc K\u0131s\u0131m' };
   const matches = [];
 
   window.maddelerData.forEach(m => {
-    // Use full text from cache
     const fullText = kisimTextsCache[m.kisim]?.[String(m.madde_no)] || m.metin || '';
     const metin = fullText.toLowerCase();
     const baslik = (m.baslik || '').toLowerCase();
@@ -713,10 +1141,9 @@ async function doFullSearch() {
     }
   });
 
-  // Başlıkta geçenler önce
   matches.sort((a, b) => (b.inTitle ? 1 : 0) - (a.inTitle ? 1 : 0));
 
-  let html = `<p style="color:var(--text-muted);margin-bottom:16px;">${matches.length} sonuç bulundu</p>`;
+  let html = `<p style="color:var(--text-muted);margin-bottom:16px;">${matches.length} sonu\u00e7 bulundu</p>`;
 
   matches.slice(0, 50).forEach(m => {
     const highlighted = m.context.replace(
@@ -727,8 +1154,8 @@ async function doFullSearch() {
     html += `
       <div class="arama-result" onclick="openMadde(${m.kisim}, ${m.madde_no})">
         <h4>${m.baslik}</h4>
-        <p>${highlighted || '(Başlıkta eşleşme)'}</p>
-        <div class="result-meta">${kisimLabels[m.kisim]}, Madde ${m.madde_no} · ${sayfaLink(m.sayfa_no, 'Sayfa ' + m.sayfa_no)}</div>
+        <p>${highlighted || '(Ba\u015fl\u0131kta e\u015fle\u015fme)'}</p>
+        <div class="result-meta">${kisimLabels[m.kisim]}, Madde ${m.madde_no} \u00B7 ${sayfaLink(m.sayfa_no, 'Sayfa ' + m.sayfa_no)}</div>
       </div>
     `;
   });
@@ -743,7 +1170,7 @@ document.getElementById('full-search')?.addEventListener('keydown', e => {
 // ===== INIT =====
 document.addEventListener('DOMContentLoaded', () => {
   if (window.tocData) {
-    console.log(`Yüklendi: ${window.tocData.length} madde, ${window.sozlukData?.length || 0} sözlük kelimesi, ${window.tablolarData?.length || 0} tablo`);
+    console.log(`Y\u00fcklendi: ${window.tocData.length} madde, ${window.sozlukData?.length || 0} s\u00f6zl\u00fck kelimesi, ${window.tablolarData?.length || 0} tablo${window.sahislarData ? ', ' + window.sahislarData.length + ' \u015fah\u0131s' : ''}`);
   }
   // Arka planda tüm metinleri önceden yükle
   setTimeout(() => {
@@ -751,4 +1178,9 @@ document.addEventListener('DOMContentLoaded', () => {
     loadKisimTexts(2);
     loadKisimTexts(3);
   }, 500);
+
+  // Handle initial route
+  if (location.hash && location.hash !== '#' && location.hash !== '#anasayfa') {
+    handleRoute();
+  }
 });

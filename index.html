@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=3">
+  <link rel="stylesheet" href="style.css?v=5">
 </head>
 <body>
   <!-- Header -->
@@ -21,10 +21,16 @@
         <nav class="main-nav">
           <button class="nav-btn active" data-page="anasayfa">Ana Sayfa</button>
           <button class="nav-btn" data-page="icerik">İçindekiler</button>
-          <button class="nav-btn" data-page="tablolar">Tablo ve Diyagramlar</button>
-          <button class="nav-btn" data-page="sozluk">Dini Lügat</button>
+          <button class="nav-btn" data-page="tablolar">Tablolar</button>
+          <button class="nav-btn" data-page="kavramlar">Kavramlar</button>
+          <button class="nav-btn" data-page="sahislar">Şahıslar</button>
+          <button class="nav-btn" data-page="sozluk">Sözlük</button>
           <button class="nav-btn" data-page="arama">Arama</button>
         </nav>
+        <button class="dark-mode-toggle" onclick="toggleDarkMode()" aria-label="Karanlık mod" title="Karanlık/Aydınlık mod">
+          <span class="dm-sun">&#9788;</span>
+          <span class="dm-moon">&#9790;</span>
+        </button>
         <button class="mobile-menu-btn" aria-label="Menü">
           <span></span><span></span><span></span>
         </button>
@@ -40,28 +46,18 @@
           <h2>Tam İlmihâl<br><span class="highlight">Se'âdet-i Ebediyye</span></h2>
           <p class="hero-desc">Hüseyn Hilmi Işık hazretlerinin hazırladığı, 1248 sayfalık kapsamlı ilmihâl eserini modern ve anlaşılır bir şekilde keşfedin.</p>
           <div class="hero-stats">
-            <div class="stat">
-              <span class="stat-num">241</span>
-              <span class="stat-label">Madde</span>
-            </div>
-            <div class="stat">
-              <span class="stat-num">3</span>
-              <span class="stat-label">Kısım</span>
-            </div>
-            <div class="stat">
-              <span class="stat-num">1248</span>
-              <span class="stat-label">Sayfa</span>
-            </div>
+            <div class="stat"><span class="stat-num">241</span><span class="stat-label">Madde</span></div>
+            <div class="stat"><span class="stat-num">3</span><span class="stat-label">Kısım</span></div>
+            <div class="stat"><span class="stat-num">1248</span><span class="stat-label">Sayfa</span></div>
           </div>
           <div class="hero-actions">
             <button class="btn btn-primary" onclick="navigateTo('icerik')">İçindekilere Git</button>
-            <button class="btn btn-secondary" onclick="navigateTo('tablolar')">Tabloları İncele</button>
+            <button class="btn btn-secondary" onclick="navigateTo('kavramlar')">Kavramları Keşfet</button>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Kısımlar Özeti -->
     <section class="kisimlar-ozet">
       <div class="container">
         <h3 class="section-title">Kitabın Üç Kısmı</h3>
@@ -88,57 +84,26 @@
       </div>
     </section>
 
-    <!-- Hızlı Erişim -->
     <section class="hizli-erisim">
       <div class="container">
         <h3 class="section-title">Konulara Hızlı Erişim</h3>
         <div class="konu-grid">
-          <button class="konu-btn" onclick="filterByCategory('iman')">
-            <span class="konu-icon">&#9733;</span>
-            <span>İman ve İtikat</span>
-          </button>
-          <button class="konu-btn" onclick="filterByCategory('temizlik')">
-            <span class="konu-icon">&#9682;</span>
-            <span>Temizlik</span>
-          </button>
-          <button class="konu-btn" onclick="filterByCategory('namaz')">
-            <span class="konu-icon">&#9775;</span>
-            <span>Namaz</span>
-          </button>
-          <button class="konu-btn" onclick="filterByCategory('oruc')">
-            <span class="konu-icon">&#9789;</span>
-            <span>Oruç</span>
-          </button>
-          <button class="konu-btn" onclick="filterByCategory('zekat')">
-            <span class="konu-icon">&#10084;</span>
-            <span>Zekât</span>
-          </button>
-          <button class="konu-btn" onclick="filterByCategory('hac')">
-            <span class="konu-icon">&#9962;</span>
-            <span>Hac</span>
-          </button>
-          <button class="konu-btn" onclick="filterByCategory('ticaret')">
-            <span class="konu-icon">&#9878;</span>
-            <span>Ticaret</span>
-          </button>
-          <button class="konu-btn" onclick="filterByCategory('aile')">
-            <span class="konu-icon">&#9825;</span>
-            <span>Aile Hukuku</span>
-          </button>
-          <button class="konu-btn" onclick="filterByCategory('ahlak')">
-            <span class="konu-icon">&#10047;</span>
-            <span>Ahlâk</span>
-          </button>
-          <button class="konu-btn" onclick="filterByCategory('cenaze')">
-            <span class="konu-icon">&#9883;</span>
-            <span>Cenaze ve Miras</span>
-          </button>
+          <button class="konu-btn" onclick="filterByCategory('iman')"><span class="konu-icon">&#9733;</span><span>İman ve İtikat</span></button>
+          <button class="konu-btn" onclick="filterByCategory('temizlik')"><span class="konu-icon">&#9682;</span><span>Temizlik</span></button>
+          <button class="konu-btn" onclick="filterByCategory('namaz')"><span class="konu-icon">&#9775;</span><span>Namaz</span></button>
+          <button class="konu-btn" onclick="filterByCategory('oruc')"><span class="konu-icon">&#9789;</span><span>Oruç</span></button>
+          <button class="konu-btn" onclick="filterByCategory('zekat')"><span class="konu-icon">&#10084;</span><span>Zekât</span></button>
+          <button class="konu-btn" onclick="filterByCategory('hac')"><span class="konu-icon">&#9962;</span><span>Hac</span></button>
+          <button class="konu-btn" onclick="filterByCategory('ticaret')"><span class="konu-icon">&#9878;</span><span>Ticaret</span></button>
+          <button class="konu-btn" onclick="filterByCategory('aile')"><span class="konu-icon">&#9825;</span><span>Aile Hukuku</span></button>
+          <button class="konu-btn" onclick="filterByCategory('ahlak')"><span class="konu-icon">&#10047;</span><span>Ahlâk</span></button>
+          <button class="konu-btn" onclick="filterByCategory('cenaze')"><span class="konu-icon">&#9883;</span><span>Cenaze ve Miras</span></button>
         </div>
       </div>
     </section>
   </main>
 
-  <!-- İçindekiler Sayfası -->
+  <!-- İçindekiler -->
   <main id="page-icerik" class="page">
     <div class="container">
       <div class="icerik-header">
@@ -157,7 +122,7 @@
     </div>
   </main>
 
-  <!-- Madde Detay (overlay) -->
+  <!-- Madde Detay -->
   <div id="madde-detay" class="madde-overlay" style="display:none">
     <div class="madde-overlay-content">
       <button class="madde-close" onclick="closeMadde()">&times;</button>
@@ -165,7 +130,71 @@
     </div>
   </div>
 
-  <!-- Tablolar Sayfası -->
+  <!-- Kavramlar -->
+  <main id="page-kavramlar" class="page">
+    <div class="container">
+      <h2 class="section-title">Kavramlar</h2>
+      <p class="section-desc">4.435 dini terim ve kavram. Bir kavrama tıklayarak geçtiği maddeleri ve ilişkili terimleri görün.</p>
+      <div class="kavram-filters">
+        <input type="text" id="kavram-search" placeholder="Kavram ara...">
+        <div class="kavram-kat-buttons">
+          <button class="kavram-kat-btn active" data-kat="all">Tümü</button>
+          <button class="kavram-kat-btn" data-kat="akaid">Akâid</button>
+          <button class="kavram-kat-btn" data-kat="ibadet">İbadet</button>
+          <button class="kavram-kat-btn" data-kat="tasavvuf">Tasavvuf</button>
+          <button class="kavram-kat-btn" data-kat="fikih">Fıkıh</button>
+          <button class="kavram-kat-btn" data-kat="muamelat">Muâmelât</button>
+          <button class="kavram-kat-btn" data-kat="siyer">Siyer</button>
+          <button class="kavram-kat-btn" data-kat="hadis">Hadis</button>
+          <button class="kavram-kat-btn" data-kat="kuran">Kur'an</button>
+          <button class="kavram-kat-btn" data-kat="mezhepler">Mezhepler</button>
+          <button class="kavram-kat-btn" data-kat="aile">Aile</button>
+          <button class="kavram-kat-btn" data-kat="dil">Dil</button>
+          <button class="kavram-kat-btn" data-kat="miras">Miras</button>
+          <button class="kavram-kat-btn" data-kat="osmanli">Osmanlı</button>
+        </div>
+      </div>
+      <div id="kavram-count" class="kavram-count"></div>
+      <div id="kavramlar-list" class="kavramlar-grid"></div>
+    </div>
+  </main>
+
+  <!-- Kavram Detay -->
+  <div id="kavram-detay" class="madde-overlay" style="display:none">
+    <div class="madde-overlay-content">
+      <button class="madde-close" onclick="closeKavram()">&times;</button>
+      <div id="kavram-body"></div>
+    </div>
+  </div>
+
+  <!-- Şahıslar -->
+  <main id="page-sahislar" class="page">
+    <div class="container">
+      <h2 class="section-title">İslâm Âlimleri ve Evliyâlar</h2>
+      <p class="section-desc">Se'âdet-i Ebediyye'de adı geçen 1.019 mübârek zâtın hâl tercemeleri. Kitabın kendi ifâdeleriyle.</p>
+      <div class="sahis-filters">
+        <input type="text" id="sahis-search" placeholder="Şahıs ara...">
+        <div class="sahis-kat-buttons">
+          <button class="sahis-kat-btn active" data-kat="all">Tümü</button>
+          <button class="sahis-kat-btn" data-kat="sahabi">Sahâbe-i Kirâm</button>
+          <button class="sahis-kat-btn" data-kat="alim">Âlimler ve Evliyâlar</button>
+          <button class="sahis-kat-btn" data-kat="diger">Diğer Şahıslar</button>
+        </div>
+      </div>
+      <div id="sahis-count" class="sahis-count"></div>
+      <div id="sahislar-list" class="sahislar-grid"></div>
+    </div>
+  </main>
+
+  <!-- Şahıs Detay -->
+  <div id="sahis-detay" class="madde-overlay" style="display:none">
+    <div class="madde-overlay-content sahis-overlay-content">
+      <button class="madde-close" onclick="closeSahis()">&times;</button>
+      <div id="sahis-body"></div>
+    </div>
+  </div>
+
+  <!-- Tablolar -->
   <main id="page-tablolar" class="page">
     <div class="container">
       <h2 class="section-title">Tablolar ve Diyagramlar</h2>
@@ -189,7 +218,7 @@
     </div>
   </main>
 
-  <!-- Sözlük Sayfası -->
+  <!-- Sözlük -->
   <main id="page-sozluk" class="page">
     <div class="container">
       <h2 class="section-title">Dini Lügat</h2>
@@ -217,7 +246,7 @@
     </div>
   </main>
 
-  <!-- Arama Sayfası -->
+  <!-- Arama -->
   <main id="page-arama" class="page">
     <div class="container">
       <h2 class="section-title">Kitapta Arama</h2>
@@ -237,10 +266,12 @@
     </div>
   </footer>
 
-  <!-- Sözlük Tooltip -->
+  <!-- Tooltip -->
   <div id="sozluk-tooltip" class="sozluk-tooltip" style="display:none"></div>
 
-  <script src="data.js?v=3"></script>
-  <script src="app.js?v=3"></script>
+  <script src="data.js?v=5"></script>
+  <script src="sahislar.js?v=5"></script>
+  <script src="crossref.js?v=5"></script>
+  <script src="app.js?v=5"></script>
 </body>
 </html>
