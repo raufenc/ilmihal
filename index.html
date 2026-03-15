@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=5">
+  <link rel="stylesheet" href="style.css?v=6">
 </head>
 <body>
   <!-- Header -->
@@ -24,7 +24,7 @@
           <button class="nav-btn" data-page="tablolar">Tablolar</button>
           <button class="nav-btn" data-page="kavramlar">Kavramlar</button>
           <button class="nav-btn" data-page="sahislar">Şahıslar</button>
-          <button class="nav-btn" data-page="sozluk">Sözlük</button>
+          <button class="nav-btn" data-page="sozluk">Dini Lügat</button>
           <button class="nav-btn" data-page="arama">Arama</button>
         </nav>
         <button class="dark-mode-toggle" onclick="toggleDarkMode()" aria-label="Karanlık mod" title="Karanlık/Aydınlık mod">
@@ -171,17 +171,10 @@
   <main id="page-sahislar" class="page">
     <div class="container">
       <h2 class="section-title">İslâm Âlimleri ve Evliyâlar</h2>
-      <p class="section-desc">Se'âdet-i Ebediyye'de adı geçen 1.019 mübârek zâtın hâl tercemeleri. Kitabın kendi ifâdeleriyle.</p>
+      <p class="section-desc">Se'âdet-i Ebediyye'de adı geçenlerin hâl tercemeleri.</p>
       <div class="sahis-filters">
         <input type="text" id="sahis-search" placeholder="Şahıs ara...">
-        <div class="sahis-kat-buttons">
-          <button class="sahis-kat-btn active" data-kat="all">Tümü</button>
-          <button class="sahis-kat-btn" data-kat="sahabi">Sahâbe-i Kirâm</button>
-          <button class="sahis-kat-btn" data-kat="alim">Âlimler ve Evliyâlar</button>
-          <button class="sahis-kat-btn" data-kat="diger">Diğer Şahıslar</button>
-        </div>
       </div>
-      <div id="sahis-count" class="sahis-count"></div>
       <div id="sahislar-list" class="sahislar-grid"></div>
     </div>
   </main>
@@ -269,9 +262,9 @@
   <!-- Tooltip -->
   <div id="sozluk-tooltip" class="sozluk-tooltip" style="display:none"></div>
 
-  <script src="data.js?v=5"></script>
-  <script src="sahislar.js?v=5"></script>
-  <script src="crossref.js?v=5"></script>
-  <script src="app.js?v=5"></script>
+  <script src="data.js?v=6"></script>
+  <script src="sahislar.js?v=6"></script>
+  <script src="crossref.js?v=6"></script>
+  <script src="app.js?v=6"></script>
 </body>
 </html>

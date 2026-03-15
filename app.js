@@ -467,7 +467,6 @@ function highlightWords(text) {
 
   const escaped = escapeHtml(text);
   const parts = escaped.split(/(\s+)/);
-  const usedWords = new Map();
 
   const result = parts.map(part => {
     if (/^\s+$/.test(part)) return part;
@@ -477,19 +476,14 @@ function highlightWords(text) {
 
     let entry = sozlukMap.get(lower) || altMap.get(lower);
     if (entry) {
-      const trackKey = entry.kelime.toLowerCase();
-      const count = usedWords.get(trackKey) || 0;
-      if (count < 3) {
-        usedWords.set(trackKey, count + 1);
-        const prefix = part.substring(0, part.indexOf(clean));
-        const suffix = part.substring(part.indexOf(clean) + clean.length);
-        const safeAnlam = entry.anlam.replace(/["\u201C\u201D]/g, '&quot;').replace(/['\u2018\u2019]/g, '&#39;');
-        const osmAttr = entry.osmanli ? ` data-osmanli="${entry.osmanli}"` : '';
-        const baglamAttr = entry.baglamlar ? ` data-baglamlar="${escapeHtml(JSON.stringify(entry.baglamlar))}"` : '';
-        const altAttr = entry.alternatif ? ` data-alternatif="${entry.alternatif.join(', ')}"` : '';
-        const kelimeAttr = ` data-kelime="${entry.kelime}"`;
-        return `${prefix}<span class="zor-kelime" data-anlam="${safeAnlam}" data-kat="${entry.kategori}"${osmAttr}${baglamAttr}${altAttr}${kelimeAttr}>${clean}</span>${suffix}`;
-      }
+      const prefix = part.substring(0, part.indexOf(clean));
+      const suffix = part.substring(part.indexOf(clean) + clean.length);
+      const safeAnlam = entry.anlam.replace(/["\u201C\u201D]/g, '&quot;').replace(/['\u2018\u2019]/g, '&#39;');
+      const osmAttr = entry.osmanli ? ` data-osmanli="${entry.osmanli}"` : '';
+      const baglamAttr = entry.baglamlar ? ` data-baglamlar="${escapeHtml(JSON.stringify(entry.baglamlar))}"` : '';
+      const altAttr = entry.alternatif ? ` data-alternatif="${entry.alternatif.join(', ')}"` : '';
+      const kelimeAttr = ` data-kelime="${entry.kelime}"`;
+      return `${prefix}<span class="zor-kelime" data-anlam="${safeAnlam}" data-kat="${entry.kategori}"${osmAttr}${baglamAttr}${altAttr}${kelimeAttr}>${clean}</span>${suffix}`;
     }
     return part;
   });
@@ -809,21 +803,14 @@ let sahislarLoaded = false;
 function loadSahislar() {
   sahislarLoaded = true;
   const list = document.getElementById('sahislar-list');
-  const countEl = document.getElementById('sahis-count');
   if (!window.sahislarData || window.sahislarData.length === 0) {
     list.innerHTML = '<p style="text-align:center;color:var(--text-muted);padding:60px;">Şahıs verileri yükleniyor...</p>';
-    countEl.textContent = '';
     return;
   }
 
   const searchText = (document.getElementById('sahis-search')?.value || '').toLowerCase();
-  const activeKat = document.querySelector('.sahis-kat-btn.active')?.dataset.kat || 'all';
 
   let filtered = window.sahislarData;
-
-  if (activeKat !== 'all') {
-    filtered = filtered.filter(s => s.kategori === activeKat);
-  }
 
   if (searchText) filtered = filtered.filter(s =>
     s.isim.toLowerCase().includes(searchText) ||
@@ -833,20 +820,14 @@ function loadSahislar() {
 
   filtered.sort((a, b) => a.isim.localeCompare(b.isim, 'tr'));
 
-  const katIcons = { sahabi: '\u2739', alim: '\u2605', diger: '\u2726' };
-  const katLabels = { sahabi: 'Sahâbî', alim: 'Âlim / Evliyâ', diger: '' };
-
   let html = '';
   filtered.forEach(s => {
-    const icon = katIcons[s.kategori] || '\u2605';
-    const katLabel = katLabels[s.kategori] || '';
     const shortBio = s.biyografi ? s.biyografi.substring(0, 100) + (s.biyografi.length > 100 ? '...' : '') : '';
     html += `
       <div class="sahis-card" onclick="openSahis('${s.slug}')">
-        <div class="sahis-card-icon">${icon}</div>
         <div class="sahis-card-body">
           <div class="sahis-card-isim">${s.isim}</div>
-          ${s.unvan ? `<div class="sahis-card-unvan">${s.unvan}</div>` : (katLabel ? `<div class="sahis-card-unvan">${katLabel}</div>` : '')}
+          ${s.unvan ? `<div class="sahis-card-unvan">${s.unvan}</div>` : ''}
           ${shortBio ? `<div class="sahis-card-bio">${shortBio}</div>` : ''}
         </div>
       </div>
@@ -854,18 +835,9 @@ function loadSahislar() {
   });
 
   list.innerHTML = html || '<p style="text-align:center;color:var(--text-muted);padding:40px;">Şahıs bulunamadı.</p>';
-  countEl.textContent = `${filtered.length} şahıs`;
 }
 
 document.getElementById('sahis-search')?.addEventListener('input', () => loadSahislar());
-
-document.querySelectorAll('.sahis-kat-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.sahis-kat-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    loadSahislar();
-  });
-});
 
 function openSahis(slug, fromRoute) {
   if (!window.sahislarData) return;
@@ -880,18 +852,12 @@ function openSahis(slug, fromRoute) {
   document.body.style.overflow = 'hidden';
 
   const kisimLabels = { 1: 'I', 2: 'II', 3: 'III' };
-  const katIcons = { sahabi: '\u2739', alim: '\u2605', diger: '\u2726' };
-  const katLabels = { sahabi: 'Sahâbe-i Kirâm', alim: 'İslâm Âlimi / Evliyâ', diger: '' };
-
-  const icon = katIcons[sahis.kategori] || '\u2605';
-  const katLabel = katLabels[sahis.kategori] || '';
 
   let html = `
     <div class="sahis-detail-header">
-      <div class="sahis-detail-icon">${icon}</div>
       <div>
         <h3>${sahis.isim}</h3>
-        ${sahis.unvan ? `<div class="sahis-detail-unvan">${sahis.unvan}</div>` : (katLabel ? `<div class="sahis-detail-unvan">${katLabel}</div>` : '')}
+        ${sahis.unvan ? `<div class="sahis-detail-unvan">${sahis.unvan}</div>` : ''}
       </div>
     </div>
   `;
