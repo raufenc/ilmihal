@@ -305,37 +305,44 @@ document.getElementById('madde-detay')?.addEventListener('click', e => {
 function highlightWords(text) {
   if (!window.sozlukData || window.sozlukData.length === 0) return escapeHtml(text);
 
-  // Metni kelimelere ayır, her kelimeyi kontrol et
+  // Ana harita + alternatif yazımlar haritası
   const sozlukMap = new Map();
+  const altMap = new Map(); // alternatif yazım -> ana entry
   window.sozlukData.forEach(entry => {
     sozlukMap.set(entry.kelime.toLowerCase(), entry);
+    // Alternatif yazımları da ekle
+    if (entry.alternatif) {
+      entry.alternatif.forEach(alt => {
+        altMap.set(alt.toLowerCase(), entry);
+      });
+    }
   });
 
-  // Metni paragraf ve satırlara ayırarak işle
   const escaped = escapeHtml(text);
-
-  // Kelime sınırlarında böl, parçaları koru
   const parts = escaped.split(/(\s+)/);
-  const usedWords = new Map(); // kelime -> kaç kez kullanıldı
+  const usedWords = new Map();
 
   const result = parts.map(part => {
-    if (/^\s+$/.test(part)) return part; // boşluk
+    if (/^\s+$/.test(part)) return part;
 
-    // Kelimeyi temizle (noktalama hariç)
     const clean = part.replace(/^[.,;:!?()\[\]"']+|[.,;:!?()\[\]"']+$/g, '');
     const lower = clean.toLowerCase();
 
-    const entry = sozlukMap.get(lower);
+    // Önce ana haritada ara, sonra alternatif yazımlarda
+    let entry = sozlukMap.get(lower) || altMap.get(lower);
     if (entry) {
-      const count = usedWords.get(lower) || 0;
+      const trackKey = entry.kelime.toLowerCase();
+      const count = usedWords.get(trackKey) || 0;
       if (count < 3) {
-        usedWords.set(lower, count + 1);
-        // Kelimeyi span ile sar, etrafındaki noktalamayı koru
+        usedWords.set(trackKey, count + 1);
         const prefix = part.substring(0, part.indexOf(clean));
         const suffix = part.substring(part.indexOf(clean) + clean.length);
         const safeAnlam = entry.anlam.replace(/["\u201C\u201D]/g, '&quot;').replace(/['\u2018\u2019]/g, '&#39;');
         const osmAttr = entry.osmanli ? ` data-osmanli="${entry.osmanli}"` : '';
-        return `${prefix}<span class="zor-kelime" data-anlam="${safeAnlam}" data-kat="${entry.kategori}"${osmAttr}>${clean}</span>${suffix}`;
+        // Bağlam bilgisi varsa data attribute olarak ekle
+        const baglamAttr = entry.baglamlar ? ` data-baglamlar="${escapeHtml(JSON.stringify(entry.baglamlar))}"` : '';
+        const altAttr = entry.alternatif ? ` data-alternatif="${entry.alternatif.join(', ')}"` : '';
+        return `${prefix}<span class="zor-kelime" data-anlam="${safeAnlam}" data-kat="${entry.kategori}"${osmAttr}${baglamAttr}${altAttr}>${clean}</span>${suffix}`;
       }
     }
     return part;
@@ -359,12 +366,31 @@ function showTooltip(e) {
   const anlam = el.dataset.anlam;
   if (!anlam) return;
 
+  let html = '';
   const osmanli = el.dataset.osmanli;
   if (osmanli) {
-    tooltip.innerHTML = '<span class="tooltip-osmanli">' + osmanli + '</span>' + anlam;
-  } else {
-    tooltip.textContent = anlam;
+    html += '<span class="tooltip-osmanli">' + osmanli + '</span>';
   }
+  html += anlam;
+
+  // Alternatif yazımlar
+  if (el.dataset.alternatif) {
+    html += '<div class="tooltip-alt">Diğer yazımlar: ' + el.dataset.alternatif + '</div>';
+  }
+
+  // Bağlama göre anlamlar (çok anlamlı kelimeler)
+  if (el.dataset.baglamlar) {
+    try {
+      const baglamlar = JSON.parse(el.dataset.baglamlar.replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>'));
+      html += '<div class="tooltip-baglamlar"><strong>Bağlama göre:</strong>';
+      baglamlar.forEach(b => {
+        html += '<div class="tooltip-baglam"><em>' + b.baglam + ':</em> ' + b.anlam + '</div>';
+      });
+      html += '</div>';
+    } catch(e) {}
+  }
+
+  tooltip.innerHTML = html;
   tooltip.style.display = 'block';
 
   const rect = el.getBoundingClientRect();
@@ -414,7 +440,8 @@ function loadSozluk(filterKat, filterText) {
   let filtered = window.sozlukData;
   if (katFilter !== 'all') filtered = filtered.filter(s => s.kategori === katFilter);
   if (searchText) filtered = filtered.filter(s =>
-    s.kelime.toLowerCase().includes(searchText) || s.anlam.toLowerCase().includes(searchText)
+    s.kelime.toLowerCase().includes(searchText) || s.anlam.toLowerCase().includes(searchText) ||
+    (s.alternatif && s.alternatif.some(a => a.toLowerCase().includes(searchText)))
   );
 
   // Alfabetik sırala
@@ -430,6 +457,15 @@ function loadSozluk(filterKat, filterText) {
   filtered.forEach(s => {
     const osmanli = s.osmanli ? `<div class="sozluk-osmanli">${s.osmanli}</div>` : '';
     const katLabel = katLabels[s.kategori] || s.kategori;
+    const altHtml = s.alternatif ? `<div class="sozluk-alt">Diğer yazımlar: ${s.alternatif.join(', ')}</div>` : '';
+    let baglamHtml = '';
+    if (s.baglamlar && s.baglamlar.length > 0) {
+      baglamHtml = '<div class="sozluk-baglamlar"><span class="baglam-label">Bağlama göre:</span>';
+      s.baglamlar.forEach(b => {
+        baglamHtml += `<div class="sozluk-baglam"><em>${b.baglam}:</em> ${b.anlam}</div>`;
+      });
+      baglamHtml += '</div>';
+    }
     html += `
       <div class="sozluk-item">
         <div class="sozluk-kelime-row">
@@ -437,6 +473,8 @@ function loadSozluk(filterKat, filterText) {
           ${osmanli}
         </div>
         <div class="sozluk-anlam">${s.anlam}</div>
+        ${altHtml}
+        ${baglamHtml}
         <span class="sozluk-kat kat-${s.kategori}">${katLabel}</span>
       </div>
     `;

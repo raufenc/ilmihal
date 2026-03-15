@@ -876,6 +876,70 @@ body {
   background: var(--primary-dark);
 }
 
+/* Tooltip - bağlam ve alternatif yazımlar */
+.sozluk-tooltip {
+  max-width: 340px;
+}
+.tooltip-alt {
+  margin-top: 4px;
+  font-size: 0.72rem;
+  opacity: 0.8;
+  font-style: italic;
+}
+.tooltip-baglamlar {
+  margin-top: 5px;
+  padding-top: 4px;
+  border-top: 1px solid rgba(255,255,255,0.2);
+  font-size: 0.73rem;
+}
+.tooltip-baglamlar strong {
+  display: block;
+  margin-bottom: 2px;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  opacity: 0.8;
+}
+.tooltip-baglam {
+  margin-bottom: 2px;
+}
+.tooltip-baglam em {
+  color: #ffd54f;
+}
+
+/* Sözlük sayfası - alternatif ve bağlam */
+.sozluk-alt {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  font-style: italic;
+  margin-top: 2px;
+}
+.sozluk-baglamlar {
+  margin-top: 6px;
+  padding: 8px 10px;
+  background: rgba(var(--primary-rgb, 30, 86, 49), 0.05);
+  border-radius: 6px;
+  border-left: 3px solid var(--primary);
+}
+.baglam-label {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--primary);
+  font-weight: 600;
+  display: block;
+  margin-bottom: 4px;
+}
+.sozluk-baglam {
+  font-size: 0.82rem;
+  margin-bottom: 3px;
+  line-height: 1.4;
+}
+.sozluk-baglam em {
+  color: var(--primary-dark);
+  font-weight: 500;
+}
+
 /* ===== Arama ===== */
 #page-arama .container { padding-top: 40px; padding-bottom: 60px; }
 
