@@ -468,10 +468,15 @@ const TR_SUFFIXES = [
   'ı', 'i', 'u', 'ü', 'a', 'e'
 ];
 
-function trStem(word) {
-  for (const suf of TR_SUFFIXES) {
-    if (word.length > suf.length + 2 && word.endsWith(suf)) {
-      return word.slice(0, -suf.length);
+// Dictionary-aware stemming: try shortest suffix first, prefer stems that exist in wordMap
+function findByStems(lower, wordMap) {
+  // Try suffixes shortest-first so we get the longest (most accurate) stem
+  for (let i = TR_SUFFIXES.length - 1; i >= 0; i--) {
+    const suf = TR_SUFFIXES[i];
+    if (lower.length > suf.length + 2 && lower.endsWith(suf)) {
+      const stem = lower.slice(0, -suf.length);
+      const entry = wordMap.get(stem);
+      if (entry) return entry;
     }
   }
   return null;
@@ -488,8 +493,6 @@ function buildSozlukIndex() {
     if (!wordMap.has(k)) wordMap.set(k, entry);
   }
 
-  // Phase 1: Standalone single-word entries get priority
-  const subWordQueue = [];
   window.sozlukData.forEach(entry => {
     const kelime = entry.kelime;
     const parenMatch = kelime.match(/^([^(]+?)(?:\s*\(([^)]+)\))?$/);
@@ -497,38 +500,34 @@ function buildSozlukIndex() {
     const parens = parenMatch && parenMatch[2] ? parenMatch[2].trim() : null;
 
     if (main.includes(' ') || main.includes('-')) {
+      // Terkip: sadece çok kelimeli eşleşme (Pass 1)
       multiWords.push({ phrase: trLower(main), entry });
-      // Queue sub-words for Phase 2 (lower priority)
-      main.split(/[\s\-]+/).forEach(w => { if (w.length >= 4) subWordQueue.push({ w, entry }); });
     } else {
-      // Single-word entry: high priority
+      // Tek kelime: wordMap'e ekle
       addKey(main, entry);
     }
 
-    // Add parenthetical as alternate (high priority for single-word parens)
+    // Parantez içi alternatifler (tek kelimeyse wordMap'e)
     if (parens) {
       parens.split(/[,;\/]/).forEach(p => {
         const pt = p.trim();
-        if (pt.length >= 2 && !pt.includes('aleyhi')) addKey(pt, entry);
+        if (pt.length >= 2 && !pt.includes('aleyhi') && !pt.includes(' ') && !pt.includes('-')) {
+          addKey(pt, entry);
+        }
       });
     }
 
     if (entry.alternatif) {
-      entry.alternatif.forEach(alt => addKey(alt, entry));
+      entry.alternatif.forEach(alt => {
+        if (!alt.includes(' ') && !alt.includes('-')) addKey(alt, entry);
+      });
     }
-  });
-
-  // Phase 2: Sub-words from compounds go into separate fallback map
-  const subWordMap = new Map();
-  subWordQueue.forEach(({ w, entry }) => {
-    const k = trLower(w).trim();
-    if (k.length >= 2 && !subWordMap.has(k)) subWordMap.set(k, entry);
   });
 
   // Sort multi-word phrases longest first for greedy matching
   multiWords.sort((a, b) => b.phrase.length - a.phrase.length);
 
-  window._sozlukIndex = { wordMap, subWordMap, multiWords };
+  window._sozlukIndex = { wordMap, multiWords };
   return window._sozlukIndex;
 }
 
@@ -544,7 +543,7 @@ function makeSpan(matchedText, entry) {
 function highlightWords(text) {
   if (!window.sozlukData || window.sozlukData.length === 0) return escapeHtml(text);
 
-  const { wordMap, subWordMap, multiWords } = buildSozlukIndex();
+  const { wordMap, multiWords } = buildSozlukIndex();
   let html = escapeHtml(text);
 
   // Pass 1: Multi-word phrases (longest first, greedy)
@@ -554,7 +553,8 @@ function highlightWords(text) {
     const pattern = escaped.split(/[\s\-]+/).join('[\\s\\-]+');
     const re = new RegExp('(?<![\\w\u00C0-\u024F])(' + pattern + ')(?![\\w\u00C0-\u024F])', 'gi');
     html = html.replace(re, (match) => {
-      // Don't re-wrap already wrapped text
+      // Don't re-wrap if already inside a span
+      if (match.includes('<span') || match.includes('</span')) return match;
       return makeSpan(match, entry);
     });
   });
@@ -571,8 +571,7 @@ function highlightWords(text) {
       const clean = token.replace(/^[.,;:!?()\[\]"'&;#\d]+|[.,;:!?()\[\]"'&;#\d]+$/g, '');
       if (clean.length < 2) return token;
       const lower = trLower(clean);
-      const stem = trStem(lower);
-      const entry = wordMap.get(lower) || (stem && wordMap.get(stem)) || subWordMap.get(lower) || (stem && subWordMap.get(stem));
+      const entry = wordMap.get(lower) || findByStems(lower, wordMap);
       if (entry) {
         const prefix = token.substring(0, token.indexOf(clean));
         const suffix = token.substring(token.indexOf(clean) + clean.length);
