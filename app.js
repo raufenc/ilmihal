@@ -469,37 +469,80 @@ const tabloKatLabels = {
 };
 const tabloKatOrder = ['itikat','temizlik','namaz','oruc','zekat','hac','aile','tasavvuf','genel'];
 
-function loadTablolar() {
+let tabloActiveKat = 'all';
+let tabloSearchText = '';
+
+function loadTablolar(filterKat, filterText) {
   tablolarLoaded = true;
   const grid = document.getElementById('tablolar-grid');
+  const countEl = document.getElementById('tablo-count');
   if (!window.tablolarData) { grid.innerHTML = '<div class="loading">Tablolar yükleniyor...</div>'; return; }
 
+  const katFilter = filterKat || tabloActiveKat || 'all';
+  const searchText = (filterText !== undefined ? filterText : tabloSearchText || '').toLowerCase();
+  tabloActiveKat = katFilter;
+  tabloSearchText = searchText;
+
+  let allItems = window.tablolarData.filter(t => t.id !== 'konu_haritasi');
+  if (katFilter !== 'all') allItems = allItems.filter(t => t.kategori === katFilter);
+  if (searchText) allItems = allItems.filter(t =>
+    t.baslik.toLowerCase().includes(searchText) ||
+    t.kaynak_metin.toLowerCase().includes(searchText) ||
+    (t.kaynak_madde || '').toLowerCase().includes(searchText)
+  );
+
   let html = '';
-  // Kategoriye göre grupla ama kitap sırası koru (data zaten sayfa_no'ya göre sıralı)
-  for (const kat of tabloKatOrder) {
-    const items = window.tablolarData.filter(t => t.kategori === kat && t.id !== 'konu_haritasi');
-    if (items.length === 0) continue;
-    html += `<div class="tablo-kategori-baslik tablo-kat-${kat}"><span>${tabloKatLabels[kat]}</span><span class="tablo-kat-count">${items.length}</span></div>`;
-    items.forEach(tablo => {
-      html += `
-        <div class="tablo-card tablo-kat-${kat}" id="tablo-${tablo.id}">
-          <div class="tablo-card-header">
-            <h4>${tablo.baslik}</h4>
-            <div class="tablo-card-ref">Kaynak: ${tablo.kaynak_madde} · ${sayfaLink(tablo.sayfa_no, 'Sayfa ' + tablo.sayfa_no)}</div>
-          </div>
-          <div class="tablo-card-body">
-            ${renderTabloBody(tablo)}
-            <div class="tablo-kaynak">
-              <strong>Kitaptan:</strong> ${tablo.kaynak_metin}
-            </div>
-          </div>
-        </div>
-      `;
-    });
+  if (katFilter === 'all') {
+    // Kategoriye göre grupla
+    for (const kat of tabloKatOrder) {
+      const items = allItems.filter(t => t.kategori === kat);
+      if (items.length === 0) continue;
+      html += `<div class="tablo-kategori-baslik tablo-kat-${kat}"><span>${tabloKatLabels[kat]}</span><span class="tablo-kat-count">${items.length}</span></div>`;
+      items.forEach(tablo => { html += renderTabloCard(tablo); });
+    }
+  } else {
+    allItems.forEach(tablo => { html += renderTabloCard(tablo); });
   }
 
-  grid.innerHTML = html;
+  const total = allItems.length;
+  countEl.textContent = searchText ? `${total} tablo bulundu` : `${total} tablo`;
+  grid.innerHTML = html || '<p style="text-align:center;color:var(--text-muted);padding:40px;">Tablo bulunamadı.</p>';
 }
+
+function renderTabloCard(tablo) {
+  const tipIcons = {tablo:'▦', liste:'▤', iki_liste:'⇄', flowchart:'▥', agac:'◈'};
+  const tipLabels = {tablo:'Tablo', liste:'Liste', iki_liste:'Karşılaştırma', flowchart:'Adımlar', agac:'Ağaç'};
+  return `
+    <div class="tablo-card tablo-kat-${tablo.kategori}" id="tablo-${tablo.id}">
+      <div class="tablo-card-header">
+        <h4>${tipIcons[tablo.tip] || '▦'} ${tablo.baslik}</h4>
+        <div class="tablo-card-ref">
+          <span class="tablo-ref-madde">${tablo.kaynak_madde}</span>
+          <span class="tablo-ref-sayfa">${sayfaLink(tablo.sayfa_no, 's. ' + tablo.sayfa_no)}</span>
+        </div>
+      </div>
+      <div class="tablo-card-body">
+        ${renderTabloBody(tablo)}
+        <div class="tablo-kaynak">
+          <strong>Kitaptan:</strong> ${tablo.kaynak_metin}
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+// Tablo filtre event'leri
+document.getElementById('tablo-search')?.addEventListener('input', (e) => {
+  loadTablolar(tabloActiveKat, e.target.value);
+});
+
+document.querySelectorAll('.tablo-filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tablo-filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    loadTablolar(btn.dataset.kat, tabloSearchText);
+  });
+});
 
 function renderTabloBody(tablo) {
   if (tablo.tip === 'tablo' && tablo.veriler) {

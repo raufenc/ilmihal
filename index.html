@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=2">
 </head>
 <body>
   <!-- Header -->
@@ -169,7 +169,22 @@
   <main id="page-tablolar" class="page">
     <div class="container">
       <h2 class="section-title">Tablolar ve Diyagramlar</h2>
-      <p class="section-desc">Her tablo, kitaptaki kaynak sayfa numarası ve orijinal metin referansıyla birlikte sunulmaktadır.</p>
+      <div class="tablolar-toolbar">
+        <input type="text" id="tablo-search" placeholder="Tablo ara...">
+        <div class="tablo-kat-filters">
+          <button class="tablo-filter-btn active" data-kat="all">Tümü</button>
+          <button class="tablo-filter-btn" data-kat="itikat">İman ve İtikat</button>
+          <button class="tablo-filter-btn" data-kat="temizlik">Temizlik</button>
+          <button class="tablo-filter-btn" data-kat="namaz">Namaz</button>
+          <button class="tablo-filter-btn" data-kat="oruc">Oruç</button>
+          <button class="tablo-filter-btn" data-kat="zekat">Zekât</button>
+          <button class="tablo-filter-btn" data-kat="hac">Hac ve Umre</button>
+          <button class="tablo-filter-btn" data-kat="aile">Aile Hukuku</button>
+          <button class="tablo-filter-btn" data-kat="tasavvuf">Tasavvuf</button>
+          <button class="tablo-filter-btn" data-kat="genel">Diğer</button>
+        </div>
+      </div>
+      <div id="tablo-count" class="tablo-count"></div>
       <div id="tablolar-grid" class="tablolar-grid"></div>
     </div>
   </main>
@@ -225,7 +240,7 @@
   <!-- Sözlük Tooltip -->
   <div id="sozluk-tooltip" class="sozluk-tooltip" style="display:none"></div>
 
-  <script src="data.js"></script>
-  <script src="app.js"></script>
+  <script src="data.js?v=2"></script>
+  <script src="app.js?v=2"></script>
 </body>
 </html>

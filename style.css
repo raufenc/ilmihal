@@ -457,6 +457,56 @@ body {
 /* ===== Tablolar ===== */
 #page-tablolar .container { padding-top: 40px; padding-bottom: 60px; }
 
+.tablolar-toolbar {
+  margin-bottom: 16px;
+}
+
+.tablolar-toolbar input {
+  width: 100%;
+  padding: 14px 20px;
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  font-size: 1rem;
+  margin-bottom: 12px;
+  transition: border-color 0.2s;
+}
+
+.tablolar-toolbar input:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+.tablo-kat-filters {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.tablo-filter-btn {
+  padding: 7px 16px;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  background: var(--bg-card);
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: all 0.2s;
+  color: var(--text);
+}
+
+.tablo-filter-btn:hover { border-color: var(--primary); color: var(--primary); }
+.tablo-filter-btn.active {
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary);
+}
+
+.tablo-count {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  margin-bottom: 20px;
+}
+
 .tablolar-grid {
   display: flex;
   flex-direction: column;
@@ -478,16 +528,46 @@ body {
 }
 
 .tablo-card-header {
-  background: linear-gradient(135deg, var(--primary-dark), var(--primary));
-  color: white;
-  padding: 20px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px 24px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg);
 }
 
-.tablo-card-header h4 { font-size: 1.1rem; margin-bottom: 4px; }
+.tablo-card-header h4 {
+  font-size: 1.05rem;
+  color: var(--primary-dark);
+  font-weight: 700;
+  margin: 0;
+  flex: 1;
+}
 
 .tablo-card-ref {
+  display: flex;
+  gap: 8px;
+  align-items: center;
   font-size: 0.8rem;
-  opacity: 0.8;
+  flex-shrink: 0;
+}
+
+.tablo-card-ref .tablo-ref-madde {
+  background: var(--primary);
+  color: white;
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 0.75rem;
+}
+
+.tablo-card-ref .tablo-ref-sayfa {
+  color: var(--text-muted);
+}
+
+.tablo-card-ref .tablo-ref-sayfa .sayfa-link {
+  color: var(--primary);
 }
 
 .tablo-card-body { padding: 20px 24px; }
@@ -878,6 +958,8 @@ body {
   .hero h2 { font-size: 2rem; }
   .hero-stats { gap: 24px; }
   .tablo-card-body table { font-size: 0.8rem; }
+  .tablo-card-header { flex-direction: column; align-items: flex-start; gap: 8px; }
+  .tablo-card-ref { align-self: flex-start; }
 }
 
 @media (max-width: 600px) {
@@ -1034,42 +1116,50 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px 16px;
-  margin: 20px 0 8px 0;
+  padding: 12px 20px;
+  margin: 28px 0 12px 0;
   border-radius: var(--radius-sm);
   font-weight: 700;
-  font-size: 0.95rem;
-  color: white;
+  font-size: 1.05rem;
+  font-family: 'Amiri', serif;
+  letter-spacing: 0.3px;
 }
 .tablo-kategori-baslik:first-child { margin-top: 0; }
 .tablo-kat-count {
-  background: rgba(255,255,255,0.25);
-  padding: 2px 10px;
+  padding: 3px 12px;
   border-radius: 12px;
   font-size: 0.8rem;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
 }
 
-/* Category colors */
-.tablo-kategori-baslik.tablo-kat-itikat { background: #2c6e8a; }
-.tablo-kategori-baslik.tablo-kat-temizlik { background: #3a8f7c; }
-.tablo-kategori-baslik.tablo-kat-namaz { background: #1a6b4e; }
-.tablo-kategori-baslik.tablo-kat-oruc { background: #8a6d2c; }
-.tablo-kategori-baslik.tablo-kat-zekat { background: #6b5a1a; }
-.tablo-kategori-baslik.tablo-kat-hac { background: #7a4a2a; }
-.tablo-kategori-baslik.tablo-kat-aile { background: #6a3a6a; }
-.tablo-kategori-baslik.tablo-kat-tasavvuf { background: #4a5a8a; }
-.tablo-kategori-baslik.tablo-kat-genel { background: #5a5a5a; }
+/* Category colors - açık arka plan, koyu metin */
+.tablo-kategori-baslik.tablo-kat-itikat { background: #e3f0f5; color: #1a4d63; border-left: 4px solid #2c6e8a; }
+.tablo-kategori-baslik.tablo-kat-itikat .tablo-kat-count { background: #2c6e8a; color: white; }
 
-/* Card header color per category */
-.tablo-card.tablo-kat-itikat .tablo-card-header { background: linear-gradient(135deg, #1e5268, #2c6e8a); }
-.tablo-card.tablo-kat-temizlik .tablo-card-header { background: linear-gradient(135deg, #2a6e5e, #3a8f7c); }
-.tablo-card.tablo-kat-namaz .tablo-card-header { background: linear-gradient(135deg, #0e4a35, #1a6b4e); }
-.tablo-card.tablo-kat-oruc .tablo-card-header { background: linear-gradient(135deg, #6a5420, #8a6d2c); }
-.tablo-card.tablo-kat-zekat .tablo-card-header { background: linear-gradient(135deg, #524410, #6b5a1a); }
-.tablo-card.tablo-kat-hac .tablo-card-header { background: linear-gradient(135deg, #5a3518, #7a4a2a); }
-.tablo-card.tablo-kat-aile .tablo-card-header { background: linear-gradient(135deg, #502850, #6a3a6a); }
-.tablo-card.tablo-kat-tasavvuf .tablo-card-header { background: linear-gradient(135deg, #364270, #4a5a8a); }
-.tablo-card.tablo-kat-genel .tablo-card-header { background: linear-gradient(135deg, #404040, #5a5a5a); }
+.tablo-kategori-baslik.tablo-kat-temizlik { background: #e0f2ee; color: #1f5c4d; border-left: 4px solid #3a8f7c; }
+.tablo-kategori-baslik.tablo-kat-temizlik .tablo-kat-count { background: #3a8f7c; color: white; }
+
+.tablo-kategori-baslik.tablo-kat-namaz { background: #e0ede7; color: #0e4a35; border-left: 4px solid #1a6b4e; }
+.tablo-kategori-baslik.tablo-kat-namaz .tablo-kat-count { background: #1a6b4e; color: white; }
+
+.tablo-kategori-baslik.tablo-kat-oruc { background: #f5efe0; color: #5a4818; border-left: 4px solid #8a6d2c; }
+.tablo-kategori-baslik.tablo-kat-oruc .tablo-kat-count { background: #8a6d2c; color: white; }
+
+.tablo-kategori-baslik.tablo-kat-zekat { background: #f2ede0; color: #4a3f0f; border-left: 4px solid #6b5a1a; }
+.tablo-kategori-baslik.tablo-kat-zekat .tablo-kat-count { background: #6b5a1a; color: white; }
+
+.tablo-kategori-baslik.tablo-kat-hac { background: #f3ebe4; color: #4a2e18; border-left: 4px solid #7a4a2a; }
+.tablo-kategori-baslik.tablo-kat-hac .tablo-kat-count { background: #7a4a2a; color: white; }
+
+.tablo-kategori-baslik.tablo-kat-aile { background: #f3e8f3; color: #4a2250; border-left: 4px solid #6a3a6a; }
+.tablo-kategori-baslik.tablo-kat-aile .tablo-kat-count { background: #6a3a6a; color: white; }
+
+.tablo-kategori-baslik.tablo-kat-tasavvuf { background: #e8ebf3; color: #2e3860; border-left: 4px solid #4a5a8a; }
+.tablo-kategori-baslik.tablo-kat-tasavvuf .tablo-kat-count { background: #4a5a8a; color: white; }
+
+.tablo-kategori-baslik.tablo-kat-genel { background: #ebebeb; color: #3a3a3a; border-left: 4px solid #5a5a5a; }
+.tablo-kategori-baslik.tablo-kat-genel .tablo-kat-count { background: #5a5a5a; color: white; }
 
 /* Card border-left accent per category */
 .tablo-card.tablo-kat-itikat { border-left: 4px solid #2c6e8a; }
