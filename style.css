@@ -907,6 +907,15 @@ body {
   color: #ffd54f;
 }
 
+.sozluk-misal {
+  font-size: 0.85rem;
+  color: var(--text-light);
+  line-height: 1.6;
+  margin-top: 6px;
+  padding-top: 6px;
+  border-top: 1px dashed var(--border);
+}
+
 /* Sözlük sayfası - alternatif ve bağlam */
 .sozluk-alt {
   font-size: 0.78rem;
@@ -1273,8 +1282,16 @@ body {
   --shadow-lg: 0 8px 32px rgba(0,0,0,0.4);
 }
 :root.dark .site-header {
-  background: linear-gradient(135deg, #1a1a1f, #24242b);
-  box-shadow: 0 2px 20px rgba(0,0,0,0.4);
+  background: linear-gradient(135deg, #1e3a2e, #2a5040);
+  box-shadow: 0 2px 20px rgba(0,0,0,0.5);
+}
+:root.dark .nav-btn { color: rgba(255,255,255,0.8); }
+:root.dark .nav-btn:hover { background: rgba(255,255,255,0.15); color: white; }
+:root.dark .nav-btn.active { background: rgba(255,255,255,0.2); color: white; }
+@media (max-width: 600px) {
+  :root.dark .main-nav.open {
+    background: #1e3a2e;
+  }
 }
 :root.dark .hero {
   background: linear-gradient(160deg, #1a1a1f 0%, #24242b 50%, #2a2a35 100%);
@@ -1290,6 +1307,11 @@ body {
 :root.dark .check-yes { background: #1a3a1a; color: #4ec98e; }
 :root.dark .check-no { background: #3a1a1a; color: #e85555; }
 :root.dark .sozluk-osmanli { color: var(--gold); }
+:root.dark .sozluk-kelime { color: #4ec98e; }
+:root.dark .sozluk-baglam em { color: #4ec98e; }
+:root.dark .kat-btn { background: var(--bg-card); color: var(--text-light); border-color: var(--border); }
+:root.dark .kat-btn:hover { border-color: var(--primary); color: var(--primary); }
+:root.dark .kat-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
 :root.dark .arama-result mark {
   background: rgba(212,182,92,0.3);
   color: var(--text);

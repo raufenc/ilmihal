@@ -701,6 +701,7 @@ function loadSozluk(filterKat, filterText) {
           ${osmanli}
         </div>
         <div class="sozluk-anlam">${s.anlam}</div>
+        ${s.misal ? `<div class="sozluk-misal">${s.misal}</div>` : ''}
         ${altHtml}
         ${baglamHtml}
         <span class="sozluk-kat kat-${s.kategori}">${katLabel}</span>
