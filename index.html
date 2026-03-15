@@ -14,15 +14,16 @@
   <header class="site-header">
     <div class="container">
       <div class="header-content">
-        <div class="logo">
+        <a class="logo" href="#anasayfa" onclick="navigateTo('anasayfa')" style="text-decoration:none;color:inherit;">
           <h1 class="site-title">Se'âdet-i Ebediyye</h1>
           <p class="site-subtitle">İnteraktif İlmihâl Rehberi</p>
-        </div>
+        </a>
         <nav class="main-nav">
           <button class="nav-btn active" data-page="anasayfa">Ana Sayfa</button>
           <button class="nav-btn" data-page="icerik">İçindekiler</button>
           <button class="nav-btn" data-page="tablolar">Tablolar</button>
           <button class="nav-btn" data-page="sahislar">Şahıslar</button>
+          <a class="nav-btn nav-btn-link" href="silsile-atlasi/" title="Silsile-i Aliyye Haritası">Silsile Atlası</a>
           <button class="nav-btn" data-page="sozluk">Dini Lügat</button>
           <button class="nav-btn" data-page="arama">Arama</button>
           <button class="nav-btn" data-page="hakkinda">Hakkında</button>
@@ -94,6 +95,23 @@
           <button class="konu-btn" onclick="filterByCategory('ahlak')"><span class="konu-icon">&#10047;</span><span>Ahlâk</span></button>
           <button class="konu-btn" onclick="filterByCategory('cenaze')"><span class="konu-icon">&#9883;</span><span>Cenaze ve Miras</span></button>
         </div>
+      </div>
+    </section>
+
+    <section class="silsile-promo">
+      <div class="container">
+        <a href="silsile-atlasi/" class="silsile-card">
+          <div class="silsile-card-content">
+            <span class="silsile-badge">Yeni</span>
+            <h3>Silsile-i Aliyye Atlası</h3>
+            <p>Hazret-i Muhammed Mustafâ'dan Hüseyin Hilmi Işık Efendi'ye uzanan 37 halkayı interaktif haritada keşfedin.</p>
+            <span class="silsile-cta">Haritayı Aç &rarr;</span>
+          </div>
+          <div class="silsile-card-visual">
+            <span class="silsile-num">37</span>
+            <span class="silsile-label">Halka</span>
+          </div>
+        </a>
       </div>
     </section>
   </main>
@@ -237,6 +255,9 @@
         <h3>Her Şey Birbirine Bağlı</h3>
         <p>Bu sitenin asıl faydası, her şeyin birbirine bağlı olmasıdır. Bir maddeyi açtığınızda ilgili diğer maddeleri, o maddede geçen şahısları, konuyla ilgili tabloları ve metindeki terimlerin anlamlarını hep bir arada görürsünüz. Herhangi bir sayfanın bağlantısını birine gönderebilirsiniz — doğrudan o madde, o şahıs veya o arama sonucu açılır.</p>
 
+        <h3>Silsile-i Aliyye Atlası</h3>
+        <p>Nakşibendiyye yolunun altın silsilesi, Hazret-i Muhammed Mustafâ (sallallahu aleyhi ve sellem)'den Hüseyin Hilmi Işık Efendi'ye uzanan 37 halkayı <a href="silsile-atlasi/" class="hakkinda-link">interaktif bir haritada</a> keşfedebilirsiniz. Her âlimin kabr-i şerîfinin bulunduğu şehir harita üzerinde işaretlenmiştir; üzerine tıklayınca biyografisi, yaşadığı asır ve silsiledeki yeri görünür. Medîne-i Münevvere'den Buhara'ya, Serhend'den Hakkâri'ye, Ankara'dan İstanbul'a uzanan bu kutlu yolculuğu coğrafyası ile birlikte takip edebilirsiniz.</p>
+
         <h3>Ne Yok Burada</h3>
         <p>Yorum yok, tefsir yok, kendi aklımızdan bir şey yok. Kitaba bir harf eklenmedi, bir harf çıkarılmadı. Gece modu, telefon uyumluluğu gibi kolaylıklar dışında yapılan tek şey, kitaptaki bilgiyi olduğu gibi sunmak ve ulaşılabilir kılmaktır.</p>
 
@@ -250,7 +271,11 @@
   <!-- Footer -->
   <footer class="site-footer">
     <div class="container">
-      <p><a href="#hakkinda" style="color:rgba(255,255,255,0.9);text-decoration:none;font-size:1.1rem;">Hakkında</a></p>
+      <p>
+        <a href="#hakkinda" style="color:rgba(255,255,255,0.9);text-decoration:none;font-size:1.1rem;">Hakkında</a>
+        <span style="color:rgba(255,255,255,0.3);margin:0 12px;">·</span>
+        <a href="silsile-atlasi/" style="color:rgba(255,255,255,0.9);text-decoration:none;font-size:1.1rem;">Silsile Atlası</a>
+      </p>
     </div>
   </footer>
 
