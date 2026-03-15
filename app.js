@@ -26,12 +26,6 @@ function handleRoute() {
     }
   }
 
-  if (route === 'kavram' && parts[1]) {
-    navigateTo('kavramlar', true);
-    setTimeout(() => openKavram(decodeURIComponent(parts[1]), true), 150);
-    return;
-  }
-
   if (route === 'sahis' && parts[1]) {
     navigateTo('sahislar', true);
     setTimeout(() => openSahis(decodeURIComponent(parts[1]), true), 150);
@@ -46,7 +40,7 @@ function handleRoute() {
     return;
   }
 
-  const validPages = ['anasayfa','icerik','tablolar','sozluk','arama','kavramlar','sahislar'];
+  const validPages = ['anasayfa','icerik','tablolar','sozluk','arama','sahislar'];
   if (validPages.includes(route)) {
     navigateTo(route, true);
   } else {
@@ -170,7 +164,6 @@ function navigateTo(page, fromRoute) {
   if (page === 'icerik' && !icerikLoaded) loadIcerik();
   if (page === 'sozluk' && !sozlukLoaded) loadSozluk();
   if (page === 'tablolar' && !tablolarLoaded) loadTablolar();
-  if (page === 'kavramlar' && !kavramlarLoaded) loadKavramlar();
   if (page === 'sahislar' && !sahislarLoaded) loadSahislar();
 }
 
@@ -436,9 +429,7 @@ function closeMadde() {
 
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') {
-    if (document.getElementById('kavram-detay')?.style.display === 'flex') {
-      closeKavram();
-    } else if (document.getElementById('sahis-detay')?.style.display === 'flex') {
+    if (document.getElementById('sahis-detay')?.style.display === 'flex') {
       closeSahis();
     } else {
       closeMadde();
@@ -451,41 +442,135 @@ document.getElementById('madde-detay')?.addEventListener('click', e => {
 });
 
 // ===== ZOR KELİME HIGHLIGHT =====
-function highlightWords(text) {
-  if (!window.sozlukData || window.sozlukData.length === 0) return escapeHtml(text);
+// Turkish-aware lowercase: fix İ→i̇ problem, normalize combining chars
+function trLower(s) {
+  return s.replace(/İ/g, 'i').replace(/I/g, 'ı').toLowerCase().replace(/\u0307/g, '');
+}
 
-  const sozlukMap = new Map();
-  const altMap = new Map();
+// Strip common Turkish suffixes to find base form
+const TR_SUFFIXES = [
+  // Long suffixes first
+  'larından', 'lerinden', 'larının', 'lerinin', 'larında', 'lerinde',
+  'larına', 'lerine', 'ların', 'lerin', 'ları', 'leri',
+  'ından', 'inden', 'ünden', 'undan',
+  'ının', 'inin', 'ünün', 'unun',
+  'ında', 'inde', 'ünde', 'unde',
+  'ına', 'ine', 'üne', 'una',
+  'daki', 'deki', 'taki', 'teki',
+  'lar', 'ler',
+  'dan', 'den', 'tan', 'ten',
+  'nın', 'nin', 'nün', 'nun',
+  'dır', 'dir', 'dur', 'dür', 'tır', 'tir', 'tur', 'tür',
+  'ın', 'in', 'ün', 'un',
+  'da', 'de', 'ta', 'te',
+  'ya', 'ye', 'na', 'ne',
+  'nı', 'ni', 'nu', 'nü',
+  'ı', 'i', 'u', 'ü', 'a', 'e'
+];
+
+function trStem(word) {
+  for (const suf of TR_SUFFIXES) {
+    if (word.length > suf.length + 2 && word.endsWith(suf)) {
+      return word.slice(0, -suf.length);
+    }
+  }
+  return null;
+}
+
+function buildSozlukIndex() {
+  if (window._sozlukIndex) return window._sozlukIndex;
+  const wordMap = new Map();
+  const multiWords = [];
+
+  function addKey(key, entry) {
+    const k = trLower(key).trim();
+    if (k.length < 2) return;
+    if (!wordMap.has(k)) wordMap.set(k, entry);
+  }
+
   window.sozlukData.forEach(entry => {
-    sozlukMap.set(entry.kelime.toLowerCase(), entry);
-    if (entry.alternatif) {
-      entry.alternatif.forEach(alt => {
-        altMap.set(alt.toLowerCase(), entry);
+    const kelime = entry.kelime;
+    // "NAMAZ (Nemâz)" -> main="NAMAZ", parens="Nemâz"
+    const parenMatch = kelime.match(/^([^(]+?)(?:\s*\(([^)]+)\))?$/);
+    const main = parenMatch ? parenMatch[1].trim() : kelime.trim();
+    const parens = parenMatch && parenMatch[2] ? parenMatch[2].trim() : null;
+
+    // Add main word(s)
+    if (main.includes(' ') || main.includes('-')) {
+      multiWords.push({ phrase: trLower(main), entry });
+      // Also add each meaningful sub-word (4+ chars) for single-word matching
+      main.split(/[\s\-]+/).forEach(w => { if (w.length >= 4) addKey(w, entry); });
+    }
+    addKey(main, entry);
+
+    // Add parenthetical as alternate
+    if (parens) {
+      parens.split(/[,;\/]/).forEach(p => {
+        const pt = p.trim();
+        if (pt.length >= 2 && !pt.includes('aleyhi')) addKey(pt, entry);
       });
+    }
+
+    // Add explicit alternates
+    if (entry.alternatif) {
+      entry.alternatif.forEach(alt => addKey(alt, entry));
     }
   });
 
-  const escaped = escapeHtml(text);
-  const parts = escaped.split(/(\s+)/);
+  // Sort multi-word phrases longest first for greedy matching
+  multiWords.sort((a, b) => b.phrase.length - a.phrase.length);
 
+  window._sozlukIndex = { wordMap, multiWords };
+  return window._sozlukIndex;
+}
+
+function makeSpan(matchedText, entry) {
+  const safeAnlam = entry.anlam.replace(/["\u201C\u201D]/g, '&quot;').replace(/['\u2018\u2019]/g, '&#39;');
+  const osmAttr = entry.osmanli ? ` data-osmanli="${entry.osmanli}"` : '';
+  const baglamAttr = entry.baglamlar ? ` data-baglamlar="${escapeHtml(JSON.stringify(entry.baglamlar))}"` : '';
+  const altAttr = entry.alternatif ? ` data-alternatif="${entry.alternatif.join(', ')}"` : '';
+  const kelimeAttr = ` data-kelime="${entry.kelime}"`;
+  return `<span class="zor-kelime" data-anlam="${safeAnlam}" data-kat="${entry.kategori}"${osmAttr}${baglamAttr}${altAttr}${kelimeAttr}>${matchedText}</span>`;
+}
+
+function highlightWords(text) {
+  if (!window.sozlukData || window.sozlukData.length === 0) return escapeHtml(text);
+
+  const { wordMap, multiWords } = buildSozlukIndex();
+  let html = escapeHtml(text);
+
+  // Pass 1: Multi-word phrases (longest first, greedy)
+  multiWords.forEach(({ phrase, entry }) => {
+    const escaped = phrase.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    // Match phrase with flexible separators (space, dash, &#39; etc.)
+    const pattern = escaped.split(/[\s\-]+/).join('[\\s\\-]+');
+    const re = new RegExp('(?<![\\w\u00C0-\u024F])(' + pattern + ')(?![\\w\u00C0-\u024F])', 'gi');
+    html = html.replace(re, (match) => {
+      // Don't re-wrap already wrapped text
+      return makeSpan(match, entry);
+    });
+  });
+
+  // Pass 2: Single words
+  const parts = html.split(/(<span[^>]*class="zor-kelime"[^>]*>.*?<\/span>)/g);
   const result = parts.map(part => {
-    if (/^\s+$/.test(part)) return part;
+    // Skip already-highlighted spans
+    if (part.startsWith('<span')) return part;
 
-    const clean = part.replace(/^[.,;:!?()\[\]"']+|[.,;:!?()\[\]"']+$/g, '');
-    const lower = clean.toLowerCase();
-
-    let entry = sozlukMap.get(lower) || altMap.get(lower);
-    if (entry) {
-      const prefix = part.substring(0, part.indexOf(clean));
-      const suffix = part.substring(part.indexOf(clean) + clean.length);
-      const safeAnlam = entry.anlam.replace(/["\u201C\u201D]/g, '&quot;').replace(/['\u2018\u2019]/g, '&#39;');
-      const osmAttr = entry.osmanli ? ` data-osmanli="${entry.osmanli}"` : '';
-      const baglamAttr = entry.baglamlar ? ` data-baglamlar="${escapeHtml(JSON.stringify(entry.baglamlar))}"` : '';
-      const altAttr = entry.alternatif ? ` data-alternatif="${entry.alternatif.join(', ')}"` : '';
-      const kelimeAttr = ` data-kelime="${entry.kelime}"`;
-      return `${prefix}<span class="zor-kelime" data-anlam="${safeAnlam}" data-kat="${entry.kategori}"${osmAttr}${baglamAttr}${altAttr}${kelimeAttr}>${clean}</span>${suffix}`;
-    }
-    return part;
+    // Split into words and whitespace
+    return part.split(/(\s+|<[^>]+>)/).map(token => {
+      if (/^\s+$/.test(token) || token.startsWith('<')) return token;
+      const clean = token.replace(/^[.,;:!?()\[\]"'&;#\d]+|[.,;:!?()\[\]"'&;#\d]+$/g, '');
+      if (clean.length < 2) return token;
+      const lower = trLower(clean);
+      const entry = wordMap.get(lower) || (trStem(lower) && wordMap.get(trStem(lower)));
+      if (entry) {
+        const prefix = token.substring(0, token.indexOf(clean));
+        const suffix = token.substring(token.indexOf(clean) + clean.length);
+        return prefix + makeSpan(clean, entry) + suffix;
+      }
+      return token;
+    }).join('');
   });
 
   return result.join('');
@@ -518,12 +603,6 @@ function showTooltip(e) {
       });
       html += '</div>';
     } catch(e) {}
-  }
-
-  // Kavram sayfasına link
-  if (el.dataset.kelime) {
-    const slug = slugify(el.dataset.kelime);
-    html += `<div class="tooltip-link"><a href="#kavram/${slug}" onclick="event.stopPropagation()">Kavram sayfas\u0131na git \u2192</a></div>`;
   }
 
   tooltip.innerHTML = html;
@@ -597,9 +676,8 @@ function loadSozluk(filterKat, filterText) {
       });
       baglamHtml += '</div>';
     }
-    const slug = slugify(s.kelime);
     html += `
-      <div class="sozluk-item" onclick="navigateTo('kavramlar');setTimeout(()=>openKavram('${slug}'),150)" style="cursor:pointer">
+      <div class="sozluk-item">
         <div class="sozluk-kelime-row">
           <div class="sozluk-kelime">${s.kelime}</div>
           ${osmanli}
@@ -627,185 +705,6 @@ document.querySelectorAll('.kat-btn').forEach(btn => {
     btn.classList.add('active');
     loadSozluk(btn.dataset.kat);
   });
-});
-
-// ===== KAVRAMLAR (Concept Pages) =====
-let kavramlarLoaded = false;
-
-function loadKavramlar() {
-  kavramlarLoaded = true;
-  const list = document.getElementById('kavramlar-list');
-  const countEl = document.getElementById('kavram-count');
-  if (!window.sozlukData) { list.innerHTML = '<div class="loading">Kavramlar y\u00fckleniyor...</div>'; return; }
-
-  const searchText = (document.getElementById('kavram-search')?.value || '').toLowerCase();
-  const katFilter = document.querySelector('.kavram-kat-btn.active')?.dataset.kat || 'all';
-
-  let filtered = window.sozlukData;
-  if (katFilter !== 'all') filtered = filtered.filter(s => s.kategori === katFilter);
-  if (searchText) filtered = filtered.filter(s =>
-    s.kelime.toLowerCase().includes(searchText) || s.anlam.toLowerCase().includes(searchText)
-  );
-
-  filtered.sort((a, b) => a.kelime.localeCompare(b.kelime, 'tr'));
-
-  const katLabels = {
-    akaid: 'Ak\u00e2id/Kel\u00e2m', ibadet: '\u0130badet/Taharet', tasavvuf: 'Tasavvuf/Ahl\u00e2k',
-    fikih: 'F\u0131k\u0131h/Us\u00fbl', muamelat: 'Mu\u00e2mel\u00e2t/Ticaret', siyer: 'Siyer/Tarih',
-    hadis: 'Hadis/S\u00fcnnet', kuran: "Kur'an/Tefsir", mezhepler: 'Mezhepler/F\u0131rkalar',
-    aile: 'Aile/Nik\u00e2h', dil: 'Dil/Edebiyat', miras: 'Miras/Fer\u00e2iz', osmanli: 'Osmanl\u0131/Kurumlar'
-  };
-
-  let html = '';
-  filtered.forEach(s => {
-    const slug = slugify(s.kelime);
-    const katLabel = katLabels[s.kategori] || s.kategori;
-    const osmanli = s.osmanli ? `<span class="kavram-osmanli">${s.osmanli}</span>` : '';
-    html += `
-      <div class="kavram-card" onclick="openKavram('${slug}')">
-        <div class="kavram-card-header">
-          <span class="kavram-card-kelime">${s.kelime}</span>
-          ${osmanli}
-        </div>
-        <div class="kavram-card-anlam">${s.anlam.substring(0, 120)}${s.anlam.length > 120 ? '...' : ''}</div>
-        <span class="sozluk-kat kat-${s.kategori}">${katLabel}</span>
-      </div>
-    `;
-  });
-
-  list.innerHTML = html || '<p style="text-align:center;color:var(--text-muted);padding:40px;">Kavram bulunamad\u0131.</p>';
-  countEl.textContent = `${filtered.length} kavram`;
-}
-
-document.getElementById('kavram-search')?.addEventListener('input', () => loadKavramlar());
-document.querySelectorAll('.kavram-kat-btn')?.forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.kavram-kat-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    loadKavramlar();
-  });
-});
-
-async function openKavram(slug, fromRoute) {
-  if (!window.sozlukData) return;
-
-  const entry = window.sozlukData.find(s => slugify(s.kelime) === slug);
-  if (!entry) return;
-
-  if (!fromRoute) updateHash(`kavram/${slug}`);
-
-  // Find maddes where this word appears
-  await Promise.all([loadKisimTexts(1), loadKisimTexts(2), loadKisimTexts(3)]);
-
-  const gectigiMaddeler = [];
-  const searchTerms = [entry.kelime.toLowerCase()];
-  if (entry.alternatif) entry.alternatif.forEach(a => searchTerms.push(a.toLowerCase()));
-
-  window.maddelerData?.forEach(m => {
-    const fullText = (kisimTextsCache[m.kisim]?.[String(m.madde_no)] || m.metin || '').toLowerCase();
-    const baslik = (m.baslik || '').toLowerCase();
-    for (const term of searchTerms) {
-      if (fullText.includes(term) || baslik.includes(term)) {
-        gectigiMaddeler.push(m);
-        break;
-      }
-    }
-  });
-
-  // Find related tables from maddes where this kavram appears
-  const iliskiliTablolar = [];
-  if (window.tablolarData) {
-    gectigiMaddeler.forEach(m => {
-      const ref = `K${m.kisim}/M${m.madde_no}`;
-      window.tablolarData.forEach(t => {
-        if (t.kaynak_madde === ref && !iliskiliTablolar.find(x => x.id === t.id)) {
-          iliskiliTablolar.push(t);
-        }
-      });
-    });
-  }
-
-  const katLabels = {
-    akaid: 'Ak\u00e2id/Kel\u00e2m', ibadet: '\u0130badet/Taharet', tasavvuf: 'Tasavvuf/Ahl\u00e2k',
-    fikih: 'F\u0131k\u0131h/Us\u00fbl', muamelat: 'Mu\u00e2mel\u00e2t/Ticaret', siyer: 'Siyer/Tarih',
-    hadis: 'Hadis/S\u00fcnnet', kuran: "Kur'an/Tefsir", mezhepler: 'Mezhepler/F\u0131rkalar',
-    aile: 'Aile/Nik\u00e2h', dil: 'Dil/Edebiyat', miras: 'Miras/Fer\u00e2iz', osmanli: 'Osmanl\u0131/Kurumlar'
-  };
-  const kisimLabels = { 1: 'I', 2: 'II', 3: 'III' };
-
-  const body = document.getElementById('kavram-body');
-  document.getElementById('kavram-detay').style.display = 'flex';
-  document.body.style.overflow = 'hidden';
-
-  let html = `
-    <div class="kavram-detail-header">
-      <h3>${entry.kelime}</h3>
-      ${entry.osmanli ? `<div class="kavram-detail-osmanli">${entry.osmanli}</div>` : ''}
-      <span class="sozluk-kat kat-${entry.kategori}">${katLabels[entry.kategori] || entry.kategori}</span>
-    </div>
-    <div class="kavram-detail-anlam">
-      <h4>Tan\u0131m</h4>
-      <p>${entry.anlam}</p>
-    </div>
-  `;
-
-  if (entry.alternatif && entry.alternatif.length > 0) {
-    html += `<div class="kavram-detail-section">
-      <h4>Di\u011fer Yaz\u0131mlar</h4>
-      <div class="kavram-alt-list">${entry.alternatif.map(a => `<span class="kavram-alt-tag">${a}</span>`).join('')}</div>
-    </div>`;
-  }
-
-  if (entry.baglamlar && entry.baglamlar.length > 0) {
-    html += `<div class="kavram-detail-section">
-      <h4>Ba\u011flama G\u00f6re Anlamlar</h4>
-      <div class="kavram-baglamlar">
-        ${entry.baglamlar.map(b => `<div class="kavram-baglam"><strong>${b.baglam}:</strong> ${b.anlam}</div>`).join('')}
-      </div>
-    </div>`;
-  }
-
-  if (gectigiMaddeler.length > 0) {
-    html += `<div class="kavram-detail-section">
-      <h4>Ge\u00e7ti\u011fi Maddeler <span class="kavram-count-badge">${gectigiMaddeler.length}</span></h4>
-      <div class="kavram-madde-list">
-        ${gectigiMaddeler.slice(0, 20).map(m => `
-          <a href="#" onclick="closeKavram();openMadde(${m.kisim},${m.madde_no});return false" class="kavram-madde-link">
-            <span class="rm-badge">${kisimLabels[m.kisim]}-${m.madde_no}</span>
-            <span>${m.baslik}</span>
-          </a>
-        `).join('')}
-        ${gectigiMaddeler.length > 20 ? `<p class="kavram-more">ve ${gectigiMaddeler.length - 20} madde daha...</p>` : ''}
-      </div>
-    </div>`;
-  }
-
-  if (iliskiliTablolar.length > 0) {
-    const tipIcons = {tablo:'\u25A6', liste:'\u25A4', iki_liste:'\u21C4', flowchart:'\u25A5', agac:'\u25C8'};
-    html += `<div class="kavram-detail-section">
-      <h4>\u0130lgili Tablolar <span class="kavram-count-badge">${iliskiliTablolar.length}</span></h4>
-      <div class="kavram-madde-list">
-        ${iliskiliTablolar.map(t => `
-          <a href="#" onclick="closeKavram();navigateTo('tablolar');setTimeout(()=>{document.getElementById('tablo-${t.id}')?.scrollIntoView({behavior:'smooth'})},300);return false" class="kavram-madde-link">
-            <span class="rm-badge">${tipIcons[t.tip] || '\u25A6'}</span>
-            <span>${t.baslik}</span>
-          </a>
-        `).join('')}
-      </div>
-    </div>`;
-  }
-
-  body.innerHTML = html;
-}
-
-function closeKavram() {
-  document.getElementById('kavram-detay').style.display = 'none';
-  document.body.style.overflow = '';
-  updateHash('kavramlar');
-}
-
-document.getElementById('kavram-detay')?.addEventListener('click', e => {
-  if (e.target === document.getElementById('kavram-detay')) closeKavram();
 });
 
 // ===== ŞAHİSLAR =====

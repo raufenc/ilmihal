@@ -22,7 +22,6 @@
           <button class="nav-btn active" data-page="anasayfa">Ana Sayfa</button>
           <button class="nav-btn" data-page="icerik">İçindekiler</button>
           <button class="nav-btn" data-page="tablolar">Tablolar</button>
-          <button class="nav-btn" data-page="kavramlar">Kavramlar</button>
           <button class="nav-btn" data-page="sahislar">Şahıslar</button>
           <button class="nav-btn" data-page="sozluk">Dini Lügat</button>
           <button class="nav-btn" data-page="arama">Arama</button>
@@ -52,7 +51,7 @@
           </div>
           <div class="hero-actions">
             <button class="btn btn-primary" onclick="navigateTo('icerik')">İçindekilere Git</button>
-            <button class="btn btn-secondary" onclick="navigateTo('kavramlar')">Kavramları Keşfet</button>
+            <button class="btn btn-secondary" onclick="navigateTo('tablolar')">Tabloları İncele</button>
           </div>
         </div>
       </div>
@@ -127,43 +126,6 @@
     <div class="madde-overlay-content">
       <button class="madde-close" onclick="closeMadde()">&times;</button>
       <div id="madde-body"></div>
-    </div>
-  </div>
-
-  <!-- Kavramlar -->
-  <main id="page-kavramlar" class="page">
-    <div class="container">
-      <h2 class="section-title">Kavramlar</h2>
-      <p class="section-desc">4.435 dini terim ve kavram. Bir kavrama tıklayarak geçtiği maddeleri ve ilişkili terimleri görün.</p>
-      <div class="kavram-filters">
-        <input type="text" id="kavram-search" placeholder="Kavram ara...">
-        <div class="kavram-kat-buttons">
-          <button class="kavram-kat-btn active" data-kat="all">Tümü</button>
-          <button class="kavram-kat-btn" data-kat="akaid">Akâid</button>
-          <button class="kavram-kat-btn" data-kat="ibadet">İbadet</button>
-          <button class="kavram-kat-btn" data-kat="tasavvuf">Tasavvuf</button>
-          <button class="kavram-kat-btn" data-kat="fikih">Fıkıh</button>
-          <button class="kavram-kat-btn" data-kat="muamelat">Muâmelât</button>
-          <button class="kavram-kat-btn" data-kat="siyer">Siyer</button>
-          <button class="kavram-kat-btn" data-kat="hadis">Hadis</button>
-          <button class="kavram-kat-btn" data-kat="kuran">Kur'an</button>
-          <button class="kavram-kat-btn" data-kat="mezhepler">Mezhepler</button>
-          <button class="kavram-kat-btn" data-kat="aile">Aile</button>
-          <button class="kavram-kat-btn" data-kat="dil">Dil</button>
-          <button class="kavram-kat-btn" data-kat="miras">Miras</button>
-          <button class="kavram-kat-btn" data-kat="osmanli">Osmanlı</button>
-        </div>
-      </div>
-      <div id="kavram-count" class="kavram-count"></div>
-      <div id="kavramlar-list" class="kavramlar-grid"></div>
-    </div>
-  </main>
-
-  <!-- Kavram Detay -->
-  <div id="kavram-detay" class="madde-overlay" style="display:none">
-    <div class="madde-overlay-content">
-      <button class="madde-close" onclick="closeKavram()">&times;</button>
-      <div id="kavram-body"></div>
     </div>
   </div>
 
