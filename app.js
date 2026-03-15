@@ -493,6 +493,8 @@ function buildSozlukIndex() {
     if (!wordMap.has(k)) wordMap.set(k, entry);
   }
 
+  // Phase 1: Bağımsız tek-kelime girişleri (en yüksek öncelik)
+  const altQueue = [];
   window.sozlukData.forEach(entry => {
     const kelime = entry.kelime;
     const parenMatch = kelime.match(/^([^(]+?)(?:\s*\(([^)]+)\))?$/);
@@ -503,26 +505,35 @@ function buildSozlukIndex() {
       // Terkip: sadece çok kelimeli eşleşme (Pass 1)
       multiWords.push({ phrase: trLower(main), entry });
     } else {
-      // Tek kelime: wordMap'e ekle
+      // Bağımsız tek kelime: en yüksek öncelik
       addKey(main, entry);
     }
 
-    // Parantez içi alternatifler (tek kelimeyse wordMap'e)
-    if (parens) {
-      parens.split(/[,;\/]/).forEach(p => {
-        const pt = p.trim();
-        if (pt.length >= 2 && !pt.includes('aleyhi') && !pt.includes(' ') && !pt.includes('-')) {
-          addKey(pt, entry);
-        }
-      });
-    }
-
-    if (entry.alternatif) {
-      entry.alternatif.forEach(alt => {
-        if (!alt.includes(' ') && !alt.includes('-')) addKey(alt, entry);
-      });
+    // Parantez ve alternatifler Phase 2'ye kuyruğa al
+    // Sadece bağımsız tek-kelime girişlerinin alternatifleri eklenir
+    // Terkip girişlerinin alternatifleri wordMap'e eklenmez (çünkü "kurban"→"Kurban Bayramı" gibi hatalar oluşur)
+    const isCompoundEntry = main.includes(' ') || main.includes('-');
+    if (!isCompoundEntry) {
+      if (parens) {
+        parens.split(/[,;\/]/).forEach(p => {
+          const pt = p.trim();
+          if (pt.length >= 2 && !pt.includes('aleyhi') && !pt.includes(' ') && !pt.includes('-')) {
+            altQueue.push({ key: pt, entry });
+          }
+        });
+      }
+      if (entry.alternatif) {
+        entry.alternatif.forEach(alt => {
+          if (!alt.includes(' ') && !alt.includes('-')) {
+            altQueue.push({ key: alt, entry });
+          }
+        });
+      }
     }
   });
+
+  // Phase 2: Alternatifler — sadece boşlukları doldur (bağımsız girişleri ezme)
+  altQueue.forEach(({ key, entry }) => addKey(key, entry));
 
   // Sort multi-word phrases longest first for greedy matching
   multiWords.sort((a, b) => b.phrase.length - a.phrase.length);
