@@ -488,22 +488,24 @@ function buildSozlukIndex() {
     if (!wordMap.has(k)) wordMap.set(k, entry);
   }
 
+  // Phase 1: Standalone single-word entries get priority
+  const subWordQueue = [];
   window.sozlukData.forEach(entry => {
     const kelime = entry.kelime;
-    // "NAMAZ (Nemâz)" -> main="NAMAZ", parens="Nemâz"
     const parenMatch = kelime.match(/^([^(]+?)(?:\s*\(([^)]+)\))?$/);
     const main = parenMatch ? parenMatch[1].trim() : kelime.trim();
     const parens = parenMatch && parenMatch[2] ? parenMatch[2].trim() : null;
 
-    // Add main word(s)
     if (main.includes(' ') || main.includes('-')) {
       multiWords.push({ phrase: trLower(main), entry });
-      // Also add each meaningful sub-word (4+ chars) for single-word matching
-      main.split(/[\s\-]+/).forEach(w => { if (w.length >= 4) addKey(w, entry); });
+      // Queue sub-words for Phase 2 (lower priority)
+      main.split(/[\s\-]+/).forEach(w => { if (w.length >= 4) subWordQueue.push({ w, entry }); });
+    } else {
+      // Single-word entry: high priority
+      addKey(main, entry);
     }
-    addKey(main, entry);
 
-    // Add parenthetical as alternate
+    // Add parenthetical as alternate (high priority for single-word parens)
     if (parens) {
       parens.split(/[,;\/]/).forEach(p => {
         const pt = p.trim();
@@ -511,16 +513,22 @@ function buildSozlukIndex() {
       });
     }
 
-    // Add explicit alternates
     if (entry.alternatif) {
       entry.alternatif.forEach(alt => addKey(alt, entry));
     }
   });
 
+  // Phase 2: Sub-words from compounds go into separate fallback map
+  const subWordMap = new Map();
+  subWordQueue.forEach(({ w, entry }) => {
+    const k = trLower(w).trim();
+    if (k.length >= 2 && !subWordMap.has(k)) subWordMap.set(k, entry);
+  });
+
   // Sort multi-word phrases longest first for greedy matching
   multiWords.sort((a, b) => b.phrase.length - a.phrase.length);
 
-  window._sozlukIndex = { wordMap, multiWords };
+  window._sozlukIndex = { wordMap, subWordMap, multiWords };
   return window._sozlukIndex;
 }
 
@@ -536,7 +544,7 @@ function makeSpan(matchedText, entry) {
 function highlightWords(text) {
   if (!window.sozlukData || window.sozlukData.length === 0) return escapeHtml(text);
 
-  const { wordMap, multiWords } = buildSozlukIndex();
+  const { wordMap, subWordMap, multiWords } = buildSozlukIndex();
   let html = escapeHtml(text);
 
   // Pass 1: Multi-word phrases (longest first, greedy)
@@ -563,7 +571,8 @@ function highlightWords(text) {
       const clean = token.replace(/^[.,;:!?()\[\]"'&;#\d]+|[.,;:!?()\[\]"'&;#\d]+$/g, '');
       if (clean.length < 2) return token;
       const lower = trLower(clean);
-      const entry = wordMap.get(lower) || (trStem(lower) && wordMap.get(trStem(lower)));
+      const stem = trStem(lower);
+      const entry = wordMap.get(lower) || (stem && wordMap.get(stem)) || subWordMap.get(lower) || (stem && subWordMap.get(stem));
       if (entry) {
         const prefix = token.substring(0, token.indexOf(clean));
         const suffix = token.substring(token.indexOf(clean) + clean.length);
