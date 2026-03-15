@@ -340,7 +340,6 @@ async function openMadde(kisim, maddeNo, fromRoute) {
       </div>
     </div>
     <div class="madde-text">${metin}</div>
-    ${getRelatedMaddes(kisim, maddeNo)}
     ${getRelatedSahislar(kisim, maddeNo)}
     ${getRelatedTables(kisim, maddeNo)}
   `;
@@ -387,7 +386,7 @@ function getRelatedSahislar(kisim, maddeNo) {
   if (related.length === 0) return '';
 
   const items = related.slice(0, 12).map(s => {
-    return `<a href="#sahis/${s.slug}" onclick="event.preventDefault();closeMadde();navigateTo('sahislar');setTimeout(()=>openSahis('${s.slug}'),200)" class="related-sahis-link">
+    return `<a href="#sahis/${s.slug}" onclick="event.preventDefault();openSahis('${s.slug}')" class="related-sahis-link">
       <span class="rs-icon">${s.kategori === 'sahabi' ? '\u2739' : '\u2605'}</span>
       <span class="rs-isim">${s.isim}</span>
     </a>`;
@@ -826,8 +825,14 @@ function openSahis(slug, fromRoute) {
 
 function closeSahis() {
   document.getElementById('sahis-detay').style.display = 'none';
-  document.body.style.overflow = '';
-  updateHash('sahislar');
+  // If madde overlay is open behind, return to it (don't navigate away)
+  const maddeOverlay = document.getElementById('madde-detay');
+  if (maddeOverlay && maddeOverlay.style.display === 'flex') {
+    document.body.style.overflow = 'hidden';
+  } else {
+    document.body.style.overflow = '';
+    updateHash('sahislar');
+  }
 }
 
 document.getElementById('sahis-detay')?.addEventListener('click', e => {
