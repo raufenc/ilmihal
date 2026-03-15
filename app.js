@@ -40,7 +40,7 @@ function handleRoute() {
     return;
   }
 
-  const validPages = ['anasayfa','icerik','tablolar','sozluk','arama','sahislar'];
+  const validPages = ['anasayfa','icerik','tablolar','sozluk','arama','sahislar','hakkinda'];
   if (validPages.includes(route)) {
     navigateTo(route, true);
   } else {

@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=6">
+  <link rel="stylesheet" href="style.css?v=7">
 </head>
 <body>
   <!-- Header -->
@@ -25,6 +25,7 @@
           <button class="nav-btn" data-page="sahislar">Şahıslar</button>
           <button class="nav-btn" data-page="sozluk">Dini Lügat</button>
           <button class="nav-btn" data-page="arama">Arama</button>
+          <button class="nav-btn" data-page="hakkinda">Hakkında</button>
         </nav>
         <button class="dark-mode-toggle" onclick="toggleDarkMode()" aria-label="Karanlık mod" title="Karanlık/Aydınlık mod">
           <span class="dm-sun">&#9788;</span>
@@ -213,20 +214,59 @@
     </div>
   </main>
 
+  <!-- Hakkında -->
+  <main id="page-hakkinda" class="page">
+    <div class="container">
+      <div class="hakkinda-content">
+        <h2 class="section-title">Hakkında</h2>
+
+        <p class="hakkinda-lead">Se'âdet-i Ebediyye'yi tanıyanlar bilir: bu kitap bir kere okunup bırakılacak bir eser değildir. Bir mesele aklınıza düştüğünde açar, arar, bulur, tekrar okursunuz. Yıllar geçtikçe aynı satırlardan yeni şeyler anlarsınız.</p>
+
+        <p>Bu site, o arayışı kolaylaştırmak için yapıldı. Hepsi bu.</p>
+
+        <h3>Kitabın Tamamı, Aranabilir Şekilde</h3>
+        <p>241 maddenin tam metni, üç kısmıyla birlikte burada. İstediğiniz konuyu başlıktan bulabilir, isterseniz <a href="#arama" class="hakkinda-link">tam metin aramasıyla</a> kitabın herhangi bir yerinde geçen bir kelimeyi veya ifadeyi saniyeler içinde bulabilirsiniz. Her maddenin orijinal PDF'deki sayfa numarası bağlantılıdır — tıklayınca kitabın o sayfasını açar. Namaz, oruç, zekât, iman, ahlâk gibi konulara <a href="#anasayfa" class="hakkinda-link">ana sayfadan</a> tek dokunuşla ulaşabilirsiniz.</p>
+
+        <h3>Kitap İçinde Pratik Sözlük</h3>
+        <p>Bir maddeyi okurken anlamını bilmediğiniz veya tam hatırlayamadığınız kelimelerin <span class="hakkinda-ornek-kelime">altı çizilidir</span>. Üzerine geldiğinizde anlamı hemen görünür — sayfadan ayrılmadan, akışınızı bozmadan. Osmanlıca yazılışı, farklı bağlamlardaki anlamları ve birden fazla manası olan kelimelerin tüm anlamları bu küçük kutucukta yer alır. Kelimenin Türkçe çekimlerini de tanır: "namazlarında" yazsa da "namaz" maddesini bulur.</p>
+
+        <h3>4.400 Terimlik Dini Lügat</h3>
+        <p>Ayrı bir <a href="#sozluk" class="hakkinda-link">sözlük sayfasında</a> 4.400'den fazla dini terim, 13 kategoride (akâid, fıkıh, tasavvuf, hadis, siyer, muâmelât ve daha fazlası) listelenmiştir. Her terimin kısa anlamının yanında, varsa misalleri ve hadis-i şeriflerden örnekleri de ayrıca gösterilir. Osmanlıca yazılışları, alternatif imlâları ve bağlama göre değişen manaları kayıtlıdır.</p>
+
+        <h3>İslâm Âlimleri ve Evliyâlar</h3>
+        <p>Kitapta adı geçen âlim ve velîlerin hâl tercemeleri ayrı bir <a href="#sahislar" class="hakkinda-link">bölümde</a> toplanmıştır. Her şahsın biyografisi, unvanı ve kitapta geçtiği maddelere doğrudan bağlantıları vardır. Bir maddeyi okurken de o maddede adı geçen şahıslar altta listelenir — tıklayınca hâl tercemesini okursunuz, oradan da o zâtın geçtiği diğer maddelere geçersiniz. Böylece kitabın içinde bir konudan diğerine, bir âlimden diğerine kolayca dolaşabilirsiniz.</p>
+
+        <h3>Tablolar ve Diyagramlar</h3>
+        <p>Kitaptaki bilgileri özetleyen <a href="#tablolar" class="hakkinda-link">tablolar ve akış şemaları</a> konularına göre düzenlenmiştir. Her tablo, kaynağı olan maddeye bağlıdır. Bir maddeyi okurken ilgili tabloları da altında görürsünüz.</p>
+
+        <h3>Her Şey Birbirine Bağlı</h3>
+        <p>Bu sitenin asıl faydası, her şeyin birbirine bağlı olmasıdır. Bir maddeyi açtığınızda ilgili diğer maddeleri, o maddede geçen şahısları, konuyla ilgili tabloları ve metindeki terimlerin anlamlarını hep bir arada görürsünüz. Herhangi bir sayfanın bağlantısını birine gönderebilirsiniz — doğrudan o madde, o şahıs veya o arama sonucu açılır.</p>
+
+        <h3>Ne Yok Burada</h3>
+        <p>Yorum yok, tefsir yok, kendi aklımızdan bir şey yok. Kitaba bir harf eklenmedi, bir harf çıkarılmadı. Gece modu, telefon uyumluluğu gibi kolaylıklar dışında yapılan tek şey, kitaptaki bilgiyi olduğu gibi sunmak ve ulaşılabilir kılmaktır.</p>
+
+        <p>Maksat, bu kıymetli esere hizmet etmektir. Kitabın yerini tutmaz; ama kitaba müracaatı kolaylaştırır.</p>
+
+        <p class="hakkinda-dua">Kusurlar bizden, istifade Allahü teâlâdandır.</p>
+      </div>
+    </div>
+  </main>
+
   <!-- Footer -->
   <footer class="site-footer">
     <div class="container">
       <p>Se'âdet-i Ebediyye &mdash; Hüseyn Hilmi Işık (rahmetullahi aleyh) [1911-2001]</p>
       <p class="footer-note">Bu site, kitabın dijital olarak daha kolay anlaşılması için hazırlanmıştır. Hakîkat Kitâbevi Yayınları.</p>
+      <p class="footer-note"><a href="#hakkinda" style="color:rgba(255,255,255,0.6);text-decoration:none;border-bottom:1px dashed rgba(255,255,255,0.3);">Hakkında</a></p>
     </div>
   </footer>
 
   <!-- Tooltip -->
   <div id="sozluk-tooltip" class="sozluk-tooltip" style="display:none"></div>
 
-  <script src="data.js?v=6"></script>
-  <script src="sahislar.js?v=6"></script>
-  <script src="crossref.js?v=6"></script>
-  <script src="app.js?v=6"></script>
+  <script src="data.js?v=7"></script>
+  <script src="sahislar.js?v=7"></script>
+  <script src="crossref.js?v=7"></script>
+  <script src="app.js?v=7"></script>
 </body>
 </html>
