@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=7">
+  <link rel="stylesheet" href="style.css?v=11">
 </head>
 <body>
   <!-- Header -->
@@ -21,7 +21,7 @@
         <nav class="main-nav">
           <button class="nav-btn active" data-page="anasayfa">Ana Sayfa</button>
           <button class="nav-btn" data-page="icerik">İçindekiler</button>
-          <button class="nav-btn" data-page="tablolar">Tablolar</button>
+          <button class="nav-btn" data-page="fevaid">Fevâid</button>
           <button class="nav-btn" data-page="sahislar">Şahıslar</button>
           <a class="nav-btn nav-btn-link" href="silsile-atlasi/" title="Silsile-i Aliyye Haritası">Silsile Atlası</a>
           <button class="nav-btn" data-page="sozluk">Dini Lügat</button>
@@ -48,7 +48,7 @@
           <p class="hero-desc">Hüseyn Hilmi Işık hazretlerinin hazırladığı, 1248 sayfalık kapsamlı ilmihâl eserini keşfedin.</p>
           <div class="hero-actions">
             <button class="btn btn-primary" onclick="navigateTo('icerik')">İçindekilere Git</button>
-            <button class="btn btn-secondary" onclick="navigateTo('tablolar')">Tabloları İncele</button>
+            <button class="btn btn-secondary" onclick="navigateTo('fevaid')">Fevâidi İncele</button>
           </div>
         </div>
       </div>
@@ -163,27 +163,57 @@
     </div>
   </div>
 
-  <!-- Tablolar -->
-  <main id="page-tablolar" class="page">
+  <!-- Fevâid -->
+  <main id="page-fevaid" class="page">
     <div class="container">
-      <h2 class="section-title">Tablolar ve Diyagramlar</h2>
-      <div class="tablolar-toolbar">
-        <input type="text" id="tablo-search" placeholder="Tablo ara...">
-        <div class="tablo-kat-filters">
-          <button class="tablo-filter-btn active" data-kat="all">Tümü</button>
-          <button class="tablo-filter-btn" data-kat="itikat">İman ve İtikat</button>
-          <button class="tablo-filter-btn" data-kat="temizlik">Temizlik</button>
-          <button class="tablo-filter-btn" data-kat="namaz">Namaz</button>
-          <button class="tablo-filter-btn" data-kat="oruc">Oruç</button>
-          <button class="tablo-filter-btn" data-kat="zekat">Zekât</button>
-          <button class="tablo-filter-btn" data-kat="hac">Hac ve Umre</button>
-          <button class="tablo-filter-btn" data-kat="aile">Aile Hukuku</button>
-          <button class="tablo-filter-btn" data-kat="tasavvuf">Tasavvuf</button>
-          <button class="tablo-filter-btn" data-kat="genel">Diğer</button>
+      <h2 class="section-title">Fevâid</h2>
+      <!-- Ana ekran: bölüm kartları -->
+      <div id="fevaid-home" class="fevaid-home">
+        <div class="fevaid-sec-grid">
+          <div class="fevaid-sec-card" onclick="openFevaidSection('tablolar')">
+            <div class="fevaid-sec-icon">&#9638;</div>
+            <h3>Tablolar ve Diyagramlar</h3>
+            <p>Kitaptaki bilgilerin özet tabloları ve akış şemaları</p>
+            <span class="fevaid-sec-count" id="fevaid-count-tablolar"></span>
+          </div>
+          <div class="fevaid-sec-card" onclick="openFevaidSection('tanimlar')">
+            <div class="fevaid-sec-icon">&#10070;</div>
+            <h3>Kitabın Kendi Tanımları</h3>
+            <p>Kitapta geçen terimlerin kitabın kendi cümleleriyle açıklaması</p>
+            <span class="fevaid-sec-count">533 tanım</span>
+          </div>
+          <div class="fevaid-sec-card fevaid-sec-yakinda">
+            <div class="fevaid-sec-icon">&#9719;</div>
+            <h3>Nemâz Vakitleri</h3>
+            <p>Etkileşimli nemâz vakitleri hesabı ve gösterimi</p>
+            <span class="fevaid-yakinda-badge">Yakında</span>
+          </div>
         </div>
       </div>
-      <div id="tablo-count" class="tablo-count"></div>
-      <div id="tablolar-grid" class="tablolar-grid"></div>
+      <!-- Tablolar bölümü -->
+      <div id="fevaid-section-tablolar" class="fevaid-section" style="display:none">
+        <button class="fevaid-back-btn" onclick="closeFevaidSection()">&#8592; Fevâid</button>
+        <div class="tablolar-toolbar">
+          <input type="text" id="tablo-search" placeholder="Tablo ara...">
+          <div class="tablo-kat-filters">
+            <button class="tablo-filter-btn active" data-kat="all">Tümü</button>
+            <button class="tablo-filter-btn" data-kat="itikat">İman ve İtikat</button>
+            <button class="tablo-filter-btn" data-kat="temizlik">Temizlik</button>
+            <button class="tablo-filter-btn" data-kat="namaz">Namaz</button>
+            <button class="tablo-filter-btn" data-kat="oruc">Oruç</button>
+            <button class="tablo-filter-btn" data-kat="zekat">Zekât</button>
+            <button class="tablo-filter-btn" data-kat="hac">Hac ve Umre</button>
+            <button class="tablo-filter-btn" data-kat="aile">Aile Hukuku</button>
+          </div>
+        </div>
+        <div id="tablo-count" class="tablo-count"></div>
+        <div id="tablolar-grid" class="tablolar-grid"></div>
+      </div>
+      <!-- Tanımlar bölümü -->
+      <div id="fevaid-section-tanimlar" class="fevaid-section" style="display:none">
+        <button class="fevaid-back-btn" onclick="closeFevaidSection()">&#8592; Fevâid</button>
+        <div id="tanimlar-fevaid-wrapper"></div>
+      </div>
     </div>
   </main>
 
@@ -282,10 +312,10 @@
   <!-- Tooltip -->
   <div id="sozluk-tooltip" class="sozluk-tooltip" style="display:none"></div>
 
-  <script src="data.js?v=10"></script>
+  <script src="data.js?v=11"></script>
   <script src="tanimlar.js?v=1"></script>
   <script src="sahislar.js?v=7"></script>
   <script src="crossref.js?v=7"></script>
-  <script src="app.js?v=8"></script>
+  <script src="app.js?v=11"></script>
 </body>
 </html>

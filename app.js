@@ -40,7 +40,7 @@ function handleRoute() {
     return;
   }
 
-  const validPages = ['anasayfa','icerik','tablolar','sozluk','arama','sahislar','hakkinda'];
+  const validPages = ['anasayfa','icerik','fevaid','sozluk','arama','sahislar','hakkinda'];
   if (validPages.includes(route)) {
     navigateTo(route, true);
   } else {
@@ -167,7 +167,7 @@ function navigateTo(page, fromRoute) {
   // Lazy load content
   if (page === 'icerik' && !icerikLoaded) loadIcerik();
   if (page === 'sozluk' && !sozlukLoaded) loadSozluk();
-  if (page === 'tablolar' && !tablolarLoaded) loadTablolar();
+  if (page === 'fevaid' && !fevaidLoaded) loadFevaid();
   if (page === 'sahislar' && !sahislarLoaded) loadSahislar();
 }
 
@@ -858,18 +858,48 @@ document.getElementById('sahis-detay')?.addEventListener('click', e => {
   if (e.target === document.getElementById('sahis-detay')) closeSahis();
 });
 
-// ===== TABLOLAR =====
+// ===== FEVÂİD =====
+let fevaidLoaded = false;
 let tablolarLoaded = false;
 
 const tabloKatLabels = {
   itikat: '\u0130man ve \u0130tikat', temizlik: 'Temizlik', namaz: 'Namaz',
   oruc: 'Oru\u00e7', zekat: 'Zek\u00e2t', hac: 'Hac ve Umre',
-  aile: 'Aile Hukuku', tasavvuf: 'Tasavvuf', genel: 'Di\u011fer Konular'
+  aile: 'Aile Hukuku'
 };
-const tabloKatOrder = ['itikat','temizlik','namaz','oruc','zekat','hac','aile','tasavvuf','genel'];
+const tabloKatOrder = ['itikat','temizlik','namaz','oruc','zekat','hac','aile'];
 
 let tabloActiveKat = 'all';
 let tabloSearchText = '';
+
+function loadFevaid() {
+  fevaidLoaded = true;
+  const count = window.tablolarData?.filter(t => t.id !== 'konu_haritasi' && t.id !== 'kitabin_tanimlari').length || 0;
+  const el = document.getElementById('fevaid-count-tablolar');
+  if (el) el.textContent = count + ' tablo';
+}
+
+function openFevaidSection(section) {
+  document.getElementById('fevaid-home').style.display = 'none';
+  document.querySelectorAll('.fevaid-section').forEach(s => { s.style.display = 'none'; });
+  const el = document.getElementById('fevaid-section-' + section);
+  if (el) el.style.display = '';
+  window.scrollTo(0, 0);
+  if (section === 'tablolar' && !tablolarLoaded) loadTablolar();
+  if (section === 'tanimlar') {
+    const wrapper = document.getElementById('tanimlar-fevaid-wrapper');
+    if (wrapper && !wrapper.dataset.loaded) {
+      wrapper.innerHTML = renderTanimlar('fevaid-main');
+      wrapper.dataset.loaded = '1';
+    }
+  }
+}
+
+function closeFevaidSection() {
+  document.getElementById('fevaid-home').style.display = '';
+  document.querySelectorAll('.fevaid-section').forEach(s => { s.style.display = 'none'; });
+  window.scrollTo(0, 0);
+}
 
 function loadTablolar(filterKat, filterText) {
   tablolarLoaded = true;
@@ -882,7 +912,7 @@ function loadTablolar(filterKat, filterText) {
   tabloActiveKat = katFilter;
   tabloSearchText = searchText;
 
-  let allItems = window.tablolarData.filter(t => t.id !== 'konu_haritasi');
+  let allItems = window.tablolarData.filter(t => t.id !== 'konu_haritasi' && t.id !== 'kitabin_tanimlari');
   if (katFilter !== 'all') allItems = allItems.filter(t => t.kategori === katFilter);
   if (searchText) allItems = allItems.filter(t =>
     t.baslik.toLowerCase().includes(searchText) ||
@@ -898,6 +928,9 @@ function loadTablolar(filterKat, filterText) {
       html += `<div class="tablo-kategori-baslik tablo-kat-${kat}"><span>${tabloKatLabels[kat]}</span><span class="tablo-kat-count">${items.length}</span></div>`;
       items.forEach(tablo => { html += renderTabloCard(tablo); });
     }
+    // genel ones without category label
+    const genel = allItems.filter(t => !tabloKatOrder.includes(t.kategori));
+    genel.forEach(tablo => { html += renderTabloCard(tablo); });
   } else {
     allItems.forEach(tablo => { html += renderTabloCard(tablo); });
   }
