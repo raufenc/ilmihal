@@ -1063,19 +1063,53 @@ function wordVariants(word) {
   const consonants = new Set('bcdfghjklmnpqrstvwxyz');
   const vowels = 'aeiou';
 
-  // Manuel varyantlar
+  // Manuel varyantlar — tam kelime eşleşmesi
   if (OTTOMAN_MANUAL[word]) vars.add(OTTOMAN_MANUAL[word]);
   Object.entries(OTTOMAN_MANUAL).forEach(([mod, ott]) => {
     if (word === ott) vars.add(mod);
   });
 
+  // Önek tabanlı varyant: Türkçe çekimli formlar için köke bak
+  // "namazi" → kök "namaz" ∈ OTTOMAN_MANUAL → "nemaz" + "i" = "nemazi"
+  // Bu sayede namazı, namazda, namazdan, namazın... hepsi çalışır
+  Object.entries(OTTOMAN_MANUAL).forEach(([mod, ott]) => {
+    if (word.length > mod.length && word.startsWith(mod)) {
+      const suffix = word.slice(mod.length);
+      vars.add(ott + suffix);         // namazi → nemazi
+    }
+    if (word.length > ott.length && word.startsWith(ott)) {
+      const suffix = word.slice(ott.length);
+      vars.add(mod + suffix);         // nemazi → namazi
+    }
+  });
+
   if (word.length >= 4) {
-    // Kural 1: Son -p ↔ -b (kitâb/kitap, vâcib/vacip, sevâb/sevap, mezheb/mezhep…)
+    // Kural 1: Son -p ↔ -b (kitab/kitap, vacib/vacip, sevab/sevap…)
     if (word.endsWith('p')) vars.add(word.slice(0, -1) + 'b');
     if (word.endsWith('b')) vars.add(word.slice(0, -1) + 'p');
-    // Kural 2: Son -t ↔ -d (cihâd/cihat, îcâd/icat, hamd/hamet…)
+    // Kural 2: Son -t ↔ -d (cihad/cihat, icad/icat…)
     if (word.endsWith('t')) vars.add(word.slice(0, -1) + 'd');
     if (word.endsWith('d')) vars.add(word.slice(0, -1) + 't');
+
+    // Çekimli b/p: "kitabi" → kitap kökü tespit, "kitabi" zaten doğru;
+    // "kitapa" (dative) → "kitaba" ✓ (Türkçe bu zaten doğru yapıyor; Osmanlıca'da da aynı)
+    // Ancak: "sevabi" → "sevabi" (book form), "sevapi" → "sevabi" (kural 1 ile değil, eke girmiş)
+    // Sesli ek alan çekimli formlar için: Ck+ek → Cb+ek veya Cp+ek
+    // Örnek: kitabi(kitap+ı), kitaba(kitap+a) → kök son harfine göre
+    ['a','e','i','u','in','a','e','dan','den','da','de','lar','ler','lari','leri'].forEach(suf => {
+      if (word.endsWith('p' + suf)) {
+        vars.add(word.slice(0, -suf.length - 1) + 'b' + suf);
+      }
+      if (word.endsWith('b' + suf)) {
+        vars.add(word.slice(0, -suf.length - 1) + 'p' + suf);
+      }
+      if (word.endsWith('t' + suf)) {
+        vars.add(word.slice(0, -suf.length - 1) + 'd' + suf);
+      }
+      if (word.endsWith('d' + suf)) {
+        vars.add(word.slice(0, -suf.length - 1) + 't' + suf);
+      }
+    });
   }
 
   // Kural 3: Ünsüz yığılması — kitapta bazı kelimeler sesli içermez
