@@ -509,12 +509,6 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem 1.5r
   </div>
 </section>
 
-<!-- FOOTER -->
-<footer>
-  <div class="footer-logo">☪ Namaz Vakitleri — Astronomik Rehber</div>
-  <p class="footer-text">Rauf Enç tarafından hazırlanmıştır.<br>
-  Astronomik formüller: Ahmed Ziyâ Beğ, Diyanet İşleri hesap metodolojisi, USNO algoritmalarına dayanmaktadır.</p>
-</footer>
 
 <script>
 // ============================================================
@@ -1681,15 +1675,16 @@ setTimeout(() => { drawSphere(720); updateFormula(720); updatePrayerResults(); }
     const inhitatPx = tc.dipArcmin * pxPerArcmin;
     const refrPx = tc.refractionArcmin * pxPerArcmin;
     const sdPx = tc.semiDiamArcmin * pxPerArcmin;
-    const nisfkutr = Math.max(12, sdPx * 0.8) * S;
     const seriY = skyH + inhitatPx;
     const appY = seriY + sdPx;
     const realY = appY + refrPx;
     const sunX = W * 0.20;
     const obsX = W * 0.74;
     const brX = W * 0.38;
-    // Sun animation: offset based on phase (0→sun at seriY, 1→sun at realY)
-    const sunCenterY = seriY + (realY - seriY) * sunAnimPhase;
+    const sunR = Math.max(10, Math.max(12, sdPx * 0.8) * S);
+    // Phase=0: sun center at appY → upper edge exactly at seriY (visible horizon)
+    // Phase=1: sun center at realY → geometric position at end of Temkin
+    const sunCenterY = appY + (realY - appY) * sunAnimPhase;
 
     // ─── Sky ─────────────────────────────────────────────
     const skyGrad = ctx.createLinearGradient(0,0,0,seriY);
@@ -1739,16 +1734,16 @@ setTimeout(() => { drawSphere(720); updateFormula(720); updatePrayerResults(); }
     ctx.fillStyle='rgba(249,115,22,0.85)'; ctx.font=`bold ${Math.max(9,11*S)}px Inter`;
     ctx.fillText("Üfk-ı Şer'î (Görünen)",W*0.03,seriY+16*S);
 
-    // ─── Refracted ray ──────────────────────────────────
+    // ─── Refracted ray (from sun's upper edge to observer) ──
+    const sunTopY = sunCenterY - sunR;
     ctx.strokeStyle='rgba(245,200,66,0.80)'; ctx.lineWidth=2.2; ctx.setLineDash([]);
-    ctx.beginPath(); ctx.moveTo(sunX,sunCenterY);
-    ctx.bezierCurveTo(W*0.30,seriY+12*S,W*0.52,skyH-4*S,obsX,skyH); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(sunX, sunTopY);
+    ctx.bezierCurveTo(W*0.30,seriY+8*S,W*0.52,skyH-4*S,obsX,skyH); ctx.stroke();
     ctx.strokeStyle='rgba(255,255,255,0.16)'; ctx.lineWidth=1.5; ctx.setLineDash([6,6]);
-    ctx.beginPath(); ctx.moveTo(sunX,sunCenterY); ctx.lineTo(obsX,skyH); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(sunX, sunTopY); ctx.lineTo(obsX,skyH); ctx.stroke();
     ctx.setLineDash([]);
 
     // ─── Sun disc (animated position) ───────────────────
-    const sunR = Math.max(10, nisfkutr);
     ctx.save();
     const sunGlow = ctx.createRadialGradient(sunX,sunCenterY,0,sunX,sunCenterY,sunR*5);
     sunGlow.addColorStop(0,'rgba(255,150,40,0.45)'); sunGlow.addColorStop(0.3,'rgba(255,90,10,0.18)');
