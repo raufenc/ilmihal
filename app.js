@@ -1028,41 +1028,102 @@ function normalizeSearch(text) {
     .trim();
 }
 
-// Bu kitaba özgü yazım varyantları
-// Sol: kullanıcının yazabileceği modern/alternatif form (normalleştirilmiş)
-// Sağ: kitabın kullandığı Osmanlıca/Arapça form (normalleştirilmiş)
-const OTTOMAN_VARIANTS = {
-  'namaz':   'nemaz',   // nemâz  (kitabın kullandığı Osmanlıca form)
-  'gusul':   'gusl',    // gusl   (kitapta sesli harf yok)
-  'vitir':   'vitr',    // vitr nemâzı
-  'vacip':   'vacib',   // vâcib
-  'sehiv':   'sehv',    // secde-i sehv
-  'kiraat':  'kiraet',  // kıraet (kitaptaki form)
-  'ibadat':  'ibadet',  // kitapta ibadet daha yaygın
+// Bu kitaba özgü özel varyantlar — algoritmik kuralların yakalayamadığı a/e alternasyonu vb.
+const OTTOMAN_MANUAL = {
+  'namaz':    'nemaz',    // nemâz — en kritik varyant
+  'niyet':    'niyyet',   // niyyet — şedde farkı
+  'vasiyet':  'vasiyyet', // vasiyyet
+  'tasavvuf': 'tesavvuf', // tesavvuf
+  'mucize':   'mu cize',  // mu'cize → normalize → "mu cize"
+  'salavat':  'salat',    // salât
+  'tövbe':    'tevbe',    // tevbe (farklı kök sesli)
+  'sakiyn':   'sakin',    // normalize sonrası ı→i zaten; bu elle gerekmez
 };
 
-// Sorguyu genişlet: hem normalize et hem varyantları üret
-function expandSearchQuery(rawQuery) {
-  const normalized = normalizeSearch(rawQuery);
-  const variants = new Set([normalized]);
+// Tek kelime için tüm olası varyantları üret (algoritmik + manuel)
+function wordVariants(word) {
+  const vars = new Set([word]);
+  const consonants = new Set('bcdfghjklmnpqrstvwxyz');
+  const vowels = 'aeiou';
 
-  const words = normalized.split(/\s+/);
-  words.forEach(word => {
-    // Modern → Osmanlıca
-    if (OTTOMAN_VARIANTS[word]) {
-      variants.add(normalized.split(/\s+/).map(w => w === word ? OTTOMAN_VARIANTS[word] : w).join(' '));
-    }
-    // Osmanlıca → Modern (ters yön)
-    Object.entries(OTTOMAN_VARIANTS).forEach(([modern, ottoman]) => {
-      if (word === ottoman) {
-        variants.add(normalized.split(/\s+/).map(w => w === word ? modern : w).join(' '));
-      }
-    });
+  // Manuel varyantlar
+  if (OTTOMAN_MANUAL[word]) vars.add(OTTOMAN_MANUAL[word]);
+  Object.entries(OTTOMAN_MANUAL).forEach(([mod, ott]) => {
+    if (word === ott) vars.add(mod);
   });
 
-  // Hangi varyant orijinalden farklı?
-  const altVariants = Array.from(variants).filter(v => v !== normalized);
-  return { normalized, variants: Array.from(variants), altVariants };
+  if (word.length >= 4) {
+    // Kural 1: Son -p ↔ -b (kitâb/kitap, vâcib/vacip, sevâb/sevap, mezheb/mezhep…)
+    if (word.endsWith('p')) vars.add(word.slice(0, -1) + 'b');
+    if (word.endsWith('b')) vars.add(word.slice(0, -1) + 'p');
+    // Kural 2: Son -t ↔ -d (cihâd/cihat, îcâd/icat, hamd/hamet…)
+    if (word.endsWith('t')) vars.add(word.slice(0, -1) + 'd');
+    if (word.endsWith('d')) vars.add(word.slice(0, -1) + 't');
+  }
+
+  // Kural 3: Ünsüz yığılması — kitapta bazı kelimeler sesli içermez
+  // gusl↔gusul, vitr↔vitir, zikr↔zikir, sabr↔sabır, nasr↔nasır
+  if (word.length >= 3) {
+    const last = word[word.length - 1];
+    const prev = word[word.length - 2];
+    if (consonants.has(last) && consonants.has(prev)) {
+      // Ünsüz yığılmalı form (gusl) → sesli eklenmiş form (gusul)
+      let lastVowel = 'i';
+      for (let i = word.length - 3; i >= 0; i--) {
+        if (vowels.includes(word[i])) { lastVowel = word[i]; break; }
+      }
+      const ins = { a: 'u', e: 'i', i: 'i', o: 'u', u: 'u' }[lastVowel] || 'i';
+      vars.add(word.slice(0, -1) + ins + last);
+    }
+    // Ters: sesli eklenmiş form (gusul) → ünsüz yığılmalı (gusl)
+    if (word.length >= 5 && vowels.includes(word[word.length - 2]) && consonants.has(last)) {
+      const without = word.slice(0, -2) + last;
+      if (without.length >= 3) vars.add(without);
+    }
+  }
+
+  // Kural 4: Şedde — niyyet/niyet, vasiyyet/vasiyet, müşekkel/müşekel
+  // Çift ünsüz → tek ünsüz
+  const dedouble = word.replace(/(.)\1/g, '$1');
+  if (dedouble !== word) vars.add(dedouble);
+  // Tek → çift (yalnızca y ve s için, diğerleri çok gürültülü olur)
+  ['y', 's'].forEach(c => {
+    const re = new RegExp(`(?<!${c})${c}(?!${c})`, 'g');
+    const doubled = word.replace(re, c + c);
+    if (doubled !== word) vars.add(doubled);
+  });
+
+  return Array.from(vars);
+}
+
+// Sorguyu genişlet: normalize et + her kelime için varyantlar üret
+function expandSearchQuery(rawQuery) {
+  const normalized = normalizeSearch(rawQuery);
+  const words = normalized.split(/\s+/);
+
+  const wordVarLists = words.map(w => wordVariants(w));
+
+  const variantSet = new Set([normalized]);
+  if (words.length <= 3) {
+    // Kısa sorgularda tüm kombinasyonlar (patlama önlemek için kelime başına max 5 varyant)
+    function combine(idx, current) {
+      if (idx === words.length) { variantSet.add(current.join(' ')); return; }
+      wordVarLists[idx].slice(0, 5).forEach(v => combine(idx + 1, [...current, v]));
+    }
+    combine(0, []);
+  } else {
+    // Uzun sorgularda her kelimeyi sırayla değiştir
+    wordVarLists.forEach((vars, i) => {
+      vars.forEach(v => {
+        const w = [...words]; w[i] = v;
+        variantSet.add(w.join(' '));
+      });
+    });
+  }
+
+  const variants = Array.from(variantSet);
+  const altVariants = variants.filter(v => v !== normalized);
+  return { normalized, variants, altVariants };
 }
 
 // ===== ARAMA =====
