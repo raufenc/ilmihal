@@ -945,7 +945,43 @@ function renderTabloBody(tablo) {
   if (tablo.tip === 'flowchart' && tablo.veriler) return renderFlowchart(tablo.veriler);
   if (tablo.tip === 'liste' && tablo.veriler) return renderListe(tablo.veriler);
   if (tablo.tip === 'iki_liste' && tablo.veriler) return renderIkiListe(tablo.veriler);
+  if (tablo.tip === 'tanimlar') return renderTanimlar(tablo.id);
   return '<p>Tablo verisi y\u00fckleniyor...</p>';
+}
+
+function renderTanimlar(id) {
+  if (!window.tanimlarData) return '<p>Tanımlar yükleniyor...</p>';
+  const containerId = 'tanimlar-container-' + id;
+  const inputId = 'tanimlar-search-' + id;
+  setTimeout(() => {
+    const input = document.getElementById(inputId);
+    const container = document.getElementById(containerId);
+    if (!input || !container) return;
+    function renderRows(q) {
+      const qn = q ? normalizeSearch(q) : '';
+      let rows;
+      if (!qn) {
+        rows = window.tanimlarData;
+      } else {
+        const { wordVarLists } = expandSearchQuery(q);
+        rows = window.tanimlarData.filter(d => {
+          const tn = normalizeSearch(d.t);
+          const cn = normalizeSearch(d.c);
+          return wordVarLists.every(vars => vars.some(v => tn.includes(v) || cn.includes(v)));
+        });
+      }
+      let html = '<table class="tanimlar-table"><thead><tr><th>Terim</th><th>Kitaptaki Tanım</th><th>S.</th></tr></thead><tbody>';
+      rows.forEach(d => {
+        html += `<tr><td class="tanimlar-terim">${escapeHtml(d.t)}</td><td class="tanimlar-cumle">${escapeHtml(d.c)}</td><td class="tanimlar-sayfa">${d.s}</td></tr>`;
+      });
+      html += '</tbody></table>';
+      html += `<div class="tanimlar-count">${rows.length} tanım gösteriliyor</div>`;
+      container.innerHTML = html;
+    }
+    input.addEventListener('input', () => renderRows(input.value));
+    renderRows('');
+  }, 0);
+  return `<div class="tanimlar-search-wrap"><input id="${inputId}" type="text" placeholder="Terim veya tanımda ara…" class="tanimlar-search-input" autocomplete="off"></div><div id="${containerId}"></div>`;
 }
 
 function renderTable(veriler, kolonlar) {
