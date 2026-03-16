@@ -191,10 +191,10 @@ function loadIcerik(filterKisim, filterText) {
   let filtered = window.tocData;
   if (kisimFilter !== 'all') filtered = filtered.filter(m => m.kisim == kisimFilter);
   if (searchText) {
-    const { variants: sVariants } = expandSearchQuery(rawSearch);
+    const { wordVarLists: sVarLists } = expandSearchQuery(rawSearch);
     filtered = filtered.filter(m => {
       const nb = normalizeSearch(m.baslik || '');
-      return sVariants.some(v => nb.includes(v));
+      return sVarLists.every(wvars => wvars.some(v => includesWordStart(nb, v)));
     });
   }
 
@@ -681,12 +681,13 @@ function loadSozluk(filterKat, filterText) {
   let filtered = window.sozlukData;
   if (katFilter !== 'all') filtered = filtered.filter(s => s.kategori === katFilter);
   if (searchText) {
-    const { variants: szVariants } = expandSearchQuery(rawSozlukSearch);
+    const { wordVarLists: szVarLists } = expandSearchQuery(rawSozlukSearch);
     filtered = filtered.filter(s => {
       const nk = normalizeSearch(s.kelime || '');
       const na = normalizeSearch(s.anlam || '');
-      const altMatch = s.alternatif && s.alternatif.some(a => szVariants.some(v => normalizeSearch(a).includes(v)));
-      return szVariants.some(v => nk.includes(v) || na.includes(v)) || altMatch;
+      const check = v => includesWordStart(nk, v) || includesWordStart(na, v) ||
+        (s.alternatif && s.alternatif.some(a => includesWordStart(normalizeSearch(a), v)));
+      return szVarLists.every(wvars => wvars.some(check));
     });
   }
 
@@ -1028,6 +1029,22 @@ function normalizeSearch(text) {
     .trim();
 }
 
+// Kelime başı farkında indexOf: eşleşme ancak boşluk veya metin başından sonra gelebilir.
+// Türkçe ekler serbest: "ahmet" → "ahmetten" ✓, ama "rahmetullah" içindeki "ahmet" → ✗
+function indexOfWordStart(text, term, from) {
+  from = from || 0;
+  while (true) {
+    const i = text.indexOf(term, from);
+    if (i === -1) return -1;
+    if (i === 0 || text[i - 1] === ' ') return i;
+    from = i + 1;
+  }
+}
+
+function includesWordStart(text, term) {
+  return indexOfWordStart(text, term) !== -1;
+}
+
 // Bu kitaba özgü özel varyantlar — algoritmik kuralların yakalayamadığı a/e alternasyonu vb.
 const OTTOMAN_MANUAL = {
   'namaz':    'nemaz',    // nemâz — en kritik varyant
@@ -1186,7 +1203,7 @@ async function doFullSearch(fromRoute) {
       const wvars = wordVarLists[wi];
       let found = false;
       for (const v of wvars) {
-        const i = normText.indexOf(v);
+        const i = indexOfWordStart(normText, v);
         if (i !== -1) {
           found = true;
           if (firstIdx === -1) { firstIdx = i; firstMatchedVar = v; }
@@ -1195,12 +1212,12 @@ async function doFullSearch(fromRoute) {
       }
       // Başlıkta da arayalım
       if (!found) {
-        found = wvars.some(v => normBaslik.includes(v));
+        found = wvars.some(v => includesWordStart(normBaslik, v));
       }
       if (!found) { allFound = false; break; }
     }
 
-    const inTitle = wordVarLists.every(wvars => wvars.some(v => normBaslik.includes(v)));
+    const inTitle = wordVarLists.every(wvars => wvars.some(v => includesWordStart(normBaslik, v)));
 
     if (allFound) {
       let context = '';
@@ -1247,7 +1264,7 @@ async function doFullSearch(fromRoute) {
       for (const v of allVars) {
         let from = 0;
         while (true) {
-          const i = normCtx.indexOf(v, from);
+          const i = indexOfWordStart(normCtx, v, from);
           if (i === -1) break;
           positions.push({ start: i, end: i + v.length });
           from = i + 1;
