@@ -219,7 +219,6 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem 1.5r
     <div class="nav-logo">☪ Namâz Vakitleri</div>
     <div class="nav-links">
       <a href="#gunes-arc">Güneş Yolculuğu</a>
-      <a href="#gunes-yolu">Güneş Yolu</a>
       <a href="#vakitler">Vakitler</a>
       <a href="#temkin">Temkin</a>
       <a href="#tadilzaman">Ta'dîl-i Zemân</a>
@@ -286,63 +285,6 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem 1.5r
         </div>
       </div>
     </div>
-  </div>
-</section>
-
-<!-- GÜNEŞ YOLU DİYAGRAMI -->
-<section id="gunes-yolu">
-  <div class="container">
-    <div class="section-label fade-in">Astronomik Hesap</div>
-    <h2 class="section-title fade-in">Güneş Yolu Diyagramı</h2>
-    <p class="section-desc fade-in">Güneşin gökyüzündeki yolculuğu stereografik projeksiyon ile gösterilir. Merkez zenit (baş üstü), dış çember ufuk çizgisidir. Yaz ve kış gündönümlerindeki farklı yolları karşılaştırın.</p>
-
-    <div class="sunpath-layout fade-in">
-      <!-- Sol: Polar Diyagram -->
-      <div>
-        <div class="sunpath-canvas-wrap">
-          <canvas id="sunpath-canvas" height="500"></canvas>
-          <div class="sp-controls">
-            <button class="ctrl-btn play" id="spPlayBtn">&#9654; Animasyon</button>
-            <input type="range" class="sp-time-slider" id="spTimeSlider" min="0" max="1440" step="1" value="720">
-            <span class="sp-time-label" id="spTimeLabel">12:00</span>
-          </div>
-        </div>
-        <!-- Hesaplanan Namaz Vakitleri -->
-        <div class="prayer-results fade-in">
-          <h4>Hesaplanan Namaz Vakitleri</h4>
-          <div class="pr-grid" id="pr-grid"></div>
-        </div>
-      </div>
-
-      <!-- Sag: Formul + Gok Kuresi -->
-      <div class="sunpath-right">
-        <!-- Formul -->
-        <div class="formula-card">
-          <div class="formula-title">Güneş İrtifâ Açısı Formülü</div>
-          <div class="formula-eq">
-            sin(<span class="fv fv-h" id="fv-h">h</span>) =
-            sin(<span class="fv fv-phi" id="fv-phi">&phi;</span>) &middot;
-            sin(<span class="fv fv-dec" id="fv-dec">&delta;</span>) +
-            cos(<span class="fv fv-phi">&#966;</span>) &middot;
-            cos(<span class="fv fv-dec">&delta;</span>) &middot;
-            cos(<span class="fv fv-ha" id="fv-ha">H</span>)
-          </div>
-          <div class="formula-vars" id="formula-vars">
-            <div class="formula-var"><span class="fv-sym fv-h">h</span><span class="fv-name">İrtifâ</span><span class="fv-val" id="fvar-h">—</span></div>
-            <div class="formula-var"><span class="fv-sym fv-phi">&phi;</span><span class="fv-name">Arz-ı Belde</span><span class="fv-val" id="fvar-phi">—</span></div>
-            <div class="formula-var"><span class="fv-sym fv-dec">&delta;</span><span class="fv-name">Meyl (Deklinasyon)</span><span class="fv-val" id="fvar-dec">—</span></div>
-            <div class="formula-var"><span class="fv-sym fv-ha">H</span><span class="fv-name">Fadl-ı Dâir (Saat Açısı)</span><span class="fv-val" id="fvar-ha">—</span></div>
-          </div>
-        </div>
-
-        <!-- Gok Kuresi Kesiti -->
-        <div class="sphere-wrap">
-          <div class="formula-title" style="padding:0 0 0.5rem 0.3rem;">Gök Küresi Kesiti</div>
-          <canvas id="sphere-canvas" height="320"></canvas>
-        </div>
-      </div>
-    </div>
-
   </div>
 </section>
 
