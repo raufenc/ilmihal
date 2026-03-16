@@ -1075,10 +1075,16 @@ function wordVariants(word) {
       const ins = { a: 'u', e: 'i', i: 'i', o: 'u', u: 'u' }[lastVowel] || 'i';
       vars.add(word.slice(0, -1) + ins + last);
     }
-    // Ters: sesli eklenmiş form (gusul) → ünsüz yığılmalı (gusl)
-    if (word.length >= 5 && vowels.includes(word[word.length - 2]) && consonants.has(last)) {
+    // Ters: sesli eklenmiş form (gusul) → ünsüz yığılmalı (gusl, vitr, zikr)
+    // Osmanlıca'da kısa sesli (u/i) ünsüz yığılmasını kırmak için eklenmiştir
+    // Bu yüzden sadece son hece -ul/-il/-ir/-ur/-ıl biçimindeyse uygula
+    const penultimate = word[word.length - 2];
+    if (word.length >= 5 && 'ui'.includes(penultimate) && consonants.has(last)) {
       const without = word.slice(0, -2) + last;
-      if (without.length >= 3) vars.add(without);
+      // Sonuç iki ünsüzle bitmeli (gusl: s+l ✓, vitr: t+r ✓)
+      if (without.length >= 3 && consonants.has(without[without.length - 2])) {
+        vars.add(without);
+      }
     }
   }
 
