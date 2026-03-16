@@ -91,6 +91,10 @@ function escapeRegex(str) {
   return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
+function escapeHtml(str) {
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
 function slugify(text) {
   return text.toLowerCase()
     .replace(/[âÂ]/g,'a').replace(/[çÇ]/g,'c').replace(/[êÊ]/g,'e')
@@ -181,11 +185,18 @@ function loadIcerik(filterKisim, filterText) {
   if (!window.tocData) { list.innerHTML = '<div class="loading">Veriler yükleniyor...</div>'; return; }
 
   const kisimFilter = filterKisim || document.getElementById('kisim-filter')?.value || 'all';
-  const searchText = (filterText || document.getElementById('icerik-search')?.value || '').toLowerCase();
+  const rawSearch = filterText || document.getElementById('icerik-search')?.value || '';
+  const searchText = rawSearch.toLowerCase();
 
   let filtered = window.tocData;
   if (kisimFilter !== 'all') filtered = filtered.filter(m => m.kisim == kisimFilter);
-  if (searchText) filtered = filtered.filter(m => m.baslik.toLowerCase().includes(searchText));
+  if (searchText) {
+    const { variants: sVariants } = expandSearchQuery(rawSearch);
+    filtered = filtered.filter(m => {
+      const nb = normalizeSearch(m.baslik || '');
+      return sVariants.some(v => nb.includes(v));
+    });
+  }
 
   const kisimLabels = { 1: 'Birinci K\u0131s\u0131m', 2: '\u0130kinci K\u0131s\u0131m', 3: '\u00dc\u00e7\u00fcnc\u00fc K\u0131s\u0131m' };
   let currentKisim = 0;
@@ -664,14 +675,20 @@ function loadSozluk(filterKat, filterText) {
   if (!window.sozlukData) { list.innerHTML = '<div class="loading">S\u00f6zl\u00fck y\u00fckleniyor...</div>'; return; }
 
   const katFilter = filterKat || 'all';
-  const searchText = (filterText || document.getElementById('sozluk-search')?.value || '').toLowerCase();
+  const rawSozlukSearch = filterText || document.getElementById('sozluk-search')?.value || '';
+  const searchText = rawSozlukSearch.toLowerCase();
 
   let filtered = window.sozlukData;
   if (katFilter !== 'all') filtered = filtered.filter(s => s.kategori === katFilter);
-  if (searchText) filtered = filtered.filter(s =>
-    s.kelime.toLowerCase().includes(searchText) || s.anlam.toLowerCase().includes(searchText) ||
-    (s.alternatif && s.alternatif.some(a => a.toLowerCase().includes(searchText)))
-  );
+  if (searchText) {
+    const { variants: szVariants } = expandSearchQuery(rawSozlukSearch);
+    filtered = filtered.filter(s => {
+      const nk = normalizeSearch(s.kelime || '');
+      const na = normalizeSearch(s.anlam || '');
+      const altMatch = s.alternatif && s.alternatif.some(a => szVariants.some(v => normalizeSearch(a).includes(v)));
+      return szVariants.some(v => nk.includes(v) || na.includes(v)) || altMatch;
+    });
+  }
 
   filtered.sort((a, b) => a.kelime.localeCompare(b.kelime, 'tr'));
 
@@ -994,10 +1011,65 @@ function renderIkiListe(veriler) {
   return html;
 }
 
+// ===== ARAMA NORMALİZASYON =====
+
+// Diyakritikleri kaldır — metin ve sorgu için aynı dönüşüm uygulanır
+// Tüm dönüşümler 1-to-1 olduğu için karakter konumları korunur
+function normalizeSearch(text) {
+  if (!text) return '';
+  return text
+    .replace(/[âÂ]/g, 'a').replace(/[çÇ]/g, 'c')
+    .replace(/[ğĞ]/g, 'g').replace(/ı/g, 'i').replace(/I/g, 'i').replace(/İ/g, 'i')
+    .replace(/[îÎ]/g, 'i').replace(/[öÖ]/g, 'o').replace(/[şŞ]/g, 's')
+    .replace(/[üÜ]/g, 'u').replace(/[ûÛ]/g, 'u').replace(/[êÊ]/g, 'e')
+    .replace(/[''\u2018\u2019]/g, ' ')
+    .toLowerCase()
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+// Bu kitaba özgü yazım varyantları
+// Sol: kullanıcının yazabileceği modern/alternatif form (normalleştirilmiş)
+// Sağ: kitabın kullandığı Osmanlıca/Arapça form (normalleştirilmiş)
+const OTTOMAN_VARIANTS = {
+  'namaz':   'nemaz',   // nemâz  (kitabın kullandığı Osmanlıca form)
+  'gusul':   'gusl',    // gusl   (kitapta sesli harf yok)
+  'vitir':   'vitr',    // vitr nemâzı
+  'vacip':   'vacib',   // vâcib
+  'sehiv':   'sehv',    // secde-i sehv
+  'kiraat':  'kiraet',  // kıraet (kitaptaki form)
+  'ibadat':  'ibadet',  // kitapta ibadet daha yaygın
+};
+
+// Sorguyu genişlet: hem normalize et hem varyantları üret
+function expandSearchQuery(rawQuery) {
+  const normalized = normalizeSearch(rawQuery);
+  const variants = new Set([normalized]);
+
+  const words = normalized.split(/\s+/);
+  words.forEach(word => {
+    // Modern → Osmanlıca
+    if (OTTOMAN_VARIANTS[word]) {
+      variants.add(normalized.split(/\s+/).map(w => w === word ? OTTOMAN_VARIANTS[word] : w).join(' '));
+    }
+    // Osmanlıca → Modern (ters yön)
+    Object.entries(OTTOMAN_VARIANTS).forEach(([modern, ottoman]) => {
+      if (word === ottoman) {
+        variants.add(normalized.split(/\s+/).map(w => w === word ? modern : w).join(' '));
+      }
+    });
+  });
+
+  // Hangi varyant orijinalden farklı?
+  const altVariants = Array.from(variants).filter(v => v !== normalized);
+  return { normalized, variants: Array.from(variants), altVariants };
+}
+
 // ===== ARAMA =====
 async function doFullSearch(fromRoute) {
-  const query = document.getElementById('full-search').value.trim().toLowerCase();
-  if (!query || query.length < 2) return;
+  const rawQuery = document.getElementById('full-search').value.trim();
+  if (!rawQuery || rawQuery.length < 2) return;
+  const query = rawQuery.toLowerCase();
 
   if (!fromRoute) updateHash(`arama/${encodeURIComponent(query)}`);
 
@@ -1011,21 +1083,34 @@ async function doFullSearch(fromRoute) {
 
   await Promise.all([loadKisimTexts(1), loadKisimTexts(2), loadKisimTexts(3)]);
 
+  // Sorguyu normalize et ve varyantlar üret
+  const { normalized: normQuery, variants, altVariants } = expandSearchQuery(rawQuery);
+
   const kisimLabels = { 1: 'Birinci K\u0131s\u0131m', 2: '\u0130kinci K\u0131s\u0131m', 3: '\u00dc\u00e7\u00fcnc\u00fc K\u0131s\u0131m' };
   const matches = [];
 
   window.maddelerData.forEach(m => {
     const fullText = kisimTextsCache[m.kisim]?.[String(m.madde_no)] || m.metin || '';
-    const metin = fullText.toLowerCase();
-    const baslik = (m.baslik || '').toLowerCase();
-    const idx = metin.indexOf(query);
-    const inTitle = baslik.includes(query);
+    // Hem metin hem başlık normalize edilmiş formda aranır
+    const normText = normalizeSearch(fullText);
+    const normBaslik = normalizeSearch(m.baslik || '');
+
+    // İlk eşleşen varyantı bul
+    let matchedVariant = null;
+    let idx = -1;
+    for (const v of variants) {
+      const i = normText.indexOf(v);
+      if (i !== -1) { idx = i; matchedVariant = v; break; }
+    }
+    const inTitle = variants.some(v => normBaslik.includes(v));
 
     if (idx !== -1 || inTitle) {
       let context = '';
       if (idx !== -1) {
+        // Konumlar 1-to-1 normalize edildiğinden orijinal metinde aynı konumu kullanabiliriz
+        const termLen = matchedVariant.length;
         const start = Math.max(0, idx - 80);
-        const end = Math.min(fullText.length, idx + query.length + 80);
+        const end = Math.min(fullText.length, idx + termLen + 80);
         context = (start > 0 ? '...' : '') +
           fullText.substring(start, end) +
           (end < fullText.length ? '...' : '');
@@ -1037,6 +1122,7 @@ async function doFullSearch(fromRoute) {
         baslik: m.baslik,
         sayfa_no: m.sayfa_no,
         context: context,
+        matchedVariant: matchedVariant,
         inTitle: inTitle
       });
     }
@@ -1044,13 +1130,46 @@ async function doFullSearch(fromRoute) {
 
   matches.sort((a, b) => (b.inTitle ? 1 : 0) - (a.inTitle ? 1 : 0));
 
-  let html = `<p style="color:var(--text-muted);margin-bottom:16px;">${matches.length} sonu\u00e7 bulundu</p>`;
+  // Varyant uyarısı: kullanıcı farklı yazım kullandıysa bildir
+  let variantNote = '';
+  if (altVariants.length > 0) {
+    const altList = altVariants.map(v => `<strong>${v}</strong>`).join(', ');
+    variantNote = `<p style="color:var(--accent);font-size:0.88em;margin-bottom:12px;">
+      "\u200b${escapeHtml(rawQuery)}" i\u00e7in ayn\u0131 zamanda ${altList} olarak da arand\u0131.</p>`;
+  }
+
+  let html = variantNote + `<p style="color:var(--text-muted);margin-bottom:16px;">${matches.length} sonu\u00e7 bulundu</p>`;
 
   matches.slice(0, 50).forEach(m => {
-    const highlighted = m.context.replace(
-      new RegExp(escapeRegex(query), 'gi'),
-      match => `<mark>${match}</mark>`
-    );
+    // Normalize edilmiş bağlamda eşleşen konumları bul, orijinal metinde işaretle
+    // (normalizasyon 1-to-1 olduğu için pozisyonlar birebir uyuşur)
+    const normCtx = normalizeSearch(m.context);
+    let highlighted = m.context;
+    if (normCtx) {
+      // Tüm varyant eşleşmelerini bul ve sırala
+      const positions = [];
+      for (const v of variants) {
+        let from = 0;
+        while (true) {
+          const i = normCtx.indexOf(v, from);
+          if (i === -1) break;
+          positions.push({ start: i, end: i + v.length });
+          from = i + 1;
+        }
+      }
+      positions.sort((a, b) => a.start - b.start);
+      // Üst üste binen aralıkları birleştir, geriye doğru uygula (konumları bozmamak için)
+      const merged = [];
+      for (const p of positions) {
+        if (merged.length && p.start <= merged[merged.length - 1].end) {
+          merged[merged.length - 1].end = Math.max(merged[merged.length - 1].end, p.end);
+        } else { merged.push({ ...p }); }
+      }
+      for (let i = merged.length - 1; i >= 0; i--) {
+        const { start, end } = merged[i];
+        highlighted = highlighted.slice(0, start) + '<mark>' + highlighted.slice(start, end) + '</mark>' + highlighted.slice(end);
+      }
+    }
 
     html += `
       <div class="arama-result" onclick="openMadde(${m.kisim}, ${m.madde_no})">
