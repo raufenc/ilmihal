@@ -1,0 +1,2181 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Namaz Vakitleri — Astronomik Rehber | Se'âdet-i Ebediyye</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --bg:#06091a;--bg2:#0c1225;--bg3:#101a35;--card:#0f1830;
+  --sun:#f5c842;--sun2:#e87c2a;--accent:#f5c842;
+  --text:#e8e6df;--text2:#8a8a9a;--text3:#b8b6af;
+  --blue:#3b82f6;--teal:#14b8a6;--green:#4ade80;--red:#f87171;
+  --border:rgba(255,255,255,0.08);
+  --glow:rgba(245,200,66,0.15);
+}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;line-height:1.7;overflow-x:hidden;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(6,9,26,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 1.5rem;}
+.nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:60px;}
+.nav-logo{font-family:'Amiri',serif;font-size:1.15rem;color:var(--accent);letter-spacing:1px;}
+.nav-links{display:flex;gap:0.2rem;flex-wrap:wrap;}
+.nav-links a{color:var(--text2);text-decoration:none;font-size:0.82rem;padding:6px 10px;border-radius:6px;transition:all .2s;}
+.nav-links a:hover{color:var(--accent);background:var(--glow);}
+
+/* HERO */
+#hero{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden;padding-top:60px;}
+#starfield{position:absolute;inset:0;width:100%;height:100%;}
+.hero-content{position:relative;z-index:2;max-width:700px;padding:2rem;}
+.hero-tag{display:inline-block;background:rgba(245,200,66,0.12);border:1px solid rgba(245,200,66,0.3);color:var(--accent);font-size:0.75rem;letter-spacing:2px;padding:5px 14px;border-radius:20px;margin-bottom:1.5rem;text-transform:uppercase;}
+.hero-title{font-size:clamp(2.4rem,6vw,4.5rem);font-weight:700;letter-spacing:-1px;line-height:1.1;margin-bottom:1rem;}
+.hero-title span{color:var(--accent);}
+.hero-sub{font-family:'Amiri',serif;font-size:clamp(1rem,2.5vw,1.4rem);color:var(--text3);margin-bottom:0.5rem;}
+.hero-author{color:var(--text2);font-size:0.9rem;font-style:italic;margin-bottom:2.5rem;}
+.hero-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;}
+.btn{padding:12px 28px;border-radius:10px;font-size:0.9rem;font-weight:600;cursor:pointer;transition:all .2s;text-decoration:none;display:inline-block;}
+.btn-primary{background:var(--accent);color:#06091a;}
+.btn-primary:hover{background:#ffd966;transform:translateY(-2px);}
+.btn-ghost{background:transparent;color:var(--text);border:1px solid var(--border);}
+.btn-ghost:hover{border-color:var(--accent);color:var(--accent);}
+.scroll-hint{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:0.5rem;color:var(--text2);font-size:0.75rem;animation:bounce 2s infinite;}
+@keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0);}50%{transform:translateX(-50%) translateY(8px);}}
+.scroll-arrow{width:1px;height:28px;background:linear-gradient(to bottom,transparent,var(--accent));}
+
+/* SECTIONS */
+section{padding:80px 1.5rem;}
+.container{max-width:1100px;margin:0 auto;}
+.section-label{color:var(--accent);font-size:0.75rem;letter-spacing:2px;text-transform:uppercase;margin-bottom:0.6rem;}
+.section-title{font-size:clamp(1.8rem,4vw,2.8rem);font-weight:700;margin-bottom:1rem;line-height:1.2;}
+.section-desc{color:var(--text3);font-size:1.05rem;max-width:650px;margin-bottom:3rem;}
+
+/* SOLAR DIAGRAM SECTION */
+#gunes-arc{background:var(--bg2);}
+.diagram-wrap{background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;}
+#solar-canvas{width:100%;display:block;cursor:pointer;}
+.diagram-controls{padding:1rem 1.5rem;border-top:1px solid var(--border);display:flex;align-items:center;gap:1rem;flex-wrap:wrap;}
+.ctrl-btn{background:rgba(255,255,255,0.06);border:1px solid var(--border);color:var(--text);padding:8px 16px;border-radius:8px;font-size:0.82rem;cursor:pointer;transition:all .2s;}
+.ctrl-btn:hover,.ctrl-btn.active{background:var(--glow);border-color:var(--accent);color:var(--accent);}
+.ctrl-btn.play{background:var(--accent);color:#06091a;border:none;font-weight:600;}
+.ctrl-btn.play:hover{background:#ffd966;}
+.timeline-bar{flex:1;min-width:200px;}
+.timeline-track{width:100%;height:8px;background:rgba(255,255,255,0.1);border-radius:4px;cursor:pointer;position:relative;}
+.timeline-fill{height:100%;border-radius:4px;background:linear-gradient(to right,#1a3a6a,#2d6abf,#87ceeb,var(--sun),var(--sun2),#87ceeb,#2d6abf,#1a3a6a);transition:width .05s;}
+.timeline-handle{position:absolute;top:50%;transform:translate(-50%,-50%);width:16px;height:16px;background:var(--accent);border-radius:50%;border:2px solid #06091a;cursor:grab;transition:left .05s;}
+.time-display{font-size:0.85rem;color:var(--text2);margin-top:0.3rem;}
+.prayer-btns{display:flex;gap:0.5rem;flex-wrap:wrap;}
+.prayer-btn{font-size:0.75rem;padding:5px 10px;border-radius:6px;border:1px solid var(--border);cursor:pointer;transition:all .2s;color:var(--text2);display:flex;flex-direction:column;align-items:center;gap:1px;line-height:1.3;}
+.prayer-btn:hover{border-color:var(--accent);color:var(--accent);}
+.pb-time{font-size:0.82rem;font-weight:700;color:var(--accent);font-variant-numeric:tabular-nums;letter-spacing:0.02em;}
+.prayer-btn:hover .pb-time{color:var(--accent);}
+
+/* PRAYER TIME CARDS */
+#vakitler{background:var(--bg);}
+.cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.5rem;}
+.prayer-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.5rem;position:relative;overflow:hidden;transition:all .3s;cursor:pointer;}
+.prayer-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;}
+.prayer-card:hover{transform:translateY(-4px);border-color:rgba(255,255,255,0.15);box-shadow:0 20px 40px rgba(0,0,0,0.4);}
+.card-icon{font-size:2rem;margin-bottom:0.75rem;}
+.card-name{font-size:1.2rem;font-weight:700;margin-bottom:0.2rem;}
+.card-arabic{font-family:'Amiri',serif;font-size:1rem;color:var(--text2);margin-bottom:0.8rem;direction:rtl;}
+.card-angle{display:inline-flex;align-items:center;gap:0.4rem;background:rgba(255,255,255,0.06);border-radius:6px;padding:3px 10px;font-size:0.8rem;margin-bottom:0.8rem;}
+.card-angle .angle-val{font-weight:700;color:var(--accent);}
+.card-desc{color:var(--text3);font-size:0.88rem;line-height:1.65;}
+.card-detail{color:var(--text2);font-size:0.82rem;margin-top:0.8rem;padding-top:0.8rem;border-top:1px solid var(--border);}
+
+/* TEMKIN */
+#temkin{background:var(--bg2);}
+#temkin-canvas{width:100%;border-radius:16px;background:var(--card);border:1px solid var(--border);display:block;margin-bottom:0.5rem;}
+.temkin-sunset-controls{display:flex;align-items:center;gap:1rem;margin-bottom:2rem;flex-wrap:wrap;}
+.temkin-elev-label{color:var(--text2);font-size:0.88rem;white-space:nowrap;}
+.temkin-elev-label strong{color:var(--accent);font-variant-numeric:tabular-nums;}
+.temkin-sunset-controls .sp-time-slider{flex:1;min-width:120px;}
+.temkin-comps{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-bottom:1.5rem;}
+@media(max-width:700px){.temkin-comps{grid-template-columns:1fr;}}
+.temkin-comp{background:var(--card);border:1px solid var(--border);border-left:3px solid;border-radius:12px;padding:1.4rem;}
+.tc-title{font-weight:700;font-size:0.9rem;margin-bottom:0.5rem;color:var(--text);}
+.tc-val{font-size:2rem;font-weight:700;margin-bottom:0.5rem;font-variant-numeric:tabular-nums;letter-spacing:-1px;transition:color 0.3s;}
+.tc-desc{color:var(--text3);font-size:0.83rem;line-height:1.65;}
+.tc-desc code{background:rgba(255,255,255,0.08);padding:0.15em 0.4em;border-radius:4px;font-size:0.85em;color:var(--text2);}
+.tc-formula{color:var(--text3);font-size:0.78rem;margin-top:0.5rem;padding-top:0.5rem;border-top:1px solid var(--border);font-variant-numeric:tabular-nums;}
+.temkin-formula-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.5rem;margin-bottom:1.5rem;border-top:2px solid var(--accent);}
+.temkin-formula-card h4{color:var(--accent);margin-bottom:1rem;font-size:1rem;}
+.temkin-eq-row{display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap;margin-bottom:0.6rem;font-size:0.92rem;color:var(--text2);font-variant-numeric:tabular-nums;}
+.teq-label{color:var(--text3);min-width:140px;font-size:0.85rem;}
+.temkin-eq-result{padding-top:0.6rem;border-top:1px solid var(--border);margin-top:0.4rem;}
+.temkin-formula-card .tc-note{color:var(--text3);font-size:0.83rem;margin-top:1rem;font-style:italic;}
+
+/* TADIL ZAMAN */
+#tadilzaman{background:var(--bg);}
+.tadil-wrap{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:2rem;}
+#tadil-canvas{width:100%;display:block;}
+.tadil-desc{color:var(--text3);font-size:0.9rem;margin-top:1rem;}
+.tadil-controls{display:flex;gap:1rem;flex-wrap:wrap;align-items:flex-end;margin-bottom:1rem;}
+.tadil-field label{display:block;font-size:0.75rem;color:var(--text2);margin-bottom:0.4rem;letter-spacing:.5px;}
+.tadil-field input[type="date"],.tadil-field select{background:var(--bg);border:1px solid var(--border);color:var(--text);border-radius:10px;padding:9px 12px;font-size:0.88rem;font-family:'Inter',sans-serif;outline:none;}
+.tadil-field input[type="date"]:focus,.tadil-field select:focus{border-color:rgba(245,200,66,0.4);}
+.tadil-btn{background:var(--accent);border:none;color:#06091a;border-radius:10px;padding:9px 18px;font-weight:700;cursor:pointer;font-size:0.88rem;font-family:'Inter',sans-serif;transition:background .2s;}
+.tadil-btn:hover{background:#ffd966;}
+.tadil-slider-box{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:10px 14px;margin-bottom:1rem;}
+.tadil-slider-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;font-size:0.78rem;color:var(--text3);}
+.tadil-slider-top input[type="range"]{width:100%;accent-color:var(--accent);}
+.tadil-kpi{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:1rem;}
+.tadil-kpi-box{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:10px 14px;flex:1;min-width:180px;}
+.tadil-kpi-box .kt{font-size:0.75rem;color:var(--text2);margin-bottom:0.3rem;}
+.tadil-kpi-box .kv{font-size:0.95rem;font-weight:700;color:var(--text);}
+
+.badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:0.75rem;font-weight:600;}
+.badge-yellow{background:rgba(245,200,66,0.15);color:var(--accent);}
+.badge-blue{background:rgba(96,165,250,0.15);color:#60a5fa;}
+.badge-green{background:rgba(74,222,128,0.15);color:#4ade80;}
+.badge-purple{background:rgba(167,139,250,0.15);color:#a78bfa;}
+
+
+/* GLOBAL CONTROLS BAR */
+.global-controls{display:flex;gap:1rem;flex-wrap:wrap;align-items:flex-end;margin-bottom:1.5rem;background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1rem 1.2rem;}
+.gc-field label{display:block;font-size:0.72rem;color:var(--text2);margin-bottom:0.35rem;letter-spacing:.5px;text-transform:uppercase;}
+.gc-field select,.gc-field input[type="date"]{background:var(--bg);border:1px solid var(--border);color:var(--text);border-radius:10px;padding:8px 12px;font-size:0.85rem;font-family:'Inter',sans-serif;outline:none;min-width:140px;}
+.gc-field select:focus,.gc-field input[type="date"]:focus{border-color:rgba(245,200,66,0.4);}
+.gc-info{margin-left:auto;text-align:right;font-size:0.78rem;color:var(--text2);line-height:1.5;}
+.gc-info strong{color:var(--accent);}
+
+/* SUN PATH SECTION */
+#gunes-yolu{background:var(--bg2);}
+.sunpath-layout{display:grid;grid-template-columns:1fr 1fr;gap:2rem;align-items:start;}
+@media(max-width:860px){.sunpath-layout{grid-template-columns:1fr;}}
+.sunpath-canvas-wrap{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.2rem;position:relative;}
+#sunpath-canvas{width:100%;display:block;border-radius:10px;}
+.sunpath-right{display:flex;flex-direction:column;gap:1.5rem;}
+
+/* FORMULA DISPLAY */
+.formula-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.5rem;position:relative;overflow:hidden;}
+.formula-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(to right,var(--accent),var(--sun2));}
+.formula-title{font-family:'Amiri',serif;font-size:1.1rem;color:var(--accent);margin-bottom:1rem;}
+.formula-eq{font-size:1.05rem;color:var(--text);line-height:2.2;font-family:'Inter',sans-serif;text-align:center;padding:0.8rem;background:rgba(0,0,0,0.25);border-radius:10px;margin-bottom:1rem;}
+.formula-eq .fv{display:inline-block;min-width:42px;text-align:center;padding:2px 6px;border-radius:6px;font-weight:700;transition:all 0.4s;}
+.formula-eq .fv-h{color:#4ade80;background:rgba(74,222,128,0.12);}
+.formula-eq .fv-phi{color:#60a5fa;background:rgba(96,165,250,0.12);}
+.formula-eq .fv-dec{color:#f97316;background:rgba(249,115,22,0.12);}
+.formula-eq .fv-ha{color:#a78bfa;background:rgba(167,139,250,0.12);}
+.formula-vars{display:grid;grid-template-columns:1fr 1fr;gap:0.6rem;}
+.formula-var{display:flex;align-items:center;gap:0.5rem;font-size:0.82rem;padding:0.4rem 0.6rem;border-radius:8px;background:rgba(0,0,0,0.15);}
+.formula-var .fv-sym{font-weight:700;min-width:20px;text-align:center;}
+.formula-var .fv-name{color:var(--text2);font-size:0.75rem;}
+.formula-var .fv-val{margin-left:auto;font-weight:600;font-variant-numeric:tabular-nums;}
+
+/* CELESTIAL SPHERE DIAGRAM */
+.sphere-wrap{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.2rem;}
+#sphere-canvas{width:100%;display:block;border-radius:10px;}
+
+/* SUNPATH TIME CONTROLS */
+.sp-controls{display:flex;gap:0.6rem;align-items:center;margin-top:0.8rem;flex-wrap:wrap;}
+.sp-controls .ctrl-btn{background:var(--bg);border:1px solid var(--border);color:var(--text);border-radius:8px;padding:6px 14px;font-size:0.82rem;cursor:pointer;font-family:'Inter',sans-serif;transition:all .2s;}
+.sp-controls .ctrl-btn:hover{border-color:var(--accent);color:var(--accent);}
+.sp-controls .ctrl-btn.play{background:var(--accent);color:#06091a;border-color:var(--accent);font-weight:700;}
+.sp-time-slider{flex:1;min-width:120px;accent-color:var(--accent);}
+.sp-time-label{font-size:0.82rem;color:var(--text2);font-variant-numeric:tabular-nums;}
+
+/* PRAYER TIMES RESULT TABLE */
+.prayer-results{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.2rem;margin-top:1.5rem;}
+.prayer-results h4{font-size:0.9rem;color:var(--accent);margin-bottom:0.8rem;font-family:'Amiri',serif;}
+.pr-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.4rem 1rem;}
+.pr-item{display:flex;justify-content:space-between;padding:0.35rem 0.5rem;border-radius:6px;font-size:0.82rem;}
+.pr-item:nth-child(odd){background:rgba(0,0,0,0.15);}
+.pr-item .pr-name{color:var(--text3);}
+.pr-item .pr-time{font-weight:600;color:var(--text);font-variant-numeric:tabular-nums;}
+
+/* FOOTER */
+footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem 1.5rem;text-align:center;}
+.footer-logo{font-family:'Amiri',serif;font-size:1.2rem;color:var(--accent);margin-bottom:0.5rem;}
+.footer-text{color:var(--text2);font-size:0.85rem;}
+
+/* RESPONSIVE */
+@media(max-width:640px){
+  .diagram-controls{flex-direction:column;align-items:stretch;}
+  .prayer-btns{flex-wrap:wrap;}
+  nav .nav-links{display:none;}
+}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:6px;}
+::-webkit-scrollbar-track{background:var(--bg);}
+::-webkit-scrollbar-thumb{background:var(--bg3);border-radius:3px;}
+
+/* SMOOTH APPEAR */
+.fade-in{opacity:0;transform:translateY(20px);transition:opacity .6s,transform .6s;}
+.fade-in.visible{opacity:1;transform:none;}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="../" class="nav-back-a" style="font-size:0.85rem;color:var(--text2);text-decoration:none;padding:6px 10px;border-radius:6px;transition:all .2s;" onmouseover="this.style.color='var(--accent)';this.style.background='var(--glow)'" onmouseout="this.style.color='var(--text2)';this.style.background=''">← Se'âdet-i Ebediyye</a>
+    <div class="nav-logo">☪ Namâz Vakitleri</div>
+    <div class="nav-links">
+      <a href="#gunes-arc">Güneş Yolculuğu</a>
+      <a href="#gunes-yolu">Güneş Yolu</a>
+      <a href="#vakitler">Vakitler</a>
+      <a href="#temkin">Temkin</a>
+      <a href="#tadilzaman">Ta'dîl-i Zemân</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <canvas id="starfield"></canvas>
+  <div class="hero-content">
+    <div class="hero-tag">Astronomik Rehber</div>
+    <h1 class="hero-title">NAMAZ<br><span>VAKİTLERİ</span></h1>
+    <p class="hero-sub">Güneşin gökyüzündeki yolculuğu ve<br>İslam'ın beş vakit namazının astronomik sırları</p>
+    <p class="hero-author">Se'âdet-i Ebediyye</p>
+    <div class="hero-btns">
+      <a href="#gunes-arc" class="btn btn-primary">Keşfet</a>
+    </div>
+  </div>
+  <div class="scroll-hint"><span>Aşağı kaydır</span><div class="scroll-arrow"></div></div>
+</section>
+
+<!-- SOLAR DIAGRAM -->
+<section id="gunes-arc">
+  <div class="container">
+    <div class="section-label fade-in">İnteraktif Görsel</div>
+    <h2 class="section-title fade-in">Güneşin Bir Günlük Yolculuğu</h2>
+    <p class="section-desc fade-in">Güneşin doğudan batıya yaptığı yolculukta namaz vakitleri nasıl belirlenir? Aşağıdaki animasyonu başlatın veya vakitler arasında geçiş yapın.</p>
+
+    <!-- Global Controls -->
+    <div class="global-controls fade-in">
+      <div class="gc-field">
+        <label>Tarih</label>
+        <input type="date" id="gc-date" />
+      </div>
+      <div class="gc-field">
+        <label>Konum</label>
+        <select id="gc-city"></select>
+      </div>
+      <div class="gc-info">
+        <span id="gc-coords"></span><br>
+        <span id="gc-decl"></span>
+      </div>
+    </div>
+
+    <div class="diagram-wrap fade-in">
+      <canvas id="solar-canvas" height="380"></canvas>
+      <div class="diagram-controls">
+        <button class="ctrl-btn play" id="playBtn" onclick="togglePlay()">▶ Başlat</button>
+        <div class="timeline-bar">
+          <div class="timeline-track" id="timelineTrack">
+            <div class="timeline-fill" id="timelineFill" style="width:0%"></div>
+            <div class="timeline-handle" id="timelineHandle" style="left:0%"></div>
+          </div>
+          <div class="time-display" id="timeDisplay">İmsak · Fecr-i Sâdık başlangıcı</div>
+        </div>
+        <div class="prayer-btns">
+          <button class="prayer-btn" onclick="jumpTo(0,'İmsak')">İmsak</button>
+          <button class="prayer-btn" onclick="jumpTo(0.10,'Güneş Doğuşu')">Güneş Doğuşu</button>
+          <button class="prayer-btn" onclick="jumpTo(0.50,'Öğle')">Öğle</button>
+          <button class="prayer-btn" onclick="jumpTo(0.64,'İkindi')">İkindi</button>
+          <button class="prayer-btn" onclick="jumpTo(0.90,'Akşam')">Akşam</button>
+          <button class="prayer-btn" onclick="jumpTo(0.956,'Yatsı')">Yatsı</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GÜNEŞ YOLU DİYAGRAMI -->
+<section id="gunes-yolu">
+  <div class="container">
+    <div class="section-label fade-in">Astronomik Hesap</div>
+    <h2 class="section-title fade-in">Güneş Yolu Diyagramı</h2>
+    <p class="section-desc fade-in">Güneşin gökyüzündeki yolculuğu stereografik projeksiyon ile gösterilir. Merkez zenit (baş üstü), dış çember ufuk çizgisidir. Yaz ve kış gündönümlerindeki farklı yolları karşılaştırın.</p>
+
+    <div class="sunpath-layout fade-in">
+      <!-- Sol: Polar Diyagram -->
+      <div>
+        <div class="sunpath-canvas-wrap">
+          <canvas id="sunpath-canvas" height="500"></canvas>
+          <div class="sp-controls">
+            <button class="ctrl-btn play" id="spPlayBtn">&#9654; Animasyon</button>
+            <input type="range" class="sp-time-slider" id="spTimeSlider" min="0" max="1440" step="1" value="720">
+            <span class="sp-time-label" id="spTimeLabel">12:00</span>
+          </div>
+        </div>
+        <!-- Hesaplanan Namaz Vakitleri -->
+        <div class="prayer-results fade-in">
+          <h4>Hesaplanan Namaz Vakitleri</h4>
+          <div class="pr-grid" id="pr-grid"></div>
+        </div>
+      </div>
+
+      <!-- Sag: Formul + Gok Kuresi -->
+      <div class="sunpath-right">
+        <!-- Formul -->
+        <div class="formula-card">
+          <div class="formula-title">Güneş İrtifâ Açısı Formülü</div>
+          <div class="formula-eq">
+            sin(<span class="fv fv-h" id="fv-h">h</span>) =
+            sin(<span class="fv fv-phi" id="fv-phi">&phi;</span>) &middot;
+            sin(<span class="fv fv-dec" id="fv-dec">&delta;</span>) +
+            cos(<span class="fv fv-phi">&#966;</span>) &middot;
+            cos(<span class="fv fv-dec">&delta;</span>) &middot;
+            cos(<span class="fv fv-ha" id="fv-ha">H</span>)
+          </div>
+          <div class="formula-vars" id="formula-vars">
+            <div class="formula-var"><span class="fv-sym fv-h">h</span><span class="fv-name">İrtifâ</span><span class="fv-val" id="fvar-h">—</span></div>
+            <div class="formula-var"><span class="fv-sym fv-phi">&phi;</span><span class="fv-name">Arz-ı Belde</span><span class="fv-val" id="fvar-phi">—</span></div>
+            <div class="formula-var"><span class="fv-sym fv-dec">&delta;</span><span class="fv-name">Meyl (Deklinasyon)</span><span class="fv-val" id="fvar-dec">—</span></div>
+            <div class="formula-var"><span class="fv-sym fv-ha">H</span><span class="fv-name">Fadl-ı Dâir (Saat Açısı)</span><span class="fv-val" id="fvar-ha">—</span></div>
+          </div>
+        </div>
+
+        <!-- Gok Kuresi Kesiti -->
+        <div class="sphere-wrap">
+          <div class="formula-title" style="padding:0 0 0.5rem 0.3rem;">Gök Küresi Kesiti</div>
+          <canvas id="sphere-canvas" height="320"></canvas>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- PRAYER TIME CARDS -->
+<section id="vakitler">
+  <div class="container">
+    <div class="section-label fade-in">Namaz Vakitleri</div>
+    <h2 class="section-title fade-in">Beş Vakit ve Astronomik Tanımları</h2>
+    <p class="section-desc fade-in">Her namaz vaktinin başlangıcı ve sonu, güneşin ufka göre belirli bir açıda bulunmasıyla belirlenir.</p>
+    <div class="cards-grid">
+
+      <div class="prayer-card fade-in" style="--c:#6366f1;">
+        <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(to right,#1e3a8a,#6366f1);"></div>
+        <div class="card-icon">🌑</div>
+        <div class="card-name">İmsak — Fecr-i Sâdık</div>
+        <div class="card-arabic">الفجر الصادق</div>
+        <div class="card-angle">Güneş irtifâsı: <span class="angle-val">-19°</span></div>
+        <div class="card-desc">Güneş doğu ufkunun 19 derece altındayken, doğu tarafında beyaz ışığın yayılmaya başladığı andır. Sabah namazının vaktinin ve orucun başlangıcıdır.</div>
+        <div class="card-detail">Dört mezhepte de aynı irtifâ değeri (-19°) kullanılır. Bu anlık Fecr-i Kâzib ile karıştırılmamalıdır; fecr-i kâzib dik bir ışık sütunu gibi görünür, fecr-i sâdık ufka yayılır.</div>
+      </div>
+
+      <div class="prayer-card fade-in" style="--c:#f59e0b;">
+        <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(to right,#f59e0b,#f5c842);"></div>
+        <div class="card-icon">🌅</div>
+        <div class="card-name">Güneş Doğuşu — Tulû'</div>
+        <div class="card-arabic">طُلُوع الشَّمْس</div>
+        <div class="card-angle">Güneş irtifâsı: <span class="angle-val">0°</span></div>
+        <div class="card-desc">Güneşin üst kenarının doğu ufkunda göründüğü andır. Sabah namazının vakti bu anda sona erer. Aynı zamanda Kuşluk (İşrâk) namazının vakti başlar.</div>
+        <div class="card-detail">Sabah namazı: Fecr-i Sâdık → Tulû' arasında kılınır. Güneş doğduktan sonra kılınmaz, kazaya kalır.</div>
+      </div>
+
+      <div class="prayer-card fade-in">
+        <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(to right,#f59e0b,#fbbf24);"></div>
+        <div class="card-icon">☀️</div>
+        <div class="card-name">Sabah Keraheti</div>
+        <div class="card-arabic">كَرَاهَة الصُّبْح</div>
+        <div class="card-angle">Güneş irtifâsı: <span class="angle-val">0° → +5°</span></div>
+        <div class="card-desc">Güneşin doğduğu andan ufuktan 5 derece yükseleceği ana kadar geçen süre mekrûh vaktidir. Bu vakitte nafile namaz kılmak mekrûhtur.</div>
+        <div class="card-detail">Güneş ufuktan 5 derece yükselince bu kerahet sona erer ve Kuşluk namazı kılınabilir.</div>
+      </div>
+
+      <div class="prayer-card fade-in">
+        <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(to right,#f5c842,#fde68a);"></div>
+        <div class="card-icon">🔆</div>
+        <div class="card-name">Öğle — Zuhr</div>
+        <div class="card-arabic">الظُّهْر</div>
+        <div class="card-angle">Güneş: <span class="angle-val">Zeval sonrası</span></div>
+        <div class="card-desc">Güneşin gün içindeki en yüksek noktasını (zevâl) geçtikten hemen sonra başlar. Herşeyin gölgesi kendi boyuna ek olarak kendi boyu kadar uzayana kadar sürer.</div>
+        <div class="card-detail">
+          <strong>Öğle Keraheti (İstiâvâ):</strong> Güneşin tepe noktasında bulunduğu kısa süre mekrûh vaktidir.<br><br>
+          <strong>Öğle Vakti Sonu:</strong> Gölge boyunun esas gölge (Fey-i Zevâl) + 1 çubuk boyu olduğu an (Şâfiî) veya + 2 çubuk boyu olduğu an (Hanefî).
+        </div>
+      </div>
+
+      <div class="prayer-card fade-in">
+        <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(to right,#f97316,#fb923c);"></div>
+        <div class="card-icon">🌤️</div>
+        <div class="card-name">İkindi — Asr</div>
+        <div class="card-arabic">العَصْر</div>
+        <div class="card-angle">Gölge: <span class="angle-val">1× veya 2× boy</span></div>
+        <div class="card-desc">Gölgenin belirli bir uzunluğa ulaştığı anda başlar ve güneşin batması ile sona erer. İki mezhebin hesabı birbirinden farklıdır.</div>
+        <div class="card-detail">
+          <strong>Asr-ı Evvel (Şâfiî, Mâlikî, Hanbelî ve İmâmeyn):</strong> Fey-i zevâl + 1 çubuk boyu olunca başlar. İmâmeyn (Ebû Yûsuf ve Muhammed eş-Şeybânî) de bu görüştedir.<br><br>
+          <strong>Asr-ı Sânî (İmâm-ı A'zam):</strong> Fey-i zevâl + 2 çubuk boyu olunca başlar. Hanefî mezhebinde her iki vakitte de namaz kılınabilir; ancak İmâm-ı A'zam'a göre tercih edilen vakit Asr-ı Sânî'dir.<br><br>
+          <strong>İkindi Keraheti:</strong> Güneşin ufkun 5 derece üzerinde olduğundan batışına kadar.
+        </div>
+      </div>
+
+      <div class="prayer-card fade-in">
+        <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(to right,#ef4444,#f97316);"></div>
+        <div class="card-icon">🌇</div>
+        <div class="card-name">Akşam — Mağrib</div>
+        <div class="card-arabic">المَغْرِب</div>
+        <div class="card-angle">Güneş irtifâsı: <span class="angle-val">0° (batış)</span></div>
+        <div class="card-desc">Güneşin üst kenarının batı ufkunda kaybolduğu andan batı ufkunda kızıllığın kaybolduğu ana kadar sürer. Güneş batışından yaklaşık 60–90 dakika sonra biter.</div>
+        <div class="card-detail">
+          <strong>Şafak:</strong> Güneş battıktan sonra gökyüzünde beliren kızıllıktır. Bu kızıllığın kaybolması akşam namazının son vaktidir.<br><br>
+          <strong>İstibâru Nücûm:</strong> Güneşin ufuktan 10° aşağıya inmesi ile yıldızlar çoğalmaya başlar. Bu vakti akşam namazını geciktirmek mekrûhtur.
+        </div>
+      </div>
+
+      <div class="prayer-card fade-in">
+        <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(to right,#7c3aed,#4f46e5);"></div>
+        <div class="card-icon">🌃</div>
+        <div class="card-name">Yatsı — İşâ</div>
+        <div class="card-arabic">العِشَاء</div>
+        <div class="card-angle">Güneş irtifâsı: <span class="angle-val">-17° veya -19°</span></div>
+        <div class="card-desc">Batıdaki kızıllığın kaybolmasından fecre kadar sürer. Mezhep imamları arasında başlangıcı konusunda ihtilaf vardır.</div>
+        <div class="card-detail">
+          <strong>İmâmeyn (Şâfiî, Mâlikî, Hanbelî ve İmâm-ı Ebû Yûsuf):</strong> Batı ufkunda kızıllık kaybolunca (güneş -17°). Bu durum 75. Sûre-i Şems'e dayanır.<br><br>
+          <strong>İmâm-ı A'zam:</strong> Kızıllıktan sonra beyazlık da kaybolunca (güneş -19°). Bu görüşe göre daha uzun bir ihtiyat süresi tanınır.
+        </div>
+      </div>
+
+      <div class="prayer-card fade-in">
+        <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(to right,#0ea5e9,#38bdf8);"></div>
+        <div class="card-icon">📐</div>
+        <div class="card-name">İkindi Vakti Hesabı</div>
+        <div class="card-arabic">فَيْء الزَّوَال</div>
+        <div class="card-angle">Fey-i Zevâl: <span class="angle-val">Öğle gölgesi</span></div>
+        <div class="card-desc">İkindi namazı vakti, gölge hesabıyla bulunur. Öğle vaktindeki en kısa gölgeye "Fey-i Zevâl" denir ve bu, hesabın temel noktasıdır.</div>
+        <div class="card-detail">
+          <strong>Formül:</strong> Fey-i Zevâl = çubuk boyu × tan(90° − Gâye İrtifâ')<br><br>
+          Örnek: İstanbul'da 13 Ağustos'ta Gâye İrtifâ = 63°50' ise:<br>
+          Fey-i Zevâl = 1 × tan(26°10') = 0.491 metre (1 m çubuk için)
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- TEMKIN -->
+<section id="temkin">
+  <div class="container">
+    <div class="section-label fade-in">İleri Astronomi</div>
+    <h2 class="section-title fade-in">Temkin Vakti</h2>
+    <p class="section-desc fade-in">Güneşin merkezinin hakîkî ufuktan gurûbundan sonra, arka kenarının üfk-ı şer'îye inerek ışığın en yüksek tepeden kaybolması için geçen zamana <strong>Temkin</strong> denir. Üç etken birleşerek bu güvenlik payını oluşturur.</p>
+
+    <canvas id="temkin-canvas" height="480" class="fade-in"></canvas>
+    <div class="temkin-sunset-controls fade-in">
+      <button class="ctrl-btn play" id="temkinPlayBtn">&#9654; Batış Animasyonu</button>
+      <label class="temkin-elev-label">Yükseklik: <strong id="temkinElevVal">267</strong> m</label>
+      <input type="range" class="sp-time-slider" id="temkinElevSlider" min="0" max="2500" step="1" value="267">
+    </div>
+
+    <div class="temkin-comps fade-in">
+      <div class="temkin-comp" style="border-left-color:#60a5fa;">
+        <div class="tc-title">1 · İnhitât-ı Ufuk Zâviyesi</div>
+        <div class="tc-val" style="color:#60a5fa;" id="temkin-dip-val">—</div>
+        <div class="tc-desc">Gözlemcinin yüksekliğinden kaynaklanan ufuk alçalması. <code>α = 0.0347 × √h</code> formülüyle hesaplanır. Yükseklik arttıkça ufuk daha aşağı iner.</div>
+        <div class="tc-formula" id="temkin-dip-formula"></div>
+      </div>
+      <div class="temkin-comp" style="border-left-color:#f97316;">
+        <div class="tc-title">2 · Işık Kırılması — İnkisâr</div>
+        <div class="tc-val" style="color:#f97316;" id="temkin-ref-val">34′ 00″</div>
+        <div class="tc-desc">Atmosferik kırılma güneşi gerçek konumundan ~34′ yukarı gösterir. Standart atmosfer koşullarında (1013 hPa, 10°C) ufuktaki maksimum değer.</div>
+      </div>
+      <div class="temkin-comp" style="border-left-color:#a78bfa;">
+        <div class="tc-title">3 · Güneş Yarı Çapı — Nısf-Kutr</div>
+        <div class="tc-val" style="color:#a78bfa;" id="temkin-sd-val">—</div>
+        <div class="tc-desc">Güneş diskinin açısal yarıçapı. Dünya-Güneş mesafesi yıl boyunca değiştiğinden bu değer de değişir (Ocak'ta büyük, Temmuz'da küçük).</div>
+        <div class="tc-formula" id="temkin-sd-formula"></div>
+      </div>
+    </div>
+
+    <div class="temkin-formula-card">
+      <h4>Temkin Hesabı</h4>
+      <div class="temkin-eq">
+        <div class="temkin-eq-row">
+          <span class="teq-label">Açısal Toplam:</span>
+          <span id="teq-dip" style="color:#60a5fa">—</span> +
+          <span id="teq-ref" style="color:#f97316">34′</span> +
+          <span id="teq-sd" style="color:#a78bfa">—</span> =
+          <strong id="teq-total" style="color:var(--accent)">—</strong>
+        </div>
+        <div class="temkin-eq-row temkin-eq-result">
+          <span class="teq-label">Temkin Süresi (Cedvelden):</span>
+          <strong id="teq-minutes" style="color:var(--accent);font-size:1.3em">—</strong>
+        </div>
+      </div>
+      <p class="tc-note">Sabah (imsak) vakti için temkin ÇIKARILIR; öğle, ikindi, akşam ve yatsı vakitlerinde EKLENIR.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TADIL-I ZAMAN -->
+<section id="tadilzaman">
+  <div class="container">
+    <div class="section-label fade-in">Zaman Düzeltmesi</div>
+    <h2 class="section-title fade-in">Ta'dîl-i Zemân — Zaman Denklemi</h2>
+    <p class="section-desc fade-in">Gerçek güneş saati ile ortalama güneş saati arasındaki farka "Ta'dîl-i Zemân" (Equation of Time) denir. Bu fark öğle namazı vaktini doğrudan etkiler.</p>
+    <div class="tadil-wrap fade-in">
+
+      <!-- Controls -->
+      <div class="tadil-controls">
+        <div class="tadil-field">
+          <label>Tarih</label>
+          <input id="tadil-date" type="date" />
+        </div>
+        <div class="tadil-field">
+          <label>Grafik Yılı</label>
+          <select id="tadil-year"></select>
+        </div>
+        <button class="tadil-btn" id="tadil-btn">Hesapla &amp; Güncelle</button>
+      </div>
+
+      <!-- Slider -->
+      <div class="tadil-slider-box">
+        <div class="tadil-slider-top">
+          <span><b>Tarihi sürükle:</b> <span id="tadil-sliderDate">—</span></span>
+          <span>Yılın günü: <span id="tadil-doyLabel">—</span></span>
+        </div>
+        <input id="tadil-doy" type="range" min="1" max="365" step="1" value="1" style="width:100%;" />
+      </div>
+
+      <!-- KPI boxes -->
+      <div class="tadil-kpi">
+        <div class="tadil-kpi-box">
+          <div class="kt">Seçili tarih için Ta'dîl-i Zemân</div>
+          <div class="kv" id="tadil-eotVal">—</div>
+        </div>
+        <div class="tadil-kpi-box">
+          <div class="kt">Yıl içi minimum / maksimum</div>
+          <div class="kv" id="tadil-minMax">—</div>
+        </div>
+        <div class="tadil-kpi-box">
+          <div class="kt">Sıfır geçişleri (yaklaşık günler)</div>
+          <div class="kv" id="tadil-zeros">—</div>
+        </div>
+      </div>
+
+      <canvas id="tadil-canvas" height="420"></canvas>
+
+      <div class="tadil-desc">
+        <strong style="color:var(--accent)">Neden oluşur?</strong> İki sebep vardır:<br>
+        1. Yeryüzü, Güneş etrafında eliptik (oval) bir yörüngede döner; Kepler'in ikinci kanununa göre yakın geçiştede hızlı, uzak geçiştede yavaş hareket eder.<br>
+        2. Yeryüzü'nün ekseni, yörünge düzlemine göre 23°27' eğiktir.<br><br>
+        <strong style="color:var(--accent)">Pratik kullanım:</strong> Ta'dîl-i Zemân yıl içinde yaklaşık +16 dakika ile -14 dakika arasında değişir. Yılda dört kez sıfıra eşit olur. Öğle vakti hesabında bu değer mutlaka dikkate alınmalıdır.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">☪ Namaz Vakitleri — Astronomik Rehber</div>
+  <p class="footer-text">Rauf Enç tarafından hazırlanmıştır.<br>
+  Astronomik formüller: Ahmed Ziyâ Beğ, Diyanet İşleri hesap metodolojisi, USNO algoritmalarına dayanmaktadır.</p>
+</footer>
+
+<script>
+// ============================================================
+// ASTRONOMICAL ENGINE — Meeus / NOAA Solar Position
+// ============================================================
+const DEG = Math.PI / 180;
+const RAD = 180 / Math.PI;
+
+const CITIES = [
+  { name:'İstanbul (Çamlıca)', lat:41.0465, lon:29.0710, elev:267, tz:3 },
+  { name:'Ankara',   lat:39.9334, lon:32.8597, elev:938, tz:3 },
+  { name:'İzmir',    lat:38.4192, lon:27.1287, elev:29,  tz:3 },
+  { name:'Bursa',    lat:40.1885, lon:29.0610, elev:155, tz:3 },
+  { name:'Antalya',  lat:36.8969, lon:30.7133, elev:30,  tz:3 },
+  { name:'Konya',    lat:37.8746, lon:32.4932, elev:1016,tz:3 },
+  { name:'Adana',    lat:37.0000, lon:35.3213, elev:23,  tz:3 },
+  { name:'Gaziantep',lat:37.0662, lon:37.3833, elev:855, tz:3 },
+  { name:'Diyarbakır',lat:37.9144, lon:40.2306, elev:660,tz:3 },
+  { name:'Trabzon',  lat:41.0027, lon:39.7168, elev:39,  tz:3 },
+  { name:'Erzurum',  lat:39.9043, lon:41.2679, elev:1893,tz:3 },
+  { name:'Samsun',   lat:41.2867, lon:36.3300, elev:4,   tz:3 },
+  { name:'Kayseri',  lat:38.7312, lon:35.4787, elev:1054,tz:3 },
+  { name:'Eskişehir',lat:39.7767, lon:30.5206, elev:792, tz:3 },
+  { name:'Edirne',   lat:41.6818, lon:26.5623, elev:42,  tz:3 },
+  { name:'Van',      lat:38.4891, lon:43.3800, elev:1727,tz:3 },
+  { name:'Sivas',    lat:39.7477, lon:37.0179, elev:1285,tz:3 },
+  { name:'Malatya',  lat:38.3554, lon:38.3335, elev:964, tz:3 },
+  { name:'Şanlıurfa',lat:37.1591, lon:38.7969, elev:518, tz:3 },
+  { name:'Hatay',    lat:36.2025, lon:36.1606, elev:68,  tz:3 },
+];
+
+let selectedCity = CITIES[0];
+let selectedDate = new Date();
+
+function julianDay(y, m, d, h){
+  if(m <= 2){ y--; m += 12; }
+  const A = Math.floor(y/100);
+  const B = 2 - A + Math.floor(A/4);
+  return Math.floor(365.25*(y+4716)) + Math.floor(30.6001*(m+1)) + d + (h||0)/24 + B - 1524.5;
+}
+
+function julianCentury(jd){ return (jd - 2451545.0) / 36525.0; }
+
+function solarGeomMeanLon(T){
+  let L0 = 280.46646 + T*(36000.76983 + 0.0003032*T);
+  return L0 % 360;
+}
+function solarGeomMeanAnomaly(T){
+  return 357.52911 + T*(35999.05029 - 0.0001537*T);
+}
+function earthEccentricity(T){
+  return 0.016708634 - T*(0.000042037 + 0.0000001267*T);
+}
+function sunEqOfCenter(T){
+  const M = solarGeomMeanAnomaly(T) * DEG;
+  return Math.sin(M)*(1.914602 - T*(0.004817+0.000014*T))
+       + Math.sin(2*M)*(0.019993 - 0.000101*T)
+       + Math.sin(3*M)*0.000289;
+}
+function sunTrueLon(T){ return solarGeomMeanLon(T) + sunEqOfCenter(T); }
+function sunApparentLon(T){
+  const omega = 125.04 - 1934.136*T;
+  return sunTrueLon(T) - 0.00569 - 0.00478*Math.sin(omega*DEG);
+}
+function meanObliquityEcliptic(T){
+  return 23 + (26 + (21.448 - T*(46.815 + T*(0.00059 - T*0.001813)))/60)/60;
+}
+function obliquityCorrection(T){
+  const omega = 125.04 - 1934.136*T;
+  return meanObliquityEcliptic(T) + 0.00256*Math.cos(omega*DEG);
+}
+function solarDeclination(T){
+  const e = obliquityCorrection(T) * DEG;
+  const lambda = sunApparentLon(T) * DEG;
+  return Math.asin(Math.sin(e)*Math.sin(lambda)) * RAD;
+}
+function equationOfTime(T){
+  const epsilon = obliquityCorrection(T) * DEG;
+  const L0 = solarGeomMeanLon(T) * DEG;
+  const e = earthEccentricity(T);
+  const M = solarGeomMeanAnomaly(T) * DEG;
+  let y = Math.tan(epsilon/2); y *= y;
+  const eot = y*Math.sin(2*L0) - 2*e*Math.sin(M) + 4*e*y*Math.sin(M)*Math.cos(2*L0)
+            - 0.5*y*y*Math.sin(4*L0) - 1.25*e*e*Math.sin(2*M);
+  return 4 * eot * RAD; // minutes
+}
+
+function solarNoon(lon, tz, eot){
+  return 720 - 4*lon - eot + tz*60; // minutes from midnight
+}
+
+function sunriseHourAngle(lat, dec, altThreshold){
+  // altThreshold in degrees (0 for geometric sunrise, -0.833 for standard, -19 for imsak etc.)
+  const latR = lat * DEG, decR = dec * DEG, altR = altThreshold * DEG;
+  const cosH = (Math.sin(altR) - Math.sin(latR)*Math.sin(decR)) / (Math.cos(latR)*Math.cos(decR));
+  if(cosH > 1) return NaN;  // never rises
+  if(cosH < -1) return NaN; // never sets
+  return Math.acos(cosH) * RAD; // degrees
+}
+
+function solarAltitude(lat, dec, hourAngle){
+  const latR = lat*DEG, decR = dec*DEG, haR = hourAngle*DEG;
+  return Math.asin(Math.sin(latR)*Math.sin(decR) + Math.cos(latR)*Math.cos(decR)*Math.cos(haR)) * RAD;
+}
+
+function solarAzimuth(lat, dec, hourAngle, alt){
+  const latR = lat*DEG, decR = dec*DEG, altR = alt*DEG;
+  let cosAz = (Math.sin(decR) - Math.sin(altR)*Math.sin(latR)) / (Math.cos(altR)*Math.cos(latR));
+  cosAz = Math.max(-1, Math.min(1, cosAz));
+  let az = Math.acos(cosAz) * RAD;
+  if(hourAngle > 0) az = 360 - az;
+  return az;
+}
+
+function minutesToHM(m){
+  if(isNaN(m)) return '--:--';
+  let h = Math.floor(m/60);
+  let mm = Math.round(m % 60);
+  if(mm === 60){ h++; mm = 0; }
+  return String(h).padStart(2,'0') + ':' + String(mm).padStart(2,'0');
+}
+
+function dipAngle(elevM){
+  // Dip angle in degrees from elevation in meters
+  return Math.sqrt(2 * elevM / 6371000) * RAD * 60 / 60; // simplified
+}
+
+function calcPrayerTimes(date, city){
+  const y = date.getFullYear(), m = date.getMonth()+1, d = date.getDate();
+  const jd = julianDay(y, m, d, 12);
+  const T = julianCentury(jd);
+  const dec = solarDeclination(T);
+  const eot = equationOfTime(T);
+  const noon = solarNoon(city.lon, city.tz, eot);
+
+  // Standard sun disc + refraction correction for sunrise/sunset
+  const stdCorr = -0.8333; // accounts for refraction (34') + semi-diameter (16')
+  // Dip angle for elevation
+  const dip = 0.0347 * Math.sqrt(Math.max(0, city.elev)); // degrees
+
+  const haRise = sunriseHourAngle(city.lat, dec, stdCorr - dip);
+  const haImsak = sunriseHourAngle(city.lat, dec, -19);
+  const haYatsiImam = sunriseHourAngle(city.lat, dec, -19);
+  const haYatsiIma = sunriseHourAngle(city.lat, dec, -17);
+  const haIstibar = sunriseHourAngle(city.lat, dec, -10);
+  const haKerahet = sunriseHourAngle(city.lat, dec, stdCorr + 5);
+
+  // Shadow-based Asr calculation
+  const maxAlt = solarAltitude(city.lat, dec, 0); // noon altitude
+  const feyZeval = 1 / Math.tan(maxAlt * DEG); // shadow ratio at noon
+  // Asr-i Evvel: shadow = feyZeval + 1
+  const asrEvvelAlt = Math.atan(1 / (feyZeval + 1)) * RAD;
+  const haAsrEvvel = sunriseHourAngle(city.lat, dec, asrEvvelAlt);
+  // Asr-i Sani: shadow = feyZeval + 2
+  const asrSaniAlt = Math.atan(1 / (feyZeval + 2)) * RAD;
+  const haAsrSani = sunriseHourAngle(city.lat, dec, asrSaniAlt);
+
+  return {
+    dec, eot, noon, maxAlt, feyZeval,
+    imsak:      noon - haImsak * 4,
+    gunes:      noon - haRise * 4,
+    israk:      noon - haKerahet * 4,
+    ogle:       noon,
+    ikindiEvvel: noon + haAsrEvvel * 4,
+    ikindiSani:  noon + haAsrSani * 4,
+    kerahet:    noon + haKerahet * 4,
+    aksam:      noon + haRise * 4,
+    istibar:    noon + haIstibar * 4,
+    yatsiIma:   noon + haYatsiIma * 4,
+    yatsiImam:  noon + haYatsiImam * 4,
+  };
+}
+
+// ─── TEMKİN CEDVELİ (Lookup Table) ──────────────────────────
+// TEMKIN_TABLE[lat][elevIdx] — lat 0-60°, elevIdx 0-20 (0m to 500m, step 25m)
+// Values in decimal minutes. Source: authoritative Temkin Cedveli.
+const TEMKIN_TABLE = [
+[3.8167,4.6333,4.9667,5.2667,5.4500,5.6333,5.8167,5.9667,6.1333,6.2833,6.4167,6.5167,6.6667,6.7833,6.9000,7.0167,7.1333,7.2333,7.3333,7.4333,7.5333],
+[3.8167,4.6333,4.9667,5.2667,5.4500,5.6333,5.8167,5.9667,6.1333,6.2833,6.4167,6.5333,6.6667,6.7833,6.9000,7.0167,7.1333,7.2333,7.3333,7.4333,7.5333],
+[3.8167,4.6333,4.9667,5.2667,5.4500,5.6333,5.8333,5.9667,6.1333,6.2833,6.4167,6.5500,6.6667,6.7833,6.9000,7.0167,7.1333,7.2333,7.3333,7.4333,7.5333],
+[3.8167,4.6333,4.9667,5.2667,5.4500,5.6500,5.8333,5.9833,6.1500,6.2833,6.4167,6.5500,6.6833,6.8000,6.9167,7.0333,7.1500,7.2500,7.3500,7.4500,7.5500],
+[3.8333,4.6500,4.9833,5.2833,5.4667,5.6500,5.8500,6.0000,6.1500,6.2833,6.4167,6.5500,6.6833,6.8000,6.9167,7.0333,7.1500,7.2500,7.3500,7.4667,7.5667],
+[3.8333,4.6500,4.9833,5.2833,5.4667,5.6667,5.8500,6.0167,6.1667,6.3000,6.4333,6.5667,6.7000,6.8167,6.9333,7.0500,7.1667,7.2667,7.3667,7.4667,7.5667],
+[3.8500,4.6500,5.0000,5.3000,5.4833,5.6667,5.8667,6.0167,6.1667,6.3000,6.4333,6.5667,6.7000,6.8167,6.9333,7.0667,7.1833,7.2833,7.3833,7.4833,7.5833],
+[3.8500,4.6667,5.0000,5.3167,5.4833,5.6833,5.8667,6.0167,6.1833,6.3167,6.4500,6.5667,6.7000,6.8167,6.9500,7.0667,7.2000,7.3000,7.4000,7.5000,7.6000],
+[3.8667,4.6667,5.0167,5.3333,5.5000,5.6833,5.8833,6.0333,6.2000,6.3333,6.4667,6.6000,6.7333,6.8500,6.9667,7.0833,7.2167,7.3167,7.4167,7.5167,7.6333],
+[3.8833,4.6833,5.0333,5.3500,5.5000,5.7000,5.9000,6.0500,6.2167,6.3667,6.5000,6.6333,6.7667,6.8833,7.0000,7.1167,7.2333,7.3333,7.4333,7.5333,7.6500],
+[3.9000,4.7000,5.0500,5.3667,5.5333,5.7167,5.9167,6.0667,6.2333,6.3667,6.5167,6.6500,6.8000,6.9167,7.0333,7.1500,7.2500,7.3500,7.4500,7.5667,7.6667],
+[3.9167,4.7167,5.0667,5.3833,5.5667,5.7500,5.9333,6.1000,6.2667,6.4000,6.5333,6.6667,6.8167,6.9333,7.0500,7.1667,7.2833,7.3833,7.4833,7.6000,7.7000],
+[3.9167,4.7500,5.1000,5.4000,5.5833,5.7667,5.9667,6.1333,6.2833,6.4333,6.5833,6.6833,6.8500,6.9667,7.0833,7.2000,7.3167,7.4167,7.5333,7.6333,7.7333],
+[3.9333,4.7667,5.1167,5.4167,5.6000,5.8000,6.0000,6.1667,6.3167,6.4667,6.6167,6.7167,6.8833,7.0000,7.1167,7.2333,7.3500,7.4500,7.5667,7.6667,7.7667],
+[3.9500,4.7833,5.1333,5.4500,5.6333,5.8500,6.0167,6.2000,6.3500,6.5000,6.6500,6.7500,6.9167,7.0333,7.1500,7.2667,7.3833,7.5000,7.5833,7.7000,7.8000],
+[3.9667,4.8167,5.1667,5.4833,5.6667,5.8833,6.0500,6.2333,6.3833,6.5333,6.6833,6.7833,6.9500,7.0833,7.2167,7.3167,7.4167,7.5333,7.6333,7.7333,7.8500],
+[4.0000,4.8333,5.2000,5.5167,5.7167,5.9167,6.0833,6.2667,6.4333,6.5833,6.7333,6.8167,7.0000,7.1167,7.2333,7.3667,7.4667,7.5833,7.6833,7.7833,7.9000],
+[4.0167,4.8667,5.2333,5.5500,5.7500,5.9667,6.1333,6.3000,6.4667,6.6167,6.7667,6.9000,7.0333,7.1500,7.2833,7.4000,7.5167,7.6333,7.7333,7.8333,7.9500],
+[4.0333,4.9000,5.2667,5.6000,5.7833,6.0000,6.1833,6.3500,6.5167,6.6667,6.8167,6.9500,7.0833,7.2000,7.3333,7.4500,7.5667,7.6833,7.7833,7.9000,8.0000],
+[4.0500,4.9333,5.3000,5.6333,5.8333,6.0500,6.2167,6.4000,6.5667,6.7167,6.8667,7.0000,7.1167,7.2500,7.3833,7.5000,7.6333,7.7333,7.8333,7.9500,8.0667],
+[4.0833,4.9667,5.3500,5.6667,5.8667,6.0833,6.2667,6.4333,6.6000,6.7500,6.9000,7.0500,7.1667,7.3000,7.4333,7.5500,7.7000,7.7833,7.9000,8.0000,8.1167],
+[4.1000,5.0167,5.3833,5.7167,5.9167,6.1167,6.3167,6.4833,6.6500,6.8000,6.9500,7.1000,7.2333,7.3667,7.5000,7.6167,7.7500,7.8500,7.9667,8.0667,8.1833],
+[4.1333,5.0333,5.4333,5.7667,5.9667,6.1833,6.3667,6.5333,6.7000,6.8667,7.0167,7.1667,7.3000,7.4333,7.5667,7.6833,7.8167,7.9333,8.0500,8.1500,8.2667],
+[4.1667,5.1000,5.4667,5.8167,6.0333,6.2333,6.4167,6.6000,6.7667,6.9333,7.0833,7.2333,7.3667,7.5000,7.6333,7.7500,7.9167,8.0000,8.1000,8.2167,8.3333],
+[4.2000,5.1333,5.5167,5.8667,6.0833,6.2833,6.4833,6.6667,6.8333,7.0000,7.1500,7.3000,7.4333,7.5667,7.7000,7.8167,7.9500,8.0667,8.1833,8.3000,8.4167],
+[4.2333,5.1833,5.5833,5.9167,6.1333,6.3333,6.5333,6.7167,6.9000,7.0833,7.2500,7.3500,7.5000,7.6333,7.7667,7.9000,8.0167,8.1500,8.2500,8.3667,8.5000],
+[4.2833,5.2500,5.6333,5.9833,6.2000,6.4000,6.6000,6.7833,6.9667,7.1333,7.2833,7.4333,7.5667,7.7167,7.8500,7.9833,8.1167,8.2167,8.3333,8.4667,8.5833],
+[4.3333,5.3167,5.7000,6.0500,6.2500,6.4500,6.6667,6.8667,7.0500,7.2167,7.3667,7.5333,7.6667,7.8167,7.9500,8.0833,8.2000,8.3333,8.4333,8.5667,8.6833],
+[4.3667,5.3667,5.7667,6.1167,6.3167,6.5333,6.7500,6.9333,7.1333,7.3000,7.4667,7.6167,7.7667,7.9167,8.0500,8.1833,8.3000,8.4333,8.5500,8.6667,8.7833],
+[4.4333,5.4500,5.8333,6.1833,6.3833,6.6000,6.8167,7.0167,7.2167,7.3833,7.5500,7.7000,7.8500,8.0000,8.1333,8.2667,8.4000,8.5333,8.6500,8.7667,8.8833],
+[4.4833,5.5167,5.9000,6.2000,6.4500,6.6833,6.9000,7.1000,7.3000,7.4667,7.6333,7.8000,7.9500,8.0833,8.2167,8.3667,8.5000,8.6167,8.7333,8.8667,8.9833],
+[4.5500,5.5667,5.9833,6.2833,6.5333,6.7667,6.9833,7.2000,7.4000,7.5667,7.7333,7.9000,8.0333,8.1833,8.3333,8.4667,8.6000,8.7333,8.8500,8.9667,9.1000],
+[4.6333,5.6167,6.0500,6.3833,6.6333,6.8667,7.1000,7.3000,7.4833,7.6667,7.8333,7.9833,8.1500,8.2833,8.4333,8.5833,8.7167,8.8333,8.9667,9.0833,9.2167],
+[4.7000,5.6833,6.1333,6.4500,6.7333,6.9667,7.2000,7.4000,7.6000,7.7667,7.9500,8.1000,8.2667,8.4167,8.5333,8.7000,8.8500,8.9667,9.1000,9.2167,9.3500],
+[4.7667,5.7833,6.2333,6.5500,6.8333,7.0667,7.3167,7.5167,7.7167,7.9000,8.0833,8.2333,8.4000,8.5500,8.7000,8.8500,9.0000,9.1167,9.2500,9.3667,9.5000],
+[4.8667,5.9000,6.3333,6.6667,6.9500,7.2000,7.4333,7.6333,7.8333,8.0167,8.2000,8.3667,8.5333,8.7000,8.8500,9.0000,9.1333,9.2667,9.4000,9.5333,9.6500],
+[4.9500,5.9833,6.4500,6.8333,7.0667,7.3167,7.5667,7.7833,7.9833,8.1667,8.3500,8.5167,8.6833,8.8667,9.0167,9.1667,9.3000,9.4333,9.5667,9.7000,9.8333],
+[5.0333,6.1000,6.5667,6.9167,7.2000,7.4500,7.6833,7.9000,8.1167,8.3167,8.5000,8.6833,8.8500,9.0167,9.1833,9.3333,9.4833,9.6167,9.7500,9.8833,10.0167],
+[5.1167,6.2667,6.6833,7.0333,7.3333,7.5833,7.8167,8.0333,8.2500,8.4667,8.6833,8.8500,9.0167,9.1833,9.3500,9.5167,9.6500,9.8000,9.9333,10.0667,10.2000],
+[5.2167,6.3333,6.8000,7.1667,7.4667,7.7333,7.9833,8.2167,8.4333,8.6333,8.8167,9.0000,9.1833,9.3500,9.5167,9.6667,9.8167,9.9667,10.1167,10.2500,10.3833],
+[5.3167,6.4333,6.9333,7.3500,7.6333,7.9000,8.1500,8.3833,8.6000,8.8000,9.0000,9.1833,9.3667,9.5333,9.7000,9.8667,10.0167,10.1667,10.3167,10.4500,10.6000],
+[5.4333,6.5500,7.0833,7.4833,7.7833,8.0500,8.3167,8.5500,8.7667,8.9833,9.1833,9.3833,9.5667,9.7500,9.9333,10.1000,10.2667,10.4167,10.5500,10.6833,10.8167],
+[5.5500,6.7000,7.2333,7.6333,7.9333,8.2333,8.5000,8.7500,8.9833,9.2000,9.4000,9.5833,9.7667,9.9500,10.1167,10.2833,10.4500,10.5667,10.7000,10.8333,10.9667],
+[5.6667,6.8667,7.4000,7.8000,8.1333,8.4333,8.7000,8.9333,9.1500,9.3667,9.5833,9.8000,10.0167,10.2167,10.4000,10.5667,10.7333,10.8833,11.0333,11.1667,11.3000],
+[5.8000,7.0500,7.5833,8.0167,8.3333,8.6333,8.9000,9.1500,9.4000,9.6167,9.8333,10.0333,10.2333,10.4167,10.6000,10.7833,10.9667,11.1167,11.2833,11.4500,11.6333],
+[5.9500,7.2167,7.7667,8.2000,8.5500,8.8500,9.1333,9.4000,9.6500,9.8833,10.1000,10.3000,10.5000,10.6833,10.8667,11.0500,11.2333,11.4000,11.5667,11.7333,11.8833],
+[6.1000,7.4333,8.0000,8.4333,8.7833,9.1000,9.3833,9.6667,9.9167,10.1500,10.3667,10.5833,10.8000,11.0000,11.1833,11.3667,11.5500,11.7167,11.8833,12.0500,12.3667],
+[6.2833,7.6333,8.2167,8.7167,9.0167,9.3500,9.6500,9.9167,10.1833,10.4000,10.6333,10.8667,11.1000,11.3000,11.5000,11.6833,11.8833,12.0167,12.1500,12.2833,12.4000],
+[6.4667,7.8667,8.4667,8.9833,9.3167,9.6333,9.9500,10.2333,10.5000,10.7500,10.9833,11.2167,11.4333,11.6500,11.8500,12.0500,12.2500,12.4333,12.6167,12.8000,12.9667],
+[6.6833,8.0667,8.7167,9.1833,9.5833,9.9333,10.2500,10.5500,10.8333,11.1000,11.3667,11.6000,11.8167,12.0167,12.2167,12.4167,12.6000,12.7833,12.9667,13.1500,13.3167],
+[6.9000,8.3167,8.9333,9.4667,9.9000,10.2333,10.5667,10.9000,11.2000,11.4833,11.7333,11.9833,12.1833,12.4167,12.6167,12.8333,13.0333,13.2333,13.4333,13.6167,13.8500],
+[7.1500,8.6667,9.3167,9.9000,10.2667,10.6500,11.0000,11.3000,11.6000,11.8833,12.1500,12.4167,12.6667,12.9000,13.1167,13.3333,13.5333,13.7333,13.9333,14.1333,14.3333],
+[7.4333,9.0333,9.7167,10.2833,10.7333,11.1167,11.4333,11.7667,12.0833,12.3667,12.6500,12.9000,13.1667,13.4167,13.6500,13.8833,14.1000,14.3167,14.5333,14.7333,14.9333],
+[7.7333,9.4333,10.1333,10.6833,11.1167,11.5500,11.9333,12.2667,12.5833,12.8833,13.1667,13.4333,13.7000,13.9500,14.2000,14.4500,14.7000,14.9500,15.2000,15.4333,15.5667],
+[8.1000,9.9000,10.6333,11.1833,11.6500,12.0833,12.4667,12.8500,13.1833,13.5167,13.8167,14.1000,14.3833,14.6333,14.8833,15.1333,15.3833,15.6333,15.8833,16.1333,16.3000],
+[8.4667,10.3667,11.1333,11.7000,12.2000,12.6500,13.0833,13.4500,13.8000,14.1333,14.4500,14.7333,15.0333,15.3333,15.6167,15.9000,16.1667,16.4333,16.7000,16.9667,17.1333],
+[8.9167,10.8667,11.7000,12.4333,12.8667,13.8500,13.7833,14.1833,14.5667,14.9167,15.2500,15.5833,15.9000,16.2000,16.5000,16.7833,17.0500,17.3167,17.5667,17.8167,18.0667],
+[9.4167,11.3333,12.3167,13.0833,13.6500,14.1333,14.5833,15.0000,15.3833,15.7500,16.1000,16.4333,16.7667,17.0833,17.4167,17.7333,18.0500,18.3667,18.6667,18.9667,19.2500],
+[10.0667,12.1333,13.2167,13.9500,14.5667,15.0833,15.5667,15.9833,16.3833,16.7667,17.1333,17.5000,17.8500,18.1833,18.5167,18.8500,19.1833,19.5167,19.8500,20.1833,20.5000],
+[10.8333,13.1000,14.2500,15.0333,15.6833,16.2167,16.7167,17.1833,17.6333,18.0667,18.4667,18.8667,19.2500,19.6333,20.0000,20.3667,20.7333,21.1000,21.4667,21.8167,22.1667],
+[11.7333,14.3333,15.4500,16.4333,17.1000,17.7000,18.2833,18.8167,19.3500,19.8500,20.3333,20.8000,21.2500,21.6833,22.0833,22.5167,22.9167,23.2833,23.6333,23.9833,24.3333]
+];
+
+// Bilinear interpolation from TEMKIN_TABLE
+function temkinFromTable(lat, elev){
+  const maxLat = 60, maxElev = 500, elevStep = 25;
+  const clampLat = Math.max(0, Math.min(maxLat, Math.abs(lat)));
+  // For elev ≤ 500m: direct table lookup with bilinear interpolation
+  if(elev <= maxElev){
+    const clampElev = Math.max(0, elev);
+    const li = Math.min(Math.floor(clampLat), maxLat - 1);
+    const lf = clampLat - li;
+    const ei = Math.min(Math.floor(clampElev / elevStep), 19);
+    const ef = (clampElev - ei * elevStep) / elevStep;
+    const v00 = TEMKIN_TABLE[li][ei], v01 = TEMKIN_TABLE[li][ei+1];
+    const v10 = TEMKIN_TABLE[li+1][ei], v11 = TEMKIN_TABLE[li+1][ei+1];
+    return v00*(1-lf)*(1-ef) + v01*(1-lf)*ef + v10*lf*(1-ef) + v11*lf*ef;
+  }
+  // For elev > 500m: extrapolate using √h relationship
+  // temkin(h) = temkin(0) + [temkin(500) - temkin(0)] × √h / √500
+  const li = Math.min(Math.floor(clampLat), maxLat - 1);
+  const lf = clampLat - li;
+  const t0_lo = TEMKIN_TABLE[li][0], t500_lo = TEMKIN_TABLE[li][20];
+  const t0_hi = TEMKIN_TABLE[li+1][0], t500_hi = TEMKIN_TABLE[li+1][20];
+  const t0 = t0_lo*(1-lf) + t0_hi*lf;
+  const t500 = t500_lo*(1-lf) + t500_hi*lf;
+  const ratio = Math.sqrt(elev) / Math.sqrt(maxElev);
+  return t0 + (t500 - t0) * ratio;
+}
+
+function calcTemkinComponents(date, city, overrideElev){
+  const elev = (overrideElev !== undefined) ? overrideElev : city.elev;
+  // 1. İnhitât (Dip Angle)
+  const dipDeg = 0.0347 * Math.sqrt(Math.max(0, elev));
+  const dipArcmin = dipDeg * 60;
+  // 2. İnkisâr (Atmospheric Refraction at horizon)
+  const refractionArcmin = 34;
+  // 3. Nısf-Kutr (Semi-diameter — varies with Earth-Sun distance)
+  const jd = julianDay(date.getFullYear(), date.getMonth()+1, date.getDate(), 12);
+  const T = julianCentury(jd);
+  const M = solarGeomMeanAnomaly(T) * DEG;
+  const sunDist = 1.00014 - 0.01671*Math.cos(M) - 0.00014*Math.cos(2*M); // AU
+  const semiDiamArcsec = 959.63 / sunDist;
+  const semiDiamArcmin = semiDiamArcsec / 60;
+  // 4. Toplam açısal düzeltme
+  const totalArcmin = dipArcmin + refractionArcmin + semiDiamArcmin;
+  // 5. Temkin dakikası — Temkin Cedveli'nden (enlem + irtifa tabanlı)
+  const temkinMin = temkinFromTable(city.lat, elev);
+  return {
+    elev, dipDeg, dipArcmin, refractionArcmin, semiDiamArcmin, semiDiamArcsec,
+    totalArcmin, totalDeg: totalArcmin/60, temkinMin,
+    sunDist
+  };
+}
+
+function getSunPosAtMinute(minute, date, city){
+  const y = date.getFullYear(), m = date.getMonth()+1, d = date.getDate();
+  const h = minute / 60;
+  const jd = julianDay(y, m, d, h - city.tz);
+  const T = julianCentury(jd);
+  const dec = solarDeclination(T);
+  const eot = equationOfTime(T);
+  const noon = solarNoon(city.lon, city.tz, eot);
+  const ha = (minute - noon) / 4; // degrees
+  const alt = solarAltitude(city.lat, dec, ha);
+  const az = solarAzimuth(city.lat, dec, ha, alt);
+  return { alt, az, dec, ha, eot };
+}
+
+// ============================================================
+// STARFIELD
+// ============================================================
+(function(){
+  const c = document.getElementById('starfield');
+  const ctx = c.getContext('2d');
+  function resize(){ c.width=window.innerWidth; c.height=window.innerHeight; }
+  resize();
+  window.addEventListener('resize', resize);
+  const stars = Array.from({length:200}, () => ({
+    x: Math.random(), y: Math.random(),
+    r: Math.random()*1.5+0.2,
+    a: Math.random(), da: (Math.random()-0.5)*0.005
+  }));
+  function drawStars(){
+    ctx.clearRect(0,0,c.width,c.height);
+    stars.forEach(s => {
+      s.a = Math.max(0.1, Math.min(1, s.a + s.da));
+      if(s.a<=0.1||s.a>=1) s.da *= -1;
+      ctx.globalAlpha = s.a * 0.7;
+      ctx.fillStyle = '#fff';
+      ctx.beginPath();
+      ctx.arc(s.x*c.width, s.y*c.height*0.8, s.r, 0, Math.PI*2);
+      ctx.fill();
+    });
+    ctx.globalAlpha = 1;
+    requestAnimationFrame(drawStars);
+  }
+  drawStars();
+})();
+
+// ============================================================
+// SOLAR DIAGRAM
+// ============================================================
+const SC = document.getElementById('solar-canvas');
+const SCX = SC.getContext('2d');
+let W, H, HY; // canvas width, height, horizon Y
+let fraction = 0;
+let playing = false;
+let animId = null;
+
+// Dynamic EVENTS — recalculated when date/city changes
+let EVENTS = [];
+function rebuildEvents(){
+  const pt = calcPrayerTimes(selectedDate, selectedCity);
+  const toF = m => Math.max(0, Math.min(1, m / 1440));
+  EVENTS = [
+    { f:toF(pt.imsak),       name:'İmsak — Fecr-i Sâdık',               alt:-19, color:'#4f46e5', dot:'#6366f1' },
+    { f:toF(pt.gunes),       name:'Güneş Doğuşu — Sabah Keraheti Başlar', alt:0,  color:'#f59e0b', dot:'#fbbf24' },
+    { f:toF(pt.israk),       name:'Kuşluk (İşrâk) Vakti',               alt:5,   color:'#f5c842', dot:'#fde68a' },
+    { f:toF(pt.ogle-2),      name:'Öğle Keraheti (İstiâvâ)',             alt:pt.maxAlt, color:'#fbbf24', dot:'#fef3c7' },
+    { f:toF(pt.ogle),        name:'Öğle (Zuhr) — Zevâl Sonrası',        alt:pt.maxAlt, color:'#f5c842', dot:'#fef08a' },
+    { f:toF(pt.ikindiEvvel), name:'İkindi — Asr-ı Evvel',                alt:0,   color:'#f97316', dot:'#fb923c' },
+    { f:toF(pt.ikindiSani),  name:"İkindi — Asr-ı Sânî (İmâm-ı A'zam)", alt:0,   color:'#f97316', dot:'#fdba74' },
+    { f:toF(pt.kerahet),     name:'İkindi Keraheti Başlar',              alt:5,   color:'#ef4444', dot:'#fca5a5' },
+    { f:toF(pt.aksam),       name:'Akşam (Mağrib) — Gurûb',             alt:0,   color:'#dc2626', dot:'#f87171' },
+    { f:toF(pt.istibar),     name:'İstibâru Nücûm',                     alt:-10, color:'#9333ea', dot:'#c084fc' },
+    { f:toF(pt.yatsiIma),    name:'Yatsı — İmâmeyn (−17°)',             alt:-17, color:'#4f46e5', dot:'#818cf8' },
+    { f:toF(pt.yatsiImam),   name:"Yatsı — İmâm-ı A'zam (−19°)",       alt:-19, color:'#312e81', dot:'#6366f1' },
+  ];
+  // Update prayer buttons with actual times
+  const btns = document.querySelectorAll('.prayer-btn');
+  const fracs = [EVENTS[0].f, EVENTS[1].f, EVENTS[4].f, EVENTS[5].f, EVENTS[8].f, EVENTS[10].f];
+  const btnNames = ['İmsak','Güneş Doğuşu','Öğle','İkindi','Akşam','Yatsı'];
+  const btnMins  = [pt.imsak, pt.gunes, pt.ogle, pt.ikindiEvvel, pt.aksam, pt.yatsiIma];
+  btns.forEach((b,i) => {
+    if(fracs[i] !== undefined){
+      b.innerHTML = `<span>${btnNames[i]}</span><span class="pb-time">${minutesToHM(btnMins[i])}</span>`;
+      b.onclick = () => jumpTo(fracs[i], btnNames[i]);
+    }
+  });
+}
+
+function resizeSolar(){
+  W = SC.parentElement.clientWidth;
+  H = Math.min(380, W * 0.48);
+  SC.width = W; SC.height = H;
+  HY = H * 0.64;
+  drawSolar();
+}
+
+function sunXY(f){
+  const margin = 40;
+  const x = margin + (W - margin*2) * f;
+  const alt = getAltitude(f);
+  const pt = calcPrayerTimes(selectedDate, selectedCity);
+  const maxAlt = Math.max(pt.maxAlt, 20);
+  let y, belowH;
+  if(alt <= 0){
+    // Below horizon: map -19..0 to underground area
+    const underground = H - HY - 20;
+    y = HY + underground * Math.min(1, Math.abs(alt) / 19);
+    belowH = true;
+  } else {
+    // Above horizon: map 0..maxAlt to sky area
+    const skyH = HY - 48;
+    y = HY - skyH * (alt / maxAlt);
+    belowH = false;
+  }
+  return { x, y, belowH };
+}
+
+function getSkyColor(f){
+  const alt = getAltitude(f);
+  if(alt < -19) return ['#020510','#04091a'];
+  if(alt < -10) return ['#06091e','#0c1a3a'];
+  if(alt < -2)  return ['#0c1a3a','#1a3a6a','#e87c2a44'];
+  if(alt < 2)   return ['#1a3a6a','#2d6abf','#f5c84244'];
+  if(alt < 10)  return ['#2d6abf','#5b9bd5','#f5c84266'];
+  if(alt > 10)  return ['#87ceeb','#5b9bd5','#2d6abf'];
+  return ['#020510','#04091a'];
+}
+
+function getAltitude(f){
+  // Real astronomical calculation based on selected date and city
+  const minute = f * 1440;
+  const pos = getSunPosAtMinute(minute, selectedDate, selectedCity);
+  return parseFloat(pos.alt.toFixed(1));
+}
+
+function drawSolar(){
+  if(!W) return;
+  SCX.clearRect(0,0,W,H);
+
+  // Sky background
+  const skyGrad = SCX.createLinearGradient(0,0,0,HY);
+  const cols = getSkyColor(fraction);
+  cols.forEach((c,i) => skyGrad.addColorStop(i/(cols.length-1), c));
+  SCX.fillStyle = skyGrad;
+  SCX.fillRect(0,0,W,HY);
+
+  // Sun glow if above horizon
+  const pos = sunXY(fraction);
+  if(!pos.belowH){
+    const glow = SCX.createRadialGradient(pos.x, pos.y, 0, pos.x, pos.y, 80);
+    const alpha = fraction > 0.85 ? (1-fraction)/0.15 : Math.min(1,(fraction-0.12)/0.06);
+    glow.addColorStop(0, `rgba(245,200,66,${0.25 * alpha})`);
+    glow.addColorStop(1, 'transparent');
+    SCX.fillStyle = glow;
+    SCX.fillRect(0,0,W,H);
+  }
+
+  // Ground
+  const gGrad = SCX.createLinearGradient(0,HY,0,H);
+  gGrad.addColorStop(0,'#1e3a1e');
+  gGrad.addColorStop(1,'#0d1a0d');
+  SCX.fillStyle = gGrad;
+  SCX.fillRect(0,HY,W,H-HY);
+
+  // Underground section (dark overlay when sun below)
+  if(pos.belowH){
+    const ugGrad = SCX.createLinearGradient(0,HY,0,H);
+    ugGrad.addColorStop(0,'rgba(0,0,20,0.6)');
+    ugGrad.addColorStop(1,'rgba(0,0,10,0.9)');
+    SCX.fillStyle = ugGrad;
+    SCX.fillRect(0,HY,W,H-HY);
+  }
+
+  // Horizon line
+  SCX.strokeStyle = '#2d5a1a';
+  SCX.lineWidth = 2;
+  SCX.setLineDash([]);
+  SCX.beginPath(); SCX.moveTo(0,HY); SCX.lineTo(W,HY); SCX.stroke();
+
+  // Draw angle reference lines
+  const drawAngleLine = (altDeg, label, col) => {
+    const MAX_ALT = 65;
+    if(altDeg >= 0) {
+      const yOff = (altDeg/MAX_ALT) * (HY - 40);
+      const y = HY - yOff;
+      SCX.strokeStyle = col + '40';
+      SCX.lineWidth = 1;
+      SCX.setLineDash([4,6]);
+      SCX.beginPath(); SCX.moveTo(0,y); SCX.lineTo(W,y); SCX.stroke();
+      SCX.fillStyle = col + '99';
+      SCX.font = '11px Inter';
+      SCX.fillText(label, 6, y-3);
+    } else {
+      const yOff = (Math.abs(altDeg)/25) * (H - HY - 20);
+      const y = HY + yOff;
+      SCX.strokeStyle = col + '40';
+      SCX.lineWidth = 1;
+      SCX.setLineDash([4,6]);
+      SCX.beginPath(); SCX.moveTo(0,y); SCX.lineTo(W,y); SCX.stroke();
+      SCX.fillStyle = col + '88';
+      SCX.font = '11px Inter';
+      SCX.fillText(label, 6, y-3);
+    }
+  };
+  drawAngleLine(5, '+5° (Kerahet)', '#f5c842');
+  drawAngleLine(-10, '-10° (İstibâr)', '#9333ea');
+  drawAngleLine(-17, '-17° (Yatsı)', '#6366f1');
+  drawAngleLine(-19, '-19° (İmsak/Yatsı)', '#4f46e5');
+  SCX.setLineDash([]);
+
+  // Sun path (dotted arc)
+  SCX.strokeStyle = 'rgba(245,200,66,0.25)';
+  SCX.lineWidth = 1.5;
+  SCX.setLineDash([3,6]);
+  SCX.beginPath();
+  for(let i=0;i<=200;i++){
+    const p = sunXY(i/200);
+    if(i===0) SCX.moveTo(p.x,p.y); else SCX.lineTo(p.x,p.y);
+  }
+  SCX.stroke();
+  SCX.setLineDash([]);
+
+  // Event tick markers
+  // 6 main events that get HH:MM labels: İmsak, Güneş, Öğle, İkindi(Evvel), Akşam, Yatsı(İmâmeyn)
+  const _pt = calcPrayerTimes(selectedDate, selectedCity);
+  const _labeledIdx = [0,1,4,5,8,10];
+  const _labelMins = [_pt.imsak, _pt.gunes, _pt.ogle, _pt.ikindiEvvel, _pt.aksam, _pt.yatsiIma];
+  EVENTS.forEach((ev, idx) => {
+    const p = sunXY(ev.f);
+    SCX.strokeStyle = ev.dot;
+    SCX.lineWidth = 1.5;
+    SCX.beginPath();
+    SCX.moveTo(p.x, HY - 6); SCX.lineTo(p.x, HY + 6);
+    SCX.stroke();
+    // HH:MM label for main 6 events
+    const li = _labeledIdx.indexOf(idx);
+    if(li >= 0){
+      const timeStr = minutesToHM(_labelMins[li]);
+      SCX.save();
+      SCX.font = 'bold 9px Inter, sans-serif';
+      SCX.textAlign = 'center';
+      SCX.textBaseline = 'bottom';
+      // Alternate vertical position to avoid overlap for close events
+      const yOff = (li === 1) ? 22 : 12; // Güneş slightly lower to avoid İmsak overlap
+      SCX.fillStyle = 'rgba(10,18,40,0.65)';
+      SCX.fillRect(p.x - 16, HY - yOff - 10, 32, 11);
+      SCX.fillStyle = ev.dot;
+      SCX.fillText(timeStr, p.x, HY - yOff);
+      SCX.restore();
+    }
+  });
+
+  // Sun disc
+  const SR = pos.belowH ? 12 : 18;
+  const sunColor = fraction > 0.85 && fraction < 0.92 ? '#e87c2a' : '#f5c842';
+  if(!pos.belowH){
+    // Rays
+    for(let i=0;i<8;i++){
+      const a = (i/8)*Math.PI*2 + Date.now()*0.0005;
+      SCX.strokeStyle = sunColor + '60';
+      SCX.lineWidth = 2;
+      SCX.beginPath();
+      SCX.moveTo(pos.x + Math.cos(a)*(SR+3), pos.y + Math.sin(a)*(SR+3));
+      SCX.lineTo(pos.x + Math.cos(a)*(SR+10), pos.y + Math.sin(a)*(SR+10));
+      SCX.stroke();
+    }
+    const sunGlow = SCX.createRadialGradient(pos.x,pos.y,0,pos.x,pos.y,SR*2);
+    sunGlow.addColorStop(0, sunColor+'cc');
+    sunGlow.addColorStop(1, 'transparent');
+    SCX.fillStyle = sunGlow;
+    SCX.beginPath(); SCX.arc(pos.x,pos.y,SR*2,0,Math.PI*2); SCX.fill();
+  }
+  // Sun body
+  const bodyGrad = SCX.createRadialGradient(pos.x-SR*0.3,pos.y-SR*0.3,1,pos.x,pos.y,SR);
+  bodyGrad.addColorStop(0,'#fff8c0');
+  bodyGrad.addColorStop(0.5, sunColor);
+  bodyGrad.addColorStop(1, pos.belowH ? '#8b4513' : '#e87c2a');
+  SCX.fillStyle = bodyGrad;
+  SCX.beginPath(); SCX.arc(pos.x,pos.y,SR,0,Math.PI*2); SCX.fill();
+  if(pos.belowH){ SCX.globalAlpha=0.5; SCX.fillStyle='#0d1526'; SCX.beginPath(); SCX.arc(pos.x,pos.y,SR,0,Math.PI*2); SCX.fill(); SCX.globalAlpha=1; }
+
+  // Current event label
+  let cur = EVENTS[0];
+  for(let i=EVENTS.length-1;i>=0;i--){ if(fraction >= EVENTS[i].f){ cur=EVENTS[i]; break; } }
+  let next = EVENTS.find(e=>e.f>fraction);
+  const labelX = Math.min(W-220, Math.max(10, pos.x-100));
+  const labelY = pos.belowH ? HY + 40 : Math.max(50, pos.y - 40);
+  SCX.fillStyle = 'rgba(6,9,26,0.85)';
+  roundRect(SCX, labelX, labelY, 200, 44, 8);
+  SCX.fillStyle = cur.dot;
+  SCX.font = 'bold 13px Inter';
+  SCX.fillText(cur.name, labelX+10, labelY+17);
+  SCX.fillStyle = '#8a8a9a';
+  SCX.font = '11px Inter';
+  const alt = getAltitude(fraction);
+  const altStr = (alt >= 0 ? '+' : '') + alt.toFixed(1) + '°';
+  SCX.fillText(`İrtifâ: ${altStr}  |  ${pos.belowH ? 'Ufkun altında' : 'Ufkun üzerinde'}`, labelX+10, labelY+34);
+
+  // Compass labels
+  SCX.fillStyle = '#ffffff66';
+  SCX.font = 'bold 13px Inter';
+  SCX.fillText('DOĞU', 6, HY + 18);
+  SCX.fillText('BATI', W-36, HY + 18);
+  SCX.fillText('ZENİT', W/2-18, 16);
+}
+
+function roundRect(ctx, x, y, w, h, r){
+  ctx.beginPath();
+  ctx.moveTo(x+r,y); ctx.lineTo(x+w-r,y); ctx.quadraticCurveTo(x+w,y,x+w,y+r);
+  ctx.lineTo(x+w,y+h-r); ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h);
+  ctx.lineTo(x+r,y+h); ctx.quadraticCurveTo(x,y+h,x,y+h-r);
+  ctx.lineTo(x,y+r); ctx.quadraticCurveTo(x,y,x+r,y);
+  ctx.closePath(); ctx.fill();
+}
+
+function updateTimeline(){
+  document.getElementById('timelineFill').style.width = (fraction*100) + '%';
+  document.getElementById('timelineHandle').style.left = (fraction*100) + '%';
+  let cur = EVENTS[0];
+  for(let i=EVENTS.length-1;i>=0;i--){ if(fraction >= EVENTS[i].f){ cur=EVENTS[i]; break; } }
+  let next = EVENTS.find(e=>e.f>fraction);
+  document.getElementById('timeDisplay').textContent = cur.name + (next ? ' → ' + next.name : ' · Gün sona eriyor');
+}
+
+let lastTime = null;
+function animate(ts){
+  if(!playing) return;
+  if(!lastTime) lastTime = ts;
+  const delta = (ts - lastTime) / 1000;
+  lastTime = ts;
+  fraction = (fraction + delta * 0.04) % 1;
+  drawSolar();
+  updateTimeline();
+  animId = requestAnimationFrame(animate);
+}
+
+function togglePlay(){
+  playing = !playing;
+  const btn = document.getElementById('playBtn');
+  if(playing){ btn.textContent='⏸ Duraklat'; lastTime=null; animId=requestAnimationFrame(animate); }
+  else { btn.textContent='▶ Başlat'; if(animId) cancelAnimationFrame(animId); }
+}
+
+function jumpTo(f, name){
+  fraction = f;
+  drawSolar();
+  updateTimeline();
+}
+
+// Timeline drag
+(function(){
+  const track = document.getElementById('timelineTrack');
+  let dragging = false;
+  function setFrac(e){
+    const r = track.getBoundingClientRect();
+    const cx = (e.touches ? e.touches[0].clientX : e.clientX);
+    fraction = Math.max(0, Math.min(1, (cx - r.left)/r.width));
+    drawSolar(); updateTimeline();
+  }
+  track.addEventListener('mousedown', e=>{ dragging=true; setFrac(e); });
+  document.addEventListener('mousemove', e=>{ if(dragging) setFrac(e); });
+  document.addEventListener('mouseup', ()=>{ dragging=false; });
+  track.addEventListener('touchstart', e=>{ dragging=true; setFrac(e); }, {passive:true});
+  document.addEventListener('touchmove', e=>{ if(dragging) setFrac(e); }, {passive:true});
+  document.addEventListener('touchend', ()=>{ dragging=false; });
+})();
+
+// Resize
+window.addEventListener('resize', resizeSolar);
+
+// ============================================================
+// GLOBAL CONTROLS INIT (City + Date)
+// ============================================================
+(function initGlobalControls(){
+  const citySelect = document.getElementById('gc-city');
+  CITIES.forEach((c, i) => {
+    const opt = document.createElement('option');
+    opt.value = i; opt.textContent = c.name;
+    if(i === 0) opt.selected = true;
+    citySelect.appendChild(opt);
+  });
+
+  const dateInput = document.getElementById('gc-date');
+  dateInput.value = new Date().toISOString().slice(0,10);
+  selectedDate = new Date(dateInput.value + 'T12:00:00');
+
+  function onGlobalChange(){
+    selectedCity = CITIES[parseInt(citySelect.value)];
+    selectedDate = new Date(dateInput.value + 'T12:00:00');
+    const pt = calcPrayerTimes(selectedDate, selectedCity);
+    document.getElementById('gc-coords').textContent =
+      selectedCity.lat.toFixed(2) + '°N, ' + selectedCity.lon.toFixed(2) + '°E · ' + selectedCity.elev + ' m';
+    document.getElementById('gc-decl').innerHTML =
+      'Deklinasyon: <strong>' + pt.dec.toFixed(2) + '°</strong> · EOT: <strong>' + pt.eot.toFixed(1) + ' dk</strong>';
+    rebuildEvents();
+    drawSolar();
+    updateTimeline();
+    if(typeof drawSunPath === 'function') drawSunPath();
+    if(typeof updateFormula === 'function') updateFormula(fraction * 1440);
+    if(typeof updatePrayerResults === 'function') updatePrayerResults();
+    if(typeof drawTemkin === 'function') drawTemkin();
+  }
+
+  citySelect.addEventListener('change', onGlobalChange);
+  dateInput.addEventListener('change', onGlobalChange);
+
+  // Initial build
+  rebuildEvents();
+  onGlobalChange();
+  setTimeout(resizeSolar, 100);
+})();
+
+// Animate sun rays periodically
+setInterval(()=>{ if(!playing) drawSolar(); }, 100);
+
+
+// ============================================================
+// SUN PATH POLAR DIAGRAM
+// ============================================================
+(function(){
+  const canvas = document.getElementById('sunpath-canvas');
+  if(!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let spPlaying = false, spAnimId = null, spMinute = 720;
+
+  function resize(){
+    canvas.width = canvas.parentElement.clientWidth - 24; // padding
+    canvas.height = canvas.width;
+    drawSunPath();
+  }
+
+  function stereo(alt){
+    // Stereographic projection: radius from center
+    // alt=90 -> r=0 (center), alt=0 -> r=radius (edge)
+    return (90 - alt) / 90;
+  }
+
+  window.drawSunPath = function(){
+    const W = canvas.width, H = canvas.height;
+    const cx = W/2, cy = H/2;
+    const R = Math.min(cx, cy) - 36;
+    ctx.clearRect(0,0,W,H);
+
+    // Background
+    ctx.fillStyle = '#0a0f1e';
+    ctx.beginPath(); ctx.arc(cx,cy,R+12,0,Math.PI*2); ctx.fill();
+
+    // Altitude circles
+    const altCircles = [0, 10, 20, 30, 40, 50, 60, 70, 80];
+    altCircles.forEach(alt => {
+      const r = stereo(alt) * R;
+      ctx.strokeStyle = alt === 0 ? 'rgba(245,200,66,0.5)' : 'rgba(255,255,255,0.08)';
+      ctx.lineWidth = alt === 0 ? 1.5 : 0.8;
+      ctx.beginPath(); ctx.arc(cx,cy,r,0,Math.PI*2); ctx.stroke();
+      if(alt > 0 && alt % 20 === 0){
+        ctx.fillStyle = 'rgba(255,255,255,0.3)';
+        ctx.font = '10px Inter';
+        ctx.textAlign = 'center';
+        ctx.fillText(alt+'°', cx, cy-r-3);
+      }
+    });
+
+    // Prayer threshold circles (below horizon shown at edge)
+    const thresholds = [
+      { alt:-19, label:'−19° İmsak', color:'rgba(99,102,241,0.4)' },
+      { alt:-17, label:'−17° Yatsı', color:'rgba(79,70,229,0.3)' },
+      { alt:-10, label:'−10° İstibâr', color:'rgba(147,51,234,0.3)' },
+      { alt:5,   label:'+5° Kerahet', color:'rgba(245,200,66,0.3)' },
+    ];
+    thresholds.forEach(t => {
+      if(t.alt >= 0){
+        const r = stereo(t.alt) * R;
+        ctx.strokeStyle = t.color;
+        ctx.lineWidth = 1;
+        ctx.setLineDash([4,4]);
+        ctx.beginPath(); ctx.arc(cx,cy,r,0,Math.PI*2); ctx.stroke();
+        ctx.setLineDash([]);
+        ctx.fillStyle = t.color;
+        ctx.font = '9px Inter';
+        ctx.textAlign = 'left';
+        ctx.fillText(t.label, cx+r*0.7+4, cy-r*0.7);
+      }
+    });
+
+    // Azimuth lines
+    const azLabels = [{az:0,l:'K'},{az:90,l:'D'},{az:180,l:'G'},{az:270,l:'B'}];
+    for(let az=0; az<360; az+=30){
+      const a = (az - 90) * DEG; // rotate so 0=North is up
+      ctx.strokeStyle = az%90===0 ? 'rgba(255,255,255,0.2)' : 'rgba(255,255,255,0.06)';
+      ctx.lineWidth = az%90===0 ? 1 : 0.6;
+      ctx.beginPath();
+      ctx.moveTo(cx, cy);
+      ctx.lineTo(cx + Math.cos(a)*R, cy + Math.sin(a)*R);
+      ctx.stroke();
+    }
+    // Compass labels
+    ctx.font = 'bold 13px Inter';
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    azLabels.forEach(l => {
+      const a = (l.az - 90) * DEG;
+      const lr = R + 20;
+      ctx.fillStyle = l.l==='K' ? '#f87171' : l.l==='G' ? '#4ade80' : 'rgba(255,255,255,0.55)';
+      ctx.fillText(l.l, cx + Math.cos(a)*lr, cy + Math.sin(a)*lr);
+    });
+
+    // Draw sun paths for key dates
+    const year = selectedDate.getFullYear();
+    const pathDates = [
+      { date: new Date(year, 5, 21), color:'#f97316', label:'21 Haz (Yaz Gündönümü)', dash:[] },
+      { date: new Date(year, 11, 21), color:'#60a5fa', label:'21 Ara (Kış Gündönümü)', dash:[] },
+      { date: new Date(year, 2, 21), color:'#4ade80', label:'21 Mar (Ekinoks)', dash:[6,4] },
+      { date: selectedDate, color:'#f5c842', label:'Seçili gün', dash:[], width:2.5 },
+    ];
+
+    pathDates.forEach(pd => {
+      ctx.strokeStyle = pd.color;
+      ctx.lineWidth = pd.width || 1.5;
+      ctx.setLineDash(pd.dash);
+      ctx.beginPath();
+      let started = false;
+      for(let m=0; m<=1440; m+=3){
+        const pos = getSunPosAtMinute(m, pd.date, selectedCity);
+        if(pos.alt < -2) continue;
+        const r = stereo(Math.max(0, pos.alt)) * R;
+        const a = (pos.az - 90) * DEG;
+        const px = cx + Math.cos(a)*r;
+        const py = cy + Math.sin(a)*r;
+        if(!started){ ctx.moveTo(px,py); started=true; }
+        else ctx.lineTo(px,py);
+      }
+      ctx.stroke();
+      ctx.setLineDash([]);
+    });
+
+    // Hour markers on selected day path
+    ctx.fillStyle = 'rgba(245,200,66,0.9)';
+    ctx.font = '9px Inter';
+    ctx.textAlign = 'center';
+    for(let h=5; h<=20; h++){
+      const m = h * 60;
+      const pos = getSunPosAtMinute(m, selectedDate, selectedCity);
+      if(pos.alt < 0) continue;
+      const r = stereo(pos.alt) * R;
+      const a = (pos.az - 90) * DEG;
+      const px = cx + Math.cos(a)*r;
+      const py = cy + Math.sin(a)*r;
+      ctx.fillStyle = '#f5c84299';
+      ctx.beginPath(); ctx.arc(px,py,3,0,Math.PI*2); ctx.fill();
+      ctx.fillStyle = 'rgba(255,255,255,0.6)';
+      ctx.fillText(h+':00', px, py-8);
+    }
+
+    // Current sun position
+    const curPos = getSunPosAtMinute(spMinute, selectedDate, selectedCity);
+    if(curPos.alt > -2){
+      const sr = stereo(Math.max(0, curPos.alt)) * R;
+      const sa = (curPos.az - 90) * DEG;
+      const sx = cx + Math.cos(sa)*sr;
+      const sy = cy + Math.sin(sa)*sr;
+
+      // Glow
+      const glow = ctx.createRadialGradient(sx,sy,0,sx,sy,20);
+      glow.addColorStop(0,'rgba(245,200,66,0.5)');
+      glow.addColorStop(1,'transparent');
+      ctx.fillStyle = glow;
+      ctx.beginPath(); ctx.arc(sx,sy,20,0,Math.PI*2); ctx.fill();
+
+      // Sun disc
+      ctx.fillStyle = '#f5c842';
+      ctx.beginPath(); ctx.arc(sx,sy,6,0,Math.PI*2); ctx.fill();
+      ctx.strokeStyle = '#fff';
+      ctx.lineWidth = 1.5;
+      ctx.beginPath(); ctx.arc(sx,sy,6,0,Math.PI*2); ctx.stroke();
+    }
+
+    // Legend
+    const lgX = 14, lgY = H - 80;
+    ctx.font = '10px Inter';
+    ctx.textAlign = 'left';
+    pathDates.forEach((pd, i) => {
+      const ly = lgY + i*16;
+      ctx.strokeStyle = pd.color;
+      ctx.lineWidth = 2;
+      ctx.setLineDash(pd.dash);
+      ctx.beginPath(); ctx.moveTo(lgX, ly); ctx.lineTo(lgX+18, ly); ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.fillStyle = 'rgba(255,255,255,0.6)';
+      ctx.fillText(pd.label, lgX+24, ly+4);
+    });
+
+    // Info box
+    ctx.fillStyle = 'rgba(6,9,26,0.85)';
+    roundRect(ctx, W-160, 10, 150, 42, 8);
+    ctx.fillStyle = '#f5c842';
+    ctx.font = 'bold 12px Inter';
+    ctx.textAlign = 'right';
+    ctx.fillText('İrtifâ: ' + curPos.alt.toFixed(1) + '°', W-18, 28);
+    ctx.fillStyle = '#8a8a9a';
+    ctx.font = '11px Inter';
+    ctx.fillText('Azimut: ' + curPos.az.toFixed(1) + '°', W-18, 44);
+    ctx.textAlign = 'left';
+  };
+
+  // Time slider
+  const slider = document.getElementById('spTimeSlider');
+  const label = document.getElementById('spTimeLabel');
+  const playBtn = document.getElementById('spPlayBtn');
+
+  slider.addEventListener('input', () => {
+    spMinute = parseInt(slider.value);
+    label.textContent = minutesToHM(spMinute);
+    drawSunPath();
+    updateFormula(spMinute);
+    drawSphere(spMinute);
+  });
+
+  playBtn.addEventListener('click', () => {
+    spPlaying = !spPlaying;
+    if(spPlaying){
+      playBtn.innerHTML = '&#9646;&#9646; Duraklat';
+      let last = null;
+      function anim(ts){
+        if(!spPlaying) return;
+        if(!last) last = ts;
+        const dt = (ts - last) / 1000;
+        last = ts;
+        spMinute = (spMinute + dt * 60) % 1440; // 1 min per second
+        slider.value = Math.round(spMinute);
+        label.textContent = minutesToHM(spMinute);
+        drawSunPath();
+        updateFormula(spMinute);
+        drawSphere(spMinute);
+        spAnimId = requestAnimationFrame(anim);
+      }
+      spAnimId = requestAnimationFrame(anim);
+    } else {
+      playBtn.innerHTML = '&#9654; Animasyon';
+      if(spAnimId) cancelAnimationFrame(spAnimId);
+    }
+  });
+
+  window.addEventListener('resize', resize);
+  setTimeout(resize, 200);
+})();
+
+// ============================================================
+// FORMULA DISPLAY — Live Values
+// ============================================================
+window.updateFormula = function(minute){
+  const pos = getSunPosAtMinute(minute || 720, selectedDate, selectedCity);
+  const pt = calcPrayerTimes(selectedDate, selectedCity);
+
+  document.getElementById('fvar-h').textContent = pos.alt.toFixed(2) + '°';
+  document.getElementById('fvar-phi').textContent = selectedCity.lat.toFixed(2) + '°';
+  document.getElementById('fvar-dec').textContent = pos.dec.toFixed(2) + '°';
+  document.getElementById('fvar-ha').textContent = pos.ha.toFixed(2) + '°';
+
+  // Animate value highlights
+  document.querySelectorAll('.formula-var .fv-val').forEach(el => {
+    el.style.transition = 'color 0.3s';
+  });
+};
+
+// ============================================================
+// PRAYER RESULTS TABLE
+// ============================================================
+window.updatePrayerResults = function(){
+  const pt = calcPrayerTimes(selectedDate, selectedCity);
+  const grid = document.getElementById('pr-grid');
+  if(!grid) return;
+  const items = [
+    ['İmsak (−19°)', pt.imsak],
+    ['Güneş Doğuşu', pt.gunes],
+    ['İşrâk (+5°)', pt.israk],
+    ['Öğle (Zevâl)', pt.ogle],
+    ['İkindi (Evvel)', pt.ikindiEvvel],
+    ['İkindi (Sânî)', pt.ikindiSani],
+    ['Kerahet (+5°)', pt.kerahet],
+    ['Akşam (Gurûb)', pt.aksam],
+    ['İstibâr (−10°)', pt.istibar],
+    ['Yatsı −17°', pt.yatsiIma],
+    ['Yatsı −19°', pt.yatsiImam],
+    ['Gâye İrtifâ', null],
+  ];
+  grid.innerHTML = items.map(([name, val]) =>
+    `<div class="pr-item"><span class="pr-name">${name}</span><span class="pr-time">${val !== null ? minutesToHM(val) : pt.maxAlt.toFixed(1)+'°'}</span></div>`
+  ).join('');
+};
+
+// ============================================================
+// CELESTIAL SPHERE CROSS-SECTION
+// ============================================================
+window.drawSphere = function(minute){
+  const canvas = document.getElementById('sphere-canvas');
+  if(!canvas) return;
+  const ctx = canvas.getContext('2d');
+  canvas.width = canvas.parentElement.clientWidth - 24;
+  canvas.height = 320;
+  const W = canvas.width, H = canvas.height;
+  const cx = W*0.5, cy = H*0.55;
+  const R = Math.min(W*0.38, H*0.42);
+
+  ctx.clearRect(0,0,W,H);
+
+  const pos = getSunPosAtMinute(minute || 720, selectedDate, selectedCity);
+  const lat = selectedCity.lat;
+  const dec = pos.dec;
+  const ha = pos.ha;
+  const alt = pos.alt;
+
+  // Celestial sphere circle
+  ctx.strokeStyle = 'rgba(255,255,255,0.15)';
+  ctx.lineWidth = 1.5;
+  ctx.beginPath(); ctx.arc(cx,cy,R,0,Math.PI*2); ctx.stroke();
+
+  // Horizon line
+  ctx.strokeStyle = 'rgba(245,200,66,0.6)';
+  ctx.lineWidth = 2;
+  ctx.beginPath(); ctx.moveTo(cx-R-10,cy); ctx.lineTo(cx+R+10,cy); ctx.stroke();
+  ctx.fillStyle = 'rgba(245,200,66,0.7)';
+  ctx.font = '10px Inter';
+  ctx.textAlign = 'left';
+  ctx.fillText('Ufuk (0°)', cx+R+4, cy+4);
+
+  // Equator line (tilted by latitude)
+  const eqTilt = lat * DEG;
+  ctx.strokeStyle = 'rgba(74,222,128,0.35)';
+  ctx.lineWidth = 1;
+  ctx.setLineDash([5,5]);
+  ctx.beginPath();
+  ctx.moveTo(cx - R*Math.cos(eqTilt), cy + R*Math.sin(eqTilt));
+  ctx.lineTo(cx + R*Math.cos(eqTilt), cy - R*Math.sin(eqTilt));
+  ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.fillStyle = 'rgba(74,222,128,0.5)';
+  ctx.font = '9px Inter';
+  ctx.textAlign = 'right';
+  ctx.fillText('Ekvator', cx+R*Math.cos(eqTilt)+2, cy-R*Math.sin(eqTilt)-6);
+
+  // Zenith
+  ctx.fillStyle = 'rgba(255,255,255,0.5)';
+  ctx.font = '10px Inter';
+  ctx.textAlign = 'center';
+  ctx.fillText('Zenit', cx, cy-R-8);
+
+  // Nadir
+  ctx.fillStyle = 'rgba(255,255,255,0.25)';
+  ctx.fillText('Nadir', cx, cy+R+14);
+
+  // Ground fill (below horizon)
+  ctx.fillStyle = 'rgba(30,58,30,0.2)';
+  ctx.beginPath();
+  ctx.moveTo(cx-R-10,cy);
+  ctx.lineTo(cx+R+10,cy);
+  ctx.lineTo(cx+R+10,H);
+  ctx.lineTo(cx-R-10,H);
+  ctx.closePath(); ctx.fill();
+
+  // Observer stick figure at center bottom of horizon
+  ctx.fillStyle = '#fff';
+  ctx.beginPath(); ctx.arc(cx, cy-8, 4, 0, Math.PI*2); ctx.fill();
+  ctx.strokeStyle = '#fff'; ctx.lineWidth = 1.5;
+  ctx.beginPath(); ctx.moveTo(cx, cy-4); ctx.lineTo(cx, cy+6); ctx.stroke();
+
+  // Sun position on the sphere
+  // Map altitude to angle from horizon on the sphere circle
+  const sunAngle = -(90 - alt) * DEG + Math.PI/2; // angle from right horizontal
+  // Actually, let's draw it simply: altitude determines vertical position
+  const sunR = R; // on the sphere edge
+  const sunA = -alt * DEG; // negative because up is negative y
+  const sunX = cx + sunR * Math.cos(Math.PI/2 + sunA) * (ha > 0 ? 1 : -1) * 0.6;
+  const sunY = cy - sunR * Math.sin(Math.PI/2 + sunA) * 0.75;
+  // Simpler approach: draw sun at correct altitude angle from horizon
+  const altAngleRad = alt * DEG;
+  const sx = cx + (ha > 0 ? 1 : -1) * R * Math.cos(altAngleRad) * 0.7;
+  const sy = cy - R * Math.sin(altAngleRad) * 0.7;
+
+  // Sun glow
+  const glow = ctx.createRadialGradient(sx,sy,0,sx,sy,16);
+  glow.addColorStop(0,'rgba(245,200,66,0.4)');
+  glow.addColorStop(1,'transparent');
+  ctx.fillStyle = glow;
+  ctx.beginPath(); ctx.arc(sx,sy,16,0,Math.PI*2); ctx.fill();
+
+  // Sun body
+  ctx.fillStyle = '#f5c842';
+  ctx.beginPath(); ctx.arc(sx,sy,6,0,Math.PI*2); ctx.fill();
+
+  // Altitude arc from horizon to sun
+  if(Math.abs(alt) > 1){
+    const arcStartX = cx + (ha > 0 ? 1 : -1) * 50;
+    ctx.strokeStyle = 'rgba(74,222,128,0.7)';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    const arcR = 50;
+    const startA = 0; // horizontal
+    const endA = -alt * DEG;
+    const dir = ha > 0;
+    if(alt > 0){
+      ctx.arc(cx, cy, arcR, dir ? 0 : Math.PI, dir ? -altAngleRad : Math.PI + altAngleRad, true);
+    } else {
+      ctx.arc(cx, cy, arcR, dir ? 0 : Math.PI, dir ? -altAngleRad : Math.PI + altAngleRad, false);
+    }
+    ctx.stroke();
+
+    // Altitude label
+    ctx.fillStyle = '#4ade80';
+    ctx.font = 'bold 11px Inter';
+    ctx.textAlign = 'center';
+    const labelR = arcR + 14;
+    const labelA = -alt/2 * DEG;
+    const lx = cx + (ha > 0 ? 1 : -1) * labelR * Math.cos(labelA);
+    const ly = cy - labelR * Math.sin(labelA);
+    ctx.fillText('h=' + alt.toFixed(1) + '°', lx, ly);
+  }
+
+  // Latitude label
+  ctx.fillStyle = '#60a5fa';
+  ctx.font = '10px Inter';
+  ctx.textAlign = 'left';
+  ctx.fillText('φ=' + lat.toFixed(1) + '°', 8, 18);
+
+  // Declination label
+  ctx.fillStyle = '#f97316';
+  ctx.fillText('δ=' + dec.toFixed(1) + '°', 8, 32);
+
+  // Hour angle label
+  ctx.fillStyle = '#a78bfa';
+  ctx.fillText('H=' + ha.toFixed(1) + '°', 8, 46);
+
+  // Time label
+  ctx.fillStyle = 'rgba(255,255,255,0.6)';
+  ctx.font = '11px Inter';
+  ctx.textAlign = 'right';
+  ctx.fillText(minutesToHM(minute || 720), W-10, 18);
+};
+
+// Initial sphere draw
+setTimeout(() => { drawSphere(720); updateFormula(720); updatePrayerResults(); }, 300);
+
+// ============================================================
+// TEMKIN — İNTERAKTİF SUNSET DİYAGRAMI + HESAPLAR
+// ============================================================
+(function(){
+  const c = document.getElementById('temkin-canvas');
+  if(!c) return;
+  const ctx = c.getContext('2d');
+  const elevSlider = document.getElementById('temkinElevSlider');
+  const elevValEl = document.getElementById('temkinElevVal');
+  const playBtn = document.getElementById('temkinPlayBtn');
+  let temkinElev = selectedCity.elev;
+  let sunAnimPhase = 0.5; // 0=above horizon, 1=fully set
+  let tPlaying = false, tAnimId = null;
+
+  function arcminStr(v){ const m=Math.floor(v); const s=Math.round((v-m)*60); return m+"′"+(s>0?" "+String(s).padStart(2,'0')+"″":""); }
+
+  function resize(){
+    c.width = c.parentElement.clientWidth;
+    c.height = 480;
+    drawTemkinCanvas();
+  }
+
+  window.drawTemkin = function(){ resize(); };
+
+  function drawTemkinCanvas(){
+    const W=c.width, H=c.height, S=H/480;
+    ctx.clearRect(0,0,W,H);
+    const tc = calcTemkinComponents(selectedDate, selectedCity, temkinElev);
+    // Pixel scale: total angle maps to a vertical range
+    const zone = H * 0.40; // vertical pixels for total angle zone
+    const skyH = H * 0.38;
+    const pxPerArcmin = zone / Math.max(tc.totalArcmin, 1);
+    const inhitatPx = tc.dipArcmin * pxPerArcmin;
+    const refrPx = tc.refractionArcmin * pxPerArcmin;
+    const sdPx = tc.semiDiamArcmin * pxPerArcmin;
+    const nisfkutr = Math.max(12, sdPx * 0.8) * S;
+    const seriY = skyH + inhitatPx;
+    const appY = seriY + sdPx;
+    const realY = appY + refrPx;
+    const sunX = W * 0.20;
+    const obsX = W * 0.74;
+    const brX = W * 0.38;
+    // Sun animation: offset based on phase (0→sun at seriY, 1→sun at realY)
+    const sunCenterY = seriY + (realY - seriY) * sunAnimPhase;
+
+    // ─── Sky ─────────────────────────────────────────────
+    const skyGrad = ctx.createLinearGradient(0,0,0,seriY);
+    skyGrad.addColorStop(0,'#01040f'); skyGrad.addColorStop(0.4,'#050e28');
+    skyGrad.addColorStop(0.72,'#0d1e48'); skyGrad.addColorStop(0.88,'#5a1c04');
+    skyGrad.addColorStop(1,'#9a3808');
+    ctx.fillStyle=skyGrad; ctx.fillRect(0,0,W,seriY);
+    const glow = ctx.createRadialGradient(sunX,seriY,0,sunX,seriY,W*0.5);
+    glow.addColorStop(0,'rgba(255,130,30,0.40)'); glow.addColorStop(0.35,'rgba(255,80,10,0.16)');
+    glow.addColorStop(1,'transparent');
+    ctx.fillStyle=glow; ctx.fillRect(0,0,W,seriY);
+    if(inhitatPx>2){
+      const st=ctx.createLinearGradient(0,skyH,0,seriY);
+      st.addColorStop(0,'rgba(180,60,5,0.04)'); st.addColorStop(1,'rgba(160,50,5,0.20)');
+      ctx.fillStyle=st; ctx.fillRect(0,skyH,W,inhitatPx);
+    }
+
+    // ─── Ground ──────────────────────────────────────────
+    const gg=ctx.createLinearGradient(0,seriY,0,H);
+    gg.addColorStop(0,'#1a2810'); gg.addColorStop(0.4,'#0f1a0a'); gg.addColorStop(1,'#060d04');
+    ctx.fillStyle=gg; ctx.fillRect(0,seriY,W,H-seriY);
+
+    // ─── Hill (height proportional to elevation) ─────────
+    const hillH = Math.min(inhitatPx + 20*S, H*0.25);
+    const hc=ctx.createLinearGradient(0,skyH,0,H);
+    hc.addColorStop(0,'#263d14'); hc.addColorStop(0.5,'#1c2c0e'); hc.addColorStop(1,'#0c1406');
+    ctx.fillStyle=hc;
+    ctx.beginPath();
+    ctx.moveTo(W*0.50,seriY);
+    ctx.quadraticCurveTo(W*0.61,skyH+hillH*0.3,obsX,skyH);
+    ctx.lineTo(obsX+40*S,skyH-10*S); ctx.lineTo(W,seriY-8*S);
+    ctx.lineTo(W,H); ctx.lineTo(W*0.50,H); ctx.closePath(); ctx.fill();
+    ctx.strokeStyle='rgba(80,130,35,0.55)'; ctx.lineWidth=1.5;
+    ctx.beginPath(); ctx.moveTo(W*0.50,seriY);
+    ctx.quadraticCurveTo(W*0.61,skyH+hillH*0.3,obsX,skyH); ctx.stroke();
+    ctx.lineWidth=1;
+
+    // ─── Riyâzî ufuk (gold dashed) ──────────────────────
+    ctx.strokeStyle='rgba(245,200,66,0.75)'; ctx.lineWidth=1.5; ctx.setLineDash([10,7]);
+    ctx.beginPath(); ctx.moveTo(0,skyH); ctx.lineTo(W,skyH); ctx.stroke(); ctx.setLineDash([]);
+    ctx.fillStyle='rgba(245,200,66,0.85)'; ctx.font=`bold ${Math.max(9,11*S)}px Inter`;
+    ctx.fillText("Üfk-ı Riyâzî (Hesap) — 0°",W*0.03,skyH-6*S);
+
+    // ─── Şer'î ufuk (orange) ────────────────────────────
+    ctx.strokeStyle='rgba(249,115,22,0.85)'; ctx.lineWidth=2;
+    ctx.beginPath(); ctx.moveTo(0,seriY); ctx.lineTo(W*0.50,seriY); ctx.stroke();
+    ctx.fillStyle='rgba(249,115,22,0.85)'; ctx.font=`bold ${Math.max(9,11*S)}px Inter`;
+    ctx.fillText("Üfk-ı Şer'î (Görünen)",W*0.03,seriY+16*S);
+
+    // ─── Refracted ray ──────────────────────────────────
+    ctx.strokeStyle='rgba(245,200,66,0.80)'; ctx.lineWidth=2.2; ctx.setLineDash([]);
+    ctx.beginPath(); ctx.moveTo(sunX,sunCenterY);
+    ctx.bezierCurveTo(W*0.30,seriY+12*S,W*0.52,skyH-4*S,obsX,skyH); ctx.stroke();
+    ctx.strokeStyle='rgba(255,255,255,0.16)'; ctx.lineWidth=1.5; ctx.setLineDash([6,6]);
+    ctx.beginPath(); ctx.moveTo(sunX,sunCenterY); ctx.lineTo(obsX,skyH); ctx.stroke();
+    ctx.setLineDash([]);
+
+    // ─── Sun disc (animated position) ───────────────────
+    const sunR = Math.max(10, nisfkutr);
+    ctx.save();
+    const sunGlow = ctx.createRadialGradient(sunX,sunCenterY,0,sunX,sunCenterY,sunR*5);
+    sunGlow.addColorStop(0,'rgba(255,150,40,0.45)'); sunGlow.addColorStop(0.3,'rgba(255,90,10,0.18)');
+    sunGlow.addColorStop(1,'transparent');
+    ctx.fillStyle=sunGlow; ctx.beginPath(); ctx.arc(sunX,sunCenterY,sunR*5,0,Math.PI*2); ctx.fill();
+    const sd=ctx.createRadialGradient(sunX-sunR*0.25,sunCenterY-sunR*0.25,sunR*0.05,sunX,sunCenterY,sunR);
+    sd.addColorStop(0,'#fffde0'); sd.addColorStop(0.45,'#ffd84a'); sd.addColorStop(1,'#f59020');
+    ctx.fillStyle=sd; ctx.beginPath(); ctx.arc(sunX,sunCenterY,sunR,0,Math.PI*2); ctx.fill();
+    ctx.strokeStyle='rgba(255,200,80,0.35)'; ctx.lineWidth=1.5;
+    ctx.beginPath(); ctx.arc(sunX,sunCenterY,sunR,0,Math.PI*2); ctx.stroke();
+    ctx.restore();
+    // Labels near sun
+    ctx.fillStyle='#f5c842'; ctx.font=`bold ${Math.max(9,10*S)}px Inter`; ctx.textAlign='center';
+    if(sunAnimPhase < 0.3){
+      ctx.fillText('Takvim Vakti',sunX,seriY-sunR-14*S);
+    } else if(sunAnimPhase > 0.7){
+      ctx.fillStyle='rgba(220,130,60,0.80)';
+      ctx.fillText("Hakîkî Konum",sunX,Math.min(realY+sunR+16*S, H-8*S));
+    }
+    ctx.textAlign='left';
+
+    // ─── Brackets (dynamic values) ──────────────────────
+    function bkt(y1,y2,color,label,val){
+      if(Math.abs(y2-y1)<2) return;
+      const mid=(y1+y2)/2,bw=7*S,lx=brX+12*S,fs=Math.max(9,11*S);
+      ctx.strokeStyle=color; ctx.lineWidth=2; ctx.setLineDash([]);
+      ctx.beginPath(); ctx.moveTo(brX,y1); ctx.lineTo(brX,y2); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(brX-bw,y1); ctx.lineTo(brX+bw,y1); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(brX-bw,y2); ctx.lineTo(brX+bw,y2); ctx.stroke();
+      ctx.font=`bold ${fs}px Inter`;
+      const lw=ctx.measureText(label).width;
+      ctx.fillStyle='rgba(6,9,26,0.75)'; ctx.fillRect(lx-3,mid-fs-2,lw+6,fs*2+8);
+      ctx.fillStyle=color; ctx.fillText(label,lx,mid-1);
+      ctx.font=`${fs}px Inter`; ctx.fillStyle=color+'cc'; ctx.fillText(val,lx,mid+fs+1);
+    }
+    bkt(skyH, seriY, '#60a5fa', "İnhitât", arcminStr(tc.dipArcmin));
+    bkt(seriY, appY, '#a78bfa', "Nısf-Kutr", arcminStr(tc.semiDiamArcmin));
+    bkt(appY, realY, '#f97316', "İnkisâr", arcminStr(tc.refractionArcmin));
+
+    // Total bracket
+    const totX = brX + (W<500?88:112)*S;
+    ctx.strokeStyle='rgba(245,200,66,0.55)'; ctx.lineWidth=1.5; ctx.setLineDash([5,4]);
+    ctx.beginPath(); ctx.moveTo(totX,skyH); ctx.lineTo(totX,realY); ctx.stroke(); ctx.setLineDash([]);
+    ctx.beginPath(); ctx.moveTo(totX-6*S,skyH); ctx.lineTo(totX+6*S,skyH); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(totX-6*S,realY); ctx.lineTo(totX+6*S,realY); ctx.stroke();
+    const tmid=(skyH+realY)/2;
+    ctx.fillStyle='#f5c842'; ctx.font=`bold ${Math.max(10,13*S)}px Inter`; ctx.textAlign='center';
+    ctx.fillText("≈ "+tc.temkinMin.toFixed(1)+" dk",totX,tmid-6*S);
+    ctx.font=`${Math.max(9,10*S)}px Inter`; ctx.fillStyle='rgba(245,200,66,0.65)';
+    ctx.fillText('Temkin',totX,tmid+8*S); ctx.textAlign='left';
+
+    // ─── Observer ────────────────────────────────────────
+    ctx.strokeStyle='#fff'; ctx.fillStyle='#fff'; ctx.lineWidth=2;
+    ctx.beginPath(); ctx.arc(obsX,skyH-10*S,5*S,0,Math.PI*2); ctx.fill();
+    ctx.lineWidth=1.8;
+    ctx.beginPath(); ctx.moveTo(obsX,skyH-5*S); ctx.lineTo(obsX,skyH+8*S);
+    ctx.moveTo(obsX-7*S,skyH-1*S); ctx.lineTo(obsX+7*S,skyH-1*S); ctx.stroke();
+    ctx.fillStyle='rgba(255,255,255,0.90)'; ctx.font=`bold ${Math.max(9,11*S)}px Inter`; ctx.textAlign='center';
+    ctx.fillText('Gözlemci',obsX,skyH-22*S);
+    ctx.fillStyle='rgba(255,255,255,0.50)'; ctx.font=`${Math.max(8,9*S)}px Inter`;
+    ctx.fillText(selectedCity.name+' · '+temkinElev+' m',obsX,skyH-11*S); ctx.textAlign='left';
+
+    // ─── Legend ──────────────────────────────────────────
+    const lgX=W*0.73,lgY=H*0.88;
+    [{c:'rgba(245,200,66,0.80)',d:false,t:'Kırılmış ışın (görünen)'},
+     {c:'rgba(255,255,255,0.22)',d:true,t:'Geometrik ışın (hakîkî)'}
+    ].forEach((l,i)=>{
+      ctx.strokeStyle=l.c; ctx.lineWidth=2;
+      if(l.d) ctx.setLineDash([5,4]); else ctx.setLineDash([]);
+      const ly=lgY+i*18*S;
+      ctx.beginPath(); ctx.moveTo(lgX,ly); ctx.lineTo(lgX+22*S,ly); ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.fillStyle=l.c; ctx.font=`${Math.max(8,9.5*S)}px Inter`;
+      ctx.fillText(l.t,lgX+26*S,ly+4*S);
+    });
+    ctx.fillStyle='rgba(255,255,255,0.22)'; ctx.font=`${Math.max(9,11*S)}px Inter`;
+    ctx.fillText('← BATI',W*0.02,H-10*S);
+  }
+
+  // ─── Update cards ─────────────────────────────────────
+  window.updateTemkinCards = function(){
+    const tc = calcTemkinComponents(selectedDate, selectedCity, temkinElev);
+    document.getElementById('temkin-dip-val').textContent = arcminStr(tc.dipArcmin);
+    document.getElementById('temkin-ref-val').textContent = "34′ 00″";
+    document.getElementById('temkin-sd-val').textContent = arcminStr(tc.semiDiamArcmin);
+    const dipF = document.getElementById('temkin-dip-formula');
+    if(dipF) dipF.textContent = "0.0347 × √"+temkinElev+" = "+tc.dipDeg.toFixed(4)+"° = "+arcminStr(tc.dipArcmin);
+    const sdF = document.getElementById('temkin-sd-formula');
+    if(sdF) sdF.textContent = "959.63″ / "+tc.sunDist.toFixed(5)+" AU = "+tc.semiDiamArcsec.toFixed(1)+"″ = "+arcminStr(tc.semiDiamArcmin);
+    // Formula card
+    document.getElementById('teq-dip').textContent = arcminStr(tc.dipArcmin);
+    document.getElementById('teq-ref').textContent = "34′";
+    document.getElementById('teq-sd').textContent = arcminStr(tc.semiDiamArcmin);
+    document.getElementById('teq-total').textContent = arcminStr(tc.totalArcmin)+" ("+tc.totalDeg.toFixed(2)+"°)";
+    const tm = tc.temkinMin;
+    const tmM = Math.floor(tm); const tmS = Math.round((tm - tmM)*60);
+    document.getElementById('teq-minutes').textContent = tmM+" dk "+String(tmS).padStart(2,'0')+" sn";
+  };
+
+  // ─── Elevation slider ─────────────────────────────────
+  elevSlider.addEventListener('input', ()=>{
+    temkinElev = parseInt(elevSlider.value);
+    elevValEl.textContent = temkinElev;
+    drawTemkinCanvas();
+    updateTemkinCards();
+  });
+
+  // ─── Sunset animation ─────────────────────────────────
+  playBtn.addEventListener('click', ()=>{
+    tPlaying = !tPlaying;
+    if(tPlaying){
+      playBtn.innerHTML = '&#9646;&#9646; Duraklat';
+      sunAnimPhase = 0;
+      let last = null;
+      function anim(ts){
+        if(!tPlaying) return;
+        if(!last) last = ts;
+        const dt = (ts-last)/1000;
+        last = ts;
+        sunAnimPhase = Math.min(1, sunAnimPhase + dt * 0.15);
+        drawTemkinCanvas();
+        if(sunAnimPhase >= 1){ tPlaying = false; playBtn.innerHTML = '&#9654; Batış Animasyonu'; return; }
+        tAnimId = requestAnimationFrame(anim);
+      }
+      tAnimId = requestAnimationFrame(anim);
+    } else {
+      playBtn.innerHTML = '&#9654; Batış Animasyonu';
+      if(tAnimId) cancelAnimationFrame(tAnimId);
+    }
+  });
+
+  // ─── Sync with global controls ────────────────────────
+  function syncElev(){
+    temkinElev = selectedCity.elev;
+    elevSlider.value = temkinElev;
+    elevValEl.textContent = temkinElev;
+  }
+
+  // Initial render
+  function init(){
+    syncElev();
+    resize();
+    updateTemkinCards();
+  }
+  // Expose for onGlobalChange
+  const origDrawTemkin = window.drawTemkin;
+  window.drawTemkin = function(){
+    syncElev();
+    resize();
+    updateTemkinCards();
+  };
+  window.addEventListener('resize', resize);
+  setTimeout(init, 250);
+})();
+
+// ============================================================
+// TA'DİL-İ ZEMÂN — İnteraktif Grafik
+// ============================================================
+(function(){
+  function eotDOY(date){
+    const s=new Date(date.getFullYear(),0,1);
+    return Math.floor((date-s)/86400000)+1;
+  }
+  function eotIsLeap(y){ return (y%4===0&&y%100!==0)||(y%400===0); }
+  function eotFromDOY(year,N){ return new Date(year,0,N,12,0,0); }
+  function eotMinutes(date){
+    const N=eotDOY(date);
+    const days=eotIsLeap(date.getFullYear())?366:365;
+    const g=2*Math.PI/days*(N-1);
+    return 229.18*(0.000075+0.001868*Math.cos(g)-0.032077*Math.sin(g)-0.014615*Math.cos(2*g)-0.040849*Math.sin(2*g));
+  }
+  function fmtMin(x){ return (x>=0?'+':'−')+Math.abs(x).toFixed(1)+' dk'; }
+  function monthTR(m){ return ['Oca','Şub','Mar','Nis','May','Haz','Tem','Ağu','Eyl','Eki','Kas','Ara'][m]||''; }
+  function buildSeries(year){
+    const days=eotIsLeap(year)?366:365, arr=[];
+    for(let i=1;i<=days;i++){ const d=new Date(year,0,i,12,0,0); arr.push({day:i,date:d,eot:eotMinutes(d)}); }
+    return arr;
+  }
+  function findMM(s){ let mn=s[0],mx=s[0]; for(const p of s){if(p.eot<mn.eot)mn=p;if(p.eot>mx.eot)mx=p;} return{mn,mx}; }
+  function findZeros(series){
+    const z=[];
+    for(let i=1;i<series.length;i++){
+      const a=series[i-1],b=series[i];
+      if((a.eot<0&&b.eot>0)||(a.eot>0&&b.eot<0)){
+        const t=Math.abs(a.eot)/(Math.abs(a.eot)+Math.abs(b.eot));
+        z.push({date:new Date(a.date.getTime()+t*86400000)});
+      }
+    }
+    return z.slice(0,6);
+  }
+  function rrEoT(ctx,x,y,w,h,r,fill,stroke){
+    const rr=Math.min(r,w/2,h/2);
+    ctx.beginPath();
+    ctx.moveTo(x+rr,y); ctx.arcTo(x+w,y,x+w,y+h,rr);
+    ctx.arcTo(x+w,y+h,x,y+h,rr); ctx.arcTo(x,y+h,x,y,rr);
+    ctx.arcTo(x,y,x+w,y,rr); ctx.closePath();
+    if(fill) ctx.fill(); if(stroke) ctx.stroke();
+  }
+  function drawChart(canvas,series,selectedDate){
+    const ctx=canvas.getContext('2d');
+    const W=canvas.width, H=canvas.height;
+    ctx.clearRect(0,0,W,H);
+    // Fill background to match card
+    ctx.fillStyle='#0b1020'; ctx.fillRect(0,0,W,H);
+
+    const padL=60,padR=18,padT=24,padB=44;
+    const plotW=W-padL-padR, plotH=H-padT-padB;
+    let yMin=Infinity,yMax=-Infinity;
+    for(const p of series){yMin=Math.min(yMin,p.eot);yMax=Math.max(yMax,p.eot);}
+    yMin-=2; yMax+=2;
+    const xToPx=x=>padL+((x-1)/(series.length-1))*plotW;
+    const yToPx=y=>padT+(1-((y-yMin)/(yMax-yMin)))*plotH;
+
+    // Horizontal grid lines
+    ctx.lineWidth=1;
+    const step=5, y0=Math.floor(yMin/step)*step;
+    for(let v=y0;v<=yMax;v+=step){
+      const py=yToPx(v);
+      ctx.strokeStyle='rgba(255,255,255,0.08)';
+      ctx.beginPath(); ctx.moveTo(padL,py); ctx.lineTo(W-padR,py); ctx.stroke();
+      ctx.fillStyle='rgba(255,255,255,0.55)'; ctx.font='11px Inter';
+      ctx.textAlign='right'; ctx.textBaseline='middle';
+      ctx.fillText(v.toFixed(0)+' dk',padL-8,py);
+    }
+    // Zero line
+    ctx.strokeStyle='rgba(255,255,255,0.28)'; ctx.lineWidth=1.5;
+    ctx.beginPath(); ctx.moveTo(padL,yToPx(0)); ctx.lineTo(W-padR,yToPx(0)); ctx.stroke();
+
+    // Month markers
+    const yr=series[0].date.getFullYear();
+    for(let m=0;m<12;m++){
+      const doy=eotDOY(new Date(yr,m,1,12,0,0));
+      const px=xToPx(doy);
+      ctx.strokeStyle='rgba(255,255,255,0.08)'; ctx.lineWidth=1;
+      ctx.beginPath(); ctx.moveTo(px,padT); ctx.lineTo(px,H-padB); ctx.stroke();
+      ctx.fillStyle='rgba(255,255,255,0.55)'; ctx.font='11px Inter';
+      ctx.textAlign='center'; ctx.textBaseline='top';
+      ctx.fillText(monthTR(m),px,H-padB+10);
+    }
+
+    // Fill areas
+    const z0=yToPx(0);
+    ctx.globalAlpha=0.13;
+    // positive fill (gold)
+    ctx.fillStyle='#f5c842';
+    ctx.beginPath(); ctx.moveTo(xToPx(1),z0);
+    for(let i=0;i<series.length;i++){
+      const p=series[i];
+      if(p.eot>0) ctx.lineTo(xToPx(p.day),yToPx(p.eot)); else ctx.lineTo(xToPx(p.day),z0);
+    }
+    ctx.lineTo(xToPx(series.length),z0); ctx.closePath(); ctx.fill();
+    // negative fill (indigo)
+    ctx.fillStyle='#6366f1';
+    ctx.beginPath(); ctx.moveTo(xToPx(1),z0);
+    for(let i=0;i<series.length;i++){
+      const p=series[i];
+      if(p.eot<0) ctx.lineTo(xToPx(p.day),yToPx(p.eot)); else ctx.lineTo(xToPx(p.day),z0);
+    }
+    ctx.lineTo(xToPx(series.length),z0); ctx.closePath(); ctx.fill();
+    ctx.globalAlpha=1;
+
+    // Main curve
+    ctx.lineWidth=2.5; ctx.strokeStyle='rgba(245,200,66,0.92)';
+    ctx.beginPath();
+    series.forEach((p,i)=>{
+      const x=xToPx(p.day), y=yToPx(p.eot);
+      if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+    });
+    ctx.stroke();
+
+    // Selected date marker
+    const selDoy=eotDOY(selectedDate);
+    const sel=series[Math.min(series.length-1,Math.max(0,selDoy-1))];
+    const sx=xToPx(sel.day), sy=yToPx(sel.eot);
+    ctx.strokeStyle='rgba(74,222,128,0.65)'; ctx.setLineDash([6,6]); ctx.lineWidth=2;
+    ctx.beginPath(); ctx.moveTo(sx,padT); ctx.lineTo(sx,H-padB); ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.fillStyle='rgba(74,222,128,0.95)';
+    ctx.beginPath(); ctx.arc(sx,sy,5.5,0,Math.PI*2); ctx.fill();
+
+    const lbl=selectedDate.toLocaleDateString('tr-TR')+' • '+fmtMin(sel.eot);
+    ctx.font='12px Inter';
+    const tw=ctx.measureText(lbl).width;
+    const bx=Math.min(W-padR-10-(tw+16),Math.max(padL+10,sx-(tw+16)/2));
+    const by=Math.max(padT+6,sy-36);
+    ctx.fillStyle='rgba(0,0,0,0.55)'; ctx.strokeStyle='rgba(74,222,128,0.4)'; ctx.lineWidth=1;
+    rrEoT(ctx,bx,by,tw+16,24,8,true,true);
+    ctx.fillStyle='rgba(255,255,255,0.92)'; ctx.textAlign='left'; ctx.textBaseline='middle';
+    ctx.fillText(lbl,bx+8,by+12);
+
+    // Chart title
+    ctx.fillStyle='rgba(255,255,255,0.55)'; ctx.font='11px Inter';
+    ctx.textAlign='left'; ctx.textBaseline='top';
+    ctx.fillText("Ta'dîl-i Zemân (Equation of Time) — Yıllık değişim",padL,8);
+  }
+
+  function eotSetBounds(year){
+    document.getElementById('tadil-doy').max=String(eotIsLeap(year)?366:365);
+  }
+  function eotSyncSlider(){
+    const d=new Date(document.getElementById('tadil-date').value+'T12:00:00');
+    const doy=eotDOY(d);
+    document.getElementById('tadil-doy').value=String(doy);
+    document.getElementById('tadil-doyLabel').textContent=String(doy);
+    document.getElementById('tadil-sliderDate').textContent=d.toLocaleDateString('tr-TR');
+  }
+  function eotSyncDate(){
+    const y=parseInt(document.getElementById('tadil-year').value,10);
+    const N=parseInt(document.getElementById('tadil-doy').value,10);
+    const d=eotFromDOY(y,N);
+    document.getElementById('tadil-date').value=new Date(y,d.getMonth(),d.getDate(),12,0,0).toISOString().slice(0,10);
+    document.getElementById('tadil-doyLabel').textContent=String(N);
+    document.getElementById('tadil-sliderDate').textContent=d.toLocaleDateString('tr-TR');
+  }
+  function eotUpdate(){
+    const d=new Date(document.getElementById('tadil-date').value+'T12:00:00');
+    const y=parseInt(document.getElementById('tadil-year').value,10);
+    document.getElementById('tadil-eotVal').textContent=fmtMin(eotMinutes(d));
+    const series=buildSeries(y);
+    const {mn,mx}=findMM(series);
+    document.getElementById('tadil-minMax').textContent=
+      fmtMin(mn.eot)+' ('+mn.date.toLocaleDateString('tr-TR')+') / '+fmtMin(mx.eot)+' ('+mx.date.toLocaleDateString('tr-TR')+')';
+    const zeros=findZeros(series).slice(0,4).map(z=>z.date.toLocaleDateString('tr-TR')).join(' • ');
+    document.getElementById('tadil-zeros').textContent=zeros||'—';
+    const forChart=new Date(y,d.getMonth(),d.getDate(),12,0,0);
+    const canvas=document.getElementById('tadil-canvas');
+    canvas.width=canvas.parentElement.clientWidth;
+    canvas.height=420;
+    drawChart(canvas,series,forChart);
+    eotSyncSlider();
+  }
+
+  // Init
+  const now=new Date(), curY=now.getFullYear();
+  const yearEl=document.getElementById('tadil-year');
+  for(let y=curY-5;y<=curY+5;y++){
+    const opt=document.createElement('option');
+    opt.value=String(y); opt.textContent=String(y);
+    if(y===curY) opt.selected=true;
+    yearEl.appendChild(opt);
+  }
+  document.getElementById('tadil-date').value=now.toISOString().slice(0,10);
+  eotSetBounds(curY);
+  eotSyncSlider();
+  document.getElementById('tadil-btn').addEventListener('click',eotUpdate);
+  document.getElementById('tadil-date').addEventListener('change',()=>{ eotSyncSlider(); eotUpdate(); });
+  document.getElementById('tadil-year').addEventListener('change',()=>{
+    eotSetBounds(parseInt(document.getElementById('tadil-year').value,10));
+    eotSyncDate(); eotUpdate();
+  });
+  document.getElementById('tadil-doy').addEventListener('input',()=>{ eotSyncDate(); eotUpdate(); });
+  window.addEventListener('resize',eotUpdate);
+  setTimeout(eotUpdate,300);
+})();
+
+// ============================================================
+
+// ============================================================
+// SCROLL ANIMATIONS
+// ============================================================
+const observer = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold:0.1, rootMargin:'0px 0px -40px 0px' });
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+// Stagger card animations
+document.querySelectorAll('.cards-grid .prayer-card').forEach((c,i)=>{
+  c.style.transitionDelay = (i*0.08) + 's';
+});
+</script>
+</body>
+</html>
