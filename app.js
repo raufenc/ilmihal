@@ -1097,37 +1097,53 @@ function wordVariants(word) {
   const doubledY = word.replace(reY, 'yy');
   if (doubledY !== word) vars.add(doubledY);
 
+  // Kural 5: Kök sesli düşürme — Osmanlıca çekimli biçimlerde epentetik sesli yoktur
+  // vakitleri → vaktleri, nakleden → nakleden, zikirler → zikrler, şekilde → şekilde
+  // Türkçe sesliler (a, e) kök sesileri, kısa sesliler (i, u) epentetik olabilir
+  // Kural: kelime içinde C + (i|u) + C dizisi bulunursa o sesiyi kaldır
+  if (word.length >= 5) {
+    for (let pos = 1; pos < word.length - 1; pos++) {
+      const ch = word[pos];
+      if ('iu'.includes(ch) && consonants.has(word[pos - 1]) && consonants.has(word[pos + 1])) {
+        // Seslinin gerçekten epentetik olduğuna işaret: önündeki harf kökte zaten var
+        // Basit kontrol: kaldırma sonrası kelime geçerli uzunlukta olmalı
+        const dropped = word.slice(0, pos) + word.slice(pos + 1);
+        if (dropped.length >= 4) vars.add(dropped);
+      }
+    }
+  }
+
   return Array.from(vars);
 }
 
 // Sorguyu genişlet: normalize et + her kelime için varyantlar üret
+// Döndürülen yapı: { normalized, wordVarLists, altWords }
+// wordVarLists[i] = i. kelimenin tüm varyantları
+// Eski variants dizisi geriye uyumluluk için tutulur (tek kelime sorgularında)
 function expandSearchQuery(rawQuery) {
   const normalized = normalizeSearch(rawQuery);
   const words = normalized.split(/\s+/);
-
   const wordVarLists = words.map(w => wordVariants(w));
 
-  const variantSet = new Set([normalized]);
-  if (words.length <= 3) {
-    // Kısa sorgularda tüm kombinasyonlar (patlama önlemek için kelime başına max 5 varyant)
-    function combine(idx, current) {
-      if (idx === words.length) { variantSet.add(current.join(' ')); return; }
-      wordVarLists[idx].slice(0, 5).forEach(v => combine(idx + 1, [...current, v]));
-    }
-    combine(0, []);
-  } else {
-    // Uzun sorgularda her kelimeyi sırayla değiştir
-    wordVarLists.forEach((vars, i) => {
-      vars.forEach(v => {
-        const w = [...words]; w[i] = v;
-        variantSet.add(w.join(' '));
-      });
-    });
-  }
+  // Kullanıcıya gösterilecek "farklı yazım" uyarısı için
+  const altWords = wordVarLists
+    .flatMap((vars, i) => vars.filter(v => v !== words[i]))
+    .filter((v, i, a) => a.indexOf(v) === i);
 
-  const variants = Array.from(variantSet);
-  const altVariants = variants.filter(v => v !== normalized);
-  return { normalized, variants, altVariants };
+  // Eski tek-phrase aramasıyla geriye uyumluluk (tek kelimeli sorgular)
+  const variantSet = new Set([normalized]);
+  wordVarLists[0]?.forEach(v => {
+    if (words.length === 1) variantSet.add(v);
+  });
+
+  return {
+    normalized,
+    words,
+    wordVarLists,
+    altWords,
+    variants: Array.from(variantSet),           // tek kelime için
+    altVariants: altWords,
+  };
 }
 
 // ===== ARAMA =====
@@ -1148,34 +1164,50 @@ async function doFullSearch(fromRoute) {
 
   await Promise.all([loadKisimTexts(1), loadKisimTexts(2), loadKisimTexts(3)]);
 
-  // Sorguyu normalize et ve varyantlar üret
-  const { normalized: normQuery, variants, altVariants } = expandSearchQuery(rawQuery);
+  // Sorguyu normalize et ve her kelime için varyant listeleri üret
+  const { normalized: normQuery, words: qWords, wordVarLists, altVariants } = expandSearchQuery(rawQuery);
+  // allVars: highlight için tüm kelime varyantlarının düz listesi
+  const allVars = wordVarLists.flat();
 
   const kisimLabels = { 1: 'Birinci K\u0131s\u0131m', 2: '\u0130kinci K\u0131s\u0131m', 3: '\u00dc\u00e7\u00fcnc\u00fc K\u0131s\u0131m' };
   const matches = [];
 
   window.maddelerData.forEach(m => {
     const fullText = kisimTextsCache[m.kisim]?.[String(m.madde_no)] || m.metin || '';
-    // Hem metin hem başlık normalize edilmiş formda aranır
     const normText = normalizeSearch(fullText);
     const normBaslik = normalizeSearch(m.baslik || '');
 
-    // İlk eşleşen varyantı bul
-    let matchedVariant = null;
-    let idx = -1;
-    for (const v of variants) {
-      const i = normText.indexOf(v);
-      if (i !== -1) { idx = i; matchedVariant = v; break; }
-    }
-    const inTitle = variants.some(v => normBaslik.includes(v));
+    // AND mantığı: her kelime (herhangi bir varyantıyla) metinde geçmeli
+    let firstIdx = -1;
+    let firstMatchedVar = null;
+    let allFound = true;
 
-    if (idx !== -1 || inTitle) {
+    for (let wi = 0; wi < wordVarLists.length; wi++) {
+      const wvars = wordVarLists[wi];
+      let found = false;
+      for (const v of wvars) {
+        const i = normText.indexOf(v);
+        if (i !== -1) {
+          found = true;
+          if (firstIdx === -1) { firstIdx = i; firstMatchedVar = v; }
+          break;
+        }
+      }
+      // Başlıkta da arayalım
+      if (!found) {
+        found = wvars.some(v => normBaslik.includes(v));
+      }
+      if (!found) { allFound = false; break; }
+    }
+
+    const inTitle = wordVarLists.every(wvars => wvars.some(v => normBaslik.includes(v)));
+
+    if (allFound) {
       let context = '';
-      if (idx !== -1) {
-        // Konumlar 1-to-1 normalize edildiğinden orijinal metinde aynı konumu kullanabiliriz
-        const termLen = matchedVariant.length;
-        const start = Math.max(0, idx - 80);
-        const end = Math.min(fullText.length, idx + termLen + 80);
+      if (firstIdx !== -1) {
+        const termLen = firstMatchedVar ? firstMatchedVar.length : qWords[0].length;
+        const start = Math.max(0, firstIdx - 80);
+        const end = Math.min(fullText.length, firstIdx + termLen + 80);
         context = (start > 0 ? '...' : '') +
           fullText.substring(start, end) +
           (end < fullText.length ? '...' : '');
@@ -1187,7 +1219,6 @@ async function doFullSearch(fromRoute) {
         baslik: m.baslik,
         sayfa_no: m.sayfa_no,
         context: context,
-        matchedVariant: matchedVariant,
         inTitle: inTitle
       });
     }
@@ -1213,7 +1244,7 @@ async function doFullSearch(fromRoute) {
     if (normCtx) {
       // Tüm varyant eşleşmelerini bul ve sırala
       const positions = [];
-      for (const v of variants) {
+      for (const v of allVars) {
         let from = 0;
         while (true) {
           const i = normCtx.indexOf(v, from);
