@@ -1063,41 +1063,39 @@ function wordVariants(word) {
 
   // Kural 3: Ünsüz yığılması — kitapta bazı kelimeler sesli içermez
   // gusl↔gusul, vitr↔vitir, zikr↔zikir, sabr↔sabır, nasr↔nasır
-  if (word.length >= 3) {
-    const last = word[word.length - 1];
-    const prev = word[word.length - 2];
-    if (consonants.has(last) && consonants.has(prev)) {
-      // Ünsüz yığılmalı form (gusl) → sesli eklenmiş form (gusul)
+  // NOT: -p/-b/-t/-d ile biten kelimeler Kural 1/2 tarafından zaten işlenir, burada atlat
+  const last3 = word[word.length - 1];
+  if (!['p','b','t','d'].includes(last3)) {
+    const prev3 = word[word.length - 2];
+    if (consonants.has(last3) && consonants.has(prev3)) {
+      // Ünsüz yığılmalı (gusl) → sesli eklenmiş (gusul)
       let lastVowel = 'i';
       for (let i = word.length - 3; i >= 0; i--) {
         if (vowels.includes(word[i])) { lastVowel = word[i]; break; }
       }
       const ins = { a: 'u', e: 'i', i: 'i', o: 'u', u: 'u' }[lastVowel] || 'i';
-      vars.add(word.slice(0, -1) + ins + last);
+      vars.add(word.slice(0, -1) + ins + last3);
     }
-    // Ters: sesli eklenmiş form (gusul) → ünsüz yığılmalı (gusl, vitr, zikr)
-    // Osmanlıca'da kısa sesli (u/i) ünsüz yığılmasını kırmak için eklenmiştir
-    // Bu yüzden sadece son hece -ul/-il/-ir/-ur/-ıl biçimindeyse uygula
-    const penultimate = word[word.length - 2];
-    if (word.length >= 5 && 'ui'.includes(penultimate) && consonants.has(last)) {
-      const without = word.slice(0, -2) + last;
-      // Sonuç iki ünsüzle bitmeli (gusl: s+l ✓, vitr: t+r ✓)
+    // Ters: sesli eklenmiş (gusul) → ünsüz yığılmalı (gusl, vitr, zikr)
+    // Sadece -ul/-il/-ir/-ur sonları için (epentetik kısa sesli)
+    const penult = word[word.length - 2];
+    if (word.length >= 5 && 'ui'.includes(penult) && consonants.has(last3)) {
+      const without = word.slice(0, -2) + last3;
+      // Sonuç iki ünsüzle bitmeli
       if (without.length >= 3 && consonants.has(without[without.length - 2])) {
         vars.add(without);
       }
     }
   }
 
-  // Kural 4: Şedde — niyyet/niyet, vasiyyet/vasiyet, müşekkel/müşekel
+  // Kural 4: Şedde — niyyet/niyet, vasiyyet/vasiyet
   // Çift ünsüz → tek ünsüz
   const dedouble = word.replace(/(.)\1/g, '$1');
   if (dedouble !== word) vars.add(dedouble);
-  // Tek → çift (yalnızca y ve s için, diğerleri çok gürültülü olur)
-  ['y', 's'].forEach(c => {
-    const re = new RegExp(`(?<!${c})${c}(?!${c})`, 'g');
-    const doubled = word.replace(re, c + c);
-    if (doubled !== word) vars.add(doubled);
-  });
+  // Tek → çift (sadece 'y' — s başta gürültü çıkarıyor)
+  const reY = /(?<!y)y(?!y)/g;
+  const doubledY = word.replace(reY, 'yy');
+  if (doubledY !== word) vars.add(doubledY);
 
   return Array.from(vars);
 }
