@@ -1403,6 +1403,259 @@ document.getElementById('full-search')?.addEventListener('keydown', e => {
   if (e.key === 'Enter') doFullSearch();
 });
 
+// ===== BİRLEŞİK ARAMA (Hero Search) =====
+(function() {
+  const heroInput = document.getElementById('hero-search');
+  const dropdown = document.getElementById('hero-search-dropdown');
+  if (!heroInput || !dropdown) return;
+
+  let debounceTimer = null;
+  let selectedIdx = -1;
+  let currentItems = [];
+
+  const categoryLabels = {
+    madde: 'Maddeler',
+    sozluk: 'Dini L\u00fcgat',
+    sahis: '\u015eah\u0131slar',
+    tablo: 'Tablolar'
+  };
+  const categoryIcons = {
+    madde: '\u{1F4D6}',
+    sozluk: '\u{1F4DD}',
+    sahis: '\u{1F464}',
+    tablo: '\u{1F4CA}'
+  };
+
+  function showDropdown(results, query, hasAI) {
+    currentItems = [];
+    selectedIdx = -1;
+
+    if (results.total === 0) {
+      dropdown.innerHTML = '<div class="search-empty">Sonu\u00e7 bulunamad\u0131</div>';
+      dropdown.style.display = 'block';
+      return;
+    }
+
+    let html = '';
+    const order = ['madde', 'sozluk', 'sahis', 'tablo'];
+
+    order.forEach(cat => {
+      const items = results[cat];
+      if (!items || items.length === 0) return;
+
+      const headerExtra = (cat === 'madde' && hasAI) ? ' <span class="search-ai-badge">AI</span>' : '';
+      html += `<div class="search-category-header">${categoryIcons[cat]} ${categoryLabels[cat]}${headerExtra}</div>`;
+
+      items.forEach(item => {
+        const idx = currentItems.length;
+        currentItems.push(item);
+
+        // Başlıkta eşleşen kelimeleri vurgula
+        let titleHtml = escapeHtml(item.title);
+        const normQuery = normalizeSearch(query);
+        const qWords = normQuery.split(/\s+/);
+        qWords.forEach(qw => {
+          if (qw.length < 2) return;
+          const normTitle = normalizeSearch(item.title);
+          let pos = 0;
+          while (true) {
+            const i = normTitle.indexOf(qw, pos);
+            if (i === -1) break;
+            // Orijinal başlıktaki aynı pozisyonu vurgula
+            titleHtml = titleHtml.substring(0, i + (titleHtml.length - item.title.length >= 0 ? 0 : 0));
+            pos = i + qw.length;
+            break; // İlk eşleşme yeter
+          }
+        });
+
+        const subtitleHtml = item.subtitle ? `<span class="search-item-subtitle">${escapeHtml(item.subtitle)}</span>` : '';
+
+        html += `<div class="search-item" data-idx="${idx}" role="option">
+          <span class="search-item-title">${escapeHtml(item.title)}</span>
+          ${subtitleHtml}
+        </div>`;
+      });
+    });
+
+    // Tüm sonuçları gör bağlantısı
+    html += `<div class="search-show-all" data-action="show-all">
+      T\u00fcm sonu\u00e7lar\u0131 g\u00f6r \u2192
+    </div>`;
+
+    dropdown.innerHTML = html;
+    dropdown.style.display = 'block';
+
+    // Tıklama olayları
+    dropdown.querySelectorAll('.search-item').forEach(el => {
+      el.addEventListener('mousedown', e => {
+        e.preventDefault();
+        const idx = parseInt(el.dataset.idx);
+        selectItem(currentItems[idx]);
+      });
+      el.addEventListener('mouseenter', () => {
+        selectedIdx = parseInt(el.dataset.idx);
+        updateHighlight();
+      });
+    });
+
+    dropdown.querySelector('.search-show-all')?.addEventListener('mousedown', e => {
+      e.preventDefault();
+      goToFullSearch(heroInput.value);
+    });
+  }
+
+  function hideDropdown() {
+    dropdown.style.display = 'none';
+    selectedIdx = -1;
+    currentItems = [];
+  }
+
+  function updateHighlight() {
+    dropdown.querySelectorAll('.search-item').forEach(el => {
+      el.classList.toggle('search-item-active', parseInt(el.dataset.idx) === selectedIdx);
+    });
+  }
+
+  function selectItem(item) {
+    if (!item) return;
+    hideDropdown();
+    heroInput.blur();
+
+    switch (item.type) {
+      case 'madde':
+        const d = item.data;
+        openMadde(d.kisim, d.madde_no);
+        break;
+      case 'sozluk':
+        navigateTo('sozluk');
+        setTimeout(() => {
+          const sozlukSearch = document.getElementById('sozluk-search');
+          if (sozlukSearch) {
+            sozlukSearch.value = item.data.t;
+            sozlukSearch.dispatchEvent(new Event('input'));
+          }
+        }, 100);
+        break;
+      case 'sahis':
+        openSahis(item.data.slug || item.data.isim);
+        break;
+      case 'tablo':
+        navigateTo('fevaid');
+        setTimeout(() => openFevaidSection('tablolar'), 100);
+        setTimeout(() => {
+          const tabloSearch = document.getElementById('tablo-search');
+          if (tabloSearch) {
+            tabloSearch.value = item.data.baslik;
+            tabloSearch.dispatchEvent(new Event('input'));
+          }
+        }, 200);
+        break;
+    }
+  }
+
+  function goToFullSearch(query) {
+    hideDropdown();
+    // Birleşik arama sayfasına git
+    navigateTo('arama');
+    const searchInput = document.getElementById('full-search');
+    if (searchInput) {
+      searchInput.value = query;
+      doFullSearch();
+    }
+  }
+
+  // Input event (debounced)
+  heroInput.addEventListener('input', () => {
+    clearTimeout(debounceTimer);
+    const query = heroInput.value.trim();
+    if (query.length < 2) {
+      hideDropdown();
+      return;
+    }
+    debounceTimer = setTimeout(async () => {
+      if (!window.SearchEngine || !window.SearchEngine.isReady()) return;
+
+      // Keyword sonuçlarını hemen göster
+      const results = window.SearchEngine.search(query, { limit: 4 });
+      showDropdown(results, query);
+
+      // Soru formatındaysa AI araması da yap
+      if (window.SearchEngine.isQuestion(query)) {
+        // Loading göster
+        const loadingEl = document.createElement('div');
+        loadingEl.className = 'search-ai-loading';
+        loadingEl.innerHTML = '<span class="search-ai-badge">AI</span> Aranıyor<span class="loading-dots"><span>.</span><span>.</span><span>.</span></span>';
+        dropdown.insertBefore(loadingEl, dropdown.querySelector('.search-show-all'));
+
+        const aiResults = await window.SearchEngine.aiSearch(query);
+        if (aiResults === null) return; // iptal edildi
+        if (aiResults.length > 0) {
+          // AI sonuçlarını dropdown'a ekle (keyword sonuçlarıyla birleştir)
+          const merged = { madde: [], sozluk: results.sozluk, sahis: results.sahis, tablo: results.tablo, total: 0 };
+          // AI sonuçlarını öne al, keyword'leri arkaya
+          const seenIds = new Set();
+          aiResults.forEach(r => { merged.madde.push(r); seenIds.add(r.id); });
+          results.madde.forEach(r => { if (!seenIds.has(r.id)) merged.madde.push(r); });
+          merged.total = merged.madde.length + merged.sozluk.length + merged.sahis.length + merged.tablo.length;
+          showDropdown(merged, query, true);
+        } else {
+          // AI sonuç bulamadı, loading'i kaldır
+          loadingEl?.remove();
+        }
+      }
+    }, 200);
+  });
+
+  // Keyboard navigation
+  heroInput.addEventListener('keydown', e => {
+    if (dropdown.style.display === 'none') {
+      if (e.key === 'Enter' && heroInput.value.trim().length >= 2) {
+        goToFullSearch(heroInput.value.trim());
+        e.preventDefault();
+      }
+      return;
+    }
+
+    switch (e.key) {
+      case 'ArrowDown':
+        e.preventDefault();
+        selectedIdx = Math.min(selectedIdx + 1, currentItems.length - 1);
+        updateHighlight();
+        break;
+      case 'ArrowUp':
+        e.preventDefault();
+        selectedIdx = Math.max(selectedIdx - 1, -1);
+        updateHighlight();
+        break;
+      case 'Enter':
+        e.preventDefault();
+        if (selectedIdx >= 0 && currentItems[selectedIdx]) {
+          selectItem(currentItems[selectedIdx]);
+        } else {
+          goToFullSearch(heroInput.value.trim());
+        }
+        break;
+      case 'Escape':
+        hideDropdown();
+        break;
+    }
+  });
+
+  // Dışarı tıklayınca kapat
+  document.addEventListener('click', e => {
+    if (!heroInput.contains(e.target) && !dropdown.contains(e.target)) {
+      hideDropdown();
+    }
+  });
+
+  // Focus'ta tekrar göster
+  heroInput.addEventListener('focus', () => {
+    if (heroInput.value.trim().length >= 2 && currentItems.length > 0) {
+      dropdown.style.display = 'block';
+    }
+  });
+})();
+
 // ===== INIT =====
 document.addEventListener('DOMContentLoaded', () => {
   if (window.tocData) {
