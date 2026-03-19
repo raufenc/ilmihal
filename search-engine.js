@@ -373,8 +373,8 @@
 
   // --- AI Arama (Vercel Edge Function üzerinden gpt-4o-mini) ---
   const AI_API_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
-    ? '/api/ilmihal-search'  // local dev (Vercel CLI)
-    : 'https://raufenc.com/api/ilmihal-search';
+    ? '/api/ilmihal-search/'  // local dev (Vercel CLI)
+    : 'https://raufenc.com/api/ilmihal-search/';
 
   const SORU_KELIMELERI = ['nasıl', 'nedir', 'neler', 'nelerdir', 'kimler', 'kimdir', 'ne zaman',
     'ne kadar', 'hangi', 'kaç', 'niçin', 'neden', 'ne demek', 'ne demektir', 'farz mı',
