@@ -307,7 +307,7 @@ async function loadKisimTexts(kisim) {
   }
 }
 
-async function openMadde(kisim, maddeNo, fromRoute) {
+async function openMadde(kisim, maddeNo, fromRoute, searchQuery) {
   const madde = window.maddelerData?.find(m => m.kisim === kisim && m.madde_no === maddeNo);
   if (!madde) return;
 
@@ -361,6 +361,99 @@ async function openMadde(kisim, maddeNo, fromRoute) {
     el.addEventListener('mouseenter', showTooltip);
     el.addEventListener('mouseleave', hideTooltip);
   });
+
+  // Arama highlight: searchQuery varsa metinde ilgili yeri bul, highlight'la ve scroll et
+  if (searchQuery) {
+    const maddeTextEl = body.querySelector('.madde-text');
+    if (maddeTextEl) {
+      highlightAndScroll(maddeTextEl, searchQuery);
+    }
+  }
+}
+
+// Madde metninde arama kelimelerini highlight'la ve ilk eşleşmeye scroll et
+function highlightAndScroll(container, query) {
+  const normQ = normalizeSearch(query);
+  const qWords = normQ.split(/\s+/).filter(w => w.length >= 2);
+  if (qWords.length === 0) return;
+
+  // Tüm varyantları topla
+  const allVars = [];
+  qWords.forEach(w => {
+    allVars.push(w);
+    if (typeof wordVariants === 'function') {
+      wordVariants(w).forEach(v => { if (v !== w) allVars.push(v); });
+    }
+  });
+
+  // TreeWalker ile text node'ları tara
+  const walker = document.createTreeWalker(container, NodeFilter.SHOW_TEXT, null, false);
+  const textNodes = [];
+  let node;
+  while ((node = walker.nextNode())) {
+    // .zor-kelime içindeki text'leri atla (tooltip bozulmasın)
+    if (node.parentElement?.classList?.contains('zor-kelime')) continue;
+    textNodes.push(node);
+  }
+
+  let firstMark = null;
+
+  textNodes.forEach(tn => {
+    const original = tn.textContent;
+    const normText = normalizeSearch(original);
+    if (!normText) return;
+
+    // Bu text node'da eşleşme var mı?
+    const positions = [];
+    for (const v of allVars) {
+      let from = 0;
+      while (from < normText.length) {
+        const i = normText.indexOf(v, from);
+        if (i === -1) break;
+        positions.push({ start: i, end: i + v.length });
+        from = i + 1;
+      }
+    }
+    if (positions.length === 0) return;
+
+    // Üst üste binenleri birleştir
+    positions.sort((a, b) => a.start - b.start);
+    const merged = [];
+    for (const p of positions) {
+      if (merged.length && p.start <= merged[merged.length - 1].end) {
+        merged[merged.length - 1].end = Math.max(merged[merged.length - 1].end, p.end);
+      } else {
+        merged.push({ ...p });
+      }
+    }
+
+    // Fragment oluştur: text + mark + text + mark + ...
+    const frag = document.createDocumentFragment();
+    let lastEnd = 0;
+    merged.forEach(({ start, end }) => {
+      if (start > lastEnd) {
+        frag.appendChild(document.createTextNode(original.substring(lastEnd, start)));
+      }
+      const mark = document.createElement('mark');
+      mark.className = 'search-highlight';
+      mark.textContent = original.substring(start, end);
+      frag.appendChild(mark);
+      if (!firstMark) firstMark = mark;
+      lastEnd = end;
+    });
+    if (lastEnd < original.length) {
+      frag.appendChild(document.createTextNode(original.substring(lastEnd)));
+    }
+
+    tn.parentNode.replaceChild(frag, tn);
+  });
+
+  // İlk highlight'a scroll et
+  if (firstMark) {
+    setTimeout(() => {
+      firstMark.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 100);
+  }
 }
 
 // ===== ÇAPRAZ REFERANS =====
@@ -1517,13 +1610,14 @@ document.getElementById('full-search')?.addEventListener('keydown', e => {
 
   function selectItem(item) {
     if (!item) return;
+    const currentQuery = heroInput.value.trim();
     hideDropdown();
     heroInput.blur();
 
     switch (item.type) {
       case 'madde':
         const d = item.data;
-        openMadde(d.kisim, d.madde_no);
+        openMadde(d.kisim, d.madde_no, false, currentQuery);
         break;
       case 'sozluk':
         navigateTo('sozluk');

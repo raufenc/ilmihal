@@ -1722,6 +1722,19 @@ body {
 :root.dark .hero-search-box:focus-within .hero-search-kbd { background: #2a2a4a; border-color: #3a3a5a; color: #888; }
 :root.dark .search-ai-badge { background: linear-gradient(135deg, #4f46e5, #7c3aed); }
 :root.dark .search-item-passage mark { background: rgba(212,182,92,0.3); }
+
+/* Search highlight in article text */
+mark.search-highlight {
+  background: rgba(201,168,76,0.3);
+  color: inherit;
+  padding: 1px 3px;
+  border-radius: 3px;
+  box-shadow: 0 0 0 1px rgba(201,168,76,0.2);
+}
+:root.dark mark.search-highlight {
+  background: rgba(212,182,92,0.25);
+  box-shadow: 0 0 0 1px rgba(212,182,92,0.15);
+}
 :root.dark .related-tablolar {
   background: linear-gradient(135deg, #1a2a20, #1e2e24);
   border-color: #35503a;
