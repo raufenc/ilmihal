@@ -371,10 +371,114 @@
     };
   }
 
+  // --- Passage Bulma ve Highlight ---
+  // Madde metninden sorguya en uygun cümleyi bul, highlight'lı döndür
+  function findPassage(fullText, query, contextLen) {
+    contextLen = contextLen || 120;
+    if (!fullText || !query) return null;
+
+    const normText = norm(fullText);
+    const qTokens = tokenize(query);
+    if (qTokens.length === 0) return null;
+
+    // Tüm varyantlarla birlikte arama tokenları
+    const allVars = [];
+    qTokens.forEach(qt => {
+      allVars.push(qt);
+      if (typeof wordVariants === 'function') {
+        wordVariants(qt).forEach(v => { if (v !== qt) allVars.push(v); });
+      }
+    });
+
+    // En çok eşleşme olan bölgeyi bul
+    let bestPos = -1;
+    let bestScore = 0;
+
+    // Cümle sınırlarında tara
+    const sentences = fullText.split(/(?<=[.!?])\s+/);
+    let charPos = 0;
+
+    for (const sentence of sentences) {
+      const normSentence = norm(sentence);
+      let score = 0;
+      const matchedTokens = new Set();
+
+      for (let qi = 0; qi < qTokens.length; qi++) {
+        const qt = qTokens[qi];
+        const vars = [qt];
+        if (typeof wordVariants === 'function') wordVariants(qt).forEach(v => vars.push(v));
+
+        for (const v of vars) {
+          if (normSentence.includes(v)) {
+            score += (v === qt) ? 3 : 2; // exact > variant
+            matchedTokens.add(qi);
+            break;
+          }
+        }
+      }
+
+      // Çok eşleşen kelime olan cümleler tercih
+      score *= (1 + matchedTokens.size);
+
+      if (score > bestScore) {
+        bestScore = score;
+        bestPos = charPos;
+      }
+      charPos += sentence.length + 1;
+    }
+
+    if (bestPos === -1 || bestScore === 0) {
+      // Cümle bazlı bulamadıysa token bazlı dene
+      for (const v of allVars) {
+        const i = normText.indexOf(v);
+        if (i !== -1) { bestPos = i; break; }
+      }
+    }
+    if (bestPos === -1) return null;
+
+    // Context çıkar
+    const start = Math.max(0, bestPos - 20);
+    const end = Math.min(fullText.length, bestPos + contextLen);
+    let snippet = (start > 0 ? '...' : '') +
+      fullText.substring(start, end).trim() +
+      (end < fullText.length ? '...' : '');
+
+    // Highlight uygula
+    const normSnippet = norm(snippet);
+    const positions = [];
+    for (const v of allVars) {
+      let from = 0;
+      while (from < normSnippet.length) {
+        const i = normSnippet.indexOf(v, from);
+        if (i === -1) break;
+        positions.push({ start: i, end: i + v.length });
+        from = i + 1;
+      }
+    }
+    positions.sort((a, b) => a.start - b.start);
+
+    // Üst üste binenleri birleştir
+    const merged = [];
+    for (const p of positions) {
+      if (merged.length && p.start <= merged[merged.length - 1].end) {
+        merged[merged.length - 1].end = Math.max(merged[merged.length - 1].end, p.end);
+      } else {
+        merged.push({ ...p });
+      }
+    }
+
+    // Geriye doğru <mark> uygula
+    let highlighted = snippet;
+    for (let i = merged.length - 1; i >= 0; i--) {
+      const { start: s, end: e } = merged[i];
+      highlighted = highlighted.slice(0, s) + '<mark>' + highlighted.slice(s, e) + '</mark>' + highlighted.slice(e);
+    }
+
+    return highlighted;
+  }
+
   // --- AI Arama (Vercel Edge Function üzerinden gpt-4o-mini) ---
-  const AI_API_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
-    ? '/api/ilmihal-search/'  // local dev (Vercel CLI)
-    : 'https://raufenc.com/api/ilmihal-search/';
+  const AI_API_URL = 'https://raufenc.com/api/ilmihal-search/';
 
   const SORU_KELIMELERI = ['nasıl', 'nedir', 'neler', 'nelerdir', 'kimler', 'kimdir', 'ne zaman',
     'ne kadar', 'hangi', 'kaç', 'niçin', 'neden', 'ne demek', 'ne demektir', 'farz mı',
@@ -411,15 +515,26 @@
       const data = await resp.json();
       if (!data.results || !Array.isArray(data.results)) return [];
 
-      // Dönen madde ID'lerini tocData'dan zenginleştir
+      // Metinleri yükle (passage bulmak için)
+      if (typeof loadKisimTexts === 'function') {
+        await Promise.all([loadKisimTexts(1), loadKisimTexts(2), loadKisimTexts(3)]);
+      }
+
+      // Dönen madde ID'lerini tocData'dan zenginleştir + passage bul
       return data.results.map(r => {
         const madde = window.tocData?.find(m => m.kisim === r.k && m.madde_no === r.m);
         if (!madde) return null;
+
+        // Madde metninden ilgili cümleyi bul
+        const fullText = window.kisimTextsCache?.[r.k]?.[String(r.m)] || '';
+        const passage = findPassage(fullText, query, 140);
+
         return {
           type: 'madde',
           id: r.k + '/' + r.m,
           title: madde.baslik,
           subtitle: r.s || ('Kısım ' + r.k + ', Madde ' + r.m),
+          passage: passage,
           data: madde,
           aiMatch: true
         };
@@ -437,6 +552,7 @@
     fullSearch: unifiedFullSearch,
     aiSearch: aiSearch,
     isQuestion: isQuestion,
+    findPassage: findPassage,
     isReady: function() { return indexReady; },
     onReady: function(cb) {
       if (indexReady) cb();

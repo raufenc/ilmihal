@@ -292,6 +292,7 @@ function renderFilteredMaddeler(filtered) {
 
 // ===== MADDE DETAY =====
 const kisimTextsCache = {};
+window.kisimTextsCache = kisimTextsCache; // search-engine.js erişimi için
 
 async function loadKisimTexts(kisim) {
   if (kisimTextsCache[kisim]) return kisimTextsCache[kisim];
@@ -1346,15 +1347,7 @@ async function doFullSearch(fromRoute) {
 
   matches.sort((a, b) => (b.inTitle ? 1 : 0) - (a.inTitle ? 1 : 0));
 
-  // Varyant uyarısı: kullanıcı farklı yazım kullandıysa bildir
-  let variantNote = '';
-  if (altVariants.length > 0) {
-    const altList = altVariants.map(v => `<strong>${v}</strong>`).join(', ');
-    variantNote = `<p style="color:var(--accent);font-size:0.88em;margin-bottom:12px;">
-      "\u200b${escapeHtml(rawQuery)}" i\u00e7in ayn\u0131 zamanda ${altList} olarak da arand\u0131.</p>`;
-  }
-
-  let html = variantNote + `<p style="color:var(--text-muted);margin-bottom:16px;">${matches.length} sonu\u00e7 bulundu</p>`;
+  let html = `<p style="color:var(--text-muted);margin-bottom:16px;">${matches.length} sonu\u00e7 bulundu</p>`;
 
   matches.slice(0, 50).forEach(m => {
     // Normalize edilmiş bağlamda eşleşen konumları bul, orijinal metinde işaretle
@@ -1468,11 +1461,17 @@ document.getElementById('full-search')?.addEventListener('keydown', e => {
           }
         });
 
-        const subtitleHtml = item.subtitle ? `<span class="search-item-subtitle">${escapeHtml(item.subtitle)}</span>` : '';
+        // Passage varsa (AI sonucu) highlight'lı göster, yoksa subtitle
+        let detailHtml = '';
+        if (item.passage) {
+          detailHtml = `<span class="search-item-passage">${item.passage}</span>`;
+        } else if (item.subtitle) {
+          detailHtml = `<span class="search-item-subtitle">${escapeHtml(item.subtitle)}</span>`;
+        }
 
         html += `<div class="search-item" data-idx="${idx}" role="option">
           <span class="search-item-title">${escapeHtml(item.title)}</span>
-          ${subtitleHtml}
+          ${detailHtml}
         </div>`;
       });
     });
@@ -1575,33 +1574,34 @@ document.getElementById('full-search')?.addEventListener('keydown', e => {
     debounceTimer = setTimeout(async () => {
       if (!window.SearchEngine || !window.SearchEngine.isReady()) return;
 
-      // Keyword sonuçlarını hemen göster
-      const results = window.SearchEngine.search(query, { limit: 4 });
-      showDropdown(results, query);
+      const isQ = window.SearchEngine.isQuestion(query);
 
-      // Soru formatındaysa AI araması da yap
-      if (window.SearchEngine.isQuestion(query)) {
-        // Loading göster
-        const loadingEl = document.createElement('div');
-        loadingEl.className = 'search-ai-loading';
-        loadingEl.innerHTML = '<span class="search-ai-badge">AI</span> Aranıyor<span class="loading-dots"><span>.</span><span>.</span><span>.</span></span>';
-        dropdown.insertBefore(loadingEl, dropdown.querySelector('.search-show-all'));
+      // Soru formatındaysa doğrudan AI loading göster
+      if (isQ) {
+        dropdown.innerHTML = '<div class="search-ai-loading"><span class="search-ai-badge">AI</span> Kitapta aran\u0131yor<span class="loading-dots"><span>.</span><span>.</span><span>.</span></span></div>';
+        dropdown.style.display = 'block';
 
         const aiResults = await window.SearchEngine.aiSearch(query);
         if (aiResults === null) return; // iptal edildi
+
+        // Keyword sonuçlarını da al (AI ile birleştirmek için)
+        const results = window.SearchEngine.search(query, { limit: 4 });
+
         if (aiResults.length > 0) {
-          // AI sonuçlarını dropdown'a ekle (keyword sonuçlarıyla birleştir)
           const merged = { madde: [], sozluk: results.sozluk, sahis: results.sahis, tablo: results.tablo, total: 0 };
-          // AI sonuçlarını öne al, keyword'leri arkaya
           const seenIds = new Set();
           aiResults.forEach(r => { merged.madde.push(r); seenIds.add(r.id); });
           results.madde.forEach(r => { if (!seenIds.has(r.id)) merged.madde.push(r); });
           merged.total = merged.madde.length + merged.sozluk.length + merged.sahis.length + merged.tablo.length;
           showDropdown(merged, query, true);
         } else {
-          // AI sonuç bulamadı, loading'i kaldır
-          loadingEl?.remove();
+          // AI sonuç bulamadı, keyword sonuçlarını göster
+          showDropdown(results, query);
         }
+      } else {
+        // Kısa sorgu: sadece keyword arama
+        const results = window.SearchEngine.search(query, { limit: 4 });
+        showDropdown(results, query);
       }
     }, 200);
   });
