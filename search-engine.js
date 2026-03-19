@@ -490,6 +490,9 @@
     const q = query.toLowerCase().trim();
     if (q.includes('?')) return true;
     const words = q.split(/\s+/);
+    // 4+ kelime = doğal dil sorusu, her zaman AI'ya gönder
+    if (words.length >= 4) return true;
+    // 3 kelime: soru kalıbı varsa
     if (words.length >= 3) {
       return SORU_KELIMELERI.some(sk => q.includes(sk));
     }
