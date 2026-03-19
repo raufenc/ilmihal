@@ -371,52 +371,96 @@ async function openMadde(kisim, maddeNo, fromRoute, searchQuery) {
   }
 }
 
-// Madde metninde arama kelimelerini highlight'la ve ilk eşleşmeye scroll et
+// Madde metninde arama kelimelerini highlight'la ve en uygun bölgeye scroll et
 function highlightAndScroll(container, query) {
   const normQ = normalizeSearch(query);
-  const qWords = normQ.split(/\s+/).filter(w => w.length >= 2);
+  const qWords = normQ.split(/\s+/).filter(w => w.length >= 3);
   if (qWords.length === 0) return;
 
-  // Tüm varyantları topla
-  const allVars = [];
-  qWords.forEach(w => {
-    allVars.push(w);
+  // Her kelime için varyantları topla (kelime bazlı gruplandırılmış)
+  const wordGroups = qWords.map(w => {
+    const vars = [w];
     if (typeof wordVariants === 'function') {
-      wordVariants(w).forEach(v => { if (v !== w) allVars.push(v); });
+      wordVariants(w).forEach(v => { if (v !== w && v.length >= 3) vars.push(v); });
     }
+    return vars;
   });
+  const allVars = wordGroups.flat();
+
+  // Tam metin üzerinde önce en iyi bölgeyi bul (highlight'tan önce)
+  const fullText = container.textContent || '';
+  const normFull = normalizeSearch(fullText);
+
+  // ~500 karakterlik pencereler içinde en çok farklı kelime eşleşen yeri bul
+  const WINDOW = 500;
+  let bestOffset = 0;
+  let bestScore = -1;
+
+  for (let pos = 0; pos < normFull.length; pos += 100) {
+    const windowText = normFull.substring(pos, pos + WINDOW);
+    let score = 0;
+    let uniqueWords = 0;
+    wordGroups.forEach(vars => {
+      const found = vars.some(v => {
+        const i = windowText.indexOf(v);
+        return i !== -1 && (i === 0 || windowText[i - 1] === ' ');
+      });
+      if (found) { score += 3; uniqueWords++; }
+    });
+    // Çok kelime eşleşmesi bonus
+    score += uniqueWords * uniqueWords;
+    if (score > bestScore) {
+      bestScore = score;
+      bestOffset = pos;
+    }
+  }
+
+  // En iyi bölge civarındaki karakter aralığı (±300 karakter genişlet)
+  const highlightStart = Math.max(0, bestOffset - 300);
+  const highlightEnd = Math.min(normFull.length, bestOffset + WINDOW + 300);
 
   // TreeWalker ile text node'ları tara
   const walker = document.createTreeWalker(container, NodeFilter.SHOW_TEXT, null, false);
   const textNodes = [];
+  let charCount = 0;
   let node;
   while ((node = walker.nextNode())) {
-    // .zor-kelime içindeki text'leri atla (tooltip bozulmasın)
+    const len = node.textContent.length;
+    const nodeStart = charCount;
+    const nodeEnd = charCount + len;
+    charCount = nodeEnd;
+    // .zor-kelime içindeki text'leri atla
     if (node.parentElement?.classList?.contains('zor-kelime')) continue;
-    textNodes.push(node);
+    textNodes.push({ node, nodeStart, nodeEnd });
   }
 
-  let firstMark = null;
+  let scrollTarget = null;
+  let totalMarks = 0;
+  const MAX_MARKS = 25;
 
-  textNodes.forEach(tn => {
+  textNodes.forEach(({ node: tn, nodeStart, nodeEnd }) => {
+    if (totalMarks >= MAX_MARKS) return;
+    // Sadece en iyi bölge civarındaki node'ları highlight'la
+    if (nodeEnd < highlightStart || nodeStart > highlightEnd) return;
+
     const original = tn.textContent;
     const normText = normalizeSearch(original);
     if (!normText) return;
 
-    // Bu text node'da eşleşme var mı?
     const positions = [];
     for (const v of allVars) {
       let from = 0;
       while (from < normText.length) {
         const i = normText.indexOf(v, from);
         if (i === -1) break;
-        positions.push({ start: i, end: i + v.length });
+        if (i === 0 || normText[i - 1] === ' ') {
+          positions.push({ start: i, end: i + v.length });
+        }
         from = i + 1;
       }
     }
     if (positions.length === 0) return;
 
-    // Üst üste binenleri birleştir
     positions.sort((a, b) => a.start - b.start);
     const merged = [];
     for (const p of positions) {
@@ -427,7 +471,6 @@ function highlightAndScroll(container, query) {
       }
     }
 
-    // Fragment oluştur: text + mark + text + mark + ...
     const frag = document.createDocumentFragment();
     let lastEnd = 0;
     merged.forEach(({ start, end }) => {
@@ -438,7 +481,8 @@ function highlightAndScroll(container, query) {
       mark.className = 'search-highlight';
       mark.textContent = original.substring(start, end);
       frag.appendChild(mark);
-      if (!firstMark) firstMark = mark;
+      if (!scrollTarget) scrollTarget = mark;
+      totalMarks++;
       lastEnd = end;
     });
     if (lastEnd < original.length) {
@@ -448,10 +492,9 @@ function highlightAndScroll(container, query) {
     tn.parentNode.replaceChild(frag, tn);
   });
 
-  // İlk highlight'a scroll et
-  if (firstMark) {
+  if (scrollTarget) {
     setTimeout(() => {
-      firstMark.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      scrollTarget.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }, 100);
   }
 }
