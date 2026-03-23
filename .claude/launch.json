@@ -6,6 +6,12 @@
       "runtimeExecutable": "python3",
       "runtimeArgs": ["-m", "http.server", "8085", "--directory", "/Users/raufenc/Library/Mobile Documents/com~apple~CloudDocs/Muhtelif/Claude/ilmihal-site"],
       "port": 8085
+    },
+    {
+      "name": "silsile-atlasi",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "8087", "--directory", "/Users/raufenc/Library/Mobile Documents/com~apple~CloudDocs/Muhtelif/Claude/ilmihal-site/silsile-atlasi"],
+      "port": 8087
     }
   ]
 }
