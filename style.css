@@ -368,6 +368,14 @@ body {
 }
 .btn-secondary:hover { background: rgba(255,255,255,0.25); }
 
+.btn-outline {
+  background: transparent;
+  color: var(--gold-light);
+  border: 1.5px solid var(--gold);
+  font-weight: 600;
+}
+.btn-outline:hover { background: rgba(201,168,76,0.15); transform: translateY(-1px); }
+
 /* ===== Kısım Cards ===== */
 .kisimlar-ozet { padding: 60px 0; }
 
