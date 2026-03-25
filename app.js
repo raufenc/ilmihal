@@ -1328,14 +1328,43 @@ function includesWordStart(text, term) {
 
 // Bu kitaba özgü özel varyantlar — algoritmik kuralların yakalayamadığı a/e alternasyonu vb.
 const OTTOMAN_MANUAL = {
-  'namaz':    'nemaz',    // nemâz — en kritik varyant
-  'niyet':    'niyyet',   // niyyet — şedde farkı
-  'vasiyet':  'vasiyyet', // vasiyyet
-  'tasavvuf': 'tesavvuf', // tesavvuf
-  'mucize':   'mu cize',  // mu'cize → normalize → "mu cize"
-  'salavat':  'salat',    // salât
-  'tövbe':    'tevbe',    // tevbe (farklı kök sesli)
-  'sakiyn':   'sakin',    // normalize sonrası ı→i zaten; bu elle gerekmez
+  'namaz':    'nemaz',
+  'niyet':    'niyyet',
+  'vasiyet':  'vasiyyet',
+  'tasavvuf': 'tesavvuf',
+  'mucize':   'mu cize',
+  'salavat':  'salat',
+  'tovbe':    'tevbe',
+  'zekat':    'zekat',
+  'oruc':     'savm',
+  'hac':      'hacc',
+  'abdest':   'abdest',
+  'gusul':    'gusl',
+  'secde':    'sucud',
+  'ruku':     'ruku',
+  'peygamber':'resulullah',
+  'kuran':    'kur an',
+  'hadis':    'hadis i serif',
+  'sunnet':   'sunnet i seniyye',
+  'mezhep':   'mezheb',
+  'bidat':    'bid at',
+  'tevekkul': 'tevekkul',
+  'sabir':    'sabr',
+  'sukur':    'sukr',
+  'nisap':    'nisab',
+  'faiz':     'riba',
+  'mehr':     'mehir',
+  'cennet':   'cennet',
+  'cehennem': 'cehennem',
+  'kible':    'kible',
+  'ihram':    'ihram',
+  'nikah':    'nikah',
+  'talak':    'talak',
+  'kurban':   'kurban',
+  'fidye':    'fidye',
+  'keffaret': 'keffaret',
+  'sahabi':   'eshab',
+  'evliya':   'evliya',
 };
 
 // Tek kelime için tüm olası varyantları üret (algoritmik + manuel)
@@ -2168,16 +2197,57 @@ function cleanSearchQuery(query) {
   return norm.split(/\s+/).filter(function(w) { return w.length >= 2 && !stopWords.has(w); });
 }
 
+// Synonym expansion: kelimeyi kitaptaki alternatif yazımlarıyla genişlet
+function expandWithSynonyms(words) {
+  if (!window.aramaSynonyms) return words;
+  var expanded = [];
+  words.forEach(function(w) {
+    expanded.push(w);
+    // Tek kelime eşleşmesi
+    if (window.aramaSynonyms[w]) {
+      window.aramaSynonyms[w].forEach(function(syn) { expanded.push(syn); });
+    }
+  });
+  // Çoklu kelime eşleşmesi (örn: "namaz kilmak")
+  var phrase = words.join(' ');
+  if (window.aramaSynonyms[phrase]) {
+    window.aramaSynonyms[phrase].forEach(function(syn) {
+      syn.split(' ').forEach(function(sw) { if (sw.length >= 2) expanded.push(sw); });
+    });
+  }
+  return [...new Set(expanded)];
+}
+
+// Soru→Madde doğrudan eşleme
+function findDirectMatch(query) {
+  if (!window.soruMaddeMap) return null;
+  var norm = (typeof normalizeSearch === 'function') ? normalizeSearch(query) : query.toLowerCase();
+  var best = null;
+  var bestScore = 0;
+  window.soruMaddeMap.forEach(function(entry) {
+    entry.soru.forEach(function(s) {
+      // Tam eşleşme
+      if (norm === s || norm.indexOf(s) !== -1 || s.indexOf(norm) !== -1) {
+        var score = s.length;
+        if (norm === s) score += 100; // tam eşleşme bonus
+        if (score > bestScore) { bestScore = score; best = entry; }
+      }
+    });
+  });
+  return best;
+}
+
 function searchInBook(query) {
   var results = [];
   if (!window.tocData || !window.kisimTextsCache) return results;
   var qWords = cleanSearchQuery(query);
   if (qWords.length === 0) {
-    // Stop word'lerden sonra hiç kelime kalmadıysa orijinali kullan
     var fallback = (typeof normalizeSearch === 'function') ? normalizeSearch(query) : query.toLowerCase();
     qWords = fallback.split(/\s+/).filter(function(w) { return w.length >= 3; });
     if (qWords.length === 0) return results;
   }
+  // Synonym expansion — kitaptaki farklı yazımları da ara
+  qWords = expandWithSynonyms(qWords);
 
   window.tocData.forEach(function(m) {
     var texts = window.kisimTextsCache[m.kisim];
@@ -2283,16 +2353,37 @@ function birlesikAra() {
   updateUrl('arama/' + encodeURIComponent(query));
 
   // Her zaman hem tam metin hem başlık araması yap
-  Promise.all([loadKisimTexts(1), loadKisimTexts(2), loadKisimTexts(3)]).then(function() {
+  Promise.all([loadKisimTexts(1), loadKisimTexts(2), loadKisimTexts(3), ensureMaddelerData()]).then(function() {
+    // Doğrudan soru eşleme — en üstte göster
+    var directMatch = findDirectMatch(query);
+    var bookResults = [];
+
+    if (directMatch) {
+      var dm = window.tocData?.find(function(t) { return t.kisim === directMatch.kisim && t.madde_no === directMatch.maddeNo; });
+      if (dm) {
+        bookResults.push({
+          kisim: directMatch.kisim,
+          maddeNo: directMatch.maddeNo,
+          baslik: '<strong>' + escapeHtml(dm.baslik) + '</strong>',
+          score: 9999,
+          pasaj: '<div style="background:rgba(26,107,78,0.08);padding:12px;border-radius:8px;border-left:3px solid var(--primary);margin-bottom:4px;">' + escapeHtml(directMatch.cevapOzet) + '</div>'
+        });
+      }
+    }
+
     // Tam metin arama (kitap içi)
-    var bookResults = searchInBook(query);
+    var moreResults = searchInBook(query);
+    // Birleştir (duplicate önle)
+    var seen = {};
+    bookResults.forEach(function(r) { seen[r.kisim + '/' + r.maddeNo] = true; });
+    moreResults.forEach(function(r) {
+      var key = r.kisim + '/' + r.maddeNo;
+      if (!seen[key]) { seen[key] = true; bookResults.push(r); }
+    });
 
     // Başlık + index araması (search engine varsa)
     if (window.SearchEngine && window.SearchEngine.isReady()) {
       var seResults = window.SearchEngine.search(query, { limit: 8 });
-      // Search engine sonuçlarını bookResults ile birleştir (duplicate önle)
-      var seen = {};
-      bookResults.forEach(function(r) { seen[r.kisim + '/' + r.maddeNo] = true; });
       if (seResults.madde) {
         seResults.madde.forEach(function(m) {
           var key = m.kisim + '/' + m.madde_no;
