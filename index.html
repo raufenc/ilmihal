@@ -629,8 +629,17 @@
   <script src="audio-map.js?v=1"></script>
   <script src="app.js?v=19"></script>
   <script>
+    // Eski SW ve cache temizle, yeni SW kaydet
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/sw.js').catch(function(){});
+      navigator.serviceWorker.getRegistrations().then(function(regs) {
+        regs.forEach(function(r) { r.unregister(); });
+      });
+      caches.keys().then(function(names) {
+        names.forEach(function(n) { if (n !== 'ilmihal-v4') caches.delete(n); });
+      });
+      setTimeout(function() {
+        navigator.serviceWorker.register('/sw.js').catch(function(){});
+      }, 1000);
     }
   </script>
 </body>
