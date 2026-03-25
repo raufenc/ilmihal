@@ -1,5 +1,5 @@
 // Service Worker - ilmihal.org PWA
-var CACHE_NAME = 'ilmihal-v4';
+var CACHE_NAME = 'ilmihal-v5';
 var CORE_ASSETS = [
   '/',
   '/index.html',
@@ -57,11 +57,15 @@ self.addEventListener('fetch', function(e) {
   // Sadece kendi origin'imiz
   if (url.origin !== location.origin) return;
 
-  // Navigation request'leri: her zaman index.html döndür (SPA)
+  // Navigation request'leri: SPA index.html döndür (alt uygulamalar hariç)
   if (e.request.mode === 'navigate') {
+    // silsile-atlasi ve namaz-vakitleri kendi index.html'lerini kullanır
+    if (url.pathname.startsWith('/silsile-atlasi') || url.pathname.startsWith('/namaz-vakitleri')) {
+      return;
+    }
     e.respondWith(
-      caches.match('/index.html').then(function(r) {
-        return r || fetch(e.request);
+      fetch(e.request).catch(function() {
+        return caches.match('/index.html');
       })
     );
     return;

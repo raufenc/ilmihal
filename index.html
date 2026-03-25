@@ -582,7 +582,7 @@
         regs.forEach(function(r) { r.unregister(); });
       });
       caches.keys().then(function(names) {
-        names.forEach(function(n) { if (n !== 'ilmihal-v4') caches.delete(n); });
+        names.forEach(function(n) { if (n !== 'ilmihal-v5') caches.delete(n); });
       });
       setTimeout(function() {
         navigator.serviceWorker.register('/sw.js').catch(function(){});

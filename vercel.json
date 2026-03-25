@@ -8,10 +8,8 @@
     { "source": "/sahislar", "destination": "/index.html" },
     { "source": "/quiz", "destination": "/index.html" },
     { "source": "/hakkinda", "destination": "/index.html" },
-    { "source": "/istatistik", "destination": "/index.html" },
     { "source": "/ayet-hadis", "destination": "/index.html" },
-    { "source": "/okuma-plani", "destination": "/index.html" },
-    { "source": "/fikih-karsilastirma", "destination": "/index.html" }
+    { "source": "/okuma-plani", "destination": "/index.html" }
   ],
   "headers": [
     {
