@@ -2622,44 +2622,8 @@ function initSyncHighlight() {
 }
 
 function updateSyncHighlight(currentTime, duration) {
-  if (!duration || syncState.sentences.length === 0) return;
-  var pct = currentTime / duration;
-  var charPos = Math.floor(pct * syncState.totalChars);
-  
-  // Hangi cümledeyiz?
-  var cumChars = 0;
-  var sentIdx = 0;
-  for (var i = 0; i < syncState.sentences.length; i++) {
-    cumChars += syncState.sentences[i].length;
-    if (cumChars >= charPos) { sentIdx = i; break; }
-  }
-  
-  if (sentIdx !== syncState.currentSentence) {
-    syncState.currentSentence = sentIdx;
-    // Önceki highlight'ı kaldır
-    document.querySelectorAll('.audio-highlight').forEach(function(el) { el.classList.remove('audio-highlight'); });
-    // Yeni cümleyi bul ve highlight et (basit yaklaşım - ilk birkaç kelimeyle ara)
-    var searchText = syncState.sentences[sentIdx];
-    if (searchText) {
-      var firstWords = searchText.substring(0, 40);
-      var textEl = document.querySelector('.madde-text');
-      if (textEl) {
-        var walker = document.createTreeWalker(textEl, NodeFilter.SHOW_TEXT);
-        var node;
-        while ((node = walker.nextNode())) {
-          if (node.textContent.indexOf(firstWords) !== -1) {
-            // Bu node'un parent'ını highlight et
-            var parent = node.parentElement;
-            if (parent && !parent.classList.contains('zor-kelime')) {
-              parent.classList.add('audio-highlight');
-              parent.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }
-            break;
-          }
-        }
-      }
-    }
-  }
+  // Eski highlight devre dışı — whisper indicator kullanılıyor
+  return;
 }
 
 // Audio timeupdate'e sync ekle

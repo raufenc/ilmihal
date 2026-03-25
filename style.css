@@ -2736,12 +2736,7 @@ mark.search-highlight {
 }
 
 /* ===== AUDIO HIGHLIGHT (Ses Senkron) ===== */
-.audio-highlight {
-  background: rgba(201,168,76,0.2) !important;
-  border-radius: 4px;
-  transition: background 0.5s ease;
-}
-:root.dark .audio-highlight { background: rgba(212,182,92,0.15) !important; }
+/* audio-highlight kaldırıldı — sync-indicator kullanılıyor */
 
 /* ===== NOT ALMA ===== */
 .madde-notlar {
