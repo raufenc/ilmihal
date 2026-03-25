@@ -1631,12 +1631,8 @@ async function doFullSearch(fromRoute) {
 
   results.innerHTML = html;
 
-  // RAG: Soru algılandıysa AI cevap üret
-  if (SearchEngine.isQuestion(rawQuery)) {
-    triggerRagAnswer(rawQuery);
-  } else {
-    hideAiAnswer();
-  }
+  // RAG: Her aramada AI cevap üret
+  triggerRagAnswer(rawQuery);
 }
 
 function triggerRagAnswer(question) {
