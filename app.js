@@ -227,11 +227,11 @@ document.querySelectorAll('.nav-btn').forEach(btn => {
 
 function navigateTo(page, fromRoute) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => { b.classList.remove('active'); b.removeAttribute('aria-current'); });
   const target = document.getElementById('page-' + page);
   if (target) target.classList.add('active');
   const navBtn = document.querySelector(`.nav-btn[data-page="${page}"]`);
-  if (navBtn) navBtn.classList.add('active');
+  if (navBtn) { navBtn.classList.add('active'); navBtn.setAttribute('aria-current', 'page'); }
   // Close mobile menu
   document.querySelector('.main-nav')?.classList.remove('open');
   window.scrollTo(0, 0);
@@ -433,7 +433,19 @@ async function openMadde(kisim, maddeNo, fromRoute, searchQuery) {
     metin = highlightWords(metin);
   }
 
+  // İlişkili maddeler (UX-03)
+  var iliskiliHTML = getIliskiliMaddeler(kisim, maddeNo, madde.baslik);
+
   body.innerHTML = `
+    <nav class="breadcrumb" aria-label="Konum">
+      <a href="#" onclick="closeMadde();navigateTo('anasayfa');return false">Ana Sayfa</a>
+      <span class="breadcrumb-sep">›</span>
+      <a href="#" onclick="closeMadde();navigateTo('icerik');return false">İçindekiler</a>
+      <span class="breadcrumb-sep">›</span>
+      <a href="#" onclick="closeMadde();navigateTo('icerik');showKisim(${kisim});return false">${kisimLabels[madde.kisim]}</a>
+      <span class="breadcrumb-sep">›</span>
+      <span class="breadcrumb-current">Madde ${madde.madde_no}</span>
+    </nav>
     <div class="madde-detail-header">
       <h3>${madde.baslik}</h3>
       <div class="madde-detail-meta">
@@ -449,6 +461,7 @@ async function openMadde(kisim, maddeNo, fromRoute, searchQuery) {
     </div>
     ${getRelatedSahislar(kisim, maddeNo)}
     ${getRelatedTables(kisim, maddeNo)}
+    ${iliskiliHTML}
   `;
 
   // Tooltip events
@@ -661,6 +674,26 @@ document.addEventListener('keydown', e => {
 
 document.getElementById('madde-detay')?.addEventListener('click', e => {
   if (e.target === document.getElementById('madde-detay')) closeMadde();
+});
+
+// Focus trap for overlays
+document.addEventListener('keydown', function(e) {
+  if (e.key !== 'Tab') return;
+  var overlay = null;
+  if (document.getElementById('sahis-detay')?.style.display === 'flex') {
+    overlay = document.getElementById('sahis-detay');
+  } else if (document.getElementById('madde-detay')?.style.display === 'flex') {
+    overlay = document.getElementById('madde-detay');
+  }
+  if (!overlay) return;
+  var focusable = overlay.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+  if (focusable.length === 0) return;
+  var first = focusable[0], last = focusable[focusable.length - 1];
+  if (e.shiftKey) {
+    if (document.activeElement === first) { e.preventDefault(); last.focus(); }
+  } else {
+    if (document.activeElement === last) { e.preventDefault(); first.focus(); }
+  }
 });
 
 // ===== ZOR KELİME HIGHLIGHT =====
@@ -1587,7 +1620,11 @@ async function doFullSearch(fromRoute) {
 
   matches.sort((a, b) => (b.inTitle ? 1 : 0) - (a.inTitle ? 1 : 0));
 
-  let html = `<p style="color:var(--text-muted);margin-bottom:16px;">${matches.length} sonu\u00e7 bulundu</p>`;
+  // SEARCH-01: Filtre UI
+  let html = `<div class="arama-filtreler" id="arama-filtreler">
+    <button type="button" class="arama-filtre-btn active" data-filtre="all" onclick="filtreAramaSonuclari('all')">Tümü <span class="filtre-count">(${matches.length})</span></button>
+  </div>`;
+  html += `<p style="color:var(--text-muted);margin-bottom:16px;" id="arama-sonuc-sayisi">${matches.length} sonuç bulundu</p>`;
 
   matches.slice(0, 50).forEach(m => {
     // Normalize edilmiş bağlamda eşleşen konumları bul, orijinal metinde işaretle
@@ -1621,10 +1658,10 @@ async function doFullSearch(fromRoute) {
     }
 
     html += `
-      <div class="arama-result" onclick="openMadde(${m.kisim}, ${m.madde_no})">
+      <div class="arama-result" data-tip="madde" onclick="openMadde(${m.kisim}, ${m.madde_no})">
         <h4>${escapeHtml(m.baslik)}</h4>
-        <p>${highlighted || '(Ba\u015fl\u0131kta e\u015fle\u015fme)'}</p>
-        <div class="result-meta">${kisimLabels[m.kisim]}, Madde ${m.madde_no} \u00B7 ${sayfaLink(m.sayfa_no, 'Sayfa ' + m.sayfa_no)}</div>
+        <p class="arama-snippet">${highlighted || '(Başlıkta eşleşme)'}</p>
+        <div class="result-meta">${kisimLabels[m.kisim]}, Madde ${m.madde_no} · ${sayfaLink(m.sayfa_no, 'Sayfa ' + m.sayfa_no)}</div>
       </div>
     `;
   });
@@ -3170,7 +3207,10 @@ var pageSeoMap = {
   'ayet-hadis': ["Âyet-i Kerîme ve Hadîs-i Şerîf İndeksi - Se'âdet-i Ebediyye", "Kitapta geçen 232 âyet-i kerîme ve 231 hadîs-i şerîfin referanslı listesi."],
   'hakkinda': ["Hakkında - Se'âdet-i Ebediyye İnteraktif İlmihâl", "Se'âdet-i Ebediyye interaktif ilmihâl platformu hakkında bilgi."],
   'gunun-bilgisi': ["Günün Bilgisi - Se'âdet-i Ebediyye", "Her gün kitaptan bir hadîs-i şerîf veya âyet-i kerîme. Paylaşılabilir görsel kartlar."],
-  'rehberler': ["Konuya Göre Rehberler - Se'âdet-i Ebediyye", "Namaz, oruç, hac, zekât, iman ve ahlâk konularında adım adım rehberler."]
+  'rehberler': ["Konuya Göre Rehberler - Se'âdet-i Ebediyye", "Namaz, oruç, hac, zekât, iman ve ahlâk konularında adım adım rehberler."],
+  'okuma-plani': ["Okuma Planı - Se'âdet-i Ebediyye", "3 ay, 6 ay veya 1 yılda Se'âdet-i Ebediyye kitabını tamamlayın. Günlük okuma takvimi ve ilerleme takibi."],
+  'icerik': ["İçindekiler - Se'âdet-i Ebediyye", "Se'âdet-i Ebediyye kitabının 241 maddesinin tam listesi. Üç kısım halinde konulara göre düzenlenmiş."],
+  'fikih-karsilastirma': ["Fıkıh Karşılaştırma - Se'âdet-i Ebediyye", "Dört mezhebe göre temel ibâdet ve muâmelât hükümlerinin karşılaştırması."]
 };
 
 // navigateTo'da SEO meta güncelle
@@ -3412,6 +3452,169 @@ function renderRehberDetay(id) {
 
   detay.innerHTML = html;
 }
+
+// ===== UX-03: İLİŞKİSEL ÖNERİ MODÜLLERİ =====
+function getIliskiliMaddeler(kisim, maddeNo, baslik) {
+  if (!window.tocData) return '';
+  var current = window.tocData.find(function(m) { return m.kisim === kisim && m.madde_no === maddeNo; });
+  if (!current) return '';
+
+  // Aynı kısımdaki yakın maddeler (önceki/sonraki 2)
+  var related = [];
+  window.tocData.forEach(function(m) {
+    if (m.kisim === kisim && m.madde_no !== maddeNo) {
+      var diff = Math.abs(m.madde_no - maddeNo);
+      if (diff <= 3 && diff > 0) {
+        related.push(m);
+      }
+    }
+  });
+
+  // Başlıktaki anahtar kelimelerle diğer kısımlarda eşleşen maddeler
+  if (baslik) {
+    var keywords = normalizeSearch(baslik).split(/\s+/).filter(function(w) { return w.length >= 4; });
+    if (keywords.length > 0) {
+      window.tocData.forEach(function(m) {
+        if (m.kisim === kisim && Math.abs(m.madde_no - maddeNo) <= 3) return;
+        if (related.some(function(r) { return r.kisim === m.kisim && r.madde_no === m.madde_no; })) return;
+        var normBaslik = normalizeSearch(m.baslik || '');
+        var matchCount = 0;
+        keywords.forEach(function(kw) { if (normBaslik.indexOf(kw) !== -1) matchCount++; });
+        if (matchCount >= 1 && related.length < 8) {
+          m._matchScore = matchCount;
+          related.push(m);
+        }
+      });
+      related.sort(function(a, b) { return (b._matchScore || 0) - (a._matchScore || 0); });
+    }
+  }
+
+  if (related.length === 0) return '';
+
+  var kisimLabels = {1:'K1', 2:'K2', 3:'K3'};
+  var html = '<div class="iliskili-maddeler"><h4>İlgili Maddeler</h4><div class="iliskili-grid">';
+  related.slice(0, 6).forEach(function(m) {
+    html += '<a href="#" class="iliskili-item" onclick="openMadde(' + m.kisim + ',' + m.madde_no + ');return false">' +
+      '<span class="iliskili-kisim">' + kisimLabels[m.kisim] + '/M' + m.madde_no + '</span> ' +
+      escapeHtml(m.baslik) + '</a>';
+  });
+  html += '</div></div>';
+  return html;
+}
+
+// ===== SEARCH-01: FİLTRE FONKSİYONU =====
+function filtreAramaSonuclari(tip) {
+  var btns = document.querySelectorAll('.arama-filtre-btn');
+  btns.forEach(function(b) { b.classList.toggle('active', b.dataset.filtre === tip); });
+  var items = document.querySelectorAll('.arama-result');
+  var count = 0;
+  items.forEach(function(el) {
+    if (tip === 'all' || el.dataset.tip === tip) {
+      el.style.display = '';
+      count++;
+    } else {
+      el.style.display = 'none';
+    }
+  });
+  var countEl = document.getElementById('arama-sonuc-sayisi');
+  if (countEl) countEl.textContent = count + ' sonuç gösteriliyor';
+}
+
+// ===== IA-01: ANA SAYFA NİYET KARTLARI =====
+(function() {
+  var heroActions = document.querySelector('.hero-actions');
+  if (!heroActions) return;
+
+  var niyetHTML = '<div class="niyet-kartlari">' +
+    '<a class="niyet-kart" href="#" onclick="navigateTo(\'arama\');return false">' +
+      '<span class="niyet-kart-icon">&#128269;</span>' +
+      '<h3>Hızlı Cevap Ara</h3>' +
+      '<p>Soru sorun veya kelime arayın, kitaptan cevabını bulalım.</p>' +
+    '</a>' +
+    '<a class="niyet-kart" href="#" onclick="navigateTo(\'okuma-plani\');return false">' +
+      '<span class="niyet-kart-icon">&#128214;</span>' +
+      '<h3>Planlı Okumaya Başla</h3>' +
+      '<p>3 ay, 6 ay veya 1 yılda kitabı tamamlayın.</p>' +
+    '</a>' +
+    '<a class="niyet-kart" href="#" onclick="navigateTo(\'sozluk\');return false">' +
+      '<span class="niyet-kart-icon">&#128218;</span>' +
+      '<h3>Sözlük ve Referans</h3>' +
+      '<p>4.400+ terimlik dini lügat, âyet-hadîs indeksi ve şahıs biyografileri.</p>' +
+    '</a>' +
+  '</div>';
+
+  // Mevcut CTA butonlarının altına ekle
+  heroActions.insertAdjacentHTML('afterend', niyetHTML);
+})();
+
+// ===== SEO-03: DİNAMİK SCHEMA.ORG =====
+(function() {
+  // Madde açıldığında Article schema ekle
+  var _origOpenMaddeForSchema = openMadde;
+  // Schema güncelleme zaten openMadde içinde addFaqSchema ile yapılıyor
+  // BreadcrumbList schema'yı dinamik ekleyelim
+  var schemaScript = document.createElement('script');
+  schemaScript.type = 'application/ld+json';
+  schemaScript.id = 'dynamic-schema';
+  document.head.appendChild(schemaScript);
+
+  window.updateDynamicSchema = function(type, data) {
+    var schema = null;
+    if (type === 'breadcrumb') {
+      schema = {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": data.map(function(item, i) {
+          return {
+            "@type": "ListItem",
+            "position": i + 1,
+            "name": item.name,
+            "item": item.url
+          };
+        })
+      };
+    } else if (type === 'article') {
+      schema = {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": data.title,
+        "author": {"@type": "Person", "name": "Hüseyn Hilmi Işık"},
+        "publisher": {"@type": "Organization", "name": "ilmihal.org"},
+        "url": data.url,
+        "isPartOf": {"@type": "Book", "name": "Se'âdet-i Ebediyye"}
+      };
+    }
+    if (schema) schemaScript.textContent = JSON.stringify(schema);
+  };
+})();
+
+// Madde açıldığında BreadcrumbList schema güncelle
+var _origOpenMaddeForBreadcrumb = openMadde;
+openMadde = async function(kisim, maddeNo, fromRoute, searchQuery) {
+  await _origOpenMaddeForBreadcrumb(kisim, maddeNo, fromRoute, searchQuery);
+  var kisimLabels = {1:'Birinci Kısım', 2:'İkinci Kısım', 3:'Üçüncü Kısım'};
+  var madde = window.maddelerData?.find(function(m) { return m.kisim === kisim && m.madde_no === maddeNo; });
+  if (madde && window.updateDynamicSchema) {
+    window.updateDynamicSchema('breadcrumb', [
+      {name: 'Ana Sayfa', url: 'https://ilmihal.org/'},
+      {name: 'İçindekiler', url: 'https://ilmihal.org/icerik'},
+      {name: kisimLabels[kisim], url: 'https://ilmihal.org/icerik'},
+      {name: madde.baslik, url: 'https://ilmihal.org/madde/' + kisim + '/' + maddeNo}
+    ]);
+  }
+};
+
+// ===== CONTENT-02: GÜNCELLEME TARİHİ =====
+// Hakkında sayfasına güncelleme tarihi ekle
+(function() {
+  var hakkindaContent = document.querySelector('.hakkinda-content');
+  if (!hakkindaContent) return;
+  var metaDiv = document.createElement('div');
+  metaDiv.className = 'icerik-meta';
+  metaDiv.innerHTML = '<span class="icerik-meta-item">&#128197; Son güncelleme: Mart 2026</span>' +
+    '<span class="icerik-meta-item">&#128214; Kaynak: Se\'âdet-i Ebediyye, Hakîkat Kitâbevi</span>';
+  hakkindaContent.insertBefore(metaDiv, hakkindaContent.querySelector('h3'));
+})();
 
 // ===== PODCAST MODU (Sürekli Dinleme Geliştirmesi) =====
 var podcastMode = false;

@@ -23,7 +23,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=19">
+  <link rel="stylesheet" href="style.css?v=20">
   <script type="application/ld+json">
   [{
     "@context": "https://schema.org",
@@ -96,7 +96,7 @@
           <div class="hero-search-wrapper">
             <div class="hero-search-box">
               <svg class="hero-search-icon" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-              <input type="text" id="hero-search" class="hero-search-input" placeholder="Kitapta, sözlükte veya şahıslarda arayın..." autocomplete="off">
+              <input type="text" id="hero-search" class="hero-search-input" placeholder="Kitapta, sözlükte veya şahıslarda arayın..." autocomplete="off" aria-label="Kitapta, sözlükte veya şahıslarda ara">
               <kbd class="hero-search-kbd">Enter</kbd>
             </div>
             <div id="hero-search-dropdown" class="search-dropdown" style="display:none"></div>
@@ -194,7 +194,7 @@
             <option value="2">İkinci Kısım</option>
             <option value="3">Üçüncü Kısım</option>
           </select>
-          <input type="text" id="icerik-search" placeholder="Madde ara...">
+          <input type="text" id="icerik-search" placeholder="Madde ara..." aria-label="İçindekiler listesinde ara">
         </div>
       </div>
       <div id="icerik-list" class="icerik-list"></div>
@@ -205,28 +205,28 @@
   <div id="madde-detay" class="madde-overlay" style="display:none">
     <div class="madde-overlay-wrap">
       <div class="madde-toolbar">
-        <button type="button" class="toolbar-btn toolbar-audio-btn" onclick="toggleAudio()" id="audio-btn" title="Sesli dinle">&#9654;</button>
-        <button type="button" class="toolbar-btn" onclick="adjustFontSize(-1)" title="Yazıyı küçült">A-</button>
-        <button type="button" class="toolbar-btn" onclick="adjustFontSize(1)" title="Yazıyı büyüt">A+</button>
-        <button type="button" class="toolbar-btn" onclick="cycleReadingMode()" id="reading-mode-btn" title="Okuma modu">&#9788;</button>
-        <button type="button" class="toolbar-btn" onclick="toggleBookmark()" id="bookmark-btn" title="Yer imi ekle">&#9734;</button>
-        <button type="button" class="toolbar-btn" onclick="shareMadde()" title="Paylaş">&#8599;</button>
-        <button type="button" class="toolbar-btn" onclick="printMadde()" title="Yazdır">&#128424;</button>
-        <button type="button" class="toolbar-btn" onclick="toggleFullscreenRead()" id="fullscreen-btn" title="Tam ekran">&#8862;</button>
-        <button type="button" class="madde-close" onclick="closeMadde()">&times;</button>
+        <button type="button" class="toolbar-btn toolbar-audio-btn" onclick="toggleAudio()" id="audio-btn" title="Sesli dinle" aria-label="Sesli dinle">&#9654;</button>
+        <button type="button" class="toolbar-btn" onclick="adjustFontSize(-1)" title="Yazıyı küçült" aria-label="Yazıyı küçült">A-</button>
+        <button type="button" class="toolbar-btn" onclick="adjustFontSize(1)" title="Yazıyı büyüt" aria-label="Yazıyı büyüt">A+</button>
+        <button type="button" class="toolbar-btn" onclick="cycleReadingMode()" id="reading-mode-btn" title="Okuma modu" aria-label="Okuma modu değiştir">&#9788;</button>
+        <button type="button" class="toolbar-btn" onclick="toggleBookmark()" id="bookmark-btn" title="Yer imi ekle" aria-label="Yer imi ekle veya kaldır">&#9734;</button>
+        <button type="button" class="toolbar-btn" onclick="shareMadde()" title="Paylaş" aria-label="Bu maddeyi paylaş">&#8599;</button>
+        <button type="button" class="toolbar-btn" onclick="printMadde()" title="Yazdır" aria-label="Bu maddeyi yazdır">&#128424;</button>
+        <button type="button" class="toolbar-btn" onclick="toggleFullscreenRead()" id="fullscreen-btn" title="Tam ekran" aria-label="Tam ekran okuma modu">&#8862;</button>
+        <button type="button" class="madde-close" onclick="closeMadde()" aria-label="Maddeyi kapat">&times;</button>
       </div>
       <div id="audio-player-bar" class="audio-player-bar" style="display:none">
         <audio id="madde-audio" preload="none"></audio>
-        <button type="button" class="audio-ctrl" id="audio-prev" onclick="audioNav(-1)">&#9664;</button>
-        <button type="button" class="audio-ctrl audio-play-btn" id="audio-play-pause" onclick="toggleAudioPlay()">&#9654;</button>
-        <button type="button" class="audio-ctrl" id="audio-next" onclick="audioNav(1)">&#9654;</button>
+        <button type="button" class="audio-ctrl" id="audio-prev" onclick="audioNav(-1)" aria-label="Önceki sayfa">&#9664;</button>
+        <button type="button" class="audio-ctrl audio-play-btn" id="audio-play-pause" onclick="toggleAudioPlay()" aria-label="Oynat veya duraklat">&#9654;</button>
+        <button type="button" class="audio-ctrl" id="audio-next" onclick="audioNav(1)" aria-label="Sonraki sayfa">&#9654;</button>
         <div class="audio-progress-wrap" onclick="audioSeek(event)">
           <div class="audio-progress" id="audio-progress"></div>
         </div>
         <span class="audio-time" id="audio-time">0:00</span>
-        <button type="button" class="audio-ctrl audio-sm" id="audio-speed-btn" onclick="cycleAudioSpeed()" title="Hız">1x</button>
-        <button type="button" class="audio-ctrl audio-sm" id="sleep-btn" onclick="cycleSleepTimer()" title="Uyku zamanlayıcı">🌙</button>
-        <button type="button" class="audio-ctrl audio-sm" id="continuous-btn" onclick="toggleContinuousPlay()" title="Sürekli dinleme" style="opacity:0.5">&#8646;</button>
+        <button type="button" class="audio-ctrl audio-sm" id="audio-speed-btn" onclick="cycleAudioSpeed()" title="Hız" aria-label="Oynatma hızını değiştir">1x</button>
+        <button type="button" class="audio-ctrl audio-sm" id="sleep-btn" onclick="cycleSleepTimer()" title="Uyku zamanlayıcı" aria-label="Uyku zamanlayıcısı">🌙</button>
+        <button type="button" class="audio-ctrl audio-sm" id="continuous-btn" onclick="toggleContinuousPlay()" title="Sürekli dinleme" aria-label="Sürekli dinleme modu" style="opacity:0.5">&#8646;</button>
         <span class="audio-page-label" id="audio-page-label"></span>
       </div>
       <div class="madde-overlay-content">
@@ -234,7 +234,7 @@
         <div class="madde-notlar" id="madde-notlar">
           <div class="notlar-header">
             <span class="notlar-title">&#128221; Notlarım</span>
-            <button type="button" class="notlar-toggle" id="notlar-toggle" onclick="toggleNotlar()">+</button>
+            <button type="button" class="notlar-toggle" id="notlar-toggle" onclick="toggleNotlar()" aria-label="Notları aç veya kapat" aria-expanded="false">+</button>
           </div>
           <div id="notlar-area" style="display:none">
             <textarea id="not-input" placeholder="Bu madde hakkında not yazın..." rows="3"></textarea>
@@ -256,7 +256,7 @@
       <h2 class="section-title">Hâl Tercemeleri</h2>
       <p class="section-desc">Se'âdet-i Ebediyye'de adı geçenlerin hâl tercemeleri.</p>
       <div class="sahis-filters">
-        <input type="text" id="sahis-search" placeholder="Şahıs ara...">
+        <input type="text" id="sahis-search" placeholder="Şahıs ara..." aria-label="Şahıs ara">
       </div>
       <div id="sahislar-list" class="sahislar-grid"></div>
     </div>
@@ -265,7 +265,7 @@
   <!-- Şahıs Detay -->
   <div id="sahis-detay" class="madde-overlay" style="display:none">
     <div class="madde-overlay-content sahis-overlay-content">
-      <button type="button" class="madde-close" onclick="closeSahis()">&times;</button>
+      <button type="button" class="madde-close" onclick="closeSahis()" aria-label="Şahıs sayfasını kapat">&times;</button>
       <div id="sahis-body"></div>
     </div>
   </div>
@@ -377,7 +377,7 @@
     <div class="container">
       <h2 class="section-title">Dini Lügat</h2>
       <div class="sozluk-filters">
-        <input type="text" id="sozluk-search" placeholder="Kelime ara...">
+        <input type="text" id="sozluk-search" placeholder="Kelime ara..." aria-label="Sözlükte kelime ara">
         <div class="kategori-buttons">
           <button type="button" class="kat-btn active" data-kat="all">Tümü</button>
           <button type="button" class="kat-btn" data-kat="akaid">Akâid/Kelâm</button>
@@ -406,7 +406,7 @@
       <h2 class="section-title">Kitapta Arama</h2>
       <p class="section-desc">Soru sorun veya kelime arayın — kitaptan cevabını bulalım.</p>
       <div class="arama-box">
-        <input type="text" id="full-search" placeholder="Örn: Abdest nasıl alınır? veya namaz, zekât..." autocomplete="off">
+        <input type="text" id="full-search" placeholder="Örn: Abdest nasıl alınır? veya namaz, zekât..." autocomplete="off" aria-label="Kitapta arama yap" role="searchbox">
         <button type="button" class="btn btn-primary" onclick="birlesikAra()">Ara</button>
       </div>
       <div class="arama-ipuclari" id="arama-ipuclari">
@@ -436,7 +436,7 @@
           <span class="ai-answer-disclaimer">Se'adet-i Ebediyye kitab metinlerine dayali AI cevabi</span>
         </div>
       </div>
-      <div id="arama-results" class="arama-results"></div>
+      <div id="arama-results" class="arama-results" aria-live="polite" aria-label="Arama sonuçları"></div>
     </div>
   </main>
 
@@ -474,7 +474,7 @@
         <button type="button" class="ah-tab active" onclick="switchAHTab('ayet')">Âyet-i Kerîmeler</button>
         <button type="button" class="ah-tab" onclick="switchAHTab('hadis')">Hadîs-i Şerîfler</button>
       </div>
-      <input type="text" id="ah-search" placeholder="İndekste ara..." style="width:100%;padding:12px 16px;border:2px solid var(--border);border-radius:var(--radius);font-size:0.95rem;margin-bottom:16px;background:var(--bg-card);color:var(--text);">
+      <input type="text" id="ah-search" placeholder="İndekste ara..." aria-label="Âyet ve hadîs indeksinde ara" style="width:100%;padding:12px 16px;border:2px solid var(--border);border-radius:var(--radius);font-size:0.95rem;margin-bottom:16px;background:var(--bg-card);color:var(--text);">
       <div id="ah-count" style="color:var(--text-muted);font-size:0.85rem;margin-bottom:12px;"></div>
       <div id="ayet-hadis-list" class="ayet-hadis-list"></div>
     </div>
@@ -645,7 +645,7 @@
   <script src="audio-map.js?v=1"></script>
   <script src="arama-sozluk.js?v=1"></script>
   <script src="rehberler.js?v=1"></script>
-  <script src="app.js?v=21"></script>
+  <script src="app.js?v=22"></script>
   <script>
     // Eski SW ve cache temizle, yeni SW kaydet
     if ('serviceWorker' in navigator) {

@@ -1,18 +1,19 @@
 // Service Worker - ilmihal.org PWA
-var CACHE_NAME = 'ilmihal-v6';
+var CACHE_NAME = 'ilmihal-v7';
 var CORE_ASSETS = [
   '/',
   '/index.html',
-  '/style.css?v=18',
+  '/style.css?v=20',
   '/data.js?v=12',
   '/tanimlar.js?v=1',
   '/sahislar.js?v=7',
   '/crossref.js?v=7',
-  '/search-engine.js?v=5',
+  '/search-engine.js?v=6',
   '/ayet-hadis.js?v=2',
   '/audio-map.js?v=1',
-  '/fikih-karsilastirma.js?v=1',
-  '/app.js?v=19',
+  '/arama-sozluk.js?v=1',
+  '/rehberler.js?v=1',
+  '/app.js?v=22',
   '/favicon.svg',
   '/manifest.json'
 ];
