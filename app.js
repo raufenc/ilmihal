@@ -1630,6 +1630,73 @@ async function doFullSearch(fromRoute) {
   });
 
   results.innerHTML = html;
+
+  // RAG: Soru algılandıysa AI cevap üret
+  if (SearchEngine.isQuestion(rawQuery)) {
+    triggerRagAnswer(rawQuery);
+  } else {
+    hideAiAnswer();
+  }
+}
+
+function triggerRagAnswer(question) {
+  const container = document.getElementById('ai-answer-container');
+  const textEl = document.getElementById('ai-answer-text');
+  const sourcesEl = document.getElementById('ai-answer-sources');
+  if (!container || !textEl) return;
+
+  container.style.display = '';
+  textEl.innerHTML = '';
+  textEl.classList.add('loading');
+  sourcesEl.innerHTML = '';
+
+  SearchEngine.ragAnswer(
+    question,
+    // onChunk: streaming metin gelirken
+    function(chunk, fullText) {
+      textEl.classList.remove('loading');
+      // Paragrafları ayır, satır sonlarını <br> yap
+      const formatted = escapeHtml(fullText).replace(/\n\n/g, '</p><p>').replace(/\n/g, '<br>');
+      textEl.innerHTML = '<p>' + formatted + '<span class="ai-cursor"></span></p>';
+    },
+    // onDone: tamamlandı — kaynak kartlarını göster
+    function(fullText, sources) {
+      const formatted = escapeHtml(fullText).replace(/\n\n/g, '</p><p>').replace(/\n/g, '<br>');
+      textEl.innerHTML = '<p>' + formatted + '</p>';
+
+      if (sources && sources.length > 0) {
+        sourcesEl.innerHTML = sources.map(s => {
+          const parts = s.id.split('/');
+          const kisim = parts[0];
+          const maddeNo = parts[1];
+          const title = escapeHtml(s.title || '');
+          // Kısa snippet (passage veya subtitle)
+          const snippet = escapeHtml((s.passage || s.subtitle || '').replace(/<[^>]+>/g, '').slice(0, 80));
+          return `<a href="#" class="ai-source-card" onclick="openMadde(${kisim}, ${maddeNo});return false;">
+            <div class="ai-source-card-ref">K${kisim}/M${maddeNo}</div>
+            <div class="ai-source-card-title">${title}</div>
+            ${snippet ? '<div class="ai-source-card-snippet">' + snippet + '...</div>' : ''}
+          </a>`;
+        }).join('');
+      }
+    },
+    // onError
+    function(err) {
+      textEl.classList.remove('loading');
+      textEl.innerHTML = '<p style="color:var(--text-muted);font-style:italic;">' + escapeHtml(err) + '</p>';
+    }
+  );
+}
+
+function closeAiAnswer() {
+  const container = document.getElementById('ai-answer-container');
+  if (container) container.style.display = 'none';
+  SearchEngine.ragAbort();
+}
+
+function hideAiAnswer() {
+  const container = document.getElementById('ai-answer-container');
+  if (container) container.style.display = 'none';
 }
 
 document.getElementById('full-search')?.addEventListener('keydown', e => {
