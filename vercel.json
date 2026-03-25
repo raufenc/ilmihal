@@ -11,7 +11,11 @@
     { "source": "/ayet-hadis", "destination": "/index.html" },
     { "source": "/okuma-plani", "destination": "/index.html" },
     { "source": "/gunun-bilgisi", "destination": "/index.html" },
-    { "source": "/rehberler", "destination": "/index.html" }
+    { "source": "/rehberler", "destination": "/index.html" },
+    { "source": "/icerik", "destination": "/index.html" },
+    { "source": "/arama", "destination": "/index.html" },
+    { "source": "/fikih-karsilastirma", "destination": "/index.html" },
+    { "source": "/calisma-alanim", "destination": "/index.html" }
   ],
   "headers": [
     {
