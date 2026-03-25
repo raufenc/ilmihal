@@ -60,7 +60,7 @@ function handleRoute() {
     return;
   }
 
-  const validPages = ['anasayfa','icerik','fevaid','sozluk','arama','sahislar','hakkinda','quiz','istatistik','ayet-hadis','okuma-plani','fikih-karsilastirma'];
+  const validPages = ['anasayfa','icerik','fevaid','sozluk','arama','sahislar','hakkinda','quiz','ayet-hadis','okuma-plani'];
   if (validPages.includes(route)) {
     navigateTo(route, true);
   } else {
@@ -2154,133 +2154,6 @@ function resetQuiz() {
   document.getElementById('quiz-area').style.display = 'none';
 }
 
-// ===== İSTATİSTİK PANELİ =====
-function loadIstatistik() {
-  var read = getReadMaddes();
-  var total = window.tocData ? window.tocData.length : 241;
-  var pct = Math.round((read.length / total) * 100);
-  var el = document.getElementById('istat-okunan');
-  if (el) el.textContent = read.length;
-  var yuzde = document.getElementById('istat-yuzde');
-  if (yuzde) yuzde.textContent = '%' + pct;
-  var bar = document.getElementById('istat-bar-okunan');
-  if (bar) bar.style.width = pct + '%';
-
-  // Streak
-  var streak = parseInt(localStorage.getItem('ilmihal-streak') || '0');
-  var streakEl = document.getElementById('istat-streak');
-  if (streakEl) streakEl.textContent = streak;
-
-  // Quiz puan
-  var quizPuan = localStorage.getItem('ilmihal-quiz-puan') || '0';
-  var quizEl = document.getElementById('istat-quiz');
-  if (quizEl) quizEl.textContent = quizPuan;
-
-  // Kısım ilerleme
-  var k1 = 0, k2 = 0, k3 = 0;
-  read.forEach(function(key) {
-    var parts = key.split('/');
-    if (parts[0] === '1') k1++;
-    else if (parts[0] === '2') k2++;
-    else if (parts[0] === '3') k3++;
-  });
-  var setBar = function(id, val, total) {
-    var b = document.getElementById(id);
-    if (b) b.style.width = Math.round((val/total)*100) + '%';
-  };
-  setBar('istat-bar-k1', k1, 98);
-  setBar('istat-bar-k2', k2, 73);
-  setBar('istat-bar-k3', k3, 70);
-  var setDetail = function(id, val, total) {
-    var d = document.getElementById(id);
-    if (d) d.textContent = val + '/' + total + ' madde (%' + Math.round((val/total)*100) + ')';
-  };
-  setDetail('istat-k1-detail', k1, 98);
-  setDetail('istat-k2-detail', k2, 73);
-  setDetail('istat-k3-detail', k3, 70);
-
-  // Yer imleri
-  var bm = getBookmarks();
-  var bmList = document.getElementById('bookmark-list-page');
-  if (bmList) {
-    if (bm.length === 0) {
-      bmList.innerHTML = '<p style="color:var(--text-muted);font-size:0.9rem;">Henüz yer imi eklemediniz. Bir maddeyi açıp ☆ butonuna tıklayarak yer imi ekleyebilirsiniz.</p>';
-    } else {
-      bmList.innerHTML = bm.map(function(b) {
-        return '<div class="bookmark-item" onclick="openMadde(' + b.kisim + ',' + b.madde_no + ')"><div><div class="bookmark-item-title">' + b.baslik + '</div><div class="bookmark-item-meta">Kısım ' + b.kisim + ', Madde ' + b.madde_no + '</div></div><button type="button" class="bookmark-item-remove" onclick="event.stopPropagation();removeBookmarkFromPage(\'' + b.key + '\')">&times;</button></div>';
-      }).join('');
-    }
-  }
-
-  // Haftanın sorusu
-  loadHaftaSorusu();
-}
-
-function removeBookmarkFromPage(key) {
-  var bm = getBookmarks();
-  bm = bm.filter(function(b) { return b.key !== key; });
-  saveBookmarks(bm);
-  loadIstatistik();
-}
-
-// ===== STREAK TAKİBİ =====
-function updateStreak() {
-  var today = new Date().toISOString().slice(0, 10);
-  var lastDate = localStorage.getItem('ilmihal-last-read-date');
-  var streak = parseInt(localStorage.getItem('ilmihal-streak') || '0');
-  if (lastDate === today) return;
-  var yesterday = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
-  if (lastDate === yesterday) {
-    streak++;
-  } else if (lastDate !== today) {
-    streak = 1;
-  }
-  localStorage.setItem('ilmihal-streak', String(streak));
-  localStorage.setItem('ilmihal-last-read-date', today);
-}
-
-// ===== HAFTANIN SORUSU =====
-function loadHaftaSorusu() {
-  var tumSorular = [];
-  for (var k in quizSorulari) { if (k !== 'karisik') tumSorular = tumSorular.concat(quizSorulari[k]); }
-  if (tumSorular.length === 0) return;
-  var week = Math.floor(Date.now() / (7 * 86400000));
-  var idx = week % tumSorular.length;
-  var s = tumSorular[idx];
-  var card = document.getElementById('hafta-sorusu-card');
-  if (!card) return;
-  var cevaplandi = localStorage.getItem('ilmihal-hafta-' + week);
-  var html = '<div class="hafta-soru-text">' + s.s + '</div><div class="hafta-secenekler">';
-  s.c.forEach(function(c, i) {
-    var cls = '';
-    if (cevaplandi) {
-      if (i === s.d) cls = ' dogru';
-      else if (parseInt(cevaplandi) === i && i !== s.d) cls = ' yanlis';
-    }
-    html += '<div class="hafta-secenek' + cls + '" onclick="haftaCevapla(' + week + ',' + i + ',' + s.d + ')">' + c + '</div>';
-  });
-  html += '</div>';
-  if (cevaplandi) {
-    html += '<div class="quiz-aciklama" style="margin-top:12px;">' + s.a + '</div>';
-  }
-  html += '<div class="hafta-paylasim"><button type="button" class="hafta-paylasim-btn" onclick="haftaPaylas()">Paylaş</button></div>';
-  card.innerHTML = html;
-}
-
-function haftaCevapla(week, idx, dogru) {
-  if (localStorage.getItem('ilmihal-hafta-' + week)) return;
-  localStorage.setItem('ilmihal-hafta-' + week, String(idx));
-  loadHaftaSorusu();
-}
-
-function haftaPaylas() {
-  var text = 'Se\'adet-i Ebediyye Bilgi Testi - ilmihal.org';
-  if (navigator.share) {
-    navigator.share({ title: 'Haftanın Sorusu', text: text, url: 'https://ilmihal.org/#istatistik' }).catch(function(){});
-  } else if (navigator.clipboard) {
-    navigator.clipboard.writeText(text + ' https://ilmihal.org/#istatistik').catch(function(){});
-  }
-}
 
 
 function searchInBook(query) {
@@ -2364,7 +2237,6 @@ var _origNavigateTo = navigateTo;
 navigateTo = function(page, fromRoute) {
   _origNavigateTo(page, fromRoute);
   if (page === 'quiz') { document.getElementById('page-quiz')?.classList.add('active'); }
-  if (page === 'istatistik') { document.getElementById('page-istatistik')?.classList.add('active'); loadIstatistik(); }
   if (page === 'ayet-hadis') { document.getElementById('page-ayet-hadis')?.classList.add('active'); renderAyetHadis(); }
   if (page === 'fikih-karsilastirma') { document.getElementById('page-fikih-karsilastirma')?.classList.add('active'); renderFikihKarsilastirma(); }
 };
