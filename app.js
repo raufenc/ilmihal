@@ -40,7 +40,7 @@ function handleRoute() {
     return;
   }
 
-  const validPages = ['anasayfa','icerik','fevaid','sozluk','arama','sahislar','hakkinda'];
+  const validPages = ['anasayfa','icerik','fevaid','sozluk','arama','sahislar','hakkinda','quiz','istatistik','sorucevap','ayet-hadis'];
   if (validPages.includes(route)) {
     navigateTo(route, true);
   } else {
@@ -366,6 +366,11 @@ async function openMadde(kisim, maddeNo, fromRoute, searchQuery) {
     el.addEventListener('mouseenter', showTooltip);
     el.addEventListener('mouseleave', hideTooltip);
   });
+
+  // FAQ Schema + OG meta + Streak
+  if (typeof addFaqSchema === 'function') addFaqSchema(madde, metin);
+  if (typeof updateOgMeta === 'function') updateOgMeta(madde);
+  if (typeof updateStreak === 'function') updateStreak();
 
   // Arama highlight: searchQuery varsa metinde ilgili yeri bul, highlight'la ve scroll et
   if (searchQuery) {
@@ -1932,3 +1937,377 @@ function markAsRead(kisim, maddeNo) {
     localStorage.setItem('ilmihal-read', JSON.stringify(read));
   }
 }
+
+// ===== OKUMA MODLARI (Normal / Sepia / Dark) =====
+var readingModes = ['normal', 'sepia', 'dark'];
+var currentReadingMode = 0;
+
+function cycleReadingMode() {
+  document.documentElement.classList.remove('sepia');
+  currentReadingMode = (currentReadingMode + 1) % readingModes.length;
+  var mode = readingModes[currentReadingMode];
+  var btn = document.getElementById('reading-mode-btn');
+  if (mode === 'sepia') {
+    document.documentElement.classList.add('sepia');
+    document.documentElement.classList.remove('dark');
+    if (btn) btn.innerHTML = '&#9790;';
+  } else if (mode === 'dark') {
+    document.documentElement.classList.remove('sepia');
+    document.documentElement.classList.add('dark');
+    localStorage.setItem('ilmihal-theme', 'dark');
+    if (btn) btn.innerHTML = '&#9788;';
+  } else {
+    document.documentElement.classList.remove('dark');
+    document.documentElement.classList.remove('sepia');
+    localStorage.setItem('ilmihal-theme', 'light');
+    if (btn) btn.innerHTML = '&#9788;';
+  }
+}
+
+// ===== YAZDIRMA =====
+function printMadde() {
+  window.print();
+}
+
+// ===== QUIZ SİSTEMİ =====
+var quizSorulari = {
+  iman: [
+    {s:"İslâmın beş şartından ilki nedir?", c:["Kelime-i şehâdet söylemek","Namaz kılmak","Oruç tutmak","Zekât vermek"], d:0, a:"İslâmın birinci şartı kelime-i şehâdet getirmek, yani Eşhedü en lâ ilâhe illallah ve eşhedü enne Muhammeden abdühü ve resûlühü demektir."},
+    {s:"Ehl-i sünnet itikadında îmânın altı şartından biri değildir?", c:["Allahü teâlâya inanmak","Meleklere inanmak","Reenkarnasyona inanmak","Kadere inanmak"], d:2, a:"Âmentünün altı şartı: Allahü teâlâya, meleklerine, kitaplarına, peygamberlerine, âhiret gününe ve kadere inanmaktır."},
+    {s:"Peygamber Efendimiz (sallallahü aleyhi ve sellem) hangi şehirde doğmuştur?", c:["Medîne","Mekke","Tâif","Kudüs"], d:1, a:"Peygamber Efendimiz Mekke-i mükerremede, Rebîul-evvel ayının onikinci Pazartesi gecesi dünyâya gelmiştir."},
+    {s:"Kur'ân-ı kerîm kaç sûredir?", c:["100","110","114","120"], d:2, a:"Kur'ân-ı kerîm 114 sûre ve 6236 âyet-i kerîmedir."},
+    {s:"Dört büyük melekten biri değildir?", c:["Cebrâîl","Mikâîl","Münker","İsrâfîl"], d:2, a:"Dört büyük melek: Cebrâîl, Mikâîl, İsrâfîl ve Azrâîl aleyhimüsselâmdır."}
+  ],
+  namaz: [
+    {s:"Beş vakit namazda toplam kaç rekât farz vardır?", c:["17","20","25","40"], d:0, a:"Sabah 2, öğle 4, ikindi 4, akşam 3, yatsı 4 olmak üzere toplam 17 rekât farz namaz vardır."},
+    {s:"Namazın farzlarından değildir?", c:["Kıbleye dönmek","Niyet etmek","Eûzü okumak","Abdest almak"], d:2, a:"Namazın farzları: Hadesten tahâret, necâsetten tahâret, setr-i avret, istikbâl-i kıble, vakit ve niyyettir."},
+    {s:"Abdesti bozan hallerden değildir?", c:["Uyumak","Ağlamak","Kan gelmesi","Bayılmak"], d:1, a:"Abdesti bozan haller: Ön ve arkadan bir şey çıkması, kan gelmesi, uyumak, bayılmak gibi hallerdir. Ağlamak abdesti bozmaz."},
+    {s:"Sabah namazının sünneti kaç rekâttır?", c:["2","4","3","Sünnet yoktur"], d:0, a:"Sabah namazının farzından önce iki rekât sünnet kılınır."},
+    {s:"Namazda secde kaç defa yapılır?", c:["Her rekâtta 1","Her rekâtta 2","Her rekâtta 3","Sadece son rekâtta"], d:1, a:"Her rekâtta iki secde yapılır."}
+  ],
+  oruc: [
+    {s:"Ramazan orucu ne zaman farz oldu?", c:["Hicretin 1. yılında","Hicretin 2. yılında","Mekke'de","Hicretin 5. yılında"], d:1, a:"Ramazan orucu hicretin ikinci yılında, Şa'bân ayının onuncu günü farz olmuştur."},
+    {s:"Orucu bozmayan hallerden biri?", c:["Yemek yemek","Unutarak su içmek","Bilerek su içmek","İğne yaptırmak"], d:1, a:"Unutarak yemek ve içmek orucu bozmaz. Hatırlayınca bırakılır ve oruca devam edilir."},
+    {s:"İftar vakti ne zamandır?", c:["Güneş doğunca","Öğle ezanında","İkindi ezanında","Güneş batınca"], d:3, a:"Oruç, güneş batınca açılır. Akşam ezanı okunduğunda iftar edilir."}
+  ],
+  zekat: [
+    {s:"Zekât vermek için en az ne kadar altın gerekir?", c:["20 miskal (80.18 gr)","10 miskal","50 miskal","100 miskal"], d:0, a:"Zekât nisabı altında 20 miskal, gümüşte 200 dirhemdir. 20 miskal altın yaklaşık 80.18 gramdır."},
+    {s:"Zekât malın yüzde kaçıdır?", c:["Yüzde 1","Yüzde 2.5","Yüzde 5","Yüzde 10"], d:1, a:"Zekât, nisab miktarı malın kırkta biri, yani yüzde iki buçuğudur."},
+    {s:"Zekât kimlere verilmez?", c:["Fakirlere","Borçlulara","Ana-babaya","Yolda kalmışlara"], d:2, a:"Zekât usûl (ana, baba, dede, nine) ve fürûa (evlat, torun) verilmez."}
+  ],
+  hac: [
+    {s:"Hac ibadeti ne zaman farz olmuştur?", c:["Hicretin 6. yılında","Hicretin 9. yılında","Mekke'de","Hicretin 2. yılında"], d:1, a:"Hac ibadeti hicretin dokuzuncu yılında farz olmuştur."},
+    {s:"Haccın farzlarından değildir?", c:["İhram","Vakfe","Tavaf","Sa'y"], d:3, a:"Haccın farzları üçtür: İhram, Arafat'ta vakfe ve ziyâret tavafı. Sa'y ise vâcibdir."},
+    {s:"Arafat vakfesi hangi gün yapılır?", c:["Zilhicce 8","Zilhicce 9","Zilhicce 10","Zilhicce 11"], d:1, a:"Arafat vakfesi Zilhicce ayının dokuzuncu günü yapılır."}
+  ],
+  ahlak: [
+    {s:"Tasavvufta 'nefs' kelimesinin anlamı nedir?", c:["Ruh","İnsanın kötü arzuları","Akıl","Kalp"], d:1, a:"Nefs, insanı kötülüğe sürükleyen arzular ve isteklerdir. Nefs-i emmâre kötülüğü emreder."},
+    {s:"Büyük günahlardan biri değildir?", c:["Yalan söylemek","Gıybet etmek","Erken kalkmak","İçki içmek"], d:2, a:"Büyük günahlar: Adam öldürmek, zina, içki, yalan, gıybet, hırsızlık gibi günahlardır."},
+    {s:"Hadis-i şerifte en çok tavsiye edilen ahlak?", c:["Sabır","Cömertlik","Doğruluk","Tevazu"], d:2, a:"Peygamber Efendimiz 'Doğruluktan ayrılmayınız. Doğruluk iyiliğe, iyilik Cennete götürür' buyurmuştur."}
+  ],
+  karisik: []
+};
+
+var quizState = { sorular: [], current: 0, dogru: 0, toplam: 0, cevaplandi: false };
+
+function startQuiz(konu) {
+  var sorular;
+  if (konu === 'karisik') {
+    var tumSorular = [];
+    for (var k in quizSorulari) { if (k !== 'karisik') tumSorular = tumSorular.concat(quizSorulari[k]); }
+    sorular = tumSorular.sort(function() { return Math.random() - 0.5; }).slice(0, 10);
+  } else {
+    sorular = (quizSorulari[konu] || []).slice();
+  }
+  if (sorular.length === 0) { alert('Bu konuda henüz soru bulunmuyor.'); return; }
+  quizState = { sorular: sorular, current: 0, dogru: 0, toplam: sorular.length, cevaplandi: false };
+  document.querySelector('.quiz-setup').style.display = 'none';
+  document.getElementById('quiz-area').style.display = 'block';
+  renderQuizSoru();
+}
+
+function renderQuizSoru() {
+  var area = document.getElementById('quiz-area');
+  if (quizState.current >= quizState.toplam) {
+    var puan = Math.round((quizState.dogru / quizState.toplam) * 100);
+    var eskiPuan = parseInt(localStorage.getItem('ilmihal-quiz-puan') || '0');
+    localStorage.setItem('ilmihal-quiz-puan', String(Math.max(eskiPuan, puan)));
+    area.innerHTML = '<div class="quiz-sonuc"><div class="quiz-sonuc-puan">' + puan + '/100</div><div class="quiz-sonuc-text">' + quizState.dogru + '/' + quizState.toplam + ' doğru cevap</div><button type="button" class="btn btn-primary" onclick="resetQuiz()">Yeni Test</button></div>';
+    return;
+  }
+  var s = quizState.sorular[quizState.current];
+  quizState.cevaplandi = false;
+  var pct = Math.round((quizState.current / quizState.toplam) * 100);
+  var html = '<div class="quiz-ilerleme"><div class="quiz-ilerleme-bar"><div class="quiz-ilerleme-fill" style="width:' + pct + '%"></div></div><span class="quiz-ilerleme-text">' + (quizState.current + 1) + '/' + quizState.toplam + '</span></div>';
+  html += '<div class="quiz-soru"><div class="quiz-soru-num">Soru ' + (quizState.current + 1) + '</div><div class="quiz-soru-text">' + s.s + '</div><div class="quiz-secenekler">';
+  s.c.forEach(function(c, i) {
+    html += '<div class="quiz-secenek" onclick="quizCevapla(' + i + ')" data-idx="' + i + '">' + c + '</div>';
+  });
+  html += '</div><div class="quiz-aciklama" id="quiz-aciklama" style="display:none"></div></div>';
+  area.innerHTML = html;
+}
+
+function quizCevapla(idx) {
+  if (quizState.cevaplandi) return;
+  quizState.cevaplandi = true;
+  var s = quizState.sorular[quizState.current];
+  var secenekler = document.querySelectorAll('.quiz-secenek');
+  secenekler.forEach(function(el) {
+    var i = parseInt(el.getAttribute('data-idx'));
+    if (i === s.d) el.classList.add('dogru');
+    if (i === idx && idx !== s.d) el.classList.add('yanlis');
+    el.style.pointerEvents = 'none';
+  });
+  if (idx === s.d) quizState.dogru++;
+  var aciklama = document.getElementById('quiz-aciklama');
+  aciklama.textContent = s.a;
+  aciklama.style.display = 'block';
+  setTimeout(function() { quizState.current++; renderQuizSoru(); }, 2500);
+}
+
+function resetQuiz() {
+  document.querySelector('.quiz-setup').style.display = 'block';
+  document.getElementById('quiz-area').style.display = 'none';
+}
+
+// ===== İSTATİSTİK PANELİ =====
+function loadIstatistik() {
+  var read = getReadMaddes();
+  var total = window.tocData ? window.tocData.length : 241;
+  var pct = Math.round((read.length / total) * 100);
+  var el = document.getElementById('istat-okunan');
+  if (el) el.textContent = read.length;
+  var yuzde = document.getElementById('istat-yuzde');
+  if (yuzde) yuzde.textContent = '%' + pct;
+  var bar = document.getElementById('istat-bar-okunan');
+  if (bar) bar.style.width = pct + '%';
+
+  // Streak
+  var streak = parseInt(localStorage.getItem('ilmihal-streak') || '0');
+  var streakEl = document.getElementById('istat-streak');
+  if (streakEl) streakEl.textContent = streak;
+
+  // Quiz puan
+  var quizPuan = localStorage.getItem('ilmihal-quiz-puan') || '0';
+  var quizEl = document.getElementById('istat-quiz');
+  if (quizEl) quizEl.textContent = quizPuan;
+
+  // Kısım ilerleme
+  var k1 = 0, k2 = 0, k3 = 0;
+  read.forEach(function(key) {
+    var parts = key.split('/');
+    if (parts[0] === '1') k1++;
+    else if (parts[0] === '2') k2++;
+    else if (parts[0] === '3') k3++;
+  });
+  var setBar = function(id, val, total) {
+    var b = document.getElementById(id);
+    if (b) b.style.width = Math.round((val/total)*100) + '%';
+  };
+  setBar('istat-bar-k1', k1, 98);
+  setBar('istat-bar-k2', k2, 73);
+  setBar('istat-bar-k3', k3, 70);
+  var setDetail = function(id, val, total) {
+    var d = document.getElementById(id);
+    if (d) d.textContent = val + '/' + total + ' madde (%' + Math.round((val/total)*100) + ')';
+  };
+  setDetail('istat-k1-detail', k1, 98);
+  setDetail('istat-k2-detail', k2, 73);
+  setDetail('istat-k3-detail', k3, 70);
+
+  // Yer imleri
+  var bm = getBookmarks();
+  var bmList = document.getElementById('bookmark-list-page');
+  if (bmList) {
+    if (bm.length === 0) {
+      bmList.innerHTML = '<p style="color:var(--text-muted);font-size:0.9rem;">Henüz yer imi eklemediniz. Bir maddeyi açıp ☆ butonuna tıklayarak yer imi ekleyebilirsiniz.</p>';
+    } else {
+      bmList.innerHTML = bm.map(function(b) {
+        return '<div class="bookmark-item" onclick="openMadde(' + b.kisim + ',' + b.madde_no + ')"><div><div class="bookmark-item-title">' + b.baslik + '</div><div class="bookmark-item-meta">Kısım ' + b.kisim + ', Madde ' + b.madde_no + '</div></div><button type="button" class="bookmark-item-remove" onclick="event.stopPropagation();removeBookmarkFromPage(\'' + b.key + '\')">&times;</button></div>';
+      }).join('');
+    }
+  }
+
+  // Haftanın sorusu
+  loadHaftaSorusu();
+}
+
+function removeBookmarkFromPage(key) {
+  var bm = getBookmarks();
+  bm = bm.filter(function(b) { return b.key !== key; });
+  saveBookmarks(bm);
+  loadIstatistik();
+}
+
+// ===== STREAK TAKİBİ =====
+function updateStreak() {
+  var today = new Date().toISOString().slice(0, 10);
+  var lastDate = localStorage.getItem('ilmihal-last-read-date');
+  var streak = parseInt(localStorage.getItem('ilmihal-streak') || '0');
+  if (lastDate === today) return;
+  var yesterday = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
+  if (lastDate === yesterday) {
+    streak++;
+  } else if (lastDate !== today) {
+    streak = 1;
+  }
+  localStorage.setItem('ilmihal-streak', String(streak));
+  localStorage.setItem('ilmihal-last-read-date', today);
+}
+
+// ===== HAFTANIN SORUSU =====
+function loadHaftaSorusu() {
+  var tumSorular = [];
+  for (var k in quizSorulari) { if (k !== 'karisik') tumSorular = tumSorular.concat(quizSorulari[k]); }
+  if (tumSorular.length === 0) return;
+  var week = Math.floor(Date.now() / (7 * 86400000));
+  var idx = week % tumSorular.length;
+  var s = tumSorular[idx];
+  var card = document.getElementById('hafta-sorusu-card');
+  if (!card) return;
+  var cevaplandi = localStorage.getItem('ilmihal-hafta-' + week);
+  var html = '<div class="hafta-soru-text">' + s.s + '</div><div class="hafta-secenekler">';
+  s.c.forEach(function(c, i) {
+    var cls = '';
+    if (cevaplandi) {
+      if (i === s.d) cls = ' dogru';
+      else if (parseInt(cevaplandi) === i && i !== s.d) cls = ' yanlis';
+    }
+    html += '<div class="hafta-secenek' + cls + '" onclick="haftaCevapla(' + week + ',' + i + ',' + s.d + ')">' + c + '</div>';
+  });
+  html += '</div>';
+  if (cevaplandi) {
+    html += '<div class="quiz-aciklama" style="margin-top:12px;">' + s.a + '</div>';
+  }
+  html += '<div class="hafta-paylasim"><button type="button" class="hafta-paylasim-btn" onclick="haftaPaylas()">Paylaş</button></div>';
+  card.innerHTML = html;
+}
+
+function haftaCevapla(week, idx, dogru) {
+  if (localStorage.getItem('ilmihal-hafta-' + week)) return;
+  localStorage.setItem('ilmihal-hafta-' + week, String(idx));
+  loadHaftaSorusu();
+}
+
+function haftaPaylas() {
+  var text = 'Se\'adet-i Ebediyye Bilgi Testi - ilmihal.org';
+  if (navigator.share) {
+    navigator.share({ title: 'Haftanın Sorusu', text: text, url: 'https://ilmihal.org/#istatistik' }).catch(function(){});
+  } else if (navigator.clipboard) {
+    navigator.clipboard.writeText(text + ' https://ilmihal.org/#istatistik').catch(function(){});
+  }
+}
+
+// ===== SORU-CEVAP AI (Kitap İçi Arama) =====
+function soruOrnekTikla(el) {
+  document.getElementById('soru-input').value = el.textContent;
+  soruCevapAra();
+}
+
+function soruCevapAra() {
+  var soru = document.getElementById('soru-input').value.trim();
+  if (!soru) return;
+  var sonuc = document.getElementById('soru-cevap-sonuc');
+  sonuc.innerHTML = '<div class="loading">Kitapta aranıyor...</div>';
+
+  // Arama motorunu kullan
+  setTimeout(function() {
+    // Tüm kısım metinlerini yükle, sonra ara
+    Promise.all([loadKisimTexts(1), loadKisimTexts(2), loadKisimTexts(3)]).then(function() {
+      var results = searchInBook(soru);
+      if (results.length === 0) {
+        sonuc.innerHTML = '<p style="text-align:center;color:var(--text-muted);padding:40px;">Bu soruyla ilgili kitapta bir sonuç bulunamadı. Farklı kelimeler deneyin.</p>';
+        return;
+      }
+      sonuc.innerHTML = '<p style="color:var(--text-muted);margin-bottom:16px;">' + results.length + ' ilgili madde bulundu:</p>' + results.map(function(r) {
+        return '<div class="soru-cevap-card" onclick="openMadde(' + r.kisim + ',' + r.maddeNo + ',false,\'' + soru.replace(/'/g, "\\'") + '\')"><h4>' + r.baslik + '</h4><div class="soru-cevap-passage">' + r.pasaj + '</div><div class="soru-cevap-ref">Kısım ' + r.kisim + ', Madde ' + r.maddeNo + ' · <a href="#madde/' + r.kisim + '/' + r.maddeNo + '">Maddeyi Aç</a></div></div>';
+      }).join('');
+    });
+  }, 100);
+}
+
+function searchInBook(query) {
+  var results = [];
+  if (!window.tocData || !window.kisimTextsCache) return results;
+  var normQ = (typeof normalizeSearch === 'function') ? normalizeSearch(query) : query.toLowerCase();
+  var qWords = normQ.split(/\s+/).filter(function(w) { return w.length >= 2; });
+  if (qWords.length === 0) return results;
+
+  window.tocData.forEach(function(m) {
+    var texts = window.kisimTextsCache[m.kisim];
+    if (!texts) return;
+    var metin = texts[String(m.madde_no)] || '';
+    var normMetin = (typeof normalizeSearch === 'function') ? normalizeSearch(metin) : metin.toLowerCase();
+    var score = 0;
+    qWords.forEach(function(w) {
+      var idx = normMetin.indexOf(w);
+      while (idx !== -1) { score++; idx = normMetin.indexOf(w, idx + 1); }
+    });
+    if (score > 0) {
+      // En iyi pasajı bul
+      var bestPos = 0;
+      var bestCount = 0;
+      for (var i = 0; i < normMetin.length; i += 200) {
+        var window_text = normMetin.substring(i, i + 400);
+        var cnt = 0;
+        qWords.forEach(function(w) { if (window_text.indexOf(w) !== -1) cnt++; });
+        if (cnt > bestCount) { bestCount = cnt; bestPos = i; }
+      }
+      var start = Math.max(0, bestPos - 50);
+      var pasaj = metin.substring(start, start + 350);
+      // Highlight
+      qWords.forEach(function(w) {
+        var re = new RegExp('(' + w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'gi');
+        pasaj = pasaj.replace(re, '<mark>$1</mark>');
+      });
+      results.push({ kisim: m.kisim, maddeNo: m.madde_no, baslik: m.baslik, score: score, pasaj: '...' + pasaj + '...' });
+    }
+  });
+  results.sort(function(a, b) { return b.score - a.score; });
+  return results.slice(0, 8);
+}
+
+// ===== FAQ SCHEMA (dinamik) =====
+function addFaqSchema(madde, metin) {
+  var existing = document.getElementById('faq-schema');
+  if (existing) existing.remove();
+  var script = document.createElement('script');
+  script.type = 'application/ld+json';
+  script.id = 'faq-schema';
+  var snippet = metin.replace(/<[^>]+>/g, '').substring(0, 300);
+  script.textContent = JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [{
+      "@type": "Question",
+      "name": madde.baslik,
+      "acceptedAnswer": { "@type": "Answer", "text": snippet + '...' }
+    }]
+  });
+  document.head.appendChild(script);
+}
+
+// ===== OG META DİNAMİK (paylaşım kartları) =====
+function updateOgMeta(madde) {
+  var setMeta = function(prop, content) {
+    var el = document.querySelector('meta[property="' + prop + '"]') || document.querySelector('meta[name="' + prop + '"]');
+    if (el) el.setAttribute('content', content);
+  };
+  setMeta('og:title', madde.baslik + ' - Se\'âdet-i Ebediyye');
+  setMeta('og:url', 'https://ilmihal.org/#madde/' + madde.kisim + '/' + madde.madde_no);
+  setMeta('og:description', 'Kısım ' + madde.kisim + ', Madde ' + madde.madde_no + ' - Se\'âdet-i Ebediyye İnteraktif İlmihâl');
+  setMeta('twitter:title', madde.baslik + ' - Se\'âdet-i Ebediyye');
+  setMeta('twitter:description', 'Kısım ' + madde.kisim + ', Madde ' + madde.madde_no);
+  document.title = madde.baslik + ' - Se\'âdet-i Ebediyye';
+}
+
+// ===== NAVİGASYON GÜNCELLEMESİ =====
+// Yeni sayfalar için validPages'e ekle
+var _origNavigateTo = navigateTo;
+navigateTo = function(page, fromRoute) {
+  _origNavigateTo(page, fromRoute);
+  if (page === 'quiz') { document.getElementById('page-quiz')?.classList.add('active'); }
+  if (page === 'istatistik') { document.getElementById('page-istatistik')?.classList.add('active'); loadIstatistik(); }
+  if (page === 'sorucevap') { document.getElementById('page-sorucevap')?.classList.add('active'); }
+  if (page === 'ayet-hadis') { document.getElementById('page-ayet-hadis')?.classList.add('active'); }
+};

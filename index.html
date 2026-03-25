@@ -23,7 +23,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=13">
+  <link rel="stylesheet" href="style.css?v=14">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -54,10 +54,9 @@
           <button type="button" class="nav-btn active" data-page="anasayfa">Ana Sayfa</button>
           <button type="button" class="nav-btn" data-page="icerik">İçindekiler</button>
           <button type="button" class="nav-btn" data-page="fevaid">Fevâid</button>
-          <button type="button" class="nav-btn" data-page="sahislar">Şahıslar</button>
-          <a class="nav-btn nav-btn-link" href="silsile-atlasi/" title="Silsile-i Aliyye Haritası">Silsile Atlası</a>
-          <button type="button" class="nav-btn" data-page="sozluk">Dini Lügat</button>
           <button type="button" class="nav-btn" data-page="arama">Arama</button>
+          <button type="button" class="nav-btn" data-page="sorucevap">Soru-Cevap</button>
+          <button type="button" class="nav-btn" data-page="istatistik">İstatistiklerim</button>
           <button type="button" class="nav-btn" data-page="hakkinda">Hakkında</button>
         </nav>
         <button type="button" class="dark-mode-toggle" onclick="toggleDarkMode()" aria-label="Karanlık mod" title="Karanlık/Aydınlık mod">
@@ -192,8 +191,10 @@
       <div class="madde-toolbar">
         <button type="button" class="toolbar-btn" onclick="adjustFontSize(-1)" title="Yazıyı küçült">A-</button>
         <button type="button" class="toolbar-btn" onclick="adjustFontSize(1)" title="Yazıyı büyüt">A+</button>
+        <button type="button" class="toolbar-btn" onclick="cycleReadingMode()" id="reading-mode-btn" title="Okuma modu">&#9788;</button>
         <button type="button" class="toolbar-btn" onclick="toggleBookmark()" id="bookmark-btn" title="Yer imi ekle">&#9734;</button>
         <button type="button" class="toolbar-btn" onclick="shareMadde()" title="Paylaş">&#8599;</button>
+        <button type="button" class="toolbar-btn" onclick="printMadde()" title="Yazdır">&#128424;</button>
         <button type="button" class="madde-close" onclick="closeMadde()">&times;</button>
       </div>
       <div id="madde-body"></div>
@@ -239,11 +240,41 @@
             <p>Kitapta geçen terimlerin kitabın kendi cümleleriyle açıklaması</p>
             <span class="fevaid-sec-count">533 tanım</span>
           </div>
+          <div class="fevaid-sec-card" onclick="navigateTo('sozluk')">
+            <div class="fevaid-sec-icon">&#128214;</div>
+            <h3>Dini Lügat</h3>
+            <p>4.400+ terimlik kapsamlı dini sözlük, 13 kategoride</p>
+            <span class="fevaid-sec-count">4400+ terim</span>
+          </div>
+          <div class="fevaid-sec-card" onclick="navigateTo('sahislar')">
+            <div class="fevaid-sec-icon">&#9733;</div>
+            <h3>İslâm Âlimleri</h3>
+            <p>Kitapta adı geçen âlim ve velîlerin hâl tercemeleri</p>
+            <span class="fevaid-sec-count" id="fevaid-count-sahislar"></span>
+          </div>
+          <div class="fevaid-sec-card" onclick="window.location.href='silsile-atlasi/'">
+            <div class="fevaid-sec-icon">&#127758;</div>
+            <h3>Silsile-i Aliyye Atlası</h3>
+            <p>37 halkayı interaktif haritada keşfedin</p>
+            <span class="fevaid-sec-count">37 halka</span>
+          </div>
           <div class="fevaid-sec-card" onclick="window.location.href='namaz-vakitleri/'">
             <div class="fevaid-sec-icon">&#9719;</div>
             <h3>Nemâz Vakitleri</h3>
             <p>Etkileşimli nemâz vakitleri hesabı ve gösterimi</p>
             <span class="fevaid-sec-count">5 vakit</span>
+          </div>
+          <div class="fevaid-sec-card" onclick="navigateTo('quiz')">
+            <div class="fevaid-sec-icon">&#10004;</div>
+            <h3>Bilgi Testi</h3>
+            <p>Öğrendiklerinizi sınayın, kendinizi test edin</p>
+            <span class="fevaid-sec-count">Yeni</span>
+          </div>
+          <div class="fevaid-sec-card" onclick="navigateTo('ayet-hadis')">
+            <div class="fevaid-sec-icon">&#128220;</div>
+            <h3>Âyet ve Hadîs İndeksi</h3>
+            <p>Kitapta geçen âyet-i kerîme ve hadîs-i şerîflerin listesi</p>
+            <span class="fevaid-sec-count">Yeni</span>
           </div>
         </div>
       </div>
@@ -327,6 +358,115 @@
     </div>
   </main>
 
+  <!-- Quiz / Bilgi Testi -->
+  <main id="page-quiz" class="page">
+    <div class="container">
+      <h2 class="section-title">Bilgi Testi</h2>
+      <p class="section-desc">Se'âdet-i Ebediyye'den sorularla kendinizi sınayın.</p>
+      <div id="quiz-container">
+        <div class="quiz-setup">
+          <h3>Konu Seçin</h3>
+          <div class="quiz-konu-grid">
+            <button type="button" class="quiz-konu-btn" onclick="startQuiz('iman')">İman ve İtikat</button>
+            <button type="button" class="quiz-konu-btn" onclick="startQuiz('namaz')">Namaz</button>
+            <button type="button" class="quiz-konu-btn" onclick="startQuiz('oruc')">Oruç</button>
+            <button type="button" class="quiz-konu-btn" onclick="startQuiz('zekat')">Zekât</button>
+            <button type="button" class="quiz-konu-btn" onclick="startQuiz('hac')">Hac</button>
+            <button type="button" class="quiz-konu-btn" onclick="startQuiz('ahlak')">Ahlâk</button>
+            <button type="button" class="quiz-konu-btn" onclick="startQuiz('karisik')">Karışık</button>
+          </div>
+          <div class="quiz-skor-ozet" id="quiz-skor-ozet"></div>
+        </div>
+        <div id="quiz-area" style="display:none"></div>
+      </div>
+    </div>
+  </main>
+
+  <!-- İstatistiklerim -->
+  <main id="page-istatistik" class="page">
+    <div class="container">
+      <h2 class="section-title">İstatistiklerim</h2>
+      <div class="istatistik-grid">
+        <div class="istat-card">
+          <div class="istat-num" id="istat-okunan">0</div>
+          <div class="istat-label">Okunan Madde</div>
+          <div class="istat-bar"><div class="istat-bar-fill" id="istat-bar-okunan"></div></div>
+        </div>
+        <div class="istat-card">
+          <div class="istat-num" id="istat-yuzde">%0</div>
+          <div class="istat-label">Tamamlanan</div>
+        </div>
+        <div class="istat-card">
+          <div class="istat-num" id="istat-streak">0</div>
+          <div class="istat-label">Gün Serisi</div>
+        </div>
+        <div class="istat-card">
+          <div class="istat-num" id="istat-quiz">0</div>
+          <div class="istat-label">Quiz Puanı</div>
+        </div>
+      </div>
+      <h3 class="section-title" style="margin-top:32px;">Yer İmleri</h3>
+      <div id="bookmark-list-page" class="bookmark-list-page"></div>
+      <h3 class="section-title" style="margin-top:32px;">Kısım İlerlemesi</h3>
+      <div class="kisim-progress-grid">
+        <div class="kisim-progress-card">
+          <h4>Birinci Kısım</h4>
+          <div class="istat-bar"><div class="istat-bar-fill" id="istat-bar-k1"></div></div>
+          <span class="istat-detail" id="istat-k1-detail"></span>
+        </div>
+        <div class="kisim-progress-card">
+          <h4>İkinci Kısım</h4>
+          <div class="istat-bar"><div class="istat-bar-fill" id="istat-bar-k2"></div></div>
+          <span class="istat-detail" id="istat-k2-detail"></span>
+        </div>
+        <div class="kisim-progress-card">
+          <h4>Üçüncü Kısım</h4>
+          <div class="istat-bar"><div class="istat-bar-fill" id="istat-bar-k3"></div></div>
+          <span class="istat-detail" id="istat-k3-detail"></span>
+        </div>
+      </div>
+      <h3 class="section-title" style="margin-top:32px;">Haftanın Sorusu</h3>
+      <div id="hafta-sorusu-card" class="hafta-sorusu-card"></div>
+    </div>
+  </main>
+
+  <!-- Soru-Cevap AI -->
+  <main id="page-sorucevap" class="page">
+    <div class="container">
+      <h2 class="section-title">Kitaptan Soru-Cevap</h2>
+      <p class="section-desc">Sorunuzu yazın, kitaptan cevabını bulalım.</p>
+      <div class="soru-cevap-box">
+        <div class="soru-input-wrap">
+          <input type="text" id="soru-input" placeholder="Örn: Abdest nasıl alınır? Namazın farzları nelerdir?" autocomplete="off">
+          <button type="button" class="btn btn-primary" onclick="soruCevapAra()">Sor</button>
+        </div>
+        <div class="soru-ornekler">
+          <span class="soru-ornek" onclick="soruOrnekTikla(this)">Abdest nasıl alınır?</span>
+          <span class="soru-ornek" onclick="soruOrnekTikla(this)">Namazın farzları nelerdir?</span>
+          <span class="soru-ornek" onclick="soruOrnekTikla(this)">Orucu bozan şeyler nelerdir?</span>
+          <span class="soru-ornek" onclick="soruOrnekTikla(this)">Zekât kimlere verilir?</span>
+          <span class="soru-ornek" onclick="soruOrnekTikla(this)">İmanın şartları nelerdir?</span>
+        </div>
+      </div>
+      <div id="soru-cevap-sonuc" class="soru-cevap-sonuc"></div>
+    </div>
+  </main>
+
+  <!-- Ayet ve Hadis İndeksi -->
+  <main id="page-ayet-hadis" class="page">
+    <div class="container">
+      <h2 class="section-title">Âyet ve Hadîs-i Şerîf İndeksi</h2>
+      <p class="section-desc">Kitapta geçen âyet-i kerîme ve hadîs-i şerîflerin toplu listesi. <em>(Yakında)</em></p>
+      <div class="ayet-hadis-tabs">
+        <button type="button" class="ah-tab active" onclick="switchAHTab('ayet')">Âyet-i Kerîmeler</button>
+        <button type="button" class="ah-tab" onclick="switchAHTab('hadis')">Hadîs-i Şerîfler</button>
+      </div>
+      <div id="ayet-hadis-list" class="ayet-hadis-list">
+        <p style="text-align:center;color:var(--text-muted);padding:60px 0;">Bu bölüm hazırlanıyor. Kitaptaki âyet ve hadîslerin indekslenmesi devam etmektedir.</p>
+      </div>
+    </div>
+  </main>
+
   <!-- Hakkında -->
   <main id="page-hakkinda" class="page">
     <div class="container">
@@ -403,11 +543,16 @@
   <!-- Tooltip -->
   <div id="sozluk-tooltip" class="sozluk-tooltip" style="display:none"></div>
 
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js').catch(function(){});
+    }
+  </script>
   <script src="data.js?v=11"></script>
   <script src="tanimlar.js?v=1"></script>
   <script src="sahislar.js?v=7"></script>
   <script src="crossref.js?v=7"></script>
   <script src="search-engine.js?v=5"></script>
-  <script src="app.js?v=13"></script>
+  <script src="app.js?v=14"></script>
 </body>
 </html>
