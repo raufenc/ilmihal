@@ -186,7 +186,7 @@
 
   <!-- Madde Detay -->
   <div id="madde-detay" class="madde-overlay" style="display:none">
-    <div class="madde-overlay-content">
+    <div class="madde-overlay-wrap">
       <div class="madde-toolbar">
         <button type="button" class="toolbar-btn" onclick="adjustFontSize(-1)" title="Yazıyı küçült">A-</button>
         <button type="button" class="toolbar-btn" onclick="adjustFontSize(1)" title="Yazıyı büyüt">A+</button>
@@ -196,7 +196,9 @@
         <button type="button" class="toolbar-btn" onclick="printMadde()" title="Yazdır">&#128424;</button>
         <button type="button" class="madde-close" onclick="closeMadde()">&times;</button>
       </div>
-      <div id="madde-body"></div>
+      <div class="madde-overlay-content">
+        <div id="madde-body"></div>
+      </div>
     </div>
   </div>
 
