@@ -23,7 +23,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=14">
+  <link rel="stylesheet" href="style.css?v=15">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -55,7 +55,6 @@
           <button type="button" class="nav-btn" data-page="icerik">İçindekiler</button>
           <button type="button" class="nav-btn" data-page="fevaid">Fevâid</button>
           <button type="button" class="nav-btn" data-page="arama">Arama</button>
-          <button type="button" class="nav-btn" data-page="sorucevap">Soru-Cevap</button>
           <button type="button" class="nav-btn" data-page="istatistik">İstatistiklerim</button>
           <button type="button" class="nav-btn" data-page="hakkinda">Hakkında</button>
         </nav>
@@ -272,9 +271,9 @@
           </div>
           <div class="fevaid-sec-card" onclick="navigateTo('ayet-hadis')">
             <div class="fevaid-sec-icon">&#128220;</div>
-            <h3>Âyet ve Hadîs İndeksi</h3>
-            <p>Kitapta geçen âyet-i kerîme ve hadîs-i şerîflerin listesi</p>
-            <span class="fevaid-sec-count">Yeni</span>
+            <h3>Âyet-i Kerîme ve Hadîs-i Şerîf İndeksi</h3>
+            <p>Kitapta geçen âyet-i kerîmelerin ve hadîs-i şerîflerin listesi</p>
+            <span class="fevaid-sec-count">463 kayıt</span>
           </div>
         </div>
       </div>
@@ -333,24 +332,25 @@
     </div>
   </main>
 
-  <!-- Arama -->
+  <!-- Arama & Soru-Cevap (Birleşik) -->
   <main id="page-arama" class="page">
     <div class="container">
       <h2 class="section-title">Kitapta Arama</h2>
+      <p class="section-desc">Soru sorun veya kelime arayın — kitaptan cevabını bulalım.</p>
       <div class="arama-box">
-        <input type="text" id="full-search" placeholder="Kitapta kelime veya cümle arayın...">
-        <button type="button" class="btn btn-primary" onclick="doFullSearch()">Ara</button>
+        <input type="text" id="full-search" placeholder="Örn: Abdest nasıl alınır? veya namaz, zekât..." autocomplete="off">
+        <button type="button" class="btn btn-primary" onclick="birlesikAra()">Ara</button>
       </div>
       <div class="arama-ipuclari" id="arama-ipuclari">
-        <p class="arama-ipucu-baslik">Popüler Aramalar</p>
         <div class="arama-etiketler">
+          <button type="button" class="arama-etiket" onclick="aramaEtiketTikla('Abdest nasıl alınır')">Abdest nasıl alınır?</button>
           <button type="button" class="arama-etiket" onclick="aramaEtiketTikla('namaz')">Namaz</button>
-          <button type="button" class="arama-etiket" onclick="aramaEtiketTikla('abdest')">Abdest</button>
+          <button type="button" class="arama-etiket" onclick="aramaEtiketTikla('Namazın farzları nelerdir')">Namazın farzları</button>
           <button type="button" class="arama-etiket" onclick="aramaEtiketTikla('oruç')">Oruç</button>
-          <button type="button" class="arama-etiket" onclick="aramaEtiketTikla('zekât')">Zekât</button>
+          <button type="button" class="arama-etiket" onclick="aramaEtiketTikla('Zekât kimlere verilir')">Zekât kimlere verilir?</button>
+          <button type="button" class="arama-etiket" onclick="aramaEtiketTikla('İmanın şartları nelerdir')">İmanın şartları</button>
           <button type="button" class="arama-etiket" onclick="aramaEtiketTikla('nikâh')">Nikâh</button>
           <button type="button" class="arama-etiket" onclick="aramaEtiketTikla('cenâze')">Cenaze</button>
-          <button type="button" class="arama-etiket" onclick="aramaEtiketTikla('tevbe')">Tevbe</button>
           <button type="button" class="arama-etiket" onclick="aramaEtiketTikla('bid\'at')">Bid'at</button>
         </div>
       </div>
@@ -430,40 +430,18 @@
     </div>
   </main>
 
-  <!-- Soru-Cevap AI -->
-  <main id="page-sorucevap" class="page">
-    <div class="container">
-      <h2 class="section-title">Kitaptan Soru-Cevap</h2>
-      <p class="section-desc">Sorunuzu yazın, kitaptan cevabını bulalım.</p>
-      <div class="soru-cevap-box">
-        <div class="soru-input-wrap">
-          <input type="text" id="soru-input" placeholder="Örn: Abdest nasıl alınır? Namazın farzları nelerdir?" autocomplete="off">
-          <button type="button" class="btn btn-primary" onclick="soruCevapAra()">Sor</button>
-        </div>
-        <div class="soru-ornekler">
-          <span class="soru-ornek" onclick="soruOrnekTikla(this)">Abdest nasıl alınır?</span>
-          <span class="soru-ornek" onclick="soruOrnekTikla(this)">Namazın farzları nelerdir?</span>
-          <span class="soru-ornek" onclick="soruOrnekTikla(this)">Orucu bozan şeyler nelerdir?</span>
-          <span class="soru-ornek" onclick="soruOrnekTikla(this)">Zekât kimlere verilir?</span>
-          <span class="soru-ornek" onclick="soruOrnekTikla(this)">İmanın şartları nelerdir?</span>
-        </div>
-      </div>
-      <div id="soru-cevap-sonuc" class="soru-cevap-sonuc"></div>
-    </div>
-  </main>
-
-  <!-- Ayet ve Hadis İndeksi -->
+  <!-- Âyet-i Kerîme ve Hadîs-i Şerîf İndeksi -->
   <main id="page-ayet-hadis" class="page">
     <div class="container">
-      <h2 class="section-title">Âyet ve Hadîs-i Şerîf İndeksi</h2>
-      <p class="section-desc">Kitapta geçen âyet-i kerîme ve hadîs-i şerîflerin toplu listesi. <em>(Yakında)</em></p>
+      <h2 class="section-title">Âyet-i Kerîme ve Hadîs-i Şerîf İndeksi</h2>
+      <p class="section-desc">Kitapta geçen âyet-i kerîmelerin ve hadîs-i şerîflerin toplu listesi.</p>
       <div class="ayet-hadis-tabs">
         <button type="button" class="ah-tab active" onclick="switchAHTab('ayet')">Âyet-i Kerîmeler</button>
         <button type="button" class="ah-tab" onclick="switchAHTab('hadis')">Hadîs-i Şerîfler</button>
       </div>
-      <div id="ayet-hadis-list" class="ayet-hadis-list">
-        <p style="text-align:center;color:var(--text-muted);padding:60px 0;">Bu bölüm hazırlanıyor. Kitaptaki âyet ve hadîslerin indekslenmesi devam etmektedir.</p>
-      </div>
+      <input type="text" id="ah-search" placeholder="İndekste ara..." style="width:100%;padding:12px 16px;border:2px solid var(--border);border-radius:var(--radius);font-size:0.95rem;margin-bottom:16px;background:var(--bg-card);color:var(--text);">
+      <div id="ah-count" style="color:var(--text-muted);font-size:0.85rem;margin-bottom:12px;"></div>
+      <div id="ayet-hadis-list" class="ayet-hadis-list"></div>
     </div>
   </main>
 
@@ -553,6 +531,7 @@
   <script src="sahislar.js?v=7"></script>
   <script src="crossref.js?v=7"></script>
   <script src="search-engine.js?v=5"></script>
-  <script src="app.js?v=14"></script>
+  <script src="ayet-hadis.js?v=1"></script>
+  <script src="app.js?v=15"></script>
 </body>
 </html>

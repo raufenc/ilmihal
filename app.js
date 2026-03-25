@@ -40,7 +40,7 @@ function handleRoute() {
     return;
   }
 
-  const validPages = ['anasayfa','icerik','fevaid','sozluk','arama','sahislar','hakkinda','quiz','istatistik','sorucevap','ayet-hadis'];
+  const validPages = ['anasayfa','icerik','fevaid','sozluk','arama','sahislar','hakkinda','quiz','istatistik','ayet-hadis'];
   if (validPages.includes(route)) {
     navigateTo(route, true);
   } else {
@@ -1972,38 +1972,53 @@ function printMadde() {
 // ===== QUIZ SİSTEMİ =====
 var quizSorulari = {
   iman: [
-    {s:"İslâmın beş şartından ilki nedir?", c:["Kelime-i şehâdet söylemek","Namaz kılmak","Oruç tutmak","Zekât vermek"], d:0, a:"İslâmın birinci şartı kelime-i şehâdet getirmek, yani Eşhedü en lâ ilâhe illallah ve eşhedü enne Muhammeden abdühü ve resûlühü demektir."},
-    {s:"Ehl-i sünnet itikadında îmânın altı şartından biri değildir?", c:["Allahü teâlâya inanmak","Meleklere inanmak","Reenkarnasyona inanmak","Kadere inanmak"], d:2, a:"Âmentünün altı şartı: Allahü teâlâya, meleklerine, kitaplarına, peygamberlerine, âhiret gününe ve kadere inanmaktır."},
-    {s:"Peygamber Efendimiz (sallallahü aleyhi ve sellem) hangi şehirde doğmuştur?", c:["Medîne","Mekke","Tâif","Kudüs"], d:1, a:"Peygamber Efendimiz Mekke-i mükerremede, Rebîul-evvel ayının onikinci Pazartesi gecesi dünyâya gelmiştir."},
-    {s:"Kur'ân-ı kerîm kaç sûredir?", c:["100","110","114","120"], d:2, a:"Kur'ân-ı kerîm 114 sûre ve 6236 âyet-i kerîmedir."},
-    {s:"Dört büyük melekten biri değildir?", c:["Cebrâîl","Mikâîl","Münker","İsrâfîl"], d:2, a:"Dört büyük melek: Cebrâîl, Mikâîl, İsrâfîl ve Azrâîl aleyhimüsselâmdır."}
+    {s:"İslâmın beş şartından ilki nedir?",c:["Kelime-i şehâdet söylemek","Namaz kılmak","Oruç tutmak","Zekât vermek"],d:0,a:"Kitapta 'Her müslimânın beş şeyi yapması farzdır: Birincisi, kelime-i şehâdet söylemekdir' buyurulmaktadır. (K1/M51)",m:{k:1,m:51}},
+    {s:"Ehl-i sünnet itikadında îmânın altı şartından biri değildir?",c:["Allahü teâlâya inanmak","Meleklere inanmak","Reenkarnasyona inanmak","Kadere inanmak"],d:2,a:"Kitapta, Âmentünün altı şartı bildirilmektedir: Allahü teâlâya, meleklerine, kitaplarına, peygamberlerine, âhiret gününe ve kadere inanmak. (K1/M3)",m:{k:1,m:3}},
+    {s:"Ehl-i sünnetin reîsi kimdir?",c:["İmâm-ı Şâfi'î","İmâm-ı a'zam Ebû Hanîfe","İmâm-ı Mâlik","İmâm-ı Ahmed bin Hanbel"],d:1,a:"Kitapta 'Ehl-i sünnetin reîsi, imâm-ı a'zam Ebû Hanîfedir' buyurulmaktadır. (K1/M5)",m:{k:1,m:5}},
+    {s:"Peygamber Efendimiz (sallallahü aleyhi ve sellem) hangi şehirde doğmuştur?",c:["Medîne","Mekke","Tâif","Kudüs"],d:1,a:"Kitapta Peygamber Efendimizin Mekke-i mükerremede doğduğu bildirilmektedir. (K1/M90)",m:{k:1,m:90}},
+    {s:"Dört büyük melekten biri değildir?",c:["Cebrâîl","Mikâîl","Münker","İsrâfîl"],d:2,a:"Kitapta dört büyük melek bildirilmektedir: Cebrâîl, Mikâîl, İsrâfîl ve Azrâîl aleyhimüsselâm. Münker ise kabir meleklerindendir. (K1/M3)",m:{k:1,m:3}},
+    {s:"Bid'at ne demektir?",c:["Güzel âdet","Dinde sonradan çıkarılan şey","Sünnet","Peygamberimizin emri"],d:1,a:"Kitapta 'Resûlullahın ve dört halîfesinin yapmadıkları şeyleri ibâdet olarak yapmağa bid'at denir' buyurulmaktadır. (K1/M1)",m:{k:1,m:1}},
+    {s:"Fıkıh ilmi ne demektir?",c:["Kur'ân-ı kerîm tefsîri","Hadîs-i şerîf ilmi","Helâl ve harâmları bildiren ilim","Tasavvuf ilmi"],d:2,a:"Kitapta 'Fıkıh ilmi, insanların yapması ve yapmaması lâzım olan şeyleri bildirir' buyurulmaktadır. (K1/M6)",m:{k:1,m:6}},
+    {s:"Kur'ân-ı kerîm kaç sûredir?",c:["100","110","114","120"],d:2,a:"Kur'ân-ı kerîm 114 sûre ve 6236 âyet-i kerîmedir. (K1/M5)",m:{k:1,m:5}}
   ],
   namaz: [
-    {s:"Beş vakit namazda toplam kaç rekât farz vardır?", c:["17","20","25","40"], d:0, a:"Sabah 2, öğle 4, ikindi 4, akşam 3, yatsı 4 olmak üzere toplam 17 rekât farz namaz vardır."},
-    {s:"Namazın farzlarından değildir?", c:["Kıbleye dönmek","Niyet etmek","Eûzü okumak","Abdest almak"], d:2, a:"Namazın farzları: Hadesten tahâret, necâsetten tahâret, setr-i avret, istikbâl-i kıble, vakit ve niyyettir."},
-    {s:"Abdesti bozan hallerden değildir?", c:["Uyumak","Ağlamak","Kan gelmesi","Bayılmak"], d:1, a:"Abdesti bozan haller: Ön ve arkadan bir şey çıkması, kan gelmesi, uyumak, bayılmak gibi hallerdir. Ağlamak abdesti bozmaz."},
-    {s:"Sabah namazının sünneti kaç rekâttır?", c:["2","4","3","Sünnet yoktur"], d:0, a:"Sabah namazının farzından önce iki rekât sünnet kılınır."},
-    {s:"Namazda secde kaç defa yapılır?", c:["Her rekâtta 1","Her rekâtta 2","Her rekâtta 3","Sadece son rekâtta"], d:1, a:"Her rekâtta iki secde yapılır."}
+    {s:"Beş vakit namazda toplam kaç rekât farz vardır?",c:["17","20","25","40"],d:0,a:"Kitapta 'Beş vakt nemâz, otuzüç farz' başlığında, sabah 2, öğle 4, ikindi 4, akşam 3, yatsı 4 olmak üzere 17 rekât farz bildirilmektedir. (K1/M51)",m:{k:1,m:51}},
+    {s:"Nemâzın farzlarından (şartlarından) değildir?",c:["Kıbleye dönmek","Niyet etmek","Eûzü okumak","Abdest almak"],d:2,a:"Kitapta nemâzın farzları: Hadesten tahâret, necâsetten tahâret, setr-i avret, istikbâl-i kıble, vakit ve niyyet olarak bildirilmektedir. Eûzü okumak sünnet-i müekkededir. (K1/M52)",m:{k:1,m:52}},
+    {s:"Abdesti bozan hallerden değildir?",c:["Uyumak","Ağlamak","Kan gelmesi","Bayılmak"],d:1,a:"Kitapta abdesti bozan haller: Ön ve arkadan bir şey çıkması, kan gelmesi, uyumak, bayılmak gibi haller bildirilmektedir. Ağlamak abdesti bozmaz. (K1/M53)",m:{k:1,m:53}},
+    {s:"Sabah namazının sünneti kaç rekâttır?",c:["2","4","3","Sünnet yoktur"],d:0,a:"Kitapta sabah namazının farzından önce iki rekât sünnet-i müekkede kılınacağı bildirilmektedir. (K1/M59)",m:{k:1,m:59}},
+    {s:"Nemâzda secde kaç defa yapılır?",c:["Her rekâtta 1","Her rekâtta 2","Her rekâtta 3","Sadece son rekâtta"],d:1,a:"Kitapta her rekâtta iki secde yapılacağı bildirilmektedir. (K1/M62)",m:{k:1,m:62}},
+    {s:"Nemâzın vâciblerinden değildir?",c:["Fâtiha okumak","Rükû'da üç kerre tesbîh","Selâm vermek","Kıyâmda durmak"],d:3,a:"Kitapta kıyâmda durmak nemâzın farzlarındandır. Fâtiha okumak, vitir nemâzında kunût okumak, rükû' ve secdelerde tesbîh söylemek vâcibdir. (K1/M62)",m:{k:1,m:62}},
+    {s:"Seferde (yolculukda) dört rekâtlık farz nemâzlar kaç rekât kılınır?",c:["4 rekât","3 rekât","2 rekât","Kılınmaz"],d:2,a:"Kitapta seferde, ya'nî yolculukda dört rekâtlık farz nemâzların iki rekât kılınacağı bildirilmektedir. (K1/M72)",m:{k:1,m:72}},
+    {s:"Cenâze nemâzında rükû' ve secde var mıdır?",c:["Evet, ikisi de var","Sadece rükû' var","Sadece secde var","Hayır, ikisi de yok"],d:3,a:"Kitapta cenâze nemâzında rükû' ve secde olmadığı, dört tekbîr ile kılındığı bildirilmektedir. (K1/M77)",m:{k:1,m:77}}
   ],
   oruc: [
-    {s:"Ramazan orucu ne zaman farz oldu?", c:["Hicretin 1. yılında","Hicretin 2. yılında","Mekke'de","Hicretin 5. yılında"], d:1, a:"Ramazan orucu hicretin ikinci yılında, Şa'bân ayının onuncu günü farz olmuştur."},
-    {s:"Orucu bozmayan hallerden biri?", c:["Yemek yemek","Unutarak su içmek","Bilerek su içmek","İğne yaptırmak"], d:1, a:"Unutarak yemek ve içmek orucu bozmaz. Hatırlayınca bırakılır ve oruca devam edilir."},
-    {s:"İftar vakti ne zamandır?", c:["Güneş doğunca","Öğle ezanında","İkindi ezanında","Güneş batınca"], d:3, a:"Oruç, güneş batınca açılır. Akşam ezanı okunduğunda iftar edilir."}
+    {s:"Ramazan orucu ne zaman farz oldu?",c:["Hicretin 1. yılında","Hicretin 2. yılında","Mekke'de","Hicretin 5. yılında"],d:1,a:"Kitapta Ramazan orucunun hicretin ikinci yılında, Şa'bân ayının onuncu günü farz olduğu bildirilmektedir. (K1/M79)",m:{k:1,m:79}},
+    {s:"Orucu bozmayan hallerden biri hangisidir?",c:["Yemek yemek","Unutarak su içmek","Bilerek su içmek","İğne yaptırmak"],d:1,a:"Kitapta 'Unutarak yimek ve içmek orucu bozmaz. Hâtırlayınca bırakılır, oruca devâm edilir' buyurulmaktadır. (K1/M80)",m:{k:1,m:80}},
+    {s:"İftar vakti ne zamandır?",c:["Güneş doğunca","Öğle ezanında","İkindi ezanında","Güneş batınca"],d:3,a:"Kitapta oruç, güneş batınca açılır denilmektedir. (K1/M79)",m:{k:1,m:79}},
+    {s:"İmsâk vakti ne demektir?",c:["Güneşin doğma vakti","Oruç yeme-içmeyi bırakma vakti","Öğle vakti","Akşam vakti"],d:1,a:"Kitapta imsâk vaktinde yemenin, içmenin bırakılması gerektiği bildirilmektedir. (K1/M79)",m:{k:1,m:79}},
+    {s:"Oruçlu iken misvâk kullanmak orucu bozar mı?",c:["Evet bozar","Hayır bozmaz","Sadece sabah bozar","Mekrûhdur"],d:1,a:"Kitapta misvâk kullanmanın orucu bozmadığı bildirilmektedir. (K1/M80)",m:{k:1,m:80}}
   ],
   zekat: [
-    {s:"Zekât vermek için en az ne kadar altın gerekir?", c:["20 miskal (80.18 gr)","10 miskal","50 miskal","100 miskal"], d:0, a:"Zekât nisabı altında 20 miskal, gümüşte 200 dirhemdir. 20 miskal altın yaklaşık 80.18 gramdır."},
-    {s:"Zekât malın yüzde kaçıdır?", c:["Yüzde 1","Yüzde 2.5","Yüzde 5","Yüzde 10"], d:1, a:"Zekât, nisab miktarı malın kırkta biri, yani yüzde iki buçuğudur."},
-    {s:"Zekât kimlere verilmez?", c:["Fakirlere","Borçlulara","Ana-babaya","Yolda kalmışlara"], d:2, a:"Zekât usûl (ana, baba, dede, nine) ve fürûa (evlat, torun) verilmez."}
+    {s:"Zekât vermek için en az ne kadar altın gerekir?",c:["20 miskal (96 gram)","10 miskal","50 miskal","100 miskal"],d:0,a:"Kitapta, altının nisâbının 20 miskal, ya'nî 96 gram olduğu bildirilmektedir. '4x20=80 gramdır demek doğru olmaz' diye açıkça yazılıdır. (K1/M78)",m:{k:1,m:78}},
+    {s:"Zekât malın yüzde kaçıdır?",c:["Yüzde 1","Yüzde 2.5","Yüzde 5","Yüzde 10"],d:1,a:"Kitapta zekâtın, nisâb mikdârı malın kırkta biri, ya'nî yüzde iki buçuğu olduğu bildirilmektedir. (K1/M78)",m:{k:1,m:78}},
+    {s:"Zekât kimlere verilmez?",c:["Fakirlere","Borçlulara","Ana-babaya","Yolda kalmışlara"],d:2,a:"Kitapta zekâtın usûl (ana, baba, dede, nine) ve fürûa (evlât, torun) verilmeyeceği bildirilmektedir. (K1/M78)",m:{k:1,m:78}},
+    {s:"Gümüşün zekât nisâbı kaç dirhemdir?",c:["100 dirhem","200 dirhem","300 dirhem","400 dirhem"],d:1,a:"Kitapta gümüşün nisâbının ikiyüz dirhem-i şer'î, ya'nî 672 gram olduğu bildirilmektedir. (K1/M78)",m:{k:1,m:78}},
+    {s:"Zekât ne zaman farz olmuştur?",c:["Mekke'de","Hicretin 1. yılında","Hicretin 2. yılında","Hicretin 5. yılında"],d:2,a:"Kitapta zekâtın hicretin ikinci yılında farz olduğu bildirilmektedir. (K1/M78)",m:{k:1,m:78}}
   ],
   hac: [
-    {s:"Hac ibadeti ne zaman farz olmuştur?", c:["Hicretin 6. yılında","Hicretin 9. yılında","Mekke'de","Hicretin 2. yılında"], d:1, a:"Hac ibadeti hicretin dokuzuncu yılında farz olmuştur."},
-    {s:"Haccın farzlarından değildir?", c:["İhram","Vakfe","Tavaf","Sa'y"], d:3, a:"Haccın farzları üçtür: İhram, Arafat'ta vakfe ve ziyâret tavafı. Sa'y ise vâcibdir."},
-    {s:"Arafat vakfesi hangi gün yapılır?", c:["Zilhicce 8","Zilhicce 9","Zilhicce 10","Zilhicce 11"], d:1, a:"Arafat vakfesi Zilhicce ayının dokuzuncu günü yapılır."}
+    {s:"Hac ibâdeti ne zaman farz olmuştur?",c:["Hicretin 6. yılında","Hicretin 9. yılında","Mekke'de","Hicretin 2. yılında"],d:1,a:"Kitapta hac ibâdetinin hicretin dokuzuncu yılında farz olduğu bildirilmektedir. (K1/M84)",m:{k:1,m:84}},
+    {s:"Haccın farzlarından değildir?",c:["İhrâm","Vakfe","Tavâf","Sa'y"],d:3,a:"Kitapta haccın farzlarının üç olduğu bildirilmektedir: İhrâm, Arafat'ta vakfe ve ziyâret tavâfı. Sa'y ise vâcibdir. (K1/M84)",m:{k:1,m:84}},
+    {s:"Arafat vakfesi hangi gün yapılır?",c:["Zilhicce 8","Zilhicce 9","Zilhicce 10","Zilhicce 11"],d:1,a:"Kitapta Arafat vakfesinin Zilhicce ayının dokuzuncu günü yapılacağı bildirilmektedir. (K1/M85)",m:{k:1,m:85}},
+    {s:"İhrâmda iken yapılması yasak olan hallerden değildir?",c:["Tıraş olmak","Güzel koku sürmek","Yemek yemek","Dikişli elbise giymek"],d:2,a:"Kitapta ihrâm yasakları bildirilmektedir: Tıraş, güzel koku, dikişli elbise harâmdır. Yemek serbesttir. (K1/M86)",m:{k:1,m:86}},
+    {s:"Umre ile hac arasındaki fark nedir?",c:["Umrede vakfe yoktur","Umrede tavâf yoktur","Umrede sa'y yoktur","Fark yoktur"],d:0,a:"Kitapta umrede Arafat vakfesinin olmadığı bildirilmektedir. (K1/M88)",m:{k:1,m:88}}
   ],
   ahlak: [
-    {s:"Tasavvufta 'nefs' kelimesinin anlamı nedir?", c:["Ruh","İnsanın kötü arzuları","Akıl","Kalp"], d:1, a:"Nefs, insanı kötülüğe sürükleyen arzular ve isteklerdir. Nefs-i emmâre kötülüğü emreder."},
-    {s:"Büyük günahlardan biri değildir?", c:["Yalan söylemek","Gıybet etmek","Erken kalkmak","İçki içmek"], d:2, a:"Büyük günahlar: Adam öldürmek, zina, içki, yalan, gıybet, hırsızlık gibi günahlardır."},
-    {s:"Hadis-i şerifte en çok tavsiye edilen ahlak?", c:["Sabır","Cömertlik","Doğruluk","Tevazu"], d:2, a:"Peygamber Efendimiz 'Doğruluktan ayrılmayınız. Doğruluk iyiliğe, iyilik Cennete götürür' buyurmuştur."}
+    {s:"Kitapta nefs-i emmâre ne olarak tanımlanmıştır?",c:["İnsanın rûhu","Hep kötülük emreden nefs","Akıl","Kalb"],d:1,a:"Kitapta 'Nefs-i emmâre dâimâ kötülük emr eder' buyurulmaktadır. (K2/M4)",m:{k:2,m:4}},
+    {s:"Büyük günahlardan biri değildir?",c:["Yalan söylemek","Gıybet etmek","Erken kalkmak","İçki içmek"],d:2,a:"Kitapta büyük günahlar arasında adam öldürmek, zinâ, içki, yalan, gıybet, hırsızlık bildirilmektedir. (K2/M1)",m:{k:2,m:1}},
+    {s:"Hadîs-i şerîfte en çok tavsiye edilen ahlâk?",c:["Sabır","Cömertlik","Doğruluk","Tevâzu"],d:2,a:"Kitapta 'Doğrulukdan ayrılmayınız. Doğruluk iyiliğe, iyilik Cennete götürür' hadîs-i şerîfi bildirilmektedir. (K2/M1)",m:{k:2,m:1}},
+    {s:"Kitapta tevbenin şartlarından biri değildir?",c:["Günâha pişmân olmak","Günâhı terk etmek","Bir daha yapmamağa azm etmek","Sadaka vermek"],d:3,a:"Kitapta tevbenin üç şartı bildirilmektedir: Pişmân olmak, terk etmek ve bir daha yapmamağa azm etmek. (K2/M1)",m:{k:2,m:1}},
+    {s:"Riyâ ne demektir?",c:["Yalan söylemek","İbâdeti gösteriş için yapmak","Hased etmek","Gıybet etmek"],d:1,a:"Kitapta 'İbâdetini başkalarına gösteriş için yapmak riyâdır. Riyâ, gizli şirkdir' buyurulmaktadır. (K2/M3)",m:{k:2,m:3}},
+    {s:"Tövbe-i nasûh ne demektir?",c:["Samîmî tevbe","Gizli tevbe","Topluluk önünde tevbe","Günde beş kez tevbe"],d:0,a:"Kitapta tövbe-i nasûh, samîmî olarak yapılan, bir daha günâha dönmemek üzere yapılan tevbe olarak bildirilmektedir. (K2/M1)",m:{k:2,m:1}}
   ],
   karisik: []
 };
@@ -2060,9 +2075,14 @@ function quizCevapla(idx) {
   });
   if (idx === s.d) quizState.dogru++;
   var aciklama = document.getElementById('quiz-aciklama');
-  aciklama.textContent = s.a;
+  // Maddeye götüren buton ekle
+  var maddeBtn = '';
+  if (s.m) {
+    maddeBtn = ' <a href="#madde/' + s.m.k + '/' + s.m.m + '" onclick="openMadde(' + s.m.k + ',' + s.m.m + ');return false" style="color:var(--primary);font-weight:600;text-decoration:none;margin-left:8px;">Maddeyi Oku →</a>';
+  }
+  aciklama.innerHTML = s.a + maddeBtn;
   aciklama.style.display = 'block';
-  setTimeout(function() { quizState.current++; renderQuizSoru(); }, 2500);
+  setTimeout(function() { quizState.current++; renderQuizSoru(); }, 3500);
 }
 
 function resetQuiz() {
@@ -2308,6 +2328,103 @@ navigateTo = function(page, fromRoute) {
   _origNavigateTo(page, fromRoute);
   if (page === 'quiz') { document.getElementById('page-quiz')?.classList.add('active'); }
   if (page === 'istatistik') { document.getElementById('page-istatistik')?.classList.add('active'); loadIstatistik(); }
-  if (page === 'sorucevap') { document.getElementById('page-sorucevap')?.classList.add('active'); }
-  if (page === 'ayet-hadis') { document.getElementById('page-ayet-hadis')?.classList.add('active'); }
+  if (page === 'ayet-hadis') { document.getElementById('page-ayet-hadis')?.classList.add('active'); renderAyetHadis(); }
 };
+
+// ===== BİRLEŞİK ARAMA (Arama + Soru-Cevap) =====
+function birlesikAra() {
+  var query = document.getElementById('full-search').value.trim();
+  if (!query) return;
+  var ipuclari = document.getElementById('arama-ipuclari');
+  if (ipuclari) ipuclari.style.display = 'none';
+
+  // Soru mu kelime mi?
+  var isSoru = query.length > 15 || query.indexOf('?') !== -1 || /nasıl|nedir|nelerdir|kaç|kimlere|hangi/i.test(query);
+
+  if (isSoru) {
+    // Soru-Cevap modu: kitaptan arama
+    var sonuc = document.getElementById('arama-results');
+    sonuc.innerHTML = '<div class="loading">Kitapta aranıyor...</div>';
+    updateHash('arama/' + encodeURIComponent(query));
+    Promise.all([loadKisimTexts(1), loadKisimTexts(2), loadKisimTexts(3)]).then(function() {
+      var results = searchInBook(query);
+      if (results.length === 0) {
+        sonuc.innerHTML = '<p style="text-align:center;color:var(--text-muted);padding:40px;">Sonuç bulunamadı. Farklı kelimeler deneyin.</p>';
+        return;
+      }
+      sonuc.innerHTML = '<p style="color:var(--text-muted);margin-bottom:16px;">' + results.length + ' ilgili madde bulundu:</p>' + results.map(function(r) {
+        return '<div class="soru-cevap-card" style="cursor:pointer" onclick="openMadde(' + r.kisim + ',' + r.maddeNo + ',false,\'' + query.replace(/'/g, "\\'") + '\')"><h4>' + r.baslik + '</h4><div class="soru-cevap-passage">' + r.pasaj + '</div><div class="soru-cevap-ref">Kısım ' + r.kisim + ', Madde ' + r.maddeNo + ' · <a href="#madde/' + r.kisim + '/' + r.maddeNo + '" onclick="event.stopPropagation()">Maddeyi Aç →</a></div></div>';
+      }).join('');
+    });
+  } else {
+    // Klasik kelime araması
+    doFullSearch();
+  }
+}
+
+// ===== ÂYET-İ KERÎME VE HADÎS-İ ŞERÎF İNDEKSİ =====
+var ahCurrentTab = 'ayet';
+
+function switchAHTab(tab) {
+  ahCurrentTab = tab;
+  document.querySelectorAll('.ah-tab').forEach(function(t) { t.classList.remove('active'); });
+  var btns = document.querySelectorAll('.ah-tab');
+  if (tab === 'ayet' && btns[0]) btns[0].classList.add('active');
+  if (tab === 'hadis' && btns[1]) btns[1].classList.add('active');
+  renderAyetHadis();
+}
+
+function renderAyetHadis(filterText) {
+  if (!window.ayetHadisData) return;
+  var list = document.getElementById('ayet-hadis-list');
+  var countEl = document.getElementById('ah-count');
+  if (!list) return;
+  
+  var items = ahCurrentTab === 'ayet' ? window.ayetHadisData.ayetler : window.ayetHadisData.hadisler;
+  var label = ahCurrentTab === 'ayet' ? 'âyet-i kerîme' : 'hadîs-i şerîf';
+  
+  // Filtrele
+  var search = filterText || (document.getElementById('ah-search') ? document.getElementById('ah-search').value.trim().toLowerCase() : '');
+  if (search) {
+    items = items.filter(function(item) {
+      return item.metin.toLowerCase().indexOf(search) !== -1;
+    });
+  }
+  
+  if (countEl) countEl.textContent = items.length + ' ' + label + ' bulundu';
+  
+  if (items.length === 0) {
+    list.innerHTML = '<p style="text-align:center;color:var(--text-muted);padding:40px;">Sonuç bulunamadı.</p>';
+    return;
+  }
+  
+  // Sayfalama: ilk 50
+  var shown = items.slice(0, 50);
+  var html = shown.map(function(item) {
+    var madde = window.tocData ? window.tocData.find(function(m) { return m.kisim === item.kisim && m.madde_no === item.madde; }) : null;
+    var baslik = madde ? madde.baslik : 'Kısım ' + item.kisim + ', Madde ' + item.madde;
+    return '<div class="ah-item" onclick="openMadde(' + item.kisim + ',' + item.madde + ')" style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px;margin-bottom:10px;cursor:pointer;transition:all 0.2s;"><div style="font-family:Amiri,serif;font-size:0.95rem;line-height:1.8;color:var(--text);margin-bottom:8px;">' + item.metin + '</div><div style="font-size:0.8rem;color:var(--text-muted);">📖 ' + baslik + ' — <span style="color:var(--primary)">Maddeyi Aç →</span></div></div>';
+  }).join('');
+  
+  if (items.length > 50) {
+    html += '<p style="text-align:center;color:var(--text-muted);padding:16px;">İlk 50 sonuç gösteriliyor. Aramayı daraltın.</p>';
+  }
+  
+  list.innerHTML = html;
+}
+
+// Âyet-Hadîs arama
+document.addEventListener('DOMContentLoaded', function() {
+  var ahSearch = document.getElementById('ah-search');
+  if (ahSearch) {
+    ahSearch.addEventListener('input', function() { renderAyetHadis(); });
+  }
+});
+
+// Fevâid'den gelen sahislar count
+document.addEventListener('DOMContentLoaded', function() {
+  if (window.sahislarData) {
+    var el = document.getElementById('fevaid-count-sahislar');
+    if (el) el.textContent = window.sahislarData.length + ' şahıs';
+  }
+});
