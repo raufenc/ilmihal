@@ -2997,3 +2997,15 @@ mark.search-highlight {
 .fevaid-sec-card, .kisim-card, .konu-btn, .quiz-konu-btn, .plan-card {
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
+
+/* ===== WHISPER SYNC HIGHLIGHT ===== */
+.whisper-highlight {
+  background: linear-gradient(90deg, rgba(201,168,76,0.3), rgba(201,168,76,0.15)) !important;
+  border-radius: 3px;
+  box-shadow: 0 0 0 2px rgba(201,168,76,0.2);
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+:root.dark .whisper-highlight {
+  background: linear-gradient(90deg, rgba(212,182,92,0.2), rgba(212,182,92,0.1)) !important;
+  box-shadow: 0 0 0 2px rgba(212,182,92,0.15);
+}

@@ -3128,3 +3128,116 @@ if (!sessionStorage.getItem('ilmihal-splash-shown')) {
   sessionStorage.setItem('ilmihal-splash-shown', '1');
   document.addEventListener('DOMContentLoaded', showSplash);
 }
+
+// ===== WHISPER SYNC (Kelime Bazlı Karaoke) =====
+var whisperSync = { words: [], active: false, currentWordIdx: -1, pageKey: '' };
+
+function loadWhisperSync(kisim, maddeNo, page) {
+  if (!window.syncData) return false;
+  var key = kisim + '/' + maddeNo;
+  var pageData = window.syncData[key];
+  if (!pageData || !pageData[page]) return false;
+  
+  whisperSync.words = pageData[page];
+  whisperSync.active = true;
+  whisperSync.currentWordIdx = -1;
+  whisperSync.pageKey = key + '/' + page;
+  
+  // Metin içinde kelime span'ları oluştur
+  prepareWordSpans();
+  return true;
+}
+
+function prepareWordSpans() {
+  // madde-text içindeki text node'larını bul ve kelime kelime span'la
+  var textEl = document.querySelector('.madde-text');
+  if (!textEl || !whisperSync.words.length) return;
+  
+  // Her kelime için benzersiz ID ile span oluştur
+  // Bu basitleştirilmiş versiyon — ilk geçişte metin eşleştirmesi yapar
+  whisperSync.wordElements = [];
+}
+
+function updateWhisperSync(currentTime) {
+  if (!whisperSync.active || !whisperSync.words.length) return;
+  
+  // Şu anki zamana göre hangi kelimedeyiz?
+  var newIdx = -1;
+  for (var i = 0; i < whisperSync.words.length; i++) {
+    if (currentTime >= whisperSync.words[i].s && currentTime <= whisperSync.words[i].e) {
+      newIdx = i;
+      break;
+    }
+    if (currentTime < whisperSync.words[i].s) break;
+    newIdx = i; // En son geçen kelime
+  }
+  
+  if (newIdx === whisperSync.currentWordIdx) return;
+  whisperSync.currentWordIdx = newIdx;
+  
+  if (newIdx < 0) return;
+  
+  var word = whisperSync.words[newIdx];
+  // Cümle bazlı bölgeleri highlight et (5 kelimelik grup)
+  var groupStart = Math.max(0, newIdx - 2);
+  var groupEnd = Math.min(whisperSync.words.length - 1, newIdx + 2);
+  var groupText = whisperSync.words.slice(groupStart, groupEnd + 1).map(function(w) { return w.w; }).join(' ');
+  
+  // Önceki highlight'ı kaldır
+  document.querySelectorAll('.whisper-highlight').forEach(function(el) { el.classList.remove('whisper-highlight'); });
+  
+  // Metinde bu kelime grubunu bul ve highlight et
+  var textEl = document.querySelector('.madde-text');
+  if (!textEl) return;
+  
+  var walker = document.createTreeWalker(textEl, NodeFilter.SHOW_TEXT);
+  var node;
+  var searchWord = word.w.toLowerCase();
+  
+  while ((node = walker.nextNode())) {
+    var nodeText = node.textContent.toLowerCase();
+    if (nodeText.indexOf(searchWord) !== -1) {
+      var parent = node.parentElement;
+      if (parent && parent.tagName !== 'MARK') {
+        parent.classList.add('whisper-highlight');
+        // Görünür alanda değilse scroll et
+        var rect = parent.getBoundingClientRect();
+        var overlay = document.querySelector('.madde-overlay-content');
+        if (overlay) {
+          var oRect = overlay.getBoundingClientRect();
+          if (rect.top < oRect.top + 100 || rect.bottom > oRect.bottom - 50) {
+            parent.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        }
+      }
+      break;
+    }
+  }
+}
+
+// Audio timeupdate'e whisper sync ekle
+document.addEventListener('DOMContentLoaded', function() {
+  var audio = document.getElementById('madde-audio');
+  if (!audio) return;
+  var lastUpdate = 0;
+  audio.addEventListener('timeupdate', function() {
+    // 200ms'de bir güncelle (performans için)
+    var now = Date.now();
+    if (now - lastUpdate < 200) return;
+    lastUpdate = now;
+    if (whisperSync.active && audioState.playing) {
+      updateWhisperSync(audio.currentTime);
+    }
+  });
+});
+
+// loadAudioPage'e whisper sync yükleme ekle
+var _origLoadAudioPage = loadAudioPage;
+loadAudioPage = function(idx) {
+  _origLoadAudioPage(idx);
+  // Whisper sync varsa yükle
+  if (audioState.madde && audioState.pages[idx]) {
+    var page = audioState.pages[idx].page;
+    loadWhisperSync(audioState.madde.kisim, audioState.madde.madde_no, page);
+  }
+};
