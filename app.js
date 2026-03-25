@@ -1878,19 +1878,22 @@ document.getElementById('full-search')?.addEventListener('keydown', e => {
     debounceTimer = setTimeout(async () => {
       if (!window.SearchEngine || !window.SearchEngine.isReady()) return;
 
-      const isQ = window.SearchEngine.isQuestion(query);
+      // Önce hızlı keyword sonuçlarını göster
+      const results = window.SearchEngine.search(query, { limit: 4 });
+      showDropdown(results, query);
 
-      // Soru formatındaysa doğrudan AI loading göster
-      if (isQ) {
-        dropdown.innerHTML = '<div class="search-ai-loading"><span class="search-ai-badge">AI</span> Kitapta aran\u0131yor<span class="loading-dots"><span>.</span><span>.</span><span>.</span></span></div>';
-        dropdown.style.display = 'block';
+      // Her aramada AI search de tetikle (paralel)
+      if (query.length >= 3) {
+        // Dropdown'un en üstüne AI loading ekle
+        const aiLoadingEl = document.createElement('div');
+        aiLoadingEl.className = 'search-ai-loading';
+        aiLoadingEl.innerHTML = '<span class="search-ai-badge">AI</span> Kitapta aran\u0131yor<span class="loading-dots"><span>.</span><span>.</span><span>.</span></span>';
+        dropdown.insertBefore(aiLoadingEl, dropdown.firstChild);
 
         const aiResults = await window.SearchEngine.aiSearch(query);
         if (aiResults === null) return; // iptal edildi
 
-        // Keyword sonuçlarını da al (AI ile birleştirmek için)
-        const results = window.SearchEngine.search(query, { limit: 4 });
-
+        // AI sonuçları geldiyse keyword ile birleştir
         if (aiResults.length > 0) {
           const merged = { madde: [], sozluk: results.sozluk, sahis: results.sahis, tablo: results.tablo, total: 0 };
           const seenIds = new Set();
@@ -1899,13 +1902,9 @@ document.getElementById('full-search')?.addEventListener('keydown', e => {
           merged.total = merged.madde.length + merged.sozluk.length + merged.sahis.length + merged.tablo.length;
           showDropdown(merged, query, true);
         } else {
-          // AI sonuç bulamadı, keyword sonuçlarını göster
-          showDropdown(results, query);
+          // AI sonuç bulamadı, loading'i kaldır
+          aiLoadingEl.remove();
         }
-      } else {
-        // Kısa sorgu: sadece keyword arama
-        const results = window.SearchEngine.search(query, { limit: 4 });
-        showDropdown(results, query);
       }
     }, 200);
   });
