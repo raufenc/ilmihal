@@ -2403,7 +2403,9 @@ function renderAyetHadis(filterText) {
   var html = shown.map(function(item) {
     var madde = window.tocData ? window.tocData.find(function(m) { return m.kisim === item.kisim && m.madde_no === item.madde; }) : null;
     var baslik = madde ? madde.baslik : 'Kısım ' + item.kisim + ', Madde ' + item.madde;
-    return '<div class="ah-item" onclick="openMadde(' + item.kisim + ',' + item.madde + ')" style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px;margin-bottom:10px;cursor:pointer;transition:all 0.2s;"><div style="font-family:Amiri,serif;font-size:0.95rem;line-height:1.8;color:var(--text);margin-bottom:8px;">' + item.metin + '</div><div style="font-size:0.8rem;color:var(--text-muted);">📖 ' + baslik + ' — <span style="color:var(--primary)">Maddeyi Aç →</span></div></div>';
+    // İlk 3-4 kelimeyi searchQuery olarak gönder ki maddenin o yerine scroll etsin
+    var words = item.metin.replace(/<[^>]+>/g,'').split(/\s+/).slice(0, 5).join(' ').replace(/'/g, "\\'");
+    return '<div class="ah-item" onclick="openMadde(' + item.kisim + ',' + item.madde + ',false,\'' + words + '\')" style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px;margin-bottom:10px;cursor:pointer;transition:all 0.2s;"><div style="font-family:Amiri,serif;font-size:0.95rem;line-height:1.8;color:var(--text);margin-bottom:8px;">' + item.metin + '</div><div style="font-size:0.8rem;color:var(--text-muted);">\u{1F4D6} ' + baslik + ' \u2014 <span style="color:var(--primary)">Maddenin bu yerine git \u2192</span></div></div>';
   }).join('');
   
   if (items.length > 50) {
