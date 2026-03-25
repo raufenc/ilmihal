@@ -277,6 +277,18 @@
       <!-- Ana ekran: bölüm kartları -->
       <div id="fevaid-home" class="fevaid-home">
         <div class="fevaid-sec-grid">
+          <div class="fevaid-sec-card fevaid-highlight" onclick="navigateTo('gunun-bilgisi')">
+            <div class="fevaid-sec-icon">&#9733;</div>
+            <h3>Günün Bilgisi</h3>
+            <p>Her gün kitaptan bir bilgi, paylaşılabilir kart</p>
+            <span class="fevaid-sec-count">Her gün yeni</span>
+          </div>
+          <div class="fevaid-sec-card fevaid-highlight" onclick="navigateTo('rehberler')">
+            <div class="fevaid-sec-icon">&#128218;</div>
+            <h3>Konuya Göre Rehberler</h3>
+            <p>Namaz, oruç, hac gibi konularda adım adım rehber</p>
+            <span class="fevaid-sec-count">8 rehber</span>
+          </div>
           <div class="fevaid-sec-card" onclick="openFevaidSection('tablolar')">
             <div class="fevaid-sec-icon">&#9638;</div>
             <h3>Tablolar ve Diyagramlar</h3>
@@ -454,6 +466,29 @@
     </div>
   </main>
 
+  <!-- Günün Bilgisi -->
+  <main id="page-gunun-bilgisi" class="page">
+    <div class="container">
+      <h2 class="section-title">Günün Bilgisi</h2>
+      <p class="section-desc">Her gün kitaptan bir bilgi. Paylaşarak sevabına ortak olun.</p>
+      <div id="gunun-bilgisi-card" class="gunun-bilgisi-card"></div>
+      <div id="gunun-bilgisi-paylasim" style="text-align:center;margin-top:20px;"></div>
+      <canvas id="paylasim-canvas" style="display:none"></canvas>
+      <h3 style="margin-top:48px;color:var(--primary-dark);">Önceki Günler</h3>
+      <div id="onceki-bilgiler" style="margin-top:16px;"></div>
+    </div>
+  </main>
+
+  <!-- Rehberler -->
+  <main id="page-rehberler" class="page">
+    <div class="container">
+      <h2 class="section-title">Konuya Göre Rehberler</h2>
+      <p class="section-desc">Adım adım öğrenme yolları. Bir konuyu baştan sona takip edin.</p>
+      <div id="rehber-list" class="rehber-grid"></div>
+      <div id="rehber-detay" style="display:none"></div>
+    </div>
+  </main>
+
   <!-- Okuma Planı -->
   <main id="page-okuma-plani" class="page">
     <div class="container">
@@ -574,7 +609,8 @@
   <script src="search-engine.js?v=5"></script>
   <script src="ayet-hadis.js?v=2"></script>
   <script src="audio-map.js?v=1"></script>
-  <script src="app.js?v=19"></script>
+  <script src="rehberler.js?v=1"></script>
+  <script src="app.js?v=20"></script>
   <script>
     // Eski SW ve cache temizle, yeni SW kaydet
     if ('serviceWorker' in navigator) {
@@ -582,7 +618,7 @@
         regs.forEach(function(r) { r.unregister(); });
       });
       caches.keys().then(function(names) {
-        names.forEach(function(n) { if (n !== 'ilmihal-v5') caches.delete(n); });
+        names.forEach(function(n) { if (n !== 'ilmihal-v6') caches.delete(n); });
       });
       setTimeout(function() {
         navigator.serviceWorker.register('/sw.js').catch(function(){});

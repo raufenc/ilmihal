@@ -60,7 +60,7 @@ function handleRoute() {
     return;
   }
 
-  const validPages = ['anasayfa','icerik','fevaid','sozluk','arama','sahislar','hakkinda','quiz','ayet-hadis','okuma-plani'];
+  const validPages = ['anasayfa','icerik','fevaid','sozluk','arama','sahislar','hakkinda','quiz','ayet-hadis','okuma-plani','gunun-bilgisi','rehberler'];
   if (validPages.includes(route)) {
     navigateTo(route, true);
   } else {
@@ -443,6 +443,10 @@ async function openMadde(kisim, maddeNo, fromRoute, searchQuery) {
       </div>
     </div>
     <div class="madde-text">${metin}</div>
+    <div class="madde-paylasim-bar">
+      <button type="button" class="btn btn-sm" onclick="maddePaylasText(${kisim},${maddeNo})">Paylas</button>
+      <button type="button" class="btn btn-sm btn-secondary" style="background:var(--primary-light);color:#fff;" onclick="maddePaylasimKarti(${kisim},${maddeNo})">Gorsel Kart</button>
+    </div>
     ${getRelatedSahislar(kisim, maddeNo)}
     ${getRelatedTables(kisim, maddeNo)}
   `;
@@ -2238,7 +2242,8 @@ navigateTo = function(page, fromRoute) {
   _origNavigateTo(page, fromRoute);
   if (page === 'quiz') { document.getElementById('page-quiz')?.classList.add('active'); }
   if (page === 'ayet-hadis') { document.getElementById('page-ayet-hadis')?.classList.add('active'); renderAyetHadis(); }
-  if (page === 'fikih-karsilastirma') { document.getElementById('page-fikih-karsilastirma')?.classList.add('active'); renderFikihKarsilastirma(); }
+  if (page === 'gunun-bilgisi') { document.getElementById('page-gunun-bilgisi')?.classList.add('active'); renderGununBilgisi(); }
+  if (page === 'rehberler') { document.getElementById('page-rehberler')?.classList.add('active'); renderRehberler(); }
 };
 
 // ===== BİRLEŞİK ARAMA (Arama + Soru-Cevap) =====
@@ -2969,7 +2974,9 @@ var pageSeoMap = {
   'arama': ["Arama - Se'âdet-i Ebediyye", "Se'âdet-i Ebediyye kitabının 241 maddesinde tam metin arama. Yapay zeka destekli soru-cevap."],
   'quiz': ["Bilgi Testi - Se'âdet-i Ebediyye", "İmân, namaz, oruç, zekât, hac ve ahlâk konularında bilgilerinizi test edin."],
   'ayet-hadis': ["Âyet-i Kerîme ve Hadîs-i Şerîf İndeksi - Se'âdet-i Ebediyye", "Kitapta geçen 232 âyet-i kerîme ve 231 hadîs-i şerîfin referanslı listesi."],
-  'hakkinda': ["Hakkında - Se'âdet-i Ebediyye İnteraktif İlmihâl", "Se'âdet-i Ebediyye interaktif ilmihâl platformu hakkında bilgi."]
+  'hakkinda': ["Hakkında - Se'âdet-i Ebediyye İnteraktif İlmihâl", "Se'âdet-i Ebediyye interaktif ilmihâl platformu hakkında bilgi."],
+  'gunun-bilgisi': ["Günün Bilgisi - Se'âdet-i Ebediyye", "Her gün kitaptan bir hadîs-i şerîf veya âyet-i kerîme. Paylaşılabilir görsel kartlar."],
+  'rehberler': ["Konuya Göre Rehberler - Se'âdet-i Ebediyye", "Namaz, oruç, hac, zekât, iman ve ahlâk konularında adım adım rehberler."]
 };
 
 // navigateTo'da SEO meta güncelle
@@ -2979,4 +2986,253 @@ navigateTo = function(page, fromRoute) {
   var seo = pageSeoMap[page];
   if (seo) updateSeoMeta(seo[0], seo[1], 'https://ilmihal.org/' + (page === 'anasayfa' ? '' : page));
 };
+
+// ===== GÜNÜN BİLGİSİ =====
+function getGununBilgisiIdx() {
+  var daysSinceEpoch = Math.floor(Date.now() / 86400000);
+  return daysSinceEpoch;
+}
+
+function getGununBilgisi(offset) {
+  if (!window.ayetHadisData) return null;
+  var all = [];
+  if (window.ayetHadisData.hadisler) {
+    window.ayetHadisData.hadisler.forEach(function(h) {
+      if (h.metin && h.metin.length > 20 && h.metin.length < 300) {
+        all.push({ tip: 'hadis', metin: h.metin, kisim: h.kisim, madde: h.madde });
+      }
+    });
+  }
+  if (window.ayetHadisData.ayetler) {
+    window.ayetHadisData.ayetler.forEach(function(a) {
+      if (a.metin && a.metin.length > 20 && a.metin.length < 300) {
+        all.push({ tip: 'ayet', metin: a.metin, kisim: a.kisim, madde: a.madde });
+      }
+    });
+  }
+  if (all.length === 0) return null;
+  var idx = (getGununBilgisiIdx() + (offset || 0)) % all.length;
+  if (idx < 0) idx += all.length;
+  return all[idx];
+}
+
+function renderGununBilgisi() {
+  var card = document.getElementById('gunun-bilgisi-card');
+  var paylasim = document.getElementById('gunun-bilgisi-paylasim');
+  if (!card) return;
+
+  var bilgi = getGununBilgisi(0);
+  if (!bilgi) { card.innerHTML = '<p>Veri yükleniyor...</p>'; return; }
+
+  var tipLabel = bilgi.tip === 'hadis' ? 'Hadîs-i Şerîf' : 'Âyet-i Kerîme';
+  card.innerHTML = '<div class="gb-tip">' + tipLabel + '</div>' +
+    '<div class="gb-metin">' + escapeHtml(bilgi.metin) + '</div>' +
+    '<div class="gb-kaynak">Se\'âdet-i Ebediyye, Kısım ' + bilgi.kisim + ', Madde ' + bilgi.madde +
+    ' · <a href="#" onclick="openMadde(' + bilgi.kisim + ',' + bilgi.madde + ');return false">Maddeyi Aç</a></div>';
+
+  paylasim.innerHTML = '<button type="button" class="btn btn-primary" onclick="paylasGununBilgisi()">Paylaş</button> ' +
+    '<button type="button" class="btn btn-secondary" style="background:var(--primary-light);color:#fff;" onclick="gununBilgisiKart()">Görsel Kart Oluştur</button>';
+
+  // Önceki günler
+  var onceki = document.getElementById('onceki-bilgiler');
+  if (onceki) {
+    var html = '';
+    for (var i = 1; i <= 7; i++) {
+      var b = getGununBilgisi(-i);
+      if (!b) break;
+      var gun = new Date(Date.now() - i * 86400000).toLocaleDateString('tr-TR', { day: 'numeric', month: 'long' });
+      html += '<div class="gb-onceki"><span class="gb-onceki-tarih">' + gun + '</span><span class="gb-onceki-metin">' + escapeHtml(b.metin.substring(0, 100)) + '...</span></div>';
+    }
+    onceki.innerHTML = html;
+  }
+}
+
+function paylasGununBilgisi() {
+  var bilgi = getGununBilgisi(0);
+  if (!bilgi) return;
+  var text = bilgi.metin + '\n\n— Se\'âdet-i Ebediyye, K' + bilgi.kisim + '/M' + bilgi.madde + '\nhttps://ilmihal.org/gunun-bilgisi';
+  if (navigator.share) {
+    navigator.share({ title: 'Günün Bilgisi - ilmihal.org', text: text }).catch(function(){});
+  } else if (navigator.clipboard) {
+    navigator.clipboard.writeText(text).then(function() { alert('Kopyalandı!'); });
+  }
+}
+
+function gununBilgisiKart() {
+  var bilgi = getGununBilgisi(0);
+  if (!bilgi) return;
+  var canvas = document.getElementById('paylasim-canvas');
+  if (!canvas) return;
+  canvas.width = 1080; canvas.height = 1080;
+  var ctx = canvas.getContext('2d');
+
+  // Arka plan
+  var grad = ctx.createLinearGradient(0, 0, 1080, 1080);
+  grad.addColorStop(0, '#0e4a35');
+  grad.addColorStop(1, '#1a6b4e');
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, 1080, 1080);
+
+  // Dekoratif çizgi
+  ctx.fillStyle = '#c9a84c';
+  ctx.fillRect(80, 120, 100, 4);
+
+  // Tip etiketi
+  ctx.fillStyle = '#c9a84c';
+  ctx.font = '28px sans-serif';
+  ctx.fillText(bilgi.tip === 'hadis' ? 'Hadis-i Serif' : 'Ayet-i Kerime', 80, 180);
+
+  // Metin (word wrap)
+  ctx.fillStyle = '#ffffff';
+  ctx.font = '36px serif';
+  var words = bilgi.metin.split(' ');
+  var lines = []; var line = '';
+  words.forEach(function(w) {
+    var test = line ? line + ' ' + w : w;
+    if (ctx.measureText(test).width > 880) { lines.push(line); line = w; }
+    else { line = test; }
+  });
+  if (line) lines.push(line);
+  lines.slice(0, 12).forEach(function(l, i) {
+    ctx.fillText(l, 80, 260 + i * 52);
+  });
+
+  // Alt bilgi
+  ctx.fillStyle = 'rgba(255,255,255,0.5)';
+  ctx.font = '24px sans-serif';
+  ctx.fillText('Se\'adet-i Ebediyye, Kisim ' + bilgi.kisim + ', Madde ' + bilgi.madde, 80, 940);
+  ctx.fillText('ilmihal.org', 80, 980);
+
+  // İndir
+  var link = document.createElement('a');
+  link.download = 'gunun-bilgisi.png';
+  link.href = canvas.toDataURL('image/png');
+  link.click();
+}
+
+// ===== PAYLAŞIM KARTI (Madde İçinden) =====
+function maddePaylasimKarti(kisim, maddeNo) {
+  var madde = window.maddelerData?.find(function(m) { return m.kisim === kisim && m.madde_no === maddeNo; });
+  if (!madde) return;
+  var canvas = document.createElement('canvas');
+  canvas.width = 1200; canvas.height = 630;
+  var ctx = canvas.getContext('2d');
+
+  var grad = ctx.createLinearGradient(0, 0, 1200, 630);
+  grad.addColorStop(0, '#0e4a35'); grad.addColorStop(1, '#1a6b4e');
+  ctx.fillStyle = grad; ctx.fillRect(0, 0, 1200, 630);
+
+  ctx.fillStyle = '#c9a84c'; ctx.fillRect(60, 80, 120, 4);
+  ctx.fillStyle = 'rgba(255,255,255,0.7)'; ctx.font = '24px serif';
+  ctx.fillText("Se'adet-i Ebediyye", 60, 140);
+  ctx.fillStyle = '#e8d48b'; ctx.font = 'bold 42px serif';
+
+  var words = madde.baslik.split(' '); var lines = []; var line = '';
+  words.forEach(function(w) { if ((line + ' ' + w).length > 40) { lines.push(line); line = w; } else { line = line ? line + ' ' + w : w; } });
+  if (line) lines.push(line);
+  lines.forEach(function(l, i) { ctx.fillText(l, 60, 220 + i * 56); });
+
+  var kl = { 1: 'Birinci Kisim', 2: 'Ikinci Kisim', 3: 'Ucuncu Kisim' };
+  ctx.fillStyle = 'rgba(255,255,255,0.5)'; ctx.font = '22px sans-serif';
+  ctx.fillText(kl[madde.kisim] + ', Madde ' + madde.madde_no, 60, 520);
+  ctx.fillStyle = 'rgba(255,255,255,0.3)'; ctx.font = '20px sans-serif';
+  ctx.fillText('ilmihal.org', 60, 580);
+
+  var link = document.createElement('a');
+  link.download = 'madde-' + kisim + '-' + maddeNo + '.png';
+  link.href = canvas.toDataURL('image/png');
+  link.click();
+}
+
+function maddePaylasText(kisim, maddeNo) {
+  var madde = window.maddelerData?.find(function(m) { return m.kisim === kisim && m.madde_no === maddeNo; });
+  if (!madde) return;
+  var text = madde.baslik + '\n\nSe\'adet-i Ebediyye, Kisim ' + kisim + ', Madde ' + maddeNo + '\nhttps://ilmihal.org/madde/' + kisim + '/' + maddeNo;
+  if (navigator.share) {
+    navigator.share({ title: madde.baslik, text: text, url: 'https://ilmihal.org/madde/' + kisim + '/' + maddeNo }).catch(function(){});
+  } else if (navigator.clipboard) {
+    navigator.clipboard.writeText(text).then(function() { alert('Kopyalandi!'); });
+  }
+}
+
+// ===== REHBERLER =====
+var rehberDetayAcik = null;
+
+function renderRehberler() {
+  var list = document.getElementById('rehber-list');
+  var detay = document.getElementById('rehber-detay');
+  if (!list || !window.rehberlerData) return;
+
+  if (rehberDetayAcik) {
+    list.style.display = 'none';
+    detay.style.display = 'block';
+    renderRehberDetay(rehberDetayAcik);
+    return;
+  }
+
+  list.style.display = 'grid';
+  detay.style.display = 'none';
+  list.innerHTML = window.rehberlerData.map(function(r) {
+    var toplamMadde = 0;
+    r.bolumler.forEach(function(b) { toplamMadde += b.maddeler.length; });
+    return '<div class="rehber-card" onclick="openRehber(\'' + r.id + '\')" style="border-left:4px solid ' + r.renk + '">' +
+      '<div class="rehber-ikon">' + r.ikon + '</div>' +
+      '<h3>' + escapeHtml(r.baslik) + '</h3>' +
+      '<p>' + escapeHtml(r.aciklama) + '</p>' +
+      '<span class="fevaid-sec-count">' + r.bolumler.length + ' bolum, ' + toplamMadde + ' madde</span>' +
+      '</div>';
+  }).join('');
+}
+
+function openRehber(id) {
+  rehberDetayAcik = id;
+  renderRehberler();
+}
+
+function closeRehber() {
+  rehberDetayAcik = null;
+  renderRehberler();
+}
+
+function renderRehberDetay(id) {
+  var detay = document.getElementById('rehber-detay');
+  var r = window.rehberlerData.find(function(x) { return x.id === id; });
+  if (!r || !detay) return;
+
+  var html = '<button type="button" class="fevaid-back-btn" onclick="closeRehber()">&#8592; Rehberler</button>';
+  html += '<h2 style="color:var(--primary-dark);margin:16px 0 8px;">' + r.ikon + ' ' + escapeHtml(r.baslik) + '</h2>';
+  html += '<p style="color:var(--text-muted);margin-bottom:24px;">' + escapeHtml(r.aciklama) + '</p>';
+
+  r.bolumler.forEach(function(b, bi) {
+    html += '<div class="rehber-bolum">';
+    html += '<h3 class="rehber-bolum-baslik"><span class="rehber-bolum-no">' + (bi + 1) + '</span>' + escapeHtml(b.baslik) + '</h3>';
+    html += '<div class="rehber-maddeler">';
+    b.maddeler.forEach(function(m) {
+      html += '<div class="rehber-madde-item" onclick="openMadde(' + m.kisim + ',' + m.maddeNo + ')">' +
+        '<span class="rehber-madde-no">K' + m.kisim + '/M' + m.maddeNo + '</span>' +
+        '<span class="rehber-madde-not">' + escapeHtml(m.not) + '</span>' +
+        '</div>';
+    });
+    html += '</div></div>';
+  });
+
+  detay.innerHTML = html;
+}
+
+// ===== PODCAST MODU (Sürekli Dinleme Geliştirmesi) =====
+var podcastMode = false;
+function togglePodcastMode() {
+  podcastMode = !podcastMode;
+  var btn = document.getElementById('podcast-btn');
+  if (btn) {
+    btn.style.opacity = podcastMode ? '1' : '0.5';
+    btn.title = podcastMode ? 'Podcast modu: ACIK - Maddeler arasi durmadan devam eder' : 'Podcast modu: KAPALI';
+  }
+  // continuousPlay'i de aktifle
+  if (typeof continuousPlay !== 'undefined') {
+    continuousPlay = podcastMode;
+    var cBtn = document.getElementById('continuous-btn');
+    if (cBtn) cBtn.style.opacity = podcastMode ? '1' : '0.5';
+  }
+}
 

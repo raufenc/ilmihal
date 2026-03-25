@@ -3090,3 +3090,147 @@ mark.search-highlight {
 :root.dark .fikih-card { background: var(--card-bg); }
 :root.dark .fikih-baslik { color: var(--gold-light); }
 :root.dark .fikih-mezhep { border-color: rgba(255,255,255,0.1); }
+
+/* ===== Gunun Bilgisi ===== */
+.gunun-bilgisi-card {
+  background: linear-gradient(135deg, #0e4a35, #1a6b4e);
+  color: #fff;
+  border-radius: var(--radius);
+  padding: 40px;
+  text-align: center;
+  box-shadow: var(--shadow-lg);
+}
+.gb-tip {
+  color: var(--gold-light);
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 16px;
+}
+.gb-metin {
+  font-family: 'Amiri', serif;
+  font-size: 1.3rem;
+  line-height: 2;
+  margin-bottom: 20px;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.gb-kaynak {
+  font-size: 0.85rem;
+  opacity: 0.7;
+}
+.gb-kaynak a { color: var(--gold-light); }
+.gb-onceki {
+  display: flex;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+  align-items: baseline;
+}
+.gb-onceki-tarih {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  min-width: 80px;
+  flex-shrink: 0;
+}
+.gb-onceki-metin {
+  font-size: 0.9rem;
+  color: var(--text-light);
+  line-height: 1.5;
+}
+
+/* ===== Fevaid Highlight Card ===== */
+.fevaid-highlight {
+  border: 2px solid var(--gold) !important;
+  background: linear-gradient(135deg, rgba(201,168,76,0.05), rgba(26,107,78,0.05)) !important;
+}
+
+/* ===== Rehberler ===== */
+.rehber-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+.rehber-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.rehber-card:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
+.rehber-ikon { font-size: 2rem; margin-bottom: 8px; }
+.rehber-card h3 { font-size: 1.1rem; color: var(--primary-dark); margin-bottom: 8px; }
+.rehber-card p { font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; }
+.rehber-bolum {
+  margin-bottom: 24px;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.rehber-bolum-baslik {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 20px;
+  background: rgba(26,107,78,0.05);
+  border-bottom: 1px solid var(--border);
+  font-size: 1rem;
+  color: var(--primary-dark);
+}
+.rehber-bolum-no {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--primary);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.rehber-maddeler { padding: 8px 0; }
+.rehber-madde-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.rehber-madde-item:hover { background: rgba(26,107,78,0.05); }
+.rehber-madde-no {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  min-width: 60px;
+  font-family: monospace;
+}
+.rehber-madde-not { font-size: 0.9rem; color: var(--text); }
+
+/* ===== Madde Paylasim Bar ===== */
+.madde-paylasim-bar {
+  display: flex;
+  gap: 8px;
+  margin: 16px 0;
+  padding: 12px 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+/* ===== Dark mode yeni ozellikler ===== */
+:root.dark .gunun-bilgisi-card { background: linear-gradient(135deg, #1a1a1f, #24242b); }
+:root.dark .gb-tip { color: var(--gold); }
+:root.dark .rehber-card { background: var(--card-bg); }
+:root.dark .rehber-card h3 { color: var(--gold-light); }
+:root.dark .rehber-bolum { background: var(--card-bg); }
+:root.dark .rehber-bolum-baslik { background: rgba(61,168,122,0.08); color: var(--gold-light); }
+
+/* ===== Sepia yeni ozellikler ===== */
+:root.sepia .gunun-bilgisi-card { background: linear-gradient(135deg, #5a4a2e, #6a5a38); }
+:root.sepia .rehber-card { background: var(--bg-card); }
