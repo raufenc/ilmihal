@@ -277,17 +277,23 @@
       <!-- Ana ekran: bölüm kartları -->
       <div id="fevaid-home" class="fevaid-home">
         <div class="fevaid-sec-grid">
+          <div class="fevaid-sec-card fevaid-highlight" onclick="navigateTo('rehberler')">
+            <div class="fevaid-sec-icon">&#128218;</div>
+            <h3>Konuya Göre Rehberler</h3>
+            <p>Namaz, oruç, hac gibi konularda adım adım rehber</p>
+            <span class="fevaid-sec-count">8 rehber</span>
+          </div>
           <div class="fevaid-sec-card fevaid-highlight" onclick="navigateTo('gunun-bilgisi')">
             <div class="fevaid-sec-icon">&#9733;</div>
             <h3>Günün Bilgisi</h3>
             <p>Her gün kitaptan bir bilgi, paylaşılabilir kart</p>
             <span class="fevaid-sec-count">Her gün yeni</span>
           </div>
-          <div class="fevaid-sec-card fevaid-highlight" onclick="navigateTo('rehberler')">
-            <div class="fevaid-sec-icon">&#128218;</div>
-            <h3>Konuya Göre Rehberler</h3>
-            <p>Namaz, oruç, hac gibi konularda adım adım rehber</p>
-            <span class="fevaid-sec-count">8 rehber</span>
+          <div class="fevaid-sec-card" onclick="navigateTo('ayet-hadis')">
+            <div class="fevaid-sec-icon">&#128220;</div>
+            <h3>Âyet-i Kerîme ve Hadîs-i Şerîf İndeksi</h3>
+            <p>Kitapta geçen âyet-i kerîmelerin ve hadîs-i şerîflerin listesi</p>
+            <span class="fevaid-sec-count">463 kayıt</span>
           </div>
           <div class="fevaid-sec-card" onclick="openFevaidSection('tablolar')">
             <div class="fevaid-sec-icon">&#9638;</div>
@@ -295,20 +301,20 @@
             <p>Kitaptaki bilgilerin özet tabloları ve akış şemaları</p>
             <span class="fevaid-sec-count" id="fevaid-count-tablolar"></span>
           </div>
-          <div class="fevaid-sec-card" onclick="openFevaidSection('tanimlar')">
-            <div class="fevaid-sec-icon">&#10070;</div>
-            <h3>Kitabın Kendi Tanımları</h3>
-            <p>Kitapta geçen terimlerin kitabın kendi cümleleriyle açıklaması</p>
-            <span class="fevaid-sec-count">533 tanım</span>
-          </div>
           <div class="fevaid-sec-card" onclick="navigateTo('sozluk')">
             <div class="fevaid-sec-icon">&#128214;</div>
             <h3>Dini Lügat</h3>
             <p>4.400+ terimlik kapsamlı dini sözlük, 13 kategoride</p>
             <span class="fevaid-sec-count">4400+ terim</span>
           </div>
+          <div class="fevaid-sec-card" onclick="openFevaidSection('tanimlar')">
+            <div class="fevaid-sec-icon">&#10070;</div>
+            <h3>Kitabın Kendi Tanımları</h3>
+            <p>Kitapta geçen terimlerin kitabın kendi cümleleriyle açıklaması</p>
+            <span class="fevaid-sec-count">533 tanım</span>
+          </div>
           <div class="fevaid-sec-card" onclick="navigateTo('sahislar')">
-            <div class="fevaid-sec-icon">&#9733;</div>
+            <div class="fevaid-sec-icon">&#9734;</div>
             <h3>Hâl Tercemeleri</h3>
             <p>Kitapta adı geçenlerin hâl tercemeleri</p>
             <span class="fevaid-sec-count" id="fevaid-count-sahislar"></span>
@@ -325,23 +331,17 @@
             <p>Etkileşimli nemâz vakitleri hesabı ve gösterimi</p>
             <span class="fevaid-sec-count">5 vakit</span>
           </div>
-          <div class="fevaid-sec-card" onclick="navigateTo('quiz')">
-            <div class="fevaid-sec-icon">&#10004;</div>
-            <h3>Bilgi Testi</h3>
-            <p>Öğrendiklerinizi sınayın, kendinizi test edin</p>
-            <span class="fevaid-sec-count">Yeni</span>
-          </div>
-          <div class="fevaid-sec-card" onclick="navigateTo('ayet-hadis')">
-            <div class="fevaid-sec-icon">&#128220;</div>
-            <h3>Âyet-i Kerîme ve Hadîs-i Şerîf İndeksi</h3>
-            <p>Kitapta geçen âyet-i kerîmelerin ve hadîs-i şerîflerin listesi</p>
-            <span class="fevaid-sec-count">708 kayıt</span>
-          </div>
           <div class="fevaid-sec-card" onclick="navigateTo('okuma-plani')">
             <div class="fevaid-sec-icon">&#128197;</div>
             <h3>Okuma Planı</h3>
             <p>3 ay, 6 ay veya 1 yılda kitabı tamamlayın</p>
             <span class="fevaid-sec-count">3 plan</span>
+          </div>
+          <div class="fevaid-sec-card" onclick="navigateTo('quiz')">
+            <div class="fevaid-sec-icon">&#10004;</div>
+            <h3>Bilgi Testi</h3>
+            <p>Öğrendiklerinizi sınayın, kendinizi test edin</p>
+            <span class="fevaid-sec-count">Yeni</span>
           </div>
         </div>
       </div>

@@ -3205,13 +3205,13 @@ function renderRehberDetay(id) {
 
   r.bolumler.forEach(function(b, bi) {
     html += '<div class="rehber-bolum">';
-    html += '<h3 class="rehber-bolum-baslik"><span class="rehber-bolum-no">' + (bi + 1) + '</span>' + escapeHtml(b.baslik) + '</h3>';
+    html += '<h3 class="rehber-bolum-baslik"><span class="rehber-bolum-no">' + (bi + 1) + '</span> ' + escapeHtml(b.baslik) + '</h3>';
     html += '<div class="rehber-maddeler">';
     b.maddeler.forEach(function(m) {
-      html += '<div class="rehber-madde-item" onclick="openMadde(' + m.kisim + ',' + m.maddeNo + ')">' +
-        '<span class="rehber-madde-no">K' + m.kisim + '/M' + m.maddeNo + '</span>' +
+      html += '<a href="#" class="rehber-madde-item" onclick="openMadde(' + m.kisim + ',' + m.maddeNo + ');return false">' +
+        '<span class="rehber-madde-no">K' + m.kisim + ' / M' + m.maddeNo + '</span>' +
         '<span class="rehber-madde-not">' + escapeHtml(m.not) + '</span>' +
-        '</div>';
+        '</a>';
     });
     html += '</div></div>';
   });
