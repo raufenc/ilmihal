@@ -492,9 +492,10 @@
     const words = q.split(/\s+/);
     // 4+ kelime = doğal dil sorusu, her zaman AI'ya gönder
     if (words.length >= 4) return true;
-    // 3 kelime: soru kalıbı varsa
+    // 3 kelime: soru kalıbı varsa (normalize ederek de kontrol et)
     if (words.length >= 3) {
-      return SORU_KELIMELERI.some(sk => q.includes(sk));
+      const qn = norm(q);
+      return SORU_KELIMELERI.some(sk => q.includes(sk) || qn.includes(norm(sk)));
     }
     return false;
   }
