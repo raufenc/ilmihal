@@ -3625,11 +3625,531 @@ function togglePodcastMode() {
     btn.style.opacity = podcastMode ? '1' : '0.5';
     btn.title = podcastMode ? 'Podcast modu: ACIK - Maddeler arasi durmadan devam eder' : 'Podcast modu: KAPALI';
   }
-  // continuousPlay'i de aktifle
   if (typeof continuousPlay !== 'undefined') {
     continuousPlay = podcastMode;
     var cBtn = document.getElementById('continuous-btn');
     if (cBtn) cBtn.style.opacity = podcastMode ? '1' : '0.5';
   }
 }
+
+// ===== PRODUCT-01: OKUMA PLANI İLERLEME İYİLEŞTİRMESİ =====
+// Diğer günlere göz atma, otomatik ilerleme kaydı, streak takibi
+(function() {
+  // Okuma planı: gün navigasyonu
+  window.planGunOffset = 0;
+
+  window.planGunNav = function(dir) {
+    var plan = getPlan();
+    if (!plan) return;
+    window.planGunOffset = (window.planGunOffset || 0) + dir;
+    var start = new Date(plan.startDate);
+    var today = new Date();
+    var dayNum = Math.floor((today - start) / 86400000) + window.planGunOffset;
+    if (dayNum < 0) { window.planGunOffset -= dir; return; }
+    if (dayNum >= plan.days.length) { window.planGunOffset -= dir; return; }
+    renderPlanEnhanced();
+  };
+
+  window.planGunBugune = function() {
+    window.planGunOffset = 0;
+    renderPlanEnhanced();
+  };
+
+  // Madde kapatıldığında otomatik "okudum" işaretle
+  var _origCloseMaddeForPlan = closeMadde;
+  closeMadde = function() {
+    // Mevcut açık maddeyi plan'a ekle
+    if (window.currentMaddeForBookmark) {
+      var plan = getPlan();
+      if (plan) {
+        var key = window.currentMaddeForBookmark.kisim + '/' + window.currentMaddeForBookmark.madde_no;
+        if (plan.completed.indexOf(key) === -1) {
+          plan.completed.push(key);
+          localStorage.setItem('ilmihal-plan', JSON.stringify(plan));
+        }
+      }
+    }
+    _origCloseMaddeForPlan();
+    // Plan sayfası açıksa güncelle
+    if (document.getElementById('page-okuma-plani')?.classList.contains('active')) {
+      renderPlanEnhanced();
+    }
+  };
+
+  // Geliştirilmiş plan render'ı (mevcut renderPlan'ı override etmeden, ek UI ekler)
+  function renderPlanEnhanced() {
+    var plan = getPlan();
+    if (!plan || !window.tocData) return;
+
+    var start = new Date(plan.startDate);
+    var today = new Date();
+    var dayNum = Math.floor((today - start) / 86400000) + (window.planGunOffset || 0);
+    if (dayNum < 0) dayNum = 0;
+    if (dayNum >= plan.days.length) dayNum = plan.days.length - 1;
+
+    var todayReal = Math.floor((today - start) / 86400000);
+
+    // Progress
+    var completed = plan.completed.length;
+    var total = window.tocData.length;
+    var pct = Math.round((completed / total) * 100);
+    var bar = document.getElementById('plan-bar');
+    if (bar) bar.style.width = pct + '%';
+    var text = document.getElementById('plan-progress-text');
+    if (text) text.textContent = completed + '/' + total + ' madde (%' + pct + ')';
+
+    // Streak hesapla
+    var streak = 0;
+    var checkDay = todayReal;
+    while (checkDay >= 0 && checkDay < plan.days.length) {
+      var indices = plan.days[checkDay] || [];
+      var allDone = indices.length > 0 && indices.every(function(idx) {
+        if (idx >= window.tocData.length) return true;
+        var m = window.tocData[idx];
+        return plan.completed.indexOf(m.kisim + '/' + m.madde_no) !== -1;
+      });
+      if (allDone) { streak++; checkDay--; } else { break; }
+    }
+
+    var todayIndices = plan.days[dayNum] || [];
+    var bugunEl = document.getElementById('plan-bugun');
+    if (!bugunEl) return;
+
+    var kisimLabels = { 1: 'Birinci Kısım', 2: 'İkinci Kısım', 3: 'Üçüncü Kısım' };
+    var isToday = (dayNum === todayReal);
+
+    // Gün navigasyonu
+    var html = '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">';
+    html += '<button type="button" class="btn btn-sm btn-secondary" onclick="planGunNav(-1)" ' + (dayNum <= 0 ? 'disabled' : '') + '>← Önceki</button>';
+    html += '<div style="text-align:center">';
+    html += '<strong>' + (dayNum + 1) + '. gün</strong>';
+    if (!isToday) html += ' <button type="button" class="btn btn-sm" onclick="planGunBugune()" style="margin-left:8px;font-size:0.75rem;">Bugüne Dön</button>';
+    html += '</div>';
+    html += '<button type="button" class="btn btn-sm btn-secondary" onclick="planGunNav(1)" ' + (dayNum >= plan.days.length - 1 ? 'disabled' : '') + '>Sonraki →</button>';
+    html += '</div>';
+
+    // Streak
+    if (streak > 0) {
+      html += '<div style="text-align:center;padding:8px;margin-bottom:12px;background:rgba(26,107,78,0.08);border-radius:var(--radius-sm);color:var(--primary-dark);font-weight:500;">🔥 ' + streak + ' gün üst üste tamamlandı!</div>';
+    }
+
+    html += '<p style="color:var(--text-muted);font-size:0.85rem;margin-bottom:12px;">' + todayIndices.length + ' madde' + (isToday ? ' — bugün' : '') + '</p>';
+
+    // Bugün tüm maddeler okunmuş mu?
+    var allDoneToday = todayIndices.length > 0;
+    todayIndices.forEach(function(idx) {
+      if (idx >= window.tocData.length) return;
+      var m = window.tocData[idx];
+      var key = m.kisim + '/' + m.madde_no;
+      var done = plan.completed.indexOf(key) !== -1;
+      if (!done) allDoneToday = false;
+      var sayfa = getMaddeSayfa(m);
+      html += '<div class="plan-madde-item ' + (done ? 'plan-done' : '') + '" onclick="planMaddeOku(' + m.kisim + ',' + m.madde_no + ')" style="cursor:pointer">';
+      html += '<span class="plan-check">' + (done ? '✓' : '○') + '</span>';
+      html += '<span class="plan-madde-title">' + escapeHtml(m.baslik) + '</span>';
+      html += '<span class="plan-madde-meta">' + kisimLabels[m.kisim] + ' · ' + sayfa + ' sayfa</span>';
+      html += '</div>';
+    });
+
+    if (allDoneToday && isToday) {
+      html += '<div style="text-align:center;padding:16px;margin-top:12px;background:rgba(26,107,78,0.1);border-radius:var(--radius);color:var(--primary-dark);">✅ Bugünkü okumayı tamamladınız!</div>';
+    }
+
+    if (completed >= total) {
+      html = '<div style="text-align:center;padding:32px;"><p style="font-size:1.3rem;color:var(--primary);font-weight:600;">🎉 Tebrikler!</p><p style="color:var(--text-light);margin-top:8px;">Planı tamamladınız! ' + total + ' maddenin tamamını okudunuz.</p></div>';
+    }
+
+    bugunEl.innerHTML = html;
+  }
+
+  // renderPlan override
+  var _origRenderPlan = renderPlan;
+  renderPlan = function() {
+    _origRenderPlan();
+    var plan = getPlan();
+    if (plan && plan.days) {
+      renderPlanEnhanced();
+    }
+  };
+})();
+
+// ===== PRODUCT-02: REHBER ADIM TAMAMLAMA =====
+(function() {
+  function getRehberProgress() {
+    try { return JSON.parse(localStorage.getItem('ilmihal-rehber-progress') || '{}'); } catch(e) { return {}; }
+  }
+  function saveRehberProgress(data) {
+    localStorage.setItem('ilmihal-rehber-progress', JSON.stringify(data));
+  }
+
+  window.toggleRehberAdim = function(rehberId, kisim, maddeNo) {
+    var prog = getRehberProgress();
+    if (!prog[rehberId]) prog[rehberId] = [];
+    var key = kisim + '/' + maddeNo;
+    var idx = prog[rehberId].indexOf(key);
+    if (idx === -1) {
+      prog[rehberId].push(key);
+    } else {
+      prog[rehberId].splice(idx, 1);
+    }
+    saveRehberProgress(prog);
+    if (typeof rehberDetayAcik !== 'undefined' && rehberDetayAcik) {
+      renderRehberDetayEnhanced(rehberDetayAcik);
+    }
+  };
+
+  // Override renderRehberDetay
+  var _origRenderRehberDetay = renderRehberDetay;
+  window.renderRehberDetayEnhanced = function(id) {
+    var detay = document.getElementById('rehber-detay');
+    var r = window.rehberlerData ? window.rehberlerData.find(function(x) { return x.id === id; }) : null;
+    if (!r || !detay) return;
+
+    var prog = getRehberProgress();
+    var completed = prog[id] || [];
+    var totalMaddeler = 0;
+    r.bolumler.forEach(function(b) { totalMaddeler += b.maddeler.length; });
+    var pct = totalMaddeler > 0 ? Math.round((completed.length / totalMaddeler) * 100) : 0;
+
+    var html = '<button type="button" class="fevaid-back-btn" onclick="closeRehber()">&#8592; Rehberler</button>';
+    html += '<h2 style="color:var(--primary-dark);margin:16px 0 8px;">' + r.ikon + ' ' + escapeHtml(r.baslik) + '</h2>';
+    html += '<p style="color:var(--text-muted);margin-bottom:16px;">' + escapeHtml(r.aciklama) + '</p>';
+
+    // Progress bar
+    html += '<div style="margin-bottom:24px;">';
+    html += '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">';
+    html += '<span style="font-size:0.85rem;color:var(--text-light);">' + completed.length + '/' + totalMaddeler + ' adım tamamlandı</span>';
+    html += '<span style="font-size:0.85rem;font-weight:600;color:var(--primary);">%' + pct + '</span>';
+    html += '</div>';
+    html += '<div class="istat-bar"><div class="istat-bar-fill" style="width:' + pct + '%;background:var(--primary);height:100%;border-radius:inherit;transition:width 0.3s;"></div></div>';
+    html += '</div>';
+
+    if (pct >= 100) {
+      html += '<div style="text-align:center;padding:16px;margin-bottom:16px;background:rgba(26,107,78,0.1);border-radius:var(--radius);color:var(--primary-dark);font-weight:500;">🎉 Bu rehberi tamamladınız!</div>';
+    }
+
+    r.bolumler.forEach(function(b, bi) {
+      var bolumDone = b.maddeler.every(function(m) { return completed.indexOf(m.kisim + '/' + m.maddeNo) !== -1; });
+      html += '<div class="rehber-bolum">';
+      html += '<h3 class="rehber-bolum-baslik"><span class="rehber-bolum-no">' + (bi + 1) + '</span> ' + escapeHtml(b.baslik) + (bolumDone ? ' ✓' : '') + '</h3>';
+      html += '<div class="rehber-maddeler">';
+      b.maddeler.forEach(function(m) {
+        var key = m.kisim + '/' + m.maddeNo;
+        var done = completed.indexOf(key) !== -1;
+        html += '<div class="rehber-madde-item" style="display:flex;align-items:center;gap:12px;padding:12px 20px;border-bottom:1px solid rgba(0,0,0,0.04);' + (done ? 'opacity:0.6;' : '') + '">';
+        html += '<button type="button" onclick="event.stopPropagation();toggleRehberAdim(\'' + id + '\',' + m.kisim + ',' + m.maddeNo + ')" style="width:24px;height:24px;border-radius:50%;border:2px solid ' + (done ? 'var(--primary)' : 'var(--border)') + ';background:' + (done ? 'var(--primary)' : 'transparent') + ';color:#fff;font-size:0.7rem;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;" aria-label="' + (done ? 'Tamamlandı olarak işaretle' : 'Okundu olarak işaretle') + '">' + (done ? '✓' : '') + '</button>';
+        html += '<a href="#" onclick="openMadde(' + m.kisim + ',' + m.maddeNo + ');return false" style="flex:1;text-decoration:none;color:inherit;">';
+        html += '<span class="rehber-madde-no">K' + m.kisim + ' / M' + m.maddeNo + '</span> ';
+        html += '<span class="rehber-madde-not">' + escapeHtml(m.not) + '</span>';
+        html += '</a></div>';
+      });
+      html += '</div></div>';
+    });
+
+    detay.innerHTML = html;
+  };
+
+  // Override
+  renderRehberDetay = function(id) {
+    renderRehberDetayEnhanced(id);
+  };
+})();
+
+// ===== UX-02: ÇALIŞMA ALANIM SAYFASI =====
+(function() {
+  // Çalışma Alanım sayfası oluştur
+  var calismaPage = document.createElement('main');
+  calismaPage.id = 'page-calisma-alanim';
+  calismaPage.className = 'page';
+  calismaPage.innerHTML = '<div class="container"><h2 class="section-title">Çalışma Alanım</h2><p class="section-desc">Notlarınız, yer imleriniz ve okuma geçmişiniz tek bir yerde.</p><div id="calisma-icerik"></div></div>';
+
+  // Footer'dan önce ekle
+  var footer = document.querySelector('.site-footer');
+  if (footer) footer.parentNode.insertBefore(calismaPage, footer);
+
+  // Footer'a link ekle
+  var kesfetLinks = document.querySelectorAll('.footer-links');
+  if (kesfetLinks.length >= 2) {
+    var link = document.createElement('a');
+    link.href = '/calisma-alanim';
+    link.textContent = 'Çalışma Alanım';
+    link.onclick = function() { navigateTo('calisma-alanim'); return false; };
+    kesfetLinks[1].appendChild(link);
+  }
+
+  // Route desteği ekle
+  var _origHandleRouteForCalisma = handleRoute;
+  handleRoute = function() {
+    var fullPath = getRoutePath();
+    if (fullPath === 'calisma-alanim') {
+      navigateTo('calisma-alanim', true);
+      return;
+    }
+    _origHandleRouteForCalisma();
+  };
+
+  // navigateTo desteği
+  var _origNavForCalisma = navigateTo;
+  navigateTo = function(page, fromRoute) {
+    _origNavForCalisma(page, fromRoute);
+    if (page === 'calisma-alanim') {
+      document.getElementById('page-calisma-alanim')?.classList.add('active');
+      renderCalismaAlanim();
+      updateSeoMeta("Çalışma Alanım - Se'âdet-i Ebediyye", "Notlarınız, yer imleriniz ve okuma geçmişiniz.", "https://ilmihal.org/calisma-alanim");
+    }
+  };
+
+  function renderCalismaAlanim() {
+    var el = document.getElementById('calisma-icerik');
+    if (!el) return;
+
+    var html = '';
+
+    // 1. Yer İmleri
+    var bookmarks = [];
+    try { bookmarks = JSON.parse(localStorage.getItem('ilmihal-bookmarks') || '[]'); } catch(e) {}
+    html += '<div style="margin-bottom:32px;">';
+    html += '<h3 style="color:var(--primary-dark);margin-bottom:12px;">⭐ Yer İmleri (' + bookmarks.length + ')</h3>';
+    if (bookmarks.length === 0) {
+      html += '<p style="color:var(--text-muted);">Henüz yer imi eklenmemiş. Bir madde açıp yıldız ikonuna tıklayarak ekleyebilirsiniz.</p>';
+    } else {
+      html += '<div class="iliskili-grid">';
+      bookmarks.forEach(function(b) {
+        var parts = b.split('/');
+        if (parts.length === 2) {
+          var kisim = parseInt(parts[0]), maddeNo = parseInt(parts[1]);
+          var m = window.tocData?.find(function(t) { return t.kisim === kisim && t.madde_no === maddeNo; });
+          if (m) {
+            html += '<a href="#" class="iliskili-item" onclick="openMadde(' + kisim + ',' + maddeNo + ');return false"><span class="iliskili-kisim">K' + kisim + '/M' + maddeNo + '</span> ' + escapeHtml(m.baslik) + '</a>';
+          }
+        }
+      });
+      html += '</div>';
+    }
+    html += '</div>';
+
+    // 2. Notlar
+    var allNotes = [];
+    for (var i = 0; i < localStorage.length; i++) {
+      var key = localStorage.key(i);
+      if (key && key.startsWith('ilmihal-not-')) {
+        try {
+          var notes = JSON.parse(localStorage.getItem(key));
+          var maddeKey = key.replace('ilmihal-not-', '');
+          if (Array.isArray(notes)) {
+            notes.forEach(function(n) { allNotes.push({ key: maddeKey, text: n.text || n, date: n.date || '' }); });
+          }
+        } catch(e) {}
+      }
+    }
+    html += '<div style="margin-bottom:32px;">';
+    html += '<h3 style="color:var(--primary-dark);margin-bottom:12px;">📝 Notlarım (' + allNotes.length + ')</h3>';
+    if (allNotes.length === 0) {
+      html += '<p style="color:var(--text-muted);">Henüz not alınmamış. Bir madde açıp "Notlarım" bölümünden not ekleyebilirsiniz.</p>';
+    } else {
+      allNotes.slice(0, 20).forEach(function(n) {
+        var parts = n.key.split('-');
+        html += '<div style="padding:12px 16px;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-sm);margin-bottom:8px;">';
+        html += '<div style="font-size:0.8rem;color:var(--text-muted);margin-bottom:4px;">Madde ' + n.key + (n.date ? ' · ' + n.date : '') + '</div>';
+        html += '<div style="font-size:0.9rem;">' + escapeHtml(typeof n.text === 'string' ? n.text : JSON.stringify(n.text)) + '</div>';
+        html += '</div>';
+      });
+    }
+    html += '</div>';
+
+    // 3. Okuma Geçmişi
+    var readHistory = [];
+    try { readHistory = JSON.parse(localStorage.getItem('ilmihal-read-history') || '[]'); } catch(e) {}
+    html += '<div style="margin-bottom:32px;">';
+    html += '<h3 style="color:var(--primary-dark);margin-bottom:12px;">📖 Son Okunanlar (' + readHistory.length + ')</h3>';
+    if (readHistory.length === 0) {
+      html += '<p style="color:var(--text-muted);">Henüz madde okumadınız.</p>';
+    } else {
+      html += '<div class="iliskili-grid">';
+      readHistory.slice(-12).reverse().forEach(function(key) {
+        var parts = key.split('/');
+        if (parts.length === 2) {
+          var kisim = parseInt(parts[0]), maddeNo = parseInt(parts[1]);
+          var m = window.tocData?.find(function(t) { return t.kisim === kisim && t.madde_no === maddeNo; });
+          if (m) {
+            html += '<a href="#" class="iliskili-item" onclick="openMadde(' + kisim + ',' + maddeNo + ');return false"><span class="iliskili-kisim">K' + kisim + '/M' + maddeNo + '</span> ' + escapeHtml(m.baslik) + '</a>';
+          }
+        }
+      });
+      html += '</div>';
+    }
+    html += '</div>';
+
+    // 4. Okuma Planı Özeti
+    var plan = getPlan();
+    if (plan) {
+      var completed = plan.completed.length;
+      var total = window.tocData ? window.tocData.length : 241;
+      var pct = Math.round((completed / total) * 100);
+      html += '<div style="margin-bottom:32px;">';
+      html += '<h3 style="color:var(--primary-dark);margin-bottom:12px;">📅 Okuma Planı</h3>';
+      html += '<div style="padding:16px;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);">';
+      html += '<p style="font-weight:500;">' + plan.gun + ' günlük plan · %' + pct + ' tamamlandı</p>';
+      html += '<div class="istat-bar" style="margin:8px 0;"><div class="istat-bar-fill" style="width:' + pct + '%;background:var(--primary);height:100%;border-radius:inherit;"></div></div>';
+      html += '<a href="#" onclick="navigateTo(\'okuma-plani\');return false" style="color:var(--primary);font-size:0.9rem;">Plana git →</a>';
+      html += '</div></div>';
+    }
+
+    // 5. Rehber İlerleme
+    var rehberProg = {};
+    try { rehberProg = JSON.parse(localStorage.getItem('ilmihal-rehber-progress') || '{}'); } catch(e) {}
+    var rehberKeys = Object.keys(rehberProg);
+    if (rehberKeys.length > 0 && window.rehberlerData) {
+      html += '<div style="margin-bottom:32px;">';
+      html += '<h3 style="color:var(--primary-dark);margin-bottom:12px;">📚 Rehber İlerlemesi</h3>';
+      rehberKeys.forEach(function(rid) {
+        var r = window.rehberlerData.find(function(x) { return x.id === rid; });
+        if (!r) return;
+        var totalM = 0;
+        r.bolumler.forEach(function(b) { totalM += b.maddeler.length; });
+        var doneM = rehberProg[rid].length;
+        var rpct = totalM > 0 ? Math.round((doneM / totalM) * 100) : 0;
+        html += '<div style="padding:12px 16px;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-sm);margin-bottom:8px;cursor:pointer;" onclick="navigateTo(\'rehberler\');setTimeout(function(){openRehber(\'' + rid + '\')},100)">';
+        html += '<div style="display:flex;justify-content:space-between;align-items:center;">';
+        html += '<span>' + r.ikon + ' ' + escapeHtml(r.baslik) + '</span>';
+        html += '<span style="font-size:0.85rem;color:var(--primary);font-weight:600;">%' + rpct + '</span>';
+        html += '</div>';
+        html += '<div class="istat-bar" style="margin-top:6px;"><div class="istat-bar-fill" style="width:' + rpct + '%;background:var(--primary);height:100%;border-radius:inherit;"></div></div>';
+        html += '</div>';
+      });
+      html += '</div>';
+    }
+
+    el.innerHTML = html;
+  }
+
+  // Okuma geçmişi takibi: markAsRead'i genişlet
+  var _origMarkAsRead = (typeof markAsRead === 'function') ? markAsRead : function() {};
+  markAsRead = function(kisim, maddeNo) {
+    _origMarkAsRead(kisim, maddeNo);
+    var key = kisim + '/' + maddeNo;
+    var history = [];
+    try { history = JSON.parse(localStorage.getItem('ilmihal-read-history') || '[]'); } catch(e) {}
+    // Tekrarı kaldır, sona ekle
+    history = history.filter(function(h) { return h !== key; });
+    history.push(key);
+    if (history.length > 50) history = history.slice(-50);
+    localStorage.setItem('ilmihal-read-history', JSON.stringify(history));
+  };
+})();
+
+// ===== IA-02: KULLANICI NİYETİNE GÖRE GİRİŞ KAPILARI =====
+(function() {
+  // Ana sayfadaki "Konulara Hızlı Erişim" bölümünün önüne niyet tabanlı kartlar ekle
+  var hizliErisim = document.querySelector('.hizli-erisim');
+  if (!hizliErisim) return;
+
+  var section = document.createElement('section');
+  section.className = 'niyet-giris';
+  section.innerHTML = '<div class="container">' +
+    '<h3 class="section-title">Nereden Başlasam?</h3>' +
+    '<div class="niyet-kartlari">' +
+      '<a class="niyet-kart" href="#" onclick="navigateTo(\'rehberler\');return false">' +
+        '<span class="niyet-kart-icon">🆕</span>' +
+        '<h3>İlk Kez Geliyorum</h3>' +
+        '<p>Rehberlerle adım adım başlayın. Namaz, oruç ve temel bilgiler.</p>' +
+      '</a>' +
+      '<a class="niyet-kart" href="#" onclick="navigateTo(\'icerik\');return false">' +
+        '<span class="niyet-kart-icon">🔍</span>' +
+        '<h3>Belirli Bir Konu Arıyorum</h3>' +
+        '<p>İçindekilerden konuya gidin veya arama yapın.</p>' +
+      '</a>' +
+      '<a class="niyet-kart" href="#" onclick="navigateTo(\'calisma-alanim\');return false">' +
+        '<span class="niyet-kart-icon">📖</span>' +
+        '<h3>Düzenli Okuyorum</h3>' +
+        '<p>Kaldığınız yerden devam edin, okuma planınızı takip edin.</p>' +
+      '</a>' +
+    '</div>' +
+  '</div>';
+
+  hizliErisim.parentNode.insertBefore(section, hizliErisim);
+})();
+
+// ===== UX-01: ONBOARDING / İLK KULLANIM İPUCU =====
+(function() {
+  if (localStorage.getItem('ilmihal-onboarding-seen')) return;
+
+  // İlk ziyarette kısa ipucu göster
+  var tip = document.createElement('div');
+  tip.id = 'onboarding-tip';
+  tip.style.cssText = 'position:fixed;bottom:24px;right:24px;z-index:999;background:var(--bg-card);border:2px solid var(--primary);border-radius:var(--radius);padding:20px 24px;max-width:340px;box-shadow:var(--shadow-lg);';
+  tip.innerHTML = '<div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:8px;"><strong style="color:var(--primary-dark);">Hoş Geldiniz!</strong><button type="button" onclick="closeOnboarding()" style="background:none;border:none;font-size:1.2rem;cursor:pointer;color:var(--text-muted);">&times;</button></div>' +
+    '<p style="font-size:0.88rem;color:var(--text-light);line-height:1.5;margin-bottom:12px;">Birkaç ipucu:</p>' +
+    '<ul style="font-size:0.85rem;color:var(--text-light);line-height:1.7;padding-left:18px;margin:0;">' +
+      '<li>Bir madde açıp <strong>kelimelerin altına</strong> gelin → anlamı görün</li>' +
+      '<li><strong>⭐ Yıldız</strong> ile yer imi ekleyin</li>' +
+      '<li><strong>A-/A+</strong> ile yazı boyutunu ayarlayın</li>' +
+      '<li><strong>🌙 Tema</strong> butonu ile gece moduna geçin</li>' +
+    '</ul>' +
+    '<button type="button" onclick="closeOnboarding()" class="btn btn-primary btn-sm" style="margin-top:12px;width:100%;">Anladım</button>';
+  document.body.appendChild(tip);
+
+  window.closeOnboarding = function() {
+    var el = document.getElementById('onboarding-tip');
+    if (el) el.remove();
+    localStorage.setItem('ilmihal-onboarding-seen', '1');
+  };
+
+  // 60 saniye sonra otomatik kapat
+  setTimeout(function() {
+    var el = document.getElementById('onboarding-tip');
+    if (el) el.remove();
+    localStorage.setItem('ilmihal-onboarding-seen', '1');
+  }, 60000);
+})();
+
+// ===== SEO-04: İÇ LİNK AĞI GÜÇLENDİRME =====
+(function() {
+  // Sözlük sayfasında: her terim için ilgili maddeleri göster
+  // Günün bilgisi'nde: ilgili maddelere link
+  // Bu zaten mevcut crossRefData ile yapılabilir
+
+  // Sözlük detayında ilgili maddeleri ekle
+  var _origRenderSozlukDetail = (typeof renderSozlukDetail === 'function') ? renderSozlukDetail : null;
+
+  // Arama sonuçlarına sözlük ve şahıs linkleri ekle (SEO-04)
+  // doFullSearch sonuçlarının altına "Bu arama ile ilgili" bölümü ekle
+  var _origDoFullSearchForLinks = doFullSearch;
+  doFullSearch = async function(fromRoute) {
+    await _origDoFullSearchForLinks(fromRoute);
+
+    var rawQuery = document.getElementById('full-search')?.value?.trim();
+    if (!rawQuery || rawQuery.length < 2) return;
+
+    var results = document.getElementById('arama-results');
+    if (!results) return;
+
+    // Sözlük eşleşmeleri
+    var relatedHtml = '';
+    if (window.SearchEngine) {
+      var sr = window.SearchEngine.search(rawQuery, { limit: 3 });
+      if (sr.sozluk && sr.sozluk.length > 0) {
+        relatedHtml += '<div style="margin-top:24px;padding:16px;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);">';
+        relatedHtml += '<h4 style="font-size:0.9rem;color:var(--primary-dark);margin-bottom:8px;">📖 İlgili Sözlük Terimleri</h4>';
+        sr.sozluk.slice(0, 5).forEach(function(s) {
+          relatedHtml += '<a href="#" onclick="navigateTo(\'sozluk\');setTimeout(function(){document.getElementById(\'sozluk-search\').value=\'' + escapeHtml(s.title).replace(/'/g, "\\'") + '\';document.getElementById(\'sozluk-search\').dispatchEvent(new Event(\'input\'))},200);return false" style="display:inline-block;padding:4px 12px;margin:2px;background:rgba(26,107,78,0.08);border-radius:16px;color:var(--primary);text-decoration:none;font-size:0.85rem;">' + escapeHtml(s.title) + '</a>';
+        });
+        relatedHtml += '</div>';
+      }
+      if (sr.sahis && sr.sahis.length > 0) {
+        relatedHtml += '<div style="margin-top:12px;padding:16px;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);">';
+        relatedHtml += '<h4 style="font-size:0.9rem;color:var(--primary-dark);margin-bottom:8px;">👤 İlgili Şahıslar</h4>';
+        sr.sahis.slice(0, 5).forEach(function(s) {
+          var slug = s.data ? s.data.slug : '';
+          relatedHtml += '<a href="#" onclick="navigateTo(\'sahislar\');setTimeout(function(){openSahis(\'' + slug + '\')},200);return false" style="display:inline-block;padding:4px 12px;margin:2px;background:rgba(201,168,76,0.12);border-radius:16px;color:var(--gold);text-decoration:none;font-size:0.85rem;">' + escapeHtml(s.title) + '</a>';
+        });
+        relatedHtml += '</div>';
+      }
+    }
+
+    if (relatedHtml) {
+      results.insertAdjacentHTML('beforeend', relatedHtml);
+    }
+  };
+})()
 
