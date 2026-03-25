@@ -23,7 +23,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=16">
+  <link rel="stylesheet" href="style.css?v=17">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -210,6 +210,21 @@
       </div>
       <div class="madde-overlay-content">
         <div id="madde-body"></div>
+        <div class="madde-notlar" id="madde-notlar">
+          <div class="notlar-header">
+            <span class="notlar-title">&#128221; Notlarım</span>
+            <button type="button" class="notlar-toggle" id="notlar-toggle" onclick="toggleNotlar()">+</button>
+          </div>
+          <div id="notlar-area" style="display:none">
+            <textarea id="not-input" placeholder="Bu madde hakkında not yazın..." rows="3"></textarea>
+            <button type="button" class="btn btn-sm" onclick="saveNot()" style="margin-top:6px;">Kaydet</button>
+            <div id="not-list"></div>
+          </div>
+        </div>
+        <div class="madde-nav-bar">
+          <button type="button" class="madde-nav-btn" id="madde-prev" onclick="navMadde(-1)">&#8592; Önceki Madde</button>
+          <button type="button" class="madde-nav-btn" id="madde-next" onclick="navMadde(1)">Sonraki Madde &#8594;</button>
+        </div>
       </div>
     </div>
   </div>
@@ -288,6 +303,12 @@
             <h3>Âyet-i Kerîme ve Hadîs-i Şerîf İndeksi</h3>
             <p>Kitapta geçen âyet-i kerîmelerin ve hadîs-i şerîflerin listesi</p>
             <span class="fevaid-sec-count">708 kayıt</span>
+          </div>
+          <div class="fevaid-sec-card" onclick="navigateTo('okuma-plani')">
+            <div class="fevaid-sec-icon">&#128197;</div>
+            <h3>Okuma Planı</h3>
+            <p>30, 60 veya 90 günde kitabı tamamlayın</p>
+            <span class="fevaid-sec-count">4 plan</span>
           </div>
         </div>
       </div>
@@ -459,6 +480,48 @@
     </div>
   </main>
 
+  <!-- Okuma Planı -->
+  <main id="page-okuma-plani" class="page">
+    <div class="container">
+      <h2 class="section-title">Okuma Planı</h2>
+      <p class="section-desc">Kitabı düzenli okumak için bir plan seçin. Her gün hangi maddeyi okuyacağınızı gösterir.</p>
+      <div id="plan-secim" class="plan-secim">
+        <div class="plan-card" onclick="startPlan(30)">
+          <div class="plan-gun">30</div>
+          <div class="plan-label">Günde Tamamla</div>
+          <p>Günde ~8 madde. Yoğun okuma programı.</p>
+        </div>
+        <div class="plan-card" onclick="startPlan(60)">
+          <div class="plan-gun">60</div>
+          <div class="plan-label">Günde Tamamla</div>
+          <p>Günde ~4 madde. Dengeli tempo.</p>
+        </div>
+        <div class="plan-card" onclick="startPlan(90)">
+          <div class="plan-gun">90</div>
+          <div class="plan-label">Günde Tamamla</div>
+          <p>Günde ~3 madde. Rahat okuma.</p>
+        </div>
+        <div class="plan-card" onclick="startPlan(241)">
+          <div class="plan-gun">241</div>
+          <div class="plan-label">Günde 1 Madde</div>
+          <p>Her gün bir madde. Sekiz ayda tamamla.</p>
+        </div>
+      </div>
+      <div id="plan-aktif" style="display:none">
+        <div class="plan-aktif-header">
+          <h3 id="plan-baslik"></h3>
+          <div class="plan-progress-wrap">
+            <div class="istat-bar"><div class="istat-bar-fill" id="plan-bar"></div></div>
+            <span id="plan-progress-text"></span>
+          </div>
+        </div>
+        <h4 style="margin:24px 0 12px;color:var(--primary-dark);">Bugün Okunacaklar</h4>
+        <div id="plan-bugun" class="plan-bugun"></div>
+        <button type="button" class="btn btn-secondary" onclick="resetPlan()" style="margin-top:24px;">Planı Sıfırla</button>
+      </div>
+    </div>
+  </main>
+
   <!-- Hakkında -->
   <main id="page-hakkinda" class="page">
     <div class="container">
@@ -547,6 +610,6 @@
   <script src="search-engine.js?v=5"></script>
   <script src="ayet-hadis.js?v=2"></script>
   <script src="audio-map.js?v=1"></script>
-  <script src="app.js?v=16"></script>
+  <script src="app.js?v=17"></script>
 </body>
 </html>

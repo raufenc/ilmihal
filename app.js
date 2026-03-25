@@ -40,7 +40,7 @@ function handleRoute() {
     return;
   }
 
-  const validPages = ['anasayfa','icerik','fevaid','sozluk','arama','sahislar','hakkinda','quiz','istatistik','ayet-hadis'];
+  const validPages = ['anasayfa','icerik','fevaid','sozluk','arama','sahislar','hakkinda','quiz','istatistik','ayet-hadis','okuma-plani'];
   if (validPages.includes(route)) {
     navigateTo(route, true);
   } else {
@@ -2605,3 +2605,297 @@ closeMadde = function() {
   audioState.playing = false;
   _origCloseMadde();
 };
+
+// ===== TAHMİNİ CÜMLE HIGHLIGHT (Ses Senkron) =====
+var syncState = { sentences: [], currentSentence: -1, totalChars: 0 };
+
+function initSyncHighlight() {
+  var textEl = document.querySelector('.madde-text');
+  if (!textEl) return;
+  // Cümleleri bul (text node'ları tara)
+  var fullText = textEl.textContent || '';
+  // Cümle sonlarından böl
+  var sentences = fullText.split(/(?<=[.!?])\s+/).filter(function(s) { return s.trim().length > 10; });
+  syncState.sentences = sentences;
+  syncState.totalChars = fullText.length;
+  syncState.currentSentence = -1;
+}
+
+function updateSyncHighlight(currentTime, duration) {
+  if (!duration || syncState.sentences.length === 0) return;
+  var pct = currentTime / duration;
+  var charPos = Math.floor(pct * syncState.totalChars);
+  
+  // Hangi cümledeyiz?
+  var cumChars = 0;
+  var sentIdx = 0;
+  for (var i = 0; i < syncState.sentences.length; i++) {
+    cumChars += syncState.sentences[i].length;
+    if (cumChars >= charPos) { sentIdx = i; break; }
+  }
+  
+  if (sentIdx !== syncState.currentSentence) {
+    syncState.currentSentence = sentIdx;
+    // Önceki highlight'ı kaldır
+    document.querySelectorAll('.audio-highlight').forEach(function(el) { el.classList.remove('audio-highlight'); });
+    // Yeni cümleyi bul ve highlight et (basit yaklaşım - ilk birkaç kelimeyle ara)
+    var searchText = syncState.sentences[sentIdx];
+    if (searchText) {
+      var firstWords = searchText.substring(0, 40);
+      var textEl = document.querySelector('.madde-text');
+      if (textEl) {
+        var walker = document.createTreeWalker(textEl, NodeFilter.SHOW_TEXT);
+        var node;
+        while ((node = walker.nextNode())) {
+          if (node.textContent.indexOf(firstWords) !== -1) {
+            // Bu node'un parent'ını highlight et
+            var parent = node.parentElement;
+            if (parent && !parent.classList.contains('zor-kelime')) {
+              parent.classList.add('audio-highlight');
+              parent.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+            break;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Audio timeupdate'e sync ekle
+document.addEventListener('DOMContentLoaded', function() {
+  var audio = document.getElementById('madde-audio');
+  if (audio) {
+    audio.addEventListener('play', function() { initSyncHighlight(); });
+    audio.addEventListener('timeupdate', function() {
+      if (audioState.playing) {
+        updateSyncHighlight(audio.currentTime, audio.duration);
+      }
+    });
+  }
+});
+
+// ===== NOT ALMA SİSTEMİ =====
+function toggleNotlar() {
+  var area = document.getElementById('notlar-area');
+  var btn = document.getElementById('notlar-toggle');
+  if (area.style.display === 'none') {
+    area.style.display = 'block';
+    if (btn) btn.textContent = '−';
+    loadNotlar();
+  } else {
+    area.style.display = 'none';
+    if (btn) btn.textContent = '+';
+  }
+}
+
+function getNotlar() {
+  try { return JSON.parse(localStorage.getItem('ilmihal-notlar') || '{}'); } catch(e) { return {}; }
+}
+
+function loadNotlar() {
+  if (!currentMaddeForBookmark) return;
+  var key = currentMaddeForBookmark.kisim + '/' + currentMaddeForBookmark.madde_no;
+  var notlar = getNotlar();
+  var list = notlar[key] || [];
+  var listEl = document.getElementById('not-list');
+  if (!listEl) return;
+  if (list.length === 0) {
+    listEl.innerHTML = '<p style="color:var(--text-muted);font-size:0.8rem;margin-top:8px;">Henüz not yok.</p>';
+  } else {
+    listEl.innerHTML = list.map(function(n, i) {
+      return '<div class="not-item"><div class="not-text">' + n.text + '</div><div class="not-meta"><span>' + n.date + '</span><button type="button" onclick="deleteNot(' + i + ')" class="not-sil">&times;</button></div></div>';
+    }).join('');
+  }
+}
+
+function saveNot() {
+  if (!currentMaddeForBookmark) return;
+  var input = document.getElementById('not-input');
+  var text = input.value.trim();
+  if (!text) return;
+  var key = currentMaddeForBookmark.kisim + '/' + currentMaddeForBookmark.madde_no;
+  var notlar = getNotlar();
+  if (!notlar[key]) notlar[key] = [];
+  notlar[key].push({ text: text, date: new Date().toLocaleDateString('tr-TR') });
+  localStorage.setItem('ilmihal-notlar', JSON.stringify(notlar));
+  input.value = '';
+  loadNotlar();
+}
+
+function deleteNot(idx) {
+  if (!currentMaddeForBookmark) return;
+  var key = currentMaddeForBookmark.kisim + '/' + currentMaddeForBookmark.madde_no;
+  var notlar = getNotlar();
+  if (notlar[key]) {
+    notlar[key].splice(idx, 1);
+    if (notlar[key].length === 0) delete notlar[key];
+    localStorage.setItem('ilmihal-notlar', JSON.stringify(notlar));
+    loadNotlar();
+  }
+}
+
+// ===== MADDE İÇİ NAVİGASYON =====
+function navMadde(dir) {
+  if (!currentMaddeForBookmark || !window.tocData) return;
+  var current = window.tocData.findIndex(function(m) {
+    return m.kisim === currentMaddeForBookmark.kisim && m.madde_no === currentMaddeForBookmark.madde_no;
+  });
+  if (current === -1) return;
+  var newIdx = current + dir;
+  if (newIdx < 0 || newIdx >= window.tocData.length) return;
+  var next = window.tocData[newIdx];
+  // Audio durdur
+  var audio = document.getElementById('madde-audio');
+  if (audio) { audio.pause(); audio.src = ''; }
+  audioState.playing = false;
+  var bar = document.getElementById('audio-player-bar');
+  if (bar) bar.style.display = 'none';
+  // Yeni maddeyi aç
+  openMadde(next.kisim, next.madde_no);
+}
+
+// ===== OKUMA PLANI =====
+function getPlan() {
+  try { return JSON.parse(localStorage.getItem('ilmihal-plan') || 'null'); } catch(e) { return null; }
+}
+
+function startPlan(gun) {
+  var total = window.tocData ? window.tocData.length : 241;
+  var perDay = Math.ceil(total / gun);
+  var plan = {
+    gun: gun,
+    perDay: perDay,
+    startDate: new Date().toISOString().slice(0, 10),
+    completed: []
+  };
+  localStorage.setItem('ilmihal-plan', JSON.stringify(plan));
+  renderPlan();
+}
+
+function resetPlan() {
+  localStorage.removeItem('ilmihal-plan');
+  document.getElementById('plan-secim').style.display = 'grid';
+  document.getElementById('plan-aktif').style.display = 'none';
+}
+
+function renderPlan() {
+  var plan = getPlan();
+  if (!plan || !window.tocData) {
+    var secim = document.getElementById('plan-secim');
+    if (secim) secim.style.display = 'grid';
+    return;
+  }
+  
+  document.getElementById('plan-secim').style.display = 'none';
+  document.getElementById('plan-aktif').style.display = 'block';
+  
+  var baslik = document.getElementById('plan-baslik');
+  if (baslik) baslik.textContent = plan.gun + ' Günlük Okuma Planı (Günde ' + plan.perDay + ' madde)';
+  
+  // Kaçıncı gün?
+  var start = new Date(plan.startDate);
+  var today = new Date();
+  var dayNum = Math.floor((today - start) / 86400000);
+  
+  // İlerleme
+  var completed = plan.completed.length;
+  var total = window.tocData.length;
+  var pct = Math.round((completed / total) * 100);
+  var bar = document.getElementById('plan-bar');
+  if (bar) bar.style.width = pct + '%';
+  var text = document.getElementById('plan-progress-text');
+  if (text) text.textContent = completed + '/' + total + ' madde (%' + pct + ')';
+  
+  // Bugün okunacaklar
+  var startIdx = dayNum * plan.perDay;
+  var endIdx = Math.min(startIdx + plan.perDay, total);
+  var bugunEl = document.getElementById('plan-bugun');
+  if (bugunEl && window.tocData) {
+    var kisimLabels = { 1: 'Birinci Kısım', 2: 'İkinci Kısım', 3: 'Üçüncü Kısım' };
+    var html = '';
+    for (var i = startIdx; i < endIdx; i++) {
+      if (i >= window.tocData.length) break;
+      var m = window.tocData[i];
+      var key = m.kisim + '/' + m.madde_no;
+      var done = plan.completed.indexOf(key) !== -1;
+      html += '<div class="plan-madde-item ' + (done ? 'plan-done' : '') + '" onclick="planMaddeOku(' + m.kisim + ',' + m.madde_no + ')"><span class="plan-check">' + (done ? '✓' : '○') + '</span><span class="plan-madde-title">' + m.baslik + '</span><span class="plan-madde-meta">' + kisimLabels[m.kisim] + '</span></div>';
+    }
+    if (startIdx >= total) {
+      html = '<p style="text-align:center;color:var(--primary);font-size:1.1rem;padding:24px;">🎉 Tebrikler! Planı tamamladınız!</p>';
+    }
+    bugunEl.innerHTML = html;
+  }
+}
+
+function planMaddeOku(kisim, maddeNo) {
+  var plan = getPlan();
+  if (plan) {
+    var key = kisim + '/' + maddeNo;
+    if (plan.completed.indexOf(key) === -1) {
+      plan.completed.push(key);
+      localStorage.setItem('ilmihal-plan', JSON.stringify(plan));
+    }
+  }
+  openMadde(kisim, maddeNo);
+}
+
+// navigateTo override'a okuma planı ekle
+var _prevNavTo = navigateTo;
+navigateTo = function(page, fromRoute) {
+  _prevNavTo(page, fromRoute);
+  if (page === 'okuma-plani') { document.getElementById('page-okuma-plani')?.classList.add('active'); renderPlan(); }
+};
+
+// ===== DİNAMİK OG GÖRSEL (Canvas) =====
+function generateShareImage(madde, callback) {
+  var canvas = document.createElement('canvas');
+  canvas.width = 1200;
+  canvas.height = 630;
+  var ctx = canvas.getContext('2d');
+  
+  // Arka plan gradient
+  var grad = ctx.createLinearGradient(0, 0, 1200, 630);
+  grad.addColorStop(0, '#0e4a35');
+  grad.addColorStop(1, '#1a6b4e');
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, 1200, 630);
+  
+  // Altın çizgi
+  ctx.fillStyle = '#c9a84c';
+  ctx.fillRect(60, 80, 120, 4);
+  
+  // Site adı
+  ctx.fillStyle = 'rgba(255,255,255,0.7)';
+  ctx.font = '24px serif';
+  ctx.fillText("Se'âdet-i Ebediyye", 60, 140);
+  
+  // Madde başlığı
+  ctx.fillStyle = '#e8d48b';
+  ctx.font = 'bold 42px serif';
+  // Uzun başlıkları kır
+  var words = madde.baslik.split(' ');
+  var lines = [];
+  var line = '';
+  words.forEach(function(w) {
+    if ((line + ' ' + w).length > 40) { lines.push(line); line = w; }
+    else { line = line ? line + ' ' + w : w; }
+  });
+  if (line) lines.push(line);
+  lines.forEach(function(l, i) {
+    ctx.fillText(l, 60, 220 + i * 56);
+  });
+  
+  // Alt bilgi
+  var kisimLabels = { 1: 'Birinci Kısım', 2: 'İkinci Kısım', 3: 'Üçüncü Kısım' };
+  ctx.fillStyle = 'rgba(255,255,255,0.5)';
+  ctx.font = '22px sans-serif';
+  ctx.fillText(kisimLabels[madde.kisim] + ', Madde ' + madde.madde_no, 60, 520);
+  
+  // Watermark
+  ctx.fillStyle = 'rgba(255,255,255,0.3)';
+  ctx.font = '20px sans-serif';
+  ctx.fillText('ilmihal.org', 60, 580);
+  
+  if (callback) callback(canvas.toDataURL('image/png'));
+}
