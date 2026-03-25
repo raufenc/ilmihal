@@ -2729,12 +2729,40 @@ function getPlan() {
   try { return JSON.parse(localStorage.getItem('ilmihal-plan') || 'null'); } catch(e) { return null; }
 }
 
+function getMaddeSayfa(m) {
+  var s = m.sayfa_no;
+  var e = m.sayfa_bitis || s;
+  if (e < s) e = s;
+  return Math.max(1, e - s + 1);
+}
+
 function startPlan(gun) {
-  var total = window.tocData ? window.tocData.length : 241;
-  var perDay = Math.ceil(total / gun);
+  if (!window.tocData) return;
+  // Toplam sayfa sayısını hesapla, günlere sayfa bazlı dengeli dağıt
+  var totalPages = 0;
+  window.tocData.forEach(function(m) { totalPages += getMaddeSayfa(m); });
+  var pagesPerDay = Math.ceil(totalPages / gun);
+
+  // Maddeleri günlere dağıt
+  var days = [];
+  var currentDay = [];
+  var currentPages = 0;
+  window.tocData.forEach(function(m, i) {
+    var p = getMaddeSayfa(m);
+    currentDay.push(i);
+    currentPages += p;
+    if (currentPages >= pagesPerDay) {
+      days.push(currentDay);
+      currentDay = [];
+      currentPages = 0;
+    }
+  });
+  if (currentDay.length > 0) days.push(currentDay);
+
   var plan = {
     gun: gun,
-    perDay: perDay,
+    pagesPerDay: pagesPerDay,
+    days: days,
     startDate: new Date().toISOString().slice(0, 10),
     completed: []
   };
@@ -2755,18 +2783,27 @@ function renderPlan() {
     if (secim) secim.style.display = 'grid';
     return;
   }
-  
+
+  // Eski format (perDay) varsa yeni formata çevir
+  if (plan.perDay && !plan.days) {
+    resetPlan();
+    startPlan(plan.gun);
+    return;
+  }
+
   document.getElementById('plan-secim').style.display = 'none';
   document.getElementById('plan-aktif').style.display = 'block';
-  
+
   var baslik = document.getElementById('plan-baslik');
-  if (baslik) baslik.textContent = plan.gun + ' Günlük Okuma Planı (Günde ' + plan.perDay + ' madde)';
-  
+  if (baslik) baslik.textContent = plan.gun + ' Günlük Okuma Planı (günde ~' + plan.pagesPerDay + ' sayfa)';
+
   // Kaçıncı gün?
   var start = new Date(plan.startDate);
   var today = new Date();
   var dayNum = Math.floor((today - start) / 86400000);
-  
+  if (dayNum < 0) dayNum = 0;
+  if (dayNum >= plan.days.length) dayNum = plan.days.length - 1;
+
   // İlerleme
   var completed = plan.completed.length;
   var total = window.tocData.length;
@@ -2775,23 +2812,23 @@ function renderPlan() {
   if (bar) bar.style.width = pct + '%';
   var text = document.getElementById('plan-progress-text');
   if (text) text.textContent = completed + '/' + total + ' madde (%' + pct + ')';
-  
+
   // Bugün okunacaklar
-  var startIdx = dayNum * plan.perDay;
-  var endIdx = Math.min(startIdx + plan.perDay, total);
+  var todayIndices = plan.days[dayNum] || [];
   var bugunEl = document.getElementById('plan-bugun');
   if (bugunEl && window.tocData) {
     var kisimLabels = { 1: 'Birinci Kısım', 2: 'İkinci Kısım', 3: 'Üçüncü Kısım' };
-    var html = '';
-    for (var i = startIdx; i < endIdx; i++) {
-      if (i >= window.tocData.length) break;
-      var m = window.tocData[i];
+    var html = '<p style="color:var(--text-muted);font-size:0.85rem;margin-bottom:12px;">' + (dayNum + 1) + '. gün — ' + todayIndices.length + ' madde</p>';
+    todayIndices.forEach(function(idx) {
+      if (idx >= window.tocData.length) return;
+      var m = window.tocData[idx];
       var key = m.kisim + '/' + m.madde_no;
       var done = plan.completed.indexOf(key) !== -1;
-      html += '<div class="plan-madde-item ' + (done ? 'plan-done' : '') + '" onclick="planMaddeOku(' + m.kisim + ',' + m.madde_no + ')"><span class="plan-check">' + (done ? '✓' : '○') + '</span><span class="plan-madde-title">' + m.baslik + '</span><span class="plan-madde-meta">' + kisimLabels[m.kisim] + '</span></div>';
-    }
-    if (startIdx >= total) {
-      html = '<p style="text-align:center;color:var(--primary);font-size:1.1rem;padding:24px;">🎉 Tebrikler! Planı tamamladınız!</p>';
+      var sayfa = getMaddeSayfa(m);
+      html += '<div class="plan-madde-item ' + (done ? 'plan-done' : '') + '" onclick="planMaddeOku(' + m.kisim + ',' + m.madde_no + ')"><span class="plan-check">' + (done ? '✓' : '○') + '</span><span class="plan-madde-title">' + escapeHtml(m.baslik) + '</span><span class="plan-madde-meta">' + kisimLabels[m.kisim] + ' · ' + sayfa + ' sayfa</span></div>';
+    });
+    if (completed >= total) {
+      html = '<p style="text-align:center;color:var(--primary);font-size:1.1rem;padding:24px;">Tebrikler! Plan\u0131 tamamlad\u0131n\u0131z!</p>';
     }
     bugunEl.innerHTML = html;
   }
