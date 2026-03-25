@@ -2160,23 +2160,49 @@ function resetQuiz() {
 
 
 
+// Türkçe stop words (soru kelimeleri + bağlaçlar)
+var stopWords = new Set(['bir','bu','ve','de','da','ile','için','ne','nasıl','nedir','nelerdir','kaç','kadar','hangi','kimlere','mi','mı','mu','mü','var','yok','olan','olarak','ise','gibi','daha','en','çok','az','her','o','şu','ben','sen','biz','siz','onlar','ki','ama','fakat','veya','ya','hem','neden','niçin','acaba','dir','dır','dur','dür','tır','tir','tur','lar','ler','dan','den','tan','ten','kadardır','kadardır','midir','nerede','yoksa','eder','ise','olan','olur','olmuş']);
+
+function cleanSearchQuery(query) {
+  var norm = (typeof normalizeSearch === 'function') ? normalizeSearch(query) : query.toLowerCase();
+  return norm.split(/\s+/).filter(function(w) { return w.length >= 2 && !stopWords.has(w); });
+}
+
 function searchInBook(query) {
   var results = [];
   if (!window.tocData || !window.kisimTextsCache) return results;
-  var normQ = (typeof normalizeSearch === 'function') ? normalizeSearch(query) : query.toLowerCase();
-  var qWords = normQ.split(/\s+/).filter(function(w) { return w.length >= 2; });
-  if (qWords.length === 0) return results;
+  var qWords = cleanSearchQuery(query);
+  if (qWords.length === 0) {
+    // Stop word'lerden sonra hiç kelime kalmadıysa orijinali kullan
+    var fallback = (typeof normalizeSearch === 'function') ? normalizeSearch(query) : query.toLowerCase();
+    qWords = fallback.split(/\s+/).filter(function(w) { return w.length >= 3; });
+    if (qWords.length === 0) return results;
+  }
 
   window.tocData.forEach(function(m) {
     var texts = window.kisimTextsCache[m.kisim];
     if (!texts) return;
     var metin = texts[String(m.madde_no)] || '';
     var normMetin = (typeof normalizeSearch === 'function') ? normalizeSearch(metin) : metin.toLowerCase();
+    var normBaslik = (typeof normalizeSearch === 'function') ? normalizeSearch(m.baslik) : m.baslik.toLowerCase();
+
+    // Metin skoru
     var score = 0;
+    var matchedWords = 0;
     qWords.forEach(function(w) {
       var idx = normMetin.indexOf(w);
+      if (idx !== -1) matchedWords++;
       while (idx !== -1) { score++; idx = normMetin.indexOf(w, idx + 1); }
     });
+
+    // Başlık bonus (çok önemli)
+    qWords.forEach(function(w) {
+      if (normBaslik.indexOf(w) !== -1) score += 20;
+    });
+
+    // Tüm kelimeler eşleşirse bonus
+    if (matchedWords === qWords.length) score += 10;
+
     if (score > 0) {
       // En iyi pasajı bul
       var bestPos = 0;
@@ -2189,7 +2215,6 @@ function searchInBook(query) {
       }
       var start = Math.max(0, bestPos - 50);
       var pasaj = escapeHtml(metin.substring(start, start + 350));
-      // Highlight
       qWords.forEach(function(w) {
         var re = new RegExp('(' + escapeRegex(w) + ')', 'gi');
         pasaj = pasaj.replace(re, '<mark>$1</mark>');
@@ -2198,7 +2223,7 @@ function searchInBook(query) {
     }
   });
   results.sort(function(a, b) { return b.score - a.score; });
-  return results.slice(0, 8);
+  return results.slice(0, 12);
 }
 
 // ===== FAQ SCHEMA (dinamik) =====
@@ -2253,28 +2278,44 @@ function birlesikAra() {
   var ipuclari = document.getElementById('arama-ipuclari');
   if (ipuclari) ipuclari.style.display = 'none';
 
-  // Soru mu kelime mi?
-  var isSoru = query.length > 15 || query.indexOf('?') !== -1 || /nasıl|nedir|nelerdir|kaç|kimlere|hangi/i.test(query);
+  var sonuc = document.getElementById('arama-results');
+  sonuc.innerHTML = '<div class="loading">Kitapta aranıyor...</div>';
+  updateUrl('arama/' + encodeURIComponent(query));
 
-  if (isSoru) {
-    // Soru-Cevap modu: kitaptan arama
-    var sonuc = document.getElementById('arama-results');
-    sonuc.innerHTML = '<div class="loading">Kitapta aranıyor...</div>';
-    updateHash('arama/' + encodeURIComponent(query));
-    Promise.all([loadKisimTexts(1), loadKisimTexts(2), loadKisimTexts(3)]).then(function() {
-      var results = searchInBook(query);
-      if (results.length === 0) {
-        sonuc.innerHTML = '<p style="text-align:center;color:var(--text-muted);padding:40px;">Sonuç bulunamadı. Farklı kelimeler deneyin.</p>';
-        return;
+  // Her zaman hem tam metin hem başlık araması yap
+  Promise.all([loadKisimTexts(1), loadKisimTexts(2), loadKisimTexts(3)]).then(function() {
+    // Tam metin arama (kitap içi)
+    var bookResults = searchInBook(query);
+
+    // Başlık + index araması (search engine varsa)
+    if (window.SearchEngine && window.SearchEngine.isReady()) {
+      var seResults = window.SearchEngine.search(query, { limit: 8 });
+      // Search engine sonuçlarını bookResults ile birleştir (duplicate önle)
+      var seen = {};
+      bookResults.forEach(function(r) { seen[r.kisim + '/' + r.maddeNo] = true; });
+      if (seResults.madde) {
+        seResults.madde.forEach(function(m) {
+          var key = m.kisim + '/' + m.madde_no;
+          if (!seen[key]) {
+            seen[key] = true;
+            bookResults.push({
+              kisim: m.kisim, maddeNo: m.madde_no,
+              baslik: escapeHtml(m.baslik), score: m.score || 1,
+              pasaj: m.context ? escapeHtml(m.context.substring(0, 200)) + '...' : ''
+            });
+          }
+        });
       }
-      sonuc.innerHTML = '<p style="color:var(--text-muted);margin-bottom:16px;">' + results.length + ' ilgili madde bulundu:</p>' + results.map(function(r) {
-        return '<div class="soru-cevap-card" style="cursor:pointer" onclick="openMadde(' + r.kisim + ',' + r.maddeNo + ',false,\'' + escapeHtml(query).replace(/'/g, "&#39;") + '\')"><h4>' + escapeHtml(r.baslik) + '</h4><div class="soru-cevap-passage">' + r.pasaj + '</div><div class="soru-cevap-ref">Kısım ' + r.kisim + ', Madde ' + r.maddeNo + ' · <a href="#madde/' + r.kisim + '/' + r.maddeNo + '" onclick="event.stopPropagation()">Maddeyi Aç →</a></div></div>';
-      }).join('');
-    });
-  } else {
-    // Klasik kelime araması
-    doFullSearch();
-  }
+    }
+
+    if (bookResults.length === 0) {
+      sonuc.innerHTML = '<p style="text-align:center;color:var(--text-muted);padding:40px;">Sonuç bulunamadı. Farklı kelimeler deneyin.</p>';
+      return;
+    }
+    sonuc.innerHTML = '<p style="color:var(--text-muted);margin-bottom:16px;">' + bookResults.length + ' ilgili madde bulundu:</p>' + bookResults.map(function(r) {
+      return '<div class="soru-cevap-card" style="cursor:pointer" onclick="openMadde(' + r.kisim + ',' + r.maddeNo + ',false,\'' + escapeHtml(query).replace(/'/g, "&#39;") + '\')"><h4>' + r.baslik + '</h4><div class="soru-cevap-passage">' + r.pasaj + '</div><div class="soru-cevap-ref">Kısım ' + r.kisim + ', Madde ' + r.maddeNo + ' · <a href="/madde/' + r.kisim + '/' + r.maddeNo + '" onclick="event.stopPropagation()">Maddeyi Aç</a></div></div>';
+    }).join('');
+  });
 }
 
 // ===== ÂYET-İ KERÎME VE HADÎS-İ ŞERÎF İNDEKSİ =====
