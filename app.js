@@ -2899,3 +2899,232 @@ function generateShareImage(madde, callback) {
   
   if (callback) callback(canvas.toDataURL('image/png'));
 }
+
+// ===== SES HIZ KONTROLÜ =====
+var audioSpeed = 1;
+function cycleAudioSpeed() {
+  var speeds = [0.75, 1, 1.25, 1.5, 2];
+  var idx = speeds.indexOf(audioSpeed);
+  audioSpeed = speeds[(idx + 1) % speeds.length];
+  var audio = document.getElementById('madde-audio');
+  if (audio) audio.playbackRate = audioSpeed;
+  var btn = document.getElementById('audio-speed-btn');
+  if (btn) btn.textContent = audioSpeed + 'x';
+}
+
+// ===== UYKU ZAMANLAYICI =====
+var sleepTimer = null;
+function setSleepTimer(minutes) {
+  if (sleepTimer) clearTimeout(sleepTimer);
+  if (minutes === 0) {
+    var btn = document.getElementById('sleep-btn');
+    if (btn) btn.textContent = '🌙';
+    btn.title = 'Uyku zamanlayıcı';
+    return;
+  }
+  sleepTimer = setTimeout(function() {
+    pauseAudio();
+    sleepTimer = null;
+    var btn = document.getElementById('sleep-btn');
+    if (btn) { btn.textContent = '🌙'; btn.title = 'Uyku zamanlayıcı'; }
+  }, minutes * 60000);
+  var btn = document.getElementById('sleep-btn');
+  if (btn) { btn.textContent = minutes + 'dk'; btn.title = minutes + ' dakika sonra duracak'; }
+}
+function cycleSleepTimer() {
+  var timers = [0, 15, 30, 60];
+  var current = sleepTimer ? parseInt(document.getElementById('sleep-btn')?.textContent) || 0 : 0;
+  var idx = timers.indexOf(current);
+  setSleepTimer(timers[(idx + 1) % timers.length]);
+}
+
+// ===== KALDIĞI YERDEN DEVAM =====
+function saveAudioPosition() {
+  if (!audioState.madde) return;
+  var audio = document.getElementById('madde-audio');
+  if (!audio || !audio.currentTime) return;
+  var pos = {
+    kisim: audioState.madde.kisim,
+    maddeNo: audioState.madde.madde_no,
+    pageIdx: audioState.currentIdx,
+    time: audio.currentTime
+  };
+  localStorage.setItem('ilmihal-audio-pos', JSON.stringify(pos));
+}
+
+function restoreAudioPosition() {
+  try {
+    var pos = JSON.parse(localStorage.getItem('ilmihal-audio-pos'));
+    if (pos && audioState.madde && pos.kisim === audioState.madde.kisim && pos.maddeNo === audioState.madde.madde_no) {
+      if (pos.pageIdx < audioState.pages.length) {
+        loadAudioPage(pos.pageIdx);
+        var audio = document.getElementById('madde-audio');
+        if (audio) {
+          audio.addEventListener('loadeddata', function onLoad() {
+            audio.currentTime = pos.time;
+            audio.removeEventListener('loadeddata', onLoad);
+          });
+        }
+      }
+    }
+  } catch(e) {}
+}
+
+// Her 5 saniyede pozisyon kaydet
+setInterval(function() {
+  if (audioState.playing) saveAudioPosition();
+}, 5000);
+
+// ===== SÜREKLİ DİNLEME (Sonraki maddeye otomatik geç) =====
+var continuousPlay = false;
+function toggleContinuousPlay() {
+  continuousPlay = !continuousPlay;
+  var btn = document.getElementById('continuous-btn');
+  if (btn) {
+    btn.style.opacity = continuousPlay ? '1' : '0.5';
+    btn.title = continuousPlay ? 'Sürekli dinleme: AÇIK' : 'Sürekli dinleme: KAPALI';
+  }
+}
+
+// Audio ended event'ini güncelle — sürekli dinleme
+document.addEventListener('DOMContentLoaded', function() {
+  var audio = document.getElementById('madde-audio');
+  if (!audio) return;
+  audio.addEventListener('ended', function() {
+    if (audioState.currentIdx < audioState.pages.length - 1) {
+      audioNav(1); playAudio();
+    } else if (continuousPlay) {
+      // Sonraki maddeye geç
+      navMadde(1);
+      setTimeout(function() {
+        toggleAudio(); // Yeni maddenin sesini başlat
+      }, 1500);
+    } else {
+      audioState.playing = false; updateAudioUI();
+    }
+  });
+});
+
+// ===== MEDIASESSION API (Kilit ekranı kontrolü) =====
+function updateMediaSession() {
+  if (!('mediaSession' in navigator) || !audioState.madde) return;
+  navigator.mediaSession.metadata = new MediaMetadata({
+    title: audioState.madde.baslik,
+    artist: "Se'âdet-i Ebediyye",
+    album: 'Kısım ' + audioState.madde.kisim
+  });
+  navigator.mediaSession.setActionHandler('play', function() { playAudio(); });
+  navigator.mediaSession.setActionHandler('pause', function() { pauseAudio(); });
+  navigator.mediaSession.setActionHandler('previoustrack', function() { audioNav(-1); });
+  navigator.mediaSession.setActionHandler('nexttrack', function() { audioNav(1); });
+}
+
+// initAudioForMadde'e mediaSession + restore ekle
+var _origInitAudio = initAudioForMadde;
+initAudioForMadde = function(madde) {
+  _origInitAudio(madde);
+  updateMediaSession();
+  restoreAudioPosition();
+};
+
+// ===== OKUMA SÜRESİ TAHMİNİ =====
+function estimateReadingTime(kisim, maddeNo) {
+  var texts = window.kisimTextsCache ? window.kisimTextsCache[kisim] : null;
+  if (!texts) return '';
+  var metin = texts[String(maddeNo)] || '';
+  var words = metin.split(/\s+/).length;
+  var minutes = Math.max(1, Math.round(words / 180)); // 180 kelime/dk Türkçe ortalama
+  return minutes;
+}
+
+// ===== TAM EKRAN OKUMA MODU =====
+function toggleFullscreenRead() {
+  var overlay = document.getElementById('madde-detay');
+  if (!overlay) return;
+  overlay.classList.toggle('fullscreen-mode');
+  var btn = document.getElementById('fullscreen-btn');
+  if (btn) {
+    btn.innerHTML = overlay.classList.contains('fullscreen-mode') ? '⊠' : '⊡';
+  }
+}
+
+// ===== GÜNLÜK HEDEF =====
+function getDailyGoal() {
+  try { return JSON.parse(localStorage.getItem('ilmihal-daily-goal') || '{"target":30,"today":"","minutes":0}'); }
+  catch(e) { return {target:30,today:'',minutes:0}; }
+}
+
+function updateDailyGoal(addMinutes) {
+  var goal = getDailyGoal();
+  var today = new Date().toISOString().slice(0,10);
+  if (goal.today !== today) { goal.today = today; goal.minutes = 0; }
+  goal.minutes += addMinutes;
+  localStorage.setItem('ilmihal-daily-goal', JSON.stringify(goal));
+  checkGoalCompletion(goal);
+}
+
+var goalCelebrated = false;
+function checkGoalCompletion(goal) {
+  if (goal.minutes >= goal.target && !goalCelebrated) {
+    goalCelebrated = true;
+    showCelebration();
+  }
+}
+
+function showCelebration() {
+  var el = document.createElement('div');
+  el.className = 'celebration-overlay';
+  el.innerHTML = '<div class="celebration-content"><div class="celebration-icon">🎉</div><h3>Tebrikler!</h3><p>Bugünkü okuma hedefinizi tamamladınız.</p><button type="button" class="btn btn-primary" onclick="this.parentElement.parentElement.remove()">Devam Et</button></div>';
+  document.body.appendChild(el);
+  setTimeout(function() { el.remove(); }, 8000);
+}
+
+// Her dakika okuma süresi güncelle (madde açıkken)
+var readingInterval = null;
+var _origOpenMadde2 = openMadde;
+
+// Madde açılınca okuma süresi say
+document.addEventListener('DOMContentLoaded', function() {
+  // Her 60 saniyede madde açıksa 1 dakika ekle
+  setInterval(function() {
+    if (document.getElementById('madde-detay')?.style.display === 'flex') {
+      updateDailyGoal(1);
+    }
+  }, 60000);
+});
+
+// ===== SPACED REPETITION QUIZ =====
+function getSpacedQueue() {
+  try { return JSON.parse(localStorage.getItem('ilmihal-spaced') || '[]'); } catch(e) { return []; }
+}
+
+function addToSpacedQueue(soruIdx, konu) {
+  var queue = getSpacedQueue();
+  var reviewDate = new Date(Date.now() + 3 * 86400000).toISOString().slice(0,10); // 3 gün sonra
+  queue.push({ soruIdx: soruIdx, konu: konu, reviewDate: reviewDate, attempts: 1 });
+  localStorage.setItem('ilmihal-spaced', JSON.stringify(queue));
+}
+
+function getSpacedDueToday() {
+  var queue = getSpacedQueue();
+  var today = new Date().toISOString().slice(0,10);
+  return queue.filter(function(q) { return q.reviewDate <= today; });
+}
+
+// ===== SPLASH SCREEN =====
+function showSplash() {
+  var splash = document.createElement('div');
+  splash.id = 'splash-screen';
+  splash.innerHTML = '<div class="splash-content"><div class="splash-besmele">بسم الله الرحمن الرحيم</div><h1 class="splash-title">Se\'âdet-i Ebediyye</h1><p class="splash-subtitle">İnteraktif İlmihâl</p><div class="splash-loader"></div></div>';
+  document.body.appendChild(splash);
+  setTimeout(function() {
+    splash.classList.add('splash-fade');
+    setTimeout(function() { splash.remove(); }, 600);
+  }, 1800);
+}
+
+// İlk ziyarette splash göster
+if (!sessionStorage.getItem('ilmihal-splash-shown')) {
+  sessionStorage.setItem('ilmihal-splash-shown', '1');
+  document.addEventListener('DOMContentLoaded', showSplash);
+}

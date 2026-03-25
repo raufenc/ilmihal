@@ -23,7 +23,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=17">
+  <link rel="stylesheet" href="style.css?v=18">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -195,6 +195,7 @@
         <button type="button" class="toolbar-btn" onclick="toggleBookmark()" id="bookmark-btn" title="Yer imi ekle">&#9734;</button>
         <button type="button" class="toolbar-btn" onclick="shareMadde()" title="Paylaş">&#8599;</button>
         <button type="button" class="toolbar-btn" onclick="printMadde()" title="Yazdır">&#128424;</button>
+        <button type="button" class="toolbar-btn" onclick="toggleFullscreenRead()" id="fullscreen-btn" title="Tam ekran">&#8862;</button>
         <button type="button" class="madde-close" onclick="closeMadde()">&times;</button>
       </div>
       <div id="audio-player-bar" class="audio-player-bar" style="display:none">
@@ -206,6 +207,9 @@
           <div class="audio-progress" id="audio-progress"></div>
         </div>
         <span class="audio-time" id="audio-time">0:00</span>
+        <button type="button" class="audio-ctrl audio-sm" id="audio-speed-btn" onclick="cycleAudioSpeed()" title="Hız">1x</button>
+        <button type="button" class="audio-ctrl audio-sm" id="sleep-btn" onclick="cycleSleepTimer()" title="Uyku zamanlayıcı">🌙</button>
+        <button type="button" class="audio-ctrl audio-sm" id="continuous-btn" onclick="toggleContinuousPlay()" title="Sürekli dinleme" style="opacity:0.5">&#8646;</button>
         <span class="audio-page-label" id="audio-page-label"></span>
       </div>
       <div class="madde-overlay-content">
@@ -610,6 +614,6 @@
   <script src="search-engine.js?v=5"></script>
   <script src="ayet-hadis.js?v=2"></script>
   <script src="audio-map.js?v=1"></script>
-  <script src="app.js?v=17"></script>
+  <script src="app.js?v=18"></script>
 </body>
 </html>
