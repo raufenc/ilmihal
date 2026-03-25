@@ -110,17 +110,36 @@ function ensureSozlukData() {
   return loadScript('sozluk-data.js?v=1');
 }
 
-// ===== DARK MODE =====
+// ===== TEMA: Gündüz / Sepya / Gece =====
+var themeModes = ['light', 'sepia', 'dark'];
+
 function initDarkMode() {
-  const saved = localStorage.getItem('ilmihal-theme');
-  if (saved === 'dark') {
-    document.documentElement.classList.add('dark');
-  }
+  var saved = localStorage.getItem('ilmihal-theme') || 'light';
+  applyTheme(saved);
+}
+
+function applyTheme(mode) {
+  document.documentElement.classList.remove('dark', 'sepia');
+  if (mode === 'dark') document.documentElement.classList.add('dark');
+  if (mode === 'sepia') document.documentElement.classList.add('sepia');
+  updateThemeButton(mode);
 }
 
 function toggleDarkMode() {
-  const isDark = document.documentElement.classList.toggle('dark');
-  localStorage.setItem('ilmihal-theme', isDark ? 'dark' : 'light');
+  var current = localStorage.getItem('ilmihal-theme') || 'light';
+  var idx = themeModes.indexOf(current);
+  var next = themeModes[(idx + 1) % themeModes.length];
+  localStorage.setItem('ilmihal-theme', next);
+  applyTheme(next);
+}
+
+function updateThemeButton(mode) {
+  var btn = document.querySelector('.dark-mode-toggle');
+  if (!btn) return;
+  var labels = { light: 'Gündüz', sepia: 'Sepya', dark: 'Gece' };
+  var icons = { light: '\u263C', sepia: '\u2600', dark: '\u263D' };
+  btn.innerHTML = '<span class="dm-icon">' + icons[mode] + '</span><span class="dm-label">' + labels[mode] + '</span>';
+  btn.title = 'Tema: ' + labels[mode];
 }
 
 initDarkMode();
