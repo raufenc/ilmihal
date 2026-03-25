@@ -3227,9 +3227,7 @@ function updateWhisperSync(currentTime) {
         if (rect.top < oRect.top + 80 || rect.bottom > oRect.bottom - 80) {
           block.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
-        }
       }
-      break;
     }
   }
 }
