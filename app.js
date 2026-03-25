@@ -60,7 +60,7 @@ function handleRoute() {
     return;
   }
 
-  const validPages = ['anasayfa','icerik','fevaid','sozluk','arama','sahislar','hakkinda','quiz','ayet-hadis','okuma-plani','gunun-bilgisi','rehberler'];
+  const validPages = ['anasayfa','icerik','fevaid','sozluk','arama','sahislar','hakkinda','quiz','ayet-hadis','okuma-plani','gunun-bilgisi','rehberler','calisma-alanim','fikih-karsilastirma'];
   if (validPages.includes(route)) {
     navigateTo(route, true);
   } else {
