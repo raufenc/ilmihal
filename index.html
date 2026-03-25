@@ -329,8 +329,8 @@
           <div class="fevaid-sec-card" onclick="navigateTo('okuma-plani')">
             <div class="fevaid-sec-icon">&#128197;</div>
             <h3>Okuma Planı</h3>
-            <p>30, 60 veya 90 günde kitabı tamamlayın</p>
-            <span class="fevaid-sec-count">4 plan</span>
+            <p>3 ay, 6 ay veya 1 yılda kitabı tamamlayın</p>
+            <span class="fevaid-sec-count">3 plan</span>
           </div>
         </div>
       </div>
@@ -508,25 +508,20 @@
       <h2 class="section-title">Okuma Planı</h2>
       <p class="section-desc">Kitabı düzenli okumak için bir plan seçin. Her gün hangi maddeyi okuyacağınızı gösterir.</p>
       <div id="plan-secim" class="plan-secim">
-        <div class="plan-card" onclick="startPlan(30)">
-          <div class="plan-gun">30</div>
-          <div class="plan-label">Günde Tamamla</div>
-          <p>Günde ~8 madde. Yoğun okuma programı.</p>
-        </div>
-        <div class="plan-card" onclick="startPlan(60)">
-          <div class="plan-gun">60</div>
-          <div class="plan-label">Günde Tamamla</div>
-          <p>Günde ~4 madde. Dengeli tempo.</p>
-        </div>
         <div class="plan-card" onclick="startPlan(90)">
-          <div class="plan-gun">90</div>
-          <div class="plan-label">Günde Tamamla</div>
-          <p>Günde ~3 madde. Rahat okuma.</p>
+          <div class="plan-gun">3 Ay</div>
+          <div class="plan-label">90 Günde Tamamla</div>
+          <p>Günde ~12 sayfa. Düzenli okuma temposu.</p>
         </div>
-        <div class="plan-card" onclick="startPlan(241)">
-          <div class="plan-gun">241</div>
-          <div class="plan-label">Günde 1 Madde</div>
-          <p>Her gün bir madde. Sekiz ayda tamamla.</p>
+        <div class="plan-card" onclick="startPlan(180)">
+          <div class="plan-gun">6 Ay</div>
+          <div class="plan-label">180 Günde Tamamla</div>
+          <p>Günde ~6 sayfa. Rahat ve sindirerek.</p>
+        </div>
+        <div class="plan-card" onclick="startPlan(365)">
+          <div class="plan-gun">1 Yıl</div>
+          <div class="plan-label">365 Günde Tamamla</div>
+          <p>Günde ~3 sayfa. Her gün biraz, bir yılda tamam.</p>
         </div>
       </div>
       <div id="plan-aktif" style="display:none">
