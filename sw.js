@@ -1,76 +1,83 @@
-const CACHE_NAME = 'ilmihal-v2';
-const STATIC_ASSETS = [
+// Service Worker - ilmihal.org PWA
+var CACHE_NAME = 'ilmihal-v3';
+var CORE_ASSETS = [
   '/',
   '/index.html',
-  '/style.css?v=14',
-  '/app.js?v=14',
-  '/data.js?v=11',
+  '/style.css?v=18',
+  '/data.js?v=12',
   '/tanimlar.js?v=1',
   '/sahislar.js?v=7',
   '/crossref.js?v=7',
   '/search-engine.js?v=5',
-  '/texts/kisim1.json',
-  '/texts/kisim2.json',
-  '/texts/kisim3.json',
+  '/ayet-hadis.js?v=2',
+  '/audio-map.js?v=1',
+  '/fikih-karsilastirma.js?v=1',
+  '/app.js?v=19',
   '/favicon.svg',
   '/manifest.json'
 ];
 
-// Install: cache static assets
-self.addEventListener('install', event => {
-  event.waitUntil(
-    caches.open(CACHE_NAME).then(cache => cache.addAll(STATIC_ASSETS))
+var LAZY_ASSETS = [
+  '/maddeler-data.js?v=1',
+  '/sozluk-data.js?v=1',
+  '/texts/kisim1.json',
+  '/texts/kisim2.json',
+  '/texts/kisim3.json'
+];
+
+// Install: core dosyaları cache'le
+self.addEventListener('install', function(e) {
+  e.waitUntil(
+    caches.open(CACHE_NAME).then(function(cache) {
+      return cache.addAll(CORE_ASSETS);
+    }).then(function() {
+      return self.skipWaiting();
+    })
   );
-  self.skipWaiting();
 });
 
-// Activate: clean old caches
-self.addEventListener('activate', event => {
-  event.waitUntil(
-    caches.keys().then(keys =>
-      Promise.all(keys.filter(k => k !== CACHE_NAME).map(k => caches.delete(k)))
-    )
+// Activate: eski cache'leri temizle
+self.addEventListener('activate', function(e) {
+  e.waitUntil(
+    caches.keys().then(function(names) {
+      return Promise.all(
+        names.filter(function(n) { return n !== CACHE_NAME; })
+             .map(function(n) { return caches.delete(n); })
+      );
+    }).then(function() {
+      return self.clients.claim();
+    })
   );
-  self.clients.claim();
 });
 
-// Fetch: network-first for HTML, cache-first for assets
-self.addEventListener('fetch', event => {
-  const url = new URL(event.request.url);
+// Fetch: cache-first for assets, network-first for navigation
+self.addEventListener('fetch', function(e) {
+  var url = new URL(e.request.url);
 
-  // Skip non-GET and external requests
-  if (event.request.method !== 'GET' || !url.origin.includes('ilmihal.org')) return;
+  // Sadece kendi origin'imiz
+  if (url.origin !== location.origin) return;
 
-  // Google Fonts: cache-first
-  if (url.hostname === 'fonts.googleapis.com' || url.hostname === 'fonts.gstatic.com') {
-    event.respondWith(
-      caches.match(event.request).then(cached => cached ||
-        fetch(event.request).then(response => {
-          const clone = response.clone();
-          caches.open(CACHE_NAME).then(cache => cache.put(event.request, clone));
-          return response;
-        })
-      )
+  // Navigation request'leri: her zaman index.html döndür (SPA)
+  if (e.request.mode === 'navigate') {
+    e.respondWith(
+      caches.match('/index.html').then(function(r) {
+        return r || fetch(e.request);
+      })
     );
     return;
   }
 
-  // HTML: network-first
-  if (event.request.headers.get('accept')?.includes('text/html')) {
-    event.respondWith(
-      fetch(event.request).catch(() => caches.match(event.request))
-    );
-    return;
-  }
-
-  // All other assets: cache-first, fallback to network
-  event.respondWith(
-    caches.match(event.request).then(cached => {
+  // Static assets: cache-first, network fallback
+  e.respondWith(
+    caches.match(e.request).then(function(cached) {
       if (cached) return cached;
-      return fetch(event.request).then(response => {
-        if (response.ok) {
-          const clone = response.clone();
-          caches.open(CACHE_NAME).then(cache => cache.put(event.request, clone));
+      return fetch(e.request).then(function(response) {
+        // Lazy asset'leri de cache'le
+        if (response.ok && (url.pathname.endsWith('.js') || url.pathname.endsWith('.json') || url.pathname.endsWith('.css'))) {
+          var clone = response.clone();
+          caches.open(CACHE_NAME).then(function(cache) {
+            cache.put(e.request, clone);
+          });
         }
         return response;
       });

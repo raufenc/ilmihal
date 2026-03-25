@@ -1,18 +1,42 @@
 {
   "name": "Se'âdet-i Ebediyye - İnteraktif İlmihâl",
   "short_name": "İlmihâl",
-  "description": "1248 sayfalık kapsamlı ilmihâl eseri, tam metin arama, dini sözlük ve interaktif silsile atlası.",
+  "description": "Se'âdet-i Ebediyye kitabının tamamı: 241 madde, 4400+ dini terim, 1019 âlim biyografisi, fıkıh karşılaştırma tabloları, yapay zeka destekli arama.",
   "start_url": "/",
+  "scope": "/",
   "display": "standalone",
+  "orientation": "any",
   "background_color": "#faf8f4",
   "theme_color": "#1a6b4e",
   "lang": "tr",
+  "dir": "ltr",
   "icons": [
     {
       "src": "favicon.svg",
       "sizes": "any",
-      "type": "image/svg+xml"
+      "type": "image/svg+xml",
+      "purpose": "any"
     }
   ],
-  "categories": ["education", "books"]
+  "categories": ["education", "books", "reference"],
+  "shortcuts": [
+    {
+      "name": "Arama",
+      "short_name": "Ara",
+      "url": "/arama",
+      "description": "Kitapta ara"
+    },
+    {
+      "name": "Dini Lügat",
+      "short_name": "Sözlük",
+      "url": "/sozluk",
+      "description": "4400+ dini terim"
+    },
+    {
+      "name": "Fıkıh Karşılaştırma",
+      "short_name": "Fıkıh",
+      "url": "/fikih-karsilastirma",
+      "description": "Dört mezhep karşılaştırması"
+    }
+  ]
 }

@@ -138,26 +138,6 @@ body {
   line-height: 1.8;
 }
 
-.hero-stats {
-  display: flex;
-  gap: 40px;
-  margin-bottom: 32px;
-}
-
-.stat { text-align: center; }
-.stat-num {
-  display: block;
-  font-size: 2.5rem;
-  font-weight: 700;
-  color: var(--gold-light);
-}
-.stat-label {
-  font-size: 0.85rem;
-  opacity: 0.8;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
 /* ===== Hero Search ===== */
 .hero-search-wrapper {
   position: relative;
@@ -661,7 +641,6 @@ body {
 }
 
 /* ===== Tablolar ===== */
-#page-tablolar .container { padding-top: 40px; padding-bottom: 60px; }
 
 .tablolar-toolbar {
   margin-bottom: 16px;
@@ -1041,7 +1020,7 @@ body {
   border-radius: 6px;
   font-size: 0.78rem;
   line-height: 1.45;
-  max-width: 260px;
+  max-width: 340px;
   z-index: 300;
   box-shadow: 0 4px 16px rgba(0,0,0,0.18);
   border: none;
@@ -1083,9 +1062,6 @@ body {
 }
 
 /* Tooltip - bağlam ve alternatif yazımlar */
-.sozluk-tooltip {
-  max-width: 340px;
-}
 .tooltip-alt {
   margin-top: 4px;
   font-size: 0.72rem;
@@ -1286,12 +1262,6 @@ body {
   font-size: 0.9rem;
 }
 
-.footer-note {
-  opacity: 0.6;
-  font-size: 0.8rem;
-  margin-top: 8px;
-}
-
 /* ===== Silsile Promo ===== */
 .nav-btn-link {
   text-decoration: none;
@@ -1408,7 +1378,6 @@ body {
   .kisim-cards { grid-template-columns: 1fr; }
   .konu-grid { grid-template-columns: repeat(3, 1fr); }
   .hero h2 { font-size: 2rem; }
-  .hero-stats { gap: 24px; }
   .tablo-card-body table { font-size: 0.8rem; }
   .tablo-card-header { flex-direction: column; align-items: flex-start; gap: 8px; }
   .tablo-card-ref { align-self: flex-start; }
@@ -1433,7 +1402,6 @@ body {
   .hero-search-wrapper { max-width: 100%; }
   .hero-search-input { font-size: 0.95rem; }
   .hero-search-kbd { display: none; }
-  .hero-stats { flex-wrap: wrap; gap: 16px; }
   .stat-num { font-size: 1.8rem; }
   .icerik-header { flex-direction: column; align-items: stretch; }
   .icerik-filters { flex-direction: column; }
@@ -3016,3 +2984,70 @@ mark.search-highlight {
   border-radius: 2px;
 }
 :root.dark #sync-indicator { opacity: 0.4; }
+
+/* ===== Fıkıh Karşılaştırma ===== */
+.fikih-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  margin-bottom: 24px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+.fikih-baslik {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--primary-dark);
+  margin-bottom: 8px;
+}
+.fikih-aciklama {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  margin-bottom: 16px;
+}
+.fikih-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+.fikih-mezhep {
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.fikih-mezhep-baslik {
+  color: #fff;
+  padding: 8px 12px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  text-align: center;
+}
+.fikih-mezhep-icerik {
+  padding: 12px;
+  font-size: 0.85rem;
+  line-height: 1.6;
+  min-height: 80px;
+}
+.fikih-kaynak {
+  margin-top: 12px;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  border-top: 1px solid var(--border);
+  padding-top: 8px;
+}
+.fikih-kaynak a { color: var(--primary); }
+
+@media (max-width: 768px) {
+  .fikih-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 480px) {
+  .fikih-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+:root.dark .fikih-card { background: var(--card-bg); }
+:root.dark .fikih-baslik { color: var(--gold-light); }
+:root.dark .fikih-mezhep { border-color: rgba(255,255,255,0.1); }

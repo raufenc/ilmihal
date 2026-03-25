@@ -25,23 +25,42 @@
   <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css?v=18">
   <script type="application/ld+json">
-  {
+  [{
     "@context": "https://schema.org",
     "@type": "WebSite",
     "name": "Se'âdet-i Ebediyye - İnteraktif İlmihâl",
     "url": "https://ilmihal.org",
-    "description": "Se'âdet-i Ebediyye kitabının tamamı, aranabilir 241 madde, 4400+ terimlik dini lügat.",
+    "description": "Se'âdet-i Ebediyye kitabının tamamı, aranabilir 241 madde, 4400+ terimlik dini lügat, 1019 âlim biyografisi.",
     "inLanguage": "tr",
     "potentialAction": {
       "@type": "SearchAction",
-      "target": "https://ilmihal.org/#arama/{search_term_string}",
+      "target": "https://ilmihal.org/arama/{search_term_string}",
       "query-input": "required name=search_term_string"
     }
-  }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Book",
+    "name": "Se'âdet-i Ebediyye (Tam İlmihâl)",
+    "author": {"@type": "Person", "name": "Hüseyn Hilmi Işık"},
+    "publisher": {"@type": "Organization", "name": "Hakîkat Kitâbevi"},
+    "inLanguage": "tr",
+    "genre": "İslâm ilmihâli",
+    "numberOfPages": 1248,
+    "description": "Se'âdet-i Ebediyye, Ehl-i sünnet itikâdını, fıkıh hükümlerini ve ahlâk bilgilerini kapsamlı şekilde anlatan bir ilmihâl eseridir."
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "EducationalOrganization",
+    "name": "ilmihal.org",
+    "url": "https://ilmihal.org",
+    "description": "Se'âdet-i Ebediyye kitabının interaktif dijital platformu",
+    "sameAs": ["https://github.com/raufenc/ilmihal"]
+  }]
   </script>
 </head>
 <body>
-  <a href="#main-content" class="skip-link">İçeriğe Geç</a>
+  <a href="#page-anasayfa" class="skip-link">İçeriğe Geç</a>
   <!-- Header -->
   <header class="site-header">
     <div class="container">
@@ -308,6 +327,12 @@
             <p>Kitapta geçen âyet-i kerîmelerin ve hadîs-i şerîflerin listesi</p>
             <span class="fevaid-sec-count">708 kayıt</span>
           </div>
+          <div class="fevaid-sec-card" onclick="navigateTo('fikih-karsilastirma')">
+            <div class="fevaid-sec-icon">&#9878;</div>
+            <h3>Fıkıh Karşılaştırma Tabloları</h3>
+            <p>Dört mezhebe göre temel hükümlerin karşılaştırması</p>
+            <span class="fevaid-sec-count">12+ tablo</span>
+          </div>
           <div class="fevaid-sec-card" onclick="navigateTo('okuma-plani')">
             <div class="fevaid-sec-icon">&#128197;</div>
             <h3>Okuma Planı</h3>
@@ -526,6 +551,22 @@
     </div>
   </main>
 
+  <!-- Fıkıh Karşılaştırma -->
+  <main id="page-fikih-karsilastirma" class="page">
+    <div class="container">
+      <h2 class="section-title">Fıkıh Karşılaştırma Tabloları</h2>
+      <p style="color:var(--text-muted);margin-bottom:24px;text-align:center;">Dört mezhebe göre temel ibâdet ve muâmelât hükümlerinin karşılaştırması</p>
+      <div class="fikih-toolbar" style="margin-bottom:24px;display:flex;gap:8px;flex-wrap:wrap;justify-content:center;">
+        <button type="button" class="tablo-filter-btn active" onclick="filterFikih('all')">Tümü</button>
+        <button type="button" class="tablo-filter-btn" onclick="filterFikih('ibadet')">İbâdet</button>
+        <button type="button" class="tablo-filter-btn" onclick="filterFikih('muamelat')">Muâmelât</button>
+        <button type="button" class="tablo-filter-btn" onclick="filterFikih('aile')">Âile</button>
+      </div>
+      <div id="fikih-list"></div>
+      <p style="color:var(--text-muted);font-size:0.8rem;margin-top:32px;text-align:center;">Bu bilgiler Se'âdet-i Ebediyye ve muteber fıkıh kaynaklarından derlenmiştir. Tafsilât için ilgili maddelere bakınız.</p>
+    </div>
+  </main>
+
   <!-- Hakkında -->
   <main id="page-hakkinda" class="page">
     <div class="container">
@@ -549,7 +590,7 @@
         <p>Kitapta adı geçen âlim ve velîlerin hâl tercemeleri ayrı bir <a href="#sahislar" class="hakkinda-link">bölümde</a> toplanmıştır. Her şahsın biyografisi, unvanı ve kitapta geçtiği maddelere doğrudan bağlantıları vardır. Bir maddeyi okurken de o maddede adı geçen şahıslar altta listelenir — tıklayınca hâl tercemesini okursunuz, oradan da o zâtın geçtiği diğer maddelere geçersiniz. Böylece kitabın içinde bir konudan diğerine, bir âlimden diğerine kolayca dolaşabilirsiniz.</p>
 
         <h3>Tablolar ve Diyagramlar</h3>
-        <p>Kitaptaki bilgileri özetleyen <a href="#tablolar" class="hakkinda-link">tablolar ve akış şemaları</a> konularına göre düzenlenmiştir. Her tablo, kaynağı olan maddeye bağlıdır. Bir maddeyi okurken ilgili tabloları da altında görürsünüz.</p>
+        <p>Kitaptaki bilgileri özetleyen <a href="#fevaid" class="hakkinda-link">tablolar ve akış şemaları</a> konularına göre düzenlenmiştir. Her tablo, kaynağı olan maddeye bağlıdır. Bir maddeyi okurken ilgili tabloları da altında görürsünüz.</p>
 
         <h3>Her Şey Birbirine Bağlı</h3>
         <p>Bu sitenin asıl faydası, her şeyin birbirine bağlı olmasıdır. Bir maddeyi açtığınızda ilgili diğer maddeleri, o maddede geçen şahısları, konuyla ilgili tabloları ve metindeki terimlerin anlamlarını hep bir arada görürsünüz. Herhangi bir sayfanın bağlantısını birine gönderebilirsiniz — doğrudan o madde, o şahıs veya o arama sonucu açılır.</p>
@@ -602,25 +643,19 @@
   <!-- Tooltip -->
   <div id="sozluk-tooltip" class="sozluk-tooltip" style="display:none"></div>
 
-  <script>
-    // SW güncelle + eski cache temizle
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.getRegistrations().then(function(regs) {
-        regs.forEach(function(r) { r.unregister(); });
-      });
-      caches.keys().then(function(names) {
-        names.forEach(function(n) { caches.delete(n); });
-      });
-    }
-  </script>
-  <script src="data.js?v=11"></script>
+  <script src="data.js?v=12"></script>
   <script src="tanimlar.js?v=1"></script>
   <script src="sahislar.js?v=7"></script>
   <script src="crossref.js?v=7"></script>
   <script src="search-engine.js?v=5"></script>
   <script src="ayet-hadis.js?v=2"></script>
   <script src="audio-map.js?v=1"></script>
-  <script src="sync-data.js?v=1"></script>
-  <script src="app.js?v=18"></script>
+  <script src="fikih-karsilastirma.js?v=1"></script>
+  <script src="app.js?v=19"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js').catch(function(){});
+    }
+  </script>
 </body>
 </html>
