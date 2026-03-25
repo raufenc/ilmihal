@@ -3000,12 +3000,19 @@ mark.search-highlight {
 
 /* ===== WHISPER SYNC HIGHLIGHT ===== */
 .whisper-highlight {
-  background: linear-gradient(90deg, rgba(201,168,76,0.3), rgba(201,168,76,0.15)) !important;
-  border-radius: 3px;
-  box-shadow: 0 0 0 2px rgba(201,168,76,0.2);
-  transition: background 0.3s ease, box-shadow 0.3s ease;
+  background: rgba(201,168,76,0.15) !important;
+  border-radius: 4px;
+  transition: background 0.8s ease;
+}
+.whisper-active-line {
+  background: rgba(201,168,76,0.22) !important;
+  border-left: 3px solid var(--gold) !important;
+  padding-left: 8px !important;
+  transition: background 0.6s ease;
 }
 :root.dark .whisper-highlight {
-  background: linear-gradient(90deg, rgba(212,182,92,0.2), rgba(212,182,92,0.1)) !important;
-  box-shadow: 0 0 0 2px rgba(212,182,92,0.15);
+  background: rgba(212,182,92,0.08) !important;
+}
+:root.dark .whisper-active-line {
+  background: rgba(212,182,92,0.15) !important;
 }

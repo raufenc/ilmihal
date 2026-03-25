@@ -3160,54 +3160,73 @@ function prepareWordSpans() {
 
 function updateWhisperSync(currentTime) {
   if (!whisperSync.active || !whisperSync.words.length) return;
-  
-  // Şu anki zamana göre hangi kelimedeyiz?
-  var newIdx = -1;
-  for (var i = 0; i < whisperSync.words.length; i++) {
-    if (currentTime >= whisperSync.words[i].s && currentTime <= whisperSync.words[i].e) {
-      newIdx = i;
-      break;
-    }
-    if (currentTime < whisperSync.words[i].s) break;
-    newIdx = i; // En son geçen kelime
-  }
-  
-  if (newIdx === whisperSync.currentWordIdx) return;
-  whisperSync.currentWordIdx = newIdx;
-  
-  if (newIdx < 0) return;
-  
-  var word = whisperSync.words[newIdx];
-  // Cümle bazlı bölgeleri highlight et (5 kelimelik grup)
-  var groupStart = Math.max(0, newIdx - 2);
-  var groupEnd = Math.min(whisperSync.words.length - 1, newIdx + 2);
-  var groupText = whisperSync.words.slice(groupStart, groupEnd + 1).map(function(w) { return w.w; }).join(' ');
-  
+
+  var audio = document.getElementById('madde-audio');
+  if (!audio || !audio.duration) return;
+
+  // Ses süresinin yüzde kaçındayız?
+  var pct = currentTime / audio.duration;
+
+  // 10'luk blok: toplam kelime sayısının yüzde kaçıncı bloğundayız
+  var totalWords = whisperSync.words.length;
+  var blockSize = Math.max(8, Math.floor(totalWords / 20)); // ~20 blok
+  var currentBlock = Math.floor(pct * totalWords / blockSize);
+
+  if (currentBlock === whisperSync.currentWordIdx) return;
+  whisperSync.currentWordIdx = currentBlock;
+
+  // Bu bloktaki kelimelerin metni — birkaç kelimeyi birleştir
+  var blockStart = currentBlock * blockSize;
+  var blockWords = whisperSync.words.slice(blockStart, blockStart + blockSize);
+  if (blockWords.length === 0) return;
+
+  // Bloğun ortasındaki 3 kelimeyi arama terimi olarak kullan (benzersiz olması için)
+  var midIdx = Math.floor(blockWords.length / 2);
+  var searchPhrase = blockWords.slice(Math.max(0, midIdx - 1), midIdx + 2).map(function(w) { return w.w; }).join(' ').toLowerCase();
+  if (searchPhrase.length < 5) return;
+
   // Önceki highlight'ı kaldır
+  var prev = document.querySelector('.whisper-active-line');
+  if (prev) prev.classList.remove('whisper-active-line');
   document.querySelectorAll('.whisper-highlight').forEach(function(el) { el.classList.remove('whisper-highlight'); });
-  
-  // Metinde bu kelime grubunu bul ve highlight et
+
+  // Metinde arama yap — zaman bazlı pozisyon hesapla
   var textEl = document.querySelector('.madde-text');
   if (!textEl) return;
-  
+  var fullText = textEl.textContent || '';
+  var charPos = Math.floor(pct * fullText.length);
+
+  // charPos civarındaki text node'u bul
   var walker = document.createTreeWalker(textEl, NodeFilter.SHOW_TEXT);
-  var node;
-  var searchWord = word.w.toLowerCase();
-  
+  var node, cumLen = 0, targetNode = null;
   while ((node = walker.nextNode())) {
-    var nodeText = node.textContent.toLowerCase();
-    if (nodeText.indexOf(searchWord) !== -1) {
-      var parent = node.parentElement;
-      if (parent && parent.tagName !== 'MARK') {
-        parent.classList.add('whisper-highlight');
-        // Görünür alanda değilse scroll et
-        var rect = parent.getBoundingClientRect();
-        var overlay = document.querySelector('.madde-overlay-content');
-        if (overlay) {
-          var oRect = overlay.getBoundingClientRect();
-          if (rect.top < oRect.top + 100 || rect.bottom > oRect.bottom - 50) {
-            parent.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          }
+    cumLen += node.textContent.length;
+    if (cumLen >= charPos && !targetNode) {
+      targetNode = node;
+    }
+  }
+
+  if (targetNode) {
+    var parent = targetNode.parentElement;
+    if (parent) {
+      // En yakın <p> veya büyük block element'i bul
+      var block = parent;
+      while (block && block !== textEl && !['P','DIV','BR'].includes(block.tagName)) {
+        block = block.parentElement;
+      }
+      if (!block || block === textEl) block = parent;
+
+      block.classList.add('whisper-highlight');
+      block.classList.add('whisper-active-line');
+
+      // Görünür alanda değilse scroll et
+      var overlay = document.querySelector('.madde-overlay-content');
+      if (overlay) {
+        var rect = block.getBoundingClientRect();
+        var oRect = overlay.getBoundingClientRect();
+        if (rect.top < oRect.top + 80 || rect.bottom > oRect.bottom - 80) {
+          block.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
         }
       }
       break;
