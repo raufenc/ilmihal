@@ -311,9 +311,10 @@ async function openMadde(kisim, maddeNo, fromRoute, searchQuery) {
   const madde = window.maddelerData?.find(m => m.kisim === kisim && m.madde_no === maddeNo);
   if (!madde) return;
 
-  // Bookmark & read tracking
+  // Bookmark & read tracking & audio
   currentMaddeForBookmark = madde;
   if (typeof markAsRead === 'function') markAsRead(kisim, maddeNo);
+  if (typeof initAudioForMadde === 'function') initAudioForMadde(madde);
 
   const kisimLabels = { 1: 'Birinci K\u0131s\u0131m', 2: '\u0130kinci K\u0131s\u0131m', 3: '\u00dc\u00e7\u00fcnc\u00fc K\u0131s\u0131m' };
   const body = document.getElementById('madde-body');
@@ -2430,3 +2431,177 @@ document.addEventListener('DOMContentLoaded', function() {
     if (el) el.textContent = window.sahislarData.length + ' şahıs';
   }
 });
+
+// ===== SESLİ DİNLEME SİSTEMİ =====
+var audioState = {
+  madde: null,
+  pages: [],      // bu maddenin sayfa numaraları
+  currentIdx: 0,  // şu an çalan sayfa index
+  playing: false
+};
+
+var AUDIO_BASE = 'https://www.hakikatkitabevi.net';
+
+function getAudioPagesForMadde(madde) {
+  if (!window.audioMap) return [];
+  var start = madde.sayfa_no;
+  var end = madde.sayfa_bitis || madde.sayfa_no;
+  var pages = [];
+  for (var p = start; p <= end; p++) {
+    if (window.audioMap[p]) {
+      pages.push({ page: p, path: window.audioMap[p] });
+    }
+  }
+  return pages;
+}
+
+function initAudioForMadde(madde) {
+  audioState.madde = madde;
+  audioState.pages = getAudioPagesForMadde(madde);
+  audioState.currentIdx = 0;
+  audioState.playing = false;
+
+  var btn = document.getElementById('audio-btn');
+  var bar = document.getElementById('audio-player-bar');
+
+  if (audioState.pages.length === 0) {
+    if (btn) btn.style.display = 'none';
+    if (bar) bar.style.display = 'none';
+    return;
+  }
+
+  if (btn) {
+    btn.style.display = 'flex';
+    btn.innerHTML = '&#9654;';
+    btn.classList.remove('playing');
+  }
+  if (bar) bar.style.display = 'none';
+
+  var audio = document.getElementById('madde-audio');
+  if (audio) {
+    audio.pause();
+    audio.src = '';
+  }
+}
+
+function toggleAudio() {
+  var bar = document.getElementById('audio-player-bar');
+  if (!bar) return;
+
+  if (bar.style.display === 'none') {
+    bar.style.display = 'flex';
+    loadAudioPage(0);
+    playAudio();
+  } else {
+    if (audioState.playing) {
+      pauseAudio();
+    } else {
+      playAudio();
+    }
+  }
+}
+
+function loadAudioPage(idx) {
+  if (idx < 0 || idx >= audioState.pages.length) return;
+  audioState.currentIdx = idx;
+  var page = audioState.pages[idx];
+  var audio = document.getElementById('madde-audio');
+  if (!audio) return;
+
+  audio.src = AUDIO_BASE + encodeURI(page.path).replace(/%20/g, '%20');
+  audio.load();
+
+  var label = document.getElementById('audio-page-label');
+  if (label) label.textContent = 'Sayfa ' + page.page + ' (' + (idx + 1) + '/' + audioState.pages.length + ')';
+}
+
+function playAudio() {
+  var audio = document.getElementById('madde-audio');
+  if (!audio || !audio.src) return;
+  audio.play().catch(function(){});
+  audioState.playing = true;
+  updateAudioUI();
+}
+
+function pauseAudio() {
+  var audio = document.getElementById('madde-audio');
+  if (audio) audio.pause();
+  audioState.playing = false;
+  updateAudioUI();
+}
+
+function toggleAudioPlay() {
+  if (audioState.playing) pauseAudio();
+  else playAudio();
+}
+
+function audioNav(dir) {
+  var newIdx = audioState.currentIdx + dir;
+  if (newIdx < 0 || newIdx >= audioState.pages.length) return;
+  loadAudioPage(newIdx);
+  if (audioState.playing) playAudio();
+}
+
+function audioSeek(e) {
+  var audio = document.getElementById('madde-audio');
+  if (!audio || !audio.duration) return;
+  var rect = e.currentTarget.getBoundingClientRect();
+  var pct = (e.clientX - rect.left) / rect.width;
+  audio.currentTime = pct * audio.duration;
+}
+
+function updateAudioUI() {
+  var btn = document.getElementById('audio-btn');
+  var playBtn = document.getElementById('audio-play-pause');
+  if (btn) {
+    if (audioState.playing) {
+      btn.innerHTML = '&#9646;&#9646;';
+      btn.classList.add('playing');
+    } else {
+      btn.innerHTML = '&#9654;';
+      btn.classList.remove('playing');
+    }
+  }
+  if (playBtn) {
+    playBtn.innerHTML = audioState.playing ? '&#9646;&#9646;' : '&#9654;';
+  }
+}
+
+// Audio events
+document.addEventListener('DOMContentLoaded', function() {
+  var audio = document.getElementById('madde-audio');
+  if (!audio) return;
+
+  audio.addEventListener('timeupdate', function() {
+    if (!audio.duration) return;
+    var pct = (audio.currentTime / audio.duration) * 100;
+    var prog = document.getElementById('audio-progress');
+    if (prog) prog.style.width = pct + '%';
+    var timeEl = document.getElementById('audio-time');
+    if (timeEl) {
+      var m = Math.floor(audio.currentTime / 60);
+      var s = Math.floor(audio.currentTime % 60);
+      timeEl.textContent = m + ':' + (s < 10 ? '0' : '') + s;
+    }
+  });
+
+  audio.addEventListener('ended', function() {
+    // Sonraki sayfaya geç
+    if (audioState.currentIdx < audioState.pages.length - 1) {
+      audioNav(1);
+      playAudio();
+    } else {
+      audioState.playing = false;
+      updateAudioUI();
+    }
+  });
+});
+
+// closeMadde'de audio'yu durdur
+var _origCloseMadde = closeMadde;
+closeMadde = function() {
+  var audio = document.getElementById('madde-audio');
+  if (audio) { audio.pause(); audio.src = ''; }
+  audioState.playing = false;
+  _origCloseMadde();
+};

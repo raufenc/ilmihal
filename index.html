@@ -23,7 +23,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=15">
+  <link rel="stylesheet" href="style.css?v=16">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -188,6 +188,7 @@
   <div id="madde-detay" class="madde-overlay" style="display:none">
     <div class="madde-overlay-wrap">
       <div class="madde-toolbar">
+        <button type="button" class="toolbar-btn toolbar-audio-btn" onclick="toggleAudio()" id="audio-btn" title="Sesli dinle">&#9654;</button>
         <button type="button" class="toolbar-btn" onclick="adjustFontSize(-1)" title="Yazıyı küçült">A-</button>
         <button type="button" class="toolbar-btn" onclick="adjustFontSize(1)" title="Yazıyı büyüt">A+</button>
         <button type="button" class="toolbar-btn" onclick="cycleReadingMode()" id="reading-mode-btn" title="Okuma modu">&#9788;</button>
@@ -195,6 +196,17 @@
         <button type="button" class="toolbar-btn" onclick="shareMadde()" title="Paylaş">&#8599;</button>
         <button type="button" class="toolbar-btn" onclick="printMadde()" title="Yazdır">&#128424;</button>
         <button type="button" class="madde-close" onclick="closeMadde()">&times;</button>
+      </div>
+      <div id="audio-player-bar" class="audio-player-bar" style="display:none">
+        <audio id="madde-audio" preload="none"></audio>
+        <button type="button" class="audio-ctrl" id="audio-prev" onclick="audioNav(-1)">&#9664;</button>
+        <button type="button" class="audio-ctrl audio-play-btn" id="audio-play-pause" onclick="toggleAudioPlay()">&#9654;</button>
+        <button type="button" class="audio-ctrl" id="audio-next" onclick="audioNav(1)">&#9654;</button>
+        <div class="audio-progress-wrap" onclick="audioSeek(event)">
+          <div class="audio-progress" id="audio-progress"></div>
+        </div>
+        <span class="audio-time" id="audio-time">0:00</span>
+        <span class="audio-page-label" id="audio-page-label"></span>
       </div>
       <div class="madde-overlay-content">
         <div id="madde-body"></div>
@@ -534,6 +546,7 @@
   <script src="crossref.js?v=7"></script>
   <script src="search-engine.js?v=5"></script>
   <script src="ayet-hadis.js?v=2"></script>
-  <script src="app.js?v=15"></script>
+  <script src="audio-map.js?v=1"></script>
+  <script src="app.js?v=16"></script>
 </body>
 </html>

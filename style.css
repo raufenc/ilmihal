@@ -2655,3 +2655,82 @@ mark.search-highlight {
 :root.dark .soru-cevap-card { background: var(--bg-card); }
 :root.dark .soru-ornek { background: var(--bg-card); }
 :root.dark .ah-tab { background: var(--bg-card); }
+
+/* ===== AUDIO PLAYER ===== */
+.toolbar-audio-btn {
+  background: var(--primary) !important;
+  color: white !important;
+  border-color: var(--primary) !important;
+  font-size: 0.7rem !important;
+}
+.toolbar-audio-btn.playing {
+  background: var(--gold) !important;
+  border-color: var(--gold) !important;
+  color: #333 !important;
+}
+.audio-player-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+  color: white;
+  flex-shrink: 0;
+  border-radius: 0;
+  font-size: 0.82rem;
+}
+:root.dark .audio-player-bar {
+  background: linear-gradient(135deg, #1e3a2e, #2a5040);
+}
+.audio-ctrl {
+  background: rgba(255,255,255,0.15);
+  border: none;
+  color: white;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+  flex-shrink: 0;
+}
+.audio-ctrl:hover { background: rgba(255,255,255,0.3); }
+.audio-play-btn { width: 36px; height: 36px; font-size: 0.85rem; }
+.audio-progress-wrap {
+  flex: 1;
+  height: 6px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 3px;
+  cursor: pointer;
+  overflow: hidden;
+  min-width: 80px;
+}
+.audio-progress {
+  height: 100%;
+  background: var(--gold);
+  border-radius: 3px;
+  width: 0%;
+  transition: width 0.2s linear;
+}
+.audio-time {
+  font-size: 0.75rem;
+  opacity: 0.8;
+  min-width: 36px;
+  text-align: right;
+  flex-shrink: 0;
+}
+.audio-page-label {
+  font-size: 0.7rem;
+  opacity: 0.6;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+@media (max-width: 600px) {
+  .audio-player-bar { padding: 6px 10px; gap: 5px; }
+  .audio-ctrl { width: 28px; height: 28px; }
+  .audio-play-btn { width: 30px; height: 30px; }
+  .audio-page-label { display: none; }
+}
