@@ -311,6 +311,10 @@ async function openMadde(kisim, maddeNo, fromRoute, searchQuery) {
   const madde = window.maddelerData?.find(m => m.kisim === kisim && m.madde_no === maddeNo);
   if (!madde) return;
 
+  // Bookmark & read tracking
+  currentMaddeForBookmark = madde;
+  if (typeof markAsRead === 'function') markAsRead(kisim, maddeNo);
+
   const kisimLabels = { 1: 'Birinci K\u0131s\u0131m', 2: '\u0130kinci K\u0131s\u0131m', 3: '\u00dc\u00e7\u00fcnc\u00fc K\u0131s\u0131m' };
   const body = document.getElementById('madde-body');
 
@@ -320,6 +324,7 @@ async function openMadde(kisim, maddeNo, fromRoute, searchQuery) {
   // Show modal immediately with loading state
   document.getElementById('madde-detay').style.display = 'flex';
   document.body.style.overflow = 'hidden';
+  if (typeof updateBookmarkBtn === 'function') updateBookmarkBtn(kisim, maddeNo);
 
   body.innerHTML = `
     <div class="madde-detail-header">
@@ -1805,8 +1810,125 @@ document.addEventListener('DOMContentLoaded', () => {
     loadKisimTexts(3);
   }, 500);
 
+  // Günün maddesi
+  if (typeof loadGununMaddesi === 'function') loadGununMaddesi();
+
   // Handle initial route
   if (location.hash && location.hash !== '#' && location.hash !== '#anasayfa') {
     handleRoute();
   }
 });
+
+// ===== GÜNÜN MADDESİ =====
+function loadGununMaddesi() {
+  if (!window.tocData || window.tocData.length === 0) return;
+  const today = new Date();
+  const dayOfYear = Math.floor((today - new Date(today.getFullYear(), 0, 0)) / 86400000);
+  const index = dayOfYear % window.tocData.length;
+  const madde = window.tocData[index];
+  if (!madde) return;
+
+  const baslikEl = document.getElementById('gunun-baslik');
+  const ozetEl = document.getElementById('gunun-ozet');
+  const btn = document.getElementById('gunun-oku-btn');
+  if (!baslikEl) return;
+
+  const kisimLabels = { 1: 'Birinci Kısım', 2: 'İkinci Kısım', 3: 'Üçüncü Kısım' };
+  baslikEl.textContent = madde.baslik;
+  ozetEl.textContent = kisimLabels[madde.kisim] + ', Madde ' + madde.madde_no + (madde.mektup_ref ? ' · Mektup: ' + madde.mektup_ref : '');
+  btn.onclick = () => { navigateTo('icerik'); openMadde(madde.kisim, madde.madde_no); };
+}
+
+// ===== FONT BOYUTU AYARI =====
+let currentFontSize = parseFloat(localStorage.getItem('ilmihal-font-size') || '1.05');
+
+function adjustFontSize(delta) {
+  currentFontSize = Math.max(0.8, Math.min(1.6, currentFontSize + delta * 0.1));
+  document.documentElement.style.setProperty('--madde-font-size', currentFontSize + 'rem');
+  localStorage.setItem('ilmihal-font-size', String(currentFontSize));
+}
+
+if (localStorage.getItem('ilmihal-font-size')) {
+  document.documentElement.style.setProperty('--madde-font-size', currentFontSize + 'rem');
+}
+
+// ===== YER İMİ SİSTEMİ =====
+function getBookmarks() {
+  try { return JSON.parse(localStorage.getItem('ilmihal-bookmarks') || '[]'); }
+  catch(e) { return []; }
+}
+function saveBookmarks(bm) {
+  localStorage.setItem('ilmihal-bookmarks', JSON.stringify(bm));
+}
+
+let currentMaddeForBookmark = null;
+
+function toggleBookmark() {
+  if (!currentMaddeForBookmark) return;
+  const bm = getBookmarks();
+  const key = currentMaddeForBookmark.kisim + '/' + currentMaddeForBookmark.madde_no;
+  const idx = bm.findIndex(b => b.key === key);
+  const btn = document.getElementById('bookmark-btn');
+  if (idx >= 0) {
+    bm.splice(idx, 1);
+    if (btn) { btn.innerHTML = '&#9734;'; btn.classList.remove('bookmarked'); }
+  } else {
+    bm.push({ key, kisim: currentMaddeForBookmark.kisim, madde_no: currentMaddeForBookmark.madde_no, baslik: currentMaddeForBookmark.baslik });
+    if (btn) { btn.innerHTML = '&#9733;'; btn.classList.add('bookmarked'); }
+  }
+  saveBookmarks(bm);
+}
+
+function updateBookmarkBtn(kisim, maddeNo) {
+  const bm = getBookmarks();
+  const key = kisim + '/' + maddeNo;
+  const btn = document.getElementById('bookmark-btn');
+  if (!btn) return;
+  if (bm.some(b => b.key === key)) {
+    btn.innerHTML = '&#9733;';
+    btn.classList.add('bookmarked');
+  } else {
+    btn.innerHTML = '&#9734;';
+    btn.classList.remove('bookmarked');
+  }
+}
+
+// ===== PAYLAŞIM =====
+function shareMadde() {
+  if (!currentMaddeForBookmark) return;
+  const url = window.location.origin + window.location.pathname + '#madde/' + currentMaddeForBookmark.kisim + '/' + currentMaddeForBookmark.madde_no;
+  if (navigator.share) {
+    navigator.share({
+      title: currentMaddeForBookmark.baslik + ' - Se\'âdet-i Ebediyye',
+      url: url
+    }).catch(function(){});
+  } else if (navigator.clipboard) {
+    navigator.clipboard.writeText(url).then(function() {
+      var btn = document.querySelector('.toolbar-btn[onclick="shareMadde()"]');
+      if (btn) { var orig = btn.innerHTML; btn.innerHTML = '✓'; setTimeout(function(){ btn.innerHTML = orig; }, 1500); }
+    }).catch(function(){});
+  }
+}
+
+// ===== ARAMA ETİKET =====
+function aramaEtiketTikla(kelime) {
+  document.getElementById('full-search').value = kelime;
+  doFullSearch();
+  var ipuclari = document.getElementById('arama-ipuclari');
+  if (ipuclari) ipuclari.style.display = 'none';
+}
+
+// ===== OKUMA İSTATİSTİKLERİ =====
+function getReadMaddes() {
+  try { return JSON.parse(localStorage.getItem('ilmihal-read') || '[]'); }
+  catch(e) { return []; }
+}
+
+function markAsRead(kisim, maddeNo) {
+  var read = getReadMaddes();
+  var key = kisim + '/' + maddeNo;
+  if (read.indexOf(key) === -1) {
+    read.push(key);
+    localStorage.setItem('ilmihal-read', JSON.stringify(read));
+  }
+}

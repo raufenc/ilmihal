@@ -1,0 +1,18 @@
+{
+  "name": "Se'âdet-i Ebediyye - İnteraktif İlmihâl",
+  "short_name": "İlmihâl",
+  "description": "1248 sayfalık kapsamlı ilmihâl eseri, tam metin arama, dini sözlük ve interaktif silsile atlası.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#faf8f4",
+  "theme_color": "#1a6b4e",
+  "lang": "tr",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ],
+  "categories": ["education", "books"]
+}
