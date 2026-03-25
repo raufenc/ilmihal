@@ -2998,21 +2998,26 @@ mark.search-highlight {
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* ===== WHISPER SYNC HIGHLIGHT ===== */
-.whisper-highlight {
-  background: rgba(201,168,76,0.15) !important;
-  border-radius: 4px;
-  transition: background 0.8s ease;
+/* ===== WHISPER SYNC INDICATOR ===== */
+#sync-indicator {
+  position: absolute;
+  left: -16px;
+  width: calc(100% + 32px);
+  height: 2px;
+  background: linear-gradient(90deg, var(--gold), transparent);
+  pointer-events: none;
+  transition: top 1.5s linear;
+  z-index: 5;
+  opacity: 0.6;
 }
-.whisper-active-line {
-  background: rgba(201,168,76,0.22) !important;
-  border-left: 3px solid var(--gold) !important;
-  padding-left: 8px !important;
-  transition: background 0.6s ease;
+#sync-indicator::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: -12px;
+  width: 4px;
+  height: 26px;
+  background: var(--gold);
+  border-radius: 2px;
 }
-:root.dark .whisper-highlight {
-  background: rgba(212,182,92,0.08) !important;
-}
-:root.dark .whisper-active-line {
-  background: rgba(212,182,92,0.15) !important;
-}
+:root.dark #sync-indicator { opacity: 0.4; }
