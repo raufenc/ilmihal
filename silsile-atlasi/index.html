@@ -6,6 +6,34 @@
   <title>Silsile-i Aliyye Atlası — İnteraktif Harita</title>
   <meta name="description" content="Silsile-i Aliyye büyüklerinin interaktif haritası. Hazret-i Muhammed Mustafâ'dan Hüseyin Hilmi Işık Efendi'ye 37 halkayı keşfet.">
 
+  <!-- Open Graph -->
+  <meta property="og:title" content="Silsile-i Aliyye Atlası — Nakşibendiyye Altın Zinciri">
+  <meta property="og:description" content="Hazret-i Muhammed Mustafâ (sallallahu aleyhi ve sellem)'den Hüseyin Hilmi Işık Efendi'ye uzanan 37 halkanın interaktif haritası.">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="tr_TR">
+  <meta property="og:site_name" content="ilmihal.org">
+
+  <!-- SEO JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "Silsile-i Aliyye Atlası",
+    "description": "Nakşibendiyye tarikatının 37 halkalık manevi silsilesinin interaktif haritası.",
+    "publisher": {
+      "@type": "Organization",
+      "name": "ilmihal.org"
+    },
+    "mainEntity": {
+      "@type": "ItemList",
+      "name": "Silsile-i Aliyye",
+      "description": "Nakşibendiyye Altın Zinciri — 37 Halka",
+      "numberOfItems": 37,
+      "itemListOrder": "https://schema.org/ItemListOrderAscending"
+    }
+  }
+  </script>
+
   <!-- Leaflet CSS -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 
@@ -18,35 +46,57 @@
 </head>
 <body>
 
+  <!-- SKIP LINK -->
+  <a href="#map-section" class="skip-link">Haritaya geç</a>
+
   <!-- HEADER -->
-  <header id="main-header">
+  <header id="main-header" role="banner">
     <div class="header-inner">
       <div class="logo-area">
         <a href="../" class="logo-link" title="Se'âdet-i Ebediyye — Ana Sayfa">
-          <div class="logo-icon">&#10022;</div>
+          <div class="logo-icon" aria-hidden="true">&#10022;</div>
           <div class="logo-text">
             <span class="logo-title">Silsile-i Aliyye Atlası</span>
             <span class="logo-subtitle">ilmihal.org</span>
           </div>
         </a>
       </div>
-      <nav id="main-nav">
+      <nav id="main-nav" role="navigation" aria-label="Ana menü">
         <a href="#hero">Ana Sayfa</a>
+        <a href="#tanitim-section">Tanıtım</a>
         <a href="#map-section">Harita</a>
         <a href="#silsile-section">Silsile</a>
       </nav>
       <div class="header-controls">
-        <div class="search-box">
-          <input type="text" id="search-input" placeholder="Âlim ara...">
-          <div id="search-results" class="search-results"></div>
-        </div>
-        <button id="mobile-menu-btn" class="mobile-menu-btn">&#9776;</button>
+        <button id="global-search-btn" class="global-search-trigger" title="Ara (Ctrl+K)" aria-label="Arama aç">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M11.742 10.344a6.5 6.5 0 10-1.397 1.398h-.001l3.85 3.85a1 1 0 001.415-1.414l-3.85-3.85zm-5.242.156a5 5 0 110-10 5 5 0 010 10z"/></svg>
+          <span class="search-shortcut">Ctrl+K</span>
+        </button>
+        <button id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Menüyü aç" aria-expanded="false">&#9776;</button>
       </div>
     </div>
   </header>
 
+  <!-- GLOBAL SEARCH MODAL -->
+  <div id="global-search-modal" class="gs-modal hidden" role="dialog" aria-label="Arama" aria-modal="true">
+    <div class="gs-backdrop"></div>
+    <div class="gs-container">
+      <div class="gs-input-wrap">
+        <svg class="gs-icon" width="18" height="18" viewBox="0 0 16 16" fill="currentColor"><path d="M11.742 10.344a6.5 6.5 0 10-1.397 1.398h-.001l3.85 3.85a1 1 0 001.415-1.414l-3.85-3.85zm-5.242.156a5 5 0 110-10 5 5 0 010 10z"/></svg>
+        <input type="text" id="gs-input" placeholder="Âlim adı, şehir, bölge veya asır ara..." autocomplete="off" aria-label="Arama terimi">
+        <kbd class="gs-esc">Esc</kbd>
+      </div>
+      <div id="gs-results" class="gs-results" role="listbox"></div>
+      <div class="gs-footer">
+        <span><kbd>&uarr;</kbd><kbd>&darr;</kbd> ile geç</span>
+        <span><kbd>Enter</kbd> ile seç</span>
+        <span><kbd>Esc</kbd> ile kapat</span>
+      </div>
+    </div>
+  </div>
+
   <!-- HERO -->
-  <section id="hero">
+  <section id="hero" aria-label="Giriş">
     <div class="hero-overlay"></div>
     <div class="hero-pattern"></div>
     <div class="hero-content">
@@ -56,7 +106,7 @@
         <span class="hero-line2">Coğrafi Yolculuğu</span>
       </h1>
       <p class="hero-desc">Hazret-i Muhammed Mustafâ (sallallahu aleyhi ve sellem)'den Hüseyin Hilmi Işık Efendi'ye uzanan 37 halkanın interaktif haritası</p>
-      <div class="hero-stats">
+      <div class="hero-stats" aria-label="İstatistikler">
         <div class="stat">
           <span class="stat-num">37</span>
           <span class="stat-label">Halka</span>
@@ -73,29 +123,101 @@
       <div class="hero-buttons">
         <a href="#map-section" class="hero-cta">Keşfet</a>
         <button id="btn-journey" class="hero-cta-secondary">
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><path d="M3 2l9 5-9 5V2z"/></svg>
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor" aria-hidden="true"><path d="M3 2l9 5-9 5V2z"/></svg>
           Yolculuğu Oynat
         </button>
       </div>
     </div>
-    <div class="scroll-indicator">
+    <div class="scroll-indicator" aria-hidden="true">
       <div class="scroll-arrow"></div>
     </div>
   </section>
 
+  <!-- TANITIM SECTION -->
+  <section id="tanitim-section" aria-label="Tanıtım">
+    <div class="section-header">
+      <h2>Silsile-i Aliyye Nedir?</h2>
+      <p>Peygamber Efendimiz'den (sallallahu aleyhi ve sellem) günümüze uzanan manevî altın zincir</p>
+    </div>
+    <div class="tanitim-content">
+      <div class="tanitim-card">
+        <div class="tanitim-icon" aria-hidden="true">&#10038;</div>
+        <h3>Manevî Silsile</h3>
+        <p>Silsile-i Aliyye, Nakşibendiyye tarikatında Peygamber Efendimiz (sallallahu aleyhi ve sellem)'den başlayıp günümüze kadar kesintisiz devam eden manevî otorite ve feyz zinciridir. Her halka, bir öncekinden aldığı ilmi ve manevî emaneti bir sonrakine teslim etmiştir.</p>
+      </div>
+      <div class="tanitim-card">
+        <div class="tanitim-icon" aria-hidden="true">&#9733;</div>
+        <h3>37 Halka, 14 Asır</h3>
+        <p>Hazret-i Ebû Bekir es-Sıddık (radıyallahu anh) ile başlayan bu zincir; Hicaz, Horasan, Mâverâünnehr, Hindistan, Şam ve Anadolu coğrafyalarını dolaşarak 37 halka ve 14 asırlık bir yolculuk çizmiştir.</p>
+      </div>
+      <div class="tanitim-card">
+        <div class="tanitim-icon" aria-hidden="true">&#128218;</div>
+        <h3>Kaynaklar</h3>
+        <p>Bu atlas, başta Se'âdet-i Ebediyye olmak üzere Reşahât, Mektûbât-ı Rabbâniyye, Hadîkatü'l-Evliyâ ve İslam Alimleri Ansiklopedisi gibi muteber eserlerden derlenen bilgilerle hazırlanmıştır.</p>
+      </div>
+    </div>
+  </section>
+
   <!-- MAP SECTION -->
-  <section id="map-section">
+  <section id="map-section" aria-label="İnteraktif harita">
     <div class="section-header">
       <h2>İnteraktif Harita</h2>
       <p>Haritadaki işaretlere tıklayarak silsile büyüklerini keşfedin</p>
     </div>
     <div class="map-container">
-      <div id="map"></div>
-      <div id="scholar-panel" class="scholar-panel hidden">
-        <button id="panel-close" class="panel-close">&times;</button>
+      <div class="map-wrapper" id="map-wrapper">
+        <div id="map" role="application" aria-label="Silsile-i Aliyye haritası"></div>
+
+        <!-- Sefer Modu Controls -->
+        <div class="campaign-controls" role="toolbar" aria-label="Yolculuk kontrolleri">
+          <button class="campaign-btn" id="campaignStartBtn" aria-label="Yolculuk modunu başlat">&#9876; Yolculuk Modu</button>
+          <button class="campaign-btn pause" id="campaignPauseBtn" style="display:none;" aria-label="Duraklat">&#10074;&#10074; Duraklat</button>
+          <div class="campaign-speed" id="campaignSpeedCtrl" style="display:none;" role="group" aria-label="Hız kontrolü">
+            <span>Hız:</span>
+            <button id="speed1" class="active-speed" aria-label="Normal hız" aria-pressed="true">1x</button>
+            <button id="speed2" aria-label="2 kat hız" aria-pressed="false">2x</button>
+            <button id="speed3" aria-label="3 kat hız" aria-pressed="false">3x</button>
+          </div>
+        </div>
+
+        <!-- Campaign Card -->
+        <div class="campaign-card" id="campaignCard" role="status" aria-live="polite">
+          <div class="campaign-card-header">
+            <div class="campaign-card-num" id="campaignNum">1</div>
+            <div>
+              <div class="campaign-card-title" id="campaignTitle"></div>
+              <div class="campaign-card-meta">
+                <span id="campaignDates"></span>
+                <span id="campaignLocation"></span>
+              </div>
+            </div>
+          </div>
+          <div class="campaign-card-lakap" id="campaignLakap"></div>
+          <div class="campaign-card-summary" id="campaignSummary"></div>
+          <div class="campaign-card-nav">
+            <button class="campaign-nav-link" id="campaignPrevLink" title="Önceki halka (hocası)">
+              <span class="nav-arrow">&larr;</span> <span id="campaignPrevName">Hocası</span>
+            </button>
+            <button class="campaign-nav-link" id="campaignNextLink" title="Sonraki halka (talebesi)">
+              <span id="campaignNextName">Talebesi</span> <span class="nav-arrow">&rarr;</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Campaign Progress -->
+        <div class="campaign-progress" id="campaignProgress">
+          <div class="campaign-progress-bar" id="campaignProgressBar" role="progressbar" aria-valuemin="0" aria-valuemax="37" aria-valuenow="0">
+            <div class="campaign-progress-fill" id="campaignProgressFill"></div>
+          </div>
+          <div class="campaign-progress-label" id="campaignProgressLabel">0 / 37</div>
+        </div>
+      </div>
+
+      <div id="scholar-panel" class="scholar-panel hidden" role="complementary" aria-label="Âlim bilgileri">
+        <button id="panel-close" class="panel-close" aria-label="Paneli kapat">&times;</button>
         <div class="panel-portrait-wrap">
           <div class="panel-portrait" id="panel-portrait">
-            <svg viewBox="0 0 48 48" fill="none"><circle cx="24" cy="18" r="9" fill="currentColor" opacity="0.5"/><path d="M6 44c0-9.94 8.06-18 18-18s18 8.06 18 18" fill="currentColor" opacity="0.3"/></svg>
+            <svg viewBox="0 0 48 48" fill="none" aria-hidden="true"><circle cx="24" cy="18" r="9" fill="currentColor" opacity="0.5"/><path d="M6 44c0-9.94 8.06-18 18-18s18 8.06 18 18" fill="currentColor" opacity="0.3"/></svg>
           </div>
           <div class="panel-halka" id="panel-halka"></div>
         </div>
@@ -103,10 +225,16 @@
         <div id="panel-lakap" class="panel-lakap"></div>
         <div id="panel-dates" class="panel-dates"></div>
         <div class="panel-location">
-          <svg viewBox="0 0 16 16" fill="none"><path d="M8 1.5C5.51 1.5 3.5 3.51 3.5 6c0 3.75 4.5 8.5 4.5 8.5s4.5-4.75 4.5-8.5c0-2.49-2.01-4.5-4.5-4.5zm0 6.1a1.6 1.6 0 110-3.2 1.6 1.6 0 010 3.2z" fill="currentColor"/></svg>
+          <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 1.5C5.51 1.5 3.5 3.51 3.5 6c0 3.75 4.5 8.5 4.5 8.5s4.5-4.75 4.5-8.5c0-2.49-2.01-4.5-4.5-4.5zm0 6.1a1.6 1.6 0 110-3.2 1.6 1.6 0 010 3.2z" fill="currentColor"/></svg>
           <span id="panel-loc"></span>
         </div>
         <div class="panel-tags" id="panel-tags"></div>
+        <hr class="panel-divider">
+        <!-- Cross-reference links -->
+        <div class="panel-xref" id="panel-xref">
+          <div class="panel-xref-label">Silsile Bağlantıları</div>
+          <div class="panel-xref-links" id="panel-xref-links"></div>
+        </div>
         <hr class="panel-divider">
         <div class="panel-nav">
           <button class="nav-btn" id="btn-prev" disabled>
@@ -126,18 +254,18 @@
   </section>
 
   <!-- SILSILE SECTION -->
-  <section id="silsile-section">
+  <section id="silsile-section" aria-label="Silsile zinciri">
     <div class="section-header">
       <h2>Silsile-i Aliyye</h2>
       <p>Peygamber Efendimiz'den (sallallahu aleyhi ve sellem) günümüze uzanan manevî zincir</p>
     </div>
     <div class="silsile-wrapper">
-      <div id="silsile" class="silsile"></div>
+      <div id="silsile" class="silsile" role="list" aria-label="37 halkalık silsile zinciri"></div>
     </div>
   </section>
 
   <!-- FOOTER -->
-  <footer>
+  <footer role="contentinfo">
     <div class="footer-inner">
       <p>Silsile-i Aliyye Atlası</p>
       <p class="footer-sub">ilmihal.org &bull; Se'âdet-i Ebediyye</p>
@@ -145,10 +273,10 @@
   </footer>
 
   <!-- SCHOLAR MODAL (for silsile section clicks) -->
-  <div id="scholar-modal" class="modal hidden">
+  <div id="scholar-modal" class="modal hidden" role="dialog" aria-modal="true" aria-label="Âlim bilgileri">
     <div class="modal-backdrop"></div>
     <div class="modal-content">
-      <button class="modal-close">&times;</button>
+      <button class="modal-close" aria-label="Kapat">&times;</button>
       <div class="modal-header">
         <div class="modal-halka" id="modal-halka"></div>
         <h2 id="modal-name"></h2>
@@ -160,6 +288,8 @@
       <div class="modal-body">
         <div class="modal-location" id="modal-location"></div>
         <div class="modal-tags" id="modal-tags"></div>
+        <!-- Cross-reference in modal -->
+        <div class="modal-xref" id="modal-xref"></div>
         <div id="modal-bio" class="modal-bio"></div>
       </div>
     </div>
