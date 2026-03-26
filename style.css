@@ -3410,51 +3410,6 @@ a.rehber-madde-item:hover { background: rgba(26,107,78,0.08); color: var(--prima
   margin-top: 4px;
 }
 
-/* ===== ANA SAYFA NİYET KARTLARI (IA-01) ===== */
-.niyet-kartlari {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-  margin: 32px 0;
-}
-@media (max-width: 768px) {
-  .niyet-kartlari { grid-template-columns: 1fr; gap: 12px; }
-}
-.niyet-kart {
-  background: var(--bg-card);
-  border: 2px solid var(--border);
-  border-radius: var(--radius);
-  padding: 28px 24px;
-  text-align: center;
-  cursor: pointer;
-  transition: all 0.25s;
-  text-decoration: none;
-  color: inherit;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-}
-.niyet-kart:hover {
-  border-color: var(--primary);
-  transform: translateY(-3px);
-  box-shadow: var(--shadow-lg);
-}
-.niyet-kart-icon {
-  font-size: 2rem;
-  line-height: 1;
-}
-.niyet-kart h3 {
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: var(--primary-dark);
-}
-.niyet-kart p {
-  font-size: 0.88rem;
-  color: var(--text-light);
-  line-height: 1.5;
-}
-
 /* ===== TOOLTIP İYİLEŞTİRME (UX-01) ===== */
 [title] {
   position: relative;

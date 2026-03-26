@@ -3516,32 +3516,7 @@ function filtreAramaSonuclari(tip) {
   });
 }
 
-// ===== IA-01: ANA SAYFA NİYET KARTLARI =====
-(function() {
-  var heroActions = document.querySelector('.hero-actions');
-  if (!heroActions) return;
-
-  var niyetHTML = '<div class="niyet-kartlari">' +
-    '<a class="niyet-kart" href="#" onclick="navigateTo(\'arama\');return false">' +
-      '<span class="niyet-kart-icon">&#128269;</span>' +
-      '<h3>Hızlı Cevap Ara</h3>' +
-      '<p>Soru sorun veya kelime arayın, kitaptan cevabını bulalım.</p>' +
-    '</a>' +
-    '<a class="niyet-kart" href="#" onclick="navigateTo(\'rehberler\');return false">' +
-      '<span class="niyet-kart-icon">&#128214;</span>' +
-      '<h3>Rehberle Başla</h3>' +
-      '<p>Namaz, oruç, hac gibi konularda adım adım öğrenin.</p>' +
-    '</a>' +
-    '<a class="niyet-kart" href="#" onclick="navigateTo(\'sozluk\');return false">' +
-      '<span class="niyet-kart-icon">&#128218;</span>' +
-      '<h3>Sözlük ve Referans</h3>' +
-      '<p>4.400+ terimlik dini lügat, âyet-hadîs indeksi ve şahıs biyografileri.</p>' +
-    '</a>' +
-  '</div>';
-
-  // Mevcut CTA butonlarının altına ekle
-  heroActions.insertAdjacentHTML('afterend', niyetHTML);
-})();
+// IA-01 niyet kartları kaldırıldı
 
 // ===== SEO-03: DİNAMİK SCHEMA.ORG =====
 (function() {
