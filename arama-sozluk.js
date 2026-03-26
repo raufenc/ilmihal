@@ -514,6 +514,22 @@ var aramaSynonyms = {
 // ============================================================================
 var soruMaddeMap = [
 
+  // ============================================================
+  // BIRINCI KISIM — IMAN, IBADET, FIKIH
+  // ============================================================
+
+  // ---- PEYGAMBERE UYMAK ----
+  {
+    soru: ["peygambere uymak", "saadet nedir", "resulullaha uymak"],
+    kisim: 1, maddeNo: 1,
+    cevapOzet: "Muhammed aleyhisselama uymak, se adete kavusdurur."
+  },
+  {
+    soru: ["allaha itaat", "resule itaat", "itaat nedir"],
+    kisim: 1, maddeNo: 2,
+    cevapOzet: "Allahu tealaya ita at icin, Resulune ita at lazimdir."
+  },
+
   // ---- IMAN VE AKAID ----
   {
     soru: ["musluman nasil olunur", "musluman olmak", "kelime i sehadet", "sehadet getirmek", "islam a girmek"],
@@ -551,6 +567,11 @@ var soruMaddeMap = [
     cevapOzet: "Kur an-i kerim tercemelerine dikkat edilmelidir. Her tercemeye guvenilmez."
   },
   {
+    soru: ["din hirsizlari", "sahte hoca", "yanlis din anlatan"],
+    kisim: 1, maddeNo: 10,
+    cevapOzet: "Din hirsizlari, dini yanlis ogretip muslumanlari dogru yoldan saptiran kimselerdir."
+  },
+  {
     soru: ["iman nedir", "iman ne demek", "iman tanimi", "iman bilgileri"],
     kisim: 1, maddeNo: 11,
     cevapOzet: "Iman, Resulullah sallallahu aleyhi ve sellemin bildirdigi seylerin hepsine kalb ile inanmaktir."
@@ -566,6 +587,21 @@ var soruMaddeMap = [
     cevapOzet: "Kalbde iman bulunmasina alamet, ahkam-i islamiyyeye uymaktir."
   },
   {
+    soru: ["allahin nimetleri", "nimet nedir", "allahun nimetleri"],
+    kisim: 1, maddeNo: 13,
+    cevapOzet: "Allahu tealanin ni metleri dunyada herkesedir; ahiretdeki ni metler ise yalniz muminleredir."
+  },
+  {
+    soru: ["kafir ahirette", "kafirin akibeti", "kafir merhamet"],
+    kisim: 1, maddeNo: 14,
+    cevapOzet: "Ahiretde kafir olarak olenlere merhamet yoktur."
+  },
+  {
+    soru: ["muhabbet nedir", "allah sevgisi alameti", "sevginin alameti"],
+    kisim: 1, maddeNo: 15,
+    cevapOzet: "Muhabbetin alametleri bildirilmektedir. Sevginin alameti, sevgilinin isteklerine uymaktir."
+  },
+  {
     soru: ["peygamber efendimiz", "hz muhammed", "peygamberimizin hayati"],
     kisim: 1, maddeNo: 16,
     cevapOzet: "Muhammed aleyhisselam, Allahu tealanin sevgilisidir."
@@ -574,6 +610,41 @@ var soruMaddeMap = [
     soru: ["mucize nedir", "peygamberimizin mucizeleri"],
     kisim: 1, maddeNo: 17,
     cevapOzet: "Peygamber Efendimiz sallallahu aleyhi ve sellemin mucizeleri bildirilmektedir. Kur an-i kerimin ustunlugu aciklanmaktadir."
+  },
+  {
+    soru: ["resule tabi olmak", "evlad terbiyesi", "cocuk terbiyesi", "cocuga din ogretmek"],
+    kisim: 1, maddeNo: 18,
+    cevapOzet: "Resule tabi olmak nasil olur ve evlad terbiyesi aciklanmaktadir."
+  },
+  {
+    soru: ["hubbi fillah", "bugdi fillah", "allah icin sevmek", "allah icin buzmek"],
+    kisim: 1, maddeNo: 19,
+    cevapOzet: "Hubb-i fillah ve bugd-i fillah, Allah icin sevmek ve buzmek aciklanmaktadir."
+  },
+  {
+    soru: ["kazaya riza", "kadere razi olmak", "allahtan gelen bela"],
+    kisim: 1, maddeNo: 20,
+    cevapOzet: "Kazaya riza nasil olur, aciklanmaktadir."
+  },
+  {
+    soru: ["cennet nedir", "cennete girmek", "cennete nasil girilir"],
+    kisim: 1, maddeNo: 21,
+    cevapOzet: "Cennete girmek icin Muhammed aleyhisselama uymak lazimdir."
+  },
+  {
+    soru: ["kafirlerin iyiligi", "kafir iyilik", "kafirin sevabi"],
+    kisim: 1, maddeNo: 22,
+    cevapOzet: "Kafirlerin iyiligi dunyada kalir, ahiretde faidesi olmaz."
+  },
+  {
+    soru: ["dunya ahiretin tarlasi", "dunya nedir", "dunya ahiret"],
+    kisim: 1, maddeNo: 23,
+    cevapOzet: "Dunya, ahiretin tarlasidir. Burada ekilen ahiretde birilir."
+  },
+  {
+    soru: ["ahiret bilgileri", "ahirete iman", "gayba iman"],
+    kisim: 1, maddeNo: 24,
+    cevapOzet: "Ahiret bilgileri aklin disindadir; bunlara akl ermez, iman ile kabul edilir."
   },
   {
     soru: ["kuran i kerim nedir", "kuran allah kelami mi"],
@@ -586,24 +657,49 @@ var soruMaddeMap = [
     cevapOzet: "Allahu teala akl ile, hayal ile anlasilamaz. Gayba iman etmek lazimdir."
   },
   {
-    soru: ["cennet nedir", "cennete girmek", "cennete nasil girilir"],
-    kisim: 1, maddeNo: 21,
-    cevapOzet: "Cennete girmek icin Muhammed aleyhisselama uymak lazimdir."
+    soru: ["ictihad hatalari", "imam i azam ictihad", "muctehid hatasi"],
+    kisim: 1, maddeNo: 26,
+    cevapOzet: "Ictihad hatalari ve Imam-i A zamin buyuklugu bildirilmektedir."
   },
   {
-    soru: ["kabir azabi", "kabir azabi var mi", "kabir hayati"],
-    kisim: 2, maddeNo: 19,
-    cevapOzet: "Kabr azabi haktir. Inanmiyanlara cevab verilmektedir."
+    soru: ["kafirlerin esyasi", "gayrimuslim esyasi kullanmak"],
+    kisim: 1, maddeNo: 29,
+    cevapOzet: "Kafirlerin kullandigi seyler iki turludur: adetlere ait olanlar ve dine ait olanlar."
   },
   {
-    soru: ["kaza kader nedir", "kaza ve kader", "kader inanci"],
-    kisim: 2, maddeNo: 50,
-    cevapOzet: "Kaza ve kader, Ehl-i sunnet itikadinin onemli meselelerindendir."
+    soru: ["resulullaha uymak dereceleri", "sunnete uymak dereceleri"],
+    kisim: 1, maddeNo: 30,
+    cevapOzet: "Resulullaha uymak yedi derecedir."
   },
   {
-    soru: ["irade i cuziyye nedir", "irade i cuzi"],
-    kisim: 2, maddeNo: 49,
-    cevapOzet: "Irade-i cuz iyye, kulun bir ise yonelmesidir. Allahu teala, kulun iradesine gore yaratir."
+    soru: ["ehl i sunnet itikadi", "itikad nedir", "haramlar nelerdir"],
+    kisim: 1, maddeNo: 31,
+    cevapOzet: "Ehl-i sunnet i tikadi ve haramlar aciklanmaktadir."
+  },
+  {
+    soru: ["yetmisuc firka", "73 firka", "firkai naciye", "hangi mezhep kurtulur"],
+    kisim: 1, maddeNo: 32,
+    cevapOzet: "Bu ummet yetmisuc firkaya ayrilacakdir. Kurtulacak olan Ehl-i sunnet vel-cema atdir."
+  },
+  {
+    soru: ["allahin yakin olmasi", "kurbiyet nedir", "allaha yakinlik"],
+    kisim: 1, maddeNo: 33,
+    cevapOzet: "Allahu tealanin yakin olmasi ne demekdir, aciklanmaktadir."
+  },
+  {
+    soru: ["fen bilgileri ve din", "fen ve iman", "yaratici var mi"],
+    kisim: 1, maddeNo: 36,
+    cevapOzet: "Fen bilgileri, bir yaraticinin varligini gostermektedir."
+  },
+  {
+    soru: ["felsefecilere gore tefsir", "felsefi tefsir caiz mi"],
+    kisim: 1, maddeNo: 37,
+    cevapOzet: "Kur an-i kerimi felsefecilere gore tefsir etmek caiz degildir."
+  },
+  {
+    soru: ["tenasuh nedir", "reenkarnasyon", "ruh gocu var mi"],
+    kisim: 1, maddeNo: 39,
+    cevapOzet: "Tenasuh (ruh gocu) yoktur. Alem-i misal ve fen bilgileri aciklanmaktadir."
   },
 
   // ---- SUNNET VE BID AT ----
@@ -623,6 +719,16 @@ var soruMaddeMap = [
     cevapOzet: "Bid at, Resulullah sallallahu aleyhi ve sellem zemaindan sonra ortaya cikan, dinde olmayan seylerdir."
   },
   {
+    soru: ["sunnete yapismmak 2", "bid at tehlikesi", "sunneti terk"],
+    kisim: 1, maddeNo: 35,
+    cevapOzet: "Sunnete yapismmak ve bid atlerden sakinmak lazimdir. Bid at tehlikesi bildirilmektedir."
+  },
+  {
+    soru: ["sunneti ihya", "unutulmus sunnet", "sunneti canlandirmak"],
+    kisim: 1, maddeNo: 38,
+    cevapOzet: "Sunnete yapismmak ve bid atlerden sakinmak lazimdir."
+  },
+  {
     soru: ["ictihad nedir", "muctehid kimdir", "ictihad ne demek"],
     kisim: 1, maddeNo: 27,
     cevapOzet: "Ictihad, ahkam-i ser iyyeyi delillerden cikarmaktir. Muctehid, bunu yapabilecek ilme sahip alimdir."
@@ -632,11 +738,31 @@ var soruMaddeMap = [
     kisim: 1, maddeNo: 44,
     cevapOzet: "Farz, sunnet ve nafilelerin ehemmiyyetleri ve farklari bildirilmektedir."
   },
+  {
+    soru: ["iman ibadet nasihat", "iman ve ibadet", "luuzumlu nasihatler"],
+    kisim: 1, maddeNo: 46,
+    cevapOzet: "Iman, ibadetler ve luzumlu nasihatler bildirilmektedir."
+  },
+  {
+    soru: ["haramlar nelerdir", "iman ve haram", "buyuk gunahlar"],
+    kisim: 1, maddeNo: 47,
+    cevapOzet: "Iman, ibadetler ve haramlar bildirilmektedir."
+  },
+  {
+    soru: ["alem nasil yaratildi", "yoktan yaratma", "yunan filozoflari"],
+    kisim: 1, maddeNo: 49,
+    cevapOzet: "Alemler ve hersey yoktan var edildi. Yunan felsefecilerinin hatalari bildirilmektedir."
+  },
 
   // ---- NAMAZ ----
   {
-    soru: ["otuzuc farz", "33 farz", "bes vakit namaz farzlari"],
+    soru: ["abdest nasil alinir", "abdest almak", "abdesti bozan seyler"],
     kisim: 1, maddeNo: 51,
+    cevapOzet: "Abdest almak ve abdesti bozan seyler bildirilmektedir."
+  },
+  {
+    soru: ["otuzuc farz", "33 farz", "bes vakit namaz farzlari"],
+    kisim: 1, maddeNo: 42,
     cevapOzet: "Bes vakt nemaz ve otuzuc farz bildirilmektedir."
   },
   {
@@ -745,6 +871,11 @@ var soruMaddeMap = [
     cevapOzet: "Bayram nemazi vacibdir. Kilinis sekli anlatilmaktadir."
   },
   {
+    soru: ["namazda parmak kaldirmak", "tesehhudde parmak", "otururken parmak"],
+    kisim: 1, maddeNo: 73,
+    cevapOzet: "Namazda otururken parmak kaldirmanin hukmu bildirilmektedir."
+  },
+  {
     soru: ["kaza namazi", "kaza namazi nasil kilinir", "namaz borcu", "kaza namazlari"],
     kisim: 1, maddeNo: 74,
     cevapOzet: "Kaza nemazi kilinmasi lazimdir. Nemaz kilmiyanin cezasi bildirilmektedir."
@@ -759,11 +890,16 @@ var soruMaddeMap = [
     kisim: 1, maddeNo: 76,
     cevapOzet: "Nemazin ta dil-i erkani onemlidir. Kul hakki bildirilmektedir."
   },
+  {
+    soru: ["helal lokma", "sehid kime denir", "sehidlik nedir"],
+    kisim: 1, maddeNo: 77,
+    cevapOzet: "Nemazi dogru kilmali, helal lokma yimeli. Sehid kime denir, aciklanmaktadir."
+  },
 
   // ---- ORUC ----
   {
     soru: ["ramazan orucu", "oruc nasil tutulur", "ramazanin kiymetii"],
-    kisim: 1, maddeNo: 77,
+    kisim: 1, maddeNo: 79,
     cevapOzet: "Ramezan-i serifin kiymeti buyuktur. Oruc nasil tutulur, aciklanmaktadir."
   },
   {
@@ -818,11 +954,16 @@ var soruMaddeMap = [
     cevapOzet: "Yemin hukumleri ve yemin keffareti bildirilmektedir."
   },
 
-  // ---- MUBAREK GECELER ----
+  // ---- MUBAREK GECELER / TAKVIM ----
   {
     soru: ["mubarek geceler", "kandil geceleri", "kadir gecesi", "mirac gecesi"],
     kisim: 1, maddeNo: 85,
     cevapOzet: "Mubarek geceler ve bu gecelerde yapilacak ibadetler bildirilmektedir."
+  },
+  {
+    soru: ["hicri takvim", "kameri sene", "hicri yil cevirme"],
+    kisim: 1, maddeNo: 87,
+    cevapOzet: "Kameri seneyi miladi seneye cevirmek icin formul bildirilmektedir."
   },
 
   // ---- SELAMLASMA ----
@@ -830,6 +971,23 @@ var soruMaddeMap = [
     soru: ["selam vermek", "selamlasmak", "selam nasil verilir"],
     kisim: 1, maddeNo: 90,
     cevapOzet: "Selamlasmak sunnetdir. Selam vermenin ve almanin adabi bildirilmektedir."
+  },
+
+  // ---- KUR AN ----
+  {
+    soru: ["kuran nedir", "kuran i kerim", "kuran tercemeleri"],
+    kisim: 1, maddeNo: 25,
+    cevapOzet: "Kur an-i kerim nedir ve Kur an tercemeleri hakkinda bilgi verilmektedir."
+  },
+  {
+    soru: ["kuran mahluk mu", "kuran allah kelami", "kuran yaratilmis mi"],
+    kisim: 1, maddeNo: 92,
+    cevapOzet: "Kur an-i kerim, Allah kelamidir. Mahluk degildir."
+  },
+  {
+    soru: ["gayba iman nedir", "gayb nedir", "allahin sifatlari"],
+    kisim: 1, maddeNo: 94,
+    cevapOzet: "Allahu teala akl ile anlasilamaz. Gayba iman etmek lazimdir."
   },
 
   // ---- PEYGAMBER EFENDIMIZ ----
@@ -843,12 +1001,66 @@ var soruMaddeMap = [
     kisim: 1, maddeNo: 96,
     cevapOzet: "Muhammed aleyhisselamin yuce ahlaki anlatilmaktadir."
   },
+  {
+    soru: ["unutulmus sunnetler", "sunneti ihya etmek", "sunnetleri canlandirmak"],
+    kisim: 1, maddeNo: 98,
+    cevapOzet: "Unutulmus sunnetleri meydana cikarmak ve bid atden sakinmak tesvjk edilmektedir."
+  },
 
-  // ---- IKINCI KISIM ----
+  // ---- TEVBE, AHLAK ----
+  {
+    soru: ["tevbe nedir", "tovbe nasil yapilir", "tevbe ve vera"],
+    kisim: 1, maddeNo: 43,
+    cevapOzet: "Tevbe, vera ve takva aciklanmaktadir."
+  },
+  {
+    soru: ["emri bil maruf", "iyiligi emretmek", "cihad sevabi"],
+    kisim: 1, maddeNo: 41,
+    cevapOzet: "Emr-i bil-ma ruf, nehy-i anil-munker ve cihad sevabi coktur."
+  },
+  {
+    soru: ["tesettur farz mi", "kadinlarin ortunmesi", "islamda tesettur"],
+    kisim: 1, maddeNo: 58,
+    cevapOzet: "Setr-i avret, nemazda ve nemaz disinda ortunmesi gereken yerleri bildirmektedir. Kadinlarin ortunmesi farzdir."
+  },
+  {
+    soru: ["tasavvuf nedir", "tasavvuf yolu"],
+    kisim: 1, maddeNo: 50,
+    cevapOzet: "Tesavvuf yolunda calismak isteyenin yapmasi lazim olan seyler bildirilmektedir."
+  },
+  {
+    soru: ["alemi ervan", "alemi misal", "alemi ecsad"],
+    kisim: 1, maddeNo: 40,
+    cevapOzet: "Alem-i ervah, alem-i misal ve alem-i ecsad aciklanmaktadir. Kabr azabi bildirilmektedir."
+  },
+  {
+    soru: ["genclikte ibadet", "genc ibadet", "genclik ibadeti"],
+    kisim: 1, maddeNo: 48,
+    cevapOzet: "Genclikde yapilan ibadetlerin kiymeti buyuktur."
+  },
+  {
+    soru: ["allahin yakinligi", "kurbiyet ilahi", "yakin olmak allah"],
+    kisim: 1, maddeNo: 45,
+    cevapOzet: "Allahu tealanin yakin olmasi ne demektir, aciklanmaktadir."
+  },
+
+  // ============================================================
+  // IKINCI KISIM — AHLAK, AILE, SOSYAL HAYAT, ITIKAD
+  // ============================================================
+  {
+    soru: ["hilye i saadet 2", "peygamberimizin disgorunu", "resulullahinsallallahu aleyhi ve sellem sifatlari"],
+    kisim: 2, maddeNo: 1,
+    cevapOzet: "Hilye-i se adet, siyer kitablari ve Resulullahinsallallahu aleyhi ve sellem zevceleri hakkinda bilgi verilmektedir."
+  },
   {
     soru: ["dua nedir", "dua nasil edilir", "dua etmenin adabi"],
     kisim: 2, maddeNo: 2,
     cevapOzet: "Dua etmekdeki gizli bilgiler aciklanmaktadir."
+  },
+  {
+    soru: ["resulullaha uymak", "hocasini sevmek", "din alimine hurmet"],
+    kisim: 2, maddeNo: 3,
+    cevapOzet: "Resulullaha uymaga ve dinini ogrendigi kimseyi sevmege tesvjk edilmektedir."
   },
   {
     soru: ["adalet nedir", "akil nedir", "iman ve akil"],
@@ -856,14 +1068,49 @@ var soruMaddeMap = [
     cevapOzet: "Adalet, akl, iman, kaza ve kader meseleleri aciklanmaktadir."
   },
   {
+    soru: ["peygamberimizin guzel ahlaki", "resulullahinsallallahu aleyhi ve sellem ahlaki"],
+    kisim: 2, maddeNo: 5,
+    cevapOzet: "Muhammed aleyhisselamin guzel ahlaki anlatilmaktadir."
+  },
+  {
     soru: ["hadis nedir", "hadis cesitleri", "hadis alimleri"],
     kisim: 2, maddeNo: 6,
     cevapOzet: "Hadis-i seriflerin cesidleri ve hadis alimleri bildirilmektedir."
   },
   {
+    soru: ["dert bela allahtan", "musibete sabir", "bela allahtan gelir"],
+    kisim: 2, maddeNo: 7,
+    cevapOzet: "Derd ve belanin Allahu tealadan geldigini dusunmelidir."
+  },
+  {
+    soru: ["belaya sabretmek", "bela sabir", "musibet karsi sabir"],
+    kisim: 2, maddeNo: 8,
+    cevapOzet: "Derd ve belanin Allahu tealadan geldigini dusunmeli ve sabretmelidir."
+  },
+  {
     soru: ["sabir nedir", "belaya sabir", "derde sabr"],
     kisim: 2, maddeNo: 9,
     cevapOzet: "Insanlardan gelen sikintilara sabretmek lazimdir."
+  },
+  {
+    soru: ["uzuntuyu nimet bilmek", "sikinti nimet mi", "bela nimet"],
+    kisim: 2, maddeNo: 10,
+    cevapOzet: "Uzuntu ve sikintilari ni met bilmelidir."
+  },
+  {
+    soru: ["zahir ameller", "kalb dagilmasi", "dis islerin bozuklugu"],
+    kisim: 2, maddeNo: 11,
+    cevapOzet: "Zahir islerin bozuk olmasi, kalbin dagilmasina yol acar."
+  },
+  {
+    soru: ["bela gunaha keffaret", "dert keffaret", "hastalik gunah siler mi"],
+    kisim: 2, maddeNo: 12,
+    cevapOzet: "Derd ve belalar, gunahlara kaffaretdir."
+  },
+  {
+    soru: ["allahin arzusuna uymak", "teslim olmak", "irade i rabbani"],
+    kisim: 2, maddeNo: 13,
+    cevapOzet: "Kendi dileklerimizi birakip sahibimizin arzusuna uymak lazimdir."
   },
   {
     soru: ["kibir nedir", "ucub nedir", "kibr ve ucb"],
@@ -891,14 +1138,86 @@ var soruMaddeMap = [
     cevapOzet: "Sefa at haktir. Olulere yardim meselesi aciklanmaktadir."
   },
   {
+    soru: ["kabir azabi", "kabir azabi var mi", "kabir hayati"],
+    kisim: 2, maddeNo: 19,
+    cevapOzet: "Kabr azabi haktir. Inanmiyanlara cevab verilmektedir."
+  },
+  {
+    soru: ["bela ve sabir", "dert ve sabir", "beladan ders almak"],
+    kisim: 2, maddeNo: 20,
+    cevapOzet: "Derd ve belanin Allahu tealadan geldigini dusunmelidir."
+  },
+  {
+    soru: ["bozuk dinler", "baska dinler"],
+    kisim: 2, maddeNo: 21,
+    cevapOzet: "Bozuk dinler hakkinda bilgi verilmektedir."
+  },
+  {
+    soru: ["hurufilik nedir", "hurufiilik"],
+    kisim: 2, maddeNo: 22,
+    cevapOzet: "Hurufilik hakkinda bilgi verilmektedir."
+  },
+  {
+    soru: ["resulullahinsallallahu aleyhi ve sellem vefati", "kagid hadisesi", "eshabi kiram ihtilafi"],
+    kisim: 2, maddeNo: 23,
+    cevapOzet: "Resulullahinsallallahu aleyhi ve sellemin vefat ederken kagid istemesi ve Eshab-i kiramin durumu aciklanmaktadir."
+  },
+  {
     soru: ["eshab i kiram", "sahabe", "sahabi kimdir"],
     kisim: 2, maddeNo: 24,
     cevapOzet: "Eshab-i kiram birbirini cok severdi. Buyuklukleri bildirilmektedir."
   },
   {
+    soru: ["eshab i kiram buyuklugu", "sahabe fazileti", "sahabelere dert gelmesi"],
+    kisim: 2, maddeNo: 25,
+    cevapOzet: "Eshab-i kiramin buyuklugu ve dostlara cok dert gelmesi bildirilmektedir."
+  },
+  {
+    soru: ["sosyal adalet", "sosyalizm", "kapitalizm", "komunizm", "islam ekonomisi"],
+    kisim: 2, maddeNo: 26,
+    cevapOzet: "Sosyal adalet, sosyalizm, kapitalizm ve komunizm hakkinda Islam dinine gore degerlendirilmektedir."
+  },
+  {
+    soru: ["islam dini nedir", "islam dini ozellikleri", "islamiyet nedir"],
+    kisim: 2, maddeNo: 27,
+    cevapOzet: "Islam dini hakkinda genel bilgiler verilmektedir."
+  },
+  {
+    soru: ["nefs nedir", "akil nedir", "nefsi terbiye"],
+    kisim: 2, maddeNo: 28,
+    cevapOzet: "Nefs ve akl aciklanmaktadir."
+  },
+  {
+    soru: ["muslumanlar neden geri kaldi", "islamin gerileme sebebi", "geri kalma"],
+    kisim: 2, maddeNo: 29,
+    cevapOzet: "Muslumanlar nicin geri kaldilar, sebebleri aciklanmaktadir."
+  },
+  {
+    soru: ["islamiyet ve fen", "din fen catisir mi", "islam bilim"],
+    kisim: 2, maddeNo: 30,
+    cevapOzet: "Islamiyyet ve fen bilgileri catismaz; fen, dini destekler."
+  },
+  {
+    soru: ["atom nedir", "madde nedir", "atom bilgileri"],
+    kisim: 2, maddeNo: 31,
+    cevapOzet: "Madde ve atom uzerinde yeni bilgiler verilmektedir."
+  },
+  {
+    soru: ["radyoaktivite nedir", "radar nedir", "atom enerjisi"],
+    kisim: 2, maddeNo: 32,
+    cevapOzet: "Atom uzerinde yeni bilgiler, radyo-aktivite ve radar aciklanmaktadir."
+  },
+
+  // ---- AILE HUKUKU ----
+  {
     soru: ["nikah nasil kiyilir", "evlenme", "islamda nikah", "nikah hukumleri"],
     kisim: 2, maddeNo: 34,
     cevapOzet: "Islamiyyetde nikah ve evlenmesi caiz olmayan kadinlar bildirilmektedir."
+  },
+  {
+    soru: ["kafirlerin evlenmesi", "cocuga iman ogretmek", "cocuga islami ogretmek"],
+    kisim: 2, maddeNo: 35,
+    cevapOzet: "Kafirlerin evlenmesi ve cocuklara imani, islami ogretmek lazim oldugu bildirilmektedir."
   },
   {
     soru: ["bosanma", "talak nedir", "bosanma hukumleri", "uc talak"],
@@ -920,10 +1239,17 @@ var soruMaddeMap = [
     kisim: 2, maddeNo: 39,
     cevapOzet: "Islamiyyet ve kadin konusu ele alinmaktadir."
   },
+
+  // ---- HELAL HARAM ----
   {
     soru: ["helal haram", "halal haram", "subheli seyler", "vera ve takva"],
     kisim: 2, maddeNo: 40,
     cevapOzet: "Halal, haram ve subheli seyler, vera ve takva aciklanmaktadir."
+  },
+  {
+    soru: ["haram yiyecekler", "domuz eti", "haram giyecekler"],
+    kisim: 2, maddeNo: 41,
+    cevapOzet: "Yimesi ve kullanmasi haram olan seyler bildirilmektedir."
   },
   {
     soru: ["icki haram mi", "serab icmek", "alkol haram mi"],
@@ -936,20 +1262,51 @@ var soruMaddeMap = [
     cevapOzet: "Tutun icmenin hukmu ele alinmaktadir."
   },
   {
-    soru: ["faiz haram mi", "faiz nedir", "riba nedir", "faiz yasak mi"],
+    soru: ["faiz haram mi", "faiz nedir", "riba nedir", "faiz yasak mi", "israf nedir"],
     kisim: 2, maddeNo: 44,
-    cevapOzet: "Israf ve faiz haramdir. Tutun icmek de ele alinmaktadir."
+    cevapOzet: "Israf ve faiz haramdir."
   },
+
+  // ---- ADAB / GUNLUK HAYAT ----
   {
     soru: ["yemek adabi", "sofra adabi", "yemek icmek adabi"],
     kisim: 2, maddeNo: 45,
     cevapOzet: "Yimek, icmek adabi bildirilmektedir."
   },
   {
+    soru: ["hasta yemekleri", "hastalik tedavisi", "saglik tavsiyeleri"],
+    kisim: 2, maddeNo: 46,
+    cevapOzet: "Hasta yemekleri ve bazi hastaliklarin tedavisi bildirilmektedir."
+  },
+  {
     soru: ["tevekkul nedir", "tevekkul ne demek", "allaha tevekkul"],
     kisim: 2, maddeNo: 47,
     cevapOzet: "Tevekkul, sebeplerine yapisilip neticeyi Allahu tealaya havale etmektir."
   },
+  {
+    soru: ["levh i mahfuz", "umm ul kitab", "insan omru degisir mi"],
+    kisim: 2, maddeNo: 48,
+    cevapOzet: "Levh-il-mahfuz ve Umm-ul-kitab aciklanmaktadir. Insan omrunun degismesi ele alinmaktadir."
+  },
+
+  // ---- KAZA KADER ----
+  {
+    soru: ["kaza kader nedir", "kaza ve kader", "kader inanci"],
+    kisim: 2, maddeNo: 50,
+    cevapOzet: "Kaza ve kader, Ehl-i sunnet itikadinin onemli meselelerindendir."
+  },
+  {
+    soru: ["irade i cuziyye nedir", "irade i cuzi"],
+    kisim: 2, maddeNo: 49,
+    cevapOzet: "Irade-i cuz iyye, kulun bir ise yonelmesidir. Allahu teala, kulun iradesine gore yaratir."
+  },
+  {
+    soru: ["hamd nedir", "sukur nedir", "hamd sukrden ustun mu"],
+    kisim: 2, maddeNo: 51,
+    cevapOzet: "Sevgilinin her isi sevilir. Hamd, sukrden ustundur."
+  },
+
+  // ---- MUZIK / CIN ----
   {
     soru: ["muzik haram mi", "teganni nedir", "sark soylmek", "calgi haram mi"],
     kisim: 2, maddeNo: 52,
@@ -961,17 +1318,89 @@ var soruMaddeMap = [
     cevapOzet: "Cin hakkinda bilgi verilmektedir."
   },
   {
+    soru: ["gayb imani", "gaybe iman", "secilmislerin imani"],
+    kisim: 2, maddeNo: 54,
+    cevapOzet: "Secilmislerin ve cahillerin gaybdan imanlari aciklanmaktadir."
+  },
+  {
+    soru: ["dunyayi terk", "dunya dusuncesi", "evliya gonlu"],
+    kisim: 2, maddeNo: 55,
+    cevapOzet: "Allah adamlarinin gonlunde zerre kadar dunya dusuncesi yoktur."
+  },
+  {
+    soru: ["ruhlar gorunur mu", "tenasuh yoktur", "ruh insan seklinde"],
+    kisim: 2, maddeNo: 56,
+    cevapOzet: "Ruhlar insan seklinde gorunur. Tenasuh (ruh gocu) yoktur."
+  },
+  {
+    soru: ["medeniyet nedir", "insan neden medeni", "toplum hayati"],
+    kisim: 2, maddeNo: 57,
+    cevapOzet: "Insan medeni olmak icin yaratilmisdir."
+  },
+  {
+    soru: ["keramet cok az olmasi", "harikaarin sebebi"],
+    kisim: 2, maddeNo: 58,
+    cevapOzet: "Harikalarin ve kerametlerin cok veya az olmasinin sebebi aciklanmaktadir."
+  },
+  {
     soru: ["mucize keramet fark", "keramet nedir", "sihr nedir"],
     kisim: 2, maddeNo: 59,
     cevapOzet: "Mu cize, keramet, firaset ve sihr arasindaki farklar aciklanmaktadir."
   },
   {
-    soru: ["nefs nedir", "akil nedir", "nefsi terbiye"],
-    kisim: 2, maddeNo: 28,
-    cevapOzet: "Nefs ve akl aciklanmaktadir."
+    soru: ["veli olmak icin keramet", "kerametsiz veli", "evliyalik sarti"],
+    kisim: 2, maddeNo: 60,
+    cevapOzet: "Veli olmak icin harikalar ve kerametler lazim degildir."
+  },
+  {
+    soru: ["allah hicbir seye benzemez", "tesbihe imani", "allah akl ile anlasilir mi"],
+    kisim: 2, maddeNo: 62,
+    cevapOzet: "Allahu teala hicbir seye benzemez ve akl ile anlasilamaz."
+  },
+  {
+    soru: ["cennetde allahi gormek", "ruyetullah", "allahu teala gorulecek mi"],
+    kisim: 2, maddeNo: 63,
+    cevapOzet: "Cennetde Allahu tealanin gorulecegine inanmiyanlara cevab verilmektedir."
+  },
+  {
+    soru: ["insanin asli", "nefs in asli", "adem nedir"],
+    kisim: 2, maddeNo: 64,
+    cevapOzet: "Insanin asli ademdir. Ademde hic iyilik yoktur."
+  },
+  {
+    soru: ["guzel suretler", "guzellik sebebi", "guzel yuz"],
+    kisim: 2, maddeNo: 65,
+    cevapOzet: "Guzel suretlerin tatli olmasinin sebebi aciklanmaktadir."
+  },
+  {
+    soru: ["kadinlarla sozlesme", "peygamberimiz kadinlar", "biat nedir"],
+    kisim: 2, maddeNo: 68,
+    cevapOzet: "Resulullahinsallallahu aleyhi ve sellemin kadinlarla yapdigi sozlesme bildirilmektedir."
+  },
+  {
+    soru: ["abdullah i dehlevi", "mekatib i serife", "dehlevi hazretleri"],
+    kisim: 2, maddeNo: 69,
+    cevapOzet: "Abdullah-i Dehlevi hazretlerinin Mekatib-i serife kitabindan bilgiler verilmektedir."
+  },
+  {
+    soru: ["sunnete yapismak onemi", "bid at zulmet", "sunnet nur"],
+    kisim: 2, maddeNo: 71,
+    cevapOzet: "Isin basi, sunnet-i seniyyeye yapismak ve bid atden sakinmaktir."
   },
 
-  // ---- UCUNCU KISIM ----
+  // ============================================================
+  // UCUNCU KISIM — TICARET, CEZA, CENAZE, TASAVVUF
+  // ============================================================
+  {
+    soru: ["sunnete bagli olmak", "sunnet seniyye", "ahkam i islamiyye"],
+    kisim: 3, maddeNo: 1,
+    cevapOzet: "Isin basi, sunnet-i seniyyeye yapismak ve bid atden sakinmaktir."
+  },
+  {
+    soru: ["sirk nedir", "insanin en buyuk gunahi", "sirk tehlikesi"],
+    kisim: 3, maddeNo: 2,
+    cevapOzet: "Sirk, insan icin en buyuk tehlikedir."
+  },
   {
     soru: ["ticaret hukumleri", "islami ticaret", "alis veris hukumleri"],
     kisim: 3, maddeNo: 3,
@@ -983,14 +1412,39 @@ var soruMaddeMap = [
     cevapOzet: "Bey ve sira (alim-satim) hukumleri bildirilmektedir."
   },
   {
-    soru: ["muhayyerlik nedir", "alis veriste muhayyerlik"],
+    soru: ["muhayyerlik nedir", "alis veriste muhayyerlik", "olum hastasi satis"],
     kisim: 3, maddeNo: 5,
-    cevapOzet: "Alis veriste muhayyerlik cesitleri aciklanmaktadir."
+    cevapOzet: "Olum hastasinin satis ve hediyye yapmasi ve muhayyerlik hukumleri aciklanmaktadir."
   },
   {
     soru: ["batil satis", "fasid satis", "mekruh satis", "sarraflik"],
     kisim: 3, maddeNo: 6,
-    cevapOzet: "Batil, fasid ve mekruh satislar ve sarraflik hukumleri bildirilmektedir."
+    cevapOzet: "Komsu hakki, suf a ve diger haklar uzerinde bilgiler verilmektedir."
+  },
+  {
+    soru: ["hasta satis", "hasta hediyye", "hastanin satisi"],
+    kisim: 3, maddeNo: 7,
+    cevapOzet: "Hastanin satis yapmasi hukumleri bildirilmektedir."
+  },
+  {
+    soru: ["cesitli fikih bilgileri", "muhtelif bilgiler"],
+    kisim: 3, maddeNo: 8,
+    cevapOzet: "Cesidli fikih bilgileri verilmektedir."
+  },
+  {
+    soru: ["sart ile soylemek", "sartli satis", "sartli muamele"],
+    kisim: 3, maddeNo: 9,
+    cevapOzet: "Sart ile soylenen seylerin hukumleri aciklanmaktadir."
+  },
+  {
+    soru: ["bono nedir", "sened kirdirmak", "police", "cek nedir"],
+    kisim: 3, maddeNo: 10,
+    cevapOzet: "Kefalet, havale, bono, sened kirdirmak ve police hukumleri bildirilmektedir."
+  },
+  {
+    soru: ["istisna nedir", "siparis usulu satis", "ismarlanmis mal"],
+    kisim: 3, maddeNo: 11,
+    cevapOzet: "Istisna (siparis ile imal ettirmek) hukumleri aciklanmaktadir."
   },
   {
     soru: ["odunc vermek", "borc vermek", "karz i hasen"],
@@ -1013,6 +1467,16 @@ var soruMaddeMap = [
     cevapOzet: "Ticaretde adalet ve ihtikar hukumleri aciklanmaktadir."
   },
   {
+    soru: ["ticarette ihsan", "ticarette iyilik", "ticaret ahlaki"],
+    kisim: 3, maddeNo: 16,
+    cevapOzet: "Ticaretde ihsan ve iyilik yapmanin hukumleri bildirilmektedir."
+  },
+  {
+    soru: ["ticarette dinini kayirmak", "dindar tacir", "ticarette din"],
+    kisim: 3, maddeNo: 17,
+    cevapOzet: "Ticaretde dinini kayirmanin hukumleri aciklanmaktadir."
+  },
+  {
     soru: ["kira hukumleri", "ucret", "iscilik", "sigorta"],
     kisim: 3, maddeNo: 18,
     cevapOzet: "Kira, ucret, iscilik ve sigortacilik hukumleri bildirilmektedir."
@@ -1028,19 +1492,39 @@ var soruMaddeMap = [
     cevapOzet: "Sirketler hakkinda hukumler bildirilmektedir."
   },
   {
+    soru: ["emanet nedir", "emanete riayet", "emanetciye para"],
+    kisim: 3, maddeNo: 21,
+    cevapOzet: "Kira, ucret, iscilik, sigortacilik ve emanetciye verilen para hukumleri bildirilmektedir."
+  },
+  {
     soru: ["ceza hukuku", "ukubat", "islamda ceza"],
     kisim: 3, maddeNo: 22,
     cevapOzet: "Ukubat (ceza hukumleri) aciklanmaktadir."
   },
   {
-    soru: ["cinayet hukmu", "adam oldurme", "katl"],
+    soru: ["tazir cezasi", "tazir nedir", "fikih kitaplari okumak"],
+    kisim: 3, maddeNo: 23,
+    cevapOzet: "Ta zir cezalari bildirilmektedir. Tefsir kitablarini degil, fikh kitablarini okumak lazimdir."
+  },
+  {
+    soru: ["cinayet hukmu", "adam oldurme", "katl", "kisas nedir"],
     kisim: 3, maddeNo: 24,
-    cevapOzet: "Cinayetler ve hukumleri bildirilmektedir."
+    cevapOzet: "Cinayetler, katlin cesidleri ve cezalari, kisas hukumleri bildirilmektedir."
   },
   {
     soru: ["diyet nedir", "diyet cezasi", "katl keffareti"],
     kisim: 3, maddeNo: 25,
     cevapOzet: "Diyet cezalari ve katl keffareti hukumleri aciklanmaktadir."
+  },
+  {
+    soru: ["ikrah nedir", "zorla yapdirmak", "hicr nedir", "yasaklamak"],
+    kisim: 3, maddeNo: 26,
+    cevapOzet: "Ikrah (zorlama) ve hicr (yasaklama) hukumleri aciklanmaktadir."
+  },
+  {
+    soru: ["evliyalik ve seriat", "ahkam i islamiyyesiz evliyalik", "seriat olmadan evliya"],
+    kisim: 3, maddeNo: 27,
+    cevapOzet: "Ahkam-i islamiyyesiz evliyalik olmaz."
   },
   {
     soru: ["kelime i tevhid", "la ilahe illallah", "tevhid"],
@@ -1052,13 +1536,102 @@ var soruMaddeMap = [
     kisim: 3, maddeNo: 29,
     cevapOzet: "Kelime-i tevhidin ustunlukleri aciklanmaktadir."
   },
+
+  // ---- TASAVVUF ----
+  {
+    soru: ["fena beka nedir", "fena fillah", "beka billah"],
+    kisim: 3, maddeNo: 30,
+    cevapOzet: "Fena ve beka bildirilmektedir."
+  },
+  {
+    soru: ["eshab i yemin", "eshab i simal", "sabikun kimdir"],
+    kisim: 3, maddeNo: 31,
+    cevapOzet: "Eshab-i yemin, eshab-i simal ve sabikun aciklanmaktadir."
+  },
+  {
+    soru: ["muminin kalbi", "kalbin kiymetii", "kalb temizligi"],
+    kisim: 3, maddeNo: 32,
+    cevapOzet: "Mu minin kalbi kiymetlidir."
+  },
+  {
+    soru: ["ars nedir", "kursi nedir", "kalbin ustunlukleri"],
+    kisim: 3, maddeNo: 33,
+    cevapOzet: "Ars ve Kursi aciklanmaktadir. Kalbin ustunlukleri bildirilmektedir."
+  },
+  {
+    soru: ["alem i emr nedir", "bes cevher", "ruh kalb sir"],
+    kisim: 3, maddeNo: 34,
+    cevapOzet: "Alem-i emrdeki bes cevher aciklanmaktadir."
+  },
+  {
+    soru: ["fena fillah nedir", "fenaya kavusmak"],
+    kisim: 3, maddeNo: 35,
+    cevapOzet: "Fena-fillah nedir, aciklanmaktadir."
+  },
+  {
+    soru: ["tasavvuf yolu kac tane", "iki tasavvuf yolu", "naksibendi kadiri"],
+    kisim: 3, maddeNo: 36,
+    cevapOzet: "Allahu tealaya kavusduran tesavvuf yolu ikidir."
+  },
+  {
+    soru: ["tasavvuf mutehassisi", "tesavvuf mektubu", "tasavvuf alimi"],
+    kisim: 3, maddeNo: 37,
+    cevapOzet: "Bir tesavvuf mutehassisinin mektubu bildirilmektedir."
+  },
+  {
+    soru: ["suluk dereceleri", "suluk nedir", "tasavvuf yolu dereceleri"],
+    kisim: 3, maddeNo: 38,
+    cevapOzet: "Tesavvuf yolu, suluk dereceleri, fena ve beka aciklanmaktadir."
+  },
+  {
+    soru: ["ihata nedir", "kurbiyet nedir", "maiyet sifati"],
+    kisim: 3, maddeNo: 39,
+    cevapOzet: "Allahu tealanin ihata, kurb ve ma iyyet sifatlari aciklanmaktadir."
+  },
+  {
+    soru: ["alem vehim mi", "vehm mertebesi", "alemi vehm"],
+    kisim: 3, maddeNo: 40,
+    cevapOzet: "Alem vehm mertebesinde yaratilmisdir."
+  },
+  {
+    soru: ["tasavvuf ve seriat", "tasavvufda islamiyyete uymak"],
+    kisim: 3, maddeNo: 41,
+    cevapOzet: "Tesavvuf yolunun basinda da, sonunda da islamiyyete uymak lazimdir."
+  },
+  {
+    soru: ["evliya kimdir", "evliya olmak", "nihayet nedir"],
+    kisim: 3, maddeNo: 44,
+    cevapOzet: "Nihayet, afak ve enfusun disindadir. Evliya kimlere denir, aciklanmaktadir."
+  },
+  {
+    soru: ["vahdet i vucud", "vucud i vehmi", "panteizm"],
+    kisim: 3, maddeNo: 47,
+    cevapOzet: "Vahdet-i vucud bilgisi ve vucud-i vehmi aciklanmaktadir."
+  },
+  {
+    soru: ["kabenin kemalati", "namazin hakikati", "namazda allaha yakinlik"],
+    kisim: 3, maddeNo: 46,
+    cevapOzet: "Ka be-i muazzamanin ve nemazin kemalati aciklanmaktadir."
+  },
+  {
+    soru: ["namazda yakinlik", "namazin hakikati 2", "secde yakinlik"],
+    kisim: 3, maddeNo: 52,
+    cevapOzet: "Nemazda olanin Allahu tealaya yakinligi ve nemazin hakikati bildirilmektedir."
+  },
+  {
+    soru: ["tasavvufda seriata uymak", "evliya seriata uyar"],
+    kisim: 3, maddeNo: 50,
+    cevapOzet: "Tesavvuf yolunun basinda da, sonunda da islamiyyete uymak lazimdir."
+  },
+
+  // ---- CENAZE / KABIR ----
   {
     soru: ["olume hazirlik", "olum hakki", "can cekmek"],
     kisim: 3, maddeNo: 55,
     cevapOzet: "Olum ve olume hazirlanmak, sifa ayetleri bildirilmektedir."
   },
   {
-    soru: ["kefen nedir", "kefenleme nasil yapilir", "oluve yapilacaklar"],
+    soru: ["kefen nedir", "kefenleme nasil yapilir", "oluye yapilacaklar"],
     kisim: 3, maddeNo: 56,
     cevapOzet: "Meyyite yapilacak dini vazife ve kefen hukumleri aciklanmaktadir."
   },
@@ -1078,6 +1651,16 @@ var soruMaddeMap = [
     cevapOzet: "Kabr ziyareti ve Kur an-i kerim okumanin hukumleri bildirilmektedir."
   },
   {
+    soru: ["kabir ziyaretinin faidesi", "mezar ziyareti faydalari"],
+    kisim: 3, maddeNo: 60,
+    cevapOzet: "Kabr ziyaretinin faidesi bildirilmektedir."
+  },
+  {
+    soru: ["dunya sikintisi faydasi", "taun sevabi", "veba hastaligi"],
+    kisim: 3, maddeNo: 62,
+    cevapOzet: "Dunya sikintilarinin faidesi ve ta undan olmenin kiymeti bildirilmektedir."
+  },
+  {
     soru: ["iskat nedir", "iskat devir", "olu icin iskat"],
     kisim: 3, maddeNo: 63,
     cevapOzet: "Meyyit icin iskat hukumleri bildirilmektedir."
@@ -1093,43 +1676,40 @@ var soruMaddeMap = [
     cevapOzet: "Feraiz hesablari ve mirasi bolmek hukumleri bildirilmektedir."
   },
   {
-    soru: ["tevbe nedir", "tovbe nasil yapilir", "tevbe ve vera"],
-    kisim: 1, maddeNo: 43,
-    cevapOzet: "Tevbe, vera ve takva aciklanmaktadir."
+    soru: ["kabir hayati", "taundan olmenin kiymeti", "berzah alemi"],
+    kisim: 3, maddeNo: 66,
+    cevapOzet: "Kabr hayati ve ta undan olmenin kiymeti bildirilmektedir."
   },
   {
-    soru: ["emri bil maruf", "iyiligi emretmek", "cihad sevabi"],
-    kisim: 1, maddeNo: 41,
-    cevapOzet: "Emr-i bil-ma ruf, nehy-i anil-munker ve cihad sevabi coktur."
+    soru: ["dunya sikintilari", "sikintinin faidesi", "belaya razzi olmak"],
+    kisim: 3, maddeNo: 67,
+    cevapOzet: "Dunya sikintilarinin faidesi ve ta unun sevabi bildirilmektedir."
   },
   {
-    soru: ["bozuk dinler", "baska dinler"],
-    kisim: 2, maddeNo: 21,
-    cevapOzet: "Bozuk dinler hakkinda bilgi verilmektedir."
+    soru: ["kazaya razi olmak", "kaderden lezzet", "riza makamii"],
+    kisim: 3, maddeNo: 68,
+    cevapOzet: "Kazaya razi olmalidir, hatta lezzet duymaalidir."
   },
   {
-    soru: ["hurufilik nedir", "hurufiilik"],
-    kisim: 2, maddeNo: 22,
-    cevapOzet: "Hurufilik hakkinda bilgi verilmektedir."
+    soru: ["sevgiliden sikinti", "dert ceken asik", "bela tatliligi"],
+    kisim: 3, maddeNo: 69,
+    cevapOzet: "Sevgiliden gelen sikintilar, iyiliklerinden daha tatlidir."
   },
   {
-    soru: ["tesettur farz mi", "kadinlarin ortunmesi", "islamda tesettur"],
-    kisim: 1, maddeNo: 58,
-    cevapOzet: "Setr-i avret, nemazda ve nemaz disinda ortunmesi gereken yerleri bildirmektedir. Kadinlarin ortunmesi farzdir."
+    soru: ["seadet i ebediyye son soz", "kitabin sonu", "son soz"],
+    kisim: 3, maddeNo: 70,
+    cevapOzet: "Se adet-i Ebediyye nin son sozu bildirilmektedir."
+  },
+
+  // ---- FEN / BILIM ----
+  {
+    soru: ["hucre nedir", "hayat nedir", "mikrop nedir"],
+    kisim: 3, maddeNo: 54,
+    cevapOzet: "Madde uzerinde yeni bilgiler, hucre, hayat, mikrop ve zehr aciklanmaktadir."
   },
   {
-    soru: ["tasavvuf nedir", "tasavvuf yolu"],
-    kisim: 1, maddeNo: 50,
-    cevapOzet: "Tesavvuf yolunda calismak isteyenin yapmasi lazim olan seyler bildirilmektedir."
-  },
-  {
-    soru: ["alemi ervan", "alemi misal", "alemi ecsad"],
-    kisim: 1, maddeNo: 40,
-    cevapOzet: "Alem-i ervah, alem-i misal ve alem-i ecsad aciklanmaktadir. Kabr azabi bildirilmektedir."
-  },
-  {
-    soru: ["genclikte ibadet", "genc ibadet", "genclik ibadeti"],
-    kisim: 1, maddeNo: 48,
-    cevapOzet: "Genclikde yapilan ibadetlerin kiymeti buyuktur."
+    soru: ["madde ilahiden nasibi", "alemin nasibi", "zat i ilahi"],
+    kisim: 3, maddeNo: 53,
+    cevapOzet: "Alemin ve maddenin, zat-i ilahiden nasibi yokdur."
   }
 ];

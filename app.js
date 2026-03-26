@@ -1570,18 +1570,20 @@ function expandSearchQuery(rawQuery) {
 
 // ===== ARAMA (BİRLEŞİK) =====
 
-// BM25-benzeri scoring: azalan getirili term frequency + başlık bonusu
+// BM25 scoring: TF saturation + doküman uzunluk normalizasyonu + başlık bonusu
+var _avgDocLen = 15000; // ortalama madde uzunluğu (yaklaşık)
 function scoreMadde(normText, normBaslik, wordVarLists) {
   var textLen = normText.length;
   var score = 0;
   var matchedWordCount = 0;
+  var k1 = 1.5, b = 0.75;
+  var dlNorm = 1 - b + b * (textLen / _avgDocLen); // BM25 doküman uzunluk normalizasyonu
 
   for (var wi = 0; wi < wordVarLists.length; wi++) {
     var wvars = wordVarLists[wi];
     var wordScore = 0;
     for (var vi = 0; vi < wvars.length; vi++) {
       var v = wvars[vi];
-      // Term frequency (kelime sıklığı)
       var tf = 0;
       var pos = 0;
       while (pos < normText.length) {
@@ -1591,56 +1593,66 @@ function scoreMadde(normText, normBaslik, wordVarLists) {
         pos = idx + v.length;
       }
       if (tf > 0) {
-        // BM25 TF saturation: tf / (tf + 1.5) — azalan getiri
-        wordScore = Math.max(wordScore, tf / (tf + 1.5));
+        // BM25: tf * (k1 + 1) / (tf + k1 * dlNorm)
+        var tfScore = (tf * (k1 + 1)) / (tf + k1 * dlNorm);
+        wordScore = Math.max(wordScore, tfScore);
       }
-      // Başlık eşleşmesi: büyük bonus
+      // Başlık eşleşmesi: büyük bonus (sorgu kelime sayısına göre ölçekle)
       if (includesWordStart(normBaslik, v)) {
-        wordScore += 3.0;
+        wordScore += 5.0 / wordVarLists.length;
       }
     }
     if (wordScore > 0) matchedWordCount++;
     score += wordScore;
   }
 
-  // Tüm kelimeler eşleştiyse %50 bonus
+  // Tüm kelimeler eşleştiyse büyük bonus
   if (matchedWordCount === wordVarLists.length && wordVarLists.length > 1) {
-    score *= 1.5;
+    score *= 2.0;
   }
-
-  // Kısa metin penalty
-  if (textLen < 1000) score *= 0.8;
 
   return { score: score, matchedWordCount: matchedWordCount, allMatched: matchedWordCount >= wordVarLists.length };
 }
 
-// En iyi snippet'ı bul (en çok eşleşen bölge)
+// En iyi snippet'ı bul — cümle sınırı farkındalığı ile
 function findBestSnippet(fullText, normText, wordVarLists) {
   var allVars = [];
   for (var wi = 0; wi < wordVarLists.length; wi++) {
     for (var vi = 0; vi < wordVarLists[wi].length; vi++) allVars.push(wordVarLists[wi][vi]);
   }
 
-  // 400 karakterlik pencereler tara, en çok eşleşme olanı bul
+  // 350 karakterlik pencereler, 80 adımla tara (daha hassas)
   var bestPos = 0;
-  var bestCount = 0;
-  var step = 150;
+  var bestScore = 0;
+  var step = 80;
   for (var i = 0; i < normText.length; i += step) {
-    var windowText = normText.substring(i, i + 400);
-    var cnt = 0;
+    var windowText = normText.substring(i, i + 350);
+    var wscore = 0;
     for (var vi = 0; vi < allVars.length; vi++) {
-      if (windowText.indexOf(allVars[vi]) !== -1) cnt++;
+      var vIdx = windowText.indexOf(allVars[vi]);
+      if (vIdx !== -1) {
+        wscore += 10; // kelime bulundu
+        // Aynı pencerede kaç kez geçiyor?
+        var cnt = 0; var from = 0;
+        while ((from = windowText.indexOf(allVars[vi], from)) !== -1) { cnt++; from += allVars[vi].length; }
+        wscore += Math.min(cnt, 3); // max 3 tekrar bonus
+      }
     }
-    if (cnt > bestCount) { bestCount = cnt; bestPos = i; }
+    if (wscore > bestScore) { bestScore = wscore; bestPos = i; }
   }
 
-  var start = Math.max(0, bestPos - 30);
-  var end = Math.min(fullText.length, start + 250);
-  var snippet = (start > 0 ? '...' : '') + fullText.substring(start, end).trim() + (end < fullText.length ? '...' : '');
+  // Cümle başına hizala (nokta, soru işareti veya satır sonu bul)
+  var snapStart = Math.max(0, bestPos - 40);
+  if (snapStart > 0) {
+    var sentStart = fullText.lastIndexOf('. ', snapStart + 20);
+    if (sentStart > snapStart - 80 && sentStart >= 0) snapStart = sentStart + 2;
+  }
+  var end = Math.min(fullText.length, snapStart + 280);
+  var snippet = (snapStart > 0 ? '...' : '') + fullText.substring(snapStart, end).trim() + (end < fullText.length ? '...' : '');
   return snippet;
 }
 
-// Snippet'ta highlight uygula (escapeHtml SONRASI regex ile)
+// Snippet'ta highlight uygula — kelime sınırı farkındalığı ile
 function highlightSnippet(snippet, wordVarLists) {
   var escaped = escapeHtml(snippet);
   var allVars = [];
@@ -1650,14 +1662,66 @@ function highlightSnippet(snippet, wordVarLists) {
       if (v.length >= 2 && allVars.indexOf(v) === -1) allVars.push(v);
     }
   }
-  // Uzun varyantları önce işle (kısa olanlar üzerine yazmasın)
   allVars.sort(function(a, b) { return b.length - a.length; });
 
   for (var i = 0; i < allVars.length; i++) {
-    var re = new RegExp('(' + escapeRegex(allVars[i]) + ')', 'gi');
+    // Kelime sınırı: başta boşluk/başlangıç, sonda Türkçe ek olabilir (serbest)
+    var re = new RegExp('(?:^|(?<=[\\s.,;:!?()\\-"…]))(' + escapeRegex(allVars[i]) + ')', 'gi');
     escaped = escaped.replace(re, '<mark>$1</mark>');
   }
   return escaped;
+}
+
+// Levenshtein mesafesi — fuzzy matching için
+function levenshtein(a, b) {
+  if (a.length === 0) return b.length;
+  if (b.length === 0) return a.length;
+  var matrix = [];
+  for (var i = 0; i <= b.length; i++) matrix[i] = [i];
+  for (var j = 0; j <= a.length; j++) matrix[0][j] = j;
+  for (var i = 1; i <= b.length; i++) {
+    for (var j = 1; j <= a.length; j++) {
+      matrix[i][j] = b[i-1] === a[j-1] ? matrix[i-1][j-1] :
+        Math.min(matrix[i-1][j-1] + 1, matrix[i][j-1] + 1, matrix[i-1][j] + 1);
+    }
+  }
+  return matrix[b.length][a.length];
+}
+
+// Fuzzy öneri: kullanıcının yazdığına benzer terimleri bul
+function findFuzzySuggestions(query) {
+  var normQ = normalizeSearch(query);
+  var qWords = normQ.split(/\s+/).filter(function(w) { return w.length >= 3; });
+  if (qWords.length === 0) return [];
+
+  // Bilinen terimler havuzu: soruMaddeMap soruları + aramaSynonyms anahtarları + tocData başlıkları
+  var knownTerms = new Set();
+  if (window.aramaSynonyms) Object.keys(window.aramaSynonyms).forEach(function(k) { knownTerms.add(k); });
+  if (window.soruMaddeMap) window.soruMaddeMap.forEach(function(e) {
+    e.soru.forEach(function(s) { s.split(/\s+/).forEach(function(w) { if (w.length >= 3) knownTerms.add(w); }); });
+  });
+  // tocData başlık kelimeleri
+  if (window.tocData) window.tocData.forEach(function(m) {
+    normalizeSearch(m.baslik).split(/\s+/).forEach(function(w) { if (w.length >= 3) knownTerms.add(w); });
+  });
+
+  var suggestions = [];
+  var termsArr = Array.from(knownTerms);
+  for (var wi = 0; wi < qWords.length; wi++) {
+    var w = qWords[wi];
+    var bestTerm = null;
+    var bestDist = 999;
+    for (var ti = 0; ti < termsArr.length; ti++) {
+      var t = termsArr[ti];
+      if (t === w) { bestTerm = null; break; } // tam eşleşme var, öneri gerekmez
+      if (Math.abs(t.length - w.length) > 2) continue; // çok farklı uzunluk
+      var d = levenshtein(w, t);
+      var threshold = w.length <= 4 ? 1 : 2;
+      if (d <= threshold && d < bestDist) { bestDist = d; bestTerm = t; }
+    }
+    if (bestTerm) suggestions.push({ original: w, suggestion: bestTerm, distance: bestDist });
+  }
+  return suggestions;
 }
 
 async function doFullSearch(fromRoute) {
@@ -1687,7 +1751,8 @@ async function doFullSearch(fromRoute) {
   // 1. DOĞRUDAN EŞLEŞTİRME (soruMaddeMap)
   var directMatch = (typeof findDirectMatch === 'function') ? findDirectMatch(rawQuery) : null;
 
-  // 2. TAM METİN ARAMA — BM25 scoring ile
+  // 2. TAM METİN ARAMA — BM25 scoring ile (AND öncelikli, OR fallback)
+  var orMatches = []; // AND eşleşmezse OR sonuçları
   if (window.tocData && window.kisimTextsCache) {
     window.tocData.forEach(function(m) {
       var fullText = window.kisimTextsCache[m.kisim] ? (window.kisimTextsCache[m.kisim][String(m.madde_no)] || '') : '';
@@ -1699,25 +1764,47 @@ async function doFullSearch(fromRoute) {
       var normBaslik = normalizeSearch(m.baslik || '');
 
       var result = scoreMadde(normText, normBaslik, wordVarLists);
-      if (!result.allMatched || result.score <= 0) return;
+      if (result.score <= 0) return;
 
-      var snippet = findBestSnippet(fullText, normText, wordVarLists);
-
-      matches.push({
+      var entry = {
         kisim: m.kisim,
         madde_no: m.madde_no,
         baslik: m.baslik,
         sayfa_no: m.sayfa_no,
         score: result.score,
-        snippet: snippet,
+        fullText: fullText,
+        normText: normText,
         type: 'text'
-      });
+      };
+
+      if (result.allMatched) {
+        matches.push(entry);
+      } else if (result.matchedWordCount > 0 && wordVarLists.length > 1) {
+        // OR fallback: en az 1 kelime eşleşti (çoklu kelime sorgularında)
+        entry.score *= 0.3; // AND'den düşük skor
+        orMatches.push(entry);
+      }
     });
   }
 
-  // Skora göre sırala
+  // AND sonuçları az ise OR'dan tamamla
+  if (matches.length < 5 && orMatches.length > 0) {
+    orMatches.sort(function(a, b) { return b.score - a.score; });
+    var needed = Math.min(10, 15 - matches.length);
+    for (var oi = 0; oi < Math.min(needed, orMatches.length); oi++) {
+      matches.push(orMatches[oi]);
+    }
+  }
+
+  // Skora göre sırala + snippet'ları hesapla
   matches.sort(function(a, b) { return b.score - a.score; });
   matches = matches.slice(0, 30);
+  matches.forEach(function(m) {
+    if (!m.snippet) {
+      m.snippet = findBestSnippet(m.fullText || '', m.normText || '', wordVarLists);
+    }
+    delete m.fullText; delete m.normText; // bellek temizle
+  });
 
   // 3. AI MADDE ÖNERİSİ (sadece sorularda, arka planda)
   var aiPromise = null;
@@ -1796,9 +1883,38 @@ async function doFullSearch(fromRoute) {
     html += '</div></div>';
   }
 
-  // Sonuç yoksa
+  // Sonuç yoksa — fuzzy öneri göster
   if (maddeCount === 0 && sozlukCount === 0 && sahisCount === 0) {
-    html = '<div class="arama-bos"><p>Sonuç bulunamadı.</p><p style="color:var(--text-muted);font-size:0.9rem;">Farklı kelimeler veya Osmanlıca yazım deneyin: nemâz, gusl, oruc</p></div>';
+    var fuzzy = findFuzzySuggestions(rawQuery);
+    var fuzzyHtml = '';
+    if (fuzzy.length > 0) {
+      var corrected = rawQuery;
+      fuzzy.forEach(function(f) { corrected = corrected.replace(new RegExp(escapeRegex(f.original), 'gi'), f.suggestion); });
+      fuzzyHtml = '<p style="margin-top:12px;font-size:1rem;"><strong>Bunu mu demek istediniz?</strong> ' +
+        '<a href="#" style="color:var(--primary);text-decoration:underline;font-weight:600;" onclick="document.getElementById(\'full-search\').value=\'' +
+        escapeHtml(corrected).replace(/'/g, "\\'") + '\';doFullSearch();return false;">' + escapeHtml(corrected) + '</a></p>';
+    }
+    // İlgili konular önerisi
+    var relatedTags = '';
+    var normQ = normalizeSearch(rawQuery);
+    if (window.aramaSynonyms) {
+      var related = [];
+      Object.keys(window.aramaSynonyms).forEach(function(k) {
+        if (k.indexOf(normQ) !== -1 || normQ.indexOf(k) !== -1) related.push(k);
+      });
+      if (related.length > 0) {
+        relatedTags = '<p style="margin-top:12px;">İlgili konular: ' + related.slice(0, 5).map(function(r) {
+          return '<a href="#" style="color:var(--primary);margin:0 4px;" onclick="document.getElementById(\'full-search\').value=\'' +
+            escapeHtml(r).replace(/'/g, "\\'") + '\';doFullSearch();return false;">' + escapeHtml(r) + '</a>';
+        }).join(' · ') + '</p>';
+      }
+    }
+    html = '<div class="arama-bos">' +
+      '<p>Sonuç bulunamadı.</p>' +
+      fuzzyHtml +
+      relatedTags +
+      '<p style="color:var(--text-muted);font-size:0.85rem;margin-top:16px;">Osmanlıca yazım deneyin: nemâz, gusl, oruc · veya Rehberlerden başlayın</p>' +
+    '</div>';
   }
 
   // Filtre çubuğu
