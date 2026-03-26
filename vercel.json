@@ -1,5 +1,7 @@
 {
   "rewrites": [
+    { "source": "/anasayfa", "destination": "/index.html" },
+    { "source": "/icindekiler", "destination": "/index.html" },
     { "source": "/madde/:kisim/:maddeNo", "destination": "/index.html" },
     { "source": "/sahis/:slug", "destination": "/index.html" },
     { "source": "/arama/:query*", "destination": "/index.html" },
@@ -28,7 +30,7 @@
     {
       "source": "/(.*\\.js|.*\\.css)",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+        { "key": "Cache-Control", "value": "public, max-age=3600, must-revalidate" }
       ]
     }
   ]
