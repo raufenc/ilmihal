@@ -1825,6 +1825,24 @@ async function doFullSearch(fromRoute) {
   var seen = {};
   var html = '';
 
+  // Fuzzy öneri banner (madde sonucu az veya yoksa)
+  if (matches.length <= 2) {
+    var fuzzy = findFuzzySuggestions(rawQuery);
+    if (fuzzy.length > 0) {
+      var corrected = rawQuery;
+      fuzzy.forEach(function(f) {
+        corrected = corrected.replace(new RegExp(escapeRegex(f.original), 'gi'), f.suggestion);
+      });
+      if (corrected.toLowerCase() !== rawQuery.toLowerCase()) {
+        html += '<div class="arama-fuzzy-banner">' +
+          '<span>Bunu mu demek istediniz?</span> ' +
+          '<a href="#" onclick="document.getElementById(\'full-search\').value=\'' +
+          escapeHtml(corrected).replace(/'/g, "\\'") + '\';doFullSearch();return false;">' +
+          escapeHtml(corrected) + '</a></div>';
+      }
+    }
+  }
+
   // Sayaçlar
   var maddeCount = 0;
   var sozlukCount = sozlukResults.length;
@@ -1883,17 +1901,8 @@ async function doFullSearch(fromRoute) {
     html += '</div></div>';
   }
 
-  // Sonuç yoksa — fuzzy öneri göster
+  // Hiç sonuç yoksa
   if (maddeCount === 0 && sozlukCount === 0 && sahisCount === 0) {
-    var fuzzy = findFuzzySuggestions(rawQuery);
-    var fuzzyHtml = '';
-    if (fuzzy.length > 0) {
-      var corrected = rawQuery;
-      fuzzy.forEach(function(f) { corrected = corrected.replace(new RegExp(escapeRegex(f.original), 'gi'), f.suggestion); });
-      fuzzyHtml = '<p style="margin-top:12px;font-size:1rem;"><strong>Bunu mu demek istediniz?</strong> ' +
-        '<a href="#" style="color:var(--primary);text-decoration:underline;font-weight:600;" onclick="document.getElementById(\'full-search\').value=\'' +
-        escapeHtml(corrected).replace(/'/g, "\\'") + '\';doFullSearch();return false;">' + escapeHtml(corrected) + '</a></p>';
-    }
     // İlgili konular önerisi
     var relatedTags = '';
     var normQ = normalizeSearch(rawQuery);
@@ -1909,11 +1918,10 @@ async function doFullSearch(fromRoute) {
         }).join(' · ') + '</p>';
       }
     }
-    html = '<div class="arama-bos">' +
+    html += '<div class="arama-bos">' +
       '<p>Sonuç bulunamadı.</p>' +
-      fuzzyHtml +
       relatedTags +
-      '<p style="color:var(--text-muted);font-size:0.85rem;margin-top:16px;">Osmanlıca yazım deneyin: nemâz, gusl, oruc · veya Rehberlerden başlayın</p>' +
+      '<p style="color:var(--text-muted);font-size:0.85rem;margin-top:16px;">Farklı kelimeler veya Osmanlıca yazım deneyin: nemâz, gusl, oruc</p>' +
     '</div>';
   }
 
