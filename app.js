@@ -1829,11 +1829,13 @@ async function doFullSearch(fromRoute) {
   if (matches.length <= 2) {
     var fuzzy = findFuzzySuggestions(rawQuery);
     if (fuzzy.length > 0) {
-      var corrected = rawQuery;
+      // Düzeltilmiş sorguyu oluştur (normalize form üzerinden)
+      var correctedNorm = normalizeSearch(rawQuery);
       fuzzy.forEach(function(f) {
-        corrected = corrected.replace(new RegExp(escapeRegex(f.original), 'gi'), f.suggestion);
+        correctedNorm = correctedNorm.replace(new RegExp(escapeRegex(f.original), 'g'), f.suggestion);
       });
-      if (corrected.toLowerCase() !== rawQuery.toLowerCase()) {
+      var corrected = correctedNorm;
+      if (corrected !== normalizeSearch(rawQuery)) {
         html += '<div class="arama-fuzzy-banner">' +
           '<span>Bunu mu demek istediniz?</span> ' +
           '<a href="#" onclick="document.getElementById(\'full-search\').value=\'' +
