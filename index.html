@@ -23,7 +23,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20">
+  <link rel="stylesheet" href="style.css?v=21">
   <script type="application/ld+json">
   [{
     "@context": "https://schema.org",
@@ -74,7 +74,6 @@
           <button type="button" class="nav-btn" data-page="icerik">İçindekiler</button>
           <button type="button" class="nav-btn" data-page="fevaid">Fevâid</button>
           <button type="button" class="nav-btn" data-page="arama">Arama</button>
-          <button type="button" class="nav-btn" data-page="calisma-alanim">Çalışma Alanım</button>
           <button type="button" class="nav-btn" data-page="hakkinda">Hakkında</button>
         </nav>
         <button type="button" class="dark-mode-toggle" onclick="toggleDarkMode()" aria-label="Tema değiştir" title="Tema: Gündüz / Sepya / Gece">
@@ -332,11 +331,11 @@
             <p>Etkileşimli nemâz vakitleri hesabı ve gösterimi</p>
             <span class="fevaid-sec-count">5 vakit</span>
           </div>
-          <div class="fevaid-sec-card" onclick="navigateTo('okuma-plani')">
-            <div class="fevaid-sec-icon">&#128197;</div>
-            <h3>Okuma Planı</h3>
-            <p>3 ay, 6 ay veya 1 yılda kitabı tamamlayın</p>
-            <span class="fevaid-sec-count">3 plan</span>
+          <div class="fevaid-sec-card" onclick="navigateTo('calisma-alanim')">
+            <div class="fevaid-sec-icon">&#128221;</div>
+            <h3>Çalışma Alanım</h3>
+            <p>Yer imleriniz, notlarınız ve okuma geçmişiniz</p>
+            <span class="fevaid-sec-count">Kişisel</span>
           </div>
           <div class="fevaid-sec-card" onclick="navigateTo('quiz')">
             <div class="fevaid-sec-icon">&#10004;</div>
@@ -504,43 +503,6 @@
     </div>
   </main>
 
-  <!-- Okuma Planı -->
-  <main id="page-okuma-plani" class="page">
-    <div class="container">
-      <h2 class="section-title">Okuma Planı</h2>
-      <p class="section-desc">Kitabı düzenli okumak için bir plan seçin. Her gün hangi maddeyi okuyacağınızı gösterir.</p>
-      <div id="plan-secim" class="plan-secim">
-        <div class="plan-card" onclick="startPlan(90)">
-          <div class="plan-gun">3 Ay</div>
-          <div class="plan-label">90 Günde Tamamla</div>
-          <p>Günde ~12 sayfa. Düzenli okuma temposu.</p>
-        </div>
-        <div class="plan-card" onclick="startPlan(180)">
-          <div class="plan-gun">6 Ay</div>
-          <div class="plan-label">180 Günde Tamamla</div>
-          <p>Günde ~6 sayfa. Rahat ve sindirerek.</p>
-        </div>
-        <div class="plan-card" onclick="startPlan(365)">
-          <div class="plan-gun">1 Yıl</div>
-          <div class="plan-label">365 Günde Tamamla</div>
-          <p>Günde ~3 sayfa. Her gün biraz, bir yılda tamam.</p>
-        </div>
-      </div>
-      <div id="plan-aktif" style="display:none">
-        <div class="plan-aktif-header">
-          <h3 id="plan-baslik"></h3>
-          <div class="plan-progress-wrap">
-            <div class="istat-bar"><div class="istat-bar-fill" id="plan-bar"></div></div>
-            <span id="plan-progress-text"></span>
-          </div>
-        </div>
-        <h4 style="margin:24px 0 12px;color:var(--primary-dark);">Bugün Okunacaklar</h4>
-        <div id="plan-bugun" class="plan-bugun"></div>
-        <button type="button" class="btn btn-secondary" onclick="resetPlan()" style="margin-top:24px;">Planı Sıfırla</button>
-      </div>
-    </div>
-  </main>
-
   <!-- Hakkında -->
   <main id="page-hakkinda" class="page">
     <div class="container">
@@ -574,9 +536,6 @@
 
         <h3>Tablolar ve Diyagramlar</h3>
         <p>Kitaptaki bilgileri özetleyen <a href="/fevaid" class="hakkinda-link">tablolar ve akış şemaları</a> konularına göre düzenlenmiştir. Her tablo, kaynağı olan maddeye bağlıdır.</p>
-
-        <h3>Okuma Planı</h3>
-        <p>Kitabı düzenli okumak isteyenler için <a href="/okuma-plani" class="hakkinda-link">3 ay, 6 ay veya 1 yıllık okuma planları</a> hazırlanmıştır. Her plan, maddelerin sayfa uzunluğuna göre dengeli şekilde günlere dağıtılmıştır — kısa ve uzun maddeler eşit yük oluşturur.</p>
 
         <h3>Paylaşım Kartları</h3>
         <p>Her maddenin altındaki paylaş butonuyla maddeyi metin olarak paylaşabilir veya görsel kart oluşturup indirebilirsiniz.</p>

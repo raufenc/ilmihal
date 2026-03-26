@@ -2915,44 +2915,6 @@ mark.search-highlight {
 }
 .madde-nav-btn:hover { border-color: var(--primary); background: rgba(26,107,78,0.05); }
 
-/* ===== OKUMA PLANI ===== */
-#page-okuma-plani .container { padding-top: 40px; padding-bottom: 60px; }
-.plan-secim {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
-  margin-top: 24px;
-}
-.plan-card {
-  background: var(--bg-card); border: 2px solid var(--border); border-radius: var(--radius);
-  padding: 28px 20px; text-align: center; cursor: pointer; transition: all 0.2s;
-}
-.plan-card:hover { border-color: var(--primary); transform: translateY(-3px); box-shadow: var(--shadow-lg); }
-.plan-gun {
-  font-size: 3rem; font-weight: 700; color: var(--primary); line-height: 1;
-}
-.plan-label { font-size: 0.85rem; font-weight: 600; color: var(--text-muted); margin: 4px 0 12px; text-transform: uppercase; letter-spacing: 1px; }
-.plan-card p { font-size: 0.85rem; color: var(--text-light); }
-.plan-aktif-header { margin-bottom: 16px; }
-.plan-aktif-header h3 { font-family: 'Amiri', serif; color: var(--primary-dark); margin-bottom: 12px; }
-.plan-progress-wrap { display: flex; align-items: center; gap: 12px; }
-.plan-progress-wrap .istat-bar { flex: 1; }
-.plan-progress-wrap span { font-size: 0.85rem; color: var(--text-muted); white-space: nowrap; }
-.plan-bugun { display: flex; flex-direction: column; gap: 6px; }
-.plan-madde-item {
-  display: flex; align-items: center; gap: 12px;
-  background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-sm);
-  padding: 14px 16px; cursor: pointer; transition: all 0.2s;
-}
-.plan-madde-item:hover { border-color: var(--primary); }
-.plan-madde-item.plan-done { opacity: 0.6; }
-.plan-madde-item.plan-done .plan-check { color: var(--primary); }
-.plan-check { font-size: 1.2rem; color: var(--text-muted); flex-shrink: 0; }
-.plan-madde-title { flex: 1; font-weight: 600; color: var(--text); }
-.plan-madde-meta { font-size: 0.78rem; color: var(--text-muted); }
-@media (max-width: 768px) { .plan-secim { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 600px) { .plan-secim { grid-template-columns: 1fr 1fr; } .plan-gun { font-size: 2.2rem; } }
-
 /* ===== SPLASH SCREEN ===== */
 #splash-screen {
   position: fixed;

@@ -9,7 +9,6 @@
     { "source": "/quiz", "destination": "/index.html" },
     { "source": "/hakkinda", "destination": "/index.html" },
     { "source": "/ayet-hadis", "destination": "/index.html" },
-    { "source": "/okuma-plani", "destination": "/index.html" },
     { "source": "/gunun-bilgisi", "destination": "/index.html" },
     { "source": "/rehberler", "destination": "/index.html" },
     { "source": "/icerik", "destination": "/index.html" },

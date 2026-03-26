@@ -60,7 +60,7 @@ function handleRoute() {
     return;
   }
 
-  const validPages = ['anasayfa','icerik','fevaid','sozluk','arama','sahislar','hakkinda','quiz','ayet-hadis','okuma-plani','gunun-bilgisi','rehberler','calisma-alanim','fikih-karsilastirma'];
+  const validPages = ['anasayfa','icerik','fevaid','sozluk','arama','sahislar','hakkinda','quiz','ayet-hadis','gunun-bilgisi','rehberler','calisma-alanim','fikih-karsilastirma'];
   if (validPages.includes(route)) {
     navigateTo(route, true);
   } else {
@@ -2832,135 +2832,6 @@ function navMadde(dir) {
   openMadde(next.kisim, next.madde_no);
 }
 
-// ===== OKUMA PLANI =====
-function getPlan() {
-  try { return JSON.parse(localStorage.getItem('ilmihal-plan') || 'null'); } catch(e) { return null; }
-}
-
-function getMaddeSayfa(m) {
-  var s = m.sayfa_no;
-  var e = m.sayfa_bitis || s;
-  if (e < s) e = s;
-  return Math.max(1, e - s + 1);
-}
-
-function startPlan(gun) {
-  if (!window.tocData) return;
-  // Toplam sayfa sayısını hesapla, günlere sayfa bazlı dengeli dağıt
-  var totalPages = 0;
-  window.tocData.forEach(function(m) { totalPages += getMaddeSayfa(m); });
-  var pagesPerDay = Math.ceil(totalPages / gun);
-
-  // Maddeleri günlere dağıt
-  var days = [];
-  var currentDay = [];
-  var currentPages = 0;
-  window.tocData.forEach(function(m, i) {
-    var p = getMaddeSayfa(m);
-    currentDay.push(i);
-    currentPages += p;
-    if (currentPages >= pagesPerDay) {
-      days.push(currentDay);
-      currentDay = [];
-      currentPages = 0;
-    }
-  });
-  if (currentDay.length > 0) days.push(currentDay);
-
-  var plan = {
-    gun: gun,
-    pagesPerDay: pagesPerDay,
-    days: days,
-    startDate: new Date().toISOString().slice(0, 10),
-    completed: []
-  };
-  localStorage.setItem('ilmihal-plan', JSON.stringify(plan));
-  renderPlan();
-}
-
-function resetPlan() {
-  localStorage.removeItem('ilmihal-plan');
-  document.getElementById('plan-secim').style.display = 'grid';
-  document.getElementById('plan-aktif').style.display = 'none';
-}
-
-function renderPlan() {
-  var plan = getPlan();
-  if (!plan || !window.tocData) {
-    var secim = document.getElementById('plan-secim');
-    if (secim) secim.style.display = 'grid';
-    return;
-  }
-
-  // Eski format (perDay) varsa yeni formata çevir
-  if (plan.perDay && !plan.days) {
-    resetPlan();
-    startPlan(plan.gun);
-    return;
-  }
-
-  document.getElementById('plan-secim').style.display = 'none';
-  document.getElementById('plan-aktif').style.display = 'block';
-
-  var baslik = document.getElementById('plan-baslik');
-  if (baslik) baslik.textContent = plan.gun + ' Günlük Okuma Planı (günde ~' + plan.pagesPerDay + ' sayfa)';
-
-  // Kaçıncı gün?
-  var start = new Date(plan.startDate);
-  var today = new Date();
-  var dayNum = Math.floor((today - start) / 86400000);
-  if (dayNum < 0) dayNum = 0;
-  if (dayNum >= plan.days.length) dayNum = plan.days.length - 1;
-
-  // İlerleme
-  var completed = plan.completed.length;
-  var total = window.tocData.length;
-  var pct = Math.round((completed / total) * 100);
-  var bar = document.getElementById('plan-bar');
-  if (bar) bar.style.width = pct + '%';
-  var text = document.getElementById('plan-progress-text');
-  if (text) text.textContent = completed + '/' + total + ' madde (%' + pct + ')';
-
-  // Bugün okunacaklar
-  var todayIndices = plan.days[dayNum] || [];
-  var bugunEl = document.getElementById('plan-bugun');
-  if (bugunEl && window.tocData) {
-    var kisimLabels = { 1: 'Birinci Kısım', 2: 'İkinci Kısım', 3: 'Üçüncü Kısım' };
-    var html = '<p style="color:var(--text-muted);font-size:0.85rem;margin-bottom:12px;">' + (dayNum + 1) + '. gün — ' + todayIndices.length + ' madde</p>';
-    todayIndices.forEach(function(idx) {
-      if (idx >= window.tocData.length) return;
-      var m = window.tocData[idx];
-      var key = m.kisim + '/' + m.madde_no;
-      var done = plan.completed.indexOf(key) !== -1;
-      var sayfa = getMaddeSayfa(m);
-      html += '<div class="plan-madde-item ' + (done ? 'plan-done' : '') + '" onclick="planMaddeOku(' + m.kisim + ',' + m.madde_no + ')"><span class="plan-check">' + (done ? '✓' : '○') + '</span><span class="plan-madde-title">' + escapeHtml(m.baslik) + '</span><span class="plan-madde-meta">' + kisimLabels[m.kisim] + ' · ' + sayfa + ' sayfa</span></div>';
-    });
-    if (completed >= total) {
-      html = '<p style="text-align:center;color:var(--primary);font-size:1.1rem;padding:24px;">Tebrikler! Plan\u0131 tamamlad\u0131n\u0131z!</p>';
-    }
-    bugunEl.innerHTML = html;
-  }
-}
-
-function planMaddeOku(kisim, maddeNo) {
-  var plan = getPlan();
-  if (plan) {
-    var key = kisim + '/' + maddeNo;
-    if (plan.completed.indexOf(key) === -1) {
-      plan.completed.push(key);
-      localStorage.setItem('ilmihal-plan', JSON.stringify(plan));
-    }
-  }
-  openMadde(kisim, maddeNo);
-}
-
-// navigateTo override'a okuma planı ekle
-var _prevNavTo = navigateTo;
-navigateTo = function(page, fromRoute) {
-  _prevNavTo(page, fromRoute);
-  if (page === 'okuma-plani') { document.getElementById('page-okuma-plani')?.classList.add('active'); renderPlan(); }
-};
-
 // ===== SES HIZ KONTROLÜ =====
 var audioSpeed = 1;
 function cycleAudioSpeed() {
@@ -3208,7 +3079,6 @@ var pageSeoMap = {
   'hakkinda': ["Hakkında - Se'âdet-i Ebediyye İnteraktif İlmihâl", "Se'âdet-i Ebediyye interaktif ilmihâl platformu hakkında bilgi."],
   'gunun-bilgisi': ["Günün Bilgisi - Se'âdet-i Ebediyye", "Her gün kitaptan bir hadîs-i şerîf veya âyet-i kerîme. Paylaşılabilir görsel kartlar."],
   'rehberler': ["Konuya Göre Rehberler - Se'âdet-i Ebediyye", "Namaz, oruç, hac, zekât, iman ve ahlâk konularında adım adım rehberler."],
-  'okuma-plani': ["Okuma Planı - Se'âdet-i Ebediyye", "3 ay, 6 ay veya 1 yılda Se'âdet-i Ebediyye kitabını tamamlayın. Günlük okuma takvimi ve ilerleme takibi."],
   'icerik': ["İçindekiler - Se'âdet-i Ebediyye", "Se'âdet-i Ebediyye kitabının 241 maddesinin tam listesi. Üç kısım halinde konulara göre düzenlenmiş."],
   'fikih-karsilastirma': ["Fıkıh Karşılaştırma - Se'âdet-i Ebediyye", "Dört mezhebe göre temel ibâdet ve muâmelât hükümlerinin karşılaştırması."]
 };
@@ -3531,10 +3401,10 @@ function filtreAramaSonuclari(tip) {
       '<h3>Hızlı Cevap Ara</h3>' +
       '<p>Soru sorun veya kelime arayın, kitaptan cevabını bulalım.</p>' +
     '</a>' +
-    '<a class="niyet-kart" href="#" onclick="navigateTo(\'okuma-plani\');return false">' +
+    '<a class="niyet-kart" href="#" onclick="navigateTo(\'rehberler\');return false">' +
       '<span class="niyet-kart-icon">&#128214;</span>' +
-      '<h3>Planlı Okumaya Başla</h3>' +
-      '<p>3 ay, 6 ay veya 1 yılda kitabı tamamlayın.</p>' +
+      '<h3>Rehberle Başla</h3>' +
+      '<p>Namaz, oruç, hac gibi konularda adım adım öğrenin.</p>' +
     '</a>' +
     '<a class="niyet-kart" href="#" onclick="navigateTo(\'sozluk\');return false">' +
       '<span class="niyet-kart-icon">&#128218;</span>' +
