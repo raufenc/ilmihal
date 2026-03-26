@@ -2587,6 +2587,14 @@ var audioState = {
 
 var AUDIO_BASE = 'https://www.hakikatkitabevi.net';
 
+// Madde başlangıç offset'leri (saniye) — sayfanın ortasında başlayan maddeler için
+// Whisper speech-to-text ile tespit edildi
+var audioOffsetMap = {
+  "1/3": 272.0, "1/5": 53.0, "1/6": 84.0, "1/7": 115.0,
+  "1/9": 115.9, "1/10": 296.9, "1/11": 282.9, "1/13": 294.4,
+  "1/15": 325.0, "1/17": 117.6, "1/22": 65.0
+};
+
 function getAudioPagesForMadde(madde) {
   if (!window.audioMap) return [];
   var start = madde.sayfa_no;
@@ -2655,6 +2663,18 @@ function loadAudioPage(idx) {
 
   audio.src = AUDIO_BASE + encodeURI(page.path).replace(/%20/g, '%20');
   audio.load();
+
+  // İlk sayfada offset varsa, madde başlangıcına atla
+  if (idx === 0 && audioState.madde) {
+    var key = audioState.madde.kisim + '/' + audioState.madde.madde_no;
+    var offset = audioOffsetMap[key];
+    if (offset && offset > 0) {
+      audio.addEventListener('loadedmetadata', function onMeta() {
+        audio.removeEventListener('loadedmetadata', onMeta);
+        audio.currentTime = offset;
+      });
+    }
+  }
 
   var label = document.getElementById('audio-page-label');
   if (label) label.textContent = 'Sayfa ' + page.page + ' (' + (idx + 1) + '/' + audioState.pages.length + ')';
