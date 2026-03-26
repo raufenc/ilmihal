@@ -136,7 +136,7 @@ body {
   display: flex; align-items: flex-start; justify-content: center;
   padding: 15vh 24px 24px;
 }
-.gs-modal.hidden { display: none; }
+.gs-modal.hidden { display: none !important; }
 
 .gs-backdrop {
   position: absolute; inset: 0;
@@ -353,7 +353,7 @@ section { padding: 80px 24px; }
 
 .tanitim-content {
   max-width: 1100px; margin: 0 auto;
-  display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px;
 }
 
 .tanitim-card {
@@ -401,9 +401,11 @@ section { padding: 80px 24px; }
 
 .map-wrapper {
   flex: 1; position: relative; min-height: 650px;
+  overflow: hidden;
 }
 
 #map {
+  position: absolute; inset: 0;
   width: 100%; height: 100%;
   z-index: 1;
 }
@@ -1003,13 +1005,13 @@ footer {
 /* ========== RESPONSIVE ========== */
 @media (max-width: 1024px) {
   .map-container { flex-direction: column; height: auto; }
-  .map-wrapper { min-height: 450px; height: 450px; }
+  .map-wrapper { min-height: 450px; height: 450px; position: relative; }
   .scholar-panel {
     width: 100%; position: relative; transform: none;
     max-height: 400px;
   }
   .scholar-panel.hidden { display: none; }
-  .tanitim-content { grid-template-columns: 1fr; max-width: 500px; }
+  .tanitim-content { grid-template-columns: 1fr; max-width: 500px; margin: 0 auto; }
 }
 
 @media (max-width: 768px) {
