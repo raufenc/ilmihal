@@ -3,8 +3,8 @@
   "configurations": [
     {
       "name": "ilmihal-site",
-      "runtimeExecutable": "python3",
-      "runtimeArgs": ["-m", "http.server", "8085", "--directory", "/Users/raufenc/Library/Mobile Documents/com~apple~CloudDocs/Muhtelif/Claude/ilmihal-site"],
+      "runtimeExecutable": "bash",
+      "runtimeArgs": ["/Users/raufenc/Library/Mobile Documents/com~apple~CloudDocs/Muhtelif/Claude/ilmihal-site/.claude/serve.sh"],
       "port": 8085
     },
     {

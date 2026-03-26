@@ -407,10 +407,10 @@
   <main id="page-arama" class="page">
     <div class="container">
       <h2 class="section-title">Kitapta Arama</h2>
-      <p class="section-desc">Soru sorun veya kelime arayın — kitaptan cevabını bulalım.</p>
+      <p class="section-desc">241 maddenin tam metninde, sözlükte ve şahıslarda arayın</p>
       <div class="arama-box">
         <input type="text" id="full-search" placeholder="Örn: Abdest nasıl alınır? veya namaz, zekât..." autocomplete="off" aria-label="Kitapta arama yap" role="searchbox">
-        <button type="button" class="btn btn-primary" onclick="birlesikAra()">Ara</button>
+        <button type="button" class="btn btn-primary" onclick="doFullSearch()">Ara</button>
       </div>
       <div class="arama-ipuclari" id="arama-ipuclari">
         <div class="arama-etiketler">
@@ -423,20 +423,6 @@
           <button type="button" class="arama-etiket" onclick="aramaEtiketTikla('nikâh')">Nikâh</button>
           <button type="button" class="arama-etiket" onclick="aramaEtiketTikla('cenâze')">Cenaze</button>
           <button type="button" class="arama-etiket" onclick="aramaEtiketTikla('bid\'at')">Bid'at</button>
-        </div>
-      </div>
-      <div id="ai-answer-container" class="ai-answer-container" style="display:none;">
-        <div class="ai-answer-header">
-          <svg class="ai-answer-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
-          <span class="ai-answer-label">AI Cevab</span>
-          <button type="button" class="ai-answer-close" onclick="closeAiAnswer()" title="Kapat">&times;</button>
-        </div>
-        <div id="ai-answer-body" class="ai-answer-body">
-          <div id="ai-answer-text" class="ai-answer-text"></div>
-        </div>
-        <div id="ai-answer-sources" class="ai-answer-sources"></div>
-        <div class="ai-answer-footer">
-          <span class="ai-answer-disclaimer">Se'adet-i Ebediyye kitab metinlerine dayali AI cevabi</span>
         </div>
       </div>
       <div id="arama-results" class="arama-results" aria-live="polite" aria-label="Arama sonuçları"></div>

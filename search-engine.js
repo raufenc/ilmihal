@@ -11,15 +11,16 @@
   let indexReady = false;
   const pendingCallbacks = [];
 
-  // Aynı normalize fonksiyonu (app.js yüklenmeden önce de çalışsın diye kopyası)
+  // app.js'deki normalizeSearch'ü kullan, yüklenmemişse fallback
   function norm(text) {
+    if (window.normalizeSearch) return window.normalizeSearch(text);
     if (!text) return '';
     return text
       .replace(/[âÂ]/g, 'a').replace(/[çÇ]/g, 'c')
       .replace(/[ğĞ]/g, 'g').replace(/ı/g, 'i').replace(/I/g, 'i').replace(/İ/g, 'i')
       .replace(/[îÎ]/g, 'i').replace(/[öÖ]/g, 'o').replace(/[şŞ]/g, 's')
       .replace(/[üÜ]/g, 'u').replace(/[ûÛ]/g, 'u').replace(/[êÊ]/g, 'e')
-      .replace(/[''\u2018\u2019-]/g, '')
+      .replace(/[''\u2018\u2019-]/g, ' ')
       .toLowerCase()
       .replace(/\s+/g, ' ')
       .trim();
@@ -489,15 +490,11 @@
     if (!query) return false;
     const q = query.toLowerCase().trim();
     if (q.includes('?')) return true;
+    // Soru kalıbı kontrolü — kelime sayısından bağımsız, en az 2 kelime
     const words = q.split(/\s+/);
-    // 4+ kelime = doğal dil sorusu, her zaman AI'ya gönder
-    if (words.length >= 4) return true;
-    // 3 kelime: soru kalıbı varsa (normalize ederek de kontrol et)
-    if (words.length >= 3) {
-      const qn = norm(q);
-      return SORU_KELIMELERI.some(sk => q.includes(sk) || qn.includes(norm(sk)));
-    }
-    return false;
+    if (words.length < 2) return false;
+    const qn = norm(q);
+    return SORU_KELIMELERI.some(sk => q.includes(sk) || qn.includes(norm(sk)));
   }
 
   let aiAbortController = null;
@@ -550,113 +547,13 @@
     }
   }
 
-  // --- RAG: AI Destekli Cevap ---
-  const RAG_API_URL = 'https://raufenc.com/api/ilmihal-rag/';
-  let ragAbortController = null;
-
-  async function ragAnswer(question, onChunk, onDone, onError) {
-    if (ragAbortController) ragAbortController.abort();
-    ragAbortController = new AbortController();
-
-    try {
-      // 1. AI search ile en uygun maddeleri bul
-      const aiResults = await aiSearch(question);
-      if (!aiResults || aiResults.length === 0) {
-        if (onError) onError('Kitapda ilgili madde bulunamadı.');
-        return;
-      }
-
-      // 2. Madde metinlerini hazırla (max 3 madde)
-      const top3 = aiResults.slice(0, 3);
-      if (typeof loadKisimTexts === 'function') {
-        await Promise.all([loadKisimTexts(1), loadKisimTexts(2), loadKisimTexts(3)]);
-      }
-
-      const contexts = top3.map(r => {
-        const parts = r.id.split('/');
-        const kisim = parseInt(parts[0]);
-        const maddeNo = parseInt(parts[1]);
-        const text = window.kisimTextsCache?.[kisim]?.[String(maddeNo)] || '';
-        const madde = window.tocData?.find(m => m.kisim === kisim && m.madde_no === maddeNo);
-        return {
-          kisim: kisim,
-          madde_no: maddeNo,
-          sayfa: madde?.sayfa_no || 0,
-          baslik: madde?.baslik || '',
-          text: text.slice(0, 8000)
-        };
-      }).filter(c => c.text.length > 0);
-
-      if (contexts.length === 0) {
-        if (onError) onError('Madde metinleri yüklenemedi.');
-        return;
-      }
-
-      // 3. RAG API'ye streaming istek gönder
-      const resp = await fetch(RAG_API_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ question, contexts }),
-        signal: ragAbortController.signal
-      });
-
-      if (!resp.ok) {
-        const err = await resp.json().catch(() => ({}));
-        if (onError) onError(err.error || 'API hatası: ' + resp.status);
-        return;
-      }
-
-      // 4. Streaming SSE parse
-      const reader = resp.body.getReader();
-      const decoder = new TextDecoder();
-      let buffer = '';
-      let fullText = '';
-
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-
-        buffer += decoder.decode(value, { stream: true });
-        const lines = buffer.split('\n');
-        buffer = lines.pop() || '';
-
-        for (const line of lines) {
-          if (!line.startsWith('data: ')) continue;
-          const data = line.slice(6).trim();
-          if (data === '[DONE]') continue;
-          try {
-            const json = JSON.parse(data);
-            if (json.t) {
-              fullText += json.t;
-              if (onChunk) onChunk(json.t, fullText);
-            }
-            if (json.error) {
-              if (onError) onError(json.error);
-              return;
-            }
-          } catch {}
-        }
-      }
-
-      if (onDone) onDone(fullText, top3);
-
-    } catch (err) {
-      if (err.name === 'AbortError') return;
-      if (onError) onError(err.message || 'Beklenmeyen hata');
-    }
-  }
-
-  function ragAbort() {
-    if (ragAbortController) ragAbortController.abort();
-  }
+  // RAG kaldırıldı — dini konuda AI metin üretmesi riskli
 
   // --- Public API ---
   window.SearchEngine = {
     search: unifiedSearch,
     fullSearch: unifiedFullSearch,
     aiSearch: aiSearch,
-    ragAnswer: ragAnswer,
-    ragAbort: ragAbort,
     isQuestion: isQuestion,
     findPassage: findPassage,
     isReady: function() { return indexReady; },

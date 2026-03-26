@@ -1337,20 +1337,22 @@ function normalizeSearch(text) {
     .replace(/[ğĞ]/g, 'g').replace(/ı/g, 'i').replace(/I/g, 'i').replace(/İ/g, 'i')
     .replace(/[îÎ]/g, 'i').replace(/[öÖ]/g, 'o').replace(/[şŞ]/g, 's')
     .replace(/[üÜ]/g, 'u').replace(/[ûÛ]/g, 'u').replace(/[êÊ]/g, 'e')
-    .replace(/[''\u2018\u2019]/g, ' ')
+    .replace(/[''\u2018\u2019-]/g, ' ')
     .toLowerCase()
     .replace(/\s+/g, ' ')
     .trim();
 }
+window.normalizeSearch = normalizeSearch;
 
-// Kelime başı farkında indexOf: eşleşme ancak boşluk veya metin başından sonra gelebilir.
-// Türkçe ekler serbest: "ahmet" → "ahmetten" ✓, ama "rahmetullah" içindeki "ahmet" → ✗
+// Kelime başı farkında indexOf: eşleşme ancak kelime sınırından sonra gelebilir.
+// "ahmet" → "ahmetten" ✓, ama "rahmetullah" içindeki "ahmet" → ✗
+var _wordBoundaryChars = new Set([' ', '.', ',', '!', '?', ':', ';', '(', ')', '"', "'", '\u2014', '-', '\n', '\t']);
 function indexOfWordStart(text, term, from) {
   from = from || 0;
   while (true) {
-    const i = text.indexOf(term, from);
+    var i = text.indexOf(term, from);
     if (i === -1) return -1;
-    if (i === 0 || text[i - 1] === ' ') return i;
+    if (i === 0 || _wordBoundaryChars.has(text[i - 1])) return i;
     from = i + 1;
   }
 }
@@ -1365,7 +1367,7 @@ const OTTOMAN_MANUAL = {
   'niyet':    'niyyet',
   'vasiyet':  'vasiyyet',
   'tasavvuf': 'tesavvuf',
-  'mucize':   'mu cize',
+  'mucize':   'mucize',
   'salavat':  'salat',
   'tovbe':    'tevbe',
   'zekat':    'zekat',
@@ -1376,11 +1378,11 @@ const OTTOMAN_MANUAL = {
   'secde':    'sucud',
   'ruku':     'ruku',
   'peygamber':'resulullah',
-  'kuran':    'kur an',
-  'hadis':    'hadis i serif',
-  'sunnet':   'sunnet i seniyye',
+  'kuran':    'kuran',
+  'hadis':    'hadis',
+  'sunnet':   'sunnet',
   'mezhep':   'mezheb',
-  'bidat':    'bid at',
+  'bidat':    'bidat',
   'tevekkul': 'tevekkul',
   'sabir':    'sabr',
   'sukur':    'sukr',
@@ -1507,7 +1509,8 @@ function wordVariants(word) {
     }
   }
 
-  return Array.from(vars);
+  var result = Array.from(vars);
+  return result.length > 15 ? result.slice(0, 15) : result;
 }
 
 // Sorguyu genişlet: normalize et + her kelime için varyantlar üret
@@ -1516,220 +1519,324 @@ function wordVariants(word) {
 // Eski variants dizisi geriye uyumluluk için tutulur (tek kelime sorgularında)
 function expandSearchQuery(rawQuery) {
   const normalized = normalizeSearch(rawQuery);
-  const words = normalized.split(/\s+/);
-  const wordVarLists = words.map(w => wordVariants(w));
+  const words = normalized.split(/\s+/).filter(w => w.length >= 2);
+  if (words.length === 0) return { normalized, words: [], wordVarLists: [], altWords: [], altVariants: [] };
+
+  const wordVarLists = words.map(w => {
+    const variants = wordVariants(w);
+    // aramaSynonyms entegrasyonu — sinonim genişletme
+    if (window.aramaSynonyms && window.aramaSynonyms[w]) {
+      window.aramaSynonyms[w].forEach(syn => {
+        var normSyn = normalizeSearch(syn);
+        normSyn.split(/\s+/).forEach(sw => { if (sw.length >= 2 && !variants.includes(sw)) variants.push(sw); });
+      });
+    }
+    return variants.length > 15 ? variants.slice(0, 15) : variants;
+  });
+
+  // Çoklu kelime sinonim eşleşmesi (örn: "namaz kilmak")
+  var phrase = words.join(' ');
+  if (window.aramaSynonyms && window.aramaSynonyms[phrase]) {
+    window.aramaSynonyms[phrase].forEach(syn => {
+      var normSyn = normalizeSearch(syn);
+      normSyn.split(/\s+/).forEach(sw => {
+        if (sw.length >= 2) {
+          // İlk kelime listesine ekle (phrase synonym)
+          if (!wordVarLists[0].includes(sw)) wordVarLists[0].push(sw);
+        }
+      });
+    });
+  }
 
   // Kullanıcıya gösterilecek "farklı yazım" uyarısı için
   const altWords = wordVarLists
     .flatMap((vars, i) => vars.filter(v => v !== words[i]))
     .filter((v, i, a) => a.indexOf(v) === i);
 
-  // Eski tek-phrase aramasıyla geriye uyumluluk (tek kelimeli sorgular)
-  const variantSet = new Set([normalized]);
-  wordVarLists[0]?.forEach(v => {
-    if (words.length === 1) variantSet.add(v);
-  });
-
   return {
     normalized,
     words,
     wordVarLists,
     altWords,
-    variants: Array.from(variantSet),           // tek kelime için
     altVariants: altWords,
   };
 }
 
-// ===== ARAMA =====
-async function doFullSearch(fromRoute) {
-  const rawQuery = document.getElementById('full-search').value.trim();
-  if (!rawQuery || rawQuery.length < 2) return;
-  const query = rawQuery.toLowerCase();
+// ===== ARAMA (BİRLEŞİK) =====
 
-  if (!fromRoute) updateHash(`arama/${encodeURIComponent(query)}`);
+// BM25-benzeri scoring: azalan getirili term frequency + başlık bonusu
+function scoreMadde(normText, normBaslik, wordVarLists) {
+  var textLen = normText.length;
+  var score = 0;
+  var matchedWordCount = 0;
 
-  const results = document.getElementById('arama-results');
-  if (!window.maddelerData) {
-    results.innerHTML = '<p>Veriler y\u00fckleniyor...</p>';
-    return;
+  for (var wi = 0; wi < wordVarLists.length; wi++) {
+    var wvars = wordVarLists[wi];
+    var wordScore = 0;
+    for (var vi = 0; vi < wvars.length; vi++) {
+      var v = wvars[vi];
+      // Term frequency (kelime sıklığı)
+      var tf = 0;
+      var pos = 0;
+      while (pos < normText.length) {
+        var idx = indexOfWordStart(normText, v, pos);
+        if (idx === -1) break;
+        tf++;
+        pos = idx + v.length;
+      }
+      if (tf > 0) {
+        // BM25 TF saturation: tf / (tf + 1.5) — azalan getiri
+        wordScore = Math.max(wordScore, tf / (tf + 1.5));
+      }
+      // Başlık eşleşmesi: büyük bonus
+      if (includesWordStart(normBaslik, v)) {
+        wordScore += 3.0;
+      }
+    }
+    if (wordScore > 0) matchedWordCount++;
+    score += wordScore;
   }
 
-  results.innerHTML = '<p style="text-align:center;color:var(--text-muted);padding:20px;">Tam metin aran\u0131yor...</p>';
+  // Tüm kelimeler eşleştiyse %50 bonus
+  if (matchedWordCount === wordVarLists.length && wordVarLists.length > 1) {
+    score *= 1.5;
+  }
 
-  await Promise.all([loadKisimTexts(1), loadKisimTexts(2), loadKisimTexts(3)]);
+  // Kısa metin penalty
+  if (textLen < 1000) score *= 0.8;
 
-  // Sorguyu normalize et ve her kelime için varyant listeleri üret
-  const { normalized: normQuery, words: qWords, wordVarLists, altVariants } = expandSearchQuery(rawQuery);
-  // allVars: highlight için tüm kelime varyantlarının düz listesi
-  const allVars = wordVarLists.flat();
+  return { score: score, matchedWordCount: matchedWordCount, allMatched: matchedWordCount >= wordVarLists.length };
+}
 
-  const kisimLabels = { 1: 'Birinci K\u0131s\u0131m', 2: '\u0130kinci K\u0131s\u0131m', 3: '\u00dc\u00e7\u00fcnc\u00fc K\u0131s\u0131m' };
-  const matches = [];
+// En iyi snippet'ı bul (en çok eşleşen bölge)
+function findBestSnippet(fullText, normText, wordVarLists) {
+  var allVars = [];
+  for (var wi = 0; wi < wordVarLists.length; wi++) {
+    for (var vi = 0; vi < wordVarLists[wi].length; vi++) allVars.push(wordVarLists[wi][vi]);
+  }
 
-  window.maddelerData.forEach(m => {
-    const fullText = kisimTextsCache[m.kisim]?.[String(m.madde_no)] || m.metin || '';
-    const normText = normalizeSearch(fullText);
-    const normBaslik = normalizeSearch(m.baslik || '');
-
-    // AND mantığı: her kelime (herhangi bir varyantıyla) metinde geçmeli
-    let firstIdx = -1;
-    let firstMatchedVar = null;
-    let allFound = true;
-
-    for (let wi = 0; wi < wordVarLists.length; wi++) {
-      const wvars = wordVarLists[wi];
-      let found = false;
-      for (const v of wvars) {
-        const i = indexOfWordStart(normText, v);
-        if (i !== -1) {
-          found = true;
-          if (firstIdx === -1) { firstIdx = i; firstMatchedVar = v; }
-          break;
-        }
-      }
-      // Başlıkta da arayalım
-      if (!found) {
-        found = wvars.some(v => includesWordStart(normBaslik, v));
-      }
-      if (!found) { allFound = false; break; }
+  // 400 karakterlik pencereler tara, en çok eşleşme olanı bul
+  var bestPos = 0;
+  var bestCount = 0;
+  var step = 150;
+  for (var i = 0; i < normText.length; i += step) {
+    var windowText = normText.substring(i, i + 400);
+    var cnt = 0;
+    for (var vi = 0; vi < allVars.length; vi++) {
+      if (windowText.indexOf(allVars[vi]) !== -1) cnt++;
     }
+    if (cnt > bestCount) { bestCount = cnt; bestPos = i; }
+  }
 
-    const inTitle = wordVarLists.every(wvars => wvars.some(v => includesWordStart(normBaslik, v)));
+  var start = Math.max(0, bestPos - 30);
+  var end = Math.min(fullText.length, start + 250);
+  var snippet = (start > 0 ? '...' : '') + fullText.substring(start, end).trim() + (end < fullText.length ? '...' : '');
+  return snippet;
+}
 
-    if (allFound) {
-      let context = '';
-      if (firstIdx !== -1) {
-        const termLen = firstMatchedVar ? firstMatchedVar.length : qWords[0].length;
-        const start = Math.max(0, firstIdx - 80);
-        const end = Math.min(fullText.length, firstIdx + termLen + 80);
-        context = (start > 0 ? '...' : '') +
-          fullText.substring(start, end) +
-          (end < fullText.length ? '...' : '');
+// Snippet'ta highlight uygula (escapeHtml SONRASI regex ile)
+function highlightSnippet(snippet, wordVarLists) {
+  var escaped = escapeHtml(snippet);
+  var allVars = [];
+  for (var wi = 0; wi < wordVarLists.length; wi++) {
+    for (var vi = 0; vi < wordVarLists[wi].length; vi++) {
+      var v = wordVarLists[wi][vi];
+      if (v.length >= 2 && allVars.indexOf(v) === -1) allVars.push(v);
+    }
+  }
+  // Uzun varyantları önce işle (kısa olanlar üzerine yazmasın)
+  allVars.sort(function(a, b) { return b.length - a.length; });
+
+  for (var i = 0; i < allVars.length; i++) {
+    var re = new RegExp('(' + escapeRegex(allVars[i]) + ')', 'gi');
+    escaped = escaped.replace(re, '<mark>$1</mark>');
+  }
+  return escaped;
+}
+
+async function doFullSearch(fromRoute) {
+  var rawQuery = document.getElementById('full-search').value.trim();
+  if (!rawQuery || rawQuery.length < 2) return;
+
+  if (!fromRoute) updateHash('arama/' + encodeURIComponent(rawQuery.toLowerCase()));
+
+  var resultsEl = document.getElementById('arama-results');
+  var ipuclari = document.getElementById('arama-ipuclari');
+  if (ipuclari) ipuclari.style.display = 'none';
+
+  resultsEl.innerHTML = '<p style="text-align:center;color:var(--text-muted);padding:20px;">Aranıyor...</p>';
+
+  // Verileri yükle
+  await Promise.all([loadKisimTexts(1), loadKisimTexts(2), loadKisimTexts(3)]);
+  if (typeof ensureMaddelerData === 'function') await ensureMaddelerData();
+
+  var expanded = expandSearchQuery(rawQuery);
+  var qWords = expanded.words;
+  var wordVarLists = expanded.wordVarLists;
+  if (qWords.length === 0) { resultsEl.innerHTML = '<p style="text-align:center;color:var(--text-muted);padding:40px;">En az 2 harfli kelime girin.</p>'; return; }
+
+  var kisimLabels = { 1: 'Birinci Kısım', 2: 'İkinci Kısım', 3: 'Üçüncü Kısım' };
+  var matches = [];
+
+  // 1. DOĞRUDAN EŞLEŞTİRME (soruMaddeMap)
+  var directMatch = (typeof findDirectMatch === 'function') ? findDirectMatch(rawQuery) : null;
+
+  // 2. TAM METİN ARAMA — BM25 scoring ile
+  if (window.tocData && window.kisimTextsCache) {
+    window.tocData.forEach(function(m) {
+      var fullText = window.kisimTextsCache[m.kisim] ? (window.kisimTextsCache[m.kisim][String(m.madde_no)] || '') : '';
+      if (!fullText && window.maddelerData) {
+        var md = window.maddelerData.find(function(x) { return x.kisim === m.kisim && x.madde_no === m.madde_no; });
+        if (md) fullText = md.metin || '';
       }
+      var normText = normalizeSearch(fullText);
+      var normBaslik = normalizeSearch(m.baslik || '');
+
+      var result = scoreMadde(normText, normBaslik, wordVarLists);
+      if (!result.allMatched || result.score <= 0) return;
+
+      var snippet = findBestSnippet(fullText, normText, wordVarLists);
 
       matches.push({
         kisim: m.kisim,
         madde_no: m.madde_no,
         baslik: m.baslik,
         sayfa_no: m.sayfa_no,
-        context: context,
-        inTitle: inTitle
+        score: result.score,
+        snippet: snippet,
+        type: 'text'
       });
+    });
+  }
+
+  // Skora göre sırala
+  matches.sort(function(a, b) { return b.score - a.score; });
+  matches = matches.slice(0, 30);
+
+  // 3. AI MADDE ÖNERİSİ (sadece sorularda, arka planda)
+  var aiPromise = null;
+  if (window.SearchEngine && window.SearchEngine.isQuestion && window.SearchEngine.isQuestion(rawQuery) && window.SearchEngine.aiSearch) {
+    aiPromise = window.SearchEngine.aiSearch(rawQuery);
+  }
+
+  // 4. SÖZLÜK + ŞAHIS SONUÇLARI
+  var sozlukResults = [];
+  var sahisResults = [];
+  if (window.SearchEngine && window.SearchEngine.isReady && window.SearchEngine.isReady()) {
+    var sr = window.SearchEngine.search(rawQuery, { limit: 8 });
+    sozlukResults = sr.sozluk || [];
+    sahisResults = sr.sahis || [];
+  }
+
+  // RENDER
+  var seen = {};
+  var html = '';
+
+  // Sayaçlar
+  var maddeCount = 0;
+  var sozlukCount = sozlukResults.length;
+  var sahisCount = sahisResults.length;
+
+  // Direct match (en üstte)
+  if (directMatch) {
+    var dm = window.tocData ? window.tocData.find(function(t) { return t.kisim === directMatch.kisim && t.madde_no === directMatch.maddeNo; }) : null;
+    if (dm) {
+      var dmKey = directMatch.kisim + '/' + directMatch.maddeNo;
+      seen[dmKey] = true;
+      maddeCount++;
+      html += '<div class="arama-result arama-result--direct" data-tip="madde" onclick="openMadde(' + directMatch.kisim + ',' + directMatch.maddeNo + ')">' +
+        '<span class="arama-badge arama-badge--direct">Tam Eşleşme</span>' +
+        '<h4>' + escapeHtml(dm.baslik) + '</h4>' +
+        '<p class="arama-ozet">' + escapeHtml(directMatch.cevapOzet || '') + '</p>' +
+        '<div class="result-meta">' + kisimLabels[dm.kisim] + ', Madde ' + dm.madde_no + ' · ' + sayfaLink(dm.sayfa_no, 'Sayfa ' + dm.sayfa_no) + '</div>' +
+      '</div>';
     }
+  }
+
+  // Metin eşleşmeleri
+  matches.forEach(function(m) {
+    var key = m.kisim + '/' + m.madde_no;
+    if (seen[key]) return;
+    seen[key] = true;
+    maddeCount++;
+
+    var highlighted = highlightSnippet(m.snippet, wordVarLists);
+
+    html += '<div class="arama-result" data-tip="madde" onclick="openMadde(' + m.kisim + ',' + m.madde_no + ')">' +
+      '<h4>' + escapeHtml(m.baslik) + '</h4>' +
+      '<p class="arama-snippet">' + (highlighted || '(Başlıkta eşleşme)') + '</p>' +
+      '<div class="result-meta">' + kisimLabels[m.kisim] + ', Madde ' + m.madde_no + ' · ' + sayfaLink(m.sayfa_no, 'Sayfa ' + m.sayfa_no) + '</div>' +
+    '</div>';
   });
 
-  matches.sort((a, b) => (b.inTitle ? 1 : 0) - (a.inTitle ? 1 : 0));
+  // Sözlük sonuçları
+  if (sozlukResults.length > 0) {
+    html += '<div class="arama-ilgili" data-tip="sozluk">' +
+      '<h4>\uD83D\uDCD6 İlgili Sözlük Terimleri</h4><div class="arama-taglar">';
+    sozlukResults.forEach(function(s) {
+      html += '<a href="#" class="arama-tag" onclick="navigateTo(\'sozluk\');setTimeout(function(){document.getElementById(\'sozluk-search\').value=\'' + escapeHtml(s.title).replace(/'/g, "\\'") + '\';document.getElementById(\'sozluk-search\').dispatchEvent(new Event(\'input\'))},200);return false">' + escapeHtml(s.title) + '</a>';
+    });
+    html += '</div></div>';
+  }
 
-  // SEARCH-01: Filtre UI
-  let html = `<div class="arama-filtreler" id="arama-filtreler">
-    <button type="button" class="arama-filtre-btn active" data-filtre="all" onclick="filtreAramaSonuclari('all')">Tümü <span class="filtre-count">(${matches.length})</span></button>
-  </div>`;
-  html += `<p style="color:var(--text-muted);margin-bottom:16px;" id="arama-sonuc-sayisi">${matches.length} sonuç bulundu</p>`;
+  // Şahıs sonuçları
+  if (sahisResults.length > 0) {
+    html += '<div class="arama-ilgili" data-tip="sahis">' +
+      '<h4>\uD83D\uDC64 İlgili Şahıslar</h4><div class="arama-taglar">';
+    sahisResults.forEach(function(s) {
+      var slug = s.data ? s.data.slug : '';
+      html += '<a href="#" class="arama-tag arama-tag--sahis" onclick="navigateTo(\'sahislar\');setTimeout(function(){openSahis(\'' + slug + '\')},200);return false">' + escapeHtml(s.title) + '</a>';
+    });
+    html += '</div></div>';
+  }
 
-  matches.slice(0, 50).forEach(m => {
-    // Normalize edilmiş bağlamda eşleşen konumları bul, orijinal metinde işaretle
-    // (normalizasyon 1-to-1 olduğu için pozisyonlar birebir uyuşur)
-    const normCtx = normalizeSearch(m.context);
-    let highlighted = escapeHtml(m.context);
-    if (normCtx) {
-      // Tüm varyant eşleşmelerini bul ve sırala
-      const positions = [];
-      for (const v of allVars) {
-        let from = 0;
-        while (true) {
-          const i = indexOfWordStart(normCtx, v, from);
-          if (i === -1) break;
-          positions.push({ start: i, end: i + v.length });
-          from = i + 1;
+  // Sonuç yoksa
+  if (maddeCount === 0 && sozlukCount === 0 && sahisCount === 0) {
+    html = '<div class="arama-bos"><p>Sonuç bulunamadı.</p><p style="color:var(--text-muted);font-size:0.9rem;">Farklı kelimeler veya Osmanlıca yazım deneyin: nemâz, gusl, oruc</p></div>';
+  }
+
+  // Filtre çubuğu
+  var totalCount = maddeCount + sozlukCount + sahisCount;
+  var filterHtml = '<div class="arama-filtreler" id="arama-filtreler">' +
+    '<button type="button" class="arama-filtre-btn active" data-filtre="all" onclick="filtreAramaSonuclari(\'all\')">Tümü <span class="filtre-count">(' + totalCount + ')</span></button>';
+  if (maddeCount > 0) filterHtml += '<button type="button" class="arama-filtre-btn" data-filtre="madde" onclick="filtreAramaSonuclari(\'madde\')">Maddeler <span class="filtre-count">(' + maddeCount + ')</span></button>';
+  if (sozlukCount > 0) filterHtml += '<button type="button" class="arama-filtre-btn" data-filtre="sozluk" onclick="filtreAramaSonuclari(\'sozluk\')">Sözlük <span class="filtre-count">(' + sozlukCount + ')</span></button>';
+  if (sahisCount > 0) filterHtml += '<button type="button" class="arama-filtre-btn" data-filtre="sahis" onclick="filtreAramaSonuclari(\'sahis\')">Şahıslar <span class="filtre-count">(' + sahisCount + ')</span></button>';
+  filterHtml += '</div>';
+
+  resultsEl.innerHTML = (totalCount > 0 ? filterHtml : '') + html;
+
+  // AI sonuçlarını bekle ve varsa ekle
+  if (aiPromise) {
+    aiPromise.then(function(aiResults) {
+      if (!aiResults || aiResults.length === 0) return;
+      // AI sonuçlarını mevcut sonuçların başına ekle (duplicate önle)
+      var aiHtml = '';
+      aiResults.forEach(function(r) {
+        var key = r.id;
+        if (seen[key]) return;
+        seen[key] = true;
+        var passage = r.passage ? r.passage.replace(/<[^>]+>/g, '').slice(0, 200) : (r.subtitle || '');
+        aiHtml += '<div class="arama-result arama-result--ai" data-tip="madde" onclick="openMadde(' + r.data.kisim + ',' + r.data.madde_no + ')">' +
+          '<span class="arama-badge arama-badge--ai">AI Önerisi</span>' +
+          '<h4>' + escapeHtml(r.title) + '</h4>' +
+          '<p class="arama-snippet">' + escapeHtml(passage) + '</p>' +
+          '<div class="result-meta">' + kisimLabels[r.data.kisim] + ', Madde ' + r.data.madde_no + ' · ' + sayfaLink(r.data.sayfa_no, 'Sayfa ' + r.data.sayfa_no) + '</div>' +
+        '</div>';
+      });
+      if (aiHtml) {
+        // Filtre çubuğundan sonra, direct match'ten sonra ekle
+        var firstResult = resultsEl.querySelector('.arama-result');
+        if (firstResult && firstResult.classList.contains('arama-result--direct')) {
+          firstResult.insertAdjacentHTML('afterend', aiHtml);
+        } else if (firstResult) {
+          firstResult.insertAdjacentHTML('beforebegin', aiHtml);
+        } else {
+          resultsEl.insertAdjacentHTML('beforeend', aiHtml);
         }
       }
-      positions.sort((a, b) => a.start - b.start);
-      // Üst üste binen aralıkları birleştir, geriye doğru uygula (konumları bozmamak için)
-      const merged = [];
-      for (const p of positions) {
-        if (merged.length && p.start <= merged[merged.length - 1].end) {
-          merged[merged.length - 1].end = Math.max(merged[merged.length - 1].end, p.end);
-        } else { merged.push({ ...p }); }
-      }
-      for (let i = merged.length - 1; i >= 0; i--) {
-        const { start, end } = merged[i];
-        highlighted = highlighted.slice(0, start) + '<mark>' + highlighted.slice(start, end) + '</mark>' + highlighted.slice(end);
-      }
-    }
-
-    html += `
-      <div class="arama-result" data-tip="madde" onclick="openMadde(${m.kisim}, ${m.madde_no})">
-        <h4>${escapeHtml(m.baslik)}</h4>
-        <p class="arama-snippet">${highlighted || '(Başlıkta eşleşme)'}</p>
-        <div class="result-meta">${kisimLabels[m.kisim]}, Madde ${m.madde_no} · ${sayfaLink(m.sayfa_no, 'Sayfa ' + m.sayfa_no)}</div>
-      </div>
-    `;
-  });
-
-  results.innerHTML = html;
-
-  // RAG: Her aramada AI cevap üret
-  triggerRagAnswer(rawQuery);
-}
-
-function triggerRagAnswer(question) {
-  const container = document.getElementById('ai-answer-container');
-  const textEl = document.getElementById('ai-answer-text');
-  const sourcesEl = document.getElementById('ai-answer-sources');
-  if (!container || !textEl) return;
-
-  container.style.display = '';
-  textEl.innerHTML = '';
-  textEl.classList.add('loading');
-  sourcesEl.innerHTML = '';
-
-  SearchEngine.ragAnswer(
-    question,
-    // onChunk: streaming metin gelirken
-    function(chunk, fullText) {
-      textEl.classList.remove('loading');
-      // Paragrafları ayır, satır sonlarını <br> yap
-      const formatted = escapeHtml(fullText).replace(/\n\n/g, '</p><p>').replace(/\n/g, '<br>');
-      textEl.innerHTML = '<p>' + formatted + '<span class="ai-cursor"></span></p>';
-    },
-    // onDone: tamamlandı — kaynak kartlarını göster
-    function(fullText, sources) {
-      const formatted = escapeHtml(fullText).replace(/\n\n/g, '</p><p>').replace(/\n/g, '<br>');
-      textEl.innerHTML = '<p>' + formatted + '</p>';
-
-      if (sources && sources.length > 0) {
-        sourcesEl.innerHTML = sources.map(s => {
-          const parts = s.id.split('/');
-          const kisim = parts[0];
-          const maddeNo = parts[1];
-          const title = escapeHtml(s.title || '');
-          // Kısa snippet (passage veya subtitle)
-          const snippet = escapeHtml((s.passage || s.subtitle || '').replace(/<[^>]+>/g, '').slice(0, 80));
-          return `<a href="#" class="ai-source-card" onclick="openMadde(${kisim}, ${maddeNo});return false;">
-            <div class="ai-source-card-ref">K${kisim}/M${maddeNo}</div>
-            <div class="ai-source-card-title">${title}</div>
-            ${snippet ? '<div class="ai-source-card-snippet">' + snippet + '...</div>' : ''}
-          </a>`;
-        }).join('');
-      }
-    },
-    // onError
-    function(err) {
-      textEl.classList.remove('loading');
-      textEl.innerHTML = '<p style="color:var(--text-muted);font-style:italic;">' + escapeHtml(err) + '</p>';
-    }
-  );
-}
-
-function closeAiAnswer() {
-  const container = document.getElementById('ai-answer-container');
-  if (container) container.style.display = 'none';
-  SearchEngine.ragAbort();
-}
-
-function hideAiAnswer() {
-  const container = document.getElementById('ai-answer-container');
-  if (container) container.style.display = 'none';
+    }).catch(function() {});
+  }
 }
 
 document.getElementById('full-search')?.addEventListener('keydown', e => {
@@ -2289,34 +2396,6 @@ function resetQuiz() {
 
 
 // Türkçe stop words (soru kelimeleri + bağlaçlar)
-var stopWords = new Set(['bir','bu','ve','de','da','ile','için','ne','nasıl','nedir','nelerdir','kaç','kadar','hangi','kimlere','mi','mı','mu','mü','var','yok','olan','olarak','ise','gibi','daha','en','çok','az','her','o','şu','ben','sen','biz','siz','onlar','ki','ama','fakat','veya','ya','hem','neden','niçin','acaba','dir','dır','dur','dür','tır','tir','tur','lar','ler','dan','den','tan','ten','kadardır','kadardır','midir','nerede','yoksa','eder','ise','olan','olur','olmuş']);
-
-function cleanSearchQuery(query) {
-  var norm = (typeof normalizeSearch === 'function') ? normalizeSearch(query) : query.toLowerCase();
-  return norm.split(/\s+/).filter(function(w) { return w.length >= 2 && !stopWords.has(w); });
-}
-
-// Synonym expansion: kelimeyi kitaptaki alternatif yazımlarıyla genişlet
-function expandWithSynonyms(words) {
-  if (!window.aramaSynonyms) return words;
-  var expanded = [];
-  words.forEach(function(w) {
-    expanded.push(w);
-    // Tek kelime eşleşmesi
-    if (window.aramaSynonyms[w]) {
-      window.aramaSynonyms[w].forEach(function(syn) { expanded.push(syn); });
-    }
-  });
-  // Çoklu kelime eşleşmesi (örn: "namaz kilmak")
-  var phrase = words.join(' ');
-  if (window.aramaSynonyms[phrase]) {
-    window.aramaSynonyms[phrase].forEach(function(syn) {
-      syn.split(' ').forEach(function(sw) { if (sw.length >= 2) expanded.push(sw); });
-    });
-  }
-  return [...new Set(expanded)];
-}
-
 // Soru→Madde doğrudan eşleme
 function findDirectMatch(query) {
   if (!window.soruMaddeMap) return null;
@@ -2336,64 +2415,7 @@ function findDirectMatch(query) {
   return best;
 }
 
-function searchInBook(query) {
-  var results = [];
-  if (!window.tocData || !window.kisimTextsCache) return results;
-  var qWords = cleanSearchQuery(query);
-  if (qWords.length === 0) {
-    var fallback = (typeof normalizeSearch === 'function') ? normalizeSearch(query) : query.toLowerCase();
-    qWords = fallback.split(/\s+/).filter(function(w) { return w.length >= 3; });
-    if (qWords.length === 0) return results;
-  }
-  // Synonym expansion — kitaptaki farklı yazımları da ara
-  qWords = expandWithSynonyms(qWords);
-
-  window.tocData.forEach(function(m) {
-    var texts = window.kisimTextsCache[m.kisim];
-    if (!texts) return;
-    var metin = texts[String(m.madde_no)] || '';
-    var normMetin = (typeof normalizeSearch === 'function') ? normalizeSearch(metin) : metin.toLowerCase();
-    var normBaslik = (typeof normalizeSearch === 'function') ? normalizeSearch(m.baslik) : m.baslik.toLowerCase();
-
-    // Metin skoru
-    var score = 0;
-    var matchedWords = 0;
-    qWords.forEach(function(w) {
-      var idx = normMetin.indexOf(w);
-      if (idx !== -1) matchedWords++;
-      while (idx !== -1) { score++; idx = normMetin.indexOf(w, idx + 1); }
-    });
-
-    // Başlık bonus (çok önemli)
-    qWords.forEach(function(w) {
-      if (normBaslik.indexOf(w) !== -1) score += 20;
-    });
-
-    // Tüm kelimeler eşleşirse bonus
-    if (matchedWords === qWords.length) score += 10;
-
-    if (score > 0) {
-      // En iyi pasajı bul
-      var bestPos = 0;
-      var bestCount = 0;
-      for (var i = 0; i < normMetin.length; i += 200) {
-        var window_text = normMetin.substring(i, i + 400);
-        var cnt = 0;
-        qWords.forEach(function(w) { if (window_text.indexOf(w) !== -1) cnt++; });
-        if (cnt > bestCount) { bestCount = cnt; bestPos = i; }
-      }
-      var start = Math.max(0, bestPos - 50);
-      var pasaj = escapeHtml(metin.substring(start, start + 350));
-      qWords.forEach(function(w) {
-        var re = new RegExp('(' + escapeRegex(w) + ')', 'gi');
-        pasaj = pasaj.replace(re, '<mark>$1</mark>');
-      });
-      results.push({ kisim: m.kisim, maddeNo: m.madde_no, baslik: escapeHtml(m.baslik), score: score, pasaj: '...' + pasaj + '...' });
-    }
-  });
-  results.sort(function(a, b) { return b.score - a.score; });
-  return results.slice(0, 12);
-}
+// searchInBook kaldırıldı — doFullSearch içinde BM25 scoring ile birleştirildi
 
 // ===== FAQ SCHEMA (dinamik) =====
 function addFaqSchema(madde, metin) {
@@ -2440,73 +2462,7 @@ navigateTo = function(page, fromRoute) {
   if (page === 'rehberler') { document.getElementById('page-rehberler')?.classList.add('active'); renderRehberler(); }
 };
 
-// ===== BİRLEŞİK ARAMA (Arama + Soru-Cevap) =====
-function birlesikAra() {
-  var query = document.getElementById('full-search').value.trim();
-  if (!query) return;
-  var ipuclari = document.getElementById('arama-ipuclari');
-  if (ipuclari) ipuclari.style.display = 'none';
-
-  var sonuc = document.getElementById('arama-results');
-  sonuc.innerHTML = '<div class="loading">Kitapta aranıyor...</div>';
-  updateUrl('arama/' + encodeURIComponent(query));
-
-  // Her zaman hem tam metin hem başlık araması yap
-  Promise.all([loadKisimTexts(1), loadKisimTexts(2), loadKisimTexts(3), ensureMaddelerData()]).then(function() {
-    // Doğrudan soru eşleme — en üstte göster
-    var directMatch = findDirectMatch(query);
-    var bookResults = [];
-
-    if (directMatch) {
-      var dm = window.tocData?.find(function(t) { return t.kisim === directMatch.kisim && t.madde_no === directMatch.maddeNo; });
-      if (dm) {
-        bookResults.push({
-          kisim: directMatch.kisim,
-          maddeNo: directMatch.maddeNo,
-          baslik: '<strong>' + escapeHtml(dm.baslik) + '</strong>',
-          score: 9999,
-          pasaj: '<div style="background:rgba(26,107,78,0.08);padding:12px;border-radius:8px;border-left:3px solid var(--primary);margin-bottom:4px;">' + escapeHtml(directMatch.cevapOzet) + '</div>'
-        });
-      }
-    }
-
-    // Tam metin arama (kitap içi)
-    var moreResults = searchInBook(query);
-    // Birleştir (duplicate önle)
-    var seen = {};
-    bookResults.forEach(function(r) { seen[r.kisim + '/' + r.maddeNo] = true; });
-    moreResults.forEach(function(r) {
-      var key = r.kisim + '/' + r.maddeNo;
-      if (!seen[key]) { seen[key] = true; bookResults.push(r); }
-    });
-
-    // Başlık + index araması (search engine varsa)
-    if (window.SearchEngine && window.SearchEngine.isReady()) {
-      var seResults = window.SearchEngine.search(query, { limit: 8 });
-      if (seResults.madde) {
-        seResults.madde.forEach(function(m) {
-          var key = m.kisim + '/' + m.madde_no;
-          if (!seen[key]) {
-            seen[key] = true;
-            bookResults.push({
-              kisim: m.kisim, maddeNo: m.madde_no,
-              baslik: escapeHtml(m.baslik), score: m.score || 1,
-              pasaj: m.context ? escapeHtml(m.context.substring(0, 200)) + '...' : ''
-            });
-          }
-        });
-      }
-    }
-
-    if (bookResults.length === 0) {
-      sonuc.innerHTML = '<p style="text-align:center;color:var(--text-muted);padding:40px;">Sonuç bulunamadı. Farklı kelimeler deneyin.</p>';
-      return;
-    }
-    sonuc.innerHTML = '<p style="color:var(--text-muted);margin-bottom:16px;">' + bookResults.length + ' ilgili madde bulundu:</p>' + bookResults.map(function(r) {
-      return '<div class="soru-cevap-card" style="cursor:pointer" onclick="openMadde(' + r.kisim + ',' + r.maddeNo + ',false,\'' + escapeHtml(query).replace(/'/g, "&#39;") + '\')"><h4>' + r.baslik + '</h4><div class="soru-cevap-passage">' + r.pasaj + '</div><div class="soru-cevap-ref">Kısım ' + r.kisim + ', Madde ' + r.maddeNo + ' · <a href="/madde/' + r.kisim + '/' + r.maddeNo + '" onclick="event.stopPropagation()">Maddeyi Aç</a></div></div>';
-    }).join('');
-  });
-}
+// birlesikAra kaldırıldı — doFullSearch ile birleştirildi
 
 // ===== ÂYET-İ KERÎME VE HADÎS-İ ŞERÎF İNDEKSİ =====
 var ahCurrentTab = 'ayet';
@@ -3417,18 +3373,15 @@ function getIliskiliMaddeler(kisim, maddeNo, baslik) {
 function filtreAramaSonuclari(tip) {
   var btns = document.querySelectorAll('.arama-filtre-btn');
   btns.forEach(function(b) { b.classList.toggle('active', b.dataset.filtre === tip); });
-  var items = document.querySelectorAll('.arama-result');
-  var count = 0;
+  // Hem sonuç kartlarını hem ilgili bölümleri filtrele
+  var items = document.querySelectorAll('.arama-result, .arama-ilgili');
   items.forEach(function(el) {
     if (tip === 'all' || el.dataset.tip === tip) {
       el.style.display = '';
-      count++;
     } else {
       el.style.display = 'none';
     }
   });
-  var countEl = document.getElementById('arama-sonuc-sayisi');
-  if (countEl) countEl.textContent = count + ' sonuç gösteriliyor';
 }
 
 // ===== IA-01: ANA SAYFA NİYET KARTLARI =====
@@ -3858,53 +3811,5 @@ function togglePodcastMode() {
   }, 60000);
 })();
 
-// ===== SEO-04: İÇ LİNK AĞI GÜÇLENDİRME =====
-(function() {
-  // Sözlük sayfasında: her terim için ilgili maddeleri göster
-  // Günün bilgisi'nde: ilgili maddelere link
-  // Bu zaten mevcut crossRefData ile yapılabilir
-
-  // Sözlük detayında ilgili maddeleri ekle
-  var _origRenderSozlukDetail = (typeof renderSozlukDetail === 'function') ? renderSozlukDetail : null;
-
-  // Arama sonuçlarına sözlük ve şahıs linkleri ekle (SEO-04)
-  // doFullSearch sonuçlarının altına "Bu arama ile ilgili" bölümü ekle
-  var _origDoFullSearchForLinks = doFullSearch;
-  doFullSearch = async function(fromRoute) {
-    await _origDoFullSearchForLinks(fromRoute);
-
-    var rawQuery = document.getElementById('full-search')?.value?.trim();
-    if (!rawQuery || rawQuery.length < 2) return;
-
-    var results = document.getElementById('arama-results');
-    if (!results) return;
-
-    // Sözlük eşleşmeleri
-    var relatedHtml = '';
-    if (window.SearchEngine) {
-      var sr = window.SearchEngine.search(rawQuery, { limit: 3 });
-      if (sr.sozluk && sr.sozluk.length > 0) {
-        relatedHtml += '<div style="margin-top:24px;padding:16px;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);">';
-        relatedHtml += '<h4 style="font-size:0.9rem;color:var(--primary-dark);margin-bottom:8px;">📖 İlgili Sözlük Terimleri</h4>';
-        sr.sozluk.slice(0, 5).forEach(function(s) {
-          relatedHtml += '<a href="#" onclick="navigateTo(\'sozluk\');setTimeout(function(){document.getElementById(\'sozluk-search\').value=\'' + escapeHtml(s.title).replace(/'/g, "\\'") + '\';document.getElementById(\'sozluk-search\').dispatchEvent(new Event(\'input\'))},200);return false" style="display:inline-block;padding:4px 12px;margin:2px;background:rgba(26,107,78,0.08);border-radius:16px;color:var(--primary);text-decoration:none;font-size:0.85rem;">' + escapeHtml(s.title) + '</a>';
-        });
-        relatedHtml += '</div>';
-      }
-      if (sr.sahis && sr.sahis.length > 0) {
-        relatedHtml += '<div style="margin-top:12px;padding:16px;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);">';
-        relatedHtml += '<h4 style="font-size:0.9rem;color:var(--primary-dark);margin-bottom:8px;">👤 İlgili Şahıslar</h4>';
-        sr.sahis.slice(0, 5).forEach(function(s) {
-          var slug = s.data ? s.data.slug : '';
-          relatedHtml += '<a href="#" onclick="navigateTo(\'sahislar\');setTimeout(function(){openSahis(\'' + slug + '\')},200);return false" style="display:inline-block;padding:4px 12px;margin:2px;background:rgba(201,168,76,0.12);border-radius:16px;color:var(--gold);text-decoration:none;font-size:0.85rem;">' + escapeHtml(s.title) + '</a>';
-        });
-        relatedHtml += '</div>';
-      }
-    }
-
-    if (relatedHtml) {
-      results.insertAdjacentHTML('beforeend', relatedHtml);
-    }
-  };
-})()
+// SEO-04 monkey-patch kaldırıldı — sözlük/şahıs sonuçları artık doFullSearch içinde temiz entegre
 
