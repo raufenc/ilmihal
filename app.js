@@ -1338,6 +1338,7 @@ function normalizeSearch(text) {
     .replace(/[îÎ]/g, 'i').replace(/[öÖ]/g, 'o').replace(/[şŞ]/g, 's')
     .replace(/[üÜ]/g, 'u').replace(/[ûÛ]/g, 'u').replace(/[êÊ]/g, 'e')
     .replace(/[''\u2018\u2019-]/g, ' ')
+    .replace(/[?!.,;:()"\[\]{}]/g, '')
     .toLowerCase()
     .replace(/\s+/g, ' ')
     .trim();
