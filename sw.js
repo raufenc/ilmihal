@@ -13,7 +13,7 @@ var CORE_ASSETS = [
   '/audio-map.js?v=1',
   '/arama-sozluk.js?v=1',
   '/rehberler.js?v=1',
-  '/app.js?v=24',
+  '/app.js?v=25',
   '/favicon.svg',
   '/manifest.json'
 ];
