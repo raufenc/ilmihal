@@ -1517,9 +1517,14 @@ function wordVariants(word) {
 // Döndürülen yapı: { normalized, wordVarLists, altWords }
 // wordVarLists[i] = i. kelimenin tüm varyantları
 // Eski variants dizisi geriye uyumluluk için tutulur (tek kelime sorgularında)
+var _searchStopWords = new Set(['bir','bu','ve','de','da','ile','icin','ne','nasil','nedir','nelerdir','kac','kadar','hangi','kimlere','mi','mu','var','yok','olan','olarak','ise','gibi','daha','en','cok','az','her','su','ben','sen','biz','siz','onlar','ki','ama','fakat','veya','ya','hem','neden','nicin','acaba','dir','olur','eder','ler','lar','dan','den','tan','ten','nerede','yoksa','demektir','demek','olmak','etmek','yapmak','yapilir','edilir','alinir','verilir','olunur','neler','seyler','hangileri']);
+
 function expandSearchQuery(rawQuery) {
   const normalized = normalizeSearch(rawQuery);
-  const words = normalized.split(/\s+/).filter(w => w.length >= 2);
+  var allWords = normalized.split(/\s+/).filter(w => w.length >= 2);
+  // Stop-word filtresi: en az 1 anlamlı kelime kalmalı
+  var meaningful = allWords.filter(w => !_searchStopWords.has(w));
+  const words = meaningful.length > 0 ? meaningful : allWords;
   if (words.length === 0) return { normalized, words: [], wordVarLists: [], altWords: [], altVariants: [] };
 
   const wordVarLists = words.map(w => {
