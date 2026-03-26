@@ -2600,7 +2600,7 @@ var audioOffsetMap = {
 function getAudioPagesForMadde(madde) {
   if (!window.audioMap) return [];
   var start = madde.sayfa_no;
-  var end = madde.sayfa_bitis || madde.sayfa_no;
+  var end = Math.max(madde.sayfa_bitis || madde.sayfa_no, madde.pdf_sayfa_bitis || madde.sayfa_no, madde.sayfa_no);
   var pages = [];
   for (var p = start; p <= end; p++) {
     if (window.audioMap[p]) {
