@@ -2591,10 +2591,16 @@ var AUDIO_BASE = 'https://www.hakikatkitabevi.net';
 // Whisper speech-to-text ile tespit edildi
 var audioOffsetMap = {
   "1/2": 175.0, "1/3": 272.0, "1/5": 53.0, "1/6": 84.0, "1/7": 115.0,
-  "1/9": 115.9, "1/10": 296.9, "1/11": 282.9, "1/12": 255.7,
+  "1/8": 105.9, "1/9": 115.9, "1/10": 296.9, "1/11": 282.9, "1/12": 255.7,
   "1/13": 294.4, "1/14": 129.0, "1/15": 325.0, "1/17": 117.6,
-  "1/18": 149.0, "1/19": 155.5, "1/22": 65.0, "1/26": 173.8,
-  "1/28": 329.2, "1/29": 198.8
+  "1/18": 149.0, "1/19": 155.5, "1/20": 64.0, "1/22": 65.0,
+  "1/23": 187.0, "1/25": 166.8, "1/26": 173.8, "1/28": 329.2,
+  "1/29": 198.8, "1/34": 74.5, "1/35": 86.2, "1/40": 11.1,
+  "1/44": 347.0, "1/45": 172.2, "1/52": 82.3, "1/73": 18.0,
+  "2/10": 34.5, "2/12": 10.0, "2/27": 245.0, "2/61": 42.0,
+  "2/64": 14.2, "2/66": 61.5, "2/70": 12.0, "3/9": 9.5,
+  "3/14": 1.5, "3/23": 27.4, "3/24": 2.1, "3/25": 104.7,
+  "3/31": 14.2, "3/46": 15.3
 };
 
 function getAudioPagesForMadde(madde) {
@@ -2685,6 +2691,7 @@ function loadAudioPage(idx) {
 function playAudio() {
   var audio = document.getElementById('madde-audio');
   if (!audio || !audio.src) return;
+  audio.playbackRate = audioSpeed;
   audio.play().catch(function(){});
   audioState.playing = true;
   updateAudioUI();
@@ -2855,15 +2862,23 @@ function navMadde(dir) {
 }
 
 // ===== SES HIZ KONTROLÜ =====
-var audioSpeed = 1;
+var audioSpeed = parseFloat(localStorage.getItem('ilmihal-audio-speed')) || 1;
 function cycleAudioSpeed() {
-  var speeds = [0.75, 1, 1.25, 1.5, 2];
+  var speeds = [0.5, 0.75, 1, 1.25, 1.5, 2];
   var idx = speeds.indexOf(audioSpeed);
   audioSpeed = speeds[(idx + 1) % speeds.length];
   var audio = document.getElementById('madde-audio');
   if (audio) audio.playbackRate = audioSpeed;
   var btn = document.getElementById('audio-speed-btn');
   if (btn) btn.textContent = audioSpeed + 'x';
+  localStorage.setItem('ilmihal-audio-speed', audioSpeed);
+}
+
+// 10sn ileri/geri atlama
+function audioSkip(seconds) {
+  var audio = document.getElementById('madde-audio');
+  if (!audio) return;
+  audio.currentTime = Math.max(0, Math.min(audio.duration || 9999, audio.currentTime + seconds));
 }
 
 // ===== UYKU ZAMANLAYICI =====
@@ -2952,6 +2967,8 @@ function updateMediaSession() {
   navigator.mediaSession.setActionHandler('pause', function() { pauseAudio(); });
   navigator.mediaSession.setActionHandler('previoustrack', function() { audioNav(-1); });
   navigator.mediaSession.setActionHandler('nexttrack', function() { audioNav(1); });
+  navigator.mediaSession.setActionHandler('seekbackward', function() { audioSkip(-10); });
+  navigator.mediaSession.setActionHandler('seekforward', function() { audioSkip(10); });
 }
 
 // initAudioForMadde'e mediaSession + restore ekle

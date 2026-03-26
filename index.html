@@ -219,7 +219,9 @@
       <div id="audio-player-bar" class="audio-player-bar" style="display:none">
         <audio id="madde-audio" preload="none"></audio>
         <button type="button" class="audio-ctrl" id="audio-prev" onclick="audioNav(-1)" aria-label="Önceki sayfa">&#9664;</button>
+        <button type="button" class="audio-ctrl audio-sm" onclick="audioSkip(-10)" aria-label="10 saniye geri" title="10sn geri">-10</button>
         <button type="button" class="audio-ctrl audio-play-btn" id="audio-play-pause" onclick="toggleAudioPlay()" aria-label="Oynat veya duraklat">&#9654;</button>
+        <button type="button" class="audio-ctrl audio-sm" onclick="audioSkip(10)" aria-label="10 saniye ileri" title="10sn ileri">+10</button>
         <button type="button" class="audio-ctrl" id="audio-next" onclick="audioNav(1)" aria-label="Sonraki sayfa">&#9654;</button>
         <div class="audio-progress-wrap" onclick="audioSeek(event)">
           <div class="audio-progress" id="audio-progress"></div>
@@ -606,7 +608,7 @@
   <script src="audio-map.js?v=1"></script>
   <script src="arama-sozluk.js?v=1"></script>
   <script src="rehberler.js?v=1"></script>
-  <script src="app.js?v=28"></script>
+  <script src="app.js?v=29"></script>
   <script>
     // Eski SW ve cache temizle, yeni SW kaydet
     if ('serviceWorker' in navigator) {
