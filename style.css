@@ -878,6 +878,64 @@ body {
   color: var(--text-light);
 }
 
+/* Ağaç diyagramı */
+.agac-tree { padding: 16px 0; }
+.agac-branch {
+  border-left: 3px solid var(--primary);
+  padding: 12px 16px;
+  margin-bottom: 8px;
+  background: var(--card-bg);
+  border-radius: 0 8px 8px 0;
+}
+.agac-branch-title {
+  font-weight: 700;
+  color: var(--primary-dark);
+  margin-bottom: 6px;
+  font-size: 0.95rem;
+}
+.agac-leaves {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.agac-leaf {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  color: var(--text-light);
+}
+.agac-dallar {
+  list-style: none;
+  padding-left: 20px;
+  border-left: 2px solid var(--border);
+  margin: 8px 0;
+}
+.agac-dallar > .agac-dal {
+  position: relative;
+  padding: 10px 0 10px 16px;
+}
+.agac-dallar > .agac-dal::before {
+  content: '';
+  position: absolute;
+  left: -2px;
+  top: 18px;
+  width: 14px;
+  height: 2px;
+  background: var(--border);
+}
+.agac-dallar > .agac-dal strong {
+  color: var(--primary-dark);
+  font-size: 0.95rem;
+}
+.agac-aciklama {
+  font-size: 0.85rem;
+  color: var(--text-light);
+  margin-top: 4px;
+  line-height: 1.5;
+}
+
 /* Liste tipi tablo */
 .check-list { list-style: none; padding: 0; }
 

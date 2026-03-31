@@ -1110,9 +1110,9 @@ let tablolarLoaded = false;
 const tabloKatLabels = {
   itikat: '\u0130man ve \u0130tikat', temizlik: 'Temizlik', namaz: 'Namaz',
   oruc: 'Oru\u00e7', zekat: 'Zek\u00e2t', hac: 'Hac ve Umre',
-  aile: 'Aile Hukuku'
+  aile: 'Aile Hukuku', cenaze: 'Cen\u00e2ze', muamelat: "Mu'\u00e2mel\u00e2t"
 };
-const tabloKatOrder = ['itikat','temizlik','namaz','oruc','zekat','hac','aile'];
+const tabloKatOrder = ['itikat','temizlik','namaz','oruc','zekat','hac','aile','cenaze','muamelat'];
 
 let tabloActiveKat = 'all';
 let tabloSearchText = '';
@@ -1222,9 +1222,44 @@ function renderTabloBody(tablo) {
   if (tablo.tip === 'tablo' && tablo.veriler) return renderTable(tablo.veriler, tablo.kolonlar);
   if (tablo.tip === 'flowchart' && tablo.veriler) return renderFlowchart(tablo.veriler);
   if (tablo.tip === 'liste' && tablo.veriler) return renderListe(tablo.veriler);
-  if (tablo.tip === 'iki_liste' && tablo.veriler) return renderIkiListe(tablo.veriler);
+  if (tablo.tip === 'iki_liste' && tablo.veriler) return renderIkiListe(tablo.veriler, tablo.sol_baslik, tablo.sag_baslik);
+  if (tablo.tip === 'agac') return renderAgac(tablo);
   if (tablo.tip === 'tanimlar') return renderTanimlar(tablo.id);
   return '<p>Tablo verisi y\u00fckleniyor...</p>';
+}
+
+function renderAgac(tablo) {
+  // konu_haritasi format: veriler[] with {id, baslik, maddeler}
+  if (tablo.veriler && Array.isArray(tablo.veriler)) {
+    let html = '<div class="agac-tree">';
+    tablo.veriler.forEach(dal => {
+      html += `<div class="agac-branch"><div class="agac-branch-title">${dal.baslik || ''}</div>`;
+      if (dal.maddeler && dal.maddeler.length > 0) {
+        html += '<div class="agac-leaves">';
+        dal.maddeler.forEach(m => { html += `<span class="agac-leaf">${m}</span>`; });
+        html += '</div>';
+      }
+      html += '</div>';
+    });
+    html += '</div>';
+    return html;
+  }
+  // dallar format: dallar[] with {baslik, aciklama, alt?[]}
+  if (tablo.dallar && Array.isArray(tablo.dallar)) {
+    function renderDallar(dallar) {
+      let html = '<ul class="agac-dallar">';
+      dallar.forEach(dal => {
+        html += `<li class="agac-dal"><strong>${dal.baslik || ''}</strong>`;
+        if (dal.aciklama) html += `<div class="agac-aciklama">${dal.aciklama}</div>`;
+        if (dal.alt && dal.alt.length > 0) html += renderDallar(dal.alt);
+        html += '</li>';
+      });
+      html += '</ul>';
+      return html;
+    }
+    return '<div class="agac-tree">' + renderDallar(tablo.dallar) + '</div>';
+  }
+  return '<p>Ağaç verisi yükleniyor...</p>';
 }
 
 function renderTanimlar(id) {
@@ -1306,22 +1341,26 @@ function renderListe(veriler) {
   return html;
 }
 
-function renderIkiListe(veriler) {
+function renderIkiListe(veriler, solBaslik, sagBaslik) {
+  const keys = Object.keys(veriler);
+  if (keys.length < 2) return '';
+  const solKey = keys[0];
+  const sagKey = keys[1];
+  const solItems = veriler[solKey] || [];
+  const sagItems = veriler[sagKey] || [];
+  const solLabel = solBaslik || solKey.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+  const sagLabel = sagBaslik || sagKey.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
   let html = '<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">';
-  if (veriler.bozanlar) {
-    html += '<div><h5 style="color:#c62828;margin-bottom:8px;">Orucu Bozan \u015eeyler</h5><ul class="check-list">';
-    veriler.bozanlar.forEach(item => {
-      html += `<li><span class="check-icon check-no">&#10007;</span> <span>${item}</span></li>`;
-    });
-    html += '</ul></div>';
-  }
-  if (veriler.bozmayalar) {
-    html += '<div><h5 style="color:#2e7d32;margin-bottom:8px;">Orucu Bozmayan \u015eeyler</h5><ul class="check-list">';
-    veriler.bozmayalar.forEach(item => {
-      html += `<li><span class="check-icon check-yes">&#10003;</span> <span>${item}</span></li>`;
-    });
-    html += '</ul></div>';
-  }
+  html += `<div><h5 style="color:#c62828;margin-bottom:8px;">${solLabel}</h5><ul class="check-list">`;
+  solItems.forEach(item => {
+    html += `<li><span class="check-icon check-no">&#10007;</span> <span>${item}</span></li>`;
+  });
+  html += '</ul></div>';
+  html += `<div><h5 style="color:#2e7d32;margin-bottom:8px;">${sagLabel}</h5><ul class="check-list">`;
+  sagItems.forEach(item => {
+    html += `<li><span class="check-icon check-yes">&#10003;</span> <span>${item}</span></li>`;
+  });
+  html += '</ul></div>';
   html += '</div>';
   return html;
 }
