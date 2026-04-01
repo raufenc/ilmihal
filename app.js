@@ -425,18 +425,14 @@ async function openMadde(kisim, maddeNo, fromRoute, searchQuery) {
 
   // Load full text from kisim file
   const texts = await loadKisimTexts(kisim);
-  let metin = texts?.[String(maddeNo)] || madde.metin || '(Metin bulunamad\u0131)';
-
-  // Zor kelimeleri işaretle (sözlük lazy yüklenir)
-  await ensureSozlukData();
-  if (window.sozlukData) {
-    metin = highlightWords(metin);
-  }
+  const rawMetin = texts?.[String(maddeNo)] || madde.metin || '(Metin bulunamad\u0131)';
 
   // İlişkili maddeler (UX-03)
   var iliskiliHTML = getIliskiliMaddeler(kisim, maddeNo, madde.baslik);
 
-  body.innerHTML = `
+  // Metni hemen göster (sözlük yükünü bekleme)
+  function renderBody(metin) {
+    body.innerHTML = `
     <nav class="breadcrumb" aria-label="Konum">
       <a href="#" onclick="closeMadde();navigateTo('anasayfa');return false">Ana Sayfa</a>
       <span class="breadcrumb-sep">›</span>
@@ -463,15 +459,31 @@ async function openMadde(kisim, maddeNo, fromRoute, searchQuery) {
     ${getRelatedTables(kisim, maddeNo)}
     ${iliskiliHTML}
   `;
+    body.querySelectorAll('.zor-kelime').forEach(el => {
+      el.addEventListener('mouseenter', showTooltip);
+      el.addEventListener('mouseleave', hideTooltip);
+    });
+  }
 
-  // Tooltip events
-  body.querySelectorAll('.zor-kelime').forEach(el => {
-    el.addEventListener('mouseenter', showTooltip);
-    el.addEventListener('mouseleave', hideTooltip);
-  });
+  // Sözlük zaten yüklüyse hemen highlight'la, yoksa önce metni göster sonra arka planda yükle
+  if (window.sozlukData) {
+    renderBody(highlightWords(rawMetin));
+  } else {
+    renderBody(escapeHtml(rawMetin));
+    ensureSozlukData().then(function() {
+      if (window.sozlukData && body.isConnected) {
+        const textEl = body.querySelector('.madde-text');
+        if (textEl) textEl.innerHTML = highlightWords(rawMetin);
+        body.querySelectorAll('.zor-kelime').forEach(el => {
+          el.addEventListener('mouseenter', showTooltip);
+          el.addEventListener('mouseleave', hideTooltip);
+        });
+      }
+    });
+  }
 
   // FAQ Schema + OG meta + Streak
-  if (typeof addFaqSchema === 'function') addFaqSchema(madde, metin);
+  if (typeof addFaqSchema === 'function') addFaqSchema(madde, rawMetin);
   if (typeof updateOgMeta === 'function') updateOgMeta(madde);
   if (typeof updateStreak === 'function') updateStreak();
 
