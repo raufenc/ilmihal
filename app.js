@@ -740,7 +740,6 @@ function findByStems(lower, wordMap) {
 function buildSozlukIndex() {
   if (window._sozlukIndex) return window._sozlukIndex;
   const wordMap = new Map();
-  const multiWords = [];
 
   function addKey(key, entry) {
     const k = trLower(key).trim();
@@ -748,7 +747,7 @@ function buildSozlukIndex() {
     if (!wordMap.has(k)) wordMap.set(k, entry);
   }
 
-  // Phase 1: Bağımsız tek-kelime girişleri (en yüksek öncelik)
+  // Phase 1: Tek-kelime girişleri (boşluk/tire içerenler atlanır)
   const altQueue = [];
   window.sozlukData.forEach(entry => {
     const kelime = entry.k;
@@ -756,9 +755,7 @@ function buildSozlukIndex() {
     const main = parenMatch ? parenMatch[1].trim() : kelime.trim();
     const parens = parenMatch && parenMatch[2] ? parenMatch[2].trim() : null;
 
-    if (main.includes(' ') || main.includes('-')) {
-      multiWords.push({ phrase: trLower(main), entry });
-    } else {
+    if (!main.includes(' ') && !main.includes('-')) {
       addKey(main, entry);
     }
 
@@ -777,10 +774,7 @@ function buildSozlukIndex() {
   // Phase 2: Alternatifler — sadece boşlukları doldur
   altQueue.forEach(({ key, entry }) => addKey(key, entry));
 
-  // Sort multi-word phrases longest first for greedy matching
-  multiWords.sort((a, b) => b.phrase.length - a.phrase.length);
-
-  window._sozlukIndex = { wordMap, multiWords };
+  window._sozlukIndex = { wordMap };
   return window._sozlukIndex;
 }
 
@@ -795,23 +789,10 @@ function makeSpan(matchedText, entry) {
 function highlightWords(text) {
   if (!window.sozlukData || window.sozlukData.length === 0) return escapeHtml(text);
 
-  const { wordMap, multiWords } = buildSozlukIndex();
+  const { wordMap } = buildSozlukIndex();
   let html = escapeHtml(text);
 
-  // Pass 1: Multi-word phrases (longest first, greedy)
-  multiWords.forEach(({ phrase, entry }) => {
-    const escaped = phrase.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    // Match phrase with flexible separators (space, dash, &#39; etc.)
-    const pattern = escaped.split(/[\s\-]+/).join('[\\s\\-]+');
-    const re = new RegExp('(?<![\\w\u00C0-\u024F])(' + pattern + ')(?![\\w\u00C0-\u024F])', 'gi');
-    html = html.replace(re, (match) => {
-      // Don't re-wrap if already inside a span
-      if (match.includes('<span') || match.includes('</span')) return match;
-      return makeSpan(match, entry);
-    });
-  });
-
-  // Pass 2: Single words
+  // Single words only (multi-word pass removed: 3587 regex ops → too slow/crash on mobile)
   const parts = html.split(/(<span[^>]*class="zor-kelime"[^>]*>.*?<\/span>)/g);
   const result = parts.map(part => {
     // Skip already-highlighted spans
