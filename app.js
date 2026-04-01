@@ -1323,7 +1323,7 @@ function openTabloModal(id) {
         <span class="tablo-meta-item">${kaynakMaddeLink(tablo.kaynak_madde)}</span>
         <span class="tablo-meta-item">${sayfaLink(tablo.sayfa_no, 's. ' + tablo.sayfa_no)}</span>
       </div>
-      <div class="tablo-detay-body">
+      <div class="tablo-card-body">
         ${renderTabloBody(tablo)}
       </div>
       <div class="tablo-kaynak">
@@ -1386,21 +1386,24 @@ function openTabloDetay(id) {
   content.innerHTML = `
     <button type="button" class="fevaid-back-btn" onclick="closeTabloDetay()">\u2190 Tablolar</button>
     <div class="tablo-detay-page">
-      <div class="tablo-detay-header">
-        <h2>${tipIcons[tablo.tip] || '\u25A6'} ${tablo.baslik}</h2>
-      </div>
-      <div class="tablo-detay-meta">
-        <span class="tablo-meta-badge tablo-kat-${tablo.kategori}">${tabloKatLabels[tablo.kategori] || 'Genel'}</span>
-        ${tablo.kaynak_madde ? `<a href="#" onclick="openMadde(${kisim},${maddeNo});return false" class="tablo-meta-madde-link" title="${maddeTitle}">
-          \u{1F4D6} ${tablo.kaynak_madde}${maddeTitle ? ' — ' + maddeTitle : ''}
-        </a>` : ''}
-        <span class="tablo-meta-item">${sayfaLink(tablo.sayfa_no, '\u{1F4C4} Sayfa ' + tablo.sayfa_no)}</span>
-      </div>
-      <div class="tablo-detay-body">
-        ${renderTabloBody(tablo)}
-      </div>
-      <div class="tablo-kaynak">
-        <strong>Kitaptan:</strong> ${tablo.kaynak_metin}
+      <div class="tablo-card tablo-kat-${tablo.kategori}" style="margin-bottom:0">
+        <div class="tablo-card-header">
+          <h4>${tipIcons[tablo.tip] || '\u25A6'} ${tablo.baslik}</h4>
+          <div class="tablo-card-ref">
+            ${tablo.kaynak_madde ? kaynakMaddeLink(tablo.kaynak_madde) : ''}
+            ${sayfaLink(tablo.sayfa_no, 's.\u00a0' + tablo.sayfa_no)}
+          </div>
+        </div>
+        <div class="tablo-detay-meta" style="padding:8px 24px 0">
+          <span class="tablo-meta-badge tablo-kat-${tablo.kategori}">${tabloKatLabels[tablo.kategori] || 'Genel'}</span>
+          ${tablo.kaynak_madde && maddeTitle ? `<span class="tablo-meta-item" style="color:var(--text-muted);font-size:0.85rem">${maddeTitle}</span>` : ''}
+        </div>
+        <div class="tablo-card-body">
+          ${renderTabloBody(tablo)}
+        </div>
+        <div class="tablo-kaynak">
+          <strong>Kitaptan:</strong> ${tablo.kaynak_metin}
+        </div>
       </div>
       <div class="tablo-detay-nav">
         ${prev ? `<button type="button" class="tablo-nav-btn tablo-nav-prev" onclick="openTabloDetay('${prev.id}')">
@@ -1412,6 +1415,7 @@ function openTabloDetay(id) {
       </div>
     </div>
   `;
+
 
   window.scrollTo(0, 0);
   updateUrl('tablo/' + id);
