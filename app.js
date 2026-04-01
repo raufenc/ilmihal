@@ -119,7 +119,7 @@ function ensureMaddelerData() {
 
 function ensureSozlukData() {
   if (window.sozlukData) return Promise.resolve();
-  return loadScript('sozluk-data.js?v=2');
+  return loadScript('sozluk-data.js?v=3');
 }
 
 // ===== TEMA: Gündüz / Sepya / Gece =====

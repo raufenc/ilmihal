@@ -1,5 +1,5 @@
 // Service Worker - ilmihal.org PWA
-var CACHE_NAME = 'ilmihal-v15';
+var CACHE_NAME = 'ilmihal-v16';
 var CORE_ASSETS = [
   '/',
   '/index.html',
@@ -13,14 +13,14 @@ var CORE_ASSETS = [
   '/audio-map.js?v=1',
   '/arama-sozluk.js?v=1',
   '/rehberler.js?v=1',
-  '/app.js?v=33',
+  '/app.js?v=34',
   '/favicon.svg',
   '/manifest.json'
 ];
 
 var LAZY_ASSETS = [
   '/maddeler-data.js?v=1',
-  '/sozluk-data.js?v=2',
+  '/sozluk-data.js?v=3',
   '/texts/kisim1.json',
   '/texts/kisim2.json',
   '/texts/kisim3.json'
