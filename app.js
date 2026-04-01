@@ -89,15 +89,27 @@ function updateSeoMeta(title, description, url) {
 }
 
 // ===== LAZY LOADING (sözlük + maddeler) =====
+var _loadingScripts = {};
+
 function loadScript(src) {
-  return new Promise(function(resolve, reject) {
-    if (document.querySelector('script[src^="' + src.split('?')[0] + '"]')) { resolve(); return; }
+  var base = src.split('?')[0];
+  // Zaten yükleniyorsa aynı promise'i döndür
+  if (_loadingScripts[base]) return _loadingScripts[base];
+  // Başarıyla yüklenmiş script tag var mı? (onload tetiklendiyse)
+  var existing = document.querySelector('script[src^="' + base + '"][data-loaded="1"]');
+  if (existing) return Promise.resolve();
+  // Başarısız/yarım kalmış script tag'ı temizle
+  var old = document.querySelector('script[src^="' + base + '"]');
+  if (old) old.parentNode.removeChild(old);
+
+  _loadingScripts[base] = new Promise(function(resolve, reject) {
     var s = document.createElement('script');
     s.src = src;
-    s.onload = resolve;
-    s.onerror = reject;
+    s.onload = function() { s.setAttribute('data-loaded', '1'); delete _loadingScripts[base]; resolve(); };
+    s.onerror = function() { delete _loadingScripts[base]; reject(new Error('Script yüklenemedi: ' + src)); };
     document.body.appendChild(s);
   });
+  return _loadingScripts[base];
 }
 
 function ensureMaddelerData() {
