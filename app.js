@@ -751,43 +751,30 @@ function buildSozlukIndex() {
   // Phase 1: Bağımsız tek-kelime girişleri (en yüksek öncelik)
   const altQueue = [];
   window.sozlukData.forEach(entry => {
-    const kelime = entry.kelime;
+    const kelime = entry.k;
     const parenMatch = kelime.match(/^([^(]+?)(?:\s*\(([^)]+)\))?$/);
     const main = parenMatch ? parenMatch[1].trim() : kelime.trim();
     const parens = parenMatch && parenMatch[2] ? parenMatch[2].trim() : null;
 
     if (main.includes(' ') || main.includes('-')) {
-      // Terkip: sadece çok kelimeli eşleşme (Pass 1)
       multiWords.push({ phrase: trLower(main), entry });
     } else {
-      // Bağımsız tek kelime: en yüksek öncelik
       addKey(main, entry);
     }
 
-    // Parantez ve alternatifler Phase 2'ye kuyruğa al
-    // Sadece bağımsız tek-kelime girişlerinin alternatifleri eklenir
-    // Terkip girişlerinin alternatifleri wordMap'e eklenmez (çünkü "kurban"→"Kurban Bayramı" gibi hatalar oluşur)
+    // Parantez içi alternatifler Phase 2'ye kuyruğa al
     const isCompoundEntry = main.includes(' ') || main.includes('-');
-    if (!isCompoundEntry) {
-      if (parens) {
-        parens.split(/[,;\/]/).forEach(p => {
-          const pt = p.trim();
-          if (pt.length >= 2 && !pt.includes('aleyhi') && !pt.includes(' ') && !pt.includes('-')) {
-            altQueue.push({ key: pt, entry });
-          }
-        });
-      }
-      if (entry.alternatif) {
-        entry.alternatif.forEach(alt => {
-          if (!alt.includes(' ') && !alt.includes('-')) {
-            altQueue.push({ key: alt, entry });
-          }
-        });
-      }
+    if (!isCompoundEntry && parens) {
+      parens.split(/[,;\/]/).forEach(p => {
+        const pt = p.trim();
+        if (pt.length >= 2 && !pt.includes('aleyhi') && !pt.includes(' ') && !pt.includes('-')) {
+          altQueue.push({ key: pt, entry });
+        }
+      });
     }
   });
 
-  // Phase 2: Alternatifler — sadece boşlukları doldur (bağımsız girişleri ezme)
+  // Phase 2: Alternatifler — sadece boşlukları doldur
   altQueue.forEach(({ key, entry }) => addKey(key, entry));
 
   // Sort multi-word phrases longest first for greedy matching
@@ -798,12 +785,11 @@ function buildSozlukIndex() {
 }
 
 function makeSpan(matchedText, entry) {
-  const safeAnlam = entry.anlam.replace(/["\u201C\u201D]/g, '&quot;').replace(/['\u2018\u2019]/g, '&#39;');
-  const osmAttr = entry.osmanli ? ` data-osmanli="${entry.osmanli}"` : '';
-  const baglamAttr = entry.baglamlar ? ` data-baglamlar="${escapeHtml(JSON.stringify(entry.baglamlar))}"` : '';
-  const altAttr = entry.alternatif ? ` data-alternatif="${entry.alternatif.join(', ')}"` : '';
-  const kelimeAttr = ` data-kelime="${entry.kelime}"`;
-  return `<span class="zor-kelime" data-anlam="${safeAnlam}" data-kat="${entry.kategori}"${osmAttr}${baglamAttr}${altAttr}${kelimeAttr}>${matchedText}</span>`;
+  const safeAnlam = entry.a.replace(/["\u201C\u201D]/g, '&quot;').replace(/['\u2018\u2019]/g, '&#39;');
+  const osmAttr = entry.o ? ` data-osmanli="${entry.o}"` : '';
+  const idAttr = ` data-id="${entry.i}"`;
+  const kelimeAttr = ` data-kelime="${entry.k}"`;
+  return `<span class="zor-kelime" data-anlam="${safeAnlam}"${osmAttr}${idAttr}${kelimeAttr}>${matchedText}</span>`;
 }
 
 function highlightWords(text) {
@@ -851,7 +837,10 @@ function highlightWords(text) {
 }
 
 // ===== TOOLTIP =====
+let _tooltipHideTimer = null;
+
 function showTooltip(e) {
+  clearTimeout(_tooltipHideTimer);
   const el = e.target;
   const tooltip = document.getElementById('sozluk-tooltip');
   const anlam = el.dataset.anlam;
@@ -862,21 +851,11 @@ function showTooltip(e) {
   if (osmanli) {
     html += '<span class="tooltip-osmanli">' + osmanli + '</span>';
   }
-  html += anlam;
+  html += '<span class="tooltip-anlam">' + anlam + '</span>';
 
-  if (el.dataset.alternatif) {
-    html += '<div class="tooltip-alt">Di\u011fer yaz\u0131mlar: ' + el.dataset.alternatif + '</div>';
-  }
-
-  if (el.dataset.baglamlar) {
-    try {
-      const baglamlar = JSON.parse(el.dataset.baglamlar.replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>'));
-      html += '<div class="tooltip-baglamlar"><strong>Ba\u011flama g\u00f6re:</strong>';
-      baglamlar.forEach(b => {
-        html += '<div class="tooltip-baglam"><em>' + b.baglam + ':</em> ' + b.anlam + '</div>';
-      });
-      html += '</div>';
-    } catch(e) {}
+  const entryId = el.dataset.id;
+  if (entryId) {
+    html += '<div class="tooltip-link"><a href="#" onclick="event.preventDefault();event.stopPropagation();showSozlukModal(' + entryId + ');return false;">Ayr\u0131nt\u0131lar \u2192</a></div>';
   }
 
   tooltip.innerHTML = html;
@@ -907,86 +886,146 @@ function showTooltip(e) {
 }
 
 function hideTooltip() {
+  _tooltipHideTimer = setTimeout(() => {
+    document.getElementById('sozluk-tooltip').style.display = 'none';
+  }, 200);
+}
+
+// Tooltip üzerine gelince kapanmasın
+(function() {
+  const tip = document.getElementById('sozluk-tooltip');
+  if (tip) {
+    tip.addEventListener('mouseenter', () => clearTimeout(_tooltipHideTimer));
+    tip.addEventListener('mouseleave', hideTooltip);
+  }
+})();
+
+// ===== SÖZLÜK MODAL =====
+function showSozlukModal(entryId) {
+  // Tooltip'i gizle
+  clearTimeout(_tooltipHideTimer);
   document.getElementById('sozluk-tooltip').style.display = 'none';
+
+  if (!window.sozlukData) return;
+  const entry = window.sozlukData.find(s => s.i === entryId);
+  if (!entry) return;
+
+  // Varsa eski modalı kaldır
+  let overlay = document.getElementById('sozluk-modal-overlay');
+  if (overlay) overlay.remove();
+
+  overlay = document.createElement('div');
+  overlay.id = 'sozluk-modal-overlay';
+  overlay.className = 'sozluk-modal-overlay';
+
+  let misalHtml = '';
+  if (entry.m) {
+    misalHtml = '<div class="sozluk-modal-misal"><strong>Misal:</strong> ' + entry.m + '</div>';
+  }
+  let bkzHtml = '';
+  if (entry.b) {
+    bkzHtml = '<div class="sozluk-modal-bkz">Bkz. ' + entry.b + '</div>';
+  }
+
+  overlay.innerHTML = `
+    <div class="sozluk-modal">
+      <button class="sozluk-modal-close" onclick="closeSozlukModal()">&times;</button>
+      <div class="sozluk-modal-header">
+        <div class="sozluk-modal-kelime">${entry.k}</div>
+        ${entry.o ? '<div class="sozluk-modal-osmanli">' + entry.o + '</div>' : ''}
+      </div>
+      <div class="sozluk-modal-anlam">${entry.a}</div>
+      ${misalHtml}
+      ${bkzHtml}
+    </div>
+  `;
+
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) closeSozlukModal();
+  });
+
+  document.body.appendChild(overlay);
+  requestAnimationFrame(() => overlay.classList.add('active'));
+}
+
+function closeSozlukModal() {
+  const overlay = document.getElementById('sozluk-modal-overlay');
+  if (overlay) {
+    overlay.classList.remove('active');
+    setTimeout(() => overlay.remove(), 200);
+  }
 }
 
 // ===== SÖZLÜK =====
 let sozlukLoaded = false;
+const SOZLUK_SAYFA_BOYUTU = 100;
+let _sozlukSayfa = 1;
 
-function loadSozluk(filterKat, filterText) {
+function loadSozluk(filterText) {
   sozlukLoaded = true;
   const list = document.getElementById('sozluk-list');
   const countEl = document.getElementById('sozluk-count');
   if (!window.sozlukData) { list.innerHTML = '<div class="loading">S\u00f6zl\u00fck y\u00fckleniyor...</div>'; return; }
 
-  const katFilter = filterKat || 'all';
   const rawSozlukSearch = filterText || document.getElementById('sozluk-search')?.value || '';
-  const searchText = rawSozlukSearch.toLowerCase();
 
   let filtered = window.sozlukData;
-  if (katFilter !== 'all') filtered = filtered.filter(s => s.kategori === katFilter);
-  if (searchText) {
+  if (rawSozlukSearch) {
     const { wordVarLists: szVarLists } = expandSearchQuery(rawSozlukSearch);
     filtered = filtered.filter(s => {
-      const nk = normalizeSearch(s.kelime || '');
-      const na = normalizeSearch(s.anlam || '');
-      const check = v => includesWordStart(nk, v) || includesWordStart(na, v) ||
-        (s.alternatif && s.alternatif.some(a => includesWordStart(normalizeSearch(a), v)));
+      const nk = normalizeSearch(s.k || '');
+      const na = normalizeSearch(s.a || '');
+      const check = v => includesWordStart(nk, v) || includesWordStart(na, v);
       return szVarLists.every(wvars => wvars.some(check));
     });
   }
 
-  filtered.sort((a, b) => a.kelime.localeCompare(b.kelime, 'tr'));
+  filtered.sort((a, b) => a.k.localeCompare(b.k, 'tr'));
 
-  const katLabels = {
-    akaid: 'Ak\u00e2id/Kel\u00e2m', ibadet: '\u0130badet/Taharet', tasavvuf: 'Tasavvuf/Ahl\u00e2k',
-    fikih: 'F\u0131k\u0131h/Us\u00fbl', muamelat: 'Mu\u00e2mel\u00e2t/Ticaret', siyer: 'Siyer/Tarih',
-    hadis: 'Hadis/S\u00fcnnet', kuran: "Kur'an/Tefsir", mezhepler: 'Mezhepler/F\u0131rkalar',
-    aile: 'Aile/Nik\u00e2h', dil: 'Dil/Edebiyat', miras: 'Miras/Fer\u00e2iz', osmanli: 'Osmanl\u0131/Kurumlar'
-  };
+  // Sayfalama
+  const toplam = filtered.length;
+  const toplamSayfa = Math.max(1, Math.ceil(toplam / SOZLUK_SAYFA_BOYUTU));
+  if (_sozlukSayfa > toplamSayfa) _sozlukSayfa = toplamSayfa;
+  const baslangic = (_sozlukSayfa - 1) * SOZLUK_SAYFA_BOYUTU;
+  const sayfaVerisi = filtered.slice(baslangic, baslangic + SOZLUK_SAYFA_BOYUTU);
+
   let html = '';
-  filtered.forEach(s => {
-    const osmanli = s.osmanli ? `<div class="sozluk-osmanli">${s.osmanli}</div>` : '';
-    const katLabel = katLabels[s.kategori] || s.kategori;
-    const altHtml = s.alternatif ? `<div class="sozluk-alt">Di\u011fer yaz\u0131mlar: ${s.alternatif.join(', ')}</div>` : '';
-    let baglamHtml = '';
-    if (s.baglamlar && s.baglamlar.length > 0) {
-      baglamHtml = '<div class="sozluk-baglamlar"><span class="baglam-label">Ba\u011flama g\u00f6re:</span>';
-      s.baglamlar.forEach(b => {
-        baglamHtml += `<div class="sozluk-baglam"><em>${b.baglam}:</em> ${b.anlam}</div>`;
-      });
-      baglamHtml += '</div>';
-    }
+  sayfaVerisi.forEach(s => {
+    const osmanli = s.o ? `<div class="sozluk-osmanli">${s.o}</div>` : '';
+    const bkzHtml = s.b ? `<div class="sozluk-bkz">Bkz. ${s.b}</div>` : '';
     html += `
-      <div class="sozluk-item">
+      <div class="sozluk-item" id="sozluk-entry-${s.i}">
         <div class="sozluk-kelime-row">
-          <div class="sozluk-kelime">${s.kelime}</div>
+          <div class="sozluk-kelime">${s.k}</div>
           ${osmanli}
         </div>
-        <div class="sozluk-anlam">${s.anlam}</div>
-        ${s.misal ? `<div class="sozluk-misal">${s.misal}</div>` : ''}
-        ${altHtml}
-        ${baglamHtml}
-        <span class="sozluk-kat kat-${s.kategori}">${katLabel}</span>
+        <div class="sozluk-anlam">${s.a}</div>
+        ${s.m ? `<div class="sozluk-misal">${s.m}</div>` : ''}
+        ${bkzHtml}
       </div>
     `;
   });
 
+  // Sayfalama kontrolleri
+  if (toplamSayfa > 1) {
+    html += '<div class="sozluk-pagination">';
+    html += `<button onclick="_sozlukSayfa=1;loadSozluk()" ${_sozlukSayfa===1?'disabled':''}>&#171;</button>`;
+    html += `<button onclick="_sozlukSayfa--;loadSozluk()" ${_sozlukSayfa===1?'disabled':''}>&#8249;</button>`;
+    html += `<span class="sozluk-sayfa-bilgi">${_sozlukSayfa} / ${toplamSayfa}</span>`;
+    html += `<button onclick="_sozlukSayfa++;loadSozluk()" ${_sozlukSayfa===toplamSayfa?'disabled':''}>&#8250;</button>`;
+    html += `<button onclick="_sozlukSayfa=${toplamSayfa};loadSozluk()" ${_sozlukSayfa===toplamSayfa?'disabled':''}>&#187;</button>`;
+    html += '</div>';
+  }
+
   list.innerHTML = html || '<p style="text-align:center;color:var(--text-muted);padding:40px;">Kelime bulunamad\u0131.</p>';
-  countEl.textContent = `${filtered.length} kelime g\u00f6steriliyor`;
+  countEl.textContent = `${toplam} kelime${toplam > SOZLUK_SAYFA_BOYUTU ? ' \u00b7 Sayfa ' + _sozlukSayfa + '/' + toplamSayfa : ''}`;
+  // Sayfanın başına scroll
+  list.scrollTop = 0;
 }
 
 document.getElementById('sozluk-search')?.addEventListener('input', () => {
-  const activeKat = document.querySelector('.kat-btn.active')?.dataset.kat || 'all';
-  loadSozluk(activeKat);
-});
-
-document.querySelectorAll('.kat-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.kat-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    loadSozluk(btn.dataset.kat);
-  });
+  _sozlukSayfa = 1;
+  loadSozluk();
 });
 
 // ===== ŞAHİSLAR =====

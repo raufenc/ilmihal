@@ -91,6 +91,22 @@
       });
     }
 
+    // 2b. Sözlük (sozlukData)
+    if (window.sozlukData) {
+      window.sozlukData.forEach(s => {
+        const termTokens = tokenize(s.k);
+        addToIndex(termTokens, {
+          type: 'sozluk',
+          id: 'lugat-' + s.i,
+          title: s.k,
+          subtitle: s.a.length > 80 ? s.a.substring(0, 80) + '...' : s.a,
+          field: 'term',
+          boost: 7,
+          data: s
+        });
+      });
+    }
+
     // 3. Şahıslar
     if (window.sahislarData) {
       window.sahislarData.forEach(s => {
