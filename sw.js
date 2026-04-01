@@ -1,5 +1,5 @@
 // Service Worker - ilmihal.org PWA
-var CACHE_NAME = 'ilmihal-v17';
+var CACHE_NAME = 'ilmihal-v18';
 var CORE_ASSETS = [
   '/',
   '/index.html',

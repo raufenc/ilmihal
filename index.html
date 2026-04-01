@@ -273,6 +273,14 @@
     </div>
   </div>
 
+  <!-- Tablo Modal Overlay -->
+  <div id="tablo-modal" class="madde-overlay" style="display:none">
+    <div class="madde-overlay-content tablo-modal-content">
+      <button type="button" class="madde-close" onclick="closeTabloModal()" aria-label="Tablo modalını kapat">&times;</button>
+      <div id="tablo-modal-body"></div>
+    </div>
+  </div>
+
   <!-- Fevâid -->
   <main id="page-fevaid" class="page">
     <div class="container">
@@ -352,6 +360,10 @@
       <div id="fevaid-section-tablolar" class="fevaid-section" style="display:none">
         <button type="button" class="fevaid-back-btn" onclick="closeFevaidSection()">&#8592; Fevâid</button>
         <div class="tablolar-toolbar">
+          <div class="tablo-sort-toggle">
+            <button type="button" class="tablo-sort-btn active" data-sort="kategori">Kategorik</button>
+            <button type="button" class="tablo-sort-btn" data-sort="kitap">Kitap Sırası</button>
+          </div>
           <input type="text" id="tablo-search" placeholder="Tablo ara...">
           <div class="tablo-kat-filters">
             <button type="button" class="tablo-filter-btn active" data-kat="all">Tümü</button>
@@ -368,6 +380,10 @@
         </div>
         <div id="tablo-count" class="tablo-count"></div>
         <div id="tablolar-grid" class="tablolar-grid"></div>
+      </div>
+      <!-- Tablo Detay bölümü -->
+      <div id="fevaid-section-tablo-detay" class="fevaid-section" style="display:none">
+        <div id="tablo-detay-content"></div>
       </div>
       <!-- Tanımlar bölümü -->
       <div id="fevaid-section-tanimlar" class="fevaid-section" style="display:none">
@@ -571,7 +587,7 @@
   <!-- Tooltip -->
   <div id="sozluk-tooltip" class="sozluk-tooltip" style="display:none"></div>
 
-  <script src="data.js?v=12"></script>
+  <script src="data.js?v=13"></script>
   <script src="tanimlar.js?v=1"></script>
   <script src="sahislar.js?v=7"></script>
   <script src="crossref.js?v=7"></script>
@@ -580,7 +596,7 @@
   <script src="audio-map.js?v=1"></script>
   <script src="arama-sozluk.js?v=1"></script>
   <script src="rehberler.js?v=1"></script>
-  <script src="app.js?v=34"></script>
+  <script src="app.js?v=35"></script>
   <script>
     // Eski SW ve cache temizle, yeni SW kaydet
     if ('serviceWorker' in navigator) {

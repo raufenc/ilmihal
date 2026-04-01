@@ -55,6 +55,12 @@ function handleRoute() {
     return;
   }
 
+  if (route === 'tablo' && parts[1]) {
+    navigateTo('fevaid', true);
+    setTimeout(() => openTabloDetay(decodeURIComponent(parts[1])), 250);
+    return;
+  }
+
   if (route === 'fikih-karsilastirma') {
     navigateTo('fikih-karsilastirma', true);
     return;
@@ -665,7 +671,7 @@ function getRelatedTables(kisim, maddeNo) {
   if (related.length === 0) return '';
   const tipIcons = {tablo:'\u25A6', liste:'\u25A4', iki_liste:'\u21C4', flowchart:'\u25A5', agac:'\u25C8'};
   const items = related.map(t =>
-    `<a href="#" onclick="navigateTo('tablolar');setTimeout(()=>{document.getElementById('tablo-${t.id}')?.scrollIntoView({behavior:'smooth'})},300);closeMadde();return false" class="related-tablo-link">
+    `<a href="#" onclick="openTabloModal('${t.id}');return false" class="related-tablo-link">
       <span class="rt-icon">${tipIcons[t.tip] || '\u25A6'}</span>
       <span>${t.baslik}</span>
     </a>`
@@ -688,7 +694,9 @@ function closeMadde() {
 
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') {
-    if (document.getElementById('sahis-detay')?.style.display === 'flex') {
+    if (document.getElementById('tablo-modal')?.style.display === 'flex') {
+      closeTabloModal();
+    } else if (document.getElementById('sahis-detay')?.style.display === 'flex') {
       closeSahis();
     } else {
       closeMadde();
@@ -1161,6 +1169,7 @@ const tabloKatOrder = ['itikat','temizlik','namaz','oruc','zekat','hac','aile','
 
 let tabloActiveKat = 'all';
 let tabloSearchText = '';
+let tabloSortMode = 'kategori';
 
 function loadFevaid() {
   fevaidLoaded = true;
@@ -1211,7 +1220,11 @@ function loadTablolar(filterKat, filterText) {
   );
 
   let html = '';
-  if (katFilter === 'all') {
+  if (tabloSortMode === 'kitap') {
+    // Kitap sırasıyla — sayfa numarasına göre
+    allItems.sort((a, b) => (a.sayfa_no || 0) - (b.sayfa_no || 0));
+    allItems.forEach(tablo => { html += renderTabloCard(tablo); });
+  } else if (katFilter === 'all') {
     for (const kat of tabloKatOrder) {
       const items = allItems.filter(t => t.kategori === kat);
       if (items.length === 0) continue;
@@ -1220,7 +1233,10 @@ function loadTablolar(filterKat, filterText) {
     }
     // genel ones without category label
     const genel = allItems.filter(t => !tabloKatOrder.includes(t.kategori));
-    genel.forEach(tablo => { html += renderTabloCard(tablo); });
+    if (genel.length > 0) {
+      html += `<div class="tablo-kategori-baslik tablo-kat-genel"><span>Genel</span><span class="tablo-kat-count">${genel.length}</span></div>`;
+      genel.forEach(tablo => { html += renderTabloCard(tablo); });
+    }
   } else {
     allItems.forEach(tablo => { html += renderTabloCard(tablo); });
   }
@@ -1230,15 +1246,29 @@ function loadTablolar(filterKat, filterText) {
   grid.innerHTML = html || '<p style="text-align:center;color:var(--text-muted);padding:40px;">Tablo bulunamad\u0131.</p>';
 }
 
+function parseKaynakMadde(ref) {
+  if (!ref) return { kisim: 0, maddeNo: 0 };
+  const m = ref.match(/K(\d+)\/M(\d+)/);
+  return m ? { kisim: parseInt(m[1]), maddeNo: parseInt(m[2]) } : { kisim: 0, maddeNo: 0 };
+}
+
+function kaynakMaddeLink(ref) {
+  const { kisim, maddeNo } = parseKaynakMadde(ref);
+  if (!kisim) return ref || '';
+  const madde = window.tocData?.find(t => t.kisim === kisim && t.madde_no === maddeNo);
+  const title = madde ? madde.baslik : ref;
+  return `<a href="#" onclick="openMadde(${kisim},${maddeNo});return false" class="tablo-madde-link" title="${title}">${ref}</a>`;
+}
+
 function renderTabloCard(tablo) {
   const tipIcons = {tablo:'\u25A6', liste:'\u25A4', iki_liste:'\u21C4', flowchart:'\u25A5', agac:'\u25C8'};
   return `
     <div class="tablo-card tablo-kat-${tablo.kategori}" id="tablo-${tablo.id}">
-      <div class="tablo-card-header">
+      <div class="tablo-card-header" onclick="openTabloDetay('${tablo.id}')" style="cursor:pointer" title="Tablo sayfasını aç">
         <h4>${tipIcons[tablo.tip] || '\u25A6'} ${tablo.baslik}</h4>
         <div class="tablo-card-ref">
-          <span class="tablo-ref-madde">${tablo.kaynak_madde}</span>
-          <span class="tablo-ref-sayfa">${sayfaLink(tablo.sayfa_no, 's. ' + tablo.sayfa_no)}</span>
+          <span class="tablo-ref-madde" onclick="event.stopPropagation()">${kaynakMaddeLink(tablo.kaynak_madde)}</span>
+          <span class="tablo-ref-sayfa" onclick="event.stopPropagation()">${sayfaLink(tablo.sayfa_no, 's. ' + tablo.sayfa_no)}</span>
         </div>
       </div>
       <div class="tablo-card-body">
@@ -1262,6 +1292,140 @@ document.querySelectorAll('.tablo-filter-btn').forEach(btn => {
     loadTablolar(btn.dataset.kat, tabloSearchText);
   });
 });
+
+document.querySelectorAll('.tablo-sort-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tablo-sort-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    tabloSortMode = btn.dataset.sort;
+    // Kitap sırasında kategori filtreleri gizle
+    const katFilters = document.querySelector('.tablo-kat-filters');
+    if (katFilters) katFilters.style.display = tabloSortMode === 'kitap' ? 'none' : '';
+    loadTablolar(tabloSortMode === 'kitap' ? 'all' : tabloActiveKat, tabloSearchText);
+  });
+});
+
+// ===== TABLO MODAL =====
+function openTabloModal(id) {
+  if (!window.tablolarData) return;
+  const tablo = window.tablolarData.find(t => t.id === id);
+  if (!tablo) return;
+  const tipIcons = {tablo:'\u25A6', liste:'\u25A4', iki_liste:'\u21C4', flowchart:'\u25A5', agac:'\u25C8'};
+  const tipLabels = {tablo:'Tablo', liste:'Liste', iki_liste:'İki Liste', flowchart:'Akış', agac:'Ağaç'};
+  const body = document.getElementById('tablo-modal-body');
+  body.innerHTML = `
+    <div class="tablo-detay-page">
+      <div class="tablo-detay-header">
+        <h2>${tipIcons[tablo.tip] || '\u25A6'} ${tablo.baslik}</h2>
+      </div>
+      <div class="tablo-detay-meta">
+        <span class="tablo-meta-badge tablo-kat-${tablo.kategori}">${tabloKatLabels[tablo.kategori] || 'Genel'}</span>
+        <span class="tablo-meta-item">${kaynakMaddeLink(tablo.kaynak_madde)}</span>
+        <span class="tablo-meta-item">${sayfaLink(tablo.sayfa_no, 's. ' + tablo.sayfa_no)}</span>
+      </div>
+      <div class="tablo-detay-body">
+        ${renderTabloBody(tablo)}
+      </div>
+      <div class="tablo-kaynak">
+        <strong>Kitaptan:</strong> ${tablo.kaynak_metin}
+      </div>
+      <div class="tablo-modal-actions">
+        <button type="button" class="btn btn-primary" onclick="closeTabloModal();closeMadde();navigateTo('fevaid');setTimeout(()=>openTabloDetay('${tablo.id}'),150)">
+          Tablo Sayfasına Git \u2192
+        </button>
+      </div>
+    </div>
+  `;
+  document.getElementById('tablo-modal').style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
+
+function closeTabloModal() {
+  document.getElementById('tablo-modal').style.display = 'none';
+  // Madde overlay açıksa, body overflow hidden kalsın
+  if (document.getElementById('madde-detay')?.style.display === 'flex') {
+    document.body.style.overflow = 'hidden';
+  } else {
+    document.body.style.overflow = '';
+  }
+}
+
+// Tablo modal click-outside
+document.getElementById('tablo-modal')?.addEventListener('click', e => {
+  if (e.target === document.getElementById('tablo-modal')) closeTabloModal();
+});
+
+// ===== TABLO DETAY SAYFASI =====
+function openTabloDetay(id) {
+  if (!window.tablolarData) return;
+  const tablo = window.tablolarData.find(t => t.id === id);
+  if (!tablo) return;
+
+  const tipIcons = {tablo:'\u25A6', liste:'\u25A4', iki_liste:'\u21C4', flowchart:'\u25A5', agac:'\u25C8'};
+
+  // Sayfa sırasına göre prev/next bul
+  const sorted = window.tablolarData
+    .filter(t => t.id !== 'konu_haritasi' && t.id !== 'kitabin_tanimlari')
+    .sort((a, b) => (a.sayfa_no || 0) - (b.sayfa_no || 0));
+  const idx = sorted.findIndex(t => t.id === id);
+  const prev = idx > 0 ? sorted[idx - 1] : null;
+  const next = idx < sorted.length - 1 ? sorted[idx + 1] : null;
+
+  // Kaynak madde başlığını bul
+  const { kisim, maddeNo } = parseKaynakMadde(tablo.kaynak_madde);
+  const madde = window.tocData?.find(t => t.kisim === kisim && t.madde_no === maddeNo);
+  const maddeTitle = madde ? madde.baslik : '';
+
+  // Fevaid sectionları gizle, tablo-detay göster
+  document.getElementById('fevaid-home').style.display = 'none';
+  document.querySelectorAll('.fevaid-section').forEach(s => { s.style.display = 'none'; });
+  const detayEl = document.getElementById('fevaid-section-tablo-detay');
+  detayEl.style.display = '';
+
+  const content = document.getElementById('tablo-detay-content');
+  content.innerHTML = `
+    <button type="button" class="fevaid-back-btn" onclick="closeTabloDetay()">\u2190 Tablolar</button>
+    <div class="tablo-detay-page">
+      <div class="tablo-detay-header">
+        <h2>${tipIcons[tablo.tip] || '\u25A6'} ${tablo.baslik}</h2>
+      </div>
+      <div class="tablo-detay-meta">
+        <span class="tablo-meta-badge tablo-kat-${tablo.kategori}">${tabloKatLabels[tablo.kategori] || 'Genel'}</span>
+        ${tablo.kaynak_madde ? `<a href="#" onclick="openMadde(${kisim},${maddeNo});return false" class="tablo-meta-madde-link" title="${maddeTitle}">
+          \u{1F4D6} ${tablo.kaynak_madde}${maddeTitle ? ' — ' + maddeTitle : ''}
+        </a>` : ''}
+        <span class="tablo-meta-item">${sayfaLink(tablo.sayfa_no, '\u{1F4C4} Sayfa ' + tablo.sayfa_no)}</span>
+      </div>
+      <div class="tablo-detay-body">
+        ${renderTabloBody(tablo)}
+      </div>
+      <div class="tablo-kaynak">
+        <strong>Kitaptan:</strong> ${tablo.kaynak_metin}
+      </div>
+      <div class="tablo-detay-nav">
+        ${prev ? `<button type="button" class="tablo-nav-btn tablo-nav-prev" onclick="openTabloDetay('${prev.id}')">
+          <small>\u2190 \u00d6nceki</small><span>${prev.baslik}</span>
+        </button>` : '<div></div>'}
+        ${next ? `<button type="button" class="tablo-nav-btn tablo-nav-next" onclick="openTabloDetay('${next.id}')">
+          <small>Sonraki \u2192</small><span>${next.baslik}</span>
+        </button>` : '<div></div>'}
+      </div>
+    </div>
+  `;
+
+  window.scrollTo(0, 0);
+  updateUrl('tablo/' + id);
+  updateSeoMeta(
+    tablo.baslik + ' — Se\u2019\u00e2det-i Ebediyye',
+    tablo.kaynak_metin,
+    'tablo/' + id
+  );
+}
+
+function closeTabloDetay() {
+  document.getElementById('fevaid-section-tablo-detay').style.display = 'none';
+  openFevaidSection('tablolar');
+}
 
 function renderTabloBody(tablo) {
   if (tablo.tip === 'tablo' && tablo.veriler) return renderTable(tablo.veriler, tablo.kolonlar);
@@ -2204,14 +2368,7 @@ document.getElementById('full-search')?.addEventListener('keydown', e => {
         break;
       case 'tablo':
         navigateTo('fevaid');
-        setTimeout(() => openFevaidSection('tablolar'), 100);
-        setTimeout(() => {
-          const tabloSearch = document.getElementById('tablo-search');
-          if (tabloSearch) {
-            tabloSearch.value = item.data.baslik;
-            tabloSearch.dispatchEvent(new Event('input'));
-          }
-        }, 200);
+        setTimeout(() => openTabloDetay(item.data.id), 150);
         break;
     }
   }
