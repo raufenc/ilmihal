@@ -55,6 +55,12 @@ function handleRoute() {
     return;
   }
 
+  if (route === 'fevaid' && parts[1] === 'tablo' && parts[2]) {
+    navigateTo('fevaid', true);
+    setTimeout(() => openTabloDetay(decodeURIComponent(parts[2])), 250);
+    return;
+  }
+  // Eski /tablo/:id URL'lerini geriye dönük destekle
   if (route === 'tablo' && parts[1]) {
     navigateTo('fevaid', true);
     setTimeout(() => openTabloDetay(decodeURIComponent(parts[1])), 250);
@@ -1418,11 +1424,11 @@ function openTabloDetay(id) {
 
 
   window.scrollTo(0, 0);
-  updateUrl('tablo/' + id);
+  updateUrl('fevaid/tablo/' + id);
   updateSeoMeta(
     tablo.baslik + ' — Se\u2019\u00e2det-i Ebediyye',
     tablo.kaynak_metin,
-    'tablo/' + id
+    'fevaid/tablo/' + id
   );
 }
 

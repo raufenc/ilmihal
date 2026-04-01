@@ -788,7 +788,7 @@ body {
   color: var(--primary);
 }
 
-.tablo-card-body { padding: 20px 24px; }
+.tablo-card-body { padding: 0; overflow: hidden; }
 
 .tablo-card-body table {
   width: 100%;
@@ -797,23 +797,31 @@ body {
 }
 
 .tablo-card-body th {
-  background: var(--bg);
-  padding: 10px 12px;
+  background: var(--primary-dark);
+  padding: 11px 16px;
   text-align: left;
   font-weight: 600;
-  font-size: 0.85rem;
-  color: var(--primary-dark);
-  border-bottom: 2px solid var(--border);
+  font-size: 0.78rem;
+  color: #fff;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  border-right: 1px solid rgba(255,255,255,0.15);
 }
+.tablo-card-body th:last-child { border-right: none; }
 
 .tablo-card-body td {
-  padding: 10px 12px;
+  padding: 10px 16px;
   border-bottom: 1px solid var(--border);
+  border-right: 1px solid var(--border);
   color: var(--text);
+  vertical-align: top;
 }
+.tablo-card-body td:last-child { border-right: none; }
+.tablo-card-body td:first-child { font-weight: 600; color: var(--primary-dark); }
 
 .tablo-card-body tr:last-child td { border-bottom: none; }
-.tablo-card-body tr:hover td { background: rgba(26,107,78,0.04); }
+.tablo-card-body tbody tr:nth-child(even) td { background: rgba(26,107,78,0.035); }
+.tablo-card-body tr:hover td { background: rgba(26,107,78,0.07); }
 
 .tablo-kaynak {
   margin-top: 16px;
@@ -1791,6 +1799,10 @@ body {
   max-width: 900px;
   margin: 0 auto;
   padding: 16px 0;
+}
+.tablo-detay-page .tablo-card {
+  box-shadow: var(--shadow-lg);
+  transform: none !important;
 }
 .tablo-detay-header h2 {
   font-size: 1.5rem;
