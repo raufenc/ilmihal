@@ -807,7 +807,8 @@ function makeSpan(matchedText, entry) {
   const osmAttr = entry.o ? ` data-osmanli="${entry.o}"` : '';
   const idAttr = ` data-id="${entry.i}"`;
   const kelimeAttr = ` data-kelime="${entry.k}"`;
-  return `<span class="zor-kelime" data-anlam="${safeAnlam}"${osmAttr}${idAttr}${kelimeAttr}>${matchedText}</span>`;
+  const misalAttr = entry.m ? ' data-misal="1"' : '';
+  return `<span class="zor-kelime" data-anlam="${safeAnlam}"${osmAttr}${idAttr}${kelimeAttr}${misalAttr}>${matchedText}</span>`;
 }
 
 function highlightWords(text) {
@@ -859,7 +860,7 @@ function showTooltip(e) {
   html += '<span class="tooltip-anlam">' + anlam + '</span>';
 
   const entryId = el.dataset.id;
-  if (entryId) {
+  if (entryId && el.dataset.misal) {
     html += '<div class="tooltip-link"><a href="#" onclick="event.preventDefault();event.stopPropagation();showSozlukModal(' + entryId + ');return false;">Ayr\u0131nt\u0131lar \u2192</a></div>';
   }
 
