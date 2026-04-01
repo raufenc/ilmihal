@@ -734,14 +734,14 @@ body {
 .tablo-card {
   background: var(--bg-card);
   border-radius: var(--radius);
-  box-shadow: var(--shadow);
+  box-shadow: 0 2px 16px rgba(0,0,0,0.07);
   overflow: hidden;
-  border: 1px solid var(--border);
-  transition: all 0.3s;
+  border: 1px solid rgba(0,0,0,0.08);
+  transition: box-shadow 0.25s, transform 0.25s;
 }
 
 .tablo-card:hover {
-  box-shadow: var(--shadow-lg);
+  box-shadow: 0 6px 28px rgba(26,107,78,0.13);
   transform: translateY(-2px);
 }
 
@@ -750,34 +750,38 @@ body {
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  padding: 16px 24px;
-  border-bottom: 1px solid var(--border);
-  background: var(--bg);
+  padding: 14px 20px;
+  border-bottom: 2px solid var(--gold);
+  background: linear-gradient(to right, rgba(26,107,78,0.05), rgba(26,107,78,0.01));
+  cursor: pointer;
 }
 
 .tablo-card-header h4 {
-  font-size: 1.05rem;
+  font-size: 1rem;
   color: var(--primary-dark);
   font-weight: 700;
   margin: 0;
   flex: 1;
+  line-height: 1.35;
 }
+.tablo-card-header:hover h4 { color: var(--primary); }
 
 .tablo-card-ref {
   display: flex;
   gap: 8px;
   align-items: center;
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   flex-shrink: 0;
 }
 
 .tablo-card-ref .tablo-ref-madde {
-  background: var(--primary);
+  background: var(--primary-dark);
   color: white;
   padding: 3px 10px;
-  border-radius: 12px;
+  border-radius: 10px;
   font-weight: 600;
-  font-size: 0.75rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.02em;
 }
 
 .tablo-card-ref .tablo-ref-sayfa {
@@ -786,6 +790,7 @@ body {
 
 .tablo-card-ref .tablo-ref-sayfa .sayfa-link {
   color: var(--primary);
+  font-weight: 500;
 }
 
 .tablo-card-body { padding: 0; overflow: hidden; }
@@ -796,44 +801,63 @@ body {
   font-size: 0.9rem;
 }
 
+.tablo-card-body thead tr {
+  background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+}
+
 .tablo-card-body th {
-  background: var(--primary-dark);
-  padding: 11px 16px;
+  padding: 12px 18px;
   text-align: left;
   font-weight: 600;
-  font-size: 0.78rem;
-  color: #fff;
-  letter-spacing: 0.04em;
+  font-size: 0.76rem;
+  color: rgba(255,255,255,0.95);
+  letter-spacing: 0.06em;
   text-transform: uppercase;
-  border-right: 1px solid rgba(255,255,255,0.15);
+  border-right: 1px solid rgba(255,255,255,0.12);
+  border-bottom: 2px solid var(--gold);
 }
 .tablo-card-body th:last-child { border-right: none; }
 
 .tablo-card-body td {
-  padding: 10px 16px;
+  padding: 11px 18px;
   border-bottom: 1px solid var(--border);
-  border-right: 1px solid var(--border);
+  border-right: 1px solid rgba(0,0,0,0.05);
   color: var(--text);
   vertical-align: top;
+  line-height: 1.5;
 }
 .tablo-card-body td:last-child { border-right: none; }
-.tablo-card-body td:first-child { font-weight: 600; color: var(--primary-dark); }
-
-.tablo-card-body tr:last-child td { border-bottom: none; }
-.tablo-card-body tbody tr:nth-child(even) td { background: rgba(26,107,78,0.035); }
-.tablo-card-body tr:hover td { background: rgba(26,107,78,0.07); }
-
-.tablo-kaynak {
-  margin-top: 16px;
-  padding: 12px 16px;
-  background: var(--bg);
-  border-radius: var(--radius-sm);
-  font-size: 0.8rem;
-  color: var(--text-light);
-  border-left: 3px solid var(--gold);
+.tablo-card-body td:first-child {
+  font-weight: 600;
+  color: var(--primary-dark);
+  white-space: nowrap;
 }
 
-.tablo-kaynak strong { color: var(--primary-dark); }
+.tablo-card-body tr:last-child td { border-bottom: none; }
+.tablo-card-body tbody tr:nth-child(odd) td { background: #fff; }
+.tablo-card-body tbody tr:nth-child(even) td { background: rgba(26,107,78,0.03); }
+.tablo-card-body tr:hover td { background: rgba(26,107,78,0.08) !important; transition: background 0.15s; }
+
+.tablo-kaynak {
+  margin: 0;
+  padding: 14px 20px;
+  background: linear-gradient(to right, rgba(201,168,76,0.08), transparent);
+  font-size: 0.82rem;
+  color: var(--text-light);
+  border-top: 1px solid var(--border);
+  border-left: 3px solid var(--gold);
+  line-height: 1.6;
+  font-style: italic;
+}
+
+.tablo-kaynak strong {
+  color: var(--gold);
+  font-style: normal;
+  font-weight: 700;
+  font-size: 0.78rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
 
 /* Flowchart */
 .flowchart { padding: 16px 0; }
@@ -1779,19 +1803,51 @@ body {
   z-index: 1100;
 }
 .tablo-modal-content {
-  max-width: 850px;
-  max-height: 85vh;
+  max-width: 860px;
+  max-height: 88vh;
   overflow-y: auto;
-  padding: 32px;
+  padding: 0;
   border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.2);
 }
+.tablo-modal-content .tablo-card {
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  transform: none !important;
+}
+.tablo-modal-content .tablo-card:hover {
+  transform: none !important;
+  box-shadow: none;
+}
+.tablo-modal-content .madde-close {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  z-index: 10;
+  background: rgba(255,255,255,0.15);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1.1rem;
+}
+.tablo-modal-content .madde-close:hover { background: rgba(255,255,255,0.3); }
 .tablo-modal-actions {
-  margin-top: 24px;
+  padding: 20px;
   text-align: center;
+  border-top: 1px solid var(--border);
+  background: var(--bg);
 }
 .tablo-modal-actions .btn {
-  padding: 10px 24px;
-  font-size: 0.95rem;
+  padding: 10px 28px;
+  font-size: 0.92rem;
 }
 
 /* ===== Tablo Detay Sayfası ===== */

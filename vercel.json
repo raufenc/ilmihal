@@ -7,6 +7,8 @@
     { "source": "/arama/:query*", "destination": "/index.html" },
     { "source": "/sozluk", "destination": "/index.html" },
     { "source": "/fevaid", "destination": "/index.html" },
+    { "source": "/fevaid/tablolar", "destination": "/index.html" },
+    { "source": "/fevaid/tablolar/:id", "destination": "/index.html" },
     { "source": "/fevaid/tablo/:id", "destination": "/index.html" },
     { "source": "/tablo/:id", "destination": "/index.html" },
     { "source": "/sahislar", "destination": "/index.html" },

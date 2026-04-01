@@ -55,12 +55,22 @@ function handleRoute() {
     return;
   }
 
+  if (route === 'fevaid' && parts[1] === 'tablolar' && parts[2]) {
+    navigateTo('fevaid', true);
+    setTimeout(() => openTabloDetay(decodeURIComponent(parts[2])), 250);
+    return;
+  }
+  if (route === 'fevaid' && parts[1] === 'tablolar' && !parts[2]) {
+    navigateTo('fevaid', true);
+    setTimeout(() => openFevaidSection('tablolar'), 150);
+    return;
+  }
+  // Geriye dönük uyumluluk: eski /fevaid/tablo/:id ve /tablo/:id
   if (route === 'fevaid' && parts[1] === 'tablo' && parts[2]) {
     navigateTo('fevaid', true);
     setTimeout(() => openTabloDetay(decodeURIComponent(parts[2])), 250);
     return;
   }
-  // Eski /tablo/:id URL'lerini geriye dönük destekle
   if (route === 'tablo' && parts[1]) {
     navigateTo('fevaid', true);
     setTimeout(() => openTabloDetay(decodeURIComponent(parts[1])), 250);
@@ -1190,7 +1200,10 @@ function openFevaidSection(section) {
   const el = document.getElementById('fevaid-section-' + section);
   if (el) el.style.display = '';
   window.scrollTo(0, 0);
-  if (section === 'tablolar' && !tablolarLoaded) loadTablolar();
+  if (section === 'tablolar') {
+    updateUrl('fevaid/tablolar');
+    if (!tablolarLoaded) loadTablolar();
+  }
   if (section === 'tanimlar') {
     const wrapper = document.getElementById('tanimlar-fevaid-wrapper');
     if (wrapper && !wrapper.dataset.loaded) {
@@ -1318,18 +1331,22 @@ function openTabloModal(id) {
   if (!tablo) return;
   const tipIcons = {tablo:'\u25A6', liste:'\u25A4', iki_liste:'\u21C4', flowchart:'\u25A5', agac:'\u25C8'};
   const tipLabels = {tablo:'Tablo', liste:'Liste', iki_liste:'İki Liste', flowchart:'Akış', agac:'Ağaç'};
+  const { kisim: mKisim, maddeNo: mNo } = parseKaynakMadde(tablo.kaynak_madde);
   const body = document.getElementById('tablo-modal-body');
   body.innerHTML = `
-    <div class="tablo-detay-page">
-      <div class="tablo-detay-header">
-        <h2>${tipIcons[tablo.tip] || '\u25A6'} ${tablo.baslik}</h2>
+    <div class="tablo-card tablo-kat-${tablo.kategori}" style="border:none;border-radius:0;box-shadow:none">
+      <div class="tablo-card-header" style="position:relative;cursor:default">
+        <div>
+          <h4 style="font-size:1.1rem">${tipIcons[tablo.tip] || '\u25A6'} ${tablo.baslik}</h4>
+          <div style="display:flex;gap:8px;align-items:center;margin-top:4px">
+            <span class="tablo-meta-badge tablo-kat-${tablo.kategori}" style="font-size:0.72rem">${tabloKatLabels[tablo.kategori] || 'Genel'}</span>
+            <span style="font-size:0.78rem;color:var(--text-muted)">${kaynakMaddeLink(tablo.kaynak_madde)}</span>
+            <span style="font-size:0.78rem;color:var(--text-muted)">${sayfaLink(tablo.sayfa_no, 's.\u00a0' + tablo.sayfa_no)}</span>
+          </div>
+        </div>
+        <button type="button" onclick="closeTabloModal()" style="position:absolute;top:12px;right:14px;background:rgba(255,255,255,0.25);border:none;border-radius:50%;width:28px;height:28px;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;color:var(--primary-dark);flex-shrink:0">\u00d7</button>
       </div>
-      <div class="tablo-detay-meta">
-        <span class="tablo-meta-badge tablo-kat-${tablo.kategori}">${tabloKatLabels[tablo.kategori] || 'Genel'}</span>
-        <span class="tablo-meta-item">${kaynakMaddeLink(tablo.kaynak_madde)}</span>
-        <span class="tablo-meta-item">${sayfaLink(tablo.sayfa_no, 's. ' + tablo.sayfa_no)}</span>
-      </div>
-      <div class="tablo-card-body">
+      <div class="tablo-card-body" style="max-height:50vh;overflow-y:auto">
         ${renderTabloBody(tablo)}
       </div>
       <div class="tablo-kaynak">
@@ -1424,11 +1441,11 @@ function openTabloDetay(id) {
 
 
   window.scrollTo(0, 0);
-  updateUrl('fevaid/tablo/' + id);
+  updateUrl('fevaid/tablolar/' + id);
   updateSeoMeta(
     tablo.baslik + ' — Se\u2019\u00e2det-i Ebediyye',
     tablo.kaynak_metin,
-    'fevaid/tablo/' + id
+    'fevaid/tablolar/' + id
   );
 }
 
