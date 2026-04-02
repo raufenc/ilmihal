@@ -20,7 +20,8 @@
     { "source": "/icerik", "destination": "/index.html" },
     { "source": "/arama", "destination": "/index.html" },
     { "source": "/fikih-karsilastirma", "destination": "/index.html" },
-    { "source": "/calisma-alanim", "destination": "/index.html" }
+    { "source": "/calisma-alanim", "destination": "/index.html" },
+    { "source": "/gizlilik", "destination": "/index.html" }
   ],
   "headers": [
     {
@@ -28,13 +29,34 @@
       "headers": [
         { "key": "X-Content-Type-Options", "value": "nosniff" },
         { "key": "X-Frame-Options", "value": "DENY" },
-        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" }
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
+        { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=(self), payment=(), usb=()" },
+        { "key": "X-XSS-Protection", "value": "0" }
       ]
     },
     {
       "source": "/(.*\\.js|.*\\.css)",
       "headers": [
         { "key": "Cache-Control", "value": "public, max-age=3600, must-revalidate" }
+      ]
+    },
+    {
+      "source": "/.well-known/(.*)",
+      "headers": [
+        { "key": "Content-Type", "value": "text/plain; charset=utf-8" },
+        { "key": "Cache-Control", "value": "public, max-age=86400" }
+      ]
+    },
+    {
+      "source": "/favicon.ico",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=604800, immutable" }
+      ]
+    },
+    {
+      "source": "/apple-touch-icon.png",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=604800, immutable" }
       ]
     }
   ]

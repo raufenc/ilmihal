@@ -1,0 +1,4 @@
+Contact: mailto:info@ilmihal.org
+Preferred-Languages: tr, en
+Canonical: https://www.ilmihal.org/.well-known/security.txt
+Expires: 2027-04-01T00:00:00.000Z

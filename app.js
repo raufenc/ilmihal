@@ -426,7 +426,7 @@ async function openMadde(kisim, maddeNo, fromRoute, searchQuery) {
   updateSeoMeta(
     madde.baslik + ' - Se\'âdet-i Ebediyye',
     kisimLabel + ', Madde ' + maddeNo + ' - ' + madde.baslik + '. Se\'âdet-i Ebediyye İnteraktif İlmihâl.',
-    'https://ilmihal.org/madde/' + kisim + '/' + maddeNo
+    'https://www.ilmihal.org/madde/' + kisim + '/' + maddeNo
   );
 
   // Bookmark & read tracking & audio
@@ -2844,7 +2844,7 @@ function updateOgMeta(madde) {
     if (el) el.setAttribute('content', content);
   };
   setMeta('og:title', madde.baslik + ' - Se\'âdet-i Ebediyye');
-  setMeta('og:url', 'https://ilmihal.org/#madde/' + madde.kisim + '/' + madde.madde_no);
+  setMeta('og:url', 'https://www.ilmihal.org/#madde/' + madde.kisim + '/' + madde.madde_no);
   setMeta('og:description', 'Kısım ' + madde.kisim + ', Madde ' + madde.madde_no + ' - Se\'âdet-i Ebediyye İnteraktif İlmihâl');
   setMeta('twitter:title', madde.baslik + ' - Se\'âdet-i Ebediyye');
   setMeta('twitter:description', 'Kısım ' + madde.kisim + ', Madde ' + madde.madde_no);
@@ -3460,7 +3460,7 @@ function renderFikihKarsilastirma() {
   updateSeoMeta(
     'Fıkıh Karşılaştırma Tabloları - Se\'âdet-i Ebediyye',
     'Dört mezhebe göre temel ibâdet ve muâmelât hükümlerinin karşılaştırması. Hanefî, Şâfiî, Mâlikî ve Hanbelî mezheplerinin görüşleri.',
-    'https://ilmihal.org/fikih-karsilastirma'
+    'https://www.ilmihal.org/fikih-karsilastirma'
   );
 }
 
@@ -3477,7 +3477,9 @@ var pageSeoMap = {
   'gunun-bilgisi': ["Günün Bilgisi - Se'âdet-i Ebediyye", "Her gün kitaptan bir hadîs-i şerîf veya âyet-i kerîme. Paylaşılabilir görsel kartlar."],
   'rehberler': ["Konuya Göre Rehberler - Se'âdet-i Ebediyye", "Namaz, oruç, hac, zekât, iman ve ahlâk konularında adım adım rehberler."],
   'icerik': ["İçindekiler - Se'âdet-i Ebediyye", "Se'âdet-i Ebediyye kitabının 241 maddesinin tam listesi. Üç kısım halinde konulara göre düzenlenmiş."],
-  'fikih-karsilastirma': ["Fıkıh Karşılaştırma - Se'âdet-i Ebediyye", "Dört mezhebe göre temel ibâdet ve muâmelât hükümlerinin karşılaştırması."]
+  'fikih-karsilastirma': ["Fıkıh Karşılaştırma - Se'âdet-i Ebediyye", "Dört mezhebe göre temel ibâdet ve muâmelât hükümlerinin karşılaştırması."],
+  'calisma-alanim': ["Çalışma Alanım - Se'âdet-i Ebediyye", "Kişisel okuma ilerlemesi, notlar ve çalışma takibi. Veriler yalnızca tarayıcınızda saklanır."],
+  'gizlilik': ["Gizlilik Bildirimi - Se'âdet-i Ebediyye", "ilmihal.org gizlilik bildirimi. Kişisel veri toplanmaz, çerez kullanılmaz, veriler yalnızca tarayıcınızda saklanır."]
 };
 
 // navigateTo'da SEO meta güncelle
@@ -3485,7 +3487,7 @@ var _origNavForSeo = navigateTo;
 navigateTo = function(page, fromRoute) {
   _origNavForSeo(page, fromRoute);
   var seo = pageSeoMap[page];
-  if (seo) updateSeoMeta(seo[0], seo[1], 'https://ilmihal.org/' + (page === 'anasayfa' ? '' : page));
+  if (seo) updateSeoMeta(seo[0], seo[1], 'https://www.ilmihal.org/' + (page === 'anasayfa' ? '' : page));
 };
 
 // ===== GÜNÜN BİLGİSİ =====
@@ -3551,7 +3553,7 @@ function renderGununBilgisi() {
 function paylasGununBilgisi() {
   var bilgi = getGununBilgisi(0);
   if (!bilgi) return;
-  var text = bilgi.metin + '\n\n— Se\'âdet-i Ebediyye, K' + bilgi.kisim + '/M' + bilgi.madde + '\nhttps://ilmihal.org/gunun-bilgisi';
+  var text = bilgi.metin + '\n\n— Se\'âdet-i Ebediyye, K' + bilgi.kisim + '/M' + bilgi.madde + '\nhttps://www.ilmihal.org/gunun-bilgisi';
   if (navigator.share) {
     navigator.share({ title: 'Günün Bilgisi - ilmihal.org', text: text }).catch(function(){});
   } else if (navigator.clipboard) {
@@ -3648,9 +3650,9 @@ function maddePaylasimKarti(kisim, maddeNo) {
 function maddePaylasText(kisim, maddeNo) {
   var madde = window.maddelerData?.find(function(m) { return m.kisim === kisim && m.madde_no === maddeNo; });
   if (!madde) return;
-  var text = madde.baslik + '\n\nSe\'adet-i Ebediyye, Kisim ' + kisim + ', Madde ' + maddeNo + '\nhttps://ilmihal.org/madde/' + kisim + '/' + maddeNo;
+  var text = madde.baslik + '\n\nSe\'adet-i Ebediyye, Kisim ' + kisim + ', Madde ' + maddeNo + '\nhttps://www.ilmihal.org/madde/' + kisim + '/' + maddeNo;
   if (navigator.share) {
-    navigator.share({ title: madde.baslik, text: text, url: 'https://ilmihal.org/madde/' + kisim + '/' + maddeNo }).catch(function(){});
+    navigator.share({ title: madde.baslik, text: text, url: 'https://www.ilmihal.org/madde/' + kisim + '/' + maddeNo }).catch(function(){});
   } else if (navigator.clipboard) {
     navigator.clipboard.writeText(text).then(function() { alert('Kopyalandi!'); });
   }
@@ -3835,10 +3837,10 @@ openMadde = async function(kisim, maddeNo, fromRoute, searchQuery) {
   var madde = window.maddelerData?.find(function(m) { return m.kisim === kisim && m.madde_no === maddeNo; });
   if (madde && window.updateDynamicSchema) {
     window.updateDynamicSchema('breadcrumb', [
-      {name: 'Ana Sayfa', url: 'https://ilmihal.org/'},
-      {name: 'İçindekiler', url: 'https://ilmihal.org/icerik'},
-      {name: kisimLabels[kisim], url: 'https://ilmihal.org/icerik'},
-      {name: madde.baslik, url: 'https://ilmihal.org/madde/' + kisim + '/' + maddeNo}
+      {name: 'Ana Sayfa', url: 'https://www.ilmihal.org/'},
+      {name: 'İçindekiler', url: 'https://www.ilmihal.org/icerik'},
+      {name: kisimLabels[kisim], url: 'https://www.ilmihal.org/icerik'},
+      {name: madde.baslik, url: 'https://www.ilmihal.org/madde/' + kisim + '/' + maddeNo}
     ]);
   }
 };
@@ -3993,7 +3995,7 @@ function togglePodcastMode() {
     if (page === 'calisma-alanim') {
       document.getElementById('page-calisma-alanim')?.classList.add('active');
       renderCalismaAlanim();
-      updateSeoMeta("Çalışma Alanım - Se'âdet-i Ebediyye", "Notlarınız, yer imleriniz ve okuma geçmişiniz.", "https://ilmihal.org/calisma-alanim");
+      updateSeoMeta("Çalışma Alanım - Se'âdet-i Ebediyye", "Notlarınız, yer imleriniz ve okuma geçmişiniz.", "https://www.ilmihal.org/calisma-alanim");
     }
   };
 
