@@ -273,6 +273,13 @@ function navigateTo(page, fromRoute) {
   // Update hash
   if (!fromRoute) updateHash(page);
 
+  // Fevaid: her zaman ana ekranı göster (tablo detay vs. içindeyken nav'a basılırsa sıfırla)
+  if (page === 'fevaid') {
+    const home = document.getElementById('fevaid-home');
+    if (home) home.style.display = '';
+    document.querySelectorAll('.fevaid-section').forEach(s => { s.style.display = 'none'; });
+  }
+
   // Lazy load content
   if (page === 'icerik' && !icerikLoaded) loadIcerik();
   if (page === 'sozluk' && !sozlukLoaded) { ensureSozlukData().then(function() { loadSozluk(); }); }

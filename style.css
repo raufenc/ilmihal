@@ -819,24 +819,28 @@ body {
 .tablo-card-body th:last-child { border-right: none; }
 
 .tablo-card-body td {
-  padding: 11px 18px;
+  padding: 13px 20px;
   border-bottom: 1px solid var(--border);
   border-right: 1px solid rgba(0,0,0,0.05);
   color: var(--text);
   vertical-align: top;
-  line-height: 1.5;
+  line-height: 1.6;
 }
 .tablo-card-body td:last-child { border-right: none; }
 .tablo-card-body td:first-child {
-  font-weight: 600;
+  font-weight: 700;
   color: var(--primary-dark);
   white-space: nowrap;
+  background: rgba(26,107,78,0.06) !important;
+  border-right: 2px solid rgba(26,107,78,0.15);
+  font-size: 0.88rem;
+  letter-spacing: 0.01em;
 }
 
 .tablo-card-body tr:last-child td { border-bottom: none; }
 .tablo-card-body tbody tr:nth-child(odd) td { background: #fff; }
-.tablo-card-body tbody tr:nth-child(even) td { background: rgba(26,107,78,0.03); }
-.tablo-card-body tr:hover td { background: rgba(26,107,78,0.08) !important; transition: background 0.15s; }
+.tablo-card-body tbody tr:nth-child(even) td { background: #f7fcf9; }
+.tablo-card-body tr:hover td { background: rgba(26,107,78,0.09) !important; transition: background 0.15s; }
 
 .tablo-kaynak {
   margin: 0;
@@ -860,7 +864,7 @@ body {
 }
 
 /* Flowchart */
-.flowchart { padding: 16px 0; }
+.flowchart { padding: 16px 20px; }
 
 .flow-step {
   display: flex;
@@ -969,15 +973,15 @@ body {
 }
 
 /* Liste tipi tablo */
-.check-list { list-style: none; padding: 0; }
+.check-list { list-style: none; padding: 4px 18px; }
 
 .check-list li {
-  padding: 8px 0;
+  padding: 10px 0;
   border-bottom: 1px solid var(--border);
   font-size: 0.9rem;
   display: flex;
   align-items: flex-start;
-  gap: 8px;
+  gap: 10px;
 }
 
 .check-list li:last-child { border-bottom: none; }
