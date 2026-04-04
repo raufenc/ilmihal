@@ -1000,6 +1000,7 @@ body {
 
 .check-yes { background: #e8f5e9; color: #2e7d32; }
 .check-no { background: #fce4ec; color: #c62828; }
+.check-neutral { background: #f0f0f0; color: #666; font-size: 1rem; }
 
 /* ===== Sözlük ===== */
 #page-sozluk .container { padding-top: 40px; padding-bottom: 60px; }

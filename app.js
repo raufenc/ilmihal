@@ -1573,11 +1573,18 @@ function renderFlowchart(veriler) {
 }
 
 function renderListe(veriler) {
+  const KIRMIZI = ['bozar', 'haram', 'tahrîmen mekrûh', 'tenzîhen mekrûh', 'alamaz'];
+  const YESIL   = ['sünnet', 'sunnet', 'vâcib', 'farz', 'câiz'];
   let html = '<ul class="check-list">';
   veriler.forEach(item => {
-    const icon = item.durum === 'bozar' || item.durum === 'evet' ?
-      '<span class="check-icon check-no">&#10007;</span>' :
-      '<span class="check-icon check-yes">&#10003;</span>';
+    let icon;
+    if (KIRMIZI.includes(item.durum)) {
+      icon = '<span class="check-icon check-no">&#10007;</span>';
+    } else if (YESIL.includes(item.durum)) {
+      icon = '<span class="check-icon check-yes">&#10003;</span>';
+    } else {
+      icon = '<span class="check-icon check-neutral">&#8226;</span>';
+    }
     html += `<li>${icon} <span>${item.madde || item.baslik || item.metin || JSON.stringify(item)}</span></li>`;
   });
   html += '</ul>';
