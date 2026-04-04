@@ -1591,6 +1591,17 @@ function renderListe(veriler) {
   return html;
 }
 
+function ikiListeTip(key, baslik) {
+  // Türkçe karakterleri normalize et, anahtar + başlık üzerinde eşleştir
+  const raw = (key + ' ' + (baslik || '')).toLowerCase()
+    .replace(/[ğĞ]/g,'g').replace(/[üÜ]/g,'u').replace(/[şŞ]/g,'s')
+    .replace(/[ıI]/g,'i').replace(/[İ]/g,'i').replace(/[öÖ]/g,'o').replace(/[çÇ]/g,'c')
+    .replace(/[âÂ]/g,'a').replace(/[îÎ]/g,'i').replace(/[ûÛ]/g,'u');
+  if (/bozanlar|haram|necis|necaset|pislik|pis[\s_,)]|verilmez|olmaz|galiza|yasak|alamaz/.test(raw)) return 'no';
+  if (/helal|temiz|verilir[\s_,)]|bozmayan|olur[\s_,)]|caiz|sunnet|farz/.test(raw)) return 'yes';
+  return 'neutral';
+}
+
 function renderIkiListe(veriler, solBaslik, sagBaslik) {
   const keys = Object.keys(veriler);
   if (keys.length < 2) return '';
@@ -1600,16 +1611,27 @@ function renderIkiListe(veriler, solBaslik, sagBaslik) {
   const sagItems = veriler[sagKey] || [];
   const solLabel = solBaslik || solKey.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
   const sagLabel = sagBaslik || sagKey.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
-  let html = '<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">';
-  html += `<div><h5 style="color:#c62828;margin-bottom:8px;">${solLabel}</h5><ul class="check-list">`;
-  solItems.forEach(item => {
-    html += `<li><span class="check-icon check-no">&#10007;</span> <span>${item}</span></li>`;
-  });
+
+  const solTip = ikiListeTip(solKey, solLabel);
+  const sagTip = ikiListeTip(sagKey, sagLabel);
+
+  function iconHtml(tip) {
+    if (tip === 'no')  return '<span class="check-icon check-no">&#10007;</span>';
+    if (tip === 'yes') return '<span class="check-icon check-yes">&#10003;</span>';
+    return '<span class="check-icon check-neutral">&#8226;</span>';
+  }
+  function headerColor(tip) {
+    if (tip === 'no')  return '#c62828';
+    if (tip === 'yes') return '#1a6b4e';
+    return 'var(--text-muted)';
+  }
+
+  let html = '<div style="display:grid;grid-template-columns:1fr 1fr;gap:0;padding:0;">';
+  html += `<div style="padding:16px 20px;border-right:1px solid var(--border)"><h5 style="color:${headerColor(solTip)};margin:0 0 10px;">${solLabel}</h5><ul class="check-list" style="padding:0">`;
+  solItems.forEach(item => { html += `<li>${iconHtml(solTip)} <span>${item}</span></li>`; });
   html += '</ul></div>';
-  html += `<div><h5 style="color:#2e7d32;margin-bottom:8px;">${sagLabel}</h5><ul class="check-list">`;
-  sagItems.forEach(item => {
-    html += `<li><span class="check-icon check-yes">&#10003;</span> <span>${item}</span></li>`;
-  });
+  html += `<div style="padding:16px 20px"><h5 style="color:${headerColor(sagTip)};margin:0 0 10px;">${sagLabel}</h5><ul class="check-list" style="padding:0">`;
+  sagItems.forEach(item => { html += `<li>${iconHtml(sagTip)} <span>${item}</span></li>`; });
   html += '</ul></div>';
   html += '</div>';
   return html;
