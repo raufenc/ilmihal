@@ -82,7 +82,15 @@ function handleRoute() {
     return;
   }
 
-  const validPages = ['anasayfa','icerik','fevaid','sozluk','arama','sahislar','hakkinda','quiz','ayet-hadis','gunun-bilgisi','rehberler','calisma-alanim','fikih-karsilastirma'];
+  if (route === 'hukumler') {
+    navigateTo('hukumler', true);
+    if (parts[1]) {
+      setTimeout(function() { setHukumlerTur(parts[1]); }, 200);
+    }
+    return;
+  }
+
+  const validPages = ['anasayfa','icerik','fevaid','sozluk','arama','sahislar','hakkinda','quiz','ayet-hadis','gunun-bilgisi','rehberler','calisma-alanim','fikih-karsilastirma','hukumler'];
   if (validPages.includes(route)) {
     navigateTo(route, true);
   } else {
@@ -2896,6 +2904,7 @@ navigateTo = function(page, fromRoute) {
   if (page === 'ayet-hadis') { document.getElementById('page-ayet-hadis')?.classList.add('active'); renderAyetHadis(); }
   if (page === 'gunun-bilgisi') { document.getElementById('page-gunun-bilgisi')?.classList.add('active'); renderGununBilgisi(); }
   if (page === 'rehberler') { document.getElementById('page-rehberler')?.classList.add('active'); renderRehberler(); }
+  if (page === 'hukumler') { document.getElementById('page-hukumler')?.classList.add('active'); ensureHukumlerData(); }
 };
 
 // birlesikAra kaldırıldı — doFullSearch ile birleştirildi
@@ -3515,7 +3524,8 @@ var pageSeoMap = {
   'icerik': ["İçindekiler - Se'âdet-i Ebediyye", "Se'âdet-i Ebediyye kitabının 241 maddesinin tam listesi. Üç kısım halinde konulara göre düzenlenmiş."],
   'fikih-karsilastirma': ["Fıkıh Karşılaştırma - Se'âdet-i Ebediyye", "Dört mezhebe göre temel ibâdet ve muâmelât hükümlerinin karşılaştırması."],
   'calisma-alanim': ["Çalışma Alanım - Se'âdet-i Ebediyye", "Kişisel okuma ilerlemesi, notlar ve çalışma takibi. Veriler yalnızca tarayıcınızda saklanır."],
-  'gizlilik': ["Gizlilik Bildirimi - Se'âdet-i Ebediyye", "ilmihal.org gizlilik bildirimi. Kişisel veri toplanmaz, çerez kullanılmaz, veriler yalnızca tarayıcınızda saklanır."]
+  'gizlilik': ["Gizlilik Bildirimi - Se'âdet-i Ebediyye", "ilmihal.org gizlilik bildirimi. Kişisel veri toplanmaz, çerez kullanılmaz, veriler yalnızca tarayıcınızda saklanır."],
+  'hukumler': ["Fıkhî Hükümler - Se'âdet-i Ebediyye", "Se'âdet-i Ebediyye kitabında geçen farz, vâcib, sünnet, müstehab, mübah, mekruh ve haram hükümlerinin kategorik listesi."]
 };
 
 // navigateTo'da SEO meta güncelle
@@ -4225,4 +4235,191 @@ function togglePodcastMode() {
 })();
 
 // SEO-04 monkey-patch kaldırıldı — sözlük/şahıs sonuçları artık doFullSearch içinde temiz entegre
+
+// ===== FIKHİ HÜKÜMLER =====
+var _hukumlerLoaded = false;
+var _hukumlerEventsInit = false;
+var _hukumlerTur = 'all';
+var _hukumlerKatman = 'acik';
+var _hukumlerSearchTimer = null;
+
+function ensureHukumlerData() {
+  if (_hukumlerLoaded && window.hukumlerData) {
+    initHukumlerPage();
+    return;
+  }
+  var list = document.getElementById('hukumler-list');
+  if (list) list.innerHTML = '<p style="text-align:center;padding:40px;color:var(--text-muted);">Yükleniyor…</p>';
+  loadScript('hukumler-data.js').then(function() {
+    _hukumlerLoaded = true;
+    initHukumlerPage();
+  }).catch(function() {
+    if (list) list.innerHTML = '<p style="text-align:center;padding:40px;color:var(--text-muted);">Veri yüklenemedi.</p>';
+  });
+}
+
+function initHukumlerPage() {
+  if (!window.hukumlerData) return;
+  if (!_hukumlerEventsInit) {
+    _hukumlerEventsInit = true;
+    // Kategori tabları
+    var tabContainer = document.getElementById('hukumler-tabs');
+    if (tabContainer) {
+      tabContainer.addEventListener('click', function(e) {
+        var btn = e.target.closest('.hukum-tab');
+        if (!btn) return;
+        tabContainer.querySelectorAll('.hukum-tab').forEach(function(t) { t.classList.remove('active'); });
+        btn.classList.add('active');
+        _hukumlerTur = btn.dataset.tur;
+        updateKatmanToggle();
+        renderHukumler();
+        if (_hukumlerTur !== 'all') {
+          history.replaceState(null, '', '/hukumler/' + _hukumlerTur);
+        } else {
+          history.replaceState(null, '', '/hukumler');
+        }
+      });
+    }
+    // Katman toggle
+    var katmanToggle = document.getElementById('katman-toggle');
+    if (katmanToggle) {
+      katmanToggle.addEventListener('click', function(e) {
+        var btn = e.target.closest('.katman-btn');
+        if (!btn) return;
+        katmanToggle.querySelectorAll('.katman-btn').forEach(function(t) { t.classList.remove('active'); });
+        btn.classList.add('active');
+        _hukumlerKatman = btn.dataset.katman;
+        renderHukumler();
+      });
+    }
+    // Arama
+    var searchEl = document.getElementById('hukumler-search');
+    if (searchEl) {
+      searchEl.addEventListener('input', function() {
+        clearTimeout(_hukumlerSearchTimer);
+        _hukumlerSearchTimer = setTimeout(renderHukumler, 250);
+      });
+    }
+  }
+  updateKatmanToggle();
+  renderHukumler();
+}
+
+function updateKatmanToggle() {
+  // Seçili kategoride "tum" verisi yoksa toggle'ı gizle
+  var toggle = document.getElementById('katman-toggle');
+  if (!toggle || !window.hukumlerData) return;
+  var hasTum = window.hukumlerData.some(function(r) {
+    return r.katman === 'tum' && (_hukumlerTur === 'all' || r.tur === _hukumlerTur);
+  });
+  toggle.style.display = hasTum ? '' : 'none';
+  if (!hasTum) _hukumlerKatman = 'acik';
+}
+
+function setHukumlerTur(tur) {
+  _hukumlerTur = tur;
+  var tabs = document.querySelectorAll('#hukumler-tabs .hukum-tab');
+  tabs.forEach(function(t) {
+    t.classList.toggle('active', t.dataset.tur === tur);
+  });
+  updateKatmanToggle();
+  renderHukumler();
+}
+
+function hukumTurLabel(tur) {
+  var labels = { farz:'Farz', vacib:'Vâcib', sunnet:'Sünnet', mustehab:'Müstehab', mubah:'Mübah', mekruh:'Mekruh', haram:'Haram' };
+  return labels[tur] || tur;
+}
+
+var _sayfaMaddeCache = {};
+function findMaddeForSayfa(sayfa) {
+  if (!sayfa || !window.tocData) return null;
+  if (_sayfaMaddeCache[sayfa] !== undefined) return _sayfaMaddeCache[sayfa];
+  var madde = window.tocData.find(function(m) {
+    var s = m.sayfa_no || 0;
+    var e = m.sayfa_bitis || s;
+    return s <= sayfa && sayfa <= e;
+  });
+  _sayfaMaddeCache[sayfa] = madde || null;
+  return _sayfaMaddeCache[sayfa];
+}
+
+function renderHukumCard(h) {
+  var badge = '<span class="hukum-badge hukum-' + h.tur + '">' + hukumTurLabel(h.tur) + '</span>';
+  var altTur = h.alt_tur ? '<span class="hukum-alt-tur">' + h.alt_tur + '</span>' : '';
+  var sayfaRef = h.sayfa ? '<a href="#" class="hukum-sayfa-ref" onclick="event.preventDefault();openSayfa(' + h.sayfa + ')">s.\u202f' + h.sayfa + '</a>' : '';
+  var madde = h.madde_no ? null : (h.sayfa ? findMaddeForSayfa(h.sayfa) : null);
+  var kisim = h.kisim || (madde && madde.kisim);
+  var maddeNo = h.madde_no || (madde && madde.madde_no);
+  var maddeRef = (kisim && maddeNo) ? '<a href="/madde/' + kisim + '/' + maddeNo + '" class="hukum-madde-ref" onclick="event.preventDefault();openMadde(' + kisim + ',' + maddeNo + ')">K' + kisim + '/M' + maddeNo + '</a>' : '';
+  var konu = h.konu ? '<div class="hukum-konu">' + h.konu + '</div>' : '';
+  var baglam = h.baglam ? '<details class="hukum-baglam"><summary>Bağlam</summary><p>' + h.baglam + '</p></details>' : '';
+  return '<div class="hukum-card hukum-card-' + h.tur + '">' +
+    '<div class="hukum-card-header">' + badge + altTur + '<span class="hukum-refs">' + sayfaRef + maddeRef + '</span></div>' +
+    '<div class="hukum-card-metin">' + h.metin + '</div>' +
+    konu + baglam +
+    '</div>';
+}
+
+function renderHukumler() {
+  var list = document.getElementById('hukumler-list');
+  var sonuc = document.getElementById('hukumler-sonuc');
+  if (!list || !window.hukumlerData) return;
+
+  var search = (document.getElementById('hukumler-search') || {}).value;
+  search = search ? search.trim().toLowerCase() : '';
+
+  var filtered = window.hukumlerData.filter(function(r) {
+    if (_hukumlerTur !== 'all' && r.tur !== _hukumlerTur) return false;
+    if (r.katman !== _hukumlerKatman) return false;
+    if (search) {
+      return r.metin.toLowerCase().indexOf(search) !== -1 ||
+             (r.alt_tur && r.alt_tur.toLowerCase().indexOf(search) !== -1) ||
+             (r.konu && r.konu.toLowerCase().indexOf(search) !== -1);
+    }
+    return true;
+  });
+
+  var total = filtered.length;
+  var pageSize = 100;
+  var shown = filtered.slice(0, pageSize);
+
+  var turLabel = _hukumlerTur === 'all' ? 'hüküm' : hukumTurLabel(_hukumlerTur).toLowerCase() + ' hükmü';
+  var katmanLabel = _hukumlerKatman === 'acik' ? 'açık' : 'toplam';
+  if (sonuc) sonuc.textContent = total + ' ' + katmanLabel + ' ' + turLabel + (search ? ' (arama: "' + search + '")' : '');
+
+  if (total === 0) {
+    list.innerHTML = '<p style="text-align:center;color:var(--text-muted);padding:40px;">Sonuç bulunamadı.</p>';
+    return;
+  }
+
+  var html = shown.map(renderHukumCard).join('');
+  if (total > pageSize) {
+    html += '<div class="hukum-daha-fazla"><button type="button" class="btn btn-secondary" id="hukum-daha-btn">Daha fazla göster (' + (total - pageSize) + ' kaldı)</button></div>';
+  }
+  list.innerHTML = html;
+
+  if (total > pageSize) {
+    var btn = document.getElementById('hukum-daha-btn');
+    if (btn) {
+      var offset = pageSize;
+      btn.addEventListener('click', function() {
+        var more = filtered.slice(offset, offset + pageSize);
+        offset += pageSize;
+        var moreHtml = more.map(renderHukumCard).join('');
+        btn.parentElement.remove();
+        var div = document.createElement('div');
+        div.innerHTML = moreHtml;
+        list.appendChild(div);
+        if (offset < total) {
+          var newBtn = document.createElement('div');
+          newBtn.className = 'hukum-daha-fazla';
+          newBtn.innerHTML = '<button type="button" class="btn btn-secondary" id="hukum-daha-btn">Daha fazla göster (' + (total - offset) + ' kaldı)</button>';
+          list.appendChild(newBtn);
+          document.getElementById('hukum-daha-btn').addEventListener('click', arguments.callee);
+        }
+      });
+    }
+  }
+}
 

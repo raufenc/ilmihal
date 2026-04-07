@@ -21,7 +21,9 @@
     { "source": "/arama", "destination": "/index.html" },
     { "source": "/fikih-karsilastirma", "destination": "/index.html" },
     { "source": "/calisma-alanim", "destination": "/index.html" },
-    { "source": "/gizlilik", "destination": "/index.html" }
+    { "source": "/gizlilik", "destination": "/index.html" },
+    { "source": "/hukumler", "destination": "/index.html" },
+    { "source": "/hukumler/:tur", "destination": "/index.html" }
   ],
   "headers": [
     {

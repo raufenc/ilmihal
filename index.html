@@ -289,6 +289,12 @@
       <!-- Ana ekran: bölüm kartları -->
       <div id="fevaid-home" class="fevaid-home">
         <div class="fevaid-sec-grid">
+          <div class="fevaid-sec-card fevaid-highlight" onclick="navigateTo('hukumler')">
+            <div class="fevaid-sec-icon">&#9878;</div>
+            <h3>Fıkhî Hükümler</h3>
+            <p>Kitapta geçen farz, vâcib, sünnet, müstehab, mübah, mekruh ve haram hükümlerinin tam listesi</p>
+            <span class="fevaid-sec-count" id="fevaid-count-hukumler">6.756 hüküm</span>
+          </div>
           <div class="fevaid-sec-card fevaid-highlight" onclick="navigateTo('rehberler')">
             <div class="fevaid-sec-icon">&#128218;</div>
             <h3>Konuya Göre Rehberler</h3>
@@ -548,6 +554,35 @@
 
         <p class="hakkinda-dua">Kusurlar bizden, istifade Allahü teâlâdandır.</p>
       </div>
+    </div>
+  </main>
+
+  <!-- Fıkhî Hükümler -->
+  <main id="page-hukumler" class="page">
+    <div class="container">
+      <h2 class="section-title">Fıkhî Hükümler</h2>
+      <p class="section-desc">Kitapta geçen fıkhî hükümlerin kategorik listesi. Her cümleye tıklayarak kitaptaki yerine gidebilirsiniz.</p>
+      <div class="hukumler-toolbar">
+        <div class="hukumler-tabs" id="hukumler-tabs">
+          <button type="button" class="hukum-tab active" data-tur="all">Tümü</button>
+          <button type="button" class="hukum-tab tab-farz" data-tur="farz">Farz</button>
+          <button type="button" class="hukum-tab tab-vacib" data-tur="vacib">Vâcib</button>
+          <button type="button" class="hukum-tab tab-sunnet" data-tur="sunnet">Sünnet</button>
+          <button type="button" class="hukum-tab tab-mustehab" data-tur="mustehab">Müstehab</button>
+          <button type="button" class="hukum-tab tab-mubah" data-tur="mubah">Mübah</button>
+          <button type="button" class="hukum-tab tab-mekruh" data-tur="mekruh">Mekruh</button>
+          <button type="button" class="hukum-tab tab-haram" data-tur="haram">Haram</button>
+        </div>
+        <div class="hukumler-alt-bar">
+          <div class="katman-toggle" id="katman-toggle">
+            <button type="button" class="katman-btn active" data-katman="acik">Açık Hükümler</button>
+            <button type="button" class="katman-btn" data-katman="tum">Tüm Geçişler</button>
+          </div>
+          <input type="text" id="hukumler-search" placeholder="Hüküm ara..." autocomplete="off">
+        </div>
+      </div>
+      <div id="hukumler-sonuc" class="hukumler-sonuc"></div>
+      <div id="hukumler-list"></div>
     </div>
   </main>
 

@@ -3835,3 +3835,229 @@ a.rehber-madde-item:hover { background: rgba(26,107,78,0.08); color: var(--prima
 /* ===== Sepia yeni ozellikler ===== */
 :root.sepia .gunun-bilgisi-card { background: linear-gradient(135deg, #5a4a2e, #6a5a38); }
 :root.sepia .rehber-card { background: var(--bg-card); }
+
+/* ===== FIKHİ HÜKÜMLER ===== */
+.hukumler-toolbar {
+  margin-bottom: 20px;
+}
+
+.hukumler-tabs {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+.hukum-tab {
+  padding: 7px 16px;
+  border: 2px solid var(--border);
+  border-radius: 20px;
+  background: var(--bg-card);
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: all 0.2s;
+  color: var(--text);
+}
+.hukum-tab:hover { border-color: var(--primary); color: var(--primary); }
+.hukum-tab.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+
+/* Kategori renkleri — pasif tab */
+.hukum-tab.tab-farz { border-color: #1565c0; color: #1565c0; }
+.hukum-tab.tab-vacib { border-color: #0d47a1; color: #0d47a1; }
+.hukum-tab.tab-sunnet { border-color: #2e7d32; color: #2e7d32; }
+.hukum-tab.tab-mustehab { border-color: #6a1b9a; color: #6a1b9a; }
+.hukum-tab.tab-mubah { border-color: #4e342e; color: #4e342e; }
+.hukum-tab.tab-mekruh { border-color: #bf360c; color: #bf360c; }
+.hukum-tab.tab-haram { border-color: #b71c1c; color: #b71c1c; }
+
+.hukum-tab.tab-farz.active { background: #1565c0; border-color: #1565c0; }
+.hukum-tab.tab-vacib.active { background: #0d47a1; border-color: #0d47a1; }
+.hukum-tab.tab-sunnet.active { background: #2e7d32; border-color: #2e7d32; }
+.hukum-tab.tab-mustehab.active { background: #6a1b9a; border-color: #6a1b9a; }
+.hukum-tab.tab-mubah.active { background: #4e342e; border-color: #4e342e; }
+.hukum-tab.tab-mekruh.active { background: #bf360c; border-color: #bf360c; }
+.hukum-tab.tab-haram.active { background: #b71c1c; border-color: #b71c1c; }
+
+.hukumler-alt-bar {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.katman-toggle {
+  display: flex;
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.katman-btn {
+  padding: 8px 14px;
+  border: none;
+  background: var(--bg-card);
+  cursor: pointer;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-light);
+  transition: all 0.18s;
+}
+.katman-btn + .katman-btn { border-left: 1px solid var(--border); }
+.katman-btn.active { background: var(--primary); color: #fff; }
+.katman-btn:hover:not(.active) { background: var(--bg); color: var(--primary); }
+
+#hukumler-search {
+  flex: 1;
+  min-width: 180px;
+  padding: 10px 16px;
+  border: 2px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 0.95rem;
+  transition: border-color 0.2s;
+  background: var(--bg-card);
+  color: var(--text);
+}
+#hukumler-search:focus { outline: none; border-color: var(--primary); }
+
+.hukumler-sonuc {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+  min-height: 18px;
+}
+
+/* Kart */
+.hukum-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 14px 16px;
+  margin-bottom: 8px;
+  border-left: 4px solid var(--border);
+  transition: box-shadow 0.18s;
+}
+.hukum-card:hover { box-shadow: var(--shadow); }
+
+.hukum-card.hukum-card-farz    { border-left-color: #1565c0; }
+.hukum-card.hukum-card-vacib   { border-left-color: #0d47a1; }
+.hukum-card.hukum-card-sunnet  { border-left-color: #2e7d32; }
+.hukum-card.hukum-card-mustehab { border-left-color: #6a1b9a; }
+.hukum-card.hukum-card-mubah   { border-left-color: #4e342e; }
+.hukum-card.hukum-card-mekruh  { border-left-color: #bf360c; }
+.hukum-card.hukum-card-haram   { border-left-color: #b71c1c; }
+
+.hukum-card-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
+
+.hukum-badge {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 12px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  color: #fff;
+  flex-shrink: 0;
+}
+.hukum-farz    { background: #1565c0; }
+.hukum-vacib   { background: #0d47a1; }
+.hukum-sunnet  { background: #2e7d32; }
+.hukum-mustehab { background: #6a1b9a; }
+.hukum-mubah   { background: #4e342e; }
+.hukum-mekruh  { background: #bf360c; }
+.hukum-haram   { background: #b71c1c; }
+
+.hukum-alt-tur {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.hukum-refs {
+  margin-left: auto;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.hukum-sayfa-ref, .hukum-madde-ref {
+  font-size: 0.78rem;
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 6px;
+  border: 1px solid var(--primary-light);
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+.hukum-sayfa-ref:hover, .hukum-madde-ref:hover {
+  background: var(--primary);
+  color: #fff;
+}
+
+.hukum-card-metin {
+  font-size: 0.92rem;
+  line-height: 1.75;
+  color: var(--text);
+}
+
+.hukum-konu {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-top: 6px;
+  padding-top: 6px;
+  border-top: 1px solid var(--border);
+}
+
+.hukum-baglam {
+  margin-top: 8px;
+  font-size: 0.8rem;
+}
+.hukum-baglam summary {
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 0.78rem;
+  padding: 4px 0;
+  user-select: none;
+}
+.hukum-baglam p {
+  margin: 6px 0 0;
+  padding: 10px;
+  background: var(--bg);
+  border-radius: 6px;
+  color: var(--text-light);
+  line-height: 1.65;
+}
+
+.hukum-daha-fazla {
+  text-align: center;
+  padding: 20px 0;
+}
+
+/* Dark tema */
+:root.dark .hukum-card { background: var(--bg-card); }
+:root.dark #hukumler-search { background: var(--bg-card); color: var(--text); }
+:root.dark .katman-btn { background: var(--bg-card); }
+:root.dark .hukum-tab { background: var(--bg-card); }
+
+/* Sepia tema */
+:root.sepia .hukum-badge.hukum-farz    { background: #1a5276; }
+:root.sepia .hukum-badge.hukum-haram   { background: #922b21; }
+:root.sepia .hukum-card-metin { color: var(--text); }
+
+/* Responsive */
+@media (max-width: 600px) {
+  .hukumler-tabs { gap: 4px; }
+  .hukum-tab { padding: 6px 11px; font-size: 0.78rem; }
+  .hukumler-alt-bar { flex-direction: column; align-items: stretch; }
+  .katman-toggle { width: 100%; }
+  .katman-btn { flex: 1; text-align: center; }
+  #hukumler-search { min-width: 0; }
+  .hukum-refs { margin-left: 0; }
+}

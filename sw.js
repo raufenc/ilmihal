@@ -21,6 +21,7 @@ var CORE_ASSETS = [
 var LAZY_ASSETS = [
   '/maddeler-data.js?v=1',
   '/sozluk-data.js?v=4',
+  '/hukumler-data.js',
   '/texts/kisim1.json',
   '/texts/kisim2.json',
   '/texts/kisim3.json'
