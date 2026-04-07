@@ -4347,14 +4347,17 @@ function findMaddeForSayfa(sayfa) {
 function renderHukumCard(h) {
   var badge = '<span class="hukum-badge hukum-' + h.tur + '">' + hukumTurLabel(h.tur) + '</span>';
   var altTur = h.alt_tur ? '<span class="hukum-alt-tur">' + h.alt_tur + '</span>' : '';
-  var sayfaRef = h.sayfa ? '<a href="#" class="hukum-sayfa-ref" onclick="event.preventDefault();openSayfa(' + h.sayfa + ')">s.\u202f' + h.sayfa + '</a>' : '';
   var madde = h.madde_no ? null : (h.sayfa ? findMaddeForSayfa(h.sayfa) : null);
   var kisim = h.kisim || (madde && madde.kisim);
   var maddeNo = h.madde_no || (madde && madde.madde_no);
-  var maddeRef = (kisim && maddeNo) ? '<a href="/madde/' + kisim + '/' + maddeNo + '" class="hukum-madde-ref" onclick="event.preventDefault();openMadde(' + kisim + ',' + maddeNo + ')">K' + kisim + '/M' + maddeNo + '</a>' : '';
+  // Cümlenin ilk 60 karakterini searchQuery olarak kullan (JS string escape)
+  var sq = h.metin.substring(0, 60).replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+  var sayfaRef = h.sayfa ? '<a href="#" class="hukum-sayfa-ref" onclick="event.preventDefault();openSayfa(' + h.sayfa + ')">s.\u202f' + h.sayfa + '</a>' : '';
+  var maddeRef = (kisim && maddeNo) ? '<a href="/madde/' + kisim + '/' + maddeNo + '" class="hukum-madde-ref" onclick="event.preventDefault();openMadde(' + kisim + ',' + maddeNo + ',false,\'' + sq + '\')">K' + kisim + '/M' + maddeNo + '</a>' : '';
   var konu = h.konu ? '<div class="hukum-konu">' + h.konu + '</div>' : '';
   var baglam = h.baglam ? '<details class="hukum-baglam"><summary>Bağlam</summary><p>' + h.baglam + '</p></details>' : '';
-  return '<div class="hukum-card hukum-card-' + h.tur + '">' +
+  var clickFn = (kisim && maddeNo) ? 'onclick="openMadde(' + kisim + ',' + maddeNo + ',false,\'' + sq + '\')"' : '';
+  return '<div class="hukum-card hukum-card-' + h.tur + '" ' + clickFn + ' style="cursor:' + (clickFn ? 'pointer' : 'default') + '">' +
     '<div class="hukum-card-header">' + badge + altTur + '<span class="hukum-refs">' + sayfaRef + maddeRef + '</span></div>' +
     '<div class="hukum-card-metin">' + h.metin + '</div>' +
     konu + baglam +
