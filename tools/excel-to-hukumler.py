@@ -332,7 +332,11 @@ except Exception as e:
 
 
 # ─── ÇIKTI ───────────────────────────────────────────────────────────────────
-print(f"\nToplam kayıt: {len(records)}")
+# Sayfa 17 öncesi kayıtları çıkar (sitede madde karşılığı yok, önsöz/içindekiler)
+before = len(records)
+records = [r for r in records if r['sayfa'] and r['sayfa'] >= 17]
+print(f"\nSayfa < 17 çıkarıldı: {before - len(records)} kayıt silindi")
+print(f"Toplam kayıt: {len(records)}")
 
 # Kategori özeti
 from collections import Counter
