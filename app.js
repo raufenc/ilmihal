@@ -3558,11 +3558,16 @@ function renderGununBilgisi() {
   var bilgi = getGununBilgisi(0);
   if (!bilgi) { card.innerHTML = '<p>Veri yükleniyor...</p>'; return; }
 
-  var tipLabel = bilgi.tip === 'hadis' ? 'Hadîs-i Şerîf' : 'Âyet-i Kerîme';
+  var kisimAd = ['Önsöz','Birinci Kısım','İkinci Kısım','Üçüncü Kısım'][bilgi.kisim] || '';
+  var tipLabel = bilgi.tip === 'siir' ? 'Şiir' : kisimAd;
+  var kaynakParts = ['Se\'âdet-i Ebediyye'];
+  if (bilgi.sayfa) kaynakParts.push('s. ' + bilgi.sayfa);
+  var maddeLink = bilgi.kisim > 0 && bilgi.madde > 0 ? ' · <a href="#" onclick="openMadde(' + bilgi.kisim + ',' + bilgi.madde + ');return false">Maddeyi Aç</a>' : '';
+  var ozuHtml = bilgi.ozu ? '<div class="gb-ozu">' + escapeHtml(bilgi.ozu) + '</div>' : '';
   card.innerHTML = '<div class="gb-tip">' + tipLabel + '</div>' +
     '<div class="gb-metin">' + escapeHtml(bilgi.metin) + '</div>' +
-    '<div class="gb-kaynak">Se\'âdet-i Ebediyye, Kısım ' + bilgi.kisim + ', Madde ' + bilgi.madde +
-    ' · <a href="#" onclick="openMadde(' + bilgi.kisim + ',' + bilgi.madde + ');return false">Maddeyi Aç</a></div>';
+    ozuHtml +
+    '<div class="gb-kaynak">' + kaynakParts.join(', ') + maddeLink + '</div>';
 
   paylasim.innerHTML = '<button type="button" class="btn btn-primary" onclick="paylasGununBilgisi()">Paylaş</button> ' +
     '<button type="button" class="btn btn-secondary" style="background:var(--primary-light);color:#fff;" onclick="gununBilgisiKart()">Görsel Kart Oluştur</button>';
@@ -3584,7 +3589,8 @@ function renderGununBilgisi() {
 function paylasGununBilgisi() {
   var bilgi = getGununBilgisi(0);
   if (!bilgi) return;
-  var text = bilgi.metin + '\n\n— Se\'âdet-i Ebediyye, K' + bilgi.kisim + '/M' + bilgi.madde + '\nhttps://www.ilmihal.org/gunun-bilgisi';
+  var kaynak = 'Se\'âdet-i Ebediyye' + (bilgi.sayfa ? ', s. ' + bilgi.sayfa : '');
+  var text = bilgi.metin + '\n\n— ' + kaynak + '\nhttps://www.ilmihal.org/gunun-bilgisi';
   if (navigator.share) {
     navigator.share({ title: 'Günün Bilgisi - ilmihal.org', text: text }).catch(function(){});
   } else if (navigator.clipboard) {
@@ -3614,7 +3620,8 @@ function gununBilgisiKart() {
   // Tip etiketi
   ctx.fillStyle = '#c9a84c';
   ctx.font = '28px sans-serif';
-  ctx.fillText(bilgi.tip === 'hadis' ? 'Hadis-i Serif' : 'Ayet-i Kerime', 80, 180);
+  var kisimAd2 = ['Onsoz','Birinci Kisim','Ikinci Kisim','Ucuncu Kisim'][bilgi.kisim] || '';
+  ctx.fillText(bilgi.tip === 'siir' ? 'Siir' : kisimAd2, 80, 180);
 
   // Metin (word wrap)
   ctx.fillStyle = '#ffffff';
@@ -3634,7 +3641,7 @@ function gununBilgisiKart() {
   // Alt bilgi
   ctx.fillStyle = 'rgba(255,255,255,0.5)';
   ctx.font = '24px sans-serif';
-  ctx.fillText('Se\'adet-i Ebediyye, Kisim ' + bilgi.kisim + ', Madde ' + bilgi.madde, 80, 940);
+  ctx.fillText('Se\'adet-i Ebediyye' + (bilgi.sayfa ? ', s. ' + bilgi.sayfa : ''), 80, 940);
   ctx.fillText('ilmihal.org', 80, 980);
 
   // İndir
