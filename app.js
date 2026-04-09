@@ -3543,23 +3543,8 @@ function getGununBilgisiIdx() {
 }
 
 function getGununBilgisi(offset) {
-  if (!window.ayetHadisData) return null;
-  var all = [];
-  if (window.ayetHadisData.hadisler) {
-    window.ayetHadisData.hadisler.forEach(function(h) {
-      if (h.metin && h.metin.length > 20 && h.metin.length < 300) {
-        all.push({ tip: 'hadis', metin: h.metin, kisim: h.kisim, madde: h.madde });
-      }
-    });
-  }
-  if (window.ayetHadisData.ayetler) {
-    window.ayetHadisData.ayetler.forEach(function(a) {
-      if (a.metin && a.metin.length > 20 && a.metin.length < 300) {
-        all.push({ tip: 'ayet', metin: a.metin, kisim: a.kisim, madde: a.madde });
-      }
-    });
-  }
-  if (all.length === 0) return null;
+  if (!window.gununBilgisiData || window.gununBilgisiData.length === 0) return null;
+  var all = window.gununBilgisiData;
   var idx = (getGununBilgisiIdx() + (offset || 0)) % all.length;
   if (idx < 0) idx += all.length;
   return all[idx];
