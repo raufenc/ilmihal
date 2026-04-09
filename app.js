@@ -869,7 +869,7 @@ function highlightWords(text) {
       if (clean.length < 2) return token;
       const lower = trLower(clean);
       const entry = wordMap.get(lower) || findByStems(lower, wordMap);
-      if (entry && entry.a) {
+      if (entry) {
         const prefix = token.substring(0, token.indexOf(clean));
         const suffix = token.substring(token.indexOf(clean) + clean.length);
         return prefix + makeSpan(clean, entry) + suffix;
