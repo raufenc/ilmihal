@@ -2954,9 +2954,15 @@ function renderAyetHadis(filterText) {
     // Kaynak etiketi (sûre/âyet no veya hadîs kaynağı)
     var kaynakEtiket = '';
     if (ahCurrentTab === 'ayet' && item.sure) {
-      kaynakEtiket = '<span style="display:inline-block;background:var(--primary);color:#fff;padding:3px 10px;border-radius:12px;font-size:0.75rem;font-weight:600;margin-bottom:8px;">' + escapeHtml(item.sure) + ' s\u00fbresi' + (item.ayet_no ? ', ' + escapeHtml(String(item.ayet_no)) + '. \u00e2yet' : '') + '</span>';
+      var ayetText = escapeHtml(item.sure) + ' s\u00fbresi';
+      if (item.ayet_no) {
+        ayetText += ', ' + escapeHtml(String(item.ayet_no)) + ' \u00e2yet-i ker\u00eemesinde me\u00e2len';
+      } else {
+        ayetText += 'nde me\u00e2len';
+      }
+      kaynakEtiket = '<div style="color:var(--primary-dark);font-size:0.85rem;font-weight:600;margin-bottom:10px;font-style:italic;">' + ayetText + '</div>';
     } else if (ahCurrentTab === 'hadis' && item.kaynak) {
-      kaynakEtiket = '<span style="display:inline-block;background:var(--gold);color:#fff;padding:3px 10px;border-radius:12px;font-size:0.75rem;font-weight:600;margin-bottom:8px;">(' + escapeHtml(item.kaynak) + ')</span>';
+      kaynakEtiket = '<div style="color:var(--primary-dark);font-size:0.85rem;font-weight:600;margin-bottom:10px;font-style:italic;">(' + escapeHtml(item.kaynak) + ') kit\u00e2b\u0131nda bildirilen had\u00ees-i \u015fer\u00eef</div>';
     }
 
     // Madde bilgisi (varsa)
