@@ -3513,14 +3513,29 @@ mark.search-highlight {
   margin-right: auto;
 }
 .gb-ozu {
-  font-size: 0.8rem;
-  opacity: 0.6;
+  font-size: 0.9rem;
+  opacity: 0.7;
   font-style: italic;
-  margin-bottom: 12px;
+  margin-bottom: 16px;
 }
 .gb-kaynak {
   font-size: 0.85rem;
-  opacity: 0.7;
+  opacity: 0.9;
+}
+.gb-cevab-link {
+  display: inline-block;
+  padding: 10px 24px;
+  background: var(--gold-light);
+  color: var(--primary-dark) !important;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: all 0.2s;
+}
+.gb-cevab-link:hover {
+  background: #fff;
+  transform: translateY(-2px);
 }
 .gb-kaynak a { color: var(--gold-light); }
 .gb-onceki {

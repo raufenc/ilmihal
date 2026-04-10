@@ -2930,11 +2930,14 @@ function renderAyetHadis(filterText) {
   var items = ahCurrentTab === 'ayet' ? window.ayetHadisData.ayetler : window.ayetHadisData.hadisler;
   var label = ahCurrentTab === 'ayet' ? 'âyet-i kerîme' : 'hadîs-i şerîf';
   
-  // Filtrele
+  // Filtrele (metin + sûre/kaynak bilgisinde ara)
   var search = filterText || (document.getElementById('ah-search') ? document.getElementById('ah-search').value.trim().toLowerCase() : '');
   if (search) {
     items = items.filter(function(item) {
-      return item.metin.toLowerCase().indexOf(search) !== -1;
+      if (item.metin.toLowerCase().indexOf(search) !== -1) return true;
+      if (item.sure && item.sure.toLowerCase().indexOf(search) !== -1) return true;
+      if (item.kaynak && item.kaynak.toLowerCase().indexOf(search) !== -1) return true;
+      return false;
     });
   }
   
@@ -2948,11 +2951,33 @@ function renderAyetHadis(filterText) {
   // Sayfalama: ilk 50
   var shown = items.slice(0, 50);
   var html = shown.map(function(item) {
-    var madde = window.tocData ? window.tocData.find(function(m) { return m.kisim === item.kisim && m.madde_no === item.madde; }) : null;
-    var baslik = madde ? madde.baslik : 'K\u0131s\u0131m ' + item.kisim + ', Madde ' + item.madde;
-    // 'arama' alanını searchQuery olarak gönder — maddenin tam o yerine scroll + highlight
-    var searchQ = (item.arama || '').replace(/'/g, "\\'").replace(/"/g, '&quot;');
-    return '<div class="ah-item" onclick="openMadde(' + item.kisim + ',' + item.madde + ',false,\'' + searchQ + '\')" style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px;margin-bottom:10px;cursor:pointer;transition:all 0.2s;"><div style="font-family:Amiri,serif;font-size:0.95rem;line-height:1.8;color:var(--text);margin-bottom:8px;">' + item.metin + '</div><div style="font-size:0.8rem;color:var(--text-muted);">\u{1F4D6} ' + baslik + ' \u2014 <span style="color:var(--primary)">Maddenin bu yerine git \u2192</span></div></div>';
+    // Kaynak etiketi (sûre/âyet no veya hadîs kaynağı)
+    var kaynakEtiket = '';
+    if (ahCurrentTab === 'ayet' && item.sure) {
+      kaynakEtiket = '<span style="display:inline-block;background:var(--primary);color:#fff;padding:3px 10px;border-radius:12px;font-size:0.75rem;font-weight:600;margin-bottom:8px;">' + escapeHtml(item.sure) + ' s\u00fbresi' + (item.ayet_no ? ', ' + escapeHtml(String(item.ayet_no)) + '. \u00e2yet' : '') + '</span>';
+    } else if (ahCurrentTab === 'hadis' && item.kaynak) {
+      kaynakEtiket = '<span style="display:inline-block;background:var(--gold);color:#fff;padding:3px 10px;border-radius:12px;font-size:0.75rem;font-weight:600;margin-bottom:8px;">(' + escapeHtml(item.kaynak) + ')</span>';
+    }
+
+    // Madde bilgisi (varsa)
+    var maddeHtml = '';
+    if (item.kisim && item.madde) {
+      var madde = window.tocData ? window.tocData.find(function(m) { return m.kisim === item.kisim && m.madde_no === item.madde; }) : null;
+      var baslik = madde ? madde.baslik : 'K\u0131s\u0131m ' + item.kisim + ', Madde ' + item.madde;
+      var searchQ = item.metin.substring(0, 50).replace(/'/g, "\\'").replace(/"/g, '&quot;');
+      maddeHtml = '<div class="ah-item" onclick="openMadde(' + item.kisim + ',' + item.madde + ',false,\'' + searchQ + '\')" style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px;margin-bottom:10px;cursor:pointer;transition:all 0.2s;">' +
+        kaynakEtiket +
+        '<div style="font-family:Amiri,serif;font-size:0.95rem;line-height:1.8;color:var(--text);margin-bottom:8px;">' + escapeHtml(item.metin) + '</div>' +
+        '<div style="font-size:0.8rem;color:var(--text-muted);">\u{1F4D6} ' + escapeHtml(baslik) + ' \u2014 <span style="color:var(--primary)">Maddenin bu yerine git \u2192</span></div>' +
+        '</div>';
+    } else {
+      maddeHtml = '<div class="ah-item" style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px;margin-bottom:10px;">' +
+        kaynakEtiket +
+        '<div style="font-family:Amiri,serif;font-size:0.95rem;line-height:1.8;color:var(--text);">' + escapeHtml(item.metin) + '</div>' +
+        (item.sayfa ? '<div style="font-size:0.75rem;color:var(--text-muted);margin-top:8px;">Se\'\u00e2det-i Ebediyye, sayfa ' + item.sayfa + '</div>' : '') +
+        '</div>';
+    }
+    return maddeHtml;
   }).join('');
   
   if (items.length > 50) {
@@ -3543,8 +3568,8 @@ function getGununBilgisiIdx() {
 }
 
 function getGununBilgisi(offset) {
-  if (!window.gununBilgisiData || window.gununBilgisiData.length === 0) return null;
-  var all = window.gununBilgisiData;
+  if (!window.gununSorusuData || window.gununSorusuData.length === 0) return null;
+  var all = window.gununSorusuData;
   var idx = (getGununBilgisiIdx() + (offset || 0)) % all.length;
   if (idx < 0) idx += all.length;
   return all[idx];
@@ -3558,16 +3583,13 @@ function renderGununBilgisi() {
   var bilgi = getGununBilgisi(0);
   if (!bilgi) { card.innerHTML = '<p>Veri yükleniyor...</p>'; return; }
 
-  var kisimAd = ['Önsöz','Birinci Kısım','İkinci Kısım','Üçüncü Kısım'][bilgi.kisim] || '';
-  var tipLabel = bilgi.tip === 'siir' ? 'Şiir' : kisimAd;
-  var kaynakParts = ['Se\'âdet-i Ebediyye'];
-  if (bilgi.sayfa) kaynakParts.push('s. ' + bilgi.sayfa);
-  var maddeLink = bilgi.kisim > 0 && bilgi.madde > 0 ? ' · <a href="#" onclick="openMadde(' + bilgi.kisim + ',' + bilgi.madde + ');return false">Maddeyi Aç</a>' : '';
-  var ozuHtml = bilgi.ozu ? '<div class="gb-ozu">' + escapeHtml(bilgi.ozu) + '</div>' : '';
+  var tipLabel = 'SUÂL';
+  var baslikHtml = bilgi.baslik ? '<div class="gb-ozu">' + escapeHtml(bilgi.baslik) + '</div>' : '';
+  var maddeLink = bilgi.kisim > 0 && bilgi.madde > 0 ? '<a href="#" class="gb-cevab-link" onclick="openMadde(' + bilgi.kisim + ',' + bilgi.madde + ');return false">Cevâbı için maddeyi oku &rarr;</a>' : '';
   card.innerHTML = '<div class="gb-tip">' + tipLabel + '</div>' +
-    '<div class="gb-metin">' + escapeHtml(bilgi.metin) + '</div>' +
-    ozuHtml +
-    '<div class="gb-kaynak">' + kaynakParts.join(', ') + maddeLink + '</div>';
+    '<div class="gb-metin">' + escapeHtml(bilgi.soru) + '</div>' +
+    baslikHtml +
+    '<div class="gb-kaynak">' + maddeLink + '</div>';
 
   paylasim.innerHTML = '<button type="button" class="btn btn-primary" onclick="paylasGununBilgisi()">Paylaş</button> ' +
     '<button type="button" class="btn btn-secondary" style="background:var(--primary-light);color:#fff;" onclick="gununBilgisiKart()">Görsel Kart Oluştur</button>';
@@ -3580,7 +3602,8 @@ function renderGununBilgisi() {
       var b = getGununBilgisi(-i);
       if (!b) break;
       var gun = new Date(Date.now() - i * 86400000).toLocaleDateString('tr-TR', { day: 'numeric', month: 'long' });
-      html += '<div class="gb-onceki"><span class="gb-onceki-tarih">' + gun + '</span><span class="gb-onceki-metin">' + escapeHtml(b.metin.substring(0, 100)) + '...</span></div>';
+      var preview = b.soru.length > 100 ? b.soru.substring(0, 100) + '...' : b.soru;
+      html += '<div class="gb-onceki" onclick="openMadde(' + b.kisim + ',' + b.madde + ')" style="cursor:pointer;"><span class="gb-onceki-tarih">' + gun + '</span><span class="gb-onceki-metin">' + escapeHtml(preview) + '</span></div>';
     }
     onceki.innerHTML = html;
   }
@@ -3589,10 +3612,10 @@ function renderGununBilgisi() {
 function paylasGununBilgisi() {
   var bilgi = getGununBilgisi(0);
   if (!bilgi) return;
-  var kaynak = 'Se\'âdet-i Ebediyye' + (bilgi.sayfa ? ', s. ' + bilgi.sayfa : '');
-  var text = bilgi.metin + '\n\n— ' + kaynak + '\nhttps://www.ilmihal.org/gunun-bilgisi';
+  var kaynak = 'Se\'âdet-i Ebediyye, ' + (bilgi.baslik || ('Kısım ' + bilgi.kisim + ' / Madde ' + bilgi.madde));
+  var text = 'Suâl: ' + bilgi.soru + '\n\n— ' + kaynak + '\nhttps://www.ilmihal.org/gunun-bilgisi';
   if (navigator.share) {
-    navigator.share({ title: 'Günün Bilgisi - ilmihal.org', text: text }).catch(function(){});
+    navigator.share({ title: 'Günün Suâli - ilmihal.org', text: text }).catch(function(){});
   } else if (navigator.clipboard) {
     navigator.clipboard.writeText(text).then(function() { alert('Kopyalandı!'); });
   }
@@ -3619,14 +3642,13 @@ function gununBilgisiKart() {
 
   // Tip etiketi
   ctx.fillStyle = '#c9a84c';
-  ctx.font = '28px sans-serif';
-  var kisimAd2 = ['Onsoz','Birinci Kisim','Ikinci Kisim','Ucuncu Kisim'][bilgi.kisim] || '';
-  ctx.fillText(bilgi.tip === 'siir' ? 'Siir' : kisimAd2, 80, 180);
+  ctx.font = 'bold 28px sans-serif';
+  ctx.fillText('SUAL', 80, 180);
 
   // Metin (word wrap)
   ctx.fillStyle = '#ffffff';
   ctx.font = '36px serif';
-  var words = bilgi.metin.split(' ');
+  var words = bilgi.soru.split(' ');
   var lines = []; var line = '';
   words.forEach(function(w) {
     var test = line ? line + ' ' + w : w;
@@ -3641,7 +3663,10 @@ function gununBilgisiKart() {
   // Alt bilgi
   ctx.fillStyle = 'rgba(255,255,255,0.5)';
   ctx.font = '24px sans-serif';
-  ctx.fillText('Se\'adet-i Ebediyye' + (bilgi.sayfa ? ', s. ' + bilgi.sayfa : ''), 80, 940);
+  var baslikText = bilgi.baslik || ('Kisim ' + bilgi.kisim + ' / Madde ' + bilgi.madde);
+  if (baslikText.length > 60) baslikText = baslikText.substring(0, 60) + '...';
+  ctx.fillText("Se'adet-i Ebediyye", 80, 900);
+  ctx.fillText(baslikText, 80, 940);
   ctx.fillText('ilmihal.org', 80, 980);
 
   // İndir
