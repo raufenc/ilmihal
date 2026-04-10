@@ -4265,6 +4265,7 @@ var _hukumlerEventsInit = false;
 var _hukumlerTur = 'all';
 var _hukumlerKatman = 'acik';
 var _hukumlerSearchTimer = null;
+var _hukumlerObserver = null;
 
 function ensureHukumlerData() {
   if (_hukumlerLoaded && window.hukumlerData) {
@@ -4392,6 +4393,11 @@ function renderHukumler() {
   var sonuc = document.getElementById('hukumler-sonuc');
   if (!list || !window.hukumlerData) return;
 
+  if (_hukumlerObserver) {
+    _hukumlerObserver.disconnect();
+    _hukumlerObserver = null;
+  }
+
   var search = (document.getElementById('hukumler-search') || {}).value;
   search = search ? search.trim().toLowerCase() : '';
 
@@ -4407,8 +4413,7 @@ function renderHukumler() {
   });
 
   var total = filtered.length;
-  var pageSize = 100;
-  var shown = filtered.slice(0, pageSize);
+  var batchSize = 100;
 
   var turLabel = _hukumlerTur === 'all' ? 'hüküm' : hukumTurLabel(_hukumlerTur).toLowerCase() + ' hükmü';
   var katmanLabel = _hukumlerKatman === 'acik' ? 'açık' : 'toplam';
@@ -4419,34 +4424,42 @@ function renderHukumler() {
     return;
   }
 
-  var html = shown.map(renderHukumCard).join('');
-  if (total > pageSize) {
-    html += '<div class="hukum-daha-fazla"><button type="button" class="btn btn-secondary" id="hukum-daha-btn">Daha fazla göster (' + (total - pageSize) + ' kaldı)</button></div>';
-  }
-  list.innerHTML = html;
+  list.innerHTML = '';
+  var offset = 0;
 
-  if (total > pageSize) {
-    var offset = pageSize;
-    var loadMore = function() {
-      var more = filtered.slice(offset, offset + pageSize);
-      offset += pageSize;
-      var moreHtml = more.map(renderHukumCard).join('');
-      var currentBtn = document.getElementById('hukum-daha-btn');
-      var currentWrapper = currentBtn ? currentBtn.parentElement : null;
-      if (currentWrapper) currentWrapper.remove();
-      var div = document.createElement('div');
-      div.innerHTML = moreHtml;
-      list.appendChild(div);
+  function renderBatch() {
+    var end = Math.min(offset + batchSize, total);
+    var html = '';
+    for (var i = offset; i < end; i++) html += renderHukumCard(filtered[i]);
+    var frag = document.createElement('div');
+    frag.innerHTML = html;
+    while (frag.firstChild) list.appendChild(frag.firstChild);
+    offset = end;
+  }
+
+  renderBatch();
+
+  if (offset < total && 'IntersectionObserver' in window) {
+    var sentinel = document.createElement('div');
+    sentinel.className = 'hukum-sentinel';
+    sentinel.style.height = '1px';
+    list.appendChild(sentinel);
+
+    _hukumlerObserver = new IntersectionObserver(function(entries) {
+      if (!entries[0].isIntersecting) return;
+      sentinel.remove();
+      renderBatch();
       if (offset < total) {
-        var newBtn = document.createElement('div');
-        newBtn.className = 'hukum-daha-fazla';
-        newBtn.innerHTML = '<button type="button" class="btn btn-secondary" id="hukum-daha-btn">Daha fazla göster (' + (total - offset) + ' kaldı)</button>';
-        list.appendChild(newBtn);
-        document.getElementById('hukum-daha-btn').addEventListener('click', loadMore);
+        list.appendChild(sentinel);
+      } else if (_hukumlerObserver) {
+        _hukumlerObserver.disconnect();
+        _hukumlerObserver = null;
       }
-    };
-    var initialBtn = document.getElementById('hukum-daha-btn');
-    if (initialBtn) initialBtn.addEventListener('click', loadMore);
+    }, { rootMargin: '600px' });
+    _hukumlerObserver.observe(sentinel);
+  } else {
+    // IntersectionObserver yoksa kalanı tek seferde bas
+    while (offset < total) renderBatch();
   }
 }
 

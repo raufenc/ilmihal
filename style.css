@@ -4056,11 +4056,6 @@ a.rehber-madde-item:hover { background: rgba(26,107,78,0.08); color: var(--prima
   line-height: 1.65;
 }
 
-.hukum-daha-fazla {
-  text-align: center;
-  padding: 20px 0;
-}
-
 /* Dark tema */
 :root.dark .hukum-card { background: var(--bg-card); }
 :root.dark #hukumler-search { background: var(--bg-card); color: var(--text); }
