@@ -4426,26 +4426,27 @@ function renderHukumler() {
   list.innerHTML = html;
 
   if (total > pageSize) {
-    var btn = document.getElementById('hukum-daha-btn');
-    if (btn) {
-      var offset = pageSize;
-      btn.addEventListener('click', function() {
-        var more = filtered.slice(offset, offset + pageSize);
-        offset += pageSize;
-        var moreHtml = more.map(renderHukumCard).join('');
-        btn.parentElement.remove();
-        var div = document.createElement('div');
-        div.innerHTML = moreHtml;
-        list.appendChild(div);
-        if (offset < total) {
-          var newBtn = document.createElement('div');
-          newBtn.className = 'hukum-daha-fazla';
-          newBtn.innerHTML = '<button type="button" class="btn btn-secondary" id="hukum-daha-btn">Daha fazla göster (' + (total - offset) + ' kaldı)</button>';
-          list.appendChild(newBtn);
-          document.getElementById('hukum-daha-btn').addEventListener('click', arguments.callee);
-        }
-      });
-    }
+    var offset = pageSize;
+    var loadMore = function() {
+      var more = filtered.slice(offset, offset + pageSize);
+      offset += pageSize;
+      var moreHtml = more.map(renderHukumCard).join('');
+      var currentBtn = document.getElementById('hukum-daha-btn');
+      var currentWrapper = currentBtn ? currentBtn.parentElement : null;
+      if (currentWrapper) currentWrapper.remove();
+      var div = document.createElement('div');
+      div.innerHTML = moreHtml;
+      list.appendChild(div);
+      if (offset < total) {
+        var newBtn = document.createElement('div');
+        newBtn.className = 'hukum-daha-fazla';
+        newBtn.innerHTML = '<button type="button" class="btn btn-secondary" id="hukum-daha-btn">Daha fazla göster (' + (total - offset) + ' kaldı)</button>';
+        list.appendChild(newBtn);
+        document.getElementById('hukum-daha-btn').addEventListener('click', loadMore);
+      }
+    };
+    var initialBtn = document.getElementById('hukum-daha-btn');
+    if (initialBtn) initialBtn.addEventListener('click', loadMore);
   }
 }
 
