@@ -26,7 +26,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=24">
+  <link rel="stylesheet" href="style.css?v=26">
   <script type="application/ld+json">
   [{
     "@context": "https://schema.org",
@@ -89,8 +89,14 @@
     </div>
   </header>
 
+  <!-- Duyuru Alanı -->
+  <div id="duyuru-alani" class="duyuru-alani" style="display:none"></div>
+
   <!-- Ana Sayfa -->
   <main id="page-anasayfa" class="page active" role="main">
+    <!-- Kaldığınız yerden devam edin -->
+    <div id="devam-et-banner" class="devam-et-banner" style="display:none"></div>
+
     <section class="hero">
       <div class="container">
         <div class="hero-content">
@@ -216,6 +222,8 @@
         <button type="button" class="toolbar-btn" onclick="shareMadde()" title="Paylaş" aria-label="Bu maddeyi paylaş">&#8599;</button>
         <button type="button" class="toolbar-btn" onclick="printMadde()" title="Yazdır" aria-label="Bu maddeyi yazdır">&#128424;</button>
         <button type="button" class="toolbar-btn" onclick="toggleFullscreenRead()" id="fullscreen-btn" title="Tam ekran" aria-label="Tam ekran okuma modu">&#8862;</button>
+        <button type="button" class="toolbar-btn" onclick="sunumModuAc()" title="Sunum modu" aria-label="Sunum modu">&#128253;</button>
+        <button type="button" class="toolbar-btn" onclick="splitViewAc()" title="Yan yana okuma" aria-label="İkinci madde aç">&#9109;</button>
         <button type="button" class="madde-close" onclick="closeMadde()" aria-label="Maddeyi kapat">&times;</button>
       </div>
       <div id="audio-player-bar" class="audio-player-bar" style="display:none">
@@ -645,6 +653,7 @@
             <a href="silsile-atlasi/">Silsile Atlası</a>
             <a href="/hakkinda" onclick="navigateTo('hakkinda');return false">Hakkında</a>
             <a href="/gizlilik" onclick="navigateTo('gizlilik');return false">Gizlilik</a>
+            <a href="#" onclick="event.preventDefault();gosterGeriBildirim()">Geri Bildirim</a>
           </nav>
         </div>
       </div>
@@ -667,19 +676,13 @@
   <script src="audio-map.js?v=1"></script>
   <script src="arama-sozluk.js?v=1"></script>
   <script src="rehberler.js?v=1"></script>
-  <script src="app.js?v=40"></script>
+  <script src="app.js?v=41"></script>
   <script>
-    // Eski SW ve cache temizle, yeni SW kaydet
+    // SW güncelle, eski cache'leri temizle
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.getRegistrations().then(function(regs) {
-        regs.forEach(function(r) { r.unregister(); });
-      });
-      caches.keys().then(function(names) {
-        names.forEach(function(n) { if (n !== 'ilmihal-v6') caches.delete(n); });
-      });
-      setTimeout(function() {
-        navigator.serviceWorker.register('/sw.js').catch(function(){});
-      }, 1000);
+      navigator.serviceWorker.register('/sw.js').then(function(reg) {
+        reg.update();
+      }).catch(function(){});
     }
   </script>
 </body>

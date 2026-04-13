@@ -304,9 +304,9 @@ document.querySelector('.mobile-menu-btn')?.addEventListener('click', () => {
 let icerikLoaded = false;
 
 function loadIcerik(filterKisim, filterText) {
-  icerikLoaded = true;
   const list = document.getElementById('icerik-list');
   if (!window.tocData) { list.innerHTML = '<div class="loading">Veriler yükleniyor...</div>'; return; }
+  icerikLoaded = true;
 
   const kisimFilter = filterKisim || document.getElementById('kisim-filter')?.value || 'all';
   const rawSearch = filterText || document.getElementById('icerik-search')?.value || '';
@@ -447,6 +447,8 @@ async function openMadde(kisim, maddeNo, fromRoute, searchQuery) {
   // Bookmark & read tracking & audio
   currentMaddeForBookmark = madde;
   if (typeof markAsRead === 'function') markAsRead(kisim, maddeNo);
+  // Son okunan maddeyi kaydet ("Kaldığınız yerden devam edin" için)
+  localStorage.setItem('ilmihal-son-okunan', JSON.stringify({kisim: kisim, madde_no: maddeNo, baslik: madde.baslik, zaman: Date.now()}));
   if (typeof initAudioForMadde === 'function') initAudioForMadde(madde);
 
   const kisimLabels = { 1: 'Birinci K\u0131s\u0131m', 2: '\u0130kinci K\u0131s\u0131m', 3: '\u00dc\u00e7\u00fcnc\u00fc K\u0131s\u0131m' };
@@ -514,11 +516,21 @@ async function openMadde(kisim, maddeNo, fromRoute, searchQuery) {
     });
   }
 
+  // Arama highlight helper
+  function applySearchHighlight() {
+    if (searchQuery) {
+      const maddeTextEl = body.querySelector('.madde-text');
+      if (maddeTextEl) highlightAndScroll(maddeTextEl, searchQuery);
+    }
+  }
+
   // Sözlük zaten yüklüyse hemen highlight'la, yoksa önce metni göster sonra arka planda yükle
   if (window.sozlukData) {
     renderBody(highlightWords(rawMetin));
+    applySearchHighlight();
   } else {
     renderBody(escapeHtml(rawMetin));
+    applySearchHighlight();
     ensureSozlukData().then(function() {
       if (window.sozlukData && body.isConnected) {
         const textEl = body.querySelector('.madde-text');
@@ -527,6 +539,7 @@ async function openMadde(kisim, maddeNo, fromRoute, searchQuery) {
           el.addEventListener('mouseenter', showTooltip);
           el.addEventListener('mouseleave', hideTooltip);
         });
+        applySearchHighlight();
       }
     });
   }
@@ -535,14 +548,6 @@ async function openMadde(kisim, maddeNo, fromRoute, searchQuery) {
   if (typeof addFaqSchema === 'function') addFaqSchema(madde, rawMetin);
   if (typeof updateOgMeta === 'function') updateOgMeta(madde);
   if (typeof updateStreak === 'function') updateStreak();
-
-  // Arama highlight: searchQuery varsa metinde ilgili yeri bul, highlight'la ve scroll et
-  if (searchQuery) {
-    const maddeTextEl = body.querySelector('.madde-text');
-    if (maddeTextEl) {
-      highlightAndScroll(maddeTextEl, searchQuery);
-    }
-  }
 }
 
 // Madde metninde arama kelimelerini highlight'la ve en uygun bölgeye scroll et
@@ -603,8 +608,6 @@ function highlightAndScroll(container, query) {
     const nodeStart = charCount;
     const nodeEnd = charCount + len;
     charCount = nodeEnd;
-    // .zor-kelime içindeki text'leri atla
-    if (node.parentElement?.classList?.contains('zor-kelime')) continue;
     textNodes.push({ node, nodeStart, nodeEnd });
   }
 
@@ -1286,12 +1289,14 @@ function parseKaynakMadde(ref) {
   return m ? { kisim: parseInt(m[1]), maddeNo: parseInt(m[2]) } : { kisim: 0, maddeNo: 0 };
 }
 
-function kaynakMaddeLink(ref) {
+function kaynakMaddeLink(ref, searchHint) {
   const { kisim, maddeNo } = parseKaynakMadde(ref);
   if (!kisim) return ref || '';
   const madde = window.tocData?.find(t => t.kisim === kisim && t.madde_no === maddeNo);
   const title = madde ? madde.baslik : ref;
-  return `<a href="#" onclick="openMadde(${kisim},${maddeNo});return false" class="tablo-madde-link" title="${title}">${ref}</a>`;
+  const sq = searchHint ? escapeSearchQ(searchHint) : '';
+  const sqParam = sq ? `,false,'${sq}'` : '';
+  return `<a href="#" onclick="openMadde(${kisim},${maddeNo}${sqParam});return false" class="tablo-madde-link" title="${title}">${ref}</a>`;
 }
 
 function renderTabloCard(tablo) {
@@ -2176,7 +2181,8 @@ async function doFullSearch(fromRoute) {
       var dmKey = directMatch.kisim + '/' + directMatch.maddeNo;
       seen[dmKey] = true;
       maddeCount++;
-      html += '<div class="arama-result arama-result--direct" data-tip="madde" onclick="openMadde(' + directMatch.kisim + ',' + directMatch.maddeNo + ')">' +
+      var searchQ = escapeSearchQ(rawQuery);
+      html += '<div class="arama-result arama-result--direct" data-tip="madde" onclick="openMadde(' + directMatch.kisim + ',' + directMatch.maddeNo + ',false,\'' + searchQ + '\')">' +
         '<span class="arama-badge arama-badge--direct">Tam Eşleşme</span>' +
         '<h4>' + escapeHtml(dm.baslik) + '</h4>' +
         '<p class="arama-ozet">' + escapeHtml(directMatch.cevapOzet || '') + '</p>' +
@@ -2194,7 +2200,8 @@ async function doFullSearch(fromRoute) {
 
     var highlighted = highlightSnippet(m.snippet, wordVarLists);
 
-    html += '<div class="arama-result" data-tip="madde" onclick="openMadde(' + m.kisim + ',' + m.madde_no + ')">' +
+    var searchQ = escapeSearchQ(rawQuery);
+    html += '<div class="arama-result" data-tip="madde" onclick="openMadde(' + m.kisim + ',' + m.madde_no + ',false,\'' + searchQ + '\')">' +
       '<h4>' + escapeHtml(m.baslik) + '</h4>' +
       '<p class="arama-snippet">' + (highlighted || '(Başlıkta eşleşme)') + '</p>' +
       '<div class="result-meta">' + kisimLabels[m.kisim] + ', Madde ' + m.madde_no + ' · ' + sayfaLink(m.sayfa_no, 'Sayfa ' + m.sayfa_no) + '</div>' +
@@ -2716,6 +2723,19 @@ function printMadde() {
   window.print();
 }
 
+// Maddeye giderken arama metni için güvenli escape
+function escapeSearchQ(text) {
+  if (!text) return '';
+  return text.replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/"/g, '&quot;').replace(/</g, '&lt;');
+}
+// Açıklama metninden anahtar cümle çıkar (tek tırnak içi alıntı veya ilk anlamlı kısım)
+function extractSearchHint(explanation) {
+  if (!explanation) return '';
+  var q = explanation.match(/'([^']{10,})'/);
+  if (q) return q[1];
+  return explanation.replace(/\(K\d+\/M\d+\)/g, '').replace(/^Kitapta\s+/i, '').replace(/buyurulmaktadır\.?$/i, '').trim().substring(0, 80);
+}
+
 // ===== QUIZ SİSTEMİ =====
 var quizSorulari = {
   iman: [
@@ -2822,14 +2842,20 @@ function quizCevapla(idx) {
   });
   if (idx === s.d) quizState.dogru++;
   var aciklama = document.getElementById('quiz-aciklama');
-  // Maddeye götüren buton ekle
-  var maddeBtn = '';
+  // Butonlar (sonraki soru + kitap bölümü)
+  var butonlar = '<div class="quiz-butonlar">';
   if (s.m) {
-    maddeBtn = ' <a href="#madde/' + s.m.k + '/' + s.m.m + '" onclick="openMadde(' + s.m.k + ',' + s.m.m + ');return false" style="color:var(--primary);font-weight:600;text-decoration:none;margin-left:8px;">Maddeyi Oku →</a>';
+    var hint = escapeSearchQ(extractSearchHint(s.a));
+    butonlar += '<a href="#madde/' + s.m.k + '/' + s.m.m + '" onclick="openMadde(' + s.m.k + ',' + s.m.m + ',false,\'' + hint + '\');return false" class="quiz-bolum-btn">📖 Kitap Bölümüne Git</a>';
   }
-  aciklama.innerHTML = s.a + maddeBtn;
+  if (quizState.current < quizState.toplam - 1) {
+    butonlar += '<button type="button" class="btn btn-primary quiz-sonraki-btn" onclick="quizState.current++;renderQuizSoru()">Sonraki Soruya Geç →</button>';
+  } else {
+    butonlar += '<button type="button" class="btn btn-primary quiz-sonraki-btn" onclick="quizState.current++;renderQuizSoru()">Sonuçları Gör →</button>';
+  }
+  butonlar += '</div>';
+  aciklama.innerHTML = s.a + butonlar;
   aciklama.style.display = 'block';
-  setTimeout(function() { quizState.current++; renderQuizSoru(); }, 3500);
 }
 
 function resetQuiz() {
@@ -3591,7 +3617,8 @@ function renderGununBilgisi() {
 
   var tipLabel = 'SUÂL';
   var baslikHtml = bilgi.baslik ? '<div class="gb-ozu">' + escapeHtml(bilgi.baslik) + '</div>' : '';
-  var maddeLink = bilgi.kisim > 0 && bilgi.madde > 0 ? '<a href="#" class="gb-cevab-link" onclick="openMadde(' + bilgi.kisim + ',' + bilgi.madde + ');return false">Cevâbı için maddeyi oku &rarr;</a>' : '';
+  var gbHint = escapeSearchQ(bilgi.soru || bilgi.baslik || '');
+  var maddeLink = bilgi.kisim > 0 && bilgi.madde > 0 ? '<a href="#" class="gb-cevab-link" onclick="openMadde(' + bilgi.kisim + ',' + bilgi.madde + ',false,\'' + gbHint + '\');return false">Cevâbı için maddeyi oku &rarr;</a>' : '';
   card.innerHTML = '<div class="gb-tip">' + tipLabel + '</div>' +
     '<div class="gb-metin">' + escapeHtml(bilgi.soru) + '</div>' +
     baslikHtml +
@@ -3780,7 +3807,8 @@ function renderRehberDetay(id) {
     html += '<h3 class="rehber-bolum-baslik"><span class="rehber-bolum-no">' + (bi + 1) + '</span> ' + escapeHtml(b.baslik) + '</h3>';
     html += '<div class="rehber-maddeler">';
     b.maddeler.forEach(function(m) {
-      html += '<a href="#" class="rehber-madde-item" onclick="openMadde(' + m.kisim + ',' + m.maddeNo + ');return false">' +
+      var rHint = escapeSearchQ(m.not || b.baslik);
+      html += '<a href="#" class="rehber-madde-item" onclick="openMadde(' + m.kisim + ',' + m.maddeNo + ',false,\'' + rHint + '\');return false">' +
         '<span class="rehber-madde-no">K' + m.kisim + ' / M' + m.maddeNo + '</span>' +
         '<span class="rehber-madde-not">' + escapeHtml(m.not) + '</span>' +
         '</a>';
@@ -4074,6 +4102,9 @@ function togglePodcastMode() {
 
     var html = '';
 
+    // 0. Okuma İstatistikleri
+    html += '<div id="okuma-istatistik" style="margin-bottom:32px;"></div>';
+
     // 1. Yer İmleri
     var bookmarks = [];
     try { bookmarks = JSON.parse(localStorage.getItem('ilmihal-bookmarks') || '[]'); } catch(e) {}
@@ -4175,6 +4206,7 @@ function togglePodcastMode() {
     }
 
     el.innerHTML = html;
+    if (typeof renderOkumaIstatistik === 'function') renderOkumaIstatistik();
   }
 
   // Okuma geçmişi takibi: markAsRead'i genişlet
@@ -4462,4 +4494,498 @@ function renderHukumler() {
     while (offset < total) renderBatch();
   }
 }
+
+// ===== OZELLIK 1: KALDIGINIZ YERDEN DEVAM EDIN =====
+function renderDevamEt() {
+  var el = document.getElementById('devam-et-banner');
+  if (!el) return;
+  try {
+    var son = JSON.parse(localStorage.getItem('ilmihal-son-okunan'));
+    if (son && son.kisim && son.madde_no && son.baslik) {
+      var sure = '';
+      if (son.zaman) {
+        var fark = Date.now() - son.zaman;
+        var dk = Math.floor(fark / 60000);
+        if (dk < 60) sure = dk + ' dk önce';
+        else if (dk < 1440) sure = Math.floor(dk / 60) + ' saat önce';
+        else sure = Math.floor(dk / 1440) + ' gün önce';
+      }
+      el.innerHTML = '<div class="devam-et-inner"><div class="devam-et-icon">&#128214;</div><div class="devam-et-text"><span class="devam-et-label">Kaldığınız yerden devam edin</span><strong>' + son.baslik + '</strong>' + (sure ? '<span class="devam-et-sure">' + sure + '</span>' : '') + '</div><button type="button" class="btn btn-primary btn-sm" onclick="openMadde(' + son.kisim + ',' + son.madde_no + ')">Devam Et</button><button type="button" class="devam-et-kapat" onclick="this.closest(\'.devam-et-banner\').style.display=\'none\'" aria-label="Kapat">&times;</button></div>';
+      el.style.display = '';
+    } else {
+      el.style.display = 'none';
+    }
+  } catch(e) { el.style.display = 'none'; }
+}
+document.addEventListener('DOMContentLoaded', renderDevamEt);
+
+// ===== OZELLIK 2: GERI BILDIRIM / HATA BILDIR =====
+function gosterGeriBildirim() {
+  var overlay = document.getElementById('geri-bildirim-overlay');
+  if (overlay) { overlay.style.display = 'flex'; document.body.style.overflow = 'hidden'; return; }
+  overlay = document.createElement('div');
+  overlay.id = 'geri-bildirim-overlay';
+  overlay.className = 'gb-overlay';
+  overlay.innerHTML = '<div class="gb-modal"><div class="gb-header"><h3>Geri Bildirim</h3><button type="button" class="gb-kapat" onclick="kapatGeriBildirim()">&times;</button></div><form id="gb-form" onsubmit="gonderGeriBildirim(event)"><label class="gb-label">Tür<select id="gb-tur" required><option value="oneri">Öneri / İstek</option><option value="hata">Hata Bildirimi</option><option value="icerik">İçerik Hatası</option></select></label><label class="gb-label">Mesajınız<textarea id="gb-mesaj" rows="4" required placeholder="Lütfen detaylı yazınız..."></textarea></label><label class="gb-label">E-posta (isteğe bağlı)<input type="email" id="gb-email" placeholder="ornek@email.com"></label><div class="gb-actions"><button type="submit" class="btn btn-primary">Gönder</button><button type="button" class="btn btn-secondary" onclick="kapatGeriBildirim()">İptal</button></div></form><div id="gb-basarili" style="display:none;text-align:center;padding:32px"><div style="font-size:2.5rem;margin-bottom:12px">&#10004;</div><h4>Teşekkürler!</h4><p style="color:var(--text-light);margin-top:8px">Geri bildiriminiz alındı.</p></div></div>';
+  document.body.appendChild(overlay);
+  overlay.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+  overlay.addEventListener('click', function(e) { if (e.target === overlay) kapatGeriBildirim(); });
+}
+function kapatGeriBildirim() {
+  var o = document.getElementById('geri-bildirim-overlay');
+  if (o) { o.style.display = 'none'; document.body.style.overflow = ''; }
+}
+function gonderGeriBildirim(e) {
+  e.preventDefault();
+  var tur = document.getElementById('gb-tur').value;
+  var mesaj = document.getElementById('gb-mesaj').value;
+  var email = document.getElementById('gb-email').value;
+  var bildirimler = [];
+  try { bildirimler = JSON.parse(localStorage.getItem('ilmihal-geribildirim') || '[]'); } catch(ex) {}
+  bildirimler.push({tur: tur, mesaj: mesaj, email: email, tarih: new Date().toISOString()});
+  localStorage.setItem('ilmihal-geribildirim', JSON.stringify(bildirimler));
+  var konu = encodeURIComponent('İlmihal.org Geri Bildirim: ' + tur);
+  var govde = encodeURIComponent(mesaj + (email ? '\n\nGönderen: ' + email : ''));
+  window.open('mailto:info@ilmihal.org?subject=' + konu + '&body=' + govde, '_blank');
+  document.getElementById('gb-form').style.display = 'none';
+  document.getElementById('gb-basarili').style.display = '';
+  setTimeout(kapatGeriBildirim, 2500);
+}
+
+// ===== OZELLIK 3: ONBOARDING / HOSGELDIN REHBERI =====
+function showOnboarding() {
+  if (localStorage.getItem('ilmihal-onboarding-done')) return;
+  var steps = [
+    {title:'Hoş Geldiniz!', desc:'Se\'âdet-i Ebediyye\'nin interaktif dijital platformuna hoş geldiniz. Size sitenin özelliklerini tanıtalım.', icon:'&#128075;'},
+    {title:'Tam Metin Arama', desc:'Üstteki arama kutusuyla kitabın tamamında, sözlükte ve şahıslarda arama yapabilirsiniz.', icon:'&#128269;'},
+    {title:'Sesli Dinleme', desc:'Her maddeyi sesli olarak dinleyebilirsiniz. Madde açıldığında ses butonuna tıklayın.', icon:'&#127911;'},
+    {title:'Sözlük ve Lügat', desc:'4.400+ dini terim ve kelime anlamı. Fevâid menüsünden erişebilirsiniz.', icon:'&#128214;'},
+    {title:'Not ve Yer İmi', desc:'Maddeleri işaretleyip kişisel notlar ekleyebilirsiniz. Verileriniz cihazınızda kalır.', icon:'&#128278;'},
+    {title:'Tema ve Özelleştirme', desc:'Sağ üstteki tema butonuyla gündüz, sepya ve gece modları arasında geçiş yapın.', icon:'&#127769;'},
+    {title:'Bilgi Testi', desc:'Fevâid bölümünden bilgi testine girerek öğrendiklerinizi pekiştirin.', icon:'&#127942;'},
+    {title:'Klavye Kısayolları', desc:'Hızlı navigasyon için ? tuşuna basarak kısayolları görebilirsiniz.', icon:'&#9000;'}
+  ];
+  var current = 0;
+  var overlay = document.createElement('div');
+  overlay.id = 'onboarding-overlay';
+  overlay.className = 'onb-overlay';
+  function render() {
+    var s = steps[current];
+    var progress = '';
+    for (var i = 0; i < steps.length; i++) progress += '<span class="onb-dot' + (i === current ? ' active' : '') + '"></span>';
+    overlay.innerHTML = '<div class="onb-modal"><div class="onb-icon">' + s.icon + '</div><h3>' + s.title + '</h3><p>' + s.desc + '</p><div class="onb-dots">' + progress + '</div><div class="onb-actions">' + (current > 0 ? '<button type="button" class="btn btn-secondary btn-sm" id="onb-prev">Geri</button>' : '<span></span>') + '<button type="button" class="btn btn-primary btn-sm" id="onb-next">' + (current < steps.length - 1 ? 'İleri' : 'Başlayalım!') + '</button></div><button type="button" class="onb-skip" id="onb-skip">Atla</button></div>';
+    overlay.querySelector('#onb-next').onclick = function() {
+      if (current < steps.length - 1) { current++; render(); }
+      else closeOnboarding();
+    };
+    var prev = overlay.querySelector('#onb-prev');
+    if (prev) prev.onclick = function() { current--; render(); };
+    overlay.querySelector('#onb-skip').onclick = closeOnboarding;
+  }
+  function closeOnboarding() {
+    localStorage.setItem('ilmihal-onboarding-done', '1');
+    overlay.classList.add('onb-fade');
+    setTimeout(function() { overlay.remove(); }, 400);
+  }
+  render();
+  document.body.appendChild(overlay);
+}
+document.addEventListener('DOMContentLoaded', function() {
+  setTimeout(showOnboarding, 2600);
+});
+
+// ===== OZELLIK 4: KLAVYE KISAYOLLARI =====
+var _kisayollarAcik = false;
+function gosterKisayollar() {
+  _kisayollarAcik = true;
+  var overlay = document.getElementById('kisayol-overlay');
+  if (overlay) { overlay.style.display = 'flex'; return; }
+  overlay = document.createElement('div');
+  overlay.id = 'kisayol-overlay';
+  overlay.className = 'kisayol-overlay';
+  overlay.innerHTML = '<div class="kisayol-modal"><h3>Klavye Kısayolları</h3><div class="kisayol-grid"><div class="ks"><kbd>/</kbd> veya <kbd>F</kbd><span>Arama</span></div><div class="ks"><kbd>H</kbd><span>Ana Sayfa</span></div><div class="ks"><kbd>I</kbd><span>İçindekiler</span></div><div class="ks"><kbd>T</kbd><span>Tema Değiştir</span></div><div class="ks"><kbd>Esc</kbd><span>Maddeyi / Pencereyi Kapat</span></div><div class="ks"><kbd>B</kbd><span>Yer İmi Ekle/Çıkar</span></div><div class="ks"><kbd>J</kbd><span>Sonraki Madde</span></div><div class="ks"><kbd>K</kbd><span>Önceki Madde</span></div><div class="ks"><kbd>+</kbd><span>Yazıyı Büyüt</span></div><div class="ks"><kbd>-</kbd><span>Yazıyı Küçült</span></div><div class="ks"><kbd>?</kbd><span>Bu Pencere</span></div></div><button type="button" class="btn btn-primary btn-sm" onclick="kapatKisayollar()" style="margin-top:16px">Kapat</button></div>';
+  document.body.appendChild(overlay);
+  overlay.style.display = 'flex';
+  overlay.addEventListener('click', function(e) { if (e.target === overlay) kapatKisayollar(); });
+}
+function kapatKisayollar() {
+  _kisayollarAcik = false;
+  var o = document.getElementById('kisayol-overlay');
+  if (o) o.style.display = 'none';
+}
+document.addEventListener('keydown', function(e) {
+  if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'SELECT' || e.target.isContentEditable) return;
+  if (_kisayollarAcik && e.key === 'Escape') { kapatKisayollar(); return; }
+  var maddeAcik = document.getElementById('madde-detay')?.style.display === 'flex';
+  switch(e.key) {
+    case '?': e.preventDefault(); gosterKisayollar(); break;
+    case '/':
+      if (!e.ctrlKey && !e.metaKey) { e.preventDefault(); navigateTo('arama'); var si = document.getElementById('search-input'); if (si) si.focus(); }
+      break;
+    case 'h': if (!maddeAcik) navigateTo('anasayfa'); break;
+    case 'i': if (!maddeAcik) navigateTo('icerik'); break;
+    case 't': toggleDarkMode(); break;
+    case 'b': if (maddeAcik && typeof toggleBookmark === 'function') toggleBookmark(); break;
+    case 'j': if (maddeAcik && typeof sonrakiMadde === 'function') sonrakiMadde(); break;
+    case 'k': if (maddeAcik && typeof oncekiMadde === 'function') oncekiMadde(); break;
+    case '+': case '=': if (maddeAcik && typeof artirFont === 'function') artirFont(); break;
+    case '-': if (maddeAcik && typeof azaltFont === 'function') azaltFont(); break;
+  }
+});
+
+// ===== OZELLIK 5: DUYURU ALANI =====
+var DUYURULAR = [
+  {id:'v25-yeni', baslik:'Yeni Özellikler Eklendi!', metin:'Klavye kısayolları, geri bildirim formu, metin vurgulama ve daha fazlası. ? tuşuna basarak kısayolları görebilirsiniz.', tarih:'2026-04-13', tur:'yeni'},
+];
+function renderDuyurular() {
+  var el = document.getElementById('duyuru-alani');
+  if (!el) return;
+  var kapatilanlar = [];
+  try { kapatilanlar = JSON.parse(localStorage.getItem('ilmihal-duyuru-kapatilan') || '[]'); } catch(e) {}
+  var aktif = DUYURULAR.filter(function(d) { return kapatilanlar.indexOf(d.id) === -1; });
+  if (aktif.length === 0) { el.style.display = 'none'; return; }
+  el.style.display = '';
+  el.innerHTML = aktif.map(function(d) {
+    var badge = d.tur === 'yeni' ? '<span class="duyuru-badge duyuru-yeni">Yeni</span>' : '<span class="duyuru-badge duyuru-bilgi">Bilgi</span>';
+    return '<div class="duyuru-item">' + badge + '<div class="duyuru-icerik"><strong>' + d.baslik + '</strong><p>' + d.metin + '</p></div><button type="button" class="duyuru-kapat" onclick="kapatDuyuru(\'' + d.id + '\')" aria-label="Kapat">&times;</button></div>';
+  }).join('');
+}
+function kapatDuyuru(id) {
+  var k = [];
+  try { k = JSON.parse(localStorage.getItem('ilmihal-duyuru-kapatilan') || '[]'); } catch(e) {}
+  k.push(id);
+  localStorage.setItem('ilmihal-duyuru-kapatilan', JSON.stringify(k));
+  renderDuyurular();
+}
+document.addEventListener('DOMContentLoaded', renderDuyurular);
+
+// ===== OZELLIK 6: OKUMA ISTATISTIKLERI PANELI =====
+function renderOkumaIstatistik() {
+  var el = document.getElementById('okuma-istatistik');
+  if (!el) return;
+  var read = getReadMaddes();
+  var toplam = window.tocData ? window.tocData.length : 241;
+  var yuzde = Math.round((read.length / toplam) * 100);
+  var goal = null;
+  try { goal = JSON.parse(localStorage.getItem('ilmihal-daily-goal')); } catch(e) {}
+  var gunlukDk = (goal && goal.today === new Date().toISOString().slice(0,10)) ? goal.minutes : 0;
+  var bmCount = 0;
+  try { bmCount = JSON.parse(localStorage.getItem('ilmihal-bookmarks') || '[]').length; } catch(e) {}
+  var notCount = 0;
+  try {
+    var notlar = JSON.parse(localStorage.getItem('ilmihal-notlar') || '{}');
+    for (var k in notlar) notCount += notlar[k].length;
+  } catch(e) {}
+  var k1 = 0, k2 = 0, k3 = 0;
+  read.forEach(function(r) { var p = r.split('/'); if (p[0]==='1') k1++; else if (p[0]==='2') k2++; else if (p[0]==='3') k3++; });
+
+  el.innerHTML = '<div class="ist-grid">' +
+    '<div class="ist-card ist-buyuk"><div class="ist-daire"><svg viewBox="0 0 36 36" class="ist-svg"><path class="ist-bg-arc" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#e8e4dd" stroke-width="3"/><path class="ist-arc" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="var(--primary)" stroke-width="3" stroke-dasharray="' + yuzde + ', 100" stroke-linecap="round"/></svg><span class="ist-yuzde">%' + yuzde + '</span></div><div class="ist-etiket">Tamamlanan<br><strong>' + read.length + ' / ' + toplam + ' madde</strong></div></div>' +
+    '<div class="ist-card"><div class="ist-sayi">' + gunlukDk + '</div><div class="ist-etiket">dk bugün</div></div>' +
+    '<div class="ist-card"><div class="ist-sayi">' + bmCount + '</div><div class="ist-etiket">yer imi</div></div>' +
+    '<div class="ist-card"><div class="ist-sayi">' + notCount + '</div><div class="ist-etiket">not</div></div>' +
+    '</div>' +
+    '<div class="ist-kisimlar"><h4>Kısım İlerlemesi</h4><div class="ist-bar-group">' +
+    '<div class="ist-bar-row"><span>I. Kısım</span><div class="ist-bar"><div class="ist-bar-fill" style="width:' + Math.round(k1/98*100) + '%"></div></div><span>' + k1 + '/98</span></div>' +
+    '<div class="ist-bar-row"><span>II. Kısım</span><div class="ist-bar"><div class="ist-bar-fill" style="width:' + Math.round(k2/73*100) + '%"></div></div><span>' + k2 + '/73</span></div>' +
+    '<div class="ist-bar-row"><span>III. Kısım</span><div class="ist-bar"><div class="ist-bar-fill" style="width:' + Math.round(k3/70*100) + '%"></div></div><span>' + k3 + '/70</span></div>' +
+    '</div></div>';
+}
+
+// ===== OZELLIK 7: INLINE SOZLUK POPUP =====
+var _sozlukPopupEl = null;
+function initInlineSozluk(container) {
+  if (!window.sozlukData || !container) return;
+  if (!_sozlukPopupEl) {
+    _sozlukPopupEl = document.createElement('div');
+    _sozlukPopupEl.id = 'sozluk-popup';
+    _sozlukPopupEl.className = 'sozluk-popup';
+    document.body.appendChild(_sozlukPopupEl);
+    document.addEventListener('click', function(e) {
+      if (!e.target.classList.contains('zor-kelime') && _sozlukPopupEl && !_sozlukPopupEl.contains(e.target)) _sozlukPopupEl.style.display = 'none';
+    });
+  }
+  container.querySelectorAll('.zor-kelime').forEach(function(el) {
+    el.addEventListener('click', function(e) {
+      e.stopPropagation();
+      var kelime = el.dataset.kelime || el.textContent.trim();
+      var entry = window.sozlukData.find(function(s) {
+        return s.kelime && s.kelime.toLowerCase() === kelime.toLowerCase();
+      });
+      if (!entry) {
+        entry = window.sozlukData.find(function(s) {
+          return s.kelime && s.kelime.toLowerCase().indexOf(kelime.toLowerCase()) !== -1;
+        });
+      }
+      if (entry) {
+        var anlam = entry.anlam || entry.tanim || '';
+        if (anlam.length > 300) anlam = anlam.substring(0, 300) + '...';
+        _sozlukPopupEl.innerHTML = '<div class="sp-header"><strong>' + entry.kelime + '</strong>' + (entry.osmanlica ? '<span class="sp-osmanlica">' + entry.osmanlica + '</span>' : '') + '<button type="button" class="sp-kapat" onclick="document.getElementById(\'sozluk-popup\').style.display=\'none\'">&times;</button></div><p class="sp-anlam">' + anlam + '</p>' + (entry.kategori ? '<span class="sp-kat">' + entry.kategori + '</span>' : '') + '<a class="sp-detay" href="#" onclick="event.preventDefault();navigateTo(\'sozluk\');return false">Sözlükte Aç</a>';
+        var rect = el.getBoundingClientRect();
+        _sozlukPopupEl.style.display = 'block';
+        _sozlukPopupEl.style.top = (rect.bottom + window.scrollY + 8) + 'px';
+        _sozlukPopupEl.style.left = Math.max(8, Math.min(rect.left, window.innerWidth - 320)) + 'px';
+      }
+    });
+  });
+}
+
+// ===== OZELLIK 8: SUNUM MODU =====
+function sunumModuAc() {
+  if (!currentMaddeForBookmark) return;
+  var body = document.querySelector('#madde-detay .madde-text');
+  if (!body) return;
+  var sunum = document.createElement('div');
+  sunum.id = 'sunum-modu';
+  sunum.className = 'sunum-overlay';
+  sunum.innerHTML = '<div class="sunum-header"><h2>' + currentMaddeForBookmark.baslik + '</h2><div class="sunum-kontroller"><button type="button" onclick="sunumFontDegistir(1)" title="Büyüt">A+</button><button type="button" onclick="sunumFontDegistir(-1)" title="Küçült">A-</button><button type="button" onclick="kapatSunumModu()" title="Kapat">&times;</button></div></div><div class="sunum-icerik" id="sunum-icerik">' + body.innerHTML + '</div>';
+  document.body.appendChild(sunum);
+  document.body.style.overflow = 'hidden';
+  document.addEventListener('keydown', _sunumEsc);
+}
+function kapatSunumModu() {
+  var s = document.getElementById('sunum-modu');
+  if (s) s.remove();
+  document.body.style.overflow = '';
+  document.removeEventListener('keydown', _sunumEsc);
+}
+function _sunumEsc(e) { if (e.key === 'Escape') kapatSunumModu(); }
+var _sunumFont = 1.8;
+function sunumFontDegistir(dir) {
+  _sunumFont = Math.max(1.2, Math.min(3.5, _sunumFont + dir * 0.2));
+  var el = document.getElementById('sunum-icerik');
+  if (el) el.style.fontSize = _sunumFont + 'rem';
+}
+
+// ===== OZELLIK 9: CAPRAZ REFERANS NAVIGASYONU =====
+function aktivCrossLinks(container) {
+  if (!container) return;
+  var html = container.innerHTML;
+  html = html.replace(/((?:Bkz\.?\s*)?(?:Madde|madde)\s*(\d{1,3}))/gi, function(match, full, no) {
+    var maddeNo = parseInt(no);
+    if (maddeNo < 1 || maddeNo > 241) return match;
+    var kisim = maddeNo <= 98 ? 1 : (maddeNo <= 171 ? 2 : 3);
+    if (window.tocData) {
+      var m = window.tocData.find(function(t) { return t.madde_no === maddeNo; });
+      if (m) kisim = m.kisim;
+    }
+    return '<a href="/madde/' + kisim + '/' + maddeNo + '" class="crossref-link" onclick="event.preventDefault();openMadde(' + kisim + ',' + maddeNo + ')" title="Madde ' + maddeNo + '">' + full + '</a>';
+  });
+  container.innerHTML = html;
+}
+
+// ===== OZELLIK 10: METIN PAYLASIM KARTI (text selection) =====
+function initMetinSecimPaylas() {
+  document.addEventListener('mouseup', function() {
+    var sel = window.getSelection();
+    if (!sel || sel.isCollapsed || sel.toString().trim().length < 10) {
+      gizleMetinPaylas(); return;
+    }
+    var container = document.querySelector('#madde-detay .madde-text');
+    if (!container || !container.contains(sel.anchorNode)) { gizleMetinPaylas(); return; }
+    var text = sel.toString().trim();
+    if (text.length > 500) text = text.substring(0, 500) + '...';
+    var range = sel.getRangeAt(0);
+    var rect = range.getBoundingClientRect();
+    gosterMetinPaylas(text, rect);
+  });
+}
+function gosterMetinPaylas(text, rect) {
+  var el = document.getElementById('metin-paylas-bar');
+  if (!el) {
+    el = document.createElement('div');
+    el.id = 'metin-paylas-bar';
+    el.className = 'metin-paylas-bar';
+    document.body.appendChild(el);
+  }
+  el.innerHTML = '<button type="button" onclick="metinPaylasKopyala()" title="Kopyala">&#128203; Kopyala</button><button type="button" onclick="metinPaylasKart()" title="Görsel Kart">&#127912; Kart</button><button type="button" onclick="metinPaylasVurgula()" title="Vurgula">&#128396; Vurgula</button>';
+  el.dataset.metin = text;
+  el.style.display = 'flex';
+  el.style.top = (rect.top + window.scrollY - 44) + 'px';
+  el.style.left = Math.max(8, rect.left + rect.width / 2 - 100) + 'px';
+}
+function gizleMetinPaylas() {
+  var el = document.getElementById('metin-paylas-bar');
+  if (el) el.style.display = 'none';
+}
+function metinPaylasKopyala() {
+  var el = document.getElementById('metin-paylas-bar');
+  if (!el) return;
+  if (navigator.clipboard) navigator.clipboard.writeText(el.dataset.metin);
+  gizleMetinPaylas();
+}
+function metinPaylasKart() {
+  var el = document.getElementById('metin-paylas-bar');
+  if (!el || !currentMaddeForBookmark) return;
+  var text = el.dataset.metin;
+  gizleMetinPaylas();
+  var canvas = document.createElement('canvas');
+  canvas.width = 800; canvas.height = 500;
+  var ctx = canvas.getContext('2d');
+  ctx.fillStyle = '#faf8f4'; ctx.fillRect(0, 0, 800, 500);
+  ctx.fillStyle = '#1a6b4e'; ctx.fillRect(0, 0, 800, 6); ctx.fillRect(0, 494, 800, 6);
+  ctx.font = 'bold 22px Amiri, serif'; ctx.fillStyle = '#1a6b4e';
+  ctx.fillText(currentMaddeForBookmark.baslik, 40, 50);
+  ctx.font = '16px Inter, sans-serif'; ctx.fillStyle = '#2c2c2c';
+  var words = text.split(' '), line = '', y = 90;
+  for (var i = 0; i < words.length; i++) {
+    var test = line + words[i] + ' ';
+    if (ctx.measureText(test).width > 720 && line) {
+      ctx.fillText(line.trim(), 40, y); line = words[i] + ' '; y += 26;
+      if (y > 440) { ctx.fillText('...', 40, y); break; }
+    } else line = test;
+  }
+  if (y <= 440 && line) ctx.fillText(line.trim(), 40, y);
+  ctx.font = 'italic 13px Inter, sans-serif'; ctx.fillStyle = '#999';
+  ctx.fillText('ilmihal.org - Se\u2019\u00e2det-i Ebediyye', 40, 474);
+  canvas.toBlob(function(blob) {
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a'); a.href = url; a.download = 'ilmihal-alinti.png';
+    a.click(); URL.revokeObjectURL(url);
+  });
+}
+
+// ===== OZELLIK 11: METIN ICI VURGULAMA =====
+function metinPaylasVurgula() {
+  var sel = window.getSelection();
+  if (!sel || sel.isCollapsed) return;
+  gizleMetinPaylas();
+  renSecVurgula(sel);
+}
+function renSecVurgula(sel) {
+  var renkler = [{ad:'Sarı',kod:'#fff3b0'},{ad:'Yeşil',kod:'#b8f0c8'},{ad:'Turuncu',kod:'#ffd8a8'},{ad:'Pembe',kod:'#ffc8d8'}];
+  var popup = document.createElement('div');
+  popup.className = 'vurgula-renk-popup';
+  var range = sel.getRangeAt(0);
+  var rect = range.getBoundingClientRect();
+  popup.style.top = (rect.top + window.scrollY - 50) + 'px';
+  popup.style.left = Math.max(8, rect.left + rect.width / 2 - 80) + 'px';
+  renkler.forEach(function(r) {
+    var btn = document.createElement('button');
+    btn.type = 'button'; btn.className = 'vurgula-renk-btn';
+    btn.style.background = r.kod; btn.title = r.ad;
+    btn.onclick = function() { uygulaVurgulama(sel, r.kod); popup.remove(); };
+    popup.appendChild(btn);
+  });
+  var kapat = document.createElement('button');
+  kapat.type = 'button'; kapat.textContent = '\u00d7'; kapat.className = 'vurgula-renk-kapat';
+  kapat.onclick = function() { popup.remove(); };
+  popup.appendChild(kapat);
+  document.body.appendChild(popup);
+  setTimeout(function() {
+    var handler = function(e) { if (!popup.contains(e.target)) { popup.remove(); document.removeEventListener('click', handler); } };
+    document.addEventListener('click', handler);
+  }, 100);
+}
+function uygulaVurgulama(sel, renk) {
+  if (!sel || sel.isCollapsed) return;
+  var range = sel.getRangeAt(0);
+  var mark = document.createElement('mark');
+  mark.className = 'ilmihal-highlight'; mark.style.backgroundColor = renk; mark.dataset.renk = renk;
+  try { range.surroundContents(mark); } catch(e) {
+    var text = sel.toString(); range.deleteContents();
+    mark.textContent = text; range.insertNode(mark);
+  }
+  sel.removeAllRanges();
+  kaydetVurgulamalar();
+}
+function kaydetVurgulamalar() {
+  if (!currentMaddeForBookmark) return;
+  var key = currentMaddeForBookmark.kisim + '/' + currentMaddeForBookmark.madde_no;
+  var container = document.querySelector('#madde-detay .madde-text');
+  if (!container) return;
+  var highlights = [];
+  container.querySelectorAll('.ilmihal-highlight').forEach(function(m) {
+    highlights.push({text: m.textContent, renk: m.dataset.renk});
+  });
+  var all = {};
+  try { all = JSON.parse(localStorage.getItem('ilmihal-vurgulamalar') || '{}'); } catch(e) {}
+  all[key] = highlights;
+  localStorage.setItem('ilmihal-vurgulamalar', JSON.stringify(all));
+}
+function yukleVurgulamalar(container) {
+  if (!currentMaddeForBookmark || !container) return;
+  var key = currentMaddeForBookmark.kisim + '/' + currentMaddeForBookmark.madde_no;
+  var all = {};
+  try { all = JSON.parse(localStorage.getItem('ilmihal-vurgulamalar') || '{}'); } catch(e) {}
+  var highlights = all[key];
+  if (!highlights || highlights.length === 0) return;
+  highlights.forEach(function(h) {
+    if (!h.text || h.text.length < 3) return;
+    var escaped = h.text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    var regex = new RegExp('(?<!<[^>]*)(' + escaped + ')(?![^<]*>)');
+    var html = container.innerHTML;
+    if (regex.test(html)) {
+      container.innerHTML = html.replace(regex, '<mark class="ilmihal-highlight" data-renk="' + h.renk + '" style="background-color:' + h.renk + '">$1</mark>');
+    }
+  });
+}
+initMetinSecimPaylas();
+
+// ===== OZELLIK 12: COKLU SEKME / SPLIT VIEW =====
+var _splitViewAcik = false;
+function splitViewAc() {
+  if (_splitViewAcik || !currentMaddeForBookmark) return;
+  _splitViewAcik = true;
+  var detay = document.getElementById('madde-detay');
+  if (!detay) return;
+  var overlay = detay.querySelector('.madde-overlay-content') || detay;
+  var splitPanel = document.createElement('div');
+  splitPanel.id = 'split-view-panel';
+  splitPanel.className = 'split-panel';
+  splitPanel.innerHTML = '<div class="split-header"><h4>Yan Yana Okuma</h4><button type="button" onclick="kapatSplitView()" class="split-kapat">&times;</button></div><div class="split-arama"><input type="text" id="split-search" placeholder="Madde ara..." oninput="splitViewAra(this.value)"></div><div id="split-liste" class="split-liste"></div><div id="split-icerik" class="split-icerik"></div>';
+  overlay.appendChild(splitPanel);
+  splitViewAra('');
+}
+function kapatSplitView() {
+  _splitViewAcik = false;
+  var p = document.getElementById('split-view-panel');
+  if (p) p.remove();
+}
+function splitViewAra(q) {
+  var liste = document.getElementById('split-liste');
+  if (!liste || !window.tocData) return;
+  q = q ? q.trim().toLowerCase() : '';
+  var items = window.tocData.filter(function(m) {
+    return !q || m.baslik.toLowerCase().indexOf(q) !== -1 || String(m.madde_no).indexOf(q) !== -1;
+  }).slice(0, 20);
+  liste.innerHTML = items.map(function(m) {
+    return '<button type="button" class="split-madde-btn" onclick="splitViewMaddeAc(' + m.kisim + ',' + m.madde_no + ')">' + m.madde_no + '. ' + m.baslik + '</button>';
+  }).join('');
+}
+async function splitViewMaddeAc(kisim, maddeNo) {
+  var icerik = document.getElementById('split-icerik');
+  var liste = document.getElementById('split-liste');
+  if (!icerik) return;
+  if (liste) liste.style.display = 'none';
+  icerik.innerHTML = '<div style="text-align:center;padding:20px;color:var(--text-muted)">Yükleniyor...</div>';
+  var texts = await loadKisimTexts(kisim);
+  var metin = texts?.[String(maddeNo)] || '(Metin bulunamadı)';
+  var madde = window.tocData?.find(function(m) { return m.kisim === kisim && m.madde_no === maddeNo; });
+  var baslik = madde ? madde.baslik : 'Madde ' + maddeNo;
+  icerik.innerHTML = '<div class="split-madde-header"><h4>' + baslik + '</h4><button type="button" class="btn btn-sm btn-secondary" onclick="document.getElementById(\'split-liste\').style.display=\'\';document.getElementById(\'split-icerik\').innerHTML=\'\'">Değiştir</button></div><div class="split-madde-text">' + metin + '</div>';
+}
+
+// ===== Madde açılınca yeni özellikleri entegre et =====
+(function() {
+  var _maddeObserver = new MutationObserver(function(mutations) {
+    mutations.forEach(function(m) {
+      if (m.type === 'childList' && m.addedNodes.length) {
+        var body = document.querySelector('#madde-detay .madde-text');
+        if (body && body.textContent.length > 50) {
+          if (window.sozlukData) initInlineSozluk(body);
+          aktivCrossLinks(body);
+          yukleVurgulamalar(body);
+        }
+      }
+    });
+  });
+  document.addEventListener('DOMContentLoaded', function() {
+    var maddeBody = document.getElementById('madde-body');
+    if (maddeBody) {
+      _maddeObserver.observe(maddeBody, {childList: true, subtree: true});
+    }
+  });
+})();
 

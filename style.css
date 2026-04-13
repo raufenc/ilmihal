@@ -2891,6 +2891,10 @@ mark.search-highlight {
 .quiz-secenek.dogru { border-color: #2d9d6f; background: rgba(45,157,111,0.1); color: #1a6b4e; font-weight: 600; }
 .quiz-secenek.yanlis { border-color: #e85555; background: rgba(232,85,85,0.08); color: #c44; }
 .quiz-aciklama { margin-top: 16px; padding: 12px 16px; background: var(--bg); border-left: 3px solid var(--gold); border-radius: var(--radius-sm); font-size: 0.88rem; color: var(--text-light); }
+.quiz-butonlar { display: flex; gap: 10px; margin-top: 14px; flex-wrap: wrap; }
+.quiz-bolum-btn { font-size: 0.85rem; padding: 8px 16px; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; background: transparent; color: var(--primary); border: 1.5px solid var(--primary); border-radius: var(--radius-sm); font-weight: 600; cursor: pointer; transition: all 0.2s; }
+.quiz-bolum-btn:hover { background: rgba(26,107,78,0.08); }
+.quiz-sonraki-btn { font-size: 0.85rem; padding: 8px 16px; }
 .quiz-sonuc { text-align: center; padding: 40px; }
 .quiz-sonuc-puan { font-size: 3rem; font-weight: 700; color: var(--primary); }
 .quiz-sonuc-text { font-size: 1.1rem; color: var(--text-light); margin: 12px 0 24px; }
@@ -4077,3 +4081,192 @@ a.rehber-madde-item:hover { background: rgba(26,107,78,0.08); color: var(--prima
   #hukumler-search { min-width: 0; }
   .hukum-refs { margin-left: 0; }
 }
+
+/* ===== OZELLIK 1: DEVAM ET BANNER ===== */
+.devam-et-banner { background: linear-gradient(135deg, #e8f5e9, #f1f8e9); border-bottom: 1px solid #c8e6c9; }
+.devam-et-inner { display: flex; align-items: center; gap: 12px; padding: 12px 24px; max-width: 1200px; margin: 0 auto; }
+.devam-et-icon { font-size: 1.5rem; flex-shrink: 0; }
+.devam-et-text { flex: 1; }
+.devam-et-label { display: block; font-size: 0.75rem; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.5px; }
+.devam-et-text strong { font-size: 0.95rem; color: var(--primary-dark); }
+.devam-et-sure { display: block; font-size: 0.75rem; color: var(--text-muted); }
+.devam-et-kapat { background: none; border: none; font-size: 1.3rem; color: var(--text-muted); cursor: pointer; padding: 4px 8px; }
+.devam-et-kapat:hover { color: var(--text); }
+:root.dark .devam-et-banner { background: linear-gradient(135deg, #1b2e1b, #1e2e1e); border-color: #2e4e2e; }
+:root.dark .devam-et-text strong { color: #8fd68f; }
+@media (max-width: 600px) { .devam-et-inner { padding: 10px 16px; gap: 8px; } .devam-et-icon { display: none; } }
+
+/* ===== OZELLIK 2: GERI BILDIRIM ===== */
+.gb-overlay { position: fixed; inset: 0; z-index: 2000; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; }
+.gb-modal { background: var(--bg-card); border-radius: var(--radius); padding: 28px; width: 90%; max-width: 480px; max-height: 90vh; overflow-y: auto; box-shadow: var(--shadow-lg); }
+.gb-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+.gb-header h3 { font-size: 1.2rem; color: var(--primary-dark); }
+.gb-kapat { background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--text-muted); }
+.gb-label { display: block; margin-bottom: 16px; font-size: 0.85rem; font-weight: 500; color: var(--text-light); }
+.gb-label select, .gb-label textarea, .gb-label input {
+  display: block; width: 100%; margin-top: 6px; padding: 10px 12px;
+  border: 1px solid var(--border); border-radius: var(--radius-sm);
+  font-family: inherit; font-size: 0.9rem; background: var(--bg); color: var(--text);
+}
+.gb-label select:focus, .gb-label textarea:focus, .gb-label input:focus { outline: none; border-color: var(--primary); }
+.gb-actions { display: flex; gap: 8px; justify-content: flex-end; }
+
+/* ===== OZELLIK 3: ONBOARDING ===== */
+.onb-overlay { position: fixed; inset: 0; z-index: 3000; background: rgba(0,0,0,0.6); display: flex; align-items: center; justify-content: center; animation: onbIn 0.3s; }
+@keyframes onbIn { from { opacity: 0; } to { opacity: 1; } }
+.onb-fade { animation: onbOut 0.4s forwards; }
+@keyframes onbOut { to { opacity: 0; } }
+.onb-modal { background: var(--bg-card); border-radius: 16px; padding: 36px 32px 28px; width: 90%; max-width: 420px; text-align: center; box-shadow: var(--shadow-lg); }
+.onb-icon { font-size: 3rem; margin-bottom: 8px; }
+.onb-modal h3 { font-size: 1.3rem; color: var(--primary-dark); margin-bottom: 8px; }
+.onb-modal p { font-size: 0.92rem; color: var(--text-light); line-height: 1.6; margin-bottom: 20px; }
+.onb-dots { display: flex; justify-content: center; gap: 6px; margin-bottom: 20px; }
+.onb-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--border); transition: all 0.2s; }
+.onb-dot.active { background: var(--primary); width: 20px; border-radius: 4px; }
+.onb-actions { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.onb-skip { background: none; border: none; color: var(--text-muted); font-size: 0.8rem; cursor: pointer; margin-top: 12px; }
+.onb-skip:hover { color: var(--text); text-decoration: underline; }
+
+/* ===== OZELLIK 4: KLAVYE KISAYOLLARI ===== */
+.kisayol-overlay { position: fixed; inset: 0; z-index: 2000; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; }
+.kisayol-modal { background: var(--bg-card); border-radius: var(--radius); padding: 28px; width: 90%; max-width: 440px; box-shadow: var(--shadow-lg); text-align: center; }
+.kisayol-modal h3 { color: var(--primary-dark); margin-bottom: 20px; }
+.kisayol-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; text-align: left; }
+.ks { display: flex; align-items: center; gap: 8px; padding: 6px 8px; border-radius: var(--radius-sm); font-size: 0.85rem; }
+.ks kbd {
+  display: inline-block; min-width: 28px; padding: 3px 8px; text-align: center;
+  background: var(--bg); border: 1px solid var(--border); border-radius: 4px;
+  font-family: 'Inter', monospace; font-size: 0.78rem; font-weight: 600; color: var(--text);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.08);
+}
+.ks span { color: var(--text-light); }
+@media (max-width: 480px) { .kisayol-grid { grid-template-columns: 1fr; } }
+
+/* ===== OZELLIK 5: DUYURU ALANI ===== */
+.duyuru-alani { background: linear-gradient(135deg, #fff8e1, #fff3e0); border-bottom: 1px solid #ffe0b2; }
+.duyuru-item { display: flex; align-items: flex-start; gap: 10px; padding: 10px 24px; max-width: 1200px; margin: 0 auto; }
+.duyuru-badge { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; padding: 2px 8px; border-radius: 10px; white-space: nowrap; margin-top: 2px; }
+.duyuru-yeni { background: var(--primary); color: #fff; }
+.duyuru-bilgi { background: #1565c0; color: #fff; }
+.duyuru-icerik { flex: 1; }
+.duyuru-icerik strong { font-size: 0.88rem; color: var(--text); }
+.duyuru-icerik p { font-size: 0.82rem; color: var(--text-light); margin-top: 2px; }
+.duyuru-kapat { background: none; border: none; font-size: 1.2rem; color: var(--text-muted); cursor: pointer; padding: 2px 6px; }
+:root.dark .duyuru-alani { background: linear-gradient(135deg, #2e2a1a, #2e261a); border-color: #4e3e1e; }
+@media (max-width: 600px) { .duyuru-item { padding: 8px 16px; } }
+
+/* ===== OZELLIK 6: OKUMA ISTATISTIKLERI ===== */
+.ist-grid { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+.ist-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px 16px; text-align: center; }
+.ist-card.ist-buyuk { grid-column: 1 / 2; display: flex; align-items: center; gap: 16px; text-align: left; }
+.ist-daire { position: relative; width: 70px; height: 70px; flex-shrink: 0; }
+.ist-svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+.ist-yuzde { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 1rem; font-weight: 700; color: var(--primary); }
+.ist-sayi { font-size: 1.8rem; font-weight: 700; color: var(--primary); }
+.ist-etiket { font-size: 0.78rem; color: var(--text-muted); margin-top: 4px; }
+.ist-kisimlar { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 20px; }
+.ist-kisimlar h4 { font-size: 0.9rem; color: var(--text-light); margin-bottom: 12px; }
+.ist-bar-group { display: flex; flex-direction: column; gap: 8px; }
+.ist-bar-row { display: flex; align-items: center; gap: 10px; font-size: 0.82rem; }
+.ist-bar-row > span:first-child { width: 70px; color: var(--text-light); flex-shrink: 0; }
+.ist-bar-row > span:last-child { width: 44px; text-align: right; color: var(--text-muted); font-size: 0.75rem; flex-shrink: 0; }
+.ist-bar { flex: 1; height: 8px; background: var(--border); border-radius: 4px; overflow: hidden; }
+.ist-bar-fill { height: 100%; background: var(--primary); border-radius: 4px; transition: width 0.5s ease; min-width: 2px; }
+@media (max-width: 600px) { .ist-grid { grid-template-columns: 1fr 1fr; } .ist-card.ist-buyuk { grid-column: 1 / -1; } }
+
+/* ===== OZELLIK 7: INLINE SOZLUK POPUP ===== */
+.sozluk-popup {
+  position: absolute; z-index: 1500; display: none;
+  background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius);
+  box-shadow: var(--shadow-lg); width: 300px; max-width: calc(100vw - 16px); padding: 14px 16px;
+}
+.sp-header { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+.sp-header strong { font-size: 1rem; color: var(--primary-dark); }
+.sp-osmanlica { font-family: 'Amiri', serif; font-size: 1.1rem; color: var(--gold); }
+.sp-kapat { margin-left: auto; background: none; border: none; font-size: 1.2rem; cursor: pointer; color: var(--text-muted); }
+.sp-anlam { font-size: 0.88rem; line-height: 1.6; color: var(--text); margin-bottom: 8px; }
+.sp-kat { font-size: 0.72rem; background: var(--bg); padding: 2px 8px; border-radius: 8px; color: var(--text-muted); }
+.sp-detay { display: inline-block; margin-top: 8px; font-size: 0.8rem; color: var(--primary); text-decoration: none; }
+.sp-detay:hover { text-decoration: underline; }
+
+/* ===== OZELLIK 8: SUNUM MODU ===== */
+.sunum-overlay {
+  position: fixed; inset: 0; z-index: 2500; background: var(--bg-card);
+  display: flex; flex-direction: column; overflow: hidden;
+}
+.sunum-header {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 16px 32px; border-bottom: 2px solid var(--primary);
+  background: linear-gradient(135deg, var(--primary-dark), var(--primary)); color: #fff;
+}
+.sunum-header h2 { font-family: 'Amiri', serif; font-size: 1.6rem; }
+.sunum-kontroller { display: flex; gap: 8px; }
+.sunum-kontroller button {
+  background: rgba(255,255,255,0.2); border: none; color: #fff;
+  width: 36px; height: 36px; border-radius: 50%; cursor: pointer; font-size: 1rem; font-weight: 600;
+}
+.sunum-kontroller button:hover { background: rgba(255,255,255,0.3); }
+.sunum-icerik {
+  flex: 1; overflow-y: auto; padding: 40px 60px;
+  font-size: 1.8rem; line-height: 2; max-width: 900px; margin: 0 auto; width: 100%;
+}
+@media (max-width: 600px) { .sunum-icerik { padding: 20px; font-size: 1.3rem; } .sunum-header { padding: 12px 16px; } .sunum-header h2 { font-size: 1.1rem; } }
+
+/* ===== OZELLIK 9: CAPRAZ REFERANS ===== */
+.crossref-link { color: var(--primary); text-decoration: none; border-bottom: 1px dashed var(--primary-light); padding-bottom: 1px; cursor: pointer; }
+.crossref-link:hover { color: var(--primary-dark); border-bottom-style: solid; }
+
+/* ===== OZELLIK 10: METIN PAYLAS BAR ===== */
+.metin-paylas-bar {
+  position: absolute; z-index: 1400; display: none;
+  background: var(--primary-dark); border-radius: 8px; padding: 4px; box-shadow: var(--shadow-lg); gap: 2px;
+}
+.metin-paylas-bar button {
+  background: none; border: none; color: #fff; padding: 6px 10px;
+  font-size: 0.78rem; cursor: pointer; border-radius: 6px; white-space: nowrap;
+}
+.metin-paylas-bar button:hover { background: rgba(255,255,255,0.15); }
+
+/* ===== OZELLIK 11: VURGULAMA ===== */
+.ilmihal-highlight { border-radius: 2px; padding: 0 1px; cursor: default; }
+.vurgula-renk-popup {
+  position: absolute; z-index: 1600; display: flex; gap: 4px; align-items: center;
+  background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px;
+  padding: 6px 8px; box-shadow: var(--shadow);
+}
+.vurgula-renk-btn {
+  width: 28px; height: 28px; border: 2px solid transparent; border-radius: 50%; cursor: pointer; transition: transform 0.15s;
+}
+.vurgula-renk-btn:hover { transform: scale(1.2); border-color: var(--text-muted); }
+.vurgula-renk-kapat { background: none; border: none; font-size: 1.1rem; color: var(--text-muted); cursor: pointer; margin-left: 4px; }
+
+/* ===== OZELLIK 12: SPLIT VIEW ===== */
+.split-panel {
+  position: fixed; right: 0; top: 0; bottom: 0; width: 45%; min-width: 320px;
+  background: var(--bg-card); border-left: 2px solid var(--primary);
+  box-shadow: -4px 0 24px rgba(0,0,0,0.15); z-index: 1200;
+  display: flex; flex-direction: column; overflow: hidden;
+}
+.split-header {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 12px 16px; background: var(--primary); color: #fff;
+}
+.split-header h4 { margin: 0; font-size: 0.95rem; }
+.split-kapat { background: none; border: none; color: #fff; font-size: 1.4rem; cursor: pointer; }
+.split-arama { padding: 8px 12px; border-bottom: 1px solid var(--border); }
+.split-arama input {
+  width: 100%; padding: 8px 12px; border: 1px solid var(--border);
+  border-radius: var(--radius-sm); font-size: 0.85rem; background: var(--bg); color: var(--text);
+}
+.split-liste { flex: 1; overflow-y: auto; padding: 4px; }
+.split-madde-btn {
+  display: block; width: 100%; text-align: left; padding: 8px 12px;
+  background: none; border: none; border-bottom: 1px solid var(--border);
+  font-size: 0.85rem; color: var(--text); cursor: pointer;
+}
+.split-madde-btn:hover { background: var(--bg); color: var(--primary); }
+.split-icerik { flex: 1; overflow-y: auto; padding: 16px; }
+.split-madde-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+.split-madde-header h4 { color: var(--primary-dark); font-size: 1rem; }
+.split-madde-text { font-size: 0.9rem; line-height: 1.7; }
+@media (max-width: 768px) { .split-panel { width: 85%; min-width: 0; } }

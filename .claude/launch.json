@@ -3,15 +3,9 @@
   "configurations": [
     {
       "name": "ilmihal-site",
-      "runtimeExecutable": "bash",
-      "runtimeArgs": ["/Users/raufenc/Library/Mobile Documents/com~apple~CloudDocs/Muhtelif/Claude/ilmihal-site/.claude/serve.sh"],
-      "port": 8085
-    },
-    {
-      "name": "silsile-atlasi",
       "runtimeExecutable": "python3",
-      "runtimeArgs": ["-m", "http.server", "8087", "--directory", "/Users/raufenc/Library/Mobile Documents/com~apple~CloudDocs/Muhtelif/Claude/ilmihal-site/silsile-atlasi"],
-      "port": 8087
+      "runtimeArgs": ["-m", "http.server", "8084"],
+      "port": 8084
     }
   ]
 }
