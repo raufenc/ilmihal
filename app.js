@@ -333,7 +333,7 @@ function loadIcerik(filterKisim, filterText) {
       html += `<div style="padding:24px 0 8px;"><h3 style="font-family:'Amiri',serif;color:var(--primary-dark);font-size:1.3rem;">${kisimLabels[m.kisim]}</h3></div>`;
     }
     html += `
-      <div class="madde-item" role="button" tabindex="0" onclick="openMadde(${m.kisim}, ${m.madde_no})" aria-label="${escapeHtml(m.baslik)}, Madde ${m.madde_no}">
+      <div class="madde-item" role="button" tabindex="0" onclick="openMadde(${m.kisim}, ${m.madde_no})" aria-label="${m.baslik}, Madde ${m.madde_no}">
         <div class="madde-badge">${m.madde_no}</div>
         <div class="madde-info">
           <div class="madde-title">${m.baslik}</div>
@@ -402,7 +402,7 @@ function renderFilteredMaddeler(filtered) {
   let html = '';
   filtered.forEach(m => {
     html += `
-      <div class="madde-item" role="button" tabindex="0" onclick="openMadde(${m.kisim}, ${m.madde_no})" aria-label="${escapeHtml(m.baslik)}, Madde ${m.madde_no}">
+      <div class="madde-item" role="button" tabindex="0" onclick="openMadde(${m.kisim}, ${m.madde_no})" aria-label="${m.baslik}, Madde ${m.madde_no}">
         <div class="madde-badge">${m.madde_no}</div>
         <div class="madde-info">
           <div class="madde-title">${m.baslik}</div>
