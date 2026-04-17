@@ -563,11 +563,6 @@ body {
   border-color: var(--primary-light);
   box-shadow: var(--shadow);
 }
-.madde-item:focus-visible {
-  outline: 2px solid var(--primary);
-  outline-offset: 1px;
-  border-color: var(--primary-light);
-}
 
 .madde-badge {
   flex-shrink: 0;
@@ -2421,15 +2416,6 @@ mark.search-highlight {
   color: var(--primary-dark);
   padding: 3px 10px; border-radius: 20px;
 }
-/* <a> olarak render edilen fevaid-sec-card için anchor sıfırlama */
-a.fevaid-sec-card { text-decoration: none; color: inherit; display: block; }
-a.fevaid-sec-card h3 { color: var(--primary-dark); }
-/* Klavye erişilebilirliği: role="button" elementler için focus stili */
-.kisim-card:focus-visible,
-.fevaid-sec-card:focus-visible {
-  outline: 2px solid var(--primary);
-  outline-offset: 3px;
-}
 .fevaid-yakinda-badge {
   display: inline-block;
   font-size: 0.75rem; font-weight: 600;
@@ -3082,18 +3068,11 @@ a.fevaid-sec-card h3 { color: var(--primary-dark); }
 @media print {
   .site-header, .site-footer, .madde-toolbar, .madde-close,
   .related-maddeler, .related-sahislar, .related-tablolar,
-  .skip-link, .madde-notlar, .madde-paylasim-bar,
-  .audio-player-bar, #audio-btn, .madde-nav-bar,
-  .devam-et-banner, #duyuru-alani { display: none !important; }
+  .skip-link { display: none !important; }
   .madde-overlay { position: static !important; display: block !important; background: white !important; }
   .madde-overlay-content { max-width: 100% !important; max-height: none !important; overflow: visible !important; box-shadow: none !important; padding: 0 !important; }
-  .madde-text { font-size: 11pt !important; line-height: 1.8 !important; color: #000 !important; }
-  body { background: white !important; overflow: visible !important; color: #000 !important; }
-  .madde-text p, .madde-text li { page-break-inside: avoid; }
-  .madde-detail-header { page-break-after: avoid; border-bottom: 1pt solid #ccc; padding-bottom: 8pt; margin-bottom: 12pt; }
-  h3, h4 { page-break-after: avoid; }
-  .zor-kelime { border-bottom: none !important; }
-  .madde-text a[href^="http"]::after { content: " <" attr(href) ">"; font-size: 0.8em; color: #555; }
+  .madde-text { font-size: 11pt !important; line-height: 1.8 !important; }
+  body { background: white !important; overflow: visible !important; }
 }
 
 /* ===== RESPONSIVE - NEW PAGES ===== */

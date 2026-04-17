@@ -136,19 +136,19 @@
       <div class="container">
         <h3 class="section-title">Kitabın Üç Kısmı</h3>
         <div class="kisim-cards">
-          <div class="kisim-card" role="button" tabindex="0" onclick="showKisim(1)" aria-label="Birinci Kısım - 98 Madde">
+          <div class="kisim-card" onclick="showKisim(1)">
             <div class="kisim-num">I</div>
             <h4>Birinci Kısım</h4>
             <p>İman, ibadetler (namaz, oruç, zekât, hac), Peygamber Efendimiz'in hayatı ve ahlâkı</p>
             <span class="madde-count">98 Madde</span>
           </div>
-          <div class="kisim-card" role="button" tabindex="0" onclick="showKisim(2)" aria-label="İkinci Kısım - 73 Madde">
+          <div class="kisim-card" onclick="showKisim(2)">
             <div class="kisim-num">II</div>
             <h4>İkinci Kısım</h4>
             <p>Ahlâk, tasavvuf, fıkıh ilmi, nikâh, aile hukuku, helal-haram, yeme-içme, ölüm ve kabir</p>
             <span class="madde-count">73 Madde</span>
           </div>
-          <div class="kisim-card" role="button" tabindex="0" onclick="showKisim(3)" aria-label="Üçüncü Kısım - 70 Madde">
+          <div class="kisim-card" onclick="showKisim(3)">
             <div class="kisim-num">III</div>
             <h4>Üçüncü Kısım</h4>
             <p>Ticaret, alışveriş, şirketler, ceza hukuku, tasavvuf yolu, cenaze ve miras</p>
@@ -300,67 +300,67 @@
       <!-- Ana ekran: bölüm kartları -->
       <div id="fevaid-home" class="fevaid-home">
         <div class="fevaid-sec-grid">
-          <div class="fevaid-sec-card fevaid-highlight" role="button" tabindex="0" onclick="navigateTo('hukumler')" aria-label="Fıkhî Hükümler">
+          <div class="fevaid-sec-card fevaid-highlight" onclick="navigateTo('hukumler')">
             <div class="fevaid-sec-icon">&#9878;</div>
             <h3>Fıkhî Hükümler</h3>
             <p>Kitapta geçen farz, vâcib, sünnet, müstehab, mübah, mekruh ve haram hükümlerinin tam listesi</p>
             <span class="fevaid-sec-count" id="fevaid-count-hukumler">6.756 hüküm</span>
           </div>
-          <div class="fevaid-sec-card fevaid-highlight" role="button" tabindex="0" onclick="navigateTo('gunun-bilgisi')" aria-label="Günün Suâli">
+          <div class="fevaid-sec-card fevaid-highlight" onclick="navigateTo('gunun-bilgisi')">
             <div class="fevaid-sec-icon">&#10067;</div>
             <h3>Günün Suâli</h3>
             <p>Her gün kitaptan bir sual, cevabı ilgili maddede</p>
             <span class="fevaid-sec-count">398 suâl</span>
           </div>
-          <div class="fevaid-sec-card" role="button" tabindex="0" onclick="navigateTo('ayet-hadis')" aria-label="Âyet-i Kerîme ve Hadîs-i Şerîf İndeksi">
+          <div class="fevaid-sec-card" onclick="navigateTo('ayet-hadis')">
             <div class="fevaid-sec-icon">&#128220;</div>
             <h3>Âyet-i Kerîme ve Hadîs-i Şerîf İndeksi</h3>
             <p>Kitapta geçen âyet meâlleri ve hadîs-i şerîfler, sûre ve kaynak bilgileriyle</p>
             <span class="fevaid-sec-count">645 kayıt</span>
           </div>
-          <div class="fevaid-sec-card" role="button" tabindex="0" onclick="openFevaidSection('tablolar')" aria-label="Tablolar ve Diyagramlar">
+          <div class="fevaid-sec-card" onclick="openFevaidSection('tablolar')">
             <div class="fevaid-sec-icon">&#9638;</div>
             <h3>Tablolar ve Diyagramlar</h3>
             <p>Kitaptaki bilgilerin özet tabloları ve akış şemaları</p>
             <span class="fevaid-sec-count" id="fevaid-count-tablolar"></span>
           </div>
-          <div class="fevaid-sec-card" role="button" tabindex="0" onclick="navigateTo('sozluk')" aria-label="Dini Lügat">
+          <div class="fevaid-sec-card" onclick="navigateTo('sozluk')">
             <div class="fevaid-sec-icon">&#128214;</div>
             <h3>Dini Lügat</h3>
             <p>4.400+ terimlik kapsamlı dini sözlük, 13 kategoride</p>
             <span class="fevaid-sec-count">9800+ terim</span>
           </div>
-          <div class="fevaid-sec-card" role="button" tabindex="0" onclick="openFevaidSection('tanimlar')" aria-label="Kitabın Kendi Tanımları">
+          <div class="fevaid-sec-card" onclick="openFevaidSection('tanimlar')">
             <div class="fevaid-sec-icon">&#10070;</div>
             <h3>Kitabın Kendi Tanımları</h3>
             <p>Kitapta geçen terimlerin kitabın kendi cümleleriyle açıklaması</p>
             <span class="fevaid-sec-count">533 tanım</span>
           </div>
-          <div class="fevaid-sec-card" role="button" tabindex="0" onclick="navigateTo('sahislar')" aria-label="Hâl Tercemeleri">
+          <div class="fevaid-sec-card" onclick="navigateTo('sahislar')">
             <div class="fevaid-sec-icon">&#9734;</div>
             <h3>Hâl Tercemeleri</h3>
             <p>Kitapta adı geçenlerin hâl tercemeleri</p>
             <span class="fevaid-sec-count" id="fevaid-count-sahislar"></span>
           </div>
-          <a href="silsile-atlasi/" class="fevaid-sec-card" aria-label="Silsile-i Aliyye Atlası">
+          <div class="fevaid-sec-card" onclick="window.location.href='silsile-atlasi/'">
             <div class="fevaid-sec-icon">&#127758;</div>
             <h3>Silsile-i Aliyye Atlası</h3>
             <p>37 halkayı interaktif haritada keşfedin</p>
             <span class="fevaid-sec-count">37 halka</span>
-          </a>
-          <a href="namaz-vakitleri/" class="fevaid-sec-card" aria-label="Nemâz Vakitleri">
+          </div>
+          <div class="fevaid-sec-card" onclick="window.location.href='namaz-vakitleri/'">
             <div class="fevaid-sec-icon">&#9719;</div>
             <h3>Nemâz Vakitleri</h3>
             <p>Etkileşimli nemâz vakitleri hesabı ve gösterimi</p>
             <span class="fevaid-sec-count">5 vakit</span>
-          </a>
-          <div class="fevaid-sec-card" role="button" tabindex="0" onclick="navigateTo('calisma-alanim')" aria-label="Çalışma Alanım">
+          </div>
+          <div class="fevaid-sec-card" onclick="navigateTo('calisma-alanim')">
             <div class="fevaid-sec-icon">&#128221;</div>
             <h3>Çalışma Alanım</h3>
             <p>Yer imleriniz, notlarınız ve okuma geçmişiniz</p>
             <span class="fevaid-sec-count">Kişisel</span>
           </div>
-          <div class="fevaid-sec-card" role="button" tabindex="0" onclick="navigateTo('quiz')" aria-label="Bilgi Testi">
+          <div class="fevaid-sec-card" onclick="navigateTo('quiz')">
             <div class="fevaid-sec-icon">&#10004;</div>
             <h3>Bilgi Testi</h3>
             <p>Öğrendiklerinizi sınayın, kendinizi test edin</p>
@@ -669,17 +669,17 @@
   <!-- Tooltip -->
   <div id="sozluk-tooltip" class="sozluk-tooltip" style="display:none"></div>
 
-  <script defer src="data.js?v=14"></script>
-  <script defer src="tanimlar.js?v=1"></script>
-  <script defer src="sahislar.js?v=7"></script>
-  <script defer src="crossref.js?v=7"></script>
-  <script defer src="search-engine.js?v=7"></script>
-  <script defer src="ayet-hadis.js?v=4"></script>
-  <script defer src="gunun-sorusu-data.js?v=2"></script>
-  <script defer src="audio-map.js?v=1"></script>
-  <script defer src="arama-sozluk.js?v=1"></script>
-  <script defer src="rehberler.js?v=1"></script>
-  <script defer src="app.js?v=41"></script>
+  <script src="data.js?v=14"></script>
+  <script src="tanimlar.js?v=1"></script>
+  <script src="sahislar.js?v=7"></script>
+  <script src="crossref.js?v=7"></script>
+  <script src="search-engine.js?v=7"></script>
+  <script src="ayet-hadis.js?v=4"></script>
+  <script src="gunun-sorusu-data.js?v=2"></script>
+  <script src="audio-map.js?v=1"></script>
+  <script src="arama-sozluk.js?v=1"></script>
+  <script src="rehberler.js?v=1"></script>
+  <script src="app.js?v=41"></script>
   <script>
     // SW güncelle, eski cache'leri temizle
     if ('serviceWorker' in navigator) {

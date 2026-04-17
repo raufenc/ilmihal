@@ -290,7 +290,7 @@ function navigateTo(page, fromRoute) {
 
   // Lazy load content
   if (page === 'icerik' && !icerikLoaded) loadIcerik();
-  if (page === 'sozluk' && !sozlukLoaded) { ensureSozlukData().then(function() { loadSozluk(); }).catch(function(e) { console.error('Sözlük yüklenemedi:', e); }); }
+  if (page === 'sozluk' && !sozlukLoaded) { ensureSozlukData().then(function() { loadSozluk(); }); }
   if (page === 'fevaid' && !fevaidLoaded) loadFevaid();
   if (page === 'sahislar' && !sahislarLoaded) loadSahislar();
 }
@@ -305,7 +305,6 @@ let icerikLoaded = false;
 
 function loadIcerik(filterKisim, filterText) {
   const list = document.getElementById('icerik-list');
-  if (!list) return;
   if (!window.tocData) { list.innerHTML = '<div class="loading">Veriler yükleniyor...</div>'; return; }
   icerikLoaded = true;
 
@@ -333,7 +332,7 @@ function loadIcerik(filterKisim, filterText) {
       html += `<div style="padding:24px 0 8px;"><h3 style="font-family:'Amiri',serif;color:var(--primary-dark);font-size:1.3rem;">${kisimLabels[m.kisim]}</h3></div>`;
     }
     html += `
-      <div class="madde-item" role="button" tabindex="0" onclick="openMadde(${m.kisim}, ${m.madde_no})" aria-label="${m.baslik}, Madde ${m.madde_no}">
+      <div class="madde-item" onclick="openMadde(${m.kisim}, ${m.madde_no})">
         <div class="madde-badge">${m.madde_no}</div>
         <div class="madde-info">
           <div class="madde-title">${m.baslik}</div>
@@ -402,7 +401,7 @@ function renderFilteredMaddeler(filtered) {
   let html = '';
   filtered.forEach(m => {
     html += `
-      <div class="madde-item" role="button" tabindex="0" onclick="openMadde(${m.kisim}, ${m.madde_no})" aria-label="${m.baslik}, Madde ${m.madde_no}">
+      <div class="madde-item" onclick="openMadde(${m.kisim}, ${m.madde_no})">
         <div class="madde-badge">${m.madde_no}</div>
         <div class="madde-info">
           <div class="madde-title">${m.baslik}</div>
@@ -432,10 +431,7 @@ async function loadKisimTexts(kisim) {
   }
 }
 
-var _maddeOpenerEl = null; // Focus restore için
-
 async function openMadde(kisim, maddeNo, fromRoute, searchQuery) {
-  if (!fromRoute) _maddeOpenerEl = document.activeElement;
   await ensureMaddelerData();
   const madde = window.maddelerData?.find(m => m.kisim === kisim && m.madde_no === maddeNo);
   if (!madde) return;
@@ -545,7 +541,7 @@ async function openMadde(kisim, maddeNo, fromRoute, searchQuery) {
         });
         applySearchHighlight();
       }
-    }).catch(function(e) { console.error('Sözlük yüklenemedi:', e); });
+    });
   }
 
   // FAQ Schema + OG meta + Streak
@@ -727,11 +723,6 @@ function closeMadde() {
   const activePage = document.querySelector('.page.active');
   if (activePage) {
     updateHash(activePage.id.replace('page-', ''));
-  }
-  // Focus restore: klavyeyle açılmışsa açan elemana geri dön
-  if (_maddeOpenerEl && typeof _maddeOpenerEl.focus === 'function') {
-    try { _maddeOpenerEl.focus(); } catch(e) {}
-    _maddeOpenerEl = null;
   }
 }
 
@@ -2564,16 +2555,6 @@ document.getElementById('full-search')?.addEventListener('keydown', e => {
 })();
 
 // ===== INIT =====
-// madde-item / kisim-card / fevaid-sec-card klavye desteği (event delegation)
-document.addEventListener('keydown', function(e) {
-  if (e.key !== 'Enter' && e.key !== ' ') return;
-  var el = e.target;
-  if (el.classList.contains('madde-item') || el.classList.contains('kisim-card') || el.classList.contains('fevaid-sec-card')) {
-    e.preventDefault();
-    el.click();
-  }
-});
-
 document.addEventListener('DOMContentLoaded', () => {
   if (window.tocData) {
     console.log(`Y\u00fcklendi: ${window.tocData.length} madde, ${window.sozlukData?.length || 0} s\u00f6zl\u00fck kelimesi, ${window.tablolarData?.length || 0} tablo${window.sahislarData ? ', ' + window.sahislarData.length + ' \u015fah\u0131s' : ''}`);
