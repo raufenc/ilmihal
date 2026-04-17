@@ -524,22 +524,31 @@ async function openMadde(kisim, maddeNo, fromRoute, searchQuery) {
     }
   }
 
-  // Sözlük zaten yüklüyse hemen highlight'la, yoksa önce metni göster sonra arka planda yükle
-  if (window.sozlukData) {
-    renderBody(highlightWords(rawMetin));
+  // Önce plain metni hemen göster (kullanıcı okumaya başlasın), sonra highlight async batch'ler halinde
+  var hlKey = 'm' + kisim + '_' + maddeNo;
+  function attachHighlightedText(htmlStr) {
+    if (!body.isConnected) return;
+    var textEl = body.querySelector('.madde-text');
+    if (!textEl) return;
+    textEl.innerHTML = htmlStr;
+    body.querySelectorAll('.zor-kelime').forEach(function(el) {
+      el.addEventListener('mouseenter', showTooltip);
+      el.addEventListener('mouseleave', hideTooltip);
+    });
     applySearchHighlight();
+  }
+
+  if (window.sozlukData) {
+    // Sözlük yüklü: plain göster, async highlight uygula (cache varsa instant)
+    renderBody(escapeHtml(rawMetin));
+    applySearchHighlight();
+    highlightWordsAsync(rawMetin, hlKey, attachHighlightedText);
   } else {
     renderBody(escapeHtml(rawMetin));
     applySearchHighlight();
     ensureSozlukData().then(function() {
       if (window.sozlukData && body.isConnected) {
-        const textEl = body.querySelector('.madde-text');
-        if (textEl) textEl.innerHTML = highlightWords(rawMetin);
-        body.querySelectorAll('.zor-kelime').forEach(el => {
-          el.addEventListener('mouseenter', showTooltip);
-          el.addEventListener('mouseleave', hideTooltip);
-        });
-        applySearchHighlight();
+        highlightWordsAsync(rawMetin, hlKey, attachHighlightedText);
       }
     });
   }
@@ -882,6 +891,64 @@ function highlightWords(text) {
   });
 
   return result.join('');
+}
+
+// ===== ASYNC (BATCH'Lİ) HIGHLIGHT — uzun maddelerde donmayı önler =====
+// Browser her ~12ms'de event loop'a nefes alır, 60fps korunur
+var _highlightCache = Object.create(null);  // madde bazında cache
+var _highlightToken = 0;                     // stale async işlemleri iptal
+
+function highlightWordsAsync(text, cacheKey, onDone) {
+  if (cacheKey && _highlightCache[cacheKey]) {
+    onDone(_highlightCache[cacheKey]);
+    return;
+  }
+  if (!window.sozlukData || window.sozlukData.length === 0) {
+    onDone(escapeHtml(text));
+    return;
+  }
+  var myToken = ++_highlightToken;
+  var wordMap = buildSozlukIndex().wordMap;
+  var html = escapeHtml(text);
+  var parts = html.split(/(<span[^>]*class="zor-kelime"[^>]*>.*?<\/span>)/g);
+  var results = new Array(parts.length);
+  var i = 0;
+  var BATCH_MS = 12;
+
+  function processPart(part) {
+    if (part.startsWith('<span')) return part;
+    return part.split(/(\s+|<[^>]+>)/).map(function(token) {
+      if (/^\s+$/.test(token) || token.startsWith('<')) return token;
+      var clean = token.replace(/^[.,;:!?()\[\]"'&;#\d]+|[.,;:!?()\[\]"'&;#\d]+$/g, '');
+      if (clean.length < 2) return token;
+      var lower = trLower(clean);
+      var entry = wordMap.get(lower) || findByStems(lower, wordMap);
+      if (entry) {
+        var idx = token.indexOf(clean);
+        var prefix = token.substring(0, idx);
+        var suffix = token.substring(idx + clean.length);
+        return prefix + makeSpan(clean, entry) + suffix;
+      }
+      return token;
+    }).join('');
+  }
+
+  function runBatch() {
+    if (myToken !== _highlightToken) return; // yeni madde açıldı, bu işlemi iptal et
+    var t0 = performance.now();
+    while (i < parts.length && (performance.now() - t0) < BATCH_MS) {
+      results[i] = processPart(parts[i]);
+      i++;
+    }
+    if (i < parts.length) {
+      setTimeout(runBatch, 0); // browser'a nefes aldır
+    } else {
+      var finalHtml = results.join('');
+      if (cacheKey) _highlightCache[cacheKey] = finalHtml;
+      onDone(finalHtml);
+    }
+  }
+  runBatch();
 }
 
 // ===== TOOLTIP =====
