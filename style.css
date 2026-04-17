@@ -3379,20 +3379,9 @@ mark.search-highlight {
 }
 
 /* ===== MADDE OVERLAY GEÇİŞ ===== */
-.madde-overlay[style*="display: flex"], .madde-overlay[style*="display:flex"] {
-  animation: overlayFadeIn 0.25s ease;
-}
-@keyframes overlayFadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-.madde-overlay-content {
-  animation: overlaySlideUp 0.3s ease;
-}
-@keyframes overlaySlideUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
+/* Animasyon kaldırıldı — bazı tarayıcı/tab durumlarında CSS animation
+   opacity 0'da takılıp overlay görünmez kalıyordu (maddeler açılmıyor
+   gibi görünüyordu). Animasyon olmadan güvenli görünüm. */
 
 /* ===== KART HOVER ANİMASYONU (Fevâid, Kısım vb.) ===== */
 .fevaid-sec-card, .kisim-card, .konu-btn, .quiz-konu-btn, .plan-card {
