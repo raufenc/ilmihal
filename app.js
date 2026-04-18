@@ -430,7 +430,12 @@ window.kisimTextsCache = kisimTextsCache; // search-engine.js erişimi için
 async function loadKisimTexts(kisim) {
   if (kisimTextsCache[kisim]) return kisimTextsCache[kisim];
   try {
-    const resp = await fetch(`texts/kisim${kisim}.json`);
+    // 15 saniye timeout — SW veya network takılırsa fallback'e düş
+    const ctrl = new AbortController();
+    const timer = setTimeout(function() { ctrl.abort(); }, 15000);
+    const resp = await fetch(`texts/kisim${kisim}.json`, { signal: ctrl.signal });
+    clearTimeout(timer);
+    if (!resp.ok) throw new Error('HTTP ' + resp.status);
     const data = await resp.json();
     kisimTextsCache[kisim] = data;
     return data;
@@ -494,21 +499,26 @@ async function openMadde(kisim, maddeNo, fromRoute, searchQuery) {
   // Overlay zaten görünür; bookmark btn güncelle
   try { if (typeof updateBookmarkBtn === 'function') updateBookmarkBtn(kisim, maddeNo); } catch(e) { console.error('updateBookmarkBtn:', e); }
 
-  body.innerHTML = `
-    <div class="madde-detail-header">
-      <h3>${madde.baslik}</h3>
-      <div class="madde-detail-meta">
-        <span>${kisimLabels[madde.kisim]}, Madde ${madde.madde_no}</span>
-        <span>${sayfaLinkPdf(madde.sayfa_no, sayfaLabel(madde))}</span>
-        ${madde.mektup_ref ? `<span>Mektup: ${madde.mektup_ref}</span>` : ''}
-      </div>
-    </div>
-    <div class="madde-text" style="text-align:center;padding:40px;color:var(--text-muted);">Metin y\u00fckleniyor...</div>
-  `;
-
-  // Load full text from kisim file
-  const texts = await loadKisimTexts(kisim);
-  const rawMetin = texts?.[String(maddeNo)] || madde.metin || '(Metin bulunamad\u0131)';
+  // madde.metin zaten maddeler-data.js'te tam mevcut — bekleme yok
+  // (kisim JSON sadece varyasyonlar için arka planda yüklenir)
+  const rawMetin = madde.metin || '(Metin bulunamad\u0131)';
+  // Arka planda kisim metnini de cache'e al (gerekirse highlight için)
+  loadKisimTexts(kisim).then(function(texts) {
+    if (texts && texts[String(maddeNo)] && body.isConnected) {
+      // Eğer JSON'da farklı/güncel versiyon varsa text-el'i güncelle
+      var betterMetin = texts[String(maddeNo)];
+      if (betterMetin !== rawMetin) {
+        var textEl = body.querySelector('.madde-text');
+        if (textEl && window.sozlukData) {
+          textEl.innerHTML = highlightWords(betterMetin);
+          body.querySelectorAll('.zor-kelime').forEach(function(el) {
+            el.addEventListener('mouseenter', showTooltip);
+            el.addEventListener('mouseleave', hideTooltip);
+          });
+        }
+      }
+    }
+  });
 
   // İlişkili maddeler (UX-03)
   var iliskiliHTML = getIliskiliMaddeler(kisim, maddeNo, madde.baslik);
