@@ -268,7 +268,11 @@ document.querySelectorAll('.nav-btn').forEach(btn => {
 });
 
 function navigateTo(page, fromRoute) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  // Inline display:none'u temizle (openMadde tarafından set edilmiş olabilir)
+  document.querySelectorAll('.page').forEach(p => {
+    p.classList.remove('active');
+    p.style.display = '';
+  });
   document.querySelectorAll('.nav-btn').forEach(b => { b.classList.remove('active'); b.removeAttribute('aria-current'); });
   // Madde tam sayfa açıksa onu da gizle (artık başka sayfadayız)
   var maddeDetay = document.getElementById('madde-detay');
@@ -440,13 +444,17 @@ async function openMadde(kisim, maddeNo, fromRoute, searchQuery) {
   // Madde tam sayfa olarak açılıyor (popup değil)
   var overlay = document.getElementById('madde-detay');
   var body = document.getElementById('madde-body');
-  // Diğer sayfaları gizle
-  document.querySelectorAll('.page').forEach(function(p) { p.classList.remove('active'); });
+  // Diğer sayfaları gizle (CSS override için inline style)
+  document.querySelectorAll('.page').forEach(function(p) {
+    p.classList.remove('active');
+    p.style.display = 'none';
+  });
   document.querySelectorAll('.nav-btn').forEach(function(b) { b.classList.remove('active'); b.removeAttribute('aria-current'); });
   // Madde detay sayfasını göster
   if (overlay) {
     overlay.style.display = 'block';
     overlay.style.opacity = '1';
+    overlay.style.visibility = 'visible';
     document.body.style.overflow = '';
     window.scrollTo(0, 0);
   }
