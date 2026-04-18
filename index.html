@@ -681,10 +681,17 @@
   <script src="rehberler.js?v=1"></script>
   <script src="app.js?v=45"></script>
   <script>
-    // SW güncelle, eski cache'leri temizle
+    // SW güncelle + ZORLA YENİLE: app.js sürümü farklıysa eski SW'yi at
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('/sw.js').then(function(reg) {
         reg.update();
+        // Eğer yeni SW kontrole geçtiyse sayfayı yenile (eski JS'i bırak)
+        var refreshing = false;
+        navigator.serviceWorker.addEventListener('controllerchange', function() {
+          if (refreshing) return;
+          refreshing = true;
+          window.location.reload();
+        });
       }).catch(function(){});
     }
   </script>
