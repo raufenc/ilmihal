@@ -35,7 +35,7 @@ function handleRoute() {
     const kisim = parseInt(parts[1]);
     const maddeNo = parseInt(parts[2]);
     if (kisim && maddeNo) {
-      navigateTo('icerik', true);
+      // Madde tam sayfa modunda — diğer page'lere geçmeye gerek yok
       openMadde(kisim, maddeNo, true);
       return;
     }
@@ -270,6 +270,11 @@ document.querySelectorAll('.nav-btn').forEach(btn => {
 function navigateTo(page, fromRoute) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-btn').forEach(b => { b.classList.remove('active'); b.removeAttribute('aria-current'); });
+  // Madde tam sayfa açıksa onu da gizle (artık başka sayfadayız)
+  var maddeDetay = document.getElementById('madde-detay');
+  if (maddeDetay && maddeDetay.style.display !== 'none') {
+    maddeDetay.style.display = 'none';
+  }
   const target = document.getElementById('page-' + page);
   if (target) target.classList.add('active');
   const navBtn = document.querySelector(`.nav-btn[data-page="${page}"]`);
@@ -432,13 +437,18 @@ async function loadKisimTexts(kisim) {
 }
 
 async function openMadde(kisim, maddeNo, fromRoute, searchQuery) {
-  // ÖNCE overlay'i göster (loading state) — hata olsa bile görünsün
+  // Madde tam sayfa olarak açılıyor (popup değil)
   var overlay = document.getElementById('madde-detay');
   var body = document.getElementById('madde-body');
+  // Diğer sayfaları gizle
+  document.querySelectorAll('.page').forEach(function(p) { p.classList.remove('active'); });
+  document.querySelectorAll('.nav-btn').forEach(function(b) { b.classList.remove('active'); b.removeAttribute('aria-current'); });
+  // Madde detay sayfasını göster
   if (overlay) {
-    overlay.style.display = 'flex';
+    overlay.style.display = 'block';
     overlay.style.opacity = '1';
-    document.body.style.overflow = 'hidden';
+    document.body.style.overflow = '';
+    window.scrollTo(0, 0);
   }
   if (body) {
     body.innerHTML = '<div style="text-align:center;padding:60px 20px;color:var(--text-muted);">Madde yükleniyor…</div>';
@@ -731,13 +741,11 @@ function getRelatedTables(kisim, maddeNo) {
 }
 
 function closeMadde() {
-  document.getElementById('madde-detay').style.display = 'none';
+  var overlay = document.getElementById('madde-detay');
+  if (overlay) overlay.style.display = 'none';
   document.body.style.overflow = '';
-  // Restore hash to parent page
-  const activePage = document.querySelector('.page.active');
-  if (activePage) {
-    updateHash(activePage.id.replace('page-', ''));
-  }
+  // İçindekiler'e dön (madde tam sayfa kapanınca bir sayfaya gitmek lazım)
+  navigateTo('icerik');
 }
 
 document.addEventListener('keydown', e => {

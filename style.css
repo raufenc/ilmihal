@@ -3378,10 +3378,45 @@ mark.search-highlight {
   margin-left: 8px;
 }
 
-/* ===== MADDE OVERLAY GEÇİŞ ===== */
-/* Animasyon kaldırıldı — bazı tarayıcı/tab durumlarında CSS animation
-   opacity 0'da takılıp overlay görünmez kalıyordu (maddeler açılmıyor
-   gibi görünüyordu). Animasyon olmadan güvenli görünüm. */
+/* ===== MADDE DETAY: TAM SAYFA MODU =====
+   Madde-detay artık popup overlay değil, normal sayfa olarak açılıyor.
+   Şahıs ve tablo popup'ları yine .madde-overlay class'ını kullandığı için
+   onlar overlay olarak kalmaya devam ediyor (#madde-detay ID'si ile override). */
+#madde-detay.madde-overlay {
+  position: static;
+  background: transparent;
+  padding: 0;
+  width: 100%;
+  height: auto;
+  z-index: auto;
+}
+#madde-detay .madde-overlay-wrap {
+  max-width: 1100px;
+  width: 100%;
+  margin: 0 auto;
+  max-height: none;
+  background: transparent;
+  border-radius: 0;
+  box-shadow: none;
+}
+#madde-detay .madde-overlay-content {
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 24px 28px 64px;
+  box-shadow: none;
+  border-radius: 0;
+  background: transparent;
+}
+#madde-detay .madde-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--bg-card);
+  border-bottom: 1px solid var(--border);
+  padding: 8px 16px;
+  border-radius: 0;
+}
 
 /* ===== KART HOVER ANİMASYONU (Fevâid, Kısım vb.) ===== */
 .fevaid-sec-card, .kisim-card, .konu-btn, .quiz-konu-btn, .plan-card {
