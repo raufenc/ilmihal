@@ -26,7 +26,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=28">
+  <link rel="stylesheet" href="style.css?v=26">
   <script type="application/ld+json">
   [{
     "@context": "https://schema.org",
@@ -679,19 +679,12 @@
   <script src="audio-map.js?v=1"></script>
   <script src="arama-sozluk.js?v=1"></script>
   <script src="rehberler.js?v=1"></script>
-  <script src="app.js?v=47"></script>
+  <script src="app.js?v=48"></script>
   <script>
-    // SW güncelle + ZORLA YENİLE: app.js sürümü farklıysa eski SW'yi at
+    // SW güncelle, eski cache'leri temizle
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('/sw.js').then(function(reg) {
         reg.update();
-        // Eğer yeni SW kontrole geçtiyse sayfayı yenile (eski JS'i bırak)
-        var refreshing = false;
-        navigator.serviceWorker.addEventListener('controllerchange', function() {
-          if (refreshing) return;
-          refreshing = true;
-          window.location.reload();
-        });
       }).catch(function(){});
     }
   </script>

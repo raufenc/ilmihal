@@ -35,7 +35,7 @@ function handleRoute() {
     const kisim = parseInt(parts[1]);
     const maddeNo = parseInt(parts[2]);
     if (kisim && maddeNo) {
-      // Madde tam sayfa modunda — diğer page'lere geçmeye gerek yok
+      navigateTo('icerik', true);
       openMadde(kisim, maddeNo, true);
       return;
     }
@@ -268,17 +268,8 @@ document.querySelectorAll('.nav-btn').forEach(btn => {
 });
 
 function navigateTo(page, fromRoute) {
-  // Inline display:none'u temizle (openMadde tarafından set edilmiş olabilir)
-  document.querySelectorAll('.page').forEach(p => {
-    p.classList.remove('active');
-    p.style.display = '';
-  });
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-btn').forEach(b => { b.classList.remove('active'); b.removeAttribute('aria-current'); });
-  // Madde tam sayfa açıksa onu da gizle (artık başka sayfadayız)
-  var maddeDetay = document.getElementById('madde-detay');
-  if (maddeDetay && maddeDetay.style.display !== 'none') {
-    maddeDetay.style.display = 'none';
-  }
   const target = document.getElementById('page-' + page);
   if (target) target.classList.add('active');
   const navBtn = document.querySelector(`.nav-btn[data-page="${page}"]`);
@@ -430,9 +421,9 @@ window.kisimTextsCache = kisimTextsCache; // search-engine.js erişimi için
 async function loadKisimTexts(kisim) {
   if (kisimTextsCache[kisim]) return kisimTextsCache[kisim];
   try {
-    // 15 saniye timeout — SW veya network takılırsa fallback'e düş
+    // Timeout: 5 sn içinde gelmezse iptal et, madde.metin fallback devreye girer
     const ctrl = new AbortController();
-    const timer = setTimeout(function() { ctrl.abort(); }, 15000);
+    const timer = setTimeout(function() { ctrl.abort(); }, 5000);
     const resp = await fetch(`texts/kisim${kisim}.json`, { signal: ctrl.signal });
     clearTimeout(timer);
     if (!resp.ok) throw new Error('HTTP ' + resp.status);
@@ -440,85 +431,57 @@ async function loadKisimTexts(kisim) {
     kisimTextsCache[kisim] = data;
     return data;
   } catch (e) {
-    console.error(`K\u0131s\u0131m ${kisim} metinleri y\u00fcklenemedi:`, e);
+    console.warn(`K\u0131s\u0131m ${kisim} metinleri y\u00fcklenemedi (madde.metin fallback):`, e.message);
     return null;
   }
 }
 
 async function openMadde(kisim, maddeNo, fromRoute, searchQuery) {
-  // Madde tam sayfa olarak açılıyor (popup değil)
-  var overlay = document.getElementById('madde-detay');
-  var body = document.getElementById('madde-body');
-  // Diğer sayfaları gizle (CSS override için inline style)
-  document.querySelectorAll('.page').forEach(function(p) {
-    p.classList.remove('active');
-    p.style.display = 'none';
-  });
-  document.querySelectorAll('.nav-btn').forEach(function(b) { b.classList.remove('active'); b.removeAttribute('aria-current'); });
-  // Madde detay sayfasını göster
-  if (overlay) {
-    overlay.style.display = 'block';
-    overlay.style.opacity = '1';
-    overlay.style.visibility = 'visible';
-    document.body.style.overflow = '';
-    window.scrollTo(0, 0);
-  }
-  if (body) {
-    body.innerHTML = '<div style="text-align:center;padding:60px 20px;color:var(--text-muted);">Madde yükleniyor…</div>';
-  }
-
   await ensureMaddelerData();
   const madde = window.maddelerData?.find(m => m.kisim === kisim && m.madde_no === maddeNo);
-  if (!madde) {
-    if (body) body.innerHTML = '<div style="text-align:center;padding:60px 20px;color:var(--text-muted);">Madde bulunamadı. <button type="button" class="btn" onclick="closeMadde()">Kapat</button></div>';
-    return;
-  }
+  if (!madde) return;
 
   // SEO meta güncelle
   var kisimLabel = {1:'Birinci Kısım',2:'İkinci Kısım',3:'Üçüncü Kısım'}[kisim] || '';
-  try {
-    updateSeoMeta(
-      madde.baslik + ' - Se\'âdet-i Ebediyye',
-      kisimLabel + ', Madde ' + maddeNo + ' - ' + madde.baslik + '. Se\'âdet-i Ebediyye İnteraktif İlmihâl.',
-      'https://www.ilmihal.org/madde/' + kisim + '/' + maddeNo
-    );
-  } catch(e) { console.error('updateSeoMeta:', e); }
+  updateSeoMeta(
+    madde.baslik + ' - Se\'âdet-i Ebediyye',
+    kisimLabel + ', Madde ' + maddeNo + ' - ' + madde.baslik + '. Se\'âdet-i Ebediyye İnteraktif İlmihâl.',
+    'https://www.ilmihal.org/madde/' + kisim + '/' + maddeNo
+  );
 
   // Bookmark & read tracking & audio
   currentMaddeForBookmark = madde;
-  try { if (typeof markAsRead === 'function') markAsRead(kisim, maddeNo); } catch(e) { console.error('markAsRead:', e); }
+  if (typeof markAsRead === 'function') markAsRead(kisim, maddeNo);
   // Son okunan maddeyi kaydet ("Kaldığınız yerden devam edin" için)
-  try { localStorage.setItem('ilmihal-son-okunan', JSON.stringify({kisim: kisim, madde_no: maddeNo, baslik: madde.baslik, zaman: Date.now()})); } catch(e) {}
-  try { if (typeof initAudioForMadde === 'function') initAudioForMadde(madde); } catch(e) { console.error('initAudioForMadde:', e); }
+  localStorage.setItem('ilmihal-son-okunan', JSON.stringify({kisim: kisim, madde_no: maddeNo, baslik: madde.baslik, zaman: Date.now()}));
+  if (typeof initAudioForMadde === 'function') initAudioForMadde(madde);
 
   const kisimLabels = { 1: 'Birinci K\u0131s\u0131m', 2: '\u0130kinci K\u0131s\u0131m', 3: '\u00dc\u00e7\u00fcnc\u00fc K\u0131s\u0131m' };
+  const body = document.getElementById('madde-body');
 
   // Update URL
   if (!fromRoute) updateHash(`madde/${kisim}/${maddeNo}`);
 
-  // Overlay zaten görünür; bookmark btn güncelle
-  try { if (typeof updateBookmarkBtn === 'function') updateBookmarkBtn(kisim, maddeNo); } catch(e) { console.error('updateBookmarkBtn:', e); }
+  // Show modal immediately with loading state
+  document.getElementById('madde-detay').style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+  if (typeof updateBookmarkBtn === 'function') updateBookmarkBtn(kisim, maddeNo);
 
-  // madde.metin zaten maddeler-data.js'te tam mevcut — bekleme yok
-  // (kisim JSON sadece varyasyonlar için arka planda yüklenir)
-  const rawMetin = madde.metin || '(Metin bulunamad\u0131)';
-  // Arka planda kisim metnini de cache'e al (gerekirse highlight için)
-  loadKisimTexts(kisim).then(function(texts) {
-    if (texts && texts[String(maddeNo)] && body.isConnected) {
-      // Eğer JSON'da farklı/güncel versiyon varsa text-el'i güncelle
-      var betterMetin = texts[String(maddeNo)];
-      if (betterMetin !== rawMetin) {
-        var textEl = body.querySelector('.madde-text');
-        if (textEl && window.sozlukData) {
-          textEl.innerHTML = highlightWords(betterMetin);
-          body.querySelectorAll('.zor-kelime').forEach(function(el) {
-            el.addEventListener('mouseenter', showTooltip);
-            el.addEventListener('mouseleave', hideTooltip);
-          });
-        }
-      }
-    }
-  });
+  body.innerHTML = `
+    <div class="madde-detail-header">
+      <h3>${madde.baslik}</h3>
+      <div class="madde-detail-meta">
+        <span>${kisimLabels[madde.kisim]}, Madde ${madde.madde_no}</span>
+        <span>${sayfaLinkPdf(madde.sayfa_no, sayfaLabel(madde))}</span>
+        ${madde.mektup_ref ? `<span>Mektup: ${madde.mektup_ref}</span>` : ''}
+      </div>
+    </div>
+    <div class="madde-text" style="text-align:center;padding:40px;color:var(--text-muted);">Metin y\u00fckleniyor...</div>
+  `;
+
+  // Load full text from kisim file
+  const texts = await loadKisimTexts(kisim);
+  const rawMetin = texts?.[String(maddeNo)] || madde.metin || '(Metin bulunamad\u0131)';
 
   // İlişkili maddeler (UX-03)
   var iliskiliHTML = getIliskiliMaddeler(kisim, maddeNo, madde.baslik);
@@ -759,11 +722,13 @@ function getRelatedTables(kisim, maddeNo) {
 }
 
 function closeMadde() {
-  var overlay = document.getElementById('madde-detay');
-  if (overlay) overlay.style.display = 'none';
+  document.getElementById('madde-detay').style.display = 'none';
   document.body.style.overflow = '';
-  // İçindekiler'e dön (madde tam sayfa kapanınca bir sayfaya gitmek lazım)
-  navigateTo('icerik');
+  // Restore hash to parent page
+  const activePage = document.querySelector('.page.active');
+  if (activePage) {
+    updateHash(activePage.id.replace('page-', ''));
+  }
 }
 
 document.addEventListener('keydown', e => {
