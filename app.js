@@ -437,35 +437,41 @@ async function loadKisimTexts(kisim) {
 }
 
 async function openMadde(kisim, maddeNo, fromRoute, searchQuery) {
+  // AŞAMA 0 — Modal'ı HEMEN aç, her şeyden önce. Sonraki satırlar hata atsa bile modal görünür.
+  const _overlay = document.getElementById('madde-detay');
+  const body = document.getElementById('madde-body');
+  if (_overlay) _overlay.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+  if (body) body.innerHTML = '<div style="text-align:center;padding:60px;color:var(--text-muted);">Yükleniyor…</div>';
+
   await ensureMaddelerData();
   const madde = window.maddelerData?.find(m => m.kisim === kisim && m.madde_no === maddeNo);
-  if (!madde) return;
+  if (!madde) {
+    if (body) body.innerHTML = `<div style="text-align:center;padding:40px;"><h3>Madde bulunamadı</h3><button type="button" class="btn" onclick="closeMadde()">Kapat</button></div>`;
+    return;
+  }
+
+  // Bookmark & read tracking & audio (hataya dayanıklı)
+  currentMaddeForBookmark = madde;
+  try { if (typeof markAsRead === 'function') markAsRead(kisim, maddeNo); } catch(e) {}
+  try { localStorage.setItem('ilmihal-son-okunan', JSON.stringify({kisim: kisim, madde_no: maddeNo, baslik: madde.baslik, zaman: Date.now()})); } catch(e) {}
+  try { if (typeof initAudioForMadde === 'function') initAudioForMadde(madde); } catch(e) {}
 
   // SEO meta güncelle
   var kisimLabel = {1:'Birinci Kısım',2:'İkinci Kısım',3:'Üçüncü Kısım'}[kisim] || '';
-  updateSeoMeta(
-    madde.baslik + ' - Se\'âdet-i Ebediyye',
-    kisimLabel + ', Madde ' + maddeNo + ' - ' + madde.baslik + '. Se\'âdet-i Ebediyye İnteraktif İlmihâl.',
-    'https://www.ilmihal.org/madde/' + kisim + '/' + maddeNo
-  );
-
-  // Bookmark & read tracking & audio
-  currentMaddeForBookmark = madde;
-  if (typeof markAsRead === 'function') markAsRead(kisim, maddeNo);
-  // Son okunan maddeyi kaydet ("Kaldığınız yerden devam edin" için)
-  localStorage.setItem('ilmihal-son-okunan', JSON.stringify({kisim: kisim, madde_no: maddeNo, baslik: madde.baslik, zaman: Date.now()}));
-  if (typeof initAudioForMadde === 'function') initAudioForMadde(madde);
+  try {
+    updateSeoMeta(
+      madde.baslik + ' - Se\'âdet-i Ebediyye',
+      kisimLabel + ', Madde ' + maddeNo + ' - ' + madde.baslik + '. Se\'âdet-i Ebediyye İnteraktif İlmihâl.',
+      'https://www.ilmihal.org/madde/' + kisim + '/' + maddeNo
+    );
+  } catch(e) {}
 
   const kisimLabels = { 1: 'Birinci K\u0131s\u0131m', 2: '\u0130kinci K\u0131s\u0131m', 3: '\u00dc\u00e7\u00fcnc\u00fc K\u0131s\u0131m' };
-  const body = document.getElementById('madde-body');
 
   // Update URL
-  if (!fromRoute) updateHash(`madde/${kisim}/${maddeNo}`);
-
-  // Show modal immediately with loading state
-  document.getElementById('madde-detay').style.display = 'flex';
-  document.body.style.overflow = 'hidden';
-  if (typeof updateBookmarkBtn === 'function') updateBookmarkBtn(kisim, maddeNo);
+  if (!fromRoute) { try { updateHash(`madde/${kisim}/${maddeNo}`); } catch(e) {} }
+  try { if (typeof updateBookmarkBtn === 'function') updateBookmarkBtn(kisim, maddeNo); } catch(e) {}
 
   body.innerHTML = `
     <div class="madde-detail-header">
