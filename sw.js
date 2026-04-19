@@ -1,10 +1,11 @@
 // Service Worker - ilmihal.org PWA
-var CACHE_NAME = 'ilmihal-v37';
+var CACHE_NAME = 'ilmihal-v38';
 var CORE_ASSETS = [
   '/',
   '/index.html',
   '/style.css?v=26',
   '/data.js?v=14',
+  '/maddeler-data.js?v=1',
   '/tanimlar.js?v=1',
   '/crossref.js?v=7',
   '/search-engine.js?v=7',
@@ -12,13 +13,12 @@ var CORE_ASSETS = [
   '/audio-map.js?v=1',
   '/arama-sozluk.js?v=1',
   '/rehberler.js?v=1',
-  '/app.js?v=51',
+  '/app.js?v=52',
   '/favicon.svg',
   '/manifest.json'
 ];
 
 var LAZY_ASSETS = [
-  '/maddeler-data.js?v=1',
   '/sozluk-data.js?v=4',
   '/sahislar.js?v=8',
   '/hukumler-data.js',

@@ -449,9 +449,24 @@ async function loadKisimTexts(kisim) {
 }
 
 async function openMadde(kisim, maddeNo, fromRoute, searchQuery) {
-  await ensureMaddelerData();
+  // Modal'ı HEMEN aç — kullanıcı sessiz boşlukla karşılaşmasın
+  const overlay = document.getElementById('madde-detay');
+  const body = document.getElementById('madde-body');
+  if (overlay) overlay.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+  if (body) body.innerHTML = '<div style="text-align:center;padding:60px;color:var(--text-muted);">Yükleniyor…</div>';
+
+  try {
+    await ensureMaddelerData();
+  } catch (e) {
+    if (body) body.innerHTML = '<div style="text-align:center;padding:40px;"><h3>Veri yüklenemedi</h3><p>Madde verileri yüklenirken bir sorun oluştu. Lütfen sayfayı yenileyin.</p><button type="button" class="btn" onclick="location.reload()">Yeniden Dene</button></div>';
+    return;
+  }
   const madde = window.maddelerData?.find(m => m.kisim === kisim && m.madde_no === maddeNo);
-  if (!madde) return;
+  if (!madde) {
+    if (body) body.innerHTML = `<div style="text-align:center;padding:40px;"><h3>Madde bulunamadı</h3><p>Kısım ${kisim}, Madde ${maddeNo} için kayıt yok.</p><button type="button" class="btn" onclick="closeMadde()">Kapat</button></div>`;
+    return;
+  }
 
   // SEO meta güncelle
   var kisimLabel = {1:'Birinci Kısım',2:'İkinci Kısım',3:'Üçüncü Kısım'}[kisim] || '';
@@ -469,14 +484,9 @@ async function openMadde(kisim, maddeNo, fromRoute, searchQuery) {
   if (typeof initAudioForMadde === 'function') initAudioForMadde(madde);
 
   const kisimLabels = { 1: 'Birinci K\u0131s\u0131m', 2: '\u0130kinci K\u0131s\u0131m', 3: '\u00dc\u00e7\u00fcnc\u00fc K\u0131s\u0131m' };
-  const body = document.getElementById('madde-body');
 
   // Update URL
   if (!fromRoute) updateHash(`madde/${kisim}/${maddeNo}`);
-
-  // Show modal immediately with loading state
-  document.getElementById('madde-detay').style.display = 'flex';
-  document.body.style.overflow = 'hidden';
   if (typeof updateBookmarkBtn === 'function') updateBookmarkBtn(kisim, maddeNo);
 
   body.innerHTML = `
@@ -491,9 +501,28 @@ async function openMadde(kisim, maddeNo, fromRoute, searchQuery) {
     <div class="madde-text" style="text-align:center;padding:40px;color:var(--text-muted);">Metin y\u00fckleniyor...</div>
   `;
 
-  // Load full text from kisim file
-  const texts = await loadKisimTexts(kisim);
-  const rawMetin = texts?.[String(maddeNo)] || madde.metin || '(Metin bulunamad\u0131)';
+  // Metin: önce cache'deki kisim JSON, yoksa madde.metin (maddeler-data.js senkron yüklü)
+  // Kısım JSON arka planda yüklenmediyse beklemeden devam et — donma yok
+  const cachedTexts = window.kisimTextsCache?.[kisim];
+  const rawMetin = cachedTexts?.[String(maddeNo)] || madde.metin || '(Metin bulunamad\u0131)';
+
+  // Kısım JSON henüz yüklü değilse arka planda yükle ve metni güncelle
+  if (!cachedTexts) {
+    loadKisimTexts(kisim).then(function(texts) {
+      if (!texts || !body.isConnected) return;
+      var fresh = texts[String(maddeNo)];
+      if (fresh && fresh !== rawMetin) {
+        var textEl = body.querySelector('.madde-text');
+        if (textEl) {
+          textEl.innerHTML = window.sozlukData ? highlightWords(fresh) : escapeHtml(fresh);
+          body.querySelectorAll('.zor-kelime').forEach(function(el) {
+            el.addEventListener('mouseenter', showTooltip);
+            el.addEventListener('mouseleave', hideTooltip);
+          });
+        }
+      }
+    });
+  }
 
   // İlişkili maddeler (UX-03)
   var iliskiliHTML = getIliskiliMaddeler(kisim, maddeNo, madde.baslik);
