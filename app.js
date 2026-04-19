@@ -36,7 +36,8 @@ function handleRoute() {
     const maddeNo = parseInt(parts[2]);
     if (kisim && maddeNo) {
       navigateTo('icerik', true);
-      openMadde(kisim, maddeNo, true);
+      // Setimeout: tüm scripts + init tamamlandıktan sonra modal aç
+      setTimeout(function() { openMadde(kisim, maddeNo, true); }, 300);
       return;
     }
   }
