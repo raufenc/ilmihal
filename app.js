@@ -43,7 +43,7 @@ function handleRoute() {
 
   if (route === 'sahis' && parts[1]) {
     navigateTo('sahislar', true);
-    ensureSahislarData().then(function() { openSahis(decodeURIComponent(parts[1]), true); });
+    setTimeout(() => openSahis(decodeURIComponent(parts[1]), true), 150);
     return;
   }
 
@@ -118,16 +118,6 @@ function updateSeoMeta(title, description, url) {
   if (canonical) canonical.href = url || location.href;
 }
 
-// ===== DEBOUNCE =====
-function debounce(fn, wait) {
-  var t;
-  return function() {
-    var args = arguments, self = this;
-    clearTimeout(t);
-    t = setTimeout(function() { fn.apply(self, args); }, wait);
-  };
-}
-
 // ===== LAZY LOADING (sözlük + maddeler) =====
 var _loadingScripts = {};
 
@@ -160,11 +150,6 @@ function ensureMaddelerData() {
 function ensureSozlukData() {
   if (window.sozlukData) return Promise.resolve();
   return loadScript('sozluk-data.js?v=4');
-}
-
-function ensureSahislarData() {
-  if (window.sahislarData) return Promise.resolve();
-  return loadScript('sahislar.js?v=8');
 }
 
 // ===== TEMA: Gündüz / Sepya / Gece =====
@@ -307,7 +292,7 @@ function navigateTo(page, fromRoute) {
   if (page === 'icerik' && !icerikLoaded) loadIcerik();
   if (page === 'sozluk' && !sozlukLoaded) { ensureSozlukData().then(function() { loadSozluk(); }); }
   if (page === 'fevaid' && !fevaidLoaded) loadFevaid();
-  if (page === 'sahislar' && !sahislarLoaded) { ensureSahislarData().then(function() { loadSahislar(); }); }
+  if (page === 'sahislar' && !sahislarLoaded) loadSahislar();
 }
 
 // Mobile menu
@@ -362,7 +347,7 @@ function loadIcerik(filterKisim, filterText) {
 }
 
 document.getElementById('kisim-filter')?.addEventListener('change', () => loadIcerik());
-document.getElementById('icerik-search')?.addEventListener('input', debounce(() => loadIcerik(), 200));
+document.getElementById('icerik-search')?.addEventListener('input', () => loadIcerik());
 
 function showKisim(k) {
   navigateTo('icerik');
@@ -436,37 +421,20 @@ window.kisimTextsCache = kisimTextsCache; // search-engine.js erişimi için
 async function loadKisimTexts(kisim) {
   if (kisimTextsCache[kisim]) return kisimTextsCache[kisim];
   try {
-    // ?v=2 query: eski SW cache'inde bu URL yok → network fetch zorunlu (bozuk eski cache bypass)
-    const resp = await fetch(`texts/kisim${kisim}.json?v=2`);
-    if (!resp.ok) throw new Error('HTTP ' + resp.status);
+    const resp = await fetch(`texts/kisim${kisim}.json`);
     const data = await resp.json();
     kisimTextsCache[kisim] = data;
     return data;
   } catch (e) {
-    console.warn(`K\u0131s\u0131m ${kisim} metinleri y\u00fcklenemedi:`, e.message);
+    console.error(`K\u0131s\u0131m ${kisim} metinleri y\u00fcklenemedi:`, e);
     return null;
   }
 }
 
 async function openMadde(kisim, maddeNo, fromRoute, searchQuery) {
-  // Modal'ı HEMEN aç — kullanıcı sessiz boşlukla karşılaşmasın
-  const overlay = document.getElementById('madde-detay');
-  const body = document.getElementById('madde-body');
-  if (overlay) overlay.style.display = 'flex';
-  document.body.style.overflow = 'hidden';
-  if (body) body.innerHTML = '<div style="text-align:center;padding:60px;color:var(--text-muted);">Yükleniyor…</div>';
-
-  try {
-    await ensureMaddelerData();
-  } catch (e) {
-    if (body) body.innerHTML = '<div style="text-align:center;padding:40px;"><h3>Veri yüklenemedi</h3><p>Madde verileri yüklenirken bir sorun oluştu. Lütfen sayfayı yenileyin.</p><button type="button" class="btn" onclick="location.reload()">Yeniden Dene</button></div>';
-    return;
-  }
+  await ensureMaddelerData();
   const madde = window.maddelerData?.find(m => m.kisim === kisim && m.madde_no === maddeNo);
-  if (!madde) {
-    if (body) body.innerHTML = `<div style="text-align:center;padding:40px;"><h3>Madde bulunamadı</h3><p>Kısım ${kisim}, Madde ${maddeNo} için kayıt yok.</p><button type="button" class="btn" onclick="closeMadde()">Kapat</button></div>`;
-    return;
-  }
+  if (!madde) return;
 
   // SEO meta güncelle
   var kisimLabel = {1:'Birinci Kısım',2:'İkinci Kısım',3:'Üçüncü Kısım'}[kisim] || '';
@@ -484,9 +452,14 @@ async function openMadde(kisim, maddeNo, fromRoute, searchQuery) {
   if (typeof initAudioForMadde === 'function') initAudioForMadde(madde);
 
   const kisimLabels = { 1: 'Birinci K\u0131s\u0131m', 2: '\u0130kinci K\u0131s\u0131m', 3: '\u00dc\u00e7\u00fcnc\u00fc K\u0131s\u0131m' };
+  const body = document.getElementById('madde-body');
 
   // Update URL
   if (!fromRoute) updateHash(`madde/${kisim}/${maddeNo}`);
+
+  // Show modal immediately with loading state
+  document.getElementById('madde-detay').style.display = 'flex';
+  document.body.style.overflow = 'hidden';
   if (typeof updateBookmarkBtn === 'function') updateBookmarkBtn(kisim, maddeNo);
 
   body.innerHTML = `
@@ -501,28 +474,9 @@ async function openMadde(kisim, maddeNo, fromRoute, searchQuery) {
     <div class="madde-text" style="text-align:center;padding:40px;color:var(--text-muted);">Metin y\u00fckleniyor...</div>
   `;
 
-  // Metin: önce cache'deki kisim JSON, yoksa madde.metin (maddeler-data.js senkron yüklü)
-  // Kısım JSON arka planda yüklenmediyse beklemeden devam et — donma yok
-  const cachedTexts = window.kisimTextsCache?.[kisim];
-  const rawMetin = cachedTexts?.[String(maddeNo)] || madde.metin || '(Metin bulunamad\u0131)';
-
-  // Kısım JSON henüz yüklü değilse arka planda yükle ve metni güncelle
-  if (!cachedTexts) {
-    loadKisimTexts(kisim).then(function(texts) {
-      if (!texts || !body.isConnected) return;
-      var fresh = texts[String(maddeNo)];
-      if (fresh && fresh !== rawMetin) {
-        var textEl = body.querySelector('.madde-text');
-        if (textEl) {
-          textEl.innerHTML = window.sozlukData ? highlightWords(fresh) : escapeHtml(fresh);
-          body.querySelectorAll('.zor-kelime').forEach(function(el) {
-            el.addEventListener('mouseenter', showTooltip);
-            el.addEventListener('mouseleave', hideTooltip);
-          });
-        }
-      }
-    });
-  }
+  // Load full text from kisim file
+  const texts = await loadKisimTexts(kisim);
+  const rawMetin = texts?.[String(maddeNo)] || madde.metin || '(Metin bulunamad\u0131)';
 
   // İlişkili maddeler (UX-03)
   var iliskiliHTML = getIliskiliMaddeler(kisim, maddeNo, madde.baslik);
@@ -1117,10 +1071,10 @@ function loadSozluk(filterText) {
   list.scrollTop = 0;
 }
 
-document.getElementById('sozluk-search')?.addEventListener('input', debounce(() => {
+document.getElementById('sozluk-search')?.addEventListener('input', () => {
   _sozlukSayfa = 1;
   loadSozluk();
-}, 200));
+});
 
 // ===== ŞAHİSLAR =====
 let sahislarLoaded = false;
@@ -1162,7 +1116,7 @@ function loadSahislar() {
   list.innerHTML = html || '<p style="text-align:center;color:var(--text-muted);padding:40px;">Şahıs bulunamadı.</p>';
 }
 
-document.getElementById('sahis-search')?.addEventListener('input', debounce(() => loadSahislar(), 200));
+document.getElementById('sahis-search')?.addEventListener('input', () => loadSahislar());
 
 function openSahis(slug, fromRoute) {
   if (!window.sahislarData) return;
@@ -1366,9 +1320,9 @@ function renderTabloCard(tablo) {
   `;
 }
 
-document.getElementById('tablo-search')?.addEventListener('input', debounce((e) => {
+document.getElementById('tablo-search')?.addEventListener('input', (e) => {
   loadTablolar(tabloActiveKat, e.target.value);
-}, 200));
+});
 
 document.querySelectorAll('.tablo-filter-btn').forEach(btn => {
   btn.addEventListener('click', () => {
@@ -2607,13 +2561,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   // Arka planda veri dosyalarını önceden yükle
   setTimeout(() => {
-    // Sözlük: yüklendiğinde index'i de arka planda build et ki madde açılırken donma olmasın
-    ensureSozlukData().then(function() {
-      if (!window.sozlukData) return;
-      var run = function() { try { buildSozlukIndex(); } catch(e) {} };
-      if (window.requestIdleCallback) requestIdleCallback(run, { timeout: 2000 });
-      else setTimeout(run, 100);
-    });
+    ensureSozlukData();
     ensureMaddelerData();
     loadKisimTexts(1);
     loadKisimTexts(2);
@@ -3075,7 +3023,7 @@ function renderAyetHadis(filterText) {
 document.addEventListener('DOMContentLoaded', function() {
   var ahSearch = document.getElementById('ah-search');
   if (ahSearch) {
-    ahSearch.addEventListener('input', debounce(function() { renderAyetHadis(); }, 200));
+    ahSearch.addEventListener('input', function() { renderAyetHadis(); });
   }
 });
 
