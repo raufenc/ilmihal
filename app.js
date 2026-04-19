@@ -36,8 +36,7 @@ function handleRoute() {
     const maddeNo = parseInt(parts[2]);
     if (kisim && maddeNo) {
       navigateTo('icerik', true);
-      // 150ms ertele: tarayıcı önce sayfayı (İçindekiler'i) render etsin, kullanıcı boş beyaz ekran görmesin
-      setTimeout(function() { openMadde(kisim, maddeNo, true); }, 150);
+      openMadde(kisim, maddeNo, true);
       return;
     }
   }
@@ -433,9 +432,8 @@ async function loadKisimTexts(kisim) {
 }
 
 async function openMadde(kisim, maddeNo, fromRoute, searchQuery) {
-  // tocData (data.js, senkron yüklü) modal meta için yeterli.
-  // maddeler-data.js (4.4 MB) parse main thread'i dondurabilir; gerekmedikçe bekleme.
-  const madde = window.tocData?.find(m => m.kisim === kisim && m.madde_no === maddeNo);
+  await ensureMaddelerData();
+  const madde = window.maddelerData?.find(m => m.kisim === kisim && m.madde_no === maddeNo);
   if (!madde) return;
 
   // SEO meta güncelle
@@ -476,28 +474,16 @@ async function openMadde(kisim, maddeNo, fromRoute, searchQuery) {
     <div class="madde-text" style="text-align:center;padding:40px;color:var(--text-muted);">Metin y\u00fckleniyor...</div>
   `;
 
-  // Load full text from kisim file. Fallback sırası:
-  // 1) kisim JSON cache, 2) kisim JSON fetch, 3) maddelerData lazy yüklenip madde.metin
-  let rawMetin;
-  const cachedTexts = window.kisimTextsCache?.[kisim];
-  if (cachedTexts?.[String(maddeNo)]) {
-    rawMetin = cachedTexts[String(maddeNo)];
-  } else {
-    const texts = await loadKisimTexts(kisim);
-    rawMetin = texts?.[String(maddeNo)];
-    if (!rawMetin) {
-      // Son çare: maddelerData (ağır yük) lazy yükle
-      await ensureMaddelerData();
-      const mFull = window.maddelerData?.find(m => m.kisim === kisim && m.madde_no === maddeNo);
-      rawMetin = mFull?.metin || '(Metin bulunamad\u0131)';
-    }
-  }
+  // Load full text from kisim file
+  const texts = await loadKisimTexts(kisim);
+  const rawMetin = texts?.[String(maddeNo)] || madde.metin || '(Metin bulunamad\u0131)';
 
-  // AŞAMA 1 — Çekirdek render (hiçbir ek fonksiyon çağrısı yok, hata atamaz)
-  function safeSayfaLink() {
-    try { return sayfaLinkPdf(madde.sayfa_no, sayfaLabel(madde)); } catch(e) { return ''; }
-  }
-  body.innerHTML = `
+  // İlişkili maddeler (UX-03)
+  var iliskiliHTML = getIliskiliMaddeler(kisim, maddeNo, madde.baslik);
+
+  // Metni hemen göster (sözlük yükünü bekleme)
+  function renderBody(metin) {
+    body.innerHTML = `
     <nav class="breadcrumb" aria-label="Konum">
       <a href="#" onclick="closeMadde();navigateTo('anasayfa');return false">Ana Sayfa</a>
       <span class="breadcrumb-sep">›</span>
@@ -511,73 +497,57 @@ async function openMadde(kisim, maddeNo, fromRoute, searchQuery) {
       <h3>${madde.baslik}</h3>
       <div class="madde-detail-meta">
         <span>${kisimLabels[madde.kisim]}, Madde ${madde.madde_no}</span>
-        <span>${safeSayfaLink()}</span>
+        <span>${sayfaLinkPdf(madde.sayfa_no, sayfaLabel(madde))}</span>
         ${madde.mektup_ref ? `<span>Mektup: ${madde.mektup_ref}</span>` : ''}
       </div>
     </div>
-    <div class="madde-text">${escapeHtml(rawMetin)}</div>
+    <div class="madde-text">${metin}</div>
     <div class="madde-paylasim-bar">
       <button type="button" class="btn btn-sm" onclick="maddePaylasText(${kisim},${maddeNo})">Paylas</button>
       <button type="button" class="btn btn-sm btn-secondary" style="background:var(--primary-light);color:#fff;" onclick="maddePaylasimKarti(${kisim},${maddeNo})">Gorsel Kart</button>
     </div>
-    <div id="madde-extras"></div>
+    ${getRelatedSahislar(kisim, maddeNo)}
+    ${getRelatedTables(kisim, maddeNo)}
+    ${iliskiliHTML}
   `;
+    body.querySelectorAll('.zor-kelime').forEach(el => {
+      el.addEventListener('mouseenter', showTooltip);
+      el.addEventListener('mouseleave', hideTooltip);
+    });
+  }
 
   // Arama highlight helper
   function applySearchHighlight() {
     if (searchQuery) {
       const maddeTextEl = body.querySelector('.madde-text');
-      if (maddeTextEl) {
-        try { highlightAndScroll(maddeTextEl, searchQuery); } catch(e) {}
-      }
+      if (maddeTextEl) highlightAndScroll(maddeTextEl, searchQuery);
     }
   }
-  applySearchHighlight();
 
-  // AŞAMA 2 — Ekstra bileşenler, her biri ayrı event-loop turu ve try/catch'li (hata iç render'ı bozmaz)
-  setTimeout(function() {
-    try {
-      if (window.sozlukData) {
+  // Sözlük zaten yüklüyse hemen highlight'la, yoksa önce metni göster sonra arka planda yükle
+  if (window.sozlukData) {
+    renderBody(highlightWords(rawMetin));
+    applySearchHighlight();
+  } else {
+    renderBody(escapeHtml(rawMetin));
+    applySearchHighlight();
+    ensureSozlukData().then(function() {
+      if (window.sozlukData && body.isConnected) {
         const textEl = body.querySelector('.madde-text');
         if (textEl) textEl.innerHTML = highlightWords(rawMetin);
-        body.querySelectorAll('.zor-kelime').forEach(function(el) {
+        body.querySelectorAll('.zor-kelime').forEach(el => {
           el.addEventListener('mouseenter', showTooltip);
           el.addEventListener('mouseleave', hideTooltip);
         });
         applySearchHighlight();
-      } else if (typeof ensureSozlukData === 'function') {
-        ensureSozlukData().then(function() {
-          if (window.sozlukData && body.isConnected) {
-            const textEl = body.querySelector('.madde-text');
-            if (textEl) textEl.innerHTML = highlightWords(rawMetin);
-            body.querySelectorAll('.zor-kelime').forEach(function(el) {
-              el.addEventListener('mouseenter', showTooltip);
-              el.addEventListener('mouseleave', hideTooltip);
-            });
-            applySearchHighlight();
-          }
-        });
       }
-    } catch(e) { console.warn('openMadde highlight hatası:', e); }
-  }, 0);
+    });
+  }
 
-  setTimeout(function() {
-    try {
-      var extras = document.getElementById('madde-extras');
-      if (!extras) return;
-      var html = '';
-      try { html += getRelatedSahislar(kisim, maddeNo) || ''; } catch(e) {}
-      try { html += getRelatedTables(kisim, maddeNo) || ''; } catch(e) {}
-      try { html += getIliskiliMaddeler(kisim, maddeNo, madde.baslik) || ''; } catch(e) {}
-      extras.innerHTML = html;
-    } catch(e) { console.warn('openMadde extras hatası:', e); }
-  }, 50);
-
-  setTimeout(function() {
-    try { if (typeof addFaqSchema === 'function') addFaqSchema(madde, rawMetin); } catch(e) {}
-    try { if (typeof updateOgMeta === 'function') updateOgMeta(madde); } catch(e) {}
-    try { if (typeof updateStreak === 'function') updateStreak(); } catch(e) {}
-  }, 100);
+  // FAQ Schema + OG meta + Streak
+  if (typeof addFaqSchema === 'function') addFaqSchema(madde, rawMetin);
+  if (typeof updateOgMeta === 'function') updateOgMeta(madde);
+  if (typeof updateStreak === 'function') updateStreak();
 }
 
 // Madde metninde arama kelimelerini highlight'la ve en uygun bölgeye scroll et
@@ -2602,11 +2572,9 @@ document.addEventListener('DOMContentLoaded', () => {
   if (typeof loadGununMaddesi === 'function') loadGununMaddesi();
 
   // Handle initial route (clean URL veya hash)
-  // setTimeout: event loop'a bırak, browser ilk paint yapsın, sonra ağır iş başlasın
-  // (rAF background tab'da throttled olduğu için setTimeout daha güvenli)
   var initialPath = getRoutePath();
   if (initialPath && initialPath !== 'anasayfa') {
-    setTimeout(handleRoute, 0);
+    handleRoute();
   }
 });
 

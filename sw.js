@@ -1,8 +1,6 @@
 // KAMIKAZE SW — tüm cache'leri siler, kendini unregister eder.
-// PWA modunu tamamen kaldırıyoruz; eski cache'te takılı kalan kullanıcıları
-// kurtarmak için bu SW deploy edildi. Sonraki ziyaretlerde index.html artık
-// SW register etmiyor, dolayısıyla tarayıcı doğrudan network'ten fresh
-// içerik alır (Vercel CDN + HTTP cache yeterli).
+// PWA modu kaldırıldı; eski cache'lere takılı kalan kullanıcıları kurtarmak için bu SW deploy edildi.
+// Sonraki ziyaretlerde index.html SW register etmiyor, tarayıcı network'ten fresh içerik alır.
 self.addEventListener('install', function(e) {
   e.waitUntil(self.skipWaiting());
 });
@@ -23,7 +21,6 @@ self.addEventListener('activate', function(e) {
   );
 });
 
-// Fetch: SW'yi tamamen bypass et, network'e gönder
 self.addEventListener('fetch', function(e) {
   e.respondWith(fetch(e.request));
 });

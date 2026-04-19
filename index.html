@@ -61,9 +61,6 @@
     "sameAs": ["https://github.com/raufenc/ilmihal"]
   }]
   </script>
-  <!-- Vercel Analytics + Speed Insights -->
-  <script defer src="/_vercel/insights/script.js"></script>
-  <script defer src="/_vercel/speed-insights/script.js"></script>
 </head>
 <body>
   <a href="#page-anasayfa" class="skip-link">İçeriğe Geç</a>
@@ -679,14 +676,12 @@
   <script src="audio-map.js?v=1"></script>
   <script src="arama-sozluk.js?v=1"></script>
   <script src="rehberler.js?v=1"></script>
-  <script src="app.js?v=58"></script>
+  <script src="app.js?v=59"></script>
   <script>
-    // PWA mode kaldırıldı. Eski SW'si olan kullanıcılar için kurtarma:
-    // bir kez register et (kamikaze sw.js SW'yi ve cache'leri siler, sonra reload).
+    // PWA kapatıldı. Eski SW kayıtlı kullanıcılar için kurtarma: bir kez çağrılır, kamikaze SW cache'leri siler ve kendini unregister eder.
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.getRegistrations().then(function(regs) {
         if (regs.length > 0) {
-          // Eski SW'si var: kamikaze sw.js'i register et, cache'leri sildirip kendini unregister etsin
           navigator.serviceWorker.register('/sw.js').then(function(reg) { reg.update(); });
           if (!sessionStorage.getItem('ilmihal-sw-cleanup')) {
             navigator.serviceWorker.addEventListener('controllerchange', function() {
@@ -695,7 +690,6 @@
             });
           }
         }
-        // Eski SW'si yoksa hiç register etme — site doğrudan network'ten çalışır
       }).catch(function(){});
     }
   </script>
