@@ -480,8 +480,8 @@ async function openMadde(kisim, maddeNo, fromRoute, searchQuery) {
   `;
 
   // Load full text from kisim file
-  const texts = await loadKisimTexts(kisim);
-  const rawMetin = texts?.[String(maddeNo)] || madde.metin || '(Metin bulunamad\u0131)';
+  // madde.metin zaten maddeler-data.js'te senkron yüklü; texts/kisim*.json fetch gereksiz
+  const rawMetin = madde.metin || '(Metin bulunamad\u0131)';
 
   // İlişkili maddeler (UX-03)
   var iliskiliHTML = getIliskiliMaddeler(kisim, maddeNo, madde.baslik);
