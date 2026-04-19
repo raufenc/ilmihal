@@ -43,7 +43,7 @@ function handleRoute() {
 
   if (route === 'sahis' && parts[1]) {
     navigateTo('sahislar', true);
-    setTimeout(() => openSahis(decodeURIComponent(parts[1]), true), 150);
+    ensureSahislarData().then(function() { openSahis(decodeURIComponent(parts[1]), true); });
     return;
   }
 
@@ -118,6 +118,16 @@ function updateSeoMeta(title, description, url) {
   if (canonical) canonical.href = url || location.href;
 }
 
+// ===== DEBOUNCE =====
+function debounce(fn, wait) {
+  var t;
+  return function() {
+    var args = arguments, self = this;
+    clearTimeout(t);
+    t = setTimeout(function() { fn.apply(self, args); }, wait);
+  };
+}
+
 // ===== LAZY LOADING (sözlük + maddeler) =====
 var _loadingScripts = {};
 
@@ -150,6 +160,11 @@ function ensureMaddelerData() {
 function ensureSozlukData() {
   if (window.sozlukData) return Promise.resolve();
   return loadScript('sozluk-data.js?v=4');
+}
+
+function ensureSahislarData() {
+  if (window.sahislarData) return Promise.resolve();
+  return loadScript('sahislar.js?v=8');
 }
 
 // ===== TEMA: Gündüz / Sepya / Gece =====
@@ -292,7 +307,7 @@ function navigateTo(page, fromRoute) {
   if (page === 'icerik' && !icerikLoaded) loadIcerik();
   if (page === 'sozluk' && !sozlukLoaded) { ensureSozlukData().then(function() { loadSozluk(); }); }
   if (page === 'fevaid' && !fevaidLoaded) loadFevaid();
-  if (page === 'sahislar' && !sahislarLoaded) loadSahislar();
+  if (page === 'sahislar' && !sahislarLoaded) { ensureSahislarData().then(function() { loadSahislar(); }); }
 }
 
 // Mobile menu
@@ -347,7 +362,7 @@ function loadIcerik(filterKisim, filterText) {
 }
 
 document.getElementById('kisim-filter')?.addEventListener('change', () => loadIcerik());
-document.getElementById('icerik-search')?.addEventListener('input', () => loadIcerik());
+document.getElementById('icerik-search')?.addEventListener('input', debounce(() => loadIcerik(), 200));
 
 function showKisim(k) {
   navigateTo('icerik');
@@ -421,17 +436,13 @@ window.kisimTextsCache = kisimTextsCache; // search-engine.js erişimi için
 async function loadKisimTexts(kisim) {
   if (kisimTextsCache[kisim]) return kisimTextsCache[kisim];
   try {
-    // Timeout: 5 sn içinde gelmezse iptal et, madde.metin fallback devreye girer
-    const ctrl = new AbortController();
-    const timer = setTimeout(function() { ctrl.abort(); }, 5000);
-    const resp = await fetch(`texts/kisim${kisim}.json`, { signal: ctrl.signal });
-    clearTimeout(timer);
+    const resp = await fetch(`texts/kisim${kisim}.json`);
     if (!resp.ok) throw new Error('HTTP ' + resp.status);
     const data = await resp.json();
     kisimTextsCache[kisim] = data;
     return data;
   } catch (e) {
-    console.warn(`K\u0131s\u0131m ${kisim} metinleri y\u00fcklenemedi (madde.metin fallback):`, e.message);
+    console.warn(`K\u0131s\u0131m ${kisim} metinleri y\u00fcklenemedi:`, e.message);
     return null;
   }
 }
@@ -1076,10 +1087,10 @@ function loadSozluk(filterText) {
   list.scrollTop = 0;
 }
 
-document.getElementById('sozluk-search')?.addEventListener('input', () => {
+document.getElementById('sozluk-search')?.addEventListener('input', debounce(() => {
   _sozlukSayfa = 1;
   loadSozluk();
-});
+}, 200));
 
 // ===== ŞAHİSLAR =====
 let sahislarLoaded = false;
@@ -1121,7 +1132,7 @@ function loadSahislar() {
   list.innerHTML = html || '<p style="text-align:center;color:var(--text-muted);padding:40px;">Şahıs bulunamadı.</p>';
 }
 
-document.getElementById('sahis-search')?.addEventListener('input', () => loadSahislar());
+document.getElementById('sahis-search')?.addEventListener('input', debounce(() => loadSahislar(), 200));
 
 function openSahis(slug, fromRoute) {
   if (!window.sahislarData) return;
@@ -1325,9 +1336,9 @@ function renderTabloCard(tablo) {
   `;
 }
 
-document.getElementById('tablo-search')?.addEventListener('input', (e) => {
+document.getElementById('tablo-search')?.addEventListener('input', debounce((e) => {
   loadTablolar(tabloActiveKat, e.target.value);
-});
+}, 200));
 
 document.querySelectorAll('.tablo-filter-btn').forEach(btn => {
   btn.addEventListener('click', () => {
@@ -2566,7 +2577,13 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   // Arka planda veri dosyalarını önceden yükle
   setTimeout(() => {
-    ensureSozlukData();
+    // Sözlük: yüklendiğinde index'i de arka planda build et ki madde açılırken donma olmasın
+    ensureSozlukData().then(function() {
+      if (!window.sozlukData) return;
+      var run = function() { try { buildSozlukIndex(); } catch(e) {} };
+      if (window.requestIdleCallback) requestIdleCallback(run, { timeout: 2000 });
+      else setTimeout(run, 100);
+    });
     ensureMaddelerData();
     loadKisimTexts(1);
     loadKisimTexts(2);
@@ -3028,7 +3045,7 @@ function renderAyetHadis(filterText) {
 document.addEventListener('DOMContentLoaded', function() {
   var ahSearch = document.getElementById('ah-search');
   if (ahSearch) {
-    ahSearch.addEventListener('input', function() { renderAyetHadis(); });
+    ahSearch.addEventListener('input', debounce(function() { renderAyetHadis(); }, 200));
   }
 });
 
