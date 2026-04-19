@@ -2572,14 +2572,11 @@ document.addEventListener('DOMContentLoaded', () => {
   if (typeof loadGununMaddesi === 'function') loadGununMaddesi();
 
   // Handle initial route (clean URL veya hash)
-  // DOMContentLoaded'den sonra ilk paint'i bekle — browser donmasın
+  // setTimeout: event loop'a bırak, browser ilk paint yapsın, sonra ağır iş başlasın
+  // (rAF background tab'da throttled olduğu için setTimeout daha güvenli)
   var initialPath = getRoutePath();
   if (initialPath && initialPath !== 'anasayfa') {
-    requestAnimationFrame(function() {
-      requestAnimationFrame(function() {
-        handleRoute();
-      });
-    });
+    setTimeout(handleRoute, 0);
   }
 });
 
