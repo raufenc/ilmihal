@@ -433,8 +433,9 @@ async function loadKisimTexts(kisim) {
 }
 
 async function openMadde(kisim, maddeNo, fromRoute, searchQuery) {
-  await ensureMaddelerData();
-  const madde = window.maddelerData?.find(m => m.kisim === kisim && m.madde_no === maddeNo);
+  // tocData (data.js, senkron yüklü) modal meta için yeterli.
+  // maddeler-data.js (4.4 MB) parse main thread'i dondurabilir; gerekmedikçe bekleme.
+  const madde = window.tocData?.find(m => m.kisim === kisim && m.madde_no === maddeNo);
   if (!madde) return;
 
   // SEO meta güncelle
@@ -475,9 +476,22 @@ async function openMadde(kisim, maddeNo, fromRoute, searchQuery) {
     <div class="madde-text" style="text-align:center;padding:40px;color:var(--text-muted);">Metin y\u00fckleniyor...</div>
   `;
 
-  // Load full text from kisim file
-  const texts = await loadKisimTexts(kisim);
-  const rawMetin = texts?.[String(maddeNo)] || madde.metin || '(Metin bulunamad\u0131)';
+  // Load full text from kisim file. Fallback sırası:
+  // 1) kisim JSON cache, 2) kisim JSON fetch, 3) maddelerData lazy yüklenip madde.metin
+  let rawMetin;
+  const cachedTexts = window.kisimTextsCache?.[kisim];
+  if (cachedTexts?.[String(maddeNo)]) {
+    rawMetin = cachedTexts[String(maddeNo)];
+  } else {
+    const texts = await loadKisimTexts(kisim);
+    rawMetin = texts?.[String(maddeNo)];
+    if (!rawMetin) {
+      // Son çare: maddelerData (ağır yük) lazy yükle
+      await ensureMaddelerData();
+      const mFull = window.maddelerData?.find(m => m.kisim === kisim && m.madde_no === maddeNo);
+      rawMetin = mFull?.metin || '(Metin bulunamad\u0131)';
+    }
+  }
 
   // İlişkili maddeler (UX-03)
   var iliskiliHTML = getIliskiliMaddeler(kisim, maddeNo, madde.baslik);
