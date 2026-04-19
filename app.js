@@ -4232,54 +4232,16 @@ function togglePodcastMode() {
   };
 })();
 
-// ===== IA-02: KULLANICI NİYETİNE GÖRE GİRİŞ KAPILARI =====
+// "Nereden Başlasam?" niyet kartları kaldırıldı — ana sayfa sade tutuldu
+
+// UX-01 Onboarding ipucu kaldırıldı — istenmedik popup'lar çıkarıldı
 (function() {
-  // Ana sayfadaki "Konulara Hızlı Erişim" bölümünün önüne niyet tabanlı kartlar ekle
-  var hizliErisim = document.querySelector('.hizli-erisim');
-  if (!hizliErisim) return;
-
-  var section = document.createElement('section');
-  section.className = 'niyet-giris';
-  section.innerHTML = '<div class="container">' +
-    '<h3 class="section-title">Nereden Başlasam?</h3>' +
-    '<div class="niyet-kartlari">' +
-      '<a class="niyet-kart" href="#" onclick="navigateTo(\'rehberler\');return false">' +
-        '<span class="niyet-kart-icon">🆕</span>' +
-        '<h3>İlk Kez Geliyorum</h3>' +
-        '<p>Rehberlerle adım adım başlayın. Namaz, oruç ve temel bilgiler.</p>' +
-      '</a>' +
-      '<a class="niyet-kart" href="#" onclick="navigateTo(\'icerik\');return false">' +
-        '<span class="niyet-kart-icon">🔍</span>' +
-        '<h3>Belirli Bir Konu Arıyorum</h3>' +
-        '<p>İçindekilerden konuya gidin veya arama yapın.</p>' +
-      '</a>' +
-      '<a class="niyet-kart" href="#" onclick="navigateTo(\'calisma-alanim\');return false">' +
-        '<span class="niyet-kart-icon">📖</span>' +
-        '<h3>Düzenli Okuyorum</h3>' +
-        '<p>Kaldığınız yerden devam edin, okuma planınızı takip edin.</p>' +
-      '</a>' +
-    '</div>' +
-  '</div>';
-
-  hizliErisim.parentNode.insertBefore(section, hizliErisim);
-})();
-
-// ===== UX-01: ONBOARDING / İLK KULLANIM İPUCU =====
-(function() {
+  if (true) return; // disabled
   if (localStorage.getItem('ilmihal-onboarding-seen')) return;
 
-  // İlk ziyarette kısa ipucu göster
   var tip = document.createElement('div');
   tip.id = 'onboarding-tip';
-  tip.style.cssText = 'position:fixed;bottom:24px;right:24px;z-index:999;background:var(--bg-card);border:2px solid var(--primary);border-radius:var(--radius);padding:20px 24px;max-width:340px;box-shadow:var(--shadow-lg);';
-  tip.innerHTML = '<div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:8px;"><strong style="color:var(--primary-dark);">Hoş Geldiniz!</strong><button type="button" onclick="closeOnboarding()" style="background:none;border:none;font-size:1.2rem;cursor:pointer;color:var(--text-muted);">&times;</button></div>' +
-    '<p style="font-size:0.88rem;color:var(--text-light);line-height:1.5;margin-bottom:12px;">Birkaç ipucu:</p>' +
-    '<ul style="font-size:0.85rem;color:var(--text-light);line-height:1.7;padding-left:18px;margin:0;">' +
-      '<li>Bir madde açıp <strong>kelimelerin altına</strong> gelin → anlamı görün</li>' +
-      '<li><strong>⭐ Yıldız</strong> ile yer imi ekleyin</li>' +
-      '<li><strong>A-/A+</strong> ile yazı boyutunu ayarlayın</li>' +
-      '<li><strong>🌙 Tema</strong> butonu ile gece moduna geçin</li>' +
-    '</ul>' +
+  tip.innerHTML = '' +
     '<button type="button" onclick="closeOnboarding()" class="btn btn-primary btn-sm" style="margin-top:12px;width:100%;">Anladım</button>';
   document.body.appendChild(tip);
 
@@ -4599,9 +4561,7 @@ function showOnboarding() {
   render();
   document.body.appendChild(overlay);
 }
-document.addEventListener('DOMContentLoaded', function() {
-  setTimeout(showOnboarding, 2600);
-});
+// showOnboarding kaldırıldı — 8 adımlı tour istenmedi
 
 // ===== OZELLIK 4: KLAVYE KISAYOLLARI =====
 var _kisayollarAcik = false;
