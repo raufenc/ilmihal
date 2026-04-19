@@ -2572,9 +2572,14 @@ document.addEventListener('DOMContentLoaded', () => {
   if (typeof loadGununMaddesi === 'function') loadGununMaddesi();
 
   // Handle initial route (clean URL veya hash)
+  // DOMContentLoaded'den sonra ilk paint'i bekle — browser donmasın
   var initialPath = getRoutePath();
   if (initialPath && initialPath !== 'anasayfa') {
-    handleRoute();
+    requestAnimationFrame(function() {
+      requestAnimationFrame(function() {
+        handleRoute();
+      });
+    });
   }
 });
 
