@@ -493,12 +493,11 @@ async function openMadde(kisim, maddeNo, fromRoute, searchQuery) {
     }
   }
 
-  // İlişkili maddeler (UX-03)
-  var iliskiliHTML = getIliskiliMaddeler(kisim, maddeNo, madde.baslik);
-
-  // Metni hemen göster (sözlük yükünü bekleme)
-  function renderBody(metin) {
-    body.innerHTML = `
+  // AŞAMA 1 — Çekirdek render (hiçbir ek fonksiyon çağrısı yok, hata atamaz)
+  function safeSayfaLink() {
+    try { return sayfaLinkPdf(madde.sayfa_no, sayfaLabel(madde)); } catch(e) { return ''; }
+  }
+  body.innerHTML = `
     <nav class="breadcrumb" aria-label="Konum">
       <a href="#" onclick="closeMadde();navigateTo('anasayfa');return false">Ana Sayfa</a>
       <span class="breadcrumb-sep">›</span>
@@ -512,57 +511,73 @@ async function openMadde(kisim, maddeNo, fromRoute, searchQuery) {
       <h3>${madde.baslik}</h3>
       <div class="madde-detail-meta">
         <span>${kisimLabels[madde.kisim]}, Madde ${madde.madde_no}</span>
-        <span>${sayfaLinkPdf(madde.sayfa_no, sayfaLabel(madde))}</span>
+        <span>${safeSayfaLink()}</span>
         ${madde.mektup_ref ? `<span>Mektup: ${madde.mektup_ref}</span>` : ''}
       </div>
     </div>
-    <div class="madde-text">${metin}</div>
+    <div class="madde-text">${escapeHtml(rawMetin)}</div>
     <div class="madde-paylasim-bar">
       <button type="button" class="btn btn-sm" onclick="maddePaylasText(${kisim},${maddeNo})">Paylas</button>
       <button type="button" class="btn btn-sm btn-secondary" style="background:var(--primary-light);color:#fff;" onclick="maddePaylasimKarti(${kisim},${maddeNo})">Gorsel Kart</button>
     </div>
-    ${getRelatedSahislar(kisim, maddeNo)}
-    ${getRelatedTables(kisim, maddeNo)}
-    ${iliskiliHTML}
+    <div id="madde-extras"></div>
   `;
-    body.querySelectorAll('.zor-kelime').forEach(el => {
-      el.addEventListener('mouseenter', showTooltip);
-      el.addEventListener('mouseleave', hideTooltip);
-    });
-  }
 
   // Arama highlight helper
   function applySearchHighlight() {
     if (searchQuery) {
       const maddeTextEl = body.querySelector('.madde-text');
-      if (maddeTextEl) highlightAndScroll(maddeTextEl, searchQuery);
+      if (maddeTextEl) {
+        try { highlightAndScroll(maddeTextEl, searchQuery); } catch(e) {}
+      }
     }
   }
+  applySearchHighlight();
 
-  // Sözlük zaten yüklüyse hemen highlight'la, yoksa önce metni göster sonra arka planda yükle
-  if (window.sozlukData) {
-    renderBody(highlightWords(rawMetin));
-    applySearchHighlight();
-  } else {
-    renderBody(escapeHtml(rawMetin));
-    applySearchHighlight();
-    ensureSozlukData().then(function() {
-      if (window.sozlukData && body.isConnected) {
+  // AŞAMA 2 — Ekstra bileşenler, her biri ayrı event-loop turu ve try/catch'li (hata iç render'ı bozmaz)
+  setTimeout(function() {
+    try {
+      if (window.sozlukData) {
         const textEl = body.querySelector('.madde-text');
         if (textEl) textEl.innerHTML = highlightWords(rawMetin);
-        body.querySelectorAll('.zor-kelime').forEach(el => {
+        body.querySelectorAll('.zor-kelime').forEach(function(el) {
           el.addEventListener('mouseenter', showTooltip);
           el.addEventListener('mouseleave', hideTooltip);
         });
         applySearchHighlight();
+      } else if (typeof ensureSozlukData === 'function') {
+        ensureSozlukData().then(function() {
+          if (window.sozlukData && body.isConnected) {
+            const textEl = body.querySelector('.madde-text');
+            if (textEl) textEl.innerHTML = highlightWords(rawMetin);
+            body.querySelectorAll('.zor-kelime').forEach(function(el) {
+              el.addEventListener('mouseenter', showTooltip);
+              el.addEventListener('mouseleave', hideTooltip);
+            });
+            applySearchHighlight();
+          }
+        });
       }
-    });
-  }
+    } catch(e) { console.warn('openMadde highlight hatası:', e); }
+  }, 0);
 
-  // FAQ Schema + OG meta + Streak
-  if (typeof addFaqSchema === 'function') addFaqSchema(madde, rawMetin);
-  if (typeof updateOgMeta === 'function') updateOgMeta(madde);
-  if (typeof updateStreak === 'function') updateStreak();
+  setTimeout(function() {
+    try {
+      var extras = document.getElementById('madde-extras');
+      if (!extras) return;
+      var html = '';
+      try { html += getRelatedSahislar(kisim, maddeNo) || ''; } catch(e) {}
+      try { html += getRelatedTables(kisim, maddeNo) || ''; } catch(e) {}
+      try { html += getIliskiliMaddeler(kisim, maddeNo, madde.baslik) || ''; } catch(e) {}
+      extras.innerHTML = html;
+    } catch(e) { console.warn('openMadde extras hatası:', e); }
+  }, 50);
+
+  setTimeout(function() {
+    try { if (typeof addFaqSchema === 'function') addFaqSchema(madde, rawMetin); } catch(e) {}
+    try { if (typeof updateOgMeta === 'function') updateOgMeta(madde); } catch(e) {}
+    try { if (typeof updateStreak === 'function') updateStreak(); } catch(e) {}
+  }, 100);
 }
 
 // Madde metninde arama kelimelerini highlight'la ve en uygun bölgeye scroll et
