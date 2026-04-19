@@ -436,7 +436,8 @@ window.kisimTextsCache = kisimTextsCache; // search-engine.js erişimi için
 async function loadKisimTexts(kisim) {
   if (kisimTextsCache[kisim]) return kisimTextsCache[kisim];
   try {
-    const resp = await fetch(`texts/kisim${kisim}.json`);
+    // ?v=2 query: eski SW cache'inde bu URL yok → network fetch zorunlu (bozuk eski cache bypass)
+    const resp = await fetch(`texts/kisim${kisim}.json?v=2`);
     if (!resp.ok) throw new Error('HTTP ' + resp.status);
     const data = await resp.json();
     kisimTextsCache[kisim] = data;

@@ -1,5 +1,5 @@
 // Service Worker - ilmihal.org PWA
-var CACHE_NAME = 'ilmihal-v36';
+var CACHE_NAME = 'ilmihal-v37';
 var CORE_ASSETS = [
   '/',
   '/index.html',
@@ -12,7 +12,7 @@ var CORE_ASSETS = [
   '/audio-map.js?v=1',
   '/arama-sozluk.js?v=1',
   '/rehberler.js?v=1',
-  '/app.js?v=50',
+  '/app.js?v=51',
   '/favicon.svg',
   '/manifest.json'
 ];
@@ -22,9 +22,9 @@ var LAZY_ASSETS = [
   '/sozluk-data.js?v=4',
   '/sahislar.js?v=8',
   '/hukumler-data.js',
-  '/texts/kisim1.json',
-  '/texts/kisim2.json',
-  '/texts/kisim3.json'
+  '/texts/kisim1.json?v=2',
+  '/texts/kisim2.json?v=2',
+  '/texts/kisim3.json?v=2'
 ];
 
 // Install: core dosyaları cache'le
