@@ -422,8 +422,11 @@ window.kisimTextsCache = kisimTextsCache; // search-engine.js erişimi için
 async function loadKisimTexts(kisim) {
   if (kisimTextsCache[kisim]) return kisimTextsCache[kisim];
   try {
-    // ?v=2 query: eski SW cache'inde bu URL yok → network fetch zorunlu (bozuk eski cache bypass)
-    const resp = await fetch(`texts/kisim${kisim}.json?v=2`);
+    // Cache bypass + timeout: eski SW'ye takılmadan network'ten taze çek
+    const ctrl = new AbortController();
+    const timer = setTimeout(function() { ctrl.abort(); }, 4000);
+    const resp = await fetch(`texts/kisim${kisim}.json?v=2`, { signal: ctrl.signal, cache: 'no-store' });
+    clearTimeout(timer);
     const data = await resp.json();
     kisimTextsCache[kisim] = data;
     return data;
