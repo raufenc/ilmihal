@@ -3507,11 +3507,8 @@ function showSplash() {
   }, 1800);
 }
 
-// İlk ziyarette splash göster
-if (!sessionStorage.getItem('ilmihal-splash-shown')) {
-  sessionStorage.setItem('ilmihal-splash-shown', '1');
-  document.addEventListener('DOMContentLoaded', showSplash);
-}
+// Splash kapatıldı — 2.4 sn gereksiz bekleme, bazı ortamlarda CSS bozuk olup takılı kalıyordu
+// (showSplash fonksiyonu ihtiyaç olursa el ile çağrılabilir)
 
 // ===== FIKIH KARŞILAŞTIRMA TABLOLARI =====
 var fikihActiveFilter = 'all';
