@@ -36,7 +36,8 @@ function handleRoute() {
     const maddeNo = parseInt(parts[2]);
     if (kisim && maddeNo) {
       navigateTo('icerik', true);
-      openMadde(kisim, maddeNo, true);
+      // 150ms ertele: tarayıcı önce sayfayı (İçindekiler'i) render etsin, kullanıcı boş beyaz ekran görmesin
+      setTimeout(function() { openMadde(kisim, maddeNo, true); }, 150);
       return;
     }
   }
