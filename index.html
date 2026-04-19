@@ -679,20 +679,24 @@
   <script src="audio-map.js?v=1"></script>
   <script src="arama-sozluk.js?v=1"></script>
   <script src="rehberler.js?v=1"></script>
-  <script src="app.js?v=52"></script>
+  <script src="app.js?v=53"></script>
   <script>
-    // SW güncelle, eski cache'leri temizle
+    // PWA mode kaldırıldı. Eski SW'si olan kullanıcılar için kurtarma:
+    // bir kez register et (kamikaze sw.js SW'yi ve cache'leri siler, sonra reload).
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/sw.js').then(function(reg) {
-        reg.update();
+      navigator.serviceWorker.getRegistrations().then(function(regs) {
+        if (regs.length > 0) {
+          // Eski SW'si var: kamikaze sw.js'i register et, cache'leri sildirip kendini unregister etsin
+          navigator.serviceWorker.register('/sw.js').then(function(reg) { reg.update(); });
+          if (!sessionStorage.getItem('ilmihal-sw-cleanup')) {
+            navigator.serviceWorker.addEventListener('controllerchange', function() {
+              sessionStorage.setItem('ilmihal-sw-cleanup', '1');
+              location.reload();
+            });
+          }
+        }
+        // Eski SW'si yoksa hiç register etme — site doğrudan network'ten çalışır
       }).catch(function(){});
-      // Yeni SW kontrole geçince bir kez sayfayı yenile (session başına)
-      if (!sessionStorage.getItem('ilmihal-sw-reloaded')) {
-        navigator.serviceWorker.addEventListener('controllerchange', function() {
-          sessionStorage.setItem('ilmihal-sw-reloaded', '1');
-          location.reload();
-        });
-      }
     }
   </script>
 </body>

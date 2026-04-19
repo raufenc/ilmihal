@@ -1,92 +1,29 @@
-// Service Worker - ilmihal.org PWA
-var CACHE_NAME = 'ilmihal-v38';
-var CORE_ASSETS = [
-  '/',
-  '/index.html',
-  '/style.css?v=26',
-  '/data.js?v=14',
-  '/maddeler-data.js?v=1',
-  '/tanimlar.js?v=1',
-  '/crossref.js?v=7',
-  '/search-engine.js?v=7',
-  '/ayet-hadis.js?v=4',
-  '/audio-map.js?v=1',
-  '/arama-sozluk.js?v=1',
-  '/rehberler.js?v=1',
-  '/app.js?v=52',
-  '/favicon.svg',
-  '/manifest.json'
-];
-
-var LAZY_ASSETS = [
-  '/sozluk-data.js?v=4',
-  '/sahislar.js?v=8',
-  '/hukumler-data.js',
-  '/texts/kisim1.json?v=2',
-  '/texts/kisim2.json?v=2',
-  '/texts/kisim3.json?v=2'
-];
-
-// Install: core dosyaları cache'le
+// KAMIKAZE SW — tüm cache'leri siler, kendini unregister eder.
+// PWA modunu tamamen kaldırıyoruz; eski cache'te takılı kalan kullanıcıları
+// kurtarmak için bu SW deploy edildi. Sonraki ziyaretlerde index.html artık
+// SW register etmiyor, dolayısıyla tarayıcı doğrudan network'ten fresh
+// içerik alır (Vercel CDN + HTTP cache yeterli).
 self.addEventListener('install', function(e) {
-  e.waitUntil(
-    caches.open(CACHE_NAME).then(function(cache) {
-      return cache.addAll(CORE_ASSETS);
-    }).then(function() {
-      return self.skipWaiting();
-    })
-  );
+  e.waitUntil(self.skipWaiting());
 });
 
-// Activate: eski cache'leri temizle
 self.addEventListener('activate', function(e) {
   e.waitUntil(
-    caches.keys().then(function(names) {
-      return Promise.all(
-        names.filter(function(n) { return n !== CACHE_NAME; })
-             .map(function(n) { return caches.delete(n); })
-      );
+    caches.keys().then(function(keys) {
+      return Promise.all(keys.map(function(k) { return caches.delete(k); }));
     }).then(function() {
-      return self.clients.claim();
-    })
-  );
-});
-
-// Fetch: cache-first for assets, network-first for navigation
-self.addEventListener('fetch', function(e) {
-  var url = new URL(e.request.url);
-
-  // Sadece kendi origin'imiz
-  if (url.origin !== location.origin) return;
-
-  // Navigation request'leri: SPA index.html döndür (alt uygulamalar hariç)
-  if (e.request.mode === 'navigate') {
-    // silsile-atlasi ve namaz-vakitleri kendi index.html'lerini kullanır
-    if (url.pathname.startsWith('/silsile-atlasi') || url.pathname.startsWith('/namaz-vakitleri')) {
-      return;
-    }
-    e.respondWith(
-      fetch(e.request).catch(function() {
-        return caches.match('/index.html');
-      })
-    );
-    return;
-  }
-
-  // Static assets: cache-first, network fallback
-  e.respondWith(
-    caches.match(e.request).then(function(cached) {
-      if (cached) return cached;
-      return fetch(e.request).then(function(response) {
-        // Lazy asset'leri de cache'le
-        if (response.ok && (url.pathname.endsWith('.js') || url.pathname.endsWith('.json') || url.pathname.endsWith('.css'))) {
-          var clone = response.clone();
-          caches.open(CACHE_NAME).then(function(cache) {
-            cache.put(e.request, clone);
-          });
-        }
-        return response;
+      return self.registration.unregister();
+    }).then(function() {
+      return self.clients.matchAll({ type: 'window' });
+    }).then(function(clients) {
+      clients.forEach(function(c) {
+        try { c.navigate(c.url); } catch (err) {}
       });
     })
   );
+});
+
+// Fetch: SW'yi tamamen bypass et, network'e gönder
+self.addEventListener('fetch', function(e) {
+  e.respondWith(fetch(e.request));
 });
