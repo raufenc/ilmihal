@@ -541,7 +541,6 @@
         subtitle: doc.subtitle,
         score: score,
         snippet: snippet,
-        snippetHtml: snippetHtml,
         data: doc.data
       });
     });

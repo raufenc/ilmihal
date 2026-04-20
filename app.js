@@ -2722,13 +2722,13 @@ async function doFullSearch(fromRoute) {
   }
 
   // Metin eşleşmeleri
-  matches.forEach(function(m) {
+    matches.forEach(function(m) {
     var key = m.kisim + '/' + m.madde_no;
     if (seen[key]) return;
     seen[key] = true;
     maddeCount++;
 
-    var highlighted = m.snippetHtml || highlightSnippet(m.snippet || '', wordVarLists);
+    var highlighted = highlightSnippet(m.snippet || '', wordVarLists);
 
     html += '<div class="arama-result" data-tip="madde" onclick="openMadde(' + m.kisim + ',' + m.madde_no + ',false,\'' + searchQ + '\')">' +
       '<h4>' + escapeHtml(m.baslik) + '</h4>' +
