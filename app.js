@@ -25,82 +25,99 @@ function getRoutePath() {
   return 'anasayfa';
 }
 
-function handleRoute() {
-  if (routingSilent) return;
-  const fullPath = getRoutePath();
-  const parts = fullPath.split('/');
-  const route = parts[0];
-
-  if (route === 'madde' && parts.length >= 3) {
-    const kisim = parseInt(parts[1]);
-    const maddeNo = parseInt(parts[2]);
-    if (kisim && maddeNo) {
-      navigateTo('icerik', true);
-      // Setimeout: tüm scripts + init tamamlandıktan sonra modal aç
-      setTimeout(function() { openMadde(kisim, maddeNo, true); }, 300);
+function nextFrame() {
+  return new Promise(function(resolve) {
+    if (typeof requestAnimationFrame === 'function') {
+      requestAnimationFrame(function() { resolve(); });
       return;
     }
-  }
+    setTimeout(resolve, 16);
+  });
+}
 
-  if (route === 'sahis' && parts[1]) {
-    navigateTo('sahislar', true);
-    setTimeout(() => openSahis(decodeURIComponent(parts[1]), true), 150);
-    return;
-  }
+async function navigateAndRun(page, runner) {
+  navigateTo(page, true);
+  await nextFrame();
+  return runner();
+}
 
-  if (route === 'arama' && parts[1]) {
-    navigateTo('arama', true);
-    const query = decodeURIComponent(parts.slice(1).join('/'));
-    document.getElementById('full-search').value = query;
-    setTimeout(() => doFullSearch(true), 150);
-    return;
-  }
+async function handleRoute() {
+  if (routingSilent) return;
+  try {
+    const fullPath = getRoutePath();
+    const parts = fullPath.split('/');
+    const route = parts[0];
 
-  if (route === 'fevaid' && parts[1] === 'tablolar' && parts[2]) {
-    navigateTo('fevaid', true);
-    setTimeout(() => openTabloDetay(decodeURIComponent(parts[2])), 250);
-    return;
-  }
-  if (route === 'fevaid' && parts[1] === 'tablolar' && !parts[2]) {
-    navigateTo('fevaid', true);
-    setTimeout(() => openFevaidSection('tablolar'), 150);
-    return;
-  }
-  // Geriye dönük uyumluluk: eski /fevaid/tablo/:id ve /tablo/:id
-  if (route === 'fevaid' && parts[1] === 'tablo' && parts[2]) {
-    navigateTo('fevaid', true);
-    setTimeout(() => openTabloDetay(decodeURIComponent(parts[2])), 250);
-    return;
-  }
-  if (route === 'tablo' && parts[1]) {
-    navigateTo('fevaid', true);
-    setTimeout(() => openTabloDetay(decodeURIComponent(parts[1])), 250);
-    return;
-  }
-
-  if (route === 'fikih-karsilastirma') {
-    navigateTo('fikih-karsilastirma', true);
-    return;
-  }
-
-  if (route === 'hukumler') {
-    navigateTo('hukumler', true);
-    if (parts[1]) {
-      setTimeout(function() { setHukumlerTur(parts[1]); }, 200);
+    if (route === 'madde' && parts.length >= 3) {
+      const kisim = parseInt(parts[1]);
+      const maddeNo = parseInt(parts[2]);
+      if (kisim && maddeNo) {
+        await navigateAndRun('icerik', function() { return openMadde(kisim, maddeNo, true); });
+        return;
+      }
     }
-    return;
-  }
 
-  const validPages = ['anasayfa','icerik','fevaid','sozluk','arama','sahislar','hakkinda','quiz','ayet-hadis','gunun-bilgisi','rehberler','calisma-alanim','fikih-karsilastirma','hukumler'];
-  if (validPages.includes(route)) {
-    navigateTo(route, true);
-  } else {
+    if (route === 'sahis' && parts[1]) {
+      await navigateAndRun('sahislar', function() { return openSahis(decodeURIComponent(parts[1]), true); });
+      return;
+    }
+
+    if (route === 'arama' && parts[1]) {
+      const query = decodeURIComponent(parts.slice(1).join('/'));
+      await navigateAndRun('arama', function() {
+        const input = document.getElementById('full-search');
+        if (input) input.value = query;
+        return doFullSearch(true);
+      });
+      return;
+    }
+
+    if (route === 'fevaid' && parts[1] === 'tablolar' && parts[2]) {
+      await navigateAndRun('fevaid', function() { openTabloDetay(decodeURIComponent(parts[2])); });
+      return;
+    }
+    if (route === 'fevaid' && parts[1] === 'tablolar' && !parts[2]) {
+      await navigateAndRun('fevaid', function() { openFevaidSection('tablolar'); });
+      return;
+    }
+    // Geriye dönük uyumluluk: eski /fevaid/tablo/:id ve /tablo/:id
+    if (route === 'fevaid' && parts[1] === 'tablo' && parts[2]) {
+      await navigateAndRun('fevaid', function() { openTabloDetay(decodeURIComponent(parts[2])); });
+      return;
+    }
+    if (route === 'tablo' && parts[1]) {
+      await navigateAndRun('fevaid', function() { openTabloDetay(decodeURIComponent(parts[1])); });
+      return;
+    }
+
+    if (route === 'fikih-karsilastirma') {
+      navigateTo('fikih-karsilastirma', true);
+      return;
+    }
+
+    if (route === 'hukumler') {
+      navigateTo('hukumler', true);
+      if (parts[1] && typeof ensureHukumlerData === 'function') {
+        await ensureHukumlerData();
+        setHukumlerTur(parts[1]);
+      }
+      return;
+    }
+
+    const validPages = ['anasayfa','icerik','fevaid','sozluk','arama','sahislar','hakkinda','quiz','ayet-hadis','gunun-bilgisi','rehberler','calisma-alanim','fikih-karsilastirma','hukumler'];
+    if (validPages.includes(route)) {
+      navigateTo(route, true);
+    } else {
+      navigateTo('anasayfa', true);
+    }
+  } catch (e) {
+    console.error('Route handling failed:', e);
     navigateTo('anasayfa', true);
   }
 }
 
-window.addEventListener('popstate', handleRoute);
-window.addEventListener('hashchange', handleRoute);
+window.addEventListener('popstate', function() { void handleRoute(); });
+window.addEventListener('hashchange', function() { void handleRoute(); });
 
 // ===== DİNAMİK SEO META =====
 function updateSeoMeta(title, description, url) {
@@ -151,6 +168,49 @@ function ensureMaddelerData() {
 function ensureSozlukData() {
   if (window.sozlukData) return Promise.resolve();
   return loadScript('sozluk-data.js?v=4');
+}
+
+function ensureSahislarData() {
+  if (window.sahislarData) return Promise.resolve();
+  return loadScript('sahislar.js?v=7').then(function() {
+    if (window.SearchEngine && typeof window.SearchEngine.rebuild === 'function') {
+      window.SearchEngine.rebuild();
+    }
+  });
+}
+
+function ensureAyetHadisData() {
+  if (window.ayetHadisData) return Promise.resolve();
+  return loadScript('ayet-hadis.js?v=4');
+}
+
+function ensureGununSorusuData() {
+  if (window.gununSorusuData) return Promise.resolve();
+  return loadScript('gunun-sorusu-data.js?v=2');
+}
+
+function ensureAudioMapData() {
+  if (window.audioMap) return Promise.resolve();
+  return loadScript('audio-map.js?v=1');
+}
+
+function ensureRehberlerData() {
+  if (window.rehberlerData) return Promise.resolve();
+  return loadScript('rehberler.js?v=1');
+}
+
+function preloadBackgroundData() {
+  ensureSozlukData().catch(function() {});
+}
+
+function scheduleBackgroundPreload(delay) {
+  setTimeout(function() {
+    if (typeof requestIdleCallback === 'function') {
+      requestIdleCallback(function() { preloadBackgroundData(); }, { timeout: 2000 });
+      return;
+    }
+    preloadBackgroundData();
+  }, delay);
 }
 
 // ===== TEMA: Gündüz / Sepya / Gece =====
@@ -293,7 +353,38 @@ function navigateTo(page, fromRoute) {
   if (page === 'icerik' && !icerikLoaded) loadIcerik();
   if (page === 'sozluk' && !sozlukLoaded) { ensureSozlukData().then(function() { loadSozluk(); }); }
   if (page === 'fevaid' && !fevaidLoaded) loadFevaid();
-  if (page === 'sahislar' && !sahislarLoaded) loadSahislar();
+  if (page === 'sahislar') void loadSahislar();
+  if (page === 'ayet-hadis' && typeof renderAyetHadis === 'function') void renderAyetHadis();
+  if (page === 'gunun-bilgisi' && typeof renderGununBilgisi === 'function') void renderGununBilgisi();
+  if (page === 'rehberler' && typeof renderRehberler === 'function') void renderRehberler();
+  if (page === 'hukumler' && typeof ensureHukumlerData === 'function') ensureHukumlerData();
+  if (page === 'calisma-alanim' && typeof window.renderCalismaAlanim === 'function') window.renderCalismaAlanim();
+
+  var seo = pageSeoMap && pageSeoMap[page];
+  if (seo) updateSeoMeta(seo[0], seo[1], 'https://www.ilmihal.org/' + (page === 'anasayfa' ? '' : page));
+}
+
+function goToSozlukSearch(term) {
+  navigateTo('sozluk');
+  var input = document.getElementById('sozluk-search');
+  if (!input) return;
+  input.value = term;
+  input.dispatchEvent(new Event('input'));
+}
+
+function goToSahisDetay(slug) {
+  navigateTo('sahislar');
+  openSahis(slug);
+}
+
+function goToTabloDetay(id) {
+  navigateTo('fevaid');
+  openTabloDetay(id);
+}
+
+function goToRehberDetay(id) {
+  navigateTo('rehberler');
+  openRehber(id);
 }
 
 // Mobile menu
@@ -418,25 +509,130 @@ function renderFilteredMaddeler(filtered) {
 // ===== MADDE DETAY =====
 const kisimTextsCache = {};
 window.kisimTextsCache = kisimTextsCache; // search-engine.js erişimi için
+const kisimTextPromises = {};
+var _allKisimTextsPromise = null;
+var _maddeOpenRequestId = 0;
+var _searchRequestId = 0;
+var _tocIndexByKey = null;
+var _tocByKisim = null;
+
+function buildMaddeKey(kisim, maddeNo) {
+  return String(kisim) + '/' + String(maddeNo);
+}
+
+function ensureTocIndexes() {
+  if (_tocIndexByKey || !window.tocData) return;
+  _tocIndexByKey = new Map();
+  _tocByKisim = { 1: [], 2: [], 3: [] };
+  window.tocData.forEach(function(m) {
+    var key = buildMaddeKey(m.kisim, m.madde_no);
+    _tocIndexByKey.set(key, m);
+    if (_tocByKisim[m.kisim]) _tocByKisim[m.kisim].push(m);
+  });
+}
+
+function getKisimMaddeler(kisim) {
+  ensureTocIndexes();
+  if (_tocByKisim && _tocByKisim[kisim]) return _tocByKisim[kisim];
+  return (window.tocData || []).filter(function(m) { return m.kisim === kisim; });
+}
 
 async function loadKisimTexts(kisim) {
   if (kisimTextsCache[kisim]) return kisimTextsCache[kisim];
-  try {
-    // Cache bypass + timeout: eski SW'ye takılmadan network'ten taze çek
-    const ctrl = new AbortController();
-    const timer = setTimeout(function() { ctrl.abort(); }, 4000);
-    const resp = await fetch(`texts/kisim${kisim}.json?v=2`, { signal: ctrl.signal, cache: 'no-store' });
-    clearTimeout(timer);
-    const data = await resp.json();
-    kisimTextsCache[kisim] = data;
-    return data;
-  } catch (e) {
-    console.error(`K\u0131s\u0131m ${kisim} metinleri y\u00fcklenemedi:`, e);
-    return null;
+  if (kisimTextPromises[kisim]) return kisimTextPromises[kisim];
+  kisimTextPromises[kisim] = (async function() {
+    try {
+      // Timeout var; cache davranışını tarayıcıya bırakıyoruz.
+      const ctrl = new AbortController();
+      const timer = setTimeout(function() { ctrl.abort(); }, 4000);
+      const resp = await fetch(`texts/kisim${kisim}.json?v=2`, { signal: ctrl.signal });
+      clearTimeout(timer);
+      if (!resp.ok) throw new Error('HTTP ' + resp.status);
+      const data = await resp.json();
+      kisimTextsCache[kisim] = data;
+      return data;
+    } catch (e) {
+      console.error(`K\u0131s\u0131m ${kisim} metinleri y\u00fcklenemedi:`, e);
+      return null;
+    } finally {
+      if (!kisimTextsCache[kisim]) delete kisimTextPromises[kisim];
+    }
+  })();
+  return kisimTextPromises[kisim];
+}
+
+function ensureAllKisimTexts() {
+  if (_allKisimTextsPromise) return _allKisimTextsPromise;
+  _allKisimTextsPromise = (async function() {
+    var result = {};
+    for (var kisim = 1; kisim <= 3; kisim++) {
+      result[kisim] = await loadKisimTexts(kisim);
+    }
+    return result;
+  })();
+  _allKisimTextsPromise.catch(function() {
+    _allKisimTextsPromise = null;
+  });
+  return _allKisimTextsPromise;
+}
+
+async function getMaddeText(kisim, maddeNo, options) {
+  options = options || {};
+  var kisimTexts = await loadKisimTexts(kisim);
+  var rawMetin = kisimTexts ? (kisimTexts[String(maddeNo)] || kisimTexts[maddeNo]) : null;
+  if (rawMetin) return rawMetin;
+  if (options.allowFallback === false) return null;
+  try { await ensureMaddelerData(); } catch (e) {}
+  if (!window.maddelerData) return null;
+  var fallbackMadde = window.maddelerData.find(function(m) {
+    return m.kisim === kisim && m.madde_no === maddeNo;
+  });
+  return fallbackMadde ? (fallbackMadde.metin || null) : null;
+}
+
+function getMaddeMeta(kisim, maddeNo) {
+  ensureTocIndexes();
+  var meta = _tocIndexByKey ? _tocIndexByKey.get(buildMaddeKey(kisim, maddeNo)) : null;
+  if (meta) return meta;
+  return window.maddelerData?.find(function(m) {
+    return m.kisim === kisim && m.madde_no === maddeNo;
+  }) || null;
+}
+
+function renderMaddeError(body, kisim, maddeNo, title, detail) {
+  if (!body) return;
+  body.innerHTML = '<div class="madde-detail-header">' +
+    '<h3>' + escapeHtml(title || 'Metin yüklenemedi') + '</h3>' +
+    '<div class="madde-text" style="text-align:center;padding:40px;">' +
+      '<p style="margin-bottom:12px;color:var(--text-muted);">' + escapeHtml(detail || 'Madde metni şu anda yüklenemedi.') + '</p>' +
+      '<button type="button" class="btn btn-primary" onclick="openMadde(' + kisim + ',' + maddeNo + ')">Tekrar Dene</button>' +
+    '</div>' +
+  '</div>';
+}
+
+function hydrateMaddeRelatedSahislar(requestId, kisim, maddeNo) {
+  var slot = document.getElementById('madde-related-sahis-slot');
+  if (!slot) return;
+  if (window.sahislarData) {
+    if (requestId !== _maddeOpenRequestId) return;
+    slot.innerHTML = getRelatedSahislar(kisim, maddeNo) || '';
+    return;
   }
+  slot.innerHTML = '<div class="related-sahislar"><div class="related-sahislar-title">Şahıs bağlantıları hazırlanıyor...</div></div>';
+  ensureSahislarData().then(function() {
+    if (requestId !== _maddeOpenRequestId) return;
+    var latestSlot = document.getElementById('madde-related-sahis-slot');
+    if (!latestSlot) return;
+    latestSlot.innerHTML = getRelatedSahislar(kisim, maddeNo) || '';
+  }).catch(function() {
+    if (requestId !== _maddeOpenRequestId) return;
+    var latestSlot = document.getElementById('madde-related-sahis-slot');
+    if (latestSlot) latestSlot.innerHTML = '';
+  });
 }
 
 async function openMadde(kisim, maddeNo, fromRoute, searchQuery) {
+  var requestId = ++_maddeOpenRequestId;
   // AŞAMA 0 — Modal'ı HEMEN aç, her şeyden önce. Sonraki satırlar hata atsa bile modal görünür.
   const _overlay = document.getElementById('madde-detay');
   const body = document.getElementById('madde-body');
@@ -444,12 +640,20 @@ async function openMadde(kisim, maddeNo, fromRoute, searchQuery) {
   document.body.style.overflow = 'hidden';
   if (body) body.innerHTML = '<div style="text-align:center;padding:60px;color:var(--text-muted);">Yükleniyor…</div>';
 
-  await ensureMaddelerData();
-  const madde = window.maddelerData?.find(m => m.kisim === kisim && m.madde_no === maddeNo);
+  let madde = getMaddeMeta(kisim, maddeNo);
+
+  if (!madde && typeof ensureMaddelerData === 'function') {
+    try { await ensureMaddelerData(); } catch (e) {}
+    if (requestId !== _maddeOpenRequestId) return;
+    madde = getMaddeMeta(kisim, maddeNo);
+  }
+
   if (!madde) {
     if (body) body.innerHTML = `<div style="text-align:center;padding:40px;"><h3>Madde bulunamadı</h3><button type="button" class="btn" onclick="closeMadde()">Kapat</button></div>`;
     return;
   }
+
+  madde = Object.assign({}, madde);
 
   // Bookmark & read tracking & audio (hataya dayanıklı)
   currentMaddeForBookmark = madde;
@@ -485,14 +689,25 @@ async function openMadde(kisim, maddeNo, fromRoute, searchQuery) {
     <div class="madde-text" style="text-align:center;padding:40px;color:var(--text-muted);">Metin y\u00fckleniyor...</div>
   `;
 
-  // Load full text from kisim file
-  // madde.metin zaten maddeler-data.js'te senkron yüklü; texts/kisim*.json fetch gereksiz
-  const rawMetin = madde.metin || '(Metin bulunamad\u0131)';
+  const rawMetin = await getMaddeText(kisim, maddeNo);
+  if (requestId !== _maddeOpenRequestId) return;
+  if (!rawMetin) {
+    renderMaddeError(body, kisim, maddeNo, madde.baslik, 'Madde metni şu anda yüklenemedi.');
+    return;
+  }
 
+  madde.metin = rawMetin || madde.metin || '';
+  const rawMetinSafe = madde.metin || '(Metin yüklenemedi)';
   // İlişkili maddeler (UX-03)
   var iliskiliHTML = getIliskiliMaddeler(kisim, maddeNo, madde.baslik);
-
   // Metni hemen göster (sözlük yükünü bekleme)
+  function bindMaddeTooltipListeners() {
+    body.querySelectorAll('.zor-kelime').forEach(el => {
+      el.addEventListener('mouseenter', showTooltip);
+      el.addEventListener('mouseleave', hideTooltip);
+    });
+  }
+
   function renderBody(metin) {
     body.innerHTML = `
     <nav class="breadcrumb" aria-label="Konum">
@@ -517,14 +732,11 @@ async function openMadde(kisim, maddeNo, fromRoute, searchQuery) {
       <button type="button" class="btn btn-sm" onclick="maddePaylasText(${kisim},${maddeNo})">Paylas</button>
       <button type="button" class="btn btn-sm btn-secondary" style="background:var(--primary-light);color:#fff;" onclick="maddePaylasimKarti(${kisim},${maddeNo})">Gorsel Kart</button>
     </div>
-    ${getRelatedSahislar(kisim, maddeNo)}
+    <div id="madde-related-sahis-slot"></div>
     ${getRelatedTables(kisim, maddeNo)}
     ${iliskiliHTML}
   `;
-    body.querySelectorAll('.zor-kelime').forEach(el => {
-      el.addEventListener('mouseenter', showTooltip);
-      el.addEventListener('mouseleave', hideTooltip);
-    });
+    bindMaddeTooltipListeners();
   }
 
   // Arama highlight helper
@@ -535,30 +747,62 @@ async function openMadde(kisim, maddeNo, fromRoute, searchQuery) {
     }
   }
 
-  // Sözlük zaten yüklüyse hemen highlight'la, yoksa önce metni göster sonra arka planda yükle
-  if (window.sozlukData) {
-    renderBody(highlightWords(rawMetin));
-    applySearchHighlight();
-  } else {
-    renderBody(escapeHtml(rawMetin));
-    applySearchHighlight();
-    ensureSozlukData().then(function() {
-      if (window.sozlukData && body.isConnected) {
-        const textEl = body.querySelector('.madde-text');
-        if (textEl) textEl.innerHTML = highlightWords(rawMetin);
-        body.querySelectorAll('.zor-kelime').forEach(el => {
-          el.addEventListener('mouseenter', showTooltip);
-          el.addEventListener('mouseleave', hideTooltip);
-        });
-        applySearchHighlight();
-      }
-    });
+  function enhanceMaddeBodyWithSozluk() {
+    if (requestId !== _maddeOpenRequestId) return;
+    if (!body.isConnected) return;
+    const textEl = body.querySelector('.madde-text');
+    if (!textEl) return;
+    try {
+      textEl.innerHTML = highlightWords(rawMetinSafe);
+      bindMaddeTooltipListeners();
+      applySearchHighlight();
+    } catch (e) {
+      console.error('Madde sözlük highlight hatası:', e);
+    }
   }
 
+  function scheduleMaddeSozlukEnhancement() {
+    var run = function() {
+      if (requestId !== _maddeOpenRequestId) return;
+      nextFrame().then(function() {
+        if (requestId !== _maddeOpenRequestId) return;
+        enhanceMaddeBodyWithSozluk();
+      });
+    };
+    if (typeof requestIdleCallback === 'function') {
+      requestIdleCallback(run, { timeout: 1500 });
+      return;
+    }
+    setTimeout(run, 250);
+  }
+
+  // Önce çıplak metni göster; sözlük vurgularını sonra bindir.
+  renderBody(escapeHtml(rawMetinSafe));
+  applySearchHighlight();
+  hydrateMaddeRelatedSahislar(requestId, kisim, maddeNo);
+
+  if (window.sozlukData) {
+    scheduleMaddeSozlukEnhancement();
+  } else {
+    ensureSozlukData().then(function() {
+      if (requestId !== _maddeOpenRequestId) return;
+      if (window.sozlukData) scheduleMaddeSozlukEnhancement();
+    }).catch(function() {});
+  }
   // FAQ Schema + OG meta + Streak
-  if (typeof addFaqSchema === 'function') addFaqSchema(madde, rawMetin);
+  if (typeof addFaqSchema === 'function') addFaqSchema(madde, rawMetinSafe);
   if (typeof updateOgMeta === 'function') updateOgMeta(madde);
   if (typeof updateStreak === 'function') updateStreak();
+  if (window.updateDynamicSchema) {
+    try {
+      window.updateDynamicSchema('breadcrumb', [
+        {name: 'Ana Sayfa', url: 'https://www.ilmihal.org/'},
+        {name: 'İçindekiler', url: 'https://www.ilmihal.org/icerik'},
+        {name: kisimLabels[kisim], url: 'https://www.ilmihal.org/icerik'},
+        {name: madde.baslik, url: 'https://www.ilmihal.org/madde/' + kisim + '/' + maddeNo}
+      ]);
+    } catch (e) {}
+  }
 }
 
 // Madde metninde arama kelimelerini highlight'la ve en uygun bölgeye scroll et
@@ -728,6 +972,7 @@ function getRelatedTables(kisim, maddeNo) {
 }
 
 function closeMadde() {
+  _maddeOpenRequestId++;
   document.getElementById('madde-detay').style.display = 'none';
   document.body.style.overflow = '';
   // Restore hash to parent page
@@ -1090,12 +1335,18 @@ document.getElementById('sozluk-search')?.addEventListener('input', () => {
 // ===== ŞAHİSLAR =====
 let sahislarLoaded = false;
 
-function loadSahislar() {
+async function loadSahislar() {
   sahislarLoaded = true;
   const list = document.getElementById('sahislar-list');
+  if (!list) return;
   if (!window.sahislarData || window.sahislarData.length === 0) {
     list.innerHTML = '<p style="text-align:center;color:var(--text-muted);padding:60px;">Şahıs verileri yükleniyor...</p>';
-    return;
+    try {
+      await ensureSahislarData();
+    } catch (e) {
+      list.innerHTML = '<p style="text-align:center;color:var(--text-muted);padding:60px;">Şahıs verileri yüklenemedi.</p>';
+      return;
+    }
   }
 
   const searchText = (document.getElementById('sahis-search')?.value || '').toLowerCase();
@@ -1127,10 +1378,16 @@ function loadSahislar() {
   list.innerHTML = html || '<p style="text-align:center;color:var(--text-muted);padding:40px;">Şahıs bulunamadı.</p>';
 }
 
-document.getElementById('sahis-search')?.addEventListener('input', () => loadSahislar());
+document.getElementById('sahis-search')?.addEventListener('input', () => { void loadSahislar(); });
 
-function openSahis(slug, fromRoute) {
-  if (!window.sahislarData) return;
+async function openSahis(slug, fromRoute) {
+  if (!window.sahislarData) {
+    try {
+      await ensureSahislarData();
+    } catch (e) {
+      return;
+    }
+  }
 
   const sahis = window.sahislarData.find(s => s.slug === slug);
   if (!sahis) return;
@@ -1384,7 +1641,7 @@ function openTabloModal(id) {
         <strong>Kitaptan:</strong> ${tablo.kaynak_metin}
       </div>
       <div class="tablo-modal-actions">
-        <button type="button" class="btn btn-primary" onclick="closeTabloModal();closeMadde();navigateTo('fevaid');setTimeout(()=>openTabloDetay('${tablo.id}'),150)">
+        <button type="button" class="btn btn-primary" onclick="closeTabloModal();closeMadde();goToTabloDetay('${tablo.id}')">
           Tablo Sayfasına Git \u2192
         </button>
       </div>
@@ -2062,18 +2319,13 @@ function findFuzzySuggestions(query) {
 async function doFullSearch(fromRoute) {
   var rawQuery = document.getElementById('full-search').value.trim();
   if (!rawQuery || rawQuery.length < 2) return;
+  var requestId = ++_searchRequestId;
 
   if (!fromRoute) updateHash('arama/' + encodeURIComponent(rawQuery.toLowerCase()));
 
   var resultsEl = document.getElementById('arama-results');
   var ipuclari = document.getElementById('arama-ipuclari');
   if (ipuclari) ipuclari.style.display = 'none';
-
-  resultsEl.innerHTML = '<p style="text-align:center;color:var(--text-muted);padding:20px;">Aranıyor...</p>';
-
-  // Verileri yükle
-  await Promise.all([loadKisimTexts(1), loadKisimTexts(2), loadKisimTexts(3)]);
-  if (typeof ensureMaddelerData === 'function') await ensureMaddelerData();
 
   var expanded = expandSearchQuery(rawQuery);
   var qWords = expanded.words;
@@ -2082,45 +2334,55 @@ async function doFullSearch(fromRoute) {
 
   var kisimLabels = { 1: 'Birinci Kısım', 2: 'İkinci Kısım', 3: 'Üçüncü Kısım' };
   var matches = [];
+  if (!window.sahislarData) ensureSahislarData().catch(function() {});
+  function renderSearchStatus(message) {
+    if (requestId !== _searchRequestId) return false;
+    resultsEl.innerHTML = '<p style="text-align:center;color:var(--text-muted);padding:20px;">' + escapeHtml(message) + '</p>';
+    return true;
+  }
+  renderSearchStatus('Aranıyor...');
 
   // 1. DOĞRUDAN EŞLEŞTİRME (soruMaddeMap)
   var directMatch = (typeof findDirectMatch === 'function') ? findDirectMatch(rawQuery) : null;
 
   // 2. TAM METİN ARAMA — BM25 scoring ile (AND öncelikli, OR fallback)
   var orMatches = []; // AND eşleşmezse OR sonuçları
-  if (window.tocData && window.kisimTextsCache) {
-    window.tocData.forEach(function(m) {
-      var fullText = window.kisimTextsCache[m.kisim] ? (window.kisimTextsCache[m.kisim][String(m.madde_no)] || '') : '';
-      if (!fullText && window.maddelerData) {
-        var md = window.maddelerData.find(function(x) { return x.kisim === m.kisim && x.madde_no === m.madde_no; });
-        if (md) fullText = md.metin || '';
-      }
-      var normText = normalizeSearch(fullText);
-      var normBaslik = normalizeSearch(m.baslik || '');
+  if (window.tocData) {
+    for (var kisim = 1; kisim <= 3; kisim++) {
+      if (!renderSearchStatus(kisimLabels[kisim] + ' taranıyor...')) return;
+      var kisimTexts = await loadKisimTexts(kisim);
+      if (requestId !== _searchRequestId) return;
+      getKisimMaddeler(kisim).forEach(function(m) {
+        var fullText = kisimTexts ? (kisimTexts[String(m.madde_no)] || kisimTexts[m.madde_no] || '') : '';
+        if (!fullText) return;
+        var normText = normalizeSearch(fullText);
+        var normBaslik = normalizeSearch(m.baslik || '');
 
-      var result = scoreMadde(normText, normBaslik, wordVarLists);
-      if (result.score <= 0) return;
+        var result = scoreMadde(normText, normBaslik, wordVarLists);
+        if (result.score <= 0) return;
 
-      var entry = {
-        kisim: m.kisim,
-        madde_no: m.madde_no,
-        baslik: m.baslik,
-        sayfa_no: m.sayfa_no,
-        score: result.score,
-        fullText: fullText,
-        normText: normText,
-        type: 'text'
-      };
+        var entry = {
+          kisim: m.kisim,
+          madde_no: m.madde_no,
+          baslik: m.baslik,
+          sayfa_no: m.sayfa_no,
+          score: result.score,
+          fullText: fullText,
+          normText: normText,
+          type: 'text'
+        };
 
-      if (result.allMatched) {
-        matches.push(entry);
-      } else if (result.matchedWordCount > 0 && wordVarLists.length > 1) {
-        // OR fallback: en az 1 kelime eşleşti (çoklu kelime sorgularında)
-        entry.score *= 0.3; // AND'den düşük skor
-        orMatches.push(entry);
-      }
-    });
+        if (result.allMatched) {
+          matches.push(entry);
+        } else if (result.matchedWordCount > 0 && wordVarLists.length > 1) {
+          entry.score *= 0.3;
+          orMatches.push(entry);
+        }
+      });
+      await nextFrame();
+    }
   }
+  if (requestId !== _searchRequestId) return;
 
   // AND sonuçları az ise OR'dan tamamla
   if (matches.length < 5 && orMatches.length > 0) {
@@ -2224,7 +2486,7 @@ async function doFullSearch(fromRoute) {
     html += '<div class="arama-ilgili" data-tip="sozluk">' +
       '<h4>\uD83D\uDCD6 İlgili Sözlük Terimleri</h4><div class="arama-taglar">';
     sozlukResults.forEach(function(s) {
-      html += '<a href="#" class="arama-tag" onclick="navigateTo(\'sozluk\');setTimeout(function(){document.getElementById(\'sozluk-search\').value=\'' + escapeHtml(s.title).replace(/'/g, "\\'") + '\';document.getElementById(\'sozluk-search\').dispatchEvent(new Event(\'input\'))},200);return false">' + escapeHtml(s.title) + '</a>';
+      html += '<a href="#" class="arama-tag" onclick="goToSozlukSearch(\'' + escapeHtml(s.title).replace(/'/g, "\\'") + '\');return false">' + escapeHtml(s.title) + '</a>';
     });
     html += '</div></div>';
   }
@@ -2235,7 +2497,7 @@ async function doFullSearch(fromRoute) {
       '<h4>\uD83D\uDC64 İlgili Şahıslar</h4><div class="arama-taglar">';
     sahisResults.forEach(function(s) {
       var slug = s.data ? s.data.slug : '';
-      html += '<a href="#" class="arama-tag arama-tag--sahis" onclick="navigateTo(\'sahislar\');setTimeout(function(){openSahis(\'' + slug + '\')},200);return false">' + escapeHtml(s.title) + '</a>';
+      html += '<a href="#" class="arama-tag arama-tag--sahis" onclick="goToSahisDetay(\'' + slug + '\');return false">' + escapeHtml(s.title) + '</a>';
     });
     html += '</div></div>';
   }
@@ -2278,6 +2540,7 @@ async function doFullSearch(fromRoute) {
   // AI sonuçlarını bekle ve varsa ekle
   if (aiPromise) {
     aiPromise.then(function(aiResults) {
+      if (requestId !== _searchRequestId) return;
       if (!aiResults || aiResults.length === 0) return;
       // AI sonuçlarını mevcut sonuçların başına ekle (duplicate önle)
       var aiHtml = '';
@@ -2443,21 +2706,13 @@ document.getElementById('full-search')?.addEventListener('keydown', e => {
         openMadde(d.kisim, d.madde_no, false, currentQuery);
         break;
       case 'sozluk':
-        navigateTo('sozluk');
-        setTimeout(() => {
-          const sozlukSearch = document.getElementById('sozluk-search');
-          if (sozlukSearch) {
-            sozlukSearch.value = item.data.t;
-            sozlukSearch.dispatchEvent(new Event('input'));
-          }
-        }, 100);
+        goToSozlukSearch(item.data.t);
         break;
       case 'sahis':
         openSahis(item.data.slug || item.data.isim);
         break;
       case 'tablo':
-        navigateTo('fevaid');
-        setTimeout(() => openTabloDetay(item.data.id), 150);
+        goToTabloDetay(item.data.id);
         break;
     }
   }
@@ -2567,25 +2822,19 @@ document.getElementById('full-search')?.addEventListener('keydown', e => {
 
 // ===== INIT =====
 document.addEventListener('DOMContentLoaded', () => {
+  var initialPath = getRoutePath();
   if (window.tocData) {
     console.log(`Y\u00fcklendi: ${window.tocData.length} madde, ${window.sozlukData?.length || 0} s\u00f6zl\u00fck kelimesi, ${window.tablolarData?.length || 0} tablo${window.sahislarData ? ', ' + window.sahislarData.length + ' \u015fah\u0131s' : ''}`);
   }
-  // Arka planda veri dosyalarını önceden yükle
-  setTimeout(() => {
-    ensureSozlukData();
-    ensureMaddelerData();
-    loadKisimTexts(1);
-    loadKisimTexts(2);
-    loadKisimTexts(3);
-  }, 300);
+  // Arka plan preload'u ilk etkileşimi boğmasın diye geciktirilir.
+  scheduleBackgroundPreload(initialPath && initialPath !== 'anasayfa' ? 5000 : 1500);
 
   // Günün maddesi
   if (typeof loadGununMaddesi === 'function') loadGununMaddesi();
 
   // Handle initial route (clean URL veya hash)
-  var initialPath = getRoutePath();
   if (initialPath && initialPath !== 'anasayfa') {
-    handleRoute();
+    void handleRoute();
   }
 });
 
@@ -2932,18 +3181,6 @@ function updateOgMeta(madde) {
   document.title = madde.baslik + ' - Se\'âdet-i Ebediyye';
 }
 
-// ===== NAVİGASYON GÜNCELLEMESİ =====
-// Yeni sayfalar için validPages'e ekle
-var _origNavigateTo = navigateTo;
-navigateTo = function(page, fromRoute) {
-  _origNavigateTo(page, fromRoute);
-  if (page === 'quiz') { document.getElementById('page-quiz')?.classList.add('active'); }
-  if (page === 'ayet-hadis') { document.getElementById('page-ayet-hadis')?.classList.add('active'); renderAyetHadis(); }
-  if (page === 'gunun-bilgisi') { document.getElementById('page-gunun-bilgisi')?.classList.add('active'); renderGununBilgisi(); }
-  if (page === 'rehberler') { document.getElementById('page-rehberler')?.classList.add('active'); renderRehberler(); }
-  if (page === 'hukumler') { document.getElementById('page-hukumler')?.classList.add('active'); ensureHukumlerData(); }
-};
-
 // birlesikAra kaldırıldı — doFullSearch ile birleştirildi
 
 // ===== ÂYET-İ KERÎME VE HADÎS-İ ŞERÎF İNDEKSİ =====
@@ -2958,12 +3195,22 @@ function switchAHTab(tab) {
   renderAyetHadis();
 }
 
-function renderAyetHadis(filterText) {
-  if (!window.ayetHadisData) return;
+async function renderAyetHadis(filterText) {
   var list = document.getElementById('ayet-hadis-list');
   var countEl = document.getElementById('ah-count');
   if (!list) return;
-  
+  if (!window.ayetHadisData) {
+    list.innerHTML = '<p style="text-align:center;color:var(--text-muted);padding:40px;">Âyet ve hadîs verileri yükleniyor...</p>';
+    if (countEl) countEl.textContent = 'Yükleniyor...';
+    try {
+      await ensureAyetHadisData();
+    } catch (e) {
+      list.innerHTML = '<p style="text-align:center;color:var(--text-muted);padding:40px;">Âyet ve hadîs verileri yüklenemedi.</p>';
+      if (countEl) countEl.textContent = '';
+      return;
+    }
+  }
+
   var items = ahCurrentTab === 'ayet' ? window.ayetHadisData.ayetler : window.ayetHadisData.hadisler;
   var label = ahCurrentTab === 'ayet' ? 'âyet-i kerîme' : 'hadîs-i şerîf';
   
@@ -3087,14 +3334,32 @@ function getAudioPagesForMadde(madde) {
   return pages;
 }
 
-function initAudioForMadde(madde) {
+async function initAudioForMadde(madde) {
   audioState.madde = madde;
-  audioState.pages = getAudioPagesForMadde(madde);
   audioState.currentIdx = 0;
   audioState.playing = false;
 
   var btn = document.getElementById('audio-btn');
   var bar = document.getElementById('audio-player-bar');
+  audioState.pages = [];
+
+  if (!window.audioMap) {
+    if (btn) {
+      btn.style.display = 'flex';
+      btn.innerHTML = '…';
+      btn.classList.remove('playing');
+    }
+    if (bar) bar.style.display = 'none';
+    try {
+      await ensureAudioMapData();
+    } catch (e) {
+      if (btn) btn.style.display = 'none';
+      return;
+    }
+    if (!audioState.madde || audioState.madde.kisim !== madde.kisim || audioState.madde.madde_no !== madde.madde_no) return;
+  }
+
+  audioState.pages = getAudioPagesForMadde(madde);
 
   if (audioState.pages.length === 0) {
     if (btn) btn.style.display = 'none';
@@ -3445,9 +3710,10 @@ function updateMediaSession() {
 // initAudioForMadde'e mediaSession + restore ekle
 var _origInitAudio = initAudioForMadde;
 initAudioForMadde = function(madde) {
-  _origInitAudio(madde);
-  updateMediaSession();
-  restoreAudioPosition();
+  return Promise.resolve(_origInitAudio(madde)).then(function() {
+    updateMediaSession();
+    restoreAudioPosition();
+  });
 };
 
 // ===== TAM EKRAN OKUMA MODU =====
@@ -3593,14 +3859,6 @@ var pageSeoMap = {
   'hukumler': ["Fıkhî Hükümler - Se'âdet-i Ebediyye", "Se'âdet-i Ebediyye kitabında geçen farz, vâcib, sünnet, müstehab, mübah, mekruh ve haram hükümlerinin kategorik listesi."]
 };
 
-// navigateTo'da SEO meta güncelle
-var _origNavForSeo = navigateTo;
-navigateTo = function(page, fromRoute) {
-  _origNavForSeo(page, fromRoute);
-  var seo = pageSeoMap[page];
-  if (seo) updateSeoMeta(seo[0], seo[1], 'https://www.ilmihal.org/' + (page === 'anasayfa' ? '' : page));
-};
-
 // ===== GÜNÜN BİLGİSİ =====
 function getGununBilgisiIdx() {
   var daysSinceEpoch = Math.floor(Date.now() / 86400000);
@@ -3615,10 +3873,20 @@ function getGununBilgisi(offset) {
   return all[idx];
 }
 
-function renderGununBilgisi() {
+async function renderGununBilgisi() {
   var card = document.getElementById('gunun-bilgisi-card');
   var paylasim = document.getElementById('gunun-bilgisi-paylasim');
   if (!card) return;
+  if (!window.gununSorusuData) {
+    card.innerHTML = '<p>Veri yükleniyor...</p>';
+    try {
+      await ensureGununSorusuData();
+    } catch (e) {
+      card.innerHTML = '<p>Veri yüklenemedi.</p>';
+      if (paylasim) paylasim.innerHTML = '';
+      return;
+    }
+  }
 
   var bilgi = getGununBilgisi(0);
   if (!bilgi) { card.innerHTML = '<p>Veri yükleniyor...</p>'; return; }
@@ -3719,7 +3987,7 @@ function gununBilgisiKart() {
 
 // ===== PAYLAŞIM KARTI (Madde İçinden) =====
 function maddePaylasimKarti(kisim, maddeNo) {
-  var madde = window.maddelerData?.find(function(m) { return m.kisim === kisim && m.madde_no === maddeNo; });
+  var madde = getMaddeMeta(kisim, maddeNo);
   if (!madde) return;
   var canvas = document.createElement('canvas');
   canvas.width = 1200; canvas.height = 630;
@@ -3752,7 +4020,7 @@ function maddePaylasimKarti(kisim, maddeNo) {
 }
 
 function maddePaylasText(kisim, maddeNo) {
-  var madde = window.maddelerData?.find(function(m) { return m.kisim === kisim && m.madde_no === maddeNo; });
+  var madde = getMaddeMeta(kisim, maddeNo);
   if (!madde) return;
   var text = madde.baslik + '\n\nSe\'adet-i Ebediyye, Kisim ' + kisim + ', Madde ' + maddeNo + '\nhttps://www.ilmihal.org/madde/' + kisim + '/' + maddeNo;
   if (navigator.share) {
@@ -3765,10 +4033,21 @@ function maddePaylasText(kisim, maddeNo) {
 // ===== REHBERLER =====
 var rehberDetayAcik = null;
 
-function renderRehberler() {
+async function renderRehberler() {
   var list = document.getElementById('rehber-list');
   var detay = document.getElementById('rehber-detay');
-  if (!list || !window.rehberlerData) return;
+  if (!list || !detay) return;
+  if (!window.rehberlerData) {
+    list.style.display = 'grid';
+    detay.style.display = 'none';
+    list.innerHTML = '<p style="text-align:center;color:var(--text-muted);padding:40px;">Rehberler yükleniyor...</p>';
+    try {
+      await ensureRehberlerData();
+    } catch (e) {
+      list.innerHTML = '<p style="text-align:center;color:var(--text-muted);padding:40px;">Rehberler yüklenemedi.</p>';
+      return;
+    }
+  }
 
   if (rehberDetayAcik) {
     list.style.display = 'none';
@@ -3791,14 +4070,21 @@ function renderRehberler() {
   }).join('');
 }
 
-function openRehber(id) {
+async function openRehber(id) {
+  if (!window.rehberlerData) {
+    try {
+      await ensureRehberlerData();
+    } catch (e) {
+      return;
+    }
+  }
   rehberDetayAcik = id;
-  renderRehberler();
+  void renderRehberler();
 }
 
 function closeRehber() {
   rehberDetayAcik = null;
-  renderRehberler();
+  void renderRehberler();
 }
 
 function renderRehberDetay(id) {
@@ -3934,22 +4220,6 @@ function filtreAramaSonuclari(tip) {
   };
 })();
 
-// Madde açıldığında BreadcrumbList schema güncelle
-var _origOpenMaddeForBreadcrumb = openMadde;
-openMadde = async function(kisim, maddeNo, fromRoute, searchQuery) {
-  await _origOpenMaddeForBreadcrumb(kisim, maddeNo, fromRoute, searchQuery);
-  var kisimLabels = {1:'Birinci Kısım', 2:'İkinci Kısım', 3:'Üçüncü Kısım'};
-  var madde = window.maddelerData?.find(function(m) { return m.kisim === kisim && m.madde_no === maddeNo; });
-  if (madde && window.updateDynamicSchema) {
-    window.updateDynamicSchema('breadcrumb', [
-      {name: 'Ana Sayfa', url: 'https://www.ilmihal.org/'},
-      {name: 'İçindekiler', url: 'https://www.ilmihal.org/icerik'},
-      {name: kisimLabels[kisim], url: 'https://www.ilmihal.org/icerik'},
-      {name: madde.baslik, url: 'https://www.ilmihal.org/madde/' + kisim + '/' + maddeNo}
-    ]);
-  }
-};
-
 // ===== CONTENT-02: GÜNCELLEME TARİHİ =====
 // Hakkında sayfasına güncelleme tarihi ekle
 (function() {
@@ -4082,28 +4352,6 @@ function togglePodcastMode() {
     kesfetLinks[1].appendChild(link);
   }
 
-  // Route desteği ekle
-  var _origHandleRouteForCalisma = handleRoute;
-  handleRoute = function() {
-    var fullPath = getRoutePath();
-    if (fullPath === 'calisma-alanim') {
-      navigateTo('calisma-alanim', true);
-      return;
-    }
-    _origHandleRouteForCalisma();
-  };
-
-  // navigateTo desteği
-  var _origNavForCalisma = navigateTo;
-  navigateTo = function(page, fromRoute) {
-    _origNavForCalisma(page, fromRoute);
-    if (page === 'calisma-alanim') {
-      document.getElementById('page-calisma-alanim')?.classList.add('active');
-      renderCalismaAlanim();
-      updateSeoMeta("Çalışma Alanım - Se'âdet-i Ebediyye", "Notlarınız, yer imleriniz ve okuma geçmişiniz.", "https://www.ilmihal.org/calisma-alanim");
-    }
-  };
-
   function renderCalismaAlanim() {
     var el = document.getElementById('calisma-icerik');
     if (!el) return;
@@ -4202,7 +4450,7 @@ function togglePodcastMode() {
         r.bolumler.forEach(function(b) { totalM += b.maddeler.length; });
         var doneM = rehberProg[rid].length;
         var rpct = totalM > 0 ? Math.round((doneM / totalM) * 100) : 0;
-        html += '<div style="padding:12px 16px;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-sm);margin-bottom:8px;cursor:pointer;" onclick="navigateTo(\'rehberler\');setTimeout(function(){openRehber(\'' + rid + '\')},100)">';
+        html += '<div style="padding:12px 16px;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-sm);margin-bottom:8px;cursor:pointer;" onclick="goToRehberDetay(\'' + rid + '\')">';
         html += '<div style="display:flex;justify-content:space-between;align-items:center;">';
         html += '<span>' + r.ikon + ' ' + escapeHtml(r.baslik) + '</span>';
         html += '<span style="font-size:0.85rem;color:var(--primary);font-weight:600;">%' + rpct + '</span>';
@@ -4216,6 +4464,8 @@ function togglePodcastMode() {
     el.innerHTML = html;
     if (typeof renderOkumaIstatistik === 'function') renderOkumaIstatistik();
   }
+
+  window.renderCalismaAlanim = renderCalismaAlanim;
 
   // Okuma geçmişi takibi: markAsRead'i genişlet
   var _origMarkAsRead = (typeof markAsRead === 'function') ? markAsRead : function() {};
@@ -4263,6 +4513,7 @@ function togglePodcastMode() {
 
 // ===== FIKHİ HÜKÜMLER =====
 var _hukumlerLoaded = false;
+var _hukumlerLoadPromise = null;
 var _hukumlerEventsInit = false;
 var _hukumlerTur = 'all';
 var _hukumlerKatman = 'acik';
@@ -4272,16 +4523,22 @@ var _hukumlerObserver = null;
 function ensureHukumlerData() {
   if (_hukumlerLoaded && window.hukumlerData) {
     initHukumlerPage();
-    return;
+    return Promise.resolve(window.hukumlerData);
   }
   var list = document.getElementById('hukumler-list');
   if (list) list.innerHTML = '<p style="text-align:center;padding:40px;color:var(--text-muted);">Yükleniyor…</p>';
-  loadScript('hukumler-data.js').then(function() {
+  if (_hukumlerLoadPromise) return _hukumlerLoadPromise;
+  _hukumlerLoadPromise = loadScript('hukumler-data.js').then(function() {
     _hukumlerLoaded = true;
     initHukumlerPage();
+    return window.hukumlerData;
   }).catch(function() {
     if (list) list.innerHTML = '<p style="text-align:center;padding:40px;color:var(--text-muted);">Veri yüklenemedi.</p>';
+    throw new Error('Hukumler verisi yüklenemedi');
+  }).finally(function() {
+    _hukumlerLoadPromise = null;
   });
+  return _hukumlerLoadPromise;
 }
 
 function initHukumlerPage() {

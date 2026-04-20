@@ -47,6 +47,8 @@
 
   // --- Index'i kur ---
   function buildIndex() {
+    index.clear();
+    indexReady = false;
     // 1. Maddeler (başlıklar)
     if (window.tocData) {
       window.tocData.forEach(m => {
@@ -316,7 +318,9 @@
     const indexResults = unifiedSearch(query, { limit: limit });
 
     // Tam metin araması için kisimTexts'i yükle (app.js'den)
-    if (typeof loadKisimTexts === 'function') {
+    if (typeof ensureAllKisimTexts === 'function') {
+      await ensureAllKisimTexts();
+    } else if (typeof loadKisimTexts === 'function') {
       await Promise.all([loadKisimTexts(1), loadKisimTexts(2), loadKisimTexts(3)]);
     }
 
@@ -533,7 +537,9 @@
       if (!data.results || !Array.isArray(data.results)) return [];
 
       // Metinleri yükle (passage bulmak için)
-      if (typeof loadKisimTexts === 'function') {
+      if (typeof ensureAllKisimTexts === 'function') {
+        await ensureAllKisimTexts();
+      } else if (typeof loadKisimTexts === 'function') {
         await Promise.all([loadKisimTexts(1), loadKisimTexts(2), loadKisimTexts(3)]);
       }
 
