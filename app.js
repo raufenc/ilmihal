@@ -139,6 +139,7 @@ function updateSeoMeta(title, description, url) {
 // ===== LAZY LOADING (sözlük + maddeler) =====
 var _loadingScripts = {};
 var MADDE_SAFE_MODE = true;
+var MADDE_ENABLE_SOZLUK_LAYER = true;
 
 function assetUrl(path) {
   if (!path) return path;
@@ -983,6 +984,7 @@ async function openMadde(kisim, maddeNo, fromRoute, searchQuery) {
     try {
       textEl.innerHTML = highlightWords(rawMetinSafe);
       bindMaddeTooltipListeners();
+      if (typeof initInlineSozluk === 'function') initInlineSozluk(textEl);
       applySearchHighlight();
     } catch (e) {
       console.error('Madde sözlük highlight hatası:', e);
@@ -1032,7 +1034,8 @@ async function openMadde(kisim, maddeNo, fromRoute, searchQuery) {
       hydrateMaddeRelatedTables(requestId, kisim, maddeNo);
       hydrateMaddeIliskiliMaddeler(requestId, kisim, maddeNo, madde.baslik);
     });
-
+  }
+  if (MADDE_ENABLE_SOZLUK_LAYER) {
     if (window.sozlukData) {
       scheduleMaddeSozlukEnhancement();
     } else {
@@ -5186,21 +5189,28 @@ function initInlineSozluk(container) {
     });
   }
   container.querySelectorAll('.zor-kelime').forEach(function(el) {
+    if (el.dataset.inlineSozlukBound === '1') return;
+    el.dataset.inlineSozlukBound = '1';
     el.addEventListener('click', function(e) {
       e.stopPropagation();
       var kelime = el.dataset.kelime || el.textContent.trim();
       var entry = window.sozlukData.find(function(s) {
-        return s.kelime && s.kelime.toLowerCase() === kelime.toLowerCase();
+        var value = s.k || s.kelime || '';
+        return value && trLower(value) === trLower(kelime);
       });
       if (!entry) {
         entry = window.sozlukData.find(function(s) {
-          return s.kelime && s.kelime.toLowerCase().indexOf(kelime.toLowerCase()) !== -1;
+          var value = s.k || s.kelime || '';
+          return value && trLower(value).indexOf(trLower(kelime)) !== -1;
         });
       }
       if (entry) {
-        var anlam = entry.anlam || entry.tanim || '';
+        var entryKelime = entry.k || entry.kelime || kelime;
+        var anlam = entry.a || entry.anlam || entry.tanim || '';
+        var osmanlica = entry.o || entry.osmanlica || '';
+        var kategori = entry.kat || entry.kategori || '';
         if (anlam.length > 300) anlam = anlam.substring(0, 300) + '...';
-        _sozlukPopupEl.innerHTML = '<div class="sp-header"><strong>' + entry.kelime + '</strong>' + (entry.osmanlica ? '<span class="sp-osmanlica">' + entry.osmanlica + '</span>' : '') + '<button type="button" class="sp-kapat" onclick="document.getElementById(\'sozluk-popup\').style.display=\'none\'">&times;</button></div><p class="sp-anlam">' + anlam + '</p>' + (entry.kategori ? '<span class="sp-kat">' + entry.kategori + '</span>' : '') + '<a class="sp-detay" href="#" onclick="event.preventDefault();navigateTo(\'sozluk\');return false">Sözlükte Aç</a>';
+        _sozlukPopupEl.innerHTML = '<div class="sp-header"><strong>' + entryKelime + '</strong>' + (osmanlica ? '<span class="sp-osmanlica">' + osmanlica + '</span>' : '') + '<button type="button" class="sp-kapat" onclick="document.getElementById(\'sozluk-popup\').style.display=\'none\'">&times;</button></div><p class="sp-anlam">' + anlam + '</p>' + (kategori ? '<span class="sp-kat">' + kategori + '</span>' : '') + '<a class="sp-detay" href="#" onclick="event.preventDefault();goToSozlukSearch(\'' + escapeHtml(entryKelime).replace(/'/g, "\\'") + '\');document.getElementById(\'sozluk-popup\').style.display=\'none\';return false">Sözlükte Aç</a>';
         var rect = el.getBoundingClientRect();
         _sozlukPopupEl.style.display = 'block';
         _sozlukPopupEl.style.top = (rect.bottom + window.scrollY + 8) + 'px';
