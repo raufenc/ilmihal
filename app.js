@@ -139,8 +139,13 @@ function updateSeoMeta(title, description, url) {
 // ===== LAZY LOADING (sözlük + maddeler) =====
 var _loadingScripts = {};
 
+function assetUrl(path) {
+  if (!path) return path;
+  return path.charAt(0) === '/' ? path : '/' + path;
+}
+
 function loadScript(src) {
-  var base = src.split('?')[0];
+  var base = assetUrl(src.split('?')[0]);
   // Zaten yükleniyorsa aynı promise'i döndür
   if (_loadingScripts[base]) return _loadingScripts[base];
   // Başarıyla yüklenmiş script tag var mı? (onload tetiklendiyse)
@@ -152,7 +157,7 @@ function loadScript(src) {
 
   _loadingScripts[base] = new Promise(function(resolve, reject) {
     var s = document.createElement('script');
-    s.src = src;
+    s.src = assetUrl(src);
     s.onload = function() { s.setAttribute('data-loaded', '1'); delete _loadingScripts[base]; resolve(); };
     s.onerror = function() { delete _loadingScripts[base]; reject(new Error('Script yüklenemedi: ' + src)); };
     document.body.appendChild(s);
@@ -540,24 +545,36 @@ function getKisimMaddeler(kisim) {
 async function loadKisimTexts(kisim) {
   if (kisimTextsCache[kisim]) return kisimTextsCache[kisim];
   if (kisimTextPromises[kisim]) return kisimTextPromises[kisim];
-  kisimTextPromises[kisim] = (async function() {
-    try {
-      // Timeout var; cache davranışını tarayıcıya bırakıyoruz.
-      const ctrl = new AbortController();
-      const timer = setTimeout(function() { ctrl.abort(); }, 4000);
-      const resp = await fetch(`texts/kisim${kisim}.json?v=2`, { signal: ctrl.signal });
+  kisimTextPromises[kisim] = new Promise(function(resolve) {
+    var ctrl = new AbortController();
+    var settled = false;
+    var timer = setTimeout(function() {
+      try { ctrl.abort(); } catch (e) {}
+      finish(null, new Error('timeout'));
+    }, 2500);
+
+    function finish(data, err) {
+      if (settled) return;
+      settled = true;
       clearTimeout(timer);
-      if (!resp.ok) throw new Error('HTTP ' + resp.status);
-      const data = await resp.json();
-      kisimTextsCache[kisim] = data;
-      return data;
-    } catch (e) {
-      console.error(`K\u0131s\u0131m ${kisim} metinleri y\u00fcklenemedi:`, e);
-      return null;
-    } finally {
-      if (!kisimTextsCache[kisim]) delete kisimTextPromises[kisim];
+      if (data) {
+        kisimTextsCache[kisim] = data;
+      } else {
+        delete kisimTextPromises[kisim];
+      }
+      if (err) console.error(`K\u0131s\u0131m ${kisim} metinleri y\u00fcklenemedi:`, err);
+      resolve(data || null);
     }
-  })();
+
+    fetch(assetUrl(`texts/kisim${kisim}.json?v=2`), { signal: ctrl.signal }).then(function(resp) {
+      if (!resp.ok) throw new Error('HTTP ' + resp.status);
+      return resp.json();
+    }).then(function(data) {
+      finish(data, null);
+    }).catch(function(err) {
+      finish(null, err);
+    });
+  });
   return kisimTextPromises[kisim];
 }
 
@@ -631,6 +648,28 @@ function hydrateMaddeRelatedSahislar(requestId, kisim, maddeNo) {
   });
 }
 
+function hydrateMaddeRelatedTables(requestId, kisim, maddeNo) {
+  var slot = document.getElementById('madde-related-table-slot');
+  if (!slot || requestId !== _maddeOpenRequestId) return;
+  try {
+    slot.innerHTML = getRelatedTables(kisim, maddeNo) || '';
+  } catch (e) {
+    console.error('İlgili tablo yükleme hatası:', e);
+    slot.innerHTML = '';
+  }
+}
+
+function hydrateMaddeIliskiliMaddeler(requestId, kisim, maddeNo, baslik) {
+  var slot = document.getElementById('madde-iliskili-slot');
+  if (!slot || requestId !== _maddeOpenRequestId) return;
+  try {
+    slot.innerHTML = getIliskiliMaddeler(kisim, maddeNo, baslik) || '';
+  } catch (e) {
+    console.error('İlgili madde yükleme hatası:', e);
+    slot.innerHTML = '';
+  }
+}
+
 async function openMadde(kisim, maddeNo, fromRoute, searchQuery) {
   var requestId = ++_maddeOpenRequestId;
   // AŞAMA 0 — Modal'ı HEMEN aç, her şeyden önce. Sonraki satırlar hata atsa bile modal görünür.
@@ -692,14 +731,12 @@ async function openMadde(kisim, maddeNo, fromRoute, searchQuery) {
   const rawMetin = await getMaddeText(kisim, maddeNo);
   if (requestId !== _maddeOpenRequestId) return;
   if (!rawMetin) {
-    renderMaddeError(body, kisim, maddeNo, madde.baslik, 'Madde metni şu anda yüklenemedi.');
+    renderMaddeError(body, kisim, maddeNo, madde.baslik, 'Madde metni zamanında yüklenemedi. Tekrar deneyin veya sayfayı yenileyin.');
     return;
   }
 
   madde.metin = rawMetin || madde.metin || '';
   const rawMetinSafe = madde.metin || '(Metin yüklenemedi)';
-  // İlişkili maddeler (UX-03)
-  var iliskiliHTML = getIliskiliMaddeler(kisim, maddeNo, madde.baslik);
   // Metni hemen göster (sözlük yükünü bekleme)
   function bindMaddeTooltipListeners() {
     body.querySelectorAll('.zor-kelime').forEach(el => {
@@ -733,8 +770,8 @@ async function openMadde(kisim, maddeNo, fromRoute, searchQuery) {
       <button type="button" class="btn btn-sm btn-secondary" style="background:var(--primary-light);color:#fff;" onclick="maddePaylasimKarti(${kisim},${maddeNo})">Gorsel Kart</button>
     </div>
     <div id="madde-related-sahis-slot"></div>
-    ${getRelatedTables(kisim, maddeNo)}
-    ${iliskiliHTML}
+    <div id="madde-related-table-slot"></div>
+    <div id="madde-iliskili-slot"></div>
   `;
     bindMaddeTooltipListeners();
   }
@@ -780,6 +817,11 @@ async function openMadde(kisim, maddeNo, fromRoute, searchQuery) {
   renderBody(escapeHtml(rawMetinSafe));
   applySearchHighlight();
   hydrateMaddeRelatedSahislar(requestId, kisim, maddeNo);
+  nextFrame().then(function() {
+    if (requestId !== _maddeOpenRequestId) return;
+    hydrateMaddeRelatedTables(requestId, kisim, maddeNo);
+    hydrateMaddeIliskiliMaddeler(requestId, kisim, maddeNo, madde.baslik);
+  });
 
   if (window.sozlukData) {
     scheduleMaddeSozlukEnhancement();
