@@ -1406,6 +1406,14 @@ function bindSozlukTooltipListeners(container) {
   });
 }
 
+function resetSozlukBindingState(container) {
+  if (!container) return;
+  container.querySelectorAll('.zor-kelime').forEach(function(el) {
+    delete el.dataset.tooltipBound;
+    delete el.dataset.inlineSozlukBound;
+  });
+}
+
 function showTooltip(e) {
   clearTimeout(_tooltipHideTimer);
   const el = e.target;
@@ -5239,6 +5247,7 @@ function sunumModuAc() {
   document.body.appendChild(sunum);
   var sunumIcerik = document.getElementById('sunum-icerik');
   if (sunumIcerik) {
+    resetSozlukBindingState(sunumIcerik);
     bindSozlukTooltipListeners(sunumIcerik);
     if (typeof initInlineSozluk === 'function') initInlineSozluk(sunumIcerik);
   }
