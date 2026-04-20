@@ -10,6 +10,8 @@
   const index = new Map();
   let indexReady = false;
   const pendingCallbacks = [];
+  let fullTextCorpus = null;
+  let fullTextCorpusPromise = null;
 
   // app.js'deki normalizeSearch'ü kullan, yüklenmemişse fallback
   function norm(text) {
@@ -34,6 +36,63 @@
     return n.split(/\s+/).filter(w => w.length >= 2);
   }
 
+  function dedupeTokens(tokens) {
+    return Array.from(new Set((tokens || []).filter(Boolean)));
+  }
+
+  function indexOfWordStartSafe(text, term, from) {
+    if (!text || !term) return -1;
+    if (typeof indexOfWordStart === 'function') return indexOfWordStart(text, term, from || 0);
+    let cursor = from || 0;
+    while (true) {
+      const idx = text.indexOf(term, cursor);
+      if (idx === -1) return -1;
+      const prev = idx === 0 ? ' ' : text[idx - 1];
+      if (/\s|[.,;:!?()"'\-]/.test(prev)) return idx;
+      cursor = idx + 1;
+    }
+  }
+
+  function includesWordStartSafe(text, term) {
+    return indexOfWordStartSafe(text, term, 0) !== -1;
+  }
+
+  function countWordStartMatches(text, term, maxCount) {
+    let count = 0;
+    let from = 0;
+    const cap = maxCount || Infinity;
+    while (count < cap) {
+      const idx = indexOfWordStartSafe(text, term, from);
+      if (idx === -1) break;
+      count++;
+      from = idx + term.length;
+    }
+    return count;
+  }
+
+  function buildExpandedQuery(query) {
+    const expanded = (typeof expandSearchQuery === 'function') ? expandSearchQuery(query) : null;
+    const words = (expanded && expanded.words && expanded.words.length ? expanded.words : tokenize(query))
+      .map(w => norm(w))
+      .filter(Boolean);
+    const wordVarLists = (expanded && expanded.wordVarLists && expanded.wordVarLists.length
+      ? expanded.wordVarLists
+      : words.map(w => (typeof wordVariants === 'function') ? wordVariants(w) : [w]))
+      .map(vars => dedupeTokens((vars || []).map(v => norm(v)).filter(v => v.length >= 2)));
+
+    const phraseCandidates = dedupeTokens([
+      expanded && expanded.normalized ? norm(expanded.normalized) : norm(query),
+      words.join(' ')
+    ].filter(Boolean));
+
+    return {
+      normalized: phraseCandidates[0] || '',
+      words,
+      wordVarLists,
+      phraseCandidates
+    };
+  }
+
   // Index'e doküman ekle
   function addToIndex(tokens, entry) {
     const seen = new Set();
@@ -49,6 +108,8 @@
   function buildIndex() {
     index.clear();
     indexReady = false;
+    fullTextCorpus = null;
+    fullTextCorpusPromise = null;
     // 1. Maddeler (başlıklar)
     if (window.tocData) {
       window.tocData.forEach(m => {
@@ -104,6 +165,16 @@
           subtitle: s.a.length > 80 ? s.a.substring(0, 80) + '...' : s.a,
           field: 'term',
           boost: 7,
+          data: s
+        });
+        const definitionTokens = tokenize(s.a);
+        addToIndex(definitionTokens, {
+          type: 'sozluk',
+          id: 'lugat-' + s.i,
+          title: s.k,
+          subtitle: s.a.length > 80 ? s.a.substring(0, 80) + '...' : s.a,
+          field: 'definition',
+          boost: 1.5,
           data: s
         });
       });
@@ -224,36 +295,23 @@
       return { madde: [], sozluk: [], sahis: [], tablo: [], total: 0 };
     }
 
-    const queryTokens = tokenize(query);
-    if (queryTokens.length === 0) {
+    const queryInfo = buildExpandedQuery(query);
+    if (queryInfo.words.length === 0) {
       return { madde: [], sozluk: [], sahis: [], tablo: [], total: 0 };
     }
-
-    // Varyant genişletme (app.js'deki wordVariants varsa kullan)
-    const allQueryTokens = []; // [{token, distance}]
-    queryTokens.forEach(qt => {
-      // Exact + variants from app.js
-      const variants = (typeof wordVariants === 'function') ? wordVariants(qt) : [qt];
-      variants.forEach(v => {
-        allQueryTokens.push({ original: qt, token: v, distance: 0 });
-      });
-
-      // Fuzzy matches
-      const fuzzyMatches = fuzzyFind(qt, qt.length <= 4 ? 1 : 2);
-      fuzzyMatches.forEach((dist, fToken) => {
-        if (!variants.includes(fToken)) {
-          allQueryTokens.push({ original: qt, token: fToken, distance: dist });
-        }
-      });
-    });
 
     // Sonuç toplama: her sonuç ID'si için skor hesapla
     const scoreMap = new Map(); // id → { entry, score, matchedTokens }
 
     // Her sorgu kelimesi için
-    queryTokens.forEach((qt, qi) => {
-      // Bu kelime için tüm eşleşen token'ları bul
-      const relevantTokens = allQueryTokens.filter(t => t.original === qt);
+    queryInfo.words.forEach((qt, qi) => {
+      const relevantTokens = queryInfo.wordVarLists[qi].map(token => ({ token, distance: 0 }));
+      const fuzzyMatches = fuzzyFind(qt, qt.length <= 4 ? 1 : 2);
+      fuzzyMatches.forEach((dist, token) => {
+        if (!relevantTokens.some(item => item.token === token)) {
+          relevantTokens.push({ token, distance: dist });
+        }
+      });
 
       relevantTokens.forEach(({ token, distance }) => {
         const entries = index.get(token);
@@ -262,28 +320,60 @@
         entries.forEach(entry => {
           const key = entry.type + ':' + entry.id;
           if (!scoreMap.has(key)) {
-            scoreMap.set(key, { entry, score: 0, matchedWords: new Set() });
+            scoreMap.set(key, {
+              entry,
+              score: 0,
+              matchedWords: new Set(),
+              exactWordSet: new Set()
+            });
           }
           const record = scoreMap.get(key);
-          const distPenalty = distance === 0 ? 1 : (distance <= 0.5 ? 0.9 : 0.5 / distance);
-          record.score += entry.boost * distPenalty;
+          const distPenalty = distance === 0 ? 1 : (distance <= 0.5 ? 0.9 : 0.45 / distance);
+          const fieldWeight = (entry.field === 'title' || entry.field === 'term' || entry.field === 'name') ? 1.15 : 1;
+          record.score += entry.boost * fieldWeight * distPenalty;
           record.matchedWords.add(qi);
+          if (distance === 0) record.exactWordSet.add(qi);
         });
       });
     });
 
     // AND mantığı: tüm sorgu kelimeleri eşleşmeli (en az 1 token'la)
     // Tek kelime sorgularda bu otomatik sağlanır
-    const minWords = queryTokens.length >= 3 ? queryTokens.length - 1 : queryTokens.length;
+    const minWords = queryInfo.words.length >= 4 ? queryInfo.words.length - 1 : queryInfo.words.length;
 
     const allResults = [];
-    scoreMap.forEach(({ entry, score, matchedWords }) => {
+    scoreMap.forEach(({ entry, score, matchedWords, exactWordSet }) => {
       if (matchedWords.size >= minWords) {
-        // Tüm kelimeler eşleşirse bonus
-        const allMatch = matchedWords.size === queryTokens.length;
+        const normTitle = norm(entry.title || '');
+        const normSubtitle = norm(entry.subtitle || '');
+        const allMatch = matchedWords.size === queryInfo.words.length;
+        const titleCoverage = queryInfo.wordVarLists.reduce((count, vars) => {
+          return count + (vars.some(v => includesWordStartSafe(normTitle, v)) ? 1 : 0);
+        }, 0);
+        const exactWordCount = exactWordSet ? exactWordSet.size : 0;
+        let boostedScore = score * (allMatch ? 1.35 : 1);
+
+        if (normTitle === queryInfo.normalized) {
+          boostedScore += (entry.type === 'madde' ? 120 : 90);
+        } else if (queryInfo.normalized && (normTitle.startsWith(queryInfo.normalized + ' ') || normTitle.startsWith(queryInfo.normalized))) {
+          boostedScore += 42;
+        } else if (queryInfo.normalized && normTitle.indexOf(queryInfo.normalized) !== -1) {
+          boostedScore += 22;
+        }
+
+        boostedScore += titleCoverage * 9;
+        if (titleCoverage === queryInfo.wordVarLists.length) boostedScore += 18;
+        if (queryInfo.normalized && normSubtitle.indexOf(queryInfo.normalized) !== -1) boostedScore += 5;
+        boostedScore += exactWordCount * 3;
+        if (queryInfo.words.length === 1 && queryInfo.words[0]) {
+          if (normTitle === queryInfo.words[0]) boostedScore += 60;
+          else if (normTitle.startsWith(queryInfo.words[0] + ' ') || normTitle.startsWith(queryInfo.words[0])) boostedScore += 55;
+          else if (includesWordStartSafe(normTitle, queryInfo.words[0])) boostedScore += 20;
+        }
+
         allResults.push({
           ...entry,
-          score: score * (allMatch ? 1.5 : 1)
+          score: boostedScore
         });
       }
     });
@@ -294,12 +384,19 @@
     // Kategorilere ayır + deduplicate
     const categories = { madde: [], sozluk: [], sahis: [], tablo: [] };
     const seen = {};
-    Object.keys(categories).forEach(k => seen[k] = new Set());
+    const seenTitles = {};
+    Object.keys(categories).forEach(k => {
+      seen[k] = new Set();
+      seenTitles[k] = new Set();
+    });
 
     allResults.forEach(r => {
       if (seen[r.type].has(r.id)) return;
       if (categories[r.type].length >= limit) return;
+      const titleKey = norm(r.title || '');
+      if (titleKey && seenTitles[r.type].has(titleKey)) return;
       seen[r.type].add(r.id);
+      if (titleKey) seenTitles[r.type].add(titleKey);
       categories[r.type].push(r);
     });
 
@@ -309,87 +406,166 @@
     return { ...categories, total };
   }
 
+  async function ensureFullTextCorpus() {
+    if (fullTextCorpus) return fullTextCorpus;
+    if (fullTextCorpusPromise) return fullTextCorpusPromise;
+
+    fullTextCorpusPromise = (async function() {
+      if (typeof ensureAllKisimTexts === 'function') {
+        await ensureAllKisimTexts();
+      } else if (typeof loadKisimTexts === 'function') {
+        await Promise.all([1, 2, 3].map(kisim => loadKisimTexts(kisim)));
+      }
+
+      const cache = window.kisimTextsCache || {};
+      fullTextCorpus = (window.tocData || []).map(m => {
+        const kisimTexts = cache[m.kisim] || {};
+        const fullText = kisimTexts[String(m.madde_no)] || kisimTexts[m.madde_no] || '';
+        return {
+          id: m.kisim + '/' + m.madde_no,
+          title: m.baslik,
+          subtitle: 'Kısım ' + m.kisim + ', Madde ' + m.madde_no,
+          normTitle: norm(m.baslik || ''),
+          fullText: fullText,
+          normText: norm(fullText || ''),
+          data: m
+        };
+      });
+      return fullTextCorpus;
+    })();
+
+    fullTextCorpusPromise.catch(() => {
+      fullTextCorpusPromise = null;
+    });
+
+    return fullTextCorpusPromise;
+  }
+
   // --- Tam metin arama (maddeler içinde, mevcut doFullSearch'ü tamamlar) ---
-  async function unifiedFullSearch(query, limit) {
-    limit = limit || 50;
-    if (!query || query.trim().length < 2) return [];
-
-    // Index sonuçlarını al
-    const indexResults = unifiedSearch(query, { limit: limit });
-
-    // Tam metin araması için kisimTexts'i yükle (app.js'den)
-    if (typeof ensureAllKisimTexts === 'function') {
-      await ensureAllKisimTexts();
-    } else if (typeof loadKisimTexts === 'function') {
-      await Promise.all([loadKisimTexts(1), loadKisimTexts(2), loadKisimTexts(3)]);
+  async function unifiedFullSearch(query, options) {
+    options = options || {};
+    const limit = options.limit || 30;
+    const sideLimit = options.sideLimit || Math.min(limit, 8);
+    if (!query || query.trim().length < 2) {
+      return { madde: [], sozluk: [], sahis: [], tablo: [], total: 0 };
     }
 
-    // Metin içi arama (mevcut doFullSearch mantığıyla aynı)
-    const queryExpanded = (typeof expandSearchQuery === 'function')
-      ? expandSearchQuery(query)
-      : { words: tokenize(query), wordVarLists: [tokenize(query)] };
+    const queryInfo = buildExpandedQuery(query);
+    if (queryInfo.words.length === 0) {
+      return { madde: [], sozluk: [], sahis: [], tablo: [], total: 0 };
+    }
 
-    const textMatches = [];
-    if (window.tocData && window.kisimTextsCache) {
-      window.tocData.forEach(m => {
-        const fullText = window.kisimTextsCache[m.kisim]?.[String(m.madde_no)] || '';
-        const normText = norm(fullText);
-        const normBaslik = norm(m.baslik || '');
+    const indexResults = unifiedSearch(query, { limit: sideLimit });
+    const corpus = await ensureFullTextCorpus();
+    const groupDocCounts = queryInfo.wordVarLists.map(() => 0);
 
-        let allFound = true;
-        let firstIdx = -1;
-        let firstVar = null;
+    corpus.forEach(doc => {
+      queryInfo.wordVarLists.forEach((vars, idx) => {
+        const matched = vars.some(v => includesWordStartSafe(doc.normTitle, v) || includesWordStartSafe(doc.normText, v));
+        if (matched) groupDocCounts[idx] += 1;
+      });
+    });
 
-        for (let wi = 0; wi < queryExpanded.wordVarLists.length; wi++) {
-          const wvars = queryExpanded.wordVarLists[wi];
-          let found = false;
-          for (const v of wvars) {
-            const idx = normText.indexOf(v);
-            if (idx !== -1) {
-              found = true;
-              if (firstIdx === -1) { firstIdx = idx; firstVar = v; }
-              break;
-            }
+    const minWords = queryInfo.wordVarLists.length >= 4 ? queryInfo.wordVarLists.length - 1 : queryInfo.wordVarLists.length;
+    const maddeResults = [];
+
+    corpus.forEach(doc => {
+      let score = 0;
+      let matchedWordCount = 0;
+
+      queryInfo.wordVarLists.forEach((vars, idx) => {
+        let titleScore = 0;
+        let tfScore = 0;
+
+        vars.forEach(v => {
+          if (!v) return;
+          if (doc.normTitle === v) {
+            titleScore = Math.max(titleScore, 8);
+          } else if (doc.normTitle.startsWith(v + ' ') || doc.normTitle.startsWith(v)) {
+            titleScore = Math.max(titleScore, 6);
+          } else if (includesWordStartSafe(doc.normTitle, v)) {
+            titleScore = Math.max(titleScore, 4);
           }
-          if (!found) {
-            found = wvars.some(v => normBaslik.includes(v));
-          }
-          if (!found) { allFound = false; break; }
-        }
 
-        if (allFound) {
-          let context = '';
-          if (firstIdx !== -1) {
-            const tLen = firstVar ? firstVar.length : 4;
-            const start = Math.max(0, firstIdx - 60);
-            const end = Math.min(fullText.length, firstIdx + tLen + 60);
-            context = (start > 0 ? '...' : '') +
-              fullText.substring(start, end) +
-              (end < fullText.length ? '...' : '');
+          const tf = countWordStartMatches(doc.normText, v, 4);
+          if (tf > 0) {
+            tfScore = Math.max(tfScore, Math.min(tf, 4) * 1.6);
           }
-          textMatches.push({
-            type: 'madde',
-            id: m.kisim + '/' + m.madde_no,
-            title: m.baslik,
-            subtitle: 'K\u0131s\u0131m ' + m.kisim + ', Madde ' + m.madde_no,
-            context: context,
-            inTitle: queryExpanded.wordVarLists.every(wvars =>
-              wvars.some(v => normBaslik.includes(v))),
-            data: m
-          });
+        });
+
+        if (titleScore > 0 || tfScore > 0) {
+          matchedWordCount++;
+          const df = Math.max(1, groupDocCounts[idx]);
+          const idf = Math.log(1 + ((corpus.length + 1) / df));
+          score += (titleScore + tfScore) * idf;
         }
       });
-    }
 
-    // Başlık eşleşmelerini öne al
-    textMatches.sort((a, b) => (b.inTitle ? 1 : 0) - (a.inTitle ? 1 : 0));
+      if (matchedWordCount < minWords) return;
 
-    return {
-      madde: textMatches.slice(0, limit),
+      if (matchedWordCount === queryInfo.wordVarLists.length) {
+        score *= queryInfo.wordVarLists.length > 1 ? 1.45 : 1.15;
+      }
+
+      queryInfo.phraseCandidates.forEach(phrase => {
+        if (!phrase || phrase.length < 3) return;
+        if (doc.normTitle === phrase) {
+          score += 80;
+        } else if (doc.normTitle.startsWith(phrase + ' ') || doc.normTitle.startsWith(phrase)) {
+          score += 32;
+        } else if (doc.normTitle.indexOf(phrase) !== -1) {
+          score += 18;
+        }
+        if (doc.normText.indexOf(phrase) !== -1) {
+          score += 14;
+        }
+      });
+
+      if (queryInfo.words.length === 1 && queryInfo.words[0]) {
+        if (doc.normTitle === queryInfo.words[0]) {
+          score += 70;
+        } else if (doc.normTitle.startsWith(queryInfo.words[0] + ' ') || doc.normTitle.startsWith(queryInfo.words[0])) {
+          score += 90;
+        } else if (includesWordStartSafe(doc.normTitle, queryInfo.words[0])) {
+          score += 28;
+        }
+      }
+
+      const snippetHtml = doc.fullText ? findPassage(doc.fullText, query, 180) : null;
+      const snippet = snippetHtml ? snippetHtml.replace(/<[^>]+>/g, '') : '';
+
+      maddeResults.push({
+        type: 'madde',
+        id: doc.id,
+        title: doc.title,
+        subtitle: doc.subtitle,
+        score: score,
+        snippet: snippet,
+        snippetHtml: snippetHtml,
+        data: doc.data
+      });
+    });
+
+    maddeResults.sort((a, b) => b.score - a.score);
+
+    const uniqueMaddeResults = [];
+    const seenMaddeTitles = new Set();
+    maddeResults.forEach(item => {
+      if (uniqueMaddeResults.length >= limit) return;
+      const titleKey = norm(item.title || '');
+      if (titleKey && seenMaddeTitles.has(titleKey)) return;
+      if (titleKey) seenMaddeTitles.add(titleKey);
+      uniqueMaddeResults.push(item);
+    });
+
+    const payload = {
+      madde: uniqueMaddeResults,
       sozluk: indexResults.sozluk,
       sahis: indexResults.sahis,
       tablo: indexResults.tablo
     };
+    payload.total = payload.madde.length + payload.sozluk.length + payload.sahis.length + payload.tablo.length;
+    return payload;
   }
 
   // --- Passage Bulma ve Highlight ---
