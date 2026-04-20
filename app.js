@@ -930,10 +930,7 @@ async function openMadde(kisim, maddeNo, fromRoute, searchQuery) {
   const rawMetinSafe = madde.metin || '(Metin yüklenemedi)';
   // Metni hemen göster (sözlük yükünü bekleme)
   function bindMaddeTooltipListeners() {
-    body.querySelectorAll('.zor-kelime').forEach(el => {
-      el.addEventListener('mouseenter', showTooltip);
-      el.addEventListener('mouseleave', hideTooltip);
-    });
+    bindSozlukTooltipListeners(body);
   }
 
   function renderBody(metin) {
@@ -1398,6 +1395,16 @@ function highlightWords(text) {
 
 // ===== TOOLTIP =====
 let _tooltipHideTimer = null;
+
+function bindSozlukTooltipListeners(container) {
+  if (!container) return;
+  container.querySelectorAll('.zor-kelime').forEach(function(el) {
+    if (el.dataset.tooltipBound === '1') return;
+    el.dataset.tooltipBound = '1';
+    el.addEventListener('mouseenter', showTooltip);
+    el.addEventListener('mouseleave', hideTooltip);
+  });
+}
 
 function showTooltip(e) {
   clearTimeout(_tooltipHideTimer);
@@ -5230,6 +5237,11 @@ function sunumModuAc() {
   sunum.className = 'sunum-overlay';
   sunum.innerHTML = '<div class="sunum-header"><h2>' + currentMaddeForBookmark.baslik + '</h2><div class="sunum-kontroller"><button type="button" onclick="sunumFontDegistir(1)" title="Büyüt">A+</button><button type="button" onclick="sunumFontDegistir(-1)" title="Küçült">A-</button><button type="button" onclick="kapatSunumModu()" title="Kapat">&times;</button></div></div><div class="sunum-icerik" id="sunum-icerik">' + body.innerHTML + '</div>';
   document.body.appendChild(sunum);
+  var sunumIcerik = document.getElementById('sunum-icerik');
+  if (sunumIcerik) {
+    bindSozlukTooltipListeners(sunumIcerik);
+    if (typeof initInlineSozluk === 'function') initInlineSozluk(sunumIcerik);
+  }
   document.body.style.overflow = 'hidden';
   document.addEventListener('keydown', _sunumEsc);
 }
