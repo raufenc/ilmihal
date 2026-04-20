@@ -138,6 +138,7 @@ function updateSeoMeta(title, description, url) {
 
 // ===== LAZY LOADING (sözlük + maddeler) =====
 var _loadingScripts = {};
+var MADDE_SAFE_MODE = true;
 
 function assetUrl(path) {
   if (!path) return path;
@@ -805,6 +806,7 @@ function renderMaddeError(body, kisim, maddeNo, title, detail) {
 }
 
 function hydrateMaddeRelatedSahislar(requestId, kisim, maddeNo) {
+  if (MADDE_SAFE_MODE) return;
   var slot = document.getElementById('madde-related-sahis-slot');
   if (!slot) return;
   if (window.sahislarData) {
@@ -826,6 +828,7 @@ function hydrateMaddeRelatedSahislar(requestId, kisim, maddeNo) {
 }
 
 function hydrateMaddeRelatedTables(requestId, kisim, maddeNo) {
+  if (MADDE_SAFE_MODE) return;
   var slot = document.getElementById('madde-related-table-slot');
   if (!slot || requestId !== _maddeOpenRequestId) return;
   try {
@@ -837,6 +840,7 @@ function hydrateMaddeRelatedTables(requestId, kisim, maddeNo) {
 }
 
 function hydrateMaddeIliskiliMaddeler(requestId, kisim, maddeNo, baslik) {
+  if (MADDE_SAFE_MODE) return;
   var slot = document.getElementById('madde-iliskili-slot');
   if (!slot || requestId !== _maddeOpenRequestId) return;
   try {
@@ -1010,31 +1014,33 @@ async function openMadde(kisim, maddeNo, fromRoute, searchQuery) {
     renderMaddeError(body, kisim, maddeNo, madde.baslik, 'Madde metni hazırlandı fakat ekrana işlenirken hata oluştu.');
     return;
   }
-  try {
-    applySearchHighlight();
-    debugLog('openMadde:applySearchHighlight:done', kisim, maddeNo);
-  } catch (e) {
-    console.error('Madde arama highlight hatası:', e);
-    debugLog('openMadde:applySearchHighlight:error', kisim, maddeNo, String(e && e.message || e));
-  }
-  nextFrame().then(function() {
-    if (requestId !== _maddeOpenRequestId) return;
-    try { if (typeof initAudioForMadde === 'function') initAudioForMadde(madde); } catch (e) {}
-  });
-  hydrateMaddeRelatedSahislar(requestId, kisim, maddeNo);
-  nextFrame().then(function() {
-    if (requestId !== _maddeOpenRequestId) return;
-    hydrateMaddeRelatedTables(requestId, kisim, maddeNo);
-    hydrateMaddeIliskiliMaddeler(requestId, kisim, maddeNo, madde.baslik);
-  });
-
-  if (window.sozlukData) {
-    scheduleMaddeSozlukEnhancement();
-  } else {
-    ensureSozlukData().then(function() {
+  if (!MADDE_SAFE_MODE) {
+    try {
+      applySearchHighlight();
+      debugLog('openMadde:applySearchHighlight:done', kisim, maddeNo);
+    } catch (e) {
+      console.error('Madde arama highlight hatası:', e);
+      debugLog('openMadde:applySearchHighlight:error', kisim, maddeNo, String(e && e.message || e));
+    }
+    nextFrame().then(function() {
       if (requestId !== _maddeOpenRequestId) return;
-      if (window.sozlukData) scheduleMaddeSozlukEnhancement();
-    }).catch(function() {});
+      try { if (typeof initAudioForMadde === 'function') initAudioForMadde(madde); } catch (e) {}
+    });
+    hydrateMaddeRelatedSahislar(requestId, kisim, maddeNo);
+    nextFrame().then(function() {
+      if (requestId !== _maddeOpenRequestId) return;
+      hydrateMaddeRelatedTables(requestId, kisim, maddeNo);
+      hydrateMaddeIliskiliMaddeler(requestId, kisim, maddeNo, madde.baslik);
+    });
+
+    if (window.sozlukData) {
+      scheduleMaddeSozlukEnhancement();
+    } else {
+      ensureSozlukData().then(function() {
+        if (requestId !== _maddeOpenRequestId) return;
+        if (window.sozlukData) scheduleMaddeSozlukEnhancement();
+      }).catch(function() {});
+    }
   }
   // FAQ Schema + OG meta + Streak
   if (typeof addFaqSchema === 'function') addFaqSchema(madde, rawMetinSafe);
@@ -5443,6 +5449,7 @@ async function splitViewMaddeAc(kisim, maddeNo) {
 // ===== Madde açılınca yeni özellikleri entegre et =====
 (function() {
   var _maddeObserver = new MutationObserver(function(mutations) {
+    if (MADDE_SAFE_MODE) return;
     mutations.forEach(function(m) {
       if (m.type === 'childList' && m.addedNodes.length) {
         var body = document.querySelector('#madde-detay .madde-text');
