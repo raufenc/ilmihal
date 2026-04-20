@@ -932,6 +932,7 @@ async function openMadde(kisim, maddeNo, fromRoute, searchQuery) {
   }
 
   function renderBody(metin) {
+    debugLog('openMadde:renderBody:start', kisim, maddeNo, metin ? metin.length : 0);
     body.innerHTML = `
     <nav class="breadcrumb" aria-label="Konum">
       <a href="#" onclick="closeMadde();navigateTo('anasayfa');return false">Ana Sayfa</a>
@@ -1000,8 +1001,22 @@ async function openMadde(kisim, maddeNo, fromRoute, searchQuery) {
   }
 
   // Önce çıplak metni göster; sözlük vurgularını sonra bindir.
-  renderBody(escapeHtml(rawMetinSafe));
-  applySearchHighlight();
+  try {
+    renderBody(escapeHtml(rawMetinSafe));
+    debugLog('openMadde:renderBody:done', kisim, maddeNo);
+  } catch (e) {
+    console.error('Madde render hatası:', e);
+    debugLog('openMadde:renderBody:error', kisim, maddeNo, String(e && e.message || e));
+    renderMaddeError(body, kisim, maddeNo, madde.baslik, 'Madde metni hazırlandı fakat ekrana işlenirken hata oluştu.');
+    return;
+  }
+  try {
+    applySearchHighlight();
+    debugLog('openMadde:applySearchHighlight:done', kisim, maddeNo);
+  } catch (e) {
+    console.error('Madde arama highlight hatası:', e);
+    debugLog('openMadde:applySearchHighlight:error', kisim, maddeNo, String(e && e.message || e));
+  }
   nextFrame().then(function() {
     if (requestId !== _maddeOpenRequestId) return;
     try { if (typeof initAudioForMadde === 'function') initAudioForMadde(madde); } catch (e) {}
