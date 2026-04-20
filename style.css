@@ -665,11 +665,8 @@ body {
 .sunum-icerik .zor-kelime {
   cursor: pointer;
   text-decoration: none;
-  border-bottom: 2px dotted rgba(201,168,76,0.8);
-  background: linear-gradient(180deg, transparent 68%, rgba(201,168,76,0.18) 68%);
-  border-radius: 0.18em;
-  padding: 0 0.06em;
-  transition: border-color 0.2s, background-color 0.2s, box-shadow 0.2s;
+  border-bottom: 1.6px dotted rgba(201,168,76,0.72);
+  transition: border-color 0.2s, opacity 0.2s;
 }
 
 .madde-text .zor-kelime:hover,
@@ -677,9 +674,8 @@ body {
 .sunum-icerik .zor-kelime:hover,
 .sunum-icerik .zor-kelime:focus-visible {
   border-bottom-color: var(--gold);
-  border-bottom-style: solid;
-  background: linear-gradient(180deg, transparent 62%, rgba(201,168,76,0.28) 62%);
-  box-shadow: 0 2px 0 rgba(201,168,76,0.2);
+  border-bottom-style: dotted;
+  opacity: 1;
 }
 
 /* ===== Tablolar ===== */
