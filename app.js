@@ -144,22 +144,100 @@ function assetUrl(path) {
   return path.charAt(0) === '/' ? path : '/' + path;
 }
 
-function loadScript(src) {
+function settleWithTimeout(promise, timeoutMs, fallbackValue, label) {
+  return new Promise(function(resolve) {
+    var settled = false;
+    var timer = setTimeout(function() {
+      if (settled) return;
+      settled = true;
+      if (label) console.warn(label + ' zaman aşımına düştü.');
+      resolve(fallbackValue);
+    }, timeoutMs);
+
+    Promise.resolve(promise).then(function(value) {
+      if (settled) return;
+      settled = true;
+      clearTimeout(timer);
+      resolve(value);
+    }).catch(function(err) {
+      if (settled) return;
+      settled = true;
+      clearTimeout(timer);
+      if (label) console.error(label + ' hatası:', err);
+      resolve(fallbackValue);
+    });
+  });
+}
+
+function loadScript(src, timeoutMs) {
   var base = assetUrl(src.split('?')[0]);
+  var timeout = timeoutMs || 5000;
   // Zaten yükleniyorsa aynı promise'i döndür
   if (_loadingScripts[base]) return _loadingScripts[base];
   // Başarıyla yüklenmiş script tag var mı? (onload tetiklendiyse)
   var existing = document.querySelector('script[src^="' + base + '"][data-loaded="1"]');
   if (existing) return Promise.resolve();
-  // Başarısız/yarım kalmış script tag'ı temizle
+  // Yüklenmekte olan mevcut script'i yeniden kullan
   var old = document.querySelector('script[src^="' + base + '"]');
-  if (old) old.parentNode.removeChild(old);
+  if (old) {
+    _loadingScripts[base] = new Promise(function(resolve, reject) {
+      var settled = false;
+      var timer = setTimeout(function() {
+        if (settled) return;
+        settled = true;
+        delete _loadingScripts[base];
+        reject(new Error('Script zaman aşımına uğradı: ' + src));
+      }, timeout);
+      function finish(fn, payload) {
+        if (settled) return;
+        settled = true;
+        clearTimeout(timer);
+        if (fn === resolve) old.setAttribute('data-loaded', '1');
+        delete _loadingScripts[base];
+        fn(payload);
+      }
+      if (old.getAttribute('data-loaded') === '1' || old.readyState === 'complete') {
+        finish(resolve);
+        return;
+      }
+      old.addEventListener('load', function onLoad() {
+        old.removeEventListener('load', onLoad);
+        finish(resolve);
+      }, { once: true });
+      old.addEventListener('error', function onErr() {
+        old.removeEventListener('error', onErr);
+        finish(reject, new Error('Script yüklenemedi: ' + src));
+      }, { once: true });
+    });
+    return _loadingScripts[base];
+  }
 
   _loadingScripts[base] = new Promise(function(resolve, reject) {
     var s = document.createElement('script');
+    var settled = false;
+    var timer = setTimeout(function() {
+      if (settled) return;
+      settled = true;
+      delete _loadingScripts[base];
+      try { s.remove(); } catch (e) {}
+      reject(new Error('Script zaman aşımına uğradı: ' + src));
+    }, timeout);
     s.src = assetUrl(src);
-    s.onload = function() { s.setAttribute('data-loaded', '1'); delete _loadingScripts[base]; resolve(); };
-    s.onerror = function() { delete _loadingScripts[base]; reject(new Error('Script yüklenemedi: ' + src)); };
+    s.onload = function() {
+      if (settled) return;
+      settled = true;
+      clearTimeout(timer);
+      s.setAttribute('data-loaded', '1');
+      delete _loadingScripts[base];
+      resolve();
+    };
+    s.onerror = function() {
+      if (settled) return;
+      settled = true;
+      clearTimeout(timer);
+      delete _loadingScripts[base];
+      reject(new Error('Script yüklenemedi: ' + src));
+    };
     document.body.appendChild(s);
   });
   return _loadingScripts[base];
@@ -206,6 +284,15 @@ function ensureRehberlerData() {
 
 function preloadBackgroundData() {
   ensureSozlukData().catch(function() {});
+}
+
+function warmDirectRouteData(path) {
+  var match = (path || '').match(/^madde\/(\d+)\/(\d+)/);
+  if (!match) return;
+  var kisim = parseInt(match[1], 10);
+  if (!kisim) return;
+  loadKisimTexts(kisim).catch(function() {});
+  ensureMaddelerData().catch(function() {});
 }
 
 function scheduleBackgroundPreload(delay) {
@@ -593,18 +680,76 @@ function ensureAllKisimTexts() {
   return _allKisimTextsPromise;
 }
 
-async function getMaddeText(kisim, maddeNo, options) {
-  options = options || {};
-  var kisimTexts = await loadKisimTexts(kisim);
-  var rawMetin = kisimTexts ? (kisimTexts[String(maddeNo)] || kisimTexts[maddeNo]) : null;
-  if (rawMetin) return rawMetin;
-  if (options.allowFallback === false) return null;
-  try { await ensureMaddelerData(); } catch (e) {}
-  if (!window.maddelerData) return null;
+function findMaddeTextInMaddelerData(kisim, maddeNo) {
+  if (!window.maddelerData || !Array.isArray(window.maddelerData)) return null;
   var fallbackMadde = window.maddelerData.find(function(m) {
     return m.kisim === kisim && m.madde_no === maddeNo;
   });
   return fallbackMadde ? (fallbackMadde.metin || null) : null;
+}
+
+function resolveFirstTruthy(promises) {
+  return new Promise(function(resolve) {
+    if (!promises || promises.length === 0) {
+      resolve(null);
+      return;
+    }
+    var settled = false;
+    var pending = promises.length;
+    function finish(value) {
+      if (settled) return;
+      settled = true;
+      resolve(value || null);
+    }
+    promises.forEach(function(promise) {
+      Promise.resolve(promise).then(function(value) {
+        if (value) {
+          finish(value);
+          return;
+        }
+        pending -= 1;
+        if (pending <= 0) finish(null);
+      }).catch(function() {
+        pending -= 1;
+        if (pending <= 0) finish(null);
+      });
+    });
+  });
+}
+
+async function getMaddeText(kisim, maddeNo, options) {
+  options = options || {};
+  var cachedFallback = findMaddeTextInMaddelerData(kisim, maddeNo);
+  if (cachedFallback) return cachedFallback;
+
+  var candidates = [
+    settleWithTimeout(
+      loadKisimTexts(kisim).then(function(kisimTexts) {
+        return kisimTexts ? (kisimTexts[String(maddeNo)] || kisimTexts[maddeNo] || null) : null;
+      }),
+      4000,
+      null,
+      'Kısım ' + kisim + ' metin fetch'
+    )
+  ];
+
+  if (options.allowFallback !== false) {
+    candidates.push(
+      settleWithTimeout(
+        Promise.resolve().then(function() {
+          if (window.maddelerData) return findMaddeTextInMaddelerData(kisim, maddeNo);
+          return ensureMaddelerData().then(function() {
+            return findMaddeTextInMaddelerData(kisim, maddeNo);
+          });
+        }),
+        5000,
+        null,
+        'maddelerData fallback'
+      )
+    );
+  }
+
+  return resolveFirstTruthy(candidates);
 }
 
 function getMaddeMeta(kisim, maddeNo) {
@@ -694,11 +839,10 @@ async function openMadde(kisim, maddeNo, fromRoute, searchQuery) {
 
   madde = Object.assign({}, madde);
 
-  // Bookmark & read tracking & audio (hataya dayanıklı)
+  // Bookmark & read tracking (hataya dayanıklı)
   currentMaddeForBookmark = madde;
   try { if (typeof markAsRead === 'function') markAsRead(kisim, maddeNo); } catch(e) {}
   try { localStorage.setItem('ilmihal-son-okunan', JSON.stringify({kisim: kisim, madde_no: maddeNo, baslik: madde.baslik, zaman: Date.now()})); } catch(e) {}
-  try { if (typeof initAudioForMadde === 'function') initAudioForMadde(madde); } catch(e) {}
 
   // SEO meta güncelle
   var kisimLabel = {1:'Birinci Kısım',2:'İkinci Kısım',3:'Üçüncü Kısım'}[kisim] || '';
@@ -728,7 +872,12 @@ async function openMadde(kisim, maddeNo, fromRoute, searchQuery) {
     <div class="madde-text" style="text-align:center;padding:40px;color:var(--text-muted);">Metin y\u00fckleniyor...</div>
   `;
 
-  const rawMetin = await getMaddeText(kisim, maddeNo);
+  var rawMetin = null;
+  try {
+    rawMetin = await getMaddeText(kisim, maddeNo);
+  } catch (e) {
+    console.error('Madde metni alınamadı:', e);
+  }
   if (requestId !== _maddeOpenRequestId) return;
   if (!rawMetin) {
     renderMaddeError(body, kisim, maddeNo, madde.baslik, 'Madde metni zamanında yüklenemedi. Tekrar deneyin veya sayfayı yenileyin.');
@@ -816,6 +965,10 @@ async function openMadde(kisim, maddeNo, fromRoute, searchQuery) {
   // Önce çıplak metni göster; sözlük vurgularını sonra bindir.
   renderBody(escapeHtml(rawMetinSafe));
   applySearchHighlight();
+  nextFrame().then(function() {
+    if (requestId !== _maddeOpenRequestId) return;
+    try { if (typeof initAudioForMadde === 'function') initAudioForMadde(madde); } catch (e) {}
+  });
   hydrateMaddeRelatedSahislar(requestId, kisim, maddeNo);
   nextFrame().then(function() {
     if (requestId !== _maddeOpenRequestId) return;
@@ -2865,6 +3018,7 @@ document.getElementById('full-search')?.addEventListener('keydown', e => {
 // ===== INIT =====
 document.addEventListener('DOMContentLoaded', () => {
   var initialPath = getRoutePath();
+  warmDirectRouteData(initialPath);
   if (window.tocData) {
     console.log(`Y\u00fcklendi: ${window.tocData.length} madde, ${window.sozlukData?.length || 0} s\u00f6zl\u00fck kelimesi, ${window.tablolarData?.length || 0} tablo${window.sahislarData ? ', ' + window.sahislarData.length + ' \u015fah\u0131s' : ''}`);
   }
