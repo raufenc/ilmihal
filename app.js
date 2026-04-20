@@ -144,6 +144,23 @@ function assetUrl(path) {
   return path.charAt(0) === '/' ? path : '/' + path;
 }
 
+function isRuntimeDebugEnabled() {
+  try {
+    return /(?:[?&])debug=1(?:&|$)/.test(location.search || '') || localStorage.getItem('ilmihal-debug') === '1';
+  } catch (e) {
+    return false;
+  }
+}
+
+function debugLog() {
+  if (!isRuntimeDebugEnabled()) return;
+  try {
+    var args = Array.prototype.slice.call(arguments);
+    args.unshift('[ilmihal-debug]');
+    console.log.apply(console, args);
+  } catch (e) {}
+}
+
 function settleWithTimeout(promise, timeoutMs, fallbackValue, label) {
   return new Promise(function(resolve) {
     var settled = false;
@@ -172,6 +189,7 @@ function settleWithTimeout(promise, timeoutMs, fallbackValue, label) {
 function loadScript(src, timeoutMs) {
   var base = assetUrl(src.split('?')[0]);
   var timeout = timeoutMs || 5000;
+  debugLog('loadScript:start', src, 'timeout=' + timeout);
   // Zaten yükleniyorsa aynı promise'i döndür
   if (_loadingScripts[base]) return _loadingScripts[base];
   // Başarıyla yüklenmiş script tag var mı? (onload tetiklendiyse)
@@ -197,15 +215,18 @@ function loadScript(src, timeoutMs) {
         fn(payload);
       }
       if (old.getAttribute('data-loaded') === '1' || old.readyState === 'complete') {
+        debugLog('loadScript:reuse-loaded', src);
         finish(resolve);
         return;
       }
       old.addEventListener('load', function onLoad() {
         old.removeEventListener('load', onLoad);
+        debugLog('loadScript:reuse-onload', src);
         finish(resolve);
       }, { once: true });
       old.addEventListener('error', function onErr() {
         old.removeEventListener('error', onErr);
+        debugLog('loadScript:reuse-error', src);
         finish(reject, new Error('Script yüklenemedi: ' + src));
       }, { once: true });
     });
@@ -227,6 +248,7 @@ function loadScript(src, timeoutMs) {
       if (settled) return;
       settled = true;
       clearTimeout(timer);
+      debugLog('loadScript:onload', src);
       s.setAttribute('data-loaded', '1');
       delete _loadingScripts[base];
       resolve();
@@ -235,6 +257,7 @@ function loadScript(src, timeoutMs) {
       if (settled) return;
       settled = true;
       clearTimeout(timer);
+      debugLog('loadScript:onerror', src);
       delete _loadingScripts[base];
       reject(new Error('Script yüklenemedi: ' + src));
     };
@@ -630,6 +653,7 @@ function getKisimMaddeler(kisim) {
 }
 
 async function loadKisimTexts(kisim) {
+  debugLog('loadKisimTexts:start', kisim);
   if (kisimTextsCache[kisim]) return kisimTextsCache[kisim];
   if (kisimTextPromises[kisim]) return kisimTextPromises[kisim];
   kisimTextPromises[kisim] = new Promise(function(resolve) {
@@ -645,8 +669,10 @@ async function loadKisimTexts(kisim) {
       settled = true;
       clearTimeout(timer);
       if (data) {
+        debugLog('loadKisimTexts:success', kisim, Object.keys(data).length);
         kisimTextsCache[kisim] = data;
       } else {
+        debugLog('loadKisimTexts:null', kisim, err ? String(err.message || err) : '');
         delete kisimTextPromises[kisim];
       }
       if (err) console.error(`K\u0131s\u0131m ${kisim} metinleri y\u00fcklenemedi:`, err);
@@ -719,8 +745,12 @@ function resolveFirstTruthy(promises) {
 
 async function getMaddeText(kisim, maddeNo, options) {
   options = options || {};
+  debugLog('getMaddeText:start', kisim, maddeNo);
   var cachedFallback = findMaddeTextInMaddelerData(kisim, maddeNo);
-  if (cachedFallback) return cachedFallback;
+  if (cachedFallback) {
+    debugLog('getMaddeText:cached-fallback-hit', kisim, maddeNo, cachedFallback.length);
+    return cachedFallback;
+  }
 
   var candidates = [
     settleWithTimeout(
@@ -749,7 +779,9 @@ async function getMaddeText(kisim, maddeNo, options) {
     );
   }
 
-  return resolveFirstTruthy(candidates);
+  var resolved = await resolveFirstTruthy(candidates);
+  debugLog('getMaddeText:resolved', kisim, maddeNo, resolved ? resolved.length : 0);
+  return resolved;
 }
 
 function getMaddeMeta(kisim, maddeNo) {
@@ -817,6 +849,7 @@ function hydrateMaddeIliskiliMaddeler(requestId, kisim, maddeNo, baslik) {
 
 async function openMadde(kisim, maddeNo, fromRoute, searchQuery) {
   var requestId = ++_maddeOpenRequestId;
+  debugLog('openMadde:start', kisim, maddeNo, 'req=' + requestId, 'fromRoute=' + !!fromRoute);
   // AŞAMA 0 — Modal'ı HEMEN aç, her şeyden önce. Sonraki satırlar hata atsa bile modal görünür.
   const _overlay = document.getElementById('madde-detay');
   const body = document.getElementById('madde-body');
@@ -825,6 +858,7 @@ async function openMadde(kisim, maddeNo, fromRoute, searchQuery) {
   if (body) body.innerHTML = '<div style="text-align:center;padding:60px;color:var(--text-muted);">Yükleniyor…</div>';
 
   let madde = getMaddeMeta(kisim, maddeNo);
+  debugLog('openMadde:meta-initial', kisim, maddeNo, !!madde);
 
   if (!madde && typeof ensureMaddelerData === 'function') {
     try { await ensureMaddelerData(); } catch (e) {}
@@ -838,6 +872,7 @@ async function openMadde(kisim, maddeNo, fromRoute, searchQuery) {
   }
 
   madde = Object.assign({}, madde);
+  debugLog('openMadde:meta-ready', kisim, maddeNo, madde.baslik);
 
   // Bookmark & read tracking (hataya dayanıklı)
   currentMaddeForBookmark = madde;
@@ -874,10 +909,12 @@ async function openMadde(kisim, maddeNo, fromRoute, searchQuery) {
 
   var rawMetin = null;
   try {
+    debugLog('openMadde:before-getMaddeText', kisim, maddeNo, 'req=' + requestId);
     rawMetin = await getMaddeText(kisim, maddeNo);
   } catch (e) {
     console.error('Madde metni alınamadı:', e);
   }
+  debugLog('openMadde:after-getMaddeText', kisim, maddeNo, !!rawMetin, rawMetin ? rawMetin.length : 0);
   if (requestId !== _maddeOpenRequestId) return;
   if (!rawMetin) {
     renderMaddeError(body, kisim, maddeNo, madde.baslik, 'Madde metni zamanında yüklenemedi. Tekrar deneyin veya sayfayı yenileyin.');
