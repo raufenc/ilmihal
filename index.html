@@ -9,24 +9,31 @@
   <meta name="keywords" content="ilmihal, Se'âdet-i Ebediyye, Hüseyn Hilmi Işık, İslam, namaz, oruç, zekât, hac, fıkıh, dini bilgiler">
   <meta name="author" content="ilmihal.org">
   <meta property="og:type" content="website">
+  <meta property="og:site_name" content="ilmihal.org">
   <meta property="og:url" content="https://www.ilmihal.org/">
   <meta property="og:title" content="Se'âdet-i Ebediyye - İnteraktif İlmihâl">
   <meta property="og:description" content="1248 sayfalık kapsamlı ilmihâl eseri, tam metin arama, dini sözlük ve interaktif silsile atlası.">
   <meta property="og:image" content="https://www.ilmihal.org/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Se'âdet-i Ebediyye - İnteraktif İlmihâl">
   <meta property="og:locale" content="tr_TR">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Se'âdet-i Ebediyye - İnteraktif İlmihâl">
   <meta name="twitter:description" content="1248 sayfalık kapsamlı ilmihâl eseri, tam metin arama, dini sözlük ve interaktif silsile atlası.">
+  <meta name="twitter:image" content="https://www.ilmihal.org/og-image.png">
+  <meta name="twitter:image:alt" content="Se'âdet-i Ebediyye - İnteraktif İlmihâl">
   <link rel="canonical" href="https://www.ilmihal.org/">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="icon" type="image/x-icon" href="/favicon.ico" sizes="32x32">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <link rel="manifest" href="manifest.json">
+  <link rel="alternate" type="application/rss+xml" title="Se'âdet-i Ebediyye - Günün Maddesi" href="/rss.xml">
   <meta name="theme-color" content="#1a6b4e">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=28">
+  <link rel="stylesheet" href="style.css?v=2026-04-24-r1">
   <script type="application/ld+json">
   [{
     "@context": "https://schema.org",
@@ -93,7 +100,8 @@
   <div id="duyuru-alani" class="duyuru-alani" style="display:none"></div>
 
   <!-- Ana Sayfa -->
-  <main id="page-anasayfa" class="page active" role="main">
+  <main id="app-root" role="main">
+  <section id="page-anasayfa" class="page active">
     <!-- Kaldığınız yerden devam edin -->
     <div id="devam-et-banner" class="devam-et-banner" style="display:none"></div>
 
@@ -189,10 +197,10 @@
         </a>
       </div>
     </section>
-  </main>
+  </section>
 
   <!-- İçindekiler -->
-  <main id="page-icerik" class="page">
+  <section id="page-icerik" class="page">
     <div class="container">
       <div class="icerik-header">
         <h2 class="section-title">İçindekiler</h2>
@@ -208,10 +216,10 @@
       </div>
       <div id="icerik-list" class="icerik-list"></div>
     </div>
-  </main>
+  </section>
 
   <!-- Madde Detay -->
-  <div id="madde-detay" class="madde-overlay" style="display:none">
+  <div id="madde-detay" class="madde-overlay" style="display:none" role="dialog" aria-modal="true" aria-labelledby="madde-body" aria-hidden="true">
     <div class="madde-overlay-wrap">
       <div class="madde-toolbar">
         <button type="button" class="toolbar-btn toolbar-audio-btn" onclick="toggleAudio()" id="audio-btn" title="Sesli dinle" aria-label="Sesli dinle">&#9654;</button>
@@ -250,7 +258,8 @@
             <button type="button" class="notlar-toggle" id="notlar-toggle" onclick="toggleNotlar()" aria-label="Notları aç veya kapat" aria-expanded="false">+</button>
           </div>
           <div id="notlar-area" style="display:none">
-            <textarea id="not-input" placeholder="Bu madde hakkında not yazın..." rows="3"></textarea>
+            <label for="not-input" class="visually-hidden">Madde hakkında not</label>
+            <textarea id="not-input" placeholder="Bu madde hakkında not yazın..." rows="3" aria-label="Madde hakkında not"></textarea>
             <button type="button" class="btn btn-sm" onclick="saveNot()" style="margin-top:6px;">Kaydet</button>
             <div id="not-list"></div>
           </div>
@@ -264,7 +273,7 @@
   </div>
 
   <!-- Şahıslar -->
-  <main id="page-sahislar" class="page">
+  <section id="page-sahislar" class="page">
     <div class="container">
       <h2 class="section-title">Hâl Tercemeleri</h2>
       <p class="section-desc">Se'âdet-i Ebediyye'de adı geçenlerin hâl tercemeleri.</p>
@@ -273,10 +282,10 @@
       </div>
       <div id="sahislar-list" class="sahislar-grid"></div>
     </div>
-  </main>
+  </section>
 
   <!-- Şahıs Detay -->
-  <div id="sahis-detay" class="madde-overlay" style="display:none">
+  <div id="sahis-detay" class="madde-overlay" style="display:none" role="dialog" aria-modal="true" aria-labelledby="sahis-body" aria-hidden="true">
     <div class="madde-overlay-content sahis-overlay-content">
       <button type="button" class="madde-close" onclick="closeSahis()" aria-label="Şahıs sayfasını kapat">&times;</button>
       <div id="sahis-body"></div>
@@ -284,14 +293,14 @@
   </div>
 
   <!-- Tablo Modal Overlay -->
-  <div id="tablo-modal" class="madde-overlay" style="display:none">
+  <div id="tablo-modal" class="madde-overlay" style="display:none" role="dialog" aria-modal="true" aria-labelledby="tablo-modal-body" aria-hidden="true">
     <div class="madde-overlay-content tablo-modal-content">
       <div id="tablo-modal-body"></div>
     </div>
   </div>
 
   <!-- Fevâid -->
-  <main id="page-fevaid" class="page">
+  <section id="page-fevaid" class="page">
     <div class="container">
       <h2 class="section-title">Fevâid</h2>
       <!-- Ana ekran: bölüm kartları -->
@@ -400,10 +409,10 @@
         <div id="tanimlar-fevaid-wrapper"></div>
       </div>
     </div>
-  </main>
+  </section>
 
   <!-- Sözlük -->
-  <main id="page-sozluk" class="page">
+  <section id="page-sozluk" class="page">
     <div class="container">
       <h2 class="section-title">Dini Lügat</h2>
       <div class="sozluk-filters">
@@ -412,10 +421,10 @@
       <div id="sozluk-count" class="sozluk-count"></div>
       <div id="sozluk-list" class="sozluk-list"></div>
     </div>
-  </main>
+  </section>
 
   <!-- Arama & Soru-Cevap (Birleşik) -->
-  <main id="page-arama" class="page">
+  <section id="page-arama" class="page">
     <div class="container">
       <h2 class="section-title">Kitapta Arama</h2>
       <p class="section-desc">241 maddenin tam metninde, sözlükte ve şahıslarda arayın</p>
@@ -438,10 +447,10 @@
       </div>
       <div id="arama-results" class="arama-results" aria-live="polite" aria-label="Arama sonuçları"></div>
     </div>
-  </main>
+  </section>
 
   <!-- Quiz / Bilgi Testi -->
-  <main id="page-quiz" class="page">
+  <section id="page-quiz" class="page">
     <div class="container">
       <h2 class="section-title">Bilgi Testi</h2>
       <p class="section-desc">Se'âdet-i Ebediyye'den sorularla kendinizi sınayın.</p>
@@ -462,11 +471,11 @@
         <div id="quiz-area" style="display:none"></div>
       </div>
     </div>
-  </main>
+  </section>
 
   <!-- İstatistiklerim -->
   <!-- Âyet-i Kerîme ve Hadîs-i Şerîf İndeksi -->
-  <main id="page-ayet-hadis" class="page">
+  <section id="page-ayet-hadis" class="page">
     <div class="container">
       <h2 class="section-title">Âyet-i Kerîme ve Hadîs-i Şerîf İndeksi</h2>
       <p class="section-desc">Kitapta geçen âyet-i kerîmelerin ve hadîs-i şerîflerin toplu listesi.</p>
@@ -478,10 +487,10 @@
       <div id="ah-count" style="color:var(--text-muted);font-size:0.85rem;margin-bottom:12px;"></div>
       <div id="ayet-hadis-list" class="ayet-hadis-list"></div>
     </div>
-  </main>
+  </section>
 
   <!-- Günün Sorusu -->
-  <main id="page-gunun-bilgisi" class="page">
+  <section id="page-gunun-bilgisi" class="page">
     <div class="container">
       <h2 class="section-title">Günün Suâli</h2>
       <p class="section-desc">Her gün kitaptan bir sual. Cevabı için ilgili maddeyi okuyunuz.</p>
@@ -491,20 +500,20 @@
       <h3 style="margin-top:48px;color:var(--primary-dark);">Önceki Günler</h3>
       <div id="onceki-bilgiler" style="margin-top:16px;"></div>
     </div>
-  </main>
+  </section>
 
   <!-- Rehberler -->
-  <main id="page-rehberler" class="page">
+  <section id="page-rehberler" class="page">
     <div class="container">
       <h2 class="section-title">Konuya Göre Rehberler</h2>
       <p class="section-desc">Adım adım öğrenme yolları. Bir konuyu baştan sona takip edin.</p>
       <div id="rehber-list" class="rehber-grid"></div>
       <div id="rehber-detay" style="display:none"></div>
     </div>
-  </main>
+  </section>
 
   <!-- Hakkında -->
-  <main id="page-hakkinda" class="page">
+  <section id="page-hakkinda" class="page">
     <div class="container">
       <div class="hakkinda-content">
         <h2 class="section-title">Hakkında</h2>
@@ -557,10 +566,10 @@
         <p class="hakkinda-dua">Kusurlar bizden, istifade Allahü teâlâdandır.</p>
       </div>
     </div>
-  </main>
+  </section>
 
   <!-- Fıkhî Hükümler -->
-  <main id="page-hukumler" class="page">
+  <section id="page-hukumler" class="page">
     <div class="container">
       <h2 class="section-title">Fıkhî Hükümler</h2>
       <p class="section-desc">Kitapta geçen fıkhî hükümlerin kategorik listesi. Her cümleye tıklayarak kitaptaki yerine gidebilirsiniz.</p>
@@ -586,10 +595,10 @@
       <div id="hukumler-sonuc" class="hukumler-sonuc"></div>
       <div id="hukumler-list"></div>
     </div>
-  </main>
+  </section>
 
   <!-- Gizlilik -->
-  <main id="page-gizlilik" class="page">
+  <section id="page-gizlilik" class="page">
     <div class="container page-container">
       <div class="hakkinda-content">
         <h2>Gizlilik Bildirimi</h2>
@@ -625,6 +634,7 @@
         <p>Gizlilikle ilgili sorularınız için <strong>info@ilmihal.org</strong> adresine yazabilirsiniz.</p>
       </div>
     </div>
+  </section>
   </main>
 
   <!-- Footer -->
@@ -668,7 +678,7 @@
 
   <script>
     (function() {
-      var BUILD = '2026-04-20-sunum-binding-fix-35cd0f3';
+      var BUILD = '2026-04-24-cleanup-r1';
       try {
         var prevBuild = localStorage.getItem('ilmihal-build-id');
         if (prevBuild === BUILD) return;
@@ -700,22 +710,24 @@
       var match = (location.pathname || '').match(/^\/madde\/(\d+)\/(\d+)/);
       if (!match) return;
       var kisim = match[1];
+      var AV = '2026-04-24-r1';
       if (window.fetch) {
-        try { fetch('/texts/kisim' + kisim + '.json?v=2').catch(function() {}); } catch (e) {}
+        try { fetch('/texts/kisim' + kisim + '.json?v=' + AV).catch(function() {}); } catch (e) {}
       }
       var s = document.createElement('script');
-      s.src = '/maddeler-data.js?v=1';
+      s.src = '/maddeler-data.js?v=' + AV;
       s.async = true;
       s.setAttribute('data-prewarm', '1');
       document.head.appendChild(s);
     })();
   </script>
-  <script src="/data.js?v=14"></script>
-  <script src="/tanimlar.js?v=1"></script>
-  <script src="/crossref.js?v=7"></script>
-  <script src="/search-engine.js?v=9"></script>
-  <script src="/arama-sozluk.js?v=1"></script>
-  <script src="/app.js?v=79"></script>
+  <!-- Tüm script'lerde tek versiyon: BUILD ile aynı. Her release'te üstteki BUILD sabitini + buradaki ?v= değerlerini birlikte bump'la. -->
+  <script defer src="/data.js?v=2026-04-24-r1"></script>
+  <script defer src="/tanimlar.js?v=2026-04-24-r1"></script>
+  <script defer src="/crossref.js?v=2026-04-24-r1"></script>
+  <script defer src="/search-engine.js?v=2026-04-24-r1"></script>
+  <script defer src="/arama-sozluk.js?v=2026-04-24-r1"></script>
+  <script defer src="/app.js?v=2026-04-24-r1"></script>
   <script>
     // PWA kapatıldı. Eski SW kayıtlı kullanıcılar için kurtarma: bir kez çağrılır, kamikaze SW cache'leri siler ve kendini unregister eder.
     if ('serviceWorker' in navigator) {

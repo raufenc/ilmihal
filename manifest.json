@@ -1,7 +1,7 @@
 {
   "name": "Se'âdet-i Ebediyye - İnteraktif İlmihâl",
   "short_name": "İlmihâl",
-  "description": "Se'âdet-i Ebediyye kitabının tamamı: 241 madde, 4400+ dini terim, 1019 âlim biyografisi, fıkıh karşılaştırma tabloları, yapay zeka destekli arama.",
+  "description": "Se'âdet-i Ebediyye kitabının tamamı: 241 madde, 9800+ dini terim, 1019 âlim biyografisi, fıkhî hükümler ve tam metin arama.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
@@ -47,13 +47,13 @@
       "name": "Dini Lügat",
       "short_name": "Sözlük",
       "url": "/sozluk",
-      "description": "4400+ dini terim"
+      "description": "9800+ dini terim"
     },
     {
-      "name": "Fıkıh Karşılaştırma",
-      "short_name": "Fıkıh",
-      "url": "/fikih-karsilastirma",
-      "description": "Dört mezhep karşılaştırması"
+      "name": "Fıkhî Hükümler",
+      "short_name": "Hükümler",
+      "url": "/hukumler",
+      "description": "Farz, vâcib, sünnet, müstehab, mekruh, haram"
     }
   ]
 }

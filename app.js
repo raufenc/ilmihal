@@ -1,5 +1,8 @@
 // ===== Se'âdet-i Ebediyye - İnteraktif İlmihâl =====
 const PDF_URL = 'https://www.hakikatkitabevi.net/downloads/001.pdf';
+// Her release'te index.html'deki BUILD sabitiyle birlikte bump edilir — lazy-load edilen data/kod dosyalarının cache key'i.
+const ASSET_VERSION = '2026-04-24-r1';
+function vQuery() { return '?v=' + ASSET_VERSION; }
 
 // ===== URL ROUTING (Clean URL + Hash Fallback) =====
 let routingSilent = false;
@@ -90,11 +93,6 @@ async function handleRoute() {
       return;
     }
 
-    if (route === 'fikih-karsilastirma') {
-      navigateTo('fikih-karsilastirma', true);
-      return;
-    }
-
     if (route === 'hukumler') {
       navigateTo('hukumler', true);
       if (parts[1] && typeof ensureHukumlerData === 'function') {
@@ -104,7 +102,7 @@ async function handleRoute() {
       return;
     }
 
-    const validPages = ['anasayfa','icerik','fevaid','sozluk','arama','sahislar','hakkinda','quiz','ayet-hadis','gunun-bilgisi','rehberler','calisma-alanim','fikih-karsilastirma','hukumler'];
+    const validPages = ['anasayfa','icerik','fevaid','sozluk','arama','sahislar','hakkinda','quiz','ayet-hadis','gunun-bilgisi','rehberler','calisma-alanim','hukumler','gizlilik'];
     if (validPages.includes(route)) {
       navigateTo(route, true);
     } else {
@@ -268,43 +266,45 @@ function loadScript(src, timeoutMs) {
   return _loadingScripts[base];
 }
 
+function rebuildSearchIndex() {
+  if (window.SearchEngine && typeof window.SearchEngine.rebuild === 'function') {
+    window.SearchEngine.rebuild();
+  }
+}
+
 function ensureMaddelerData() {
   if (window.maddelerData) return Promise.resolve();
-  return loadScript('maddeler-data.js?v=1');
+  return loadScript('maddeler-data.js' + vQuery());
 }
 
 function ensureSozlukData() {
   if (window.sozlukData) return Promise.resolve();
-  return loadScript('sozluk-data.js?v=4');
+  return loadScript('sozluk-data.js' + vQuery()).then(rebuildSearchIndex);
 }
 
 function ensureSahislarData() {
   if (window.sahislarData) return Promise.resolve();
-  return loadScript('sahislar.js?v=7').then(function() {
-    if (window.SearchEngine && typeof window.SearchEngine.rebuild === 'function') {
-      window.SearchEngine.rebuild();
-    }
-  });
+  return loadScript('sahislar.js' + vQuery()).then(rebuildSearchIndex);
 }
 
 function ensureAyetHadisData() {
   if (window.ayetHadisData) return Promise.resolve();
-  return loadScript('ayet-hadis.js?v=4');
+  return loadScript('ayet-hadis.js' + vQuery());
 }
 
 function ensureGununSorusuData() {
   if (window.gununSorusuData) return Promise.resolve();
-  return loadScript('gunun-sorusu-data.js?v=2');
+  return loadScript('gunun-sorusu-data.js' + vQuery());
 }
 
 function ensureAudioMapData() {
   if (window.audioMap) return Promise.resolve();
-  return loadScript('audio-map.js?v=1');
+  return loadScript('audio-map.js' + vQuery());
 }
 
 function ensureRehberlerData() {
   if (window.rehberlerData) return Promise.resolve();
-  return loadScript('rehberler.js?v=1');
+  return loadScript('rehberler.js' + vQuery());
 }
 
 function preloadBackgroundData() {
@@ -681,7 +681,7 @@ async function loadKisimTexts(kisim) {
       resolve(data || null);
     }
 
-    fetch(assetUrl(`texts/kisim${kisim}.json?v=2`), { signal: ctrl.signal }).then(function(resp) {
+    fetch(assetUrl('texts/kisim' + kisim + '.json' + vQuery()), { signal: ctrl.signal }).then(function(resp) {
       if (!resp.ok) throw new Error('HTTP ' + resp.status);
       return resp.json();
     }).then(function(data) {
@@ -861,7 +861,7 @@ async function openMadde(kisim, maddeNo, fromRoute, searchQuery) {
   // AŞAMA 0 — Modal'ı HEMEN aç, her şeyden önce. Sonraki satırlar hata atsa bile modal görünür.
   const _overlay = document.getElementById('madde-detay');
   const body = document.getElementById('madde-body');
-  if (_overlay) _overlay.style.display = 'flex';
+  if (_overlay) { _overlay.style.display = 'flex'; _overlay.setAttribute('aria-hidden', 'false'); }
   document.body.style.overflow = 'hidden';
   if (body) body.innerHTML = '<div style="text-align:center;padding:60px;color:var(--text-muted);">Yükleniyor…</div>';
 
@@ -1229,7 +1229,8 @@ function getRelatedTables(kisim, maddeNo) {
 
 function closeMadde() {
   _maddeOpenRequestId++;
-  document.getElementById('madde-detay').style.display = 'none';
+  var _m = document.getElementById('madde-detay');
+  if (_m) { _m.style.display = 'none'; _m.setAttribute('aria-hidden', 'true'); }
   document.body.style.overflow = '';
   // Restore hash to parent page
   const activePage = document.querySelector('.page.active');
@@ -1669,7 +1670,8 @@ async function openSahis(slug, fromRoute) {
   if (!fromRoute) updateHash(`sahis/${slug}`);
 
   const body = document.getElementById('sahis-body');
-  document.getElementById('sahis-detay').style.display = 'flex';
+  var _s = document.getElementById('sahis-detay');
+  if (_s) { _s.style.display = 'flex'; _s.setAttribute('aria-hidden', 'false'); }
   document.body.style.overflow = 'hidden';
 
   const kisimLabels = { 1: 'I', 2: 'II', 3: 'III' };
@@ -1717,7 +1719,8 @@ async function openSahis(slug, fromRoute) {
 }
 
 function closeSahis() {
-  document.getElementById('sahis-detay').style.display = 'none';
+  var _s = document.getElementById('sahis-detay');
+  if (_s) { _s.style.display = 'none'; _s.setAttribute('aria-hidden', 'true'); }
   // If madde overlay is open behind, return to it (don't navigate away)
   const maddeOverlay = document.getElementById('madde-detay');
   if (maddeOverlay && maddeOverlay.style.display === 'flex') {
@@ -1921,12 +1924,14 @@ function openTabloModal(id) {
       </div>
     </div>
   `;
-  document.getElementById('tablo-modal').style.display = 'flex';
+  var _t = document.getElementById('tablo-modal');
+  if (_t) { _t.style.display = 'flex'; _t.setAttribute('aria-hidden', 'false'); }
   document.body.style.overflow = 'hidden';
 }
 
 function closeTabloModal() {
-  document.getElementById('tablo-modal').style.display = 'none';
+  var _t = document.getElementById('tablo-modal');
+  if (_t) { _t.style.display = 'none'; _t.setAttribute('aria-hidden', 'true'); }
   // Madde overlay açıksa, body overflow hidden kalsın
   if (document.getElementById('madde-detay')?.style.display === 'flex') {
     document.body.style.overflow = 'hidden';
@@ -2889,25 +2894,6 @@ document.getElementById('full-search')?.addEventListener('keydown', e => {
         const idx = currentItems.length;
         currentItems.push(item);
 
-        // Başlıkta eşleşen kelimeleri vurgula
-        let titleHtml = escapeHtml(item.title);
-        const normQuery = normalizeSearch(query);
-        const qWords = normQuery.split(/\s+/);
-        qWords.forEach(qw => {
-          if (qw.length < 2) return;
-          const normTitle = normalizeSearch(item.title);
-          let pos = 0;
-          while (true) {
-            const i = normTitle.indexOf(qw, pos);
-            if (i === -1) break;
-            // Orijinal başlıktaki aynı pozisyonu vurgula
-            titleHtml = titleHtml.substring(0, i + (titleHtml.length - item.title.length >= 0 ? 0 : 0));
-            pos = i + qw.length;
-            break; // İlk eşleşme yeter
-          }
-        });
-
-        // Passage varsa (AI sonucu) highlight'lı göster, yoksa subtitle
         let detailHtml = '';
         if (item.passage) {
           detailHtml = `<span class="search-item-passage">${item.passage}</span>`;
@@ -3066,7 +3052,7 @@ document.addEventListener('DOMContentLoaded', () => {
   var initialPath = getRoutePath();
   warmDirectRouteData(initialPath);
   if (window.tocData) {
-    console.log(`Y\u00fcklendi: ${window.tocData.length} madde, ${window.sozlukData?.length || 0} s\u00f6zl\u00fck kelimesi, ${window.tablolarData?.length || 0} tablo${window.sahislarData ? ', ' + window.sahislarData.length + ' \u015fah\u0131s' : ''}`);
+    debugLog(`Y\u00fcklendi: ${window.tocData.length} madde, ${window.sozlukData?.length || 0} s\u00f6zl\u00fck kelimesi, ${window.tablolarData?.length || 0} tablo${window.sahislarData ? ', ' + window.sahislarData.length + ' \u015fah\u0131s' : ''}`);
   }
   // Arka plan preload'u ilk etkileşimi boğmasın diye geciktirilir.
   scheduleBackgroundPreload(initialPath && initialPath !== 'anasayfa' ? 5000 : 1500);
@@ -4034,63 +4020,10 @@ function showSplash() {
 // Splash kapatıldı — 2.4 sn gereksiz bekleme, bazı ortamlarda CSS bozuk olup takılı kalıyordu
 // (showSplash fonksiyonu ihtiyaç olursa el ile çağrılabilir)
 
-// ===== FIKIH KARŞILAŞTIRMA TABLOLARI =====
-var fikihActiveFilter = 'all';
-function filterFikih(kat) {
-  fikihActiveFilter = kat;
-  document.querySelectorAll('.fikih-toolbar .tablo-filter-btn').forEach(function(b) {
-    b.classList.toggle('active', (b.textContent === 'Tümü' && kat === 'all') || b.getAttribute('onclick')?.includes("'" + kat + "'"));
-  });
-  renderFikihKarsilastirma();
-}
-
-function renderFikihKarsilastirma() {
-  var list = document.getElementById('fikih-list');
-  if (!list || !window.fikihKarsilastirma) return;
-  var data = window.fikihKarsilastirma;
-  if (fikihActiveFilter !== 'all') {
-    data = data.filter(function(d) { return d.kategori === fikihActiveFilter; });
-  }
-  list.innerHTML = data.map(function(item) {
-    var html = '<div class="fikih-card">';
-    html += '<h3 class="fikih-baslik">' + escapeHtml(item.baslik) + '</h3>';
-    html += '<p class="fikih-aciklama">' + escapeHtml(item.aciklama) + '</p>';
-    html += '<div class="fikih-grid">';
-    var mezhepler = [
-      {key:'hanefi', label:'Hanefî', color:'#1a6b4e'},
-      {key:'safii', label:'Şâfiî', color:'#4a7c59'},
-      {key:'maliki', label:'Mâlikî', color:'#6b5b3e'},
-      {key:'hanbeli', label:'Hanbelî', color:'#5b4a6b'}
-    ];
-    mezhepler.forEach(function(m) {
-      html += '<div class="fikih-mezhep">';
-      html += '<div class="fikih-mezhep-baslik" style="background:' + m.color + '">' + m.label + '</div>';
-      html += '<div class="fikih-mezhep-icerik">' + escapeHtml(item.mezhepler[m.key]) + '</div>';
-      html += '</div>';
-    });
-    html += '</div>';
-    if (item.kaynak) {
-      html += '<div class="fikih-kaynak">' + escapeHtml(item.kaynak);
-      if (item.ilgiliMadde) {
-        html += ' · <a href="#" onclick="openMadde(' + item.ilgiliMadde.kisim + ',' + item.ilgiliMadde.maddeNo + ');return false">Maddeyi Aç</a>';
-      }
-      html += '</div>';
-    }
-    html += '</div>';
-    return html;
-  }).join('');
-
-  updateSeoMeta(
-    'Fıkıh Karşılaştırma Tabloları - Se\'âdet-i Ebediyye',
-    'Dört mezhebe göre temel ibâdet ve muâmelât hükümlerinin karşılaştırması. Hanefî, Şâfiî, Mâlikî ve Hanbelî mezheplerinin görüşleri.',
-    'https://www.ilmihal.org/fikih-karsilastirma'
-  );
-}
-
 // ===== SAYFA SEO META GÜNCELLEMELERİ =====
 var pageSeoMap = {
-  'anasayfa': ["Se'âdet-i Ebediyye - İnteraktif İlmihâl", "Se'âdet-i Ebediyye kitabının tamamı, aranabilir 241 madde, 4400+ terimlik dini lügat, 1019 âlim biyografisi ve interaktif silsile atlası."],
-  'sozluk': ["Dini Lügat (4400+ Terim) - Se'âdet-i Ebediyye", "Akâid, ibâdet, tasavvuf, fıkıh ve daha birçok kategoride 4400+ dini terimin Türkçe ve Osmanlıca karşılıkları."],
+  'anasayfa': ["Se'âdet-i Ebediyye - İnteraktif İlmihâl", "Se'âdet-i Ebediyye kitabının tamamı, aranabilir 241 madde, 9800+ terimlik dini lügat, 1019 âlim biyografisi ve interaktif silsile atlası."],
+  'sozluk': ["Dini Lügat (9800+ Terim) - Se'âdet-i Ebediyye", "Akâid, ibâdet, tasavvuf, fıkıh ve daha birçok kategoride 9800+ dini terimin Türkçe ve Osmanlıca karşılıkları."],
   'sahislar': ["İslâm Âlimleri (1019 Biyografi) - Se'âdet-i Ebediyye", "Kitapta adı geçen 1019 İslâm âlimi ve velîsinin hâl tercemeleri, eserleri ve yaşadıkları dönemler."],
   'fevaid': ["Fevâid - Se'âdet-i Ebediyye", "Tablolar, diyagramlar, fıkıh karşılaştırmaları, dini lügat, âlim biyografileri ve daha fazlası."],
   'arama': ["Arama - Se'âdet-i Ebediyye", "Se'âdet-i Ebediyye kitabının 241 maddesinde tam metin arama. Yapay zeka destekli soru-cevap."],
@@ -4100,7 +4033,6 @@ var pageSeoMap = {
   'gunun-bilgisi': ["Günün Bilgisi - Se'âdet-i Ebediyye", "Her gün kitaptan bir hadîs-i şerîf veya âyet-i kerîme. Paylaşılabilir görsel kartlar."],
   'rehberler': ["Konuya Göre Rehberler - Se'âdet-i Ebediyye", "Namaz, oruç, hac, zekât, iman ve ahlâk konularında adım adım rehberler."],
   'icerik': ["İçindekiler - Se'âdet-i Ebediyye", "Se'âdet-i Ebediyye kitabının 241 maddesinin tam listesi. Üç kısım halinde konulara göre düzenlenmiş."],
-  'fikih-karsilastirma': ["Fıkıh Karşılaştırma - Se'âdet-i Ebediyye", "Dört mezhebe göre temel ibâdet ve muâmelât hükümlerinin karşılaştırması."],
   'calisma-alanim': ["Çalışma Alanım - Se'âdet-i Ebediyye", "Kişisel okuma ilerlemesi, notlar ve çalışma takibi. Veriler yalnızca tarayıcınızda saklanır."],
   'gizlilik': ["Gizlilik Bildirimi - Se'âdet-i Ebediyye", "ilmihal.org gizlilik bildirimi. Kişisel veri toplanmaz, çerez kullanılmaz, veriler yalnızca tarayıcınızda saklanır."],
   'hukumler': ["Fıkhî Hükümler - Se'âdet-i Ebediyye", "Se'âdet-i Ebediyye kitabında geçen farz, vâcib, sünnet, müstehab, mübah, mekruh ve haram hükümlerinin kategorik listesi."]
@@ -4580,14 +4512,19 @@ function togglePodcastMode() {
 // ===== UX-02: ÇALIŞMA ALANIM SAYFASI =====
 (function() {
   // Çalışma Alanım sayfası oluştur
-  var calismaPage = document.createElement('main');
+  var calismaPage = document.createElement('section');
   calismaPage.id = 'page-calisma-alanim';
   calismaPage.className = 'page';
   calismaPage.innerHTML = '<div class="container"><h2 class="section-title">Çalışma Alanım</h2><p class="section-desc">Notlarınız, yer imleriniz ve okuma geçmişiniz tek bir yerde.</p><div id="calisma-icerik"></div></div>';
 
-  // Footer'dan önce ekle
-  var footer = document.querySelector('.site-footer');
-  if (footer) footer.parentNode.insertBefore(calismaPage, footer);
+  // app-root içine ekle (yoksa footer'dan önce eklensin)
+  var appRoot = document.getElementById('app-root');
+  if (appRoot) {
+    appRoot.appendChild(calismaPage);
+  } else {
+    var footer = document.querySelector('.site-footer');
+    if (footer) footer.parentNode.insertBefore(calismaPage, footer);
+  }
 
   // Footer'a link ekle
   var kesfetLinks = document.querySelectorAll('.footer-links');
@@ -4775,7 +4712,7 @@ function ensureHukumlerData() {
   var list = document.getElementById('hukumler-list');
   if (list) list.innerHTML = '<p style="text-align:center;padding:40px;color:var(--text-muted);">Yükleniyor…</p>';
   if (_hukumlerLoadPromise) return _hukumlerLoadPromise;
-  _hukumlerLoadPromise = loadScript('hukumler-data.js').then(function() {
+  _hukumlerLoadPromise = loadScript('hukumler-data.js' + vQuery()).then(function() {
     _hukumlerLoaded = true;
     initHukumlerPage();
     return window.hukumlerData;
