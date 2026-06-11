@@ -5,8 +5,8 @@
 :root {
   --primary: #1a4a5e;
   --primary-light: #2a6a82;
-  --gold: #c8963e;
-  --gold-light: #ddb76a;
+  --gold: #c9a84c;
+  --gold-light: #e8d48b;
   --green: #2d6b4f;
   --green-light: #3d8b6f;
   --bg: #18181f;
@@ -21,7 +21,7 @@
   --radius: 12px;
   --radius-sm: 8px;
   --font-serif: 'Amiri', serif;
-  --font-sans: 'Noto Sans', sans-serif;
+  --font-sans: 'Inter', -apple-system, sans-serif;
   --header-h: 64px;
 
   /* Era colors */

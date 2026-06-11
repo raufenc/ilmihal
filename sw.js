@@ -12,7 +12,7 @@
 //    arka planda tazele (stale-while-revalidate).
 //  - Çapraz kaynak istekleri SW'ye hiç takılmaz.
 // ============================================================
-var SURUM = '2026-06-11-r1';
+var SURUM = '2026-06-11-r2';
 var KABUK_CACHE = 'ilmihal-kabuk-' + SURUM;
 var VERI_CACHE = 'ilmihal-veri-' + SURUM;
 

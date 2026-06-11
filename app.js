@@ -1,7 +1,7 @@
 // ===== Se'âdet-i Ebediyye - İnteraktif İlmihâl =====
 const PDF_URL = 'https://www.hakikatkitabevi.net/downloads/001.pdf';
 // Her release'te index.html'deki BUILD sabitiyle birlikte bump edilir — lazy-load edilen data/kod dosyalarının cache key'i.
-const ASSET_VERSION = '2026-06-11-r1';
+const ASSET_VERSION = '2026-06-11-r2';
 function vQuery() { return '?v=' + ASSET_VERSION; }
 
 // ===== URL ROUTING (Clean URL + Hash Fallback) =====
@@ -3899,14 +3899,14 @@ function setSleepTimer(minutes) {
   if (sleepTimer) clearTimeout(sleepTimer);
   if (minutes === 0) {
     var btn = document.getElementById('sleep-btn');
-    if (btn) { btn.textContent = '🌙'; btn.title = 'Uyku zamanlayıcı'; }
+    if (btn) { btn.innerHTML = '<svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:currentColor;stroke-width:1.8;fill:none;stroke-linecap:round;stroke-linejoin:round;" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>'; btn.title = 'Uyku zamanlayıcı'; }
     return;
   }
   sleepTimer = setTimeout(function() {
     pauseAudio();
     sleepTimer = null;
     var btn = document.getElementById('sleep-btn');
-    if (btn) { btn.textContent = '🌙'; btn.title = 'Uyku zamanlayıcı'; }
+    if (btn) { btn.innerHTML = '<svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:currentColor;stroke-width:1.8;fill:none;stroke-linecap:round;stroke-linejoin:round;" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>'; btn.title = 'Uyku zamanlayıcı'; }
   }, minutes * 60000);
   var btn = document.getElementById('sleep-btn');
   if (btn) { btn.textContent = minutes + 'dk'; btn.title = minutes + ' dakika sonra duracak'; }
@@ -4627,7 +4627,7 @@ function togglePodcastMode() {
     var bookmarks = [];
     try { bookmarks = JSON.parse(localStorage.getItem('ilmihal-bookmarks') || '[]'); } catch(e) {}
     html += '<div style="margin-bottom:32px;">';
-    html += '<h3 style="color:var(--primary-dark);margin-bottom:12px;">⭐ Yer İmleri (' + bookmarks.length + ')</h3>';
+    html += '<h3 style="color:var(--primary-dark);margin-bottom:12px;"><svg viewBox="0 0 24 24" style="width:17px;height:17px;stroke:currentColor;stroke-width:1.8;fill:none;stroke-linecap:round;stroke-linejoin:round;vertical-align:-2px;margin-right:6px;" aria-hidden="true"><path d="M12 17.3l-6.2 3.3 1.2-6.9-5-4.9 6.9-1L12 1.5l3.1 6.3 6.9 1-5 4.9 1.2 6.9z"/></svg>Yer İmleri (' + bookmarks.length + ')</h3>';
     if (bookmarks.length === 0) {
       html += '<p style="color:var(--text-muted);">Henüz yer imi eklenmemiş. Bir madde açıp yıldız ikonuna tıklayarak ekleyebilirsiniz.</p>';
     } else {
@@ -4651,7 +4651,7 @@ function togglePodcastMode() {
     var notSayisi = 0;
     Object.keys(notDeposu).forEach(function(k) { notSayisi += (notDeposu[k] || []).length; });
     html += '<div style="margin-bottom:32px;">';
-    html += '<h3 style="color:var(--primary-dark);margin-bottom:12px;">📝 Notlarım (' + notSayisi + ')</h3>';
+    html += '<h3 style="color:var(--primary-dark);margin-bottom:12px;"><svg viewBox="0 0 24 24" style="width:17px;height:17px;stroke:currentColor;stroke-width:1.8;fill:none;stroke-linecap:round;stroke-linejoin:round;vertical-align:-2px;margin-right:6px;" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L8 18l-4 1 1-4z"/></svg>Notlarım (' + notSayisi + ')</h3>';
     if (notSayisi === 0) {
       html += '<p style="color:var(--text-muted);">Henüz not alınmamış. Bir madde açıp "Notlarım" bölümünden not ekleyebilirsiniz.</p>';
     } else {
@@ -4675,7 +4675,7 @@ function togglePodcastMode() {
     var vurguSayisi = 0;
     Object.keys(vurguDeposu).forEach(function(k) { vurguSayisi += (vurguDeposu[k] || []).length; });
     html += '<div style="margin-bottom:32px;">';
-    html += '<h3 style="color:var(--primary-dark);margin-bottom:12px;">🖍 Vurgularım (' + vurguSayisi + ')</h3>';
+    html += '<h3 style="color:var(--primary-dark);margin-bottom:12px;"><svg viewBox="0 0 24 24" style="width:17px;height:17px;stroke:currentColor;stroke-width:1.8;fill:none;stroke-linecap:round;stroke-linejoin:round;vertical-align:-2px;margin-right:6px;" aria-hidden="true"><path d="M9 11l-6 6v3h9l3-3"/><path d="M22 12l-4.6 4.6a2 2 0 0 1-2.8 0l-5.2-5.2a2 2 0 0 1 0-2.8L14 4"/></svg>Vurgularım (' + vurguSayisi + ')</h3>';
     if (vurguSayisi === 0) {
       html += '<p style="color:var(--text-muted);">Henüz vurgu yapılmamış. Madde okurken metin seçip "Vurgula" diyebilirsiniz.</p>';
     } else {
@@ -4697,7 +4697,7 @@ function togglePodcastMode() {
     var readHistory = [];
     try { readHistory = JSON.parse(localStorage.getItem('ilmihal-read-history') || '[]'); } catch(e) {}
     html += '<div style="margin-bottom:32px;">';
-    html += '<h3 style="color:var(--primary-dark);margin-bottom:12px;">📖 Son Okunanlar (' + readHistory.length + ')</h3>';
+    html += '<h3 style="color:var(--primary-dark);margin-bottom:12px;"><svg viewBox="0 0 24 24" style="width:17px;height:17px;stroke:currentColor;stroke-width:1.8;fill:none;stroke-linecap:round;stroke-linejoin:round;vertical-align:-2px;margin-right:6px;" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>Son Okunanlar (' + readHistory.length + ')</h3>';
     if (readHistory.length === 0) {
       html += '<p style="color:var(--text-muted);">Henüz madde okumadınız.</p>';
     } else {
@@ -4722,7 +4722,7 @@ function togglePodcastMode() {
     var rehberKeys = Object.keys(rehberProg);
     if (rehberKeys.length > 0 && window.rehberlerData) {
       html += '<div style="margin-bottom:32px;">';
-      html += '<h3 style="color:var(--primary-dark);margin-bottom:12px;">📚 Rehber İlerlemesi</h3>';
+      html += '<h3 style="color:var(--primary-dark);margin-bottom:12px;"><svg viewBox="0 0 24 24" style="width:17px;height:17px;stroke:currentColor;stroke-width:1.8;fill:none;stroke-linecap:round;stroke-linejoin:round;vertical-align:-2px;margin-right:6px;" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>Rehber İlerlemesi</h3>';
       rehberKeys.forEach(function(rid) {
         var r = window.rehberlerData.find(function(x) { return x.id === rid; });
         if (!r) return;
