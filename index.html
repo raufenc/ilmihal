@@ -671,7 +671,7 @@
         <p>Namaz vakitleri hesaplaması için konum bilgisi kullanılabilir. Bu veri yalnızca tarayıcınızda işlenir, herhangi bir sunucuya gönderilmez ve saklanmaz.</p>
 
         <h3>Üçüncü Taraf Hizmetler</h3>
-        <p>Site, yazı tiplerini Google Fonts üzerinden ve harita verilerini OpenStreetMap üzerinden yükler. Bu hizmetlerin kendi gizlilik politikaları geçerlidir.</p>
+        <p>Yazı tipleri sitenin kendi sunucusundan yüklenir; ana site hiçbir üçüncü taraf hizmete bağlanmaz. Yalnızca Silsile Atlası sayfası harita verilerini OpenStreetMap üzerinden, yazı tiplerini Google Fonts üzerinden yükler; bu hizmetlerin kendi gizlilik politikaları geçerlidir.</p>
 
         <h3>İletişim</h3>
         <p>Gizlilikle ilgili sorularınız için <strong>info@ilmihal.org</strong> adresine yazabilirsiniz.</p>
@@ -721,29 +721,14 @@
 
   <script>
     (function() {
-      var BUILD = '2026-04-24-cleanup-r1';
+      // Offline katmanı: versiyonlu SW (sw.js kendi eski cache'lerini temizler).
+      // Nisan 2026'daki "kamikaze" temizlik bloğunun yerine geçti.
       try {
-        var prevBuild = localStorage.getItem('ilmihal-build-id');
-        if (prevBuild === BUILD) return;
-        localStorage.setItem('ilmihal-build-id', BUILD);
-        sessionStorage.removeItem('ilmihal-sw-cleanup');
+        localStorage.setItem('ilmihal-build-id', '2026-06-11-premium-r1');
         if ('serviceWorker' in navigator) {
-          navigator.serviceWorker.getRegistrations().then(function(regs) {
-            regs.forEach(function(reg) {
-              try { reg.unregister(); } catch (e) {}
-            });
-          }).catch(function() {});
-        }
-        if ('caches' in window) {
-          caches.keys().then(function(keys) {
-            return Promise.all(keys.map(function(key) { return caches.delete(key); }));
-          }).catch(function() {});
-        }
-        if (!sessionStorage.getItem('ilmihal-build-refresh')) {
-          sessionStorage.setItem('ilmihal-build-refresh', BUILD);
-          var url = new URL(location.href);
-          url.searchParams.set('v', BUILD);
-          location.replace(url.toString());
+          window.addEventListener('load', function() {
+            navigator.serviceWorker.register('/sw.js').catch(function() {});
+          });
         }
       } catch (e) {}
     })();
@@ -753,7 +738,7 @@
       var match = (location.pathname || '').match(/^\/madde\/(\d+)\/(\d+)/);
       if (!match) return;
       var kisim = match[1];
-      var AV = '2026-04-24-r1';
+      var AV = '2026-06-11-r1';
       if (window.fetch) {
         try { fetch('/texts/kisim' + kisim + '.json?v=' + AV).catch(function() {}); } catch (e) {}
       }
