@@ -81,15 +81,18 @@ const DATA = applyJitter(SILSILE);
 
 // ========== INIT ==========
 document.addEventListener('DOMContentLoaded', () => {
-  initMap();
-  initSilsile();
-  initGlobalSearch();
-  initMobileMenu();
-  initScrollAnimations();
-  initJourneyButton();
-  initCampaignControls();
-  initModal();
-  injectPersonSchema();
+  // Her adım bağımsız: biri çökerse (ör. harita kütüphanesi yüklenemezse)
+  // sayfanın geri kalanı görünür ve kullanılabilir kalır.
+  const adim = (fn, ad) => { try { fn(); } catch (e) { console.error('Atlas init hatası [' + ad + ']:', e); } };
+  adim(initScrollAnimations, 'animasyon'); // içerik görünürlüğü haritadan önce gelir
+  adim(initMap, 'harita');
+  adim(initSilsile, 'silsile');
+  adim(initGlobalSearch, 'arama');
+  adim(initMobileMenu, 'menü');
+  adim(initJourneyButton, 'yolculuk');
+  adim(initCampaignControls, 'yolculuk-kontrol');
+  adim(initModal, 'modal');
+  adim(injectPersonSchema, 'schema');
 });
 
 // ========== MAP ==========
