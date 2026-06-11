@@ -136,7 +136,7 @@ function updateSeoMeta(title, description, url) {
 
 // ===== LAZY LOADING (sözlük + maddeler) =====
 var _loadingScripts = {};
-var MADDE_SAFE_MODE = true;
+var MADDE_SAFE_MODE = false; // Nisan 2026 acil freni; kademeli render + try/catch korumaları sonrası Haziran 2026'da yeniden açıldı
 var MADDE_ENABLE_SOZLUK_LAYER = true;
 
 function assetUrl(path) {
@@ -544,18 +544,20 @@ function loadIcerik(filterKisim, filterText) {
   const kisimLabels = { 1: 'Birinci K\u0131s\u0131m', 2: '\u0130kinci K\u0131s\u0131m', 3: '\u00dc\u00e7\u00fcnc\u00fc K\u0131s\u0131m' };
   let currentKisim = 0;
   let html = '';
+  const okundular = new Set(getReadMaddes());
 
   filtered.forEach(m => {
     if (m.kisim !== currentKisim && kisimFilter === 'all') {
       currentKisim = m.kisim;
-      html += `<div style="padding:24px 0 8px;"><h3 style="font-family:'Amiri',serif;color:var(--primary-dark);font-size:1.3rem;">${kisimLabels[m.kisim]}</h3></div>`;
+      html += `<div style="padding:24px 0 8px;"><h3 style="font-family:var(--font-okuma);color:var(--primary-dark);font-size:1.3rem;">${kisimLabels[m.kisim]}</h3></div>`;
     }
+    const okundu = okundular.has(m.kisim + '/' + m.madde_no);
     html += `
-      <div class="madde-item" onclick="openMadde(${m.kisim}, ${m.madde_no})">
+      <div class="madde-item${okundu ? ' okundu' : ''}" data-madde-key="${m.kisim}/${m.madde_no}" onclick="openMadde(${m.kisim}, ${m.madde_no})">
         <div class="madde-badge">${m.madde_no}</div>
         <div class="madde-info">
-          <div class="madde-title">${m.baslik}</div>
-          <div class="madde-meta">${kisimLabels[m.kisim]}${m.mektup_ref ? ' \u00B7 Mektup: ' + m.mektup_ref : ''}</div>
+          <div class="madde-title">${m.baslik}${okundu ? OKUNDU_TIK_HTML : ''}</div>
+          <div class="madde-meta">${kisimLabels[m.kisim]}${m.mektup_ref ? ' \u00B7 <span style="white-space:nowrap">Mektup: ' + m.mektup_ref + '</span>' : ''}</div>
         </div>
         <div class="madde-sayfa">${sayfaLink(m.sayfa_no)}</div>
       </div>
@@ -626,7 +628,7 @@ function renderFilteredMaddeler(filtered) {
         <div class="madde-badge">${m.madde_no}</div>
         <div class="madde-info">
           <div class="madde-title">${m.baslik}${okundu ? OKUNDU_TIK_HTML : ''}</div>
-          <div class="madde-meta">${kisimLabels[m.kisim]}${m.mektup_ref ? ' \u00B7 Mektup: ' + m.mektup_ref : ''}</div>
+          <div class="madde-meta">${kisimLabels[m.kisim]}${m.mektup_ref ? ' \u00B7 <span style="white-space:nowrap">Mektup: ' + m.mektup_ref + '</span>' : ''}</div>
         </div>
         <div class="madde-sayfa">${sayfaLink(m.sayfa_no)}</div>
       </div>
@@ -970,8 +972,8 @@ async function openMadde(kisim, maddeNo, fromRoute, searchQuery) {
     </div>
     <div class="madde-text">${metin}</div>
     <div class="madde-paylasim-bar">
-      <button type="button" class="btn btn-sm" onclick="maddePaylasText(${kisim},${maddeNo})">Paylas</button>
-      <button type="button" class="btn btn-sm btn-secondary" style="background:var(--primary-light);color:#fff;" onclick="maddePaylasimKarti(${kisim},${maddeNo})">Gorsel Kart</button>
+      <button type="button" class="btn btn-sm" onclick="maddePaylasText(${kisim},${maddeNo})">Paylaş</button>
+      <button type="button" class="btn btn-sm btn-secondary" style="background:var(--primary-light);color:#fff;" onclick="maddePaylasimKarti(${kisim},${maddeNo})">Görsel Kart</button>
     </div>
     <div id="madde-related-sahis-slot"></div>
     <div id="madde-related-table-slot"></div>
@@ -997,6 +999,8 @@ async function openMadde(kisim, maddeNo, fromRoute, searchQuery) {
       textEl.innerHTML = highlightWords(rawMetinSafe);
       bindMaddeTooltipListeners();
       if (typeof initInlineSozluk === 'function') initInlineSozluk(textEl);
+      if (typeof aktivCrossLinks === 'function') { try { aktivCrossLinks(textEl); } catch(e2) {} }
+      if (typeof yukleVurgulamalar === 'function') { try { yukleVurgulamalar(textEl); } catch(e2) {} }
       applySearchHighlight();
     } catch (e) {
       console.error('Madde sözlük highlight hatası:', e);
@@ -4170,12 +4174,12 @@ function gununBilgisiKart() {
 
   // Tip etiketi
   ctx.fillStyle = '#c9a84c';
-  ctx.font = 'bold 28px sans-serif';
-  ctx.fillText('SUAL', 80, 180);
+  ctx.font = '600 28px Inter, sans-serif';
+  ctx.fillText('SUÂL', 80, 180);
 
   // Metin (word wrap)
   ctx.fillStyle = '#ffffff';
-  ctx.font = '36px serif';
+  ctx.font = '400 36px Literata, Georgia, serif';
   var words = bilgi.soru.split(' ');
   var lines = []; var line = '';
   words.forEach(function(w) {
@@ -4191,9 +4195,9 @@ function gununBilgisiKart() {
   // Alt bilgi
   ctx.fillStyle = 'rgba(255,255,255,0.5)';
   ctx.font = '24px sans-serif';
-  var baslikText = bilgi.baslik || ('Kisim ' + bilgi.kisim + ' / Madde ' + bilgi.madde);
+  var baslikText = bilgi.baslik || ('Kısım ' + bilgi.kisim + ' / Madde ' + bilgi.madde);
   if (baslikText.length > 60) baslikText = baslikText.substring(0, 60) + '...';
-  ctx.fillText("Se'adet-i Ebediyye", 80, 900);
+  ctx.fillText("Se'âdet-i Ebediyye", 80, 900);
   ctx.fillText(baslikText, 80, 940);
   ctx.fillText('ilmihal.org', 80, 980);
 
@@ -4208,44 +4212,73 @@ function gununBilgisiKart() {
 function maddePaylasimKarti(kisim, maddeNo) {
   var madde = getMaddeMeta(kisim, maddeNo);
   if (!madde) return;
-  var canvas = document.createElement('canvas');
-  canvas.width = 1200; canvas.height = 630;
-  var ctx = canvas.getContext('2d');
+  var fontlar = (document.fonts && document.fonts.load)
+    ? Promise.all([
+        document.fonts.load('600 56px Literata', madde.baslik.slice(0, 12)),
+        document.fonts.load('600 26px Inter', 'SEÂDET'),
+        document.fonts.load('400 24px Inter', 'Kısım')
+      ]).catch(function() {})
+    : Promise.resolve();
+  fontlar.then(function() {
+    var W = 1200, H = 630;
+    var canvas = document.createElement('canvas');
+    canvas.width = W; canvas.height = H;
+    var ctx = canvas.getContext('2d');
 
-  var grad = ctx.createLinearGradient(0, 0, 1200, 630);
-  grad.addColorStop(0, '#0e4a35'); grad.addColorStop(1, '#1a6b4e');
-  ctx.fillStyle = grad; ctx.fillRect(0, 0, 1200, 630);
+    var grad = ctx.createLinearGradient(0, 0, W, H);
+    grad.addColorStop(0, '#0c3d2c'); grad.addColorStop(1, '#1a6b4e');
+    ctx.fillStyle = grad; ctx.fillRect(0, 0, W, H);
+    ctx.strokeStyle = 'rgba(201,168,76,0.85)'; ctx.lineWidth = 2;
+    ctx.strokeRect(30, 30, W - 60, H - 60);
 
-  ctx.fillStyle = '#c9a84c'; ctx.fillRect(60, 80, 120, 4);
-  ctx.fillStyle = 'rgba(255,255,255,0.7)'; ctx.font = '24px serif';
-  ctx.fillText("Se'adet-i Ebediyye", 60, 140);
-  ctx.fillStyle = '#e8d48b'; ctx.font = 'bold 42px serif';
+    ctx.fillStyle = '#c9a84c';
+    ctx.font = '600 26px Inter, sans-serif';
+    ctx.fillText("SE'ÂDET-İ EBEDİYYE", 80, 124);
+    ctx.fillRect(80, 146, 84, 2);
 
-  var words = madde.baslik.split(' '); var lines = []; var line = '';
-  words.forEach(function(w) { if ((line + ' ' + w).length > 40) { lines.push(line); line = w; } else { line = line ? line + ' ' + w : w; } });
-  if (line) lines.push(line);
-  lines.forEach(function(l, i) { ctx.fillText(l, 60, 220 + i * 56); });
+    ctx.fillStyle = '#f3ead2';
+    var fontBoyu = 56;
+    ctx.font = '600 ' + fontBoyu + 'px Literata, Georgia, serif';
+    var kelimeler = madde.baslik.split(/\s+/), satirlar = [], satir = '';
+    for (var i = 0; i < kelimeler.length; i++) {
+      var test = satir ? satir + ' ' + kelimeler[i] : kelimeler[i];
+      if (ctx.measureText(test).width > W - 200 && satir) { satirlar.push(satir); satir = kelimeler[i]; }
+      else satir = test;
+    }
+    if (satir) satirlar.push(satir);
+    if (satirlar.length > 4) {
+      satirlar = satirlar.slice(0, 4);
+      satirlar[3] = satirlar[3].replace(/[,;:.\s]+$/, '') + '…';
+    }
+    satirlar.forEach(function(l, i) { ctx.fillText(l, 80, 240 + i * 76); });
 
-  var kl = { 1: 'Birinci Kisim', 2: 'Ikinci Kisim', 3: 'Ucuncu Kisim' };
-  ctx.fillStyle = 'rgba(255,255,255,0.5)'; ctx.font = '22px sans-serif';
-  ctx.fillText(kl[madde.kisim] + ', Madde ' + madde.madde_no, 60, 520);
-  ctx.fillStyle = 'rgba(255,255,255,0.3)'; ctx.font = '20px sans-serif';
-  ctx.fillText('ilmihal.org', 60, 580);
+    var kl = { 1: 'Birinci Kısım', 2: 'İkinci Kısım', 3: 'Üçüncü Kısım' };
+    ctx.fillStyle = 'rgba(255,255,255,0.62)';
+    ctx.font = '400 24px Inter, sans-serif';
+    ctx.fillText((kl[madde.kisim] || '') + ', Madde ' + madde.madde_no + (madde.sayfa_no ? ' · Sayfa ' + madde.sayfa_no : ''), 80, H - 104);
+    ctx.fillStyle = '#c9a84c';
+    ctx.font = '600 24px Inter, sans-serif';
+    ctx.fillText('ilmihal.org', 80, H - 60);
 
-  var link = document.createElement('a');
-  link.download = 'madde-' + kisim + '-' + maddeNo + '.png';
-  link.href = canvas.toDataURL('image/png');
-  link.click();
+    canvas.toBlob(function(blob) {
+      if (!blob) return;
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement('a');
+      a.href = url; a.download = 'madde-' + kisim + '-' + maddeNo + '.png';
+      a.click(); setTimeout(function() { URL.revokeObjectURL(url); }, 2000);
+    });
+  });
 }
 
 function maddePaylasText(kisim, maddeNo) {
   var madde = getMaddeMeta(kisim, maddeNo);
   if (!madde) return;
-  var text = madde.baslik + '\n\nSe\'adet-i Ebediyye, Kisim ' + kisim + ', Madde ' + maddeNo + '\nhttps://www.ilmihal.org/madde/' + kisim + '/' + maddeNo;
+  var kl = { 1: 'Birinci Kısım', 2: 'İkinci Kısım', 3: 'Üçüncü Kısım' };
+  var text = madde.baslik + '\n\nSe\'âdet-i Ebediyye, ' + (kl[kisim] || 'Kısım ' + kisim) + ', Madde ' + maddeNo + '\nhttps://www.ilmihal.org/madde/' + kisim + '/' + maddeNo;
   if (navigator.share) {
     navigator.share({ title: madde.baslik, text: text, url: 'https://www.ilmihal.org/madde/' + kisim + '/' + maddeNo }).catch(function(){});
   } else if (navigator.clipboard) {
-    navigator.clipboard.writeText(text).then(function() { alert('Kopyalandi!'); });
+    navigator.clipboard.writeText(text).then(function() { alert('Kopyalandı!'); });
   }
 }
 
@@ -4585,6 +4618,11 @@ function togglePodcastMode() {
     // 0. Okuma İstatistikleri
     html += '<div id="okuma-istatistik" style="margin-bottom:32px;"></div>';
 
+    // 0b. Dışa aktarım
+    html += '<div style="margin-bottom:28px;display:flex;gap:10px;flex-wrap:wrap;">';
+    html += '<button type="button" class="disa-aktar-btn" onclick="calismaAlaniDisaAktar()"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M4 19h16"/></svg> Notları ve Vurguları İndir (.md)</button>';
+    html += '</div>';
+
     // 1. Yer İmleri
     var bookmarks = [];
     try { bookmarks = JSON.parse(localStorage.getItem('ilmihal-bookmarks') || '[]'); } catch(e) {}
@@ -4608,31 +4646,49 @@ function togglePodcastMode() {
     }
     html += '</div>';
 
-    // 2. Notlar
-    var allNotes = [];
-    for (var i = 0; i < localStorage.length; i++) {
-      var key = localStorage.key(i);
-      if (key && key.startsWith('ilmihal-not-')) {
-        try {
-          var notes = JSON.parse(localStorage.getItem(key));
-          var maddeKey = key.replace('ilmihal-not-', '');
-          if (Array.isArray(notes)) {
-            notes.forEach(function(n) { allNotes.push({ key: maddeKey, text: n.text || n, date: n.date || '' }); });
-          }
-        } catch(e) {}
-      }
-    }
+    // 2. Notlar (gerçek depo: ilmihal-notlar)
+    var notDeposu = (typeof getNotlar === 'function') ? getNotlar() : {};
+    var notSayisi = 0;
+    Object.keys(notDeposu).forEach(function(k) { notSayisi += (notDeposu[k] || []).length; });
     html += '<div style="margin-bottom:32px;">';
-    html += '<h3 style="color:var(--primary-dark);margin-bottom:12px;">📝 Notlarım (' + allNotes.length + ')</h3>';
-    if (allNotes.length === 0) {
+    html += '<h3 style="color:var(--primary-dark);margin-bottom:12px;">📝 Notlarım (' + notSayisi + ')</h3>';
+    if (notSayisi === 0) {
       html += '<p style="color:var(--text-muted);">Henüz not alınmamış. Bir madde açıp "Notlarım" bölümünden not ekleyebilirsiniz.</p>';
     } else {
-      allNotes.slice(0, 20).forEach(function(n) {
-        var parts = n.key.split('-');
-        html += '<div style="padding:12px 16px;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-sm);margin-bottom:8px;">';
-        html += '<div style="font-size:0.8rem;color:var(--text-muted);margin-bottom:4px;">Madde ' + n.key + (n.date ? ' · ' + n.date : '') + '</div>';
-        html += '<div style="font-size:0.9rem;">' + escapeHtml(typeof n.text === 'string' ? n.text : JSON.stringify(n.text)) + '</div>';
-        html += '</div>';
+      Object.keys(notDeposu).forEach(function(mKey) {
+        (notDeposu[mKey] || []).forEach(function(n, idx) {
+          var baslik = calismaMaddeBaslik(mKey);
+          var git = 'openMadde(' + mKey.split('/')[0] + ',' + mKey.split('/')[1] + ');return false';
+          html += '<div class="vurgu-kart" style="border-left-color:var(--primary);" onclick="' + git + '">';
+          html += '<div class="vurgu-kart-metin">' + escapeHtml(n.text) + '</div>';
+          html += '<div class="vurgu-kart-kaynak"><span>' + escapeHtml(baslik) + (n.date ? ' · ' + escapeHtml(n.date) : '') + '</span>';
+          html += '<button type="button" class="vurgu-sil" onclick="event.stopPropagation();calismaNotSil(\'' + mKey + '\',' + idx + ')">Sil</button></div>';
+          html += '</div>';
+        });
+      });
+    }
+    html += '</div>';
+
+    // 2b. Vurgularım
+    var vurguDeposu = {};
+    try { vurguDeposu = JSON.parse(localStorage.getItem('ilmihal-vurgulamalar') || '{}'); } catch(e) {}
+    var vurguSayisi = 0;
+    Object.keys(vurguDeposu).forEach(function(k) { vurguSayisi += (vurguDeposu[k] || []).length; });
+    html += '<div style="margin-bottom:32px;">';
+    html += '<h3 style="color:var(--primary-dark);margin-bottom:12px;">🖍 Vurgularım (' + vurguSayisi + ')</h3>';
+    if (vurguSayisi === 0) {
+      html += '<p style="color:var(--text-muted);">Henüz vurgu yapılmamış. Madde okurken metin seçip "Vurgula" diyebilirsiniz.</p>';
+    } else {
+      Object.keys(vurguDeposu).forEach(function(mKey) {
+        (vurguDeposu[mKey] || []).forEach(function(v, idx) {
+          var baslik = calismaMaddeBaslik(mKey);
+          var git = 'openMadde(' + mKey.split('/')[0] + ',' + mKey.split('/')[1] + ');return false';
+          html += '<div class="vurgu-kart" style="border-left-color:' + (v.renk || 'var(--gold)') + ';" onclick="' + git + '">';
+          html += '<div class="vurgu-kart-metin">&ldquo;' + escapeHtml(v.text) + '&rdquo;</div>';
+          html += '<div class="vurgu-kart-kaynak"><span>' + escapeHtml(baslik) + '</span>';
+          html += '<button type="button" class="vurgu-sil" onclick="event.stopPropagation();calismaVurguSil(\'' + mKey + '\',' + idx + ')">Sil</button></div>';
+          html += '</div>';
+        });
       });
     }
     html += '</div>';
@@ -4688,6 +4744,69 @@ function togglePodcastMode() {
     el.innerHTML = html;
     if (typeof renderOkumaIstatistik === 'function') renderOkumaIstatistik();
   }
+
+  function calismaMaddeBaslik(key) {
+    var parts = String(key).split('/');
+    var kisim = parseInt(parts[0], 10), maddeNo = parseInt(parts[1], 10);
+    var kl = { 1: 'Birinci Kısım', 2: 'İkinci Kısım', 3: 'Üçüncü Kısım' };
+    var m = window.tocData && window.tocData.find(function(t) { return t.kisim === kisim && t.madde_no === maddeNo; });
+    return (kl[kisim] || ('Kısım ' + kisim)) + ', Madde ' + maddeNo + (m ? ' — ' + m.baslik : '');
+  }
+
+  window.calismaNotSil = function(mKey, idx) {
+    var notlar = (typeof getNotlar === 'function') ? getNotlar() : {};
+    if (notlar[mKey]) {
+      notlar[mKey].splice(idx, 1);
+      if (notlar[mKey].length === 0) delete notlar[mKey];
+      try { localStorage.setItem('ilmihal-notlar', JSON.stringify(notlar)); } catch(e) {}
+      renderCalismaAlanim();
+    }
+  };
+
+  window.calismaVurguSil = function(mKey, idx) {
+    var all = {};
+    try { all = JSON.parse(localStorage.getItem('ilmihal-vurgulamalar') || '{}'); } catch(e) {}
+    if (all[mKey]) {
+      all[mKey].splice(idx, 1);
+      if (all[mKey].length === 0) delete all[mKey];
+      try { localStorage.setItem('ilmihal-vurgulamalar', JSON.stringify(all)); } catch(e) {}
+      renderCalismaAlanim();
+    }
+  };
+
+  window.calismaAlaniDisaAktar = function() {
+    var notlar = (typeof getNotlar === 'function') ? getNotlar() : {};
+    var vurgular = {};
+    try { vurgular = JSON.parse(localStorage.getItem('ilmihal-vurgulamalar') || '{}'); } catch(e) {}
+    var anahtarlar = {};
+    Object.keys(notlar).forEach(function(k) { anahtarlar[k] = true; });
+    Object.keys(vurgular).forEach(function(k) { anahtarlar[k] = true; });
+    var keys = Object.keys(anahtarlar).sort(function(a, b) {
+      var pa = a.split('/').map(Number), pb = b.split('/').map(Number);
+      return pa[0] - pb[0] || pa[1] - pb[1];
+    });
+    if (keys.length === 0) { alert('Dışa aktarılacak not veya vurgu yok.'); return; }
+    var tarih = new Date().toLocaleDateString('tr-TR');
+    var md = "# Çalışma Alanım — Se'âdet-i Ebediyye\n\n_" + tarih + " tarihinde ilmihal.org üzerinden dışa aktarıldı._\n\n";
+    keys.forEach(function(k) {
+      md += '## ' + calismaMaddeBaslik(k) + '\n';
+      md += 'https://www.ilmihal.org/madde/' + k + '\n\n';
+      (vurgular[k] || []).forEach(function(v) { md += '> ' + String(v.text).replace(/\n/g, ' ') + '\n\n'; });
+      var notList = notlar[k] || [];
+      if (notList.length) {
+        md += '**Notlarım:**\n\n';
+        notList.forEach(function(n) { md += '- ' + (n.date ? '(' + n.date + ') ' : '') + String(n.text).replace(/\n/g, ' ') + '\n'; });
+        md += '\n';
+      }
+    });
+    var blob = new Blob([md], { type: 'text/markdown;charset=utf-8' });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = 'ilmihal-calisma-alanim-' + new Date().toISOString().slice(0, 10) + '.md';
+    a.click();
+    setTimeout(function() { URL.revokeObjectURL(url); }, 2000);
+  };
 
   window.renderCalismaAlanim = renderCalismaAlanim;
 
@@ -5285,29 +5404,98 @@ function metinPaylasKart() {
   if (!el || !currentMaddeForBookmark) return;
   var text = el.dataset.metin;
   gizleMetinPaylas();
-  var canvas = document.createElement('canvas');
-  canvas.width = 800; canvas.height = 500;
-  var ctx = canvas.getContext('2d');
-  ctx.fillStyle = '#faf8f4'; ctx.fillRect(0, 0, 800, 500);
-  ctx.fillStyle = '#1a6b4e'; ctx.fillRect(0, 0, 800, 6); ctx.fillRect(0, 494, 800, 6);
-  ctx.font = 'bold 22px Amiri, serif'; ctx.fillStyle = '#1a6b4e';
-  ctx.fillText(currentMaddeForBookmark.baslik, 40, 50);
-  ctx.font = '16px Inter, sans-serif'; ctx.fillStyle = '#2c2c2c';
-  var words = text.split(' '), line = '', y = 90;
-  for (var i = 0; i < words.length; i++) {
-    var test = line + words[i] + ' ';
-    if (ctx.measureText(test).width > 720 && line) {
-      ctx.fillText(line.trim(), 40, y); line = words[i] + ' '; y += 26;
-      if (y > 440) { ctx.fillText('...', 40, y); break; }
-    } else line = test;
-  }
-  if (y <= 440 && line) ctx.fillText(line.trim(), 40, y);
-  ctx.font = 'italic 13px Inter, sans-serif'; ctx.fillStyle = '#999';
-  ctx.fillText('ilmihal.org - Se\u2019\u00e2det-i Ebediyye', 40, 474);
-  canvas.toBlob(function(blob) {
-    var url = URL.createObjectURL(blob);
-    var a = document.createElement('a'); a.href = url; a.download = 'ilmihal-alinti.png';
-    a.click(); URL.revokeObjectURL(url);
+  var madde = currentMaddeForBookmark;
+  var fontlar = (document.fonts && document.fonts.load)
+    ? Promise.all([
+        document.fonts.load('400 52px Literata', text.slice(0, 20)),
+        document.fonts.load('600 30px Inter', 'SEÂDET'),
+        document.fonts.load('500 26px Inter', 'ilmihal')
+      ]).catch(function() {})
+    : Promise.resolve();
+  fontlar.then(function() {
+    var W = 1080, H = 1350;
+    var canvas = document.createElement('canvas');
+    canvas.width = W; canvas.height = H;
+    var ctx = canvas.getContext('2d');
+
+    // Fildişi zemin + çift altın çerçeve
+    ctx.fillStyle = '#faf7f0'; ctx.fillRect(0, 0, W, H);
+    ctx.strokeStyle = '#c9a84c'; ctx.lineWidth = 3;
+    ctx.strokeRect(36, 36, W - 72, H - 72);
+    ctx.strokeStyle = 'rgba(201,168,76,0.45)'; ctx.lineWidth = 1;
+    ctx.strokeRect(48, 48, W - 96, H - 96);
+
+    // Üst başlık: eser adı
+    ctx.fillStyle = '#c9a84c';
+    ctx.font = '600 30px Inter, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText("SE'ÂDET-İ EBEDİYYE", W / 2, 140);
+    ctx.fillRect(W / 2 - 40, 168, 80, 2);
+
+    // Alıntı metni (Literata, akıllı sarma + dikey ortalama)
+    var maxGenislik = W - 220;
+    var boyutlar = [52, 46, 40, 36];
+    var satirlar = null, fontBoyu = 36, satirAralik = 0;
+    for (var b = 0; b < boyutlar.length; b++) {
+      fontBoyu = boyutlar[b];
+      satirAralik = Math.round(fontBoyu * 1.62);
+      ctx.font = '400 ' + fontBoyu + 'px Literata, Georgia, serif';
+      var kelimeler = text.split(/\s+/), deneme = [], satir = '';
+      for (var i = 0; i < kelimeler.length; i++) {
+        var test = satir ? satir + ' ' + kelimeler[i] : kelimeler[i];
+        if (ctx.measureText(test).width > maxGenislik && satir) { deneme.push(satir); satir = kelimeler[i]; }
+        else satir = test;
+      }
+      if (satir) deneme.push(satir);
+      if (deneme.length * satirAralik <= 820 || b === boyutlar.length - 1) {
+        var maxSatir = Math.floor(820 / satirAralik);
+        if (deneme.length > maxSatir) {
+          deneme = deneme.slice(0, maxSatir);
+          deneme[maxSatir - 1] = deneme[maxSatir - 1].replace(/[,;:.\s]+$/, '') + '…';
+        }
+        satirlar = deneme;
+        break;
+      }
+    }
+    var blokYukseklik = satirlar.length * satirAralik;
+    var yBas = 230 + Math.max(0, (820 - blokYukseklik) / 2) + fontBoyu;
+    ctx.fillStyle = '#2c2418';
+    ctx.font = '400 ' + fontBoyu + 'px Literata, Georgia, serif';
+    satirlar.forEach(function(s, i) { ctx.fillText(s, W / 2, yBas + i * satirAralik); });
+
+    // Alt bilgi: kaynak
+    var kl = { 1: 'Birinci Kısım', 2: 'İkinci Kısım', 3: 'Üçüncü Kısım' };
+    ctx.fillStyle = '#c9a84c';
+    ctx.fillRect(W / 2 - 40, H - 234, 80, 2);
+    ctx.fillStyle = '#6b5f48';
+    ctx.font = '500 27px Inter, sans-serif';
+    var baslikKisa = madde.baslik.length > 52 ? madde.baslik.slice(0, 52).trim() + '…' : madde.baslik;
+    ctx.fillText(baslikKisa, W / 2, H - 186);
+    ctx.font = '400 24px Inter, sans-serif';
+    ctx.fillStyle = '#8a7d63';
+    ctx.fillText((kl[madde.kisim] || '') + ', Madde ' + madde.madde_no + (madde.sayfa_no ? ' · Sayfa ' + madde.sayfa_no : ''), W / 2, H - 146);
+    ctx.font = '600 26px Inter, sans-serif';
+    ctx.fillStyle = '#1a6b4e';
+    ctx.fillText('ilmihal.org', W / 2, H - 92);
+    ctx.textAlign = 'left';
+
+    canvas.toBlob(function(blob) {
+      if (!blob) return;
+      var dosyaAdi = 'ilmihal-alinti-' + madde.kisim + '-' + madde.madde_no + '.png';
+      var dosya = null;
+      try { dosya = new File([blob], dosyaAdi, { type: 'image/png' }); } catch(e) {}
+      if (dosya && navigator.canShare && navigator.canShare({ files: [dosya] })) {
+        navigator.share({ files: [dosya], title: "Se'âdet-i Ebediyye" }).catch(function() {
+          var url = URL.createObjectURL(blob);
+          var a = document.createElement('a'); a.href = url; a.download = dosyaAdi;
+          a.click(); setTimeout(function() { URL.revokeObjectURL(url); }, 2000);
+        });
+      } else {
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement('a'); a.href = url; a.download = dosyaAdi;
+        a.click(); setTimeout(function() { URL.revokeObjectURL(url); }, 2000);
+      }
+    });
   });
 }
 
@@ -5349,8 +5537,14 @@ function uygulaVurgulama(sel, renk) {
   var mark = document.createElement('mark');
   mark.className = 'ilmihal-highlight'; mark.style.backgroundColor = renk; mark.dataset.renk = renk;
   try { range.surroundContents(mark); } catch(e) {
-    var text = sel.toString(); range.deleteContents();
-    mark.textContent = text; range.insertNode(mark);
+    try {
+      var frag = range.extractContents();
+      mark.appendChild(frag);
+      range.insertNode(mark);
+    } catch(e2) {
+      var text = sel.toString(); range.deleteContents();
+      mark.textContent = text; range.insertNode(mark);
+    }
   }
   sel.removeAllRanges();
   kaydetVurgulamalar();
@@ -5371,20 +5565,60 @@ function kaydetVurgulamalar() {
 }
 function yukleVurgulamalar(container) {
   if (!currentMaddeForBookmark || !container) return;
-  var key = currentMaddeForBookmark.kisim + '/' + currentMaddeForBookmark.madde_no;
-  var all = {};
-  try { all = JSON.parse(localStorage.getItem('ilmihal-vurgulamalar') || '{}'); } catch(e) {}
-  var highlights = all[key];
-  if (!highlights || highlights.length === 0) return;
-  highlights.forEach(function(h) {
-    if (!h.text || h.text.length < 3) return;
-    var escaped = h.text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    var regex = new RegExp('(?<!<[^>]*)(' + escaped + ')(?![^<]*>)');
-    var html = container.innerHTML;
-    if (regex.test(html)) {
-      container.innerHTML = html.replace(regex, '<mark class="ilmihal-highlight" data-renk="' + h.renk + '" style="background-color:' + h.renk + '">$1</mark>');
+  try {
+    var key = currentMaddeForBookmark.kisim + '/' + currentMaddeForBookmark.madde_no;
+    var all = {};
+    try { all = JSON.parse(localStorage.getItem('ilmihal-vurgulamalar') || '{}'); } catch(e) {}
+    var highlights = all[key];
+    if (!highlights || highlights.length === 0) return;
+    // Aynı metin zaten işaretliyse tekrarlama
+    var mevcut = {};
+    container.querySelectorAll('mark.ilmihal-highlight').forEach(function(m) { mevcut[m.textContent] = true; });
+    highlights.forEach(function(h) {
+      if (!h.text || h.text.length < 3 || mevcut[h.text]) return;
+      vurguMetniIsaretle(container, h.text, h.renk);
+    });
+  } catch(e) {}
+}
+
+// Metin düğümleri üzerinde birleşik arama ile vurgu uygular (sözlük span'lerine dayanıklı)
+function vurguMetniIsaretle(container, text, renk) {
+  var tw = document.createTreeWalker(container, NodeFilter.SHOW_TEXT, {
+    acceptNode: function(n) {
+      return (n.parentElement && n.parentElement.closest('mark.ilmihal-highlight'))
+        ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT;
     }
   });
+  var nodes = [], buf = '', node;
+  while ((node = tw.nextNode())) {
+    nodes.push({ node: node, start: buf.length });
+    buf += node.textContent;
+  }
+  var idx = buf.indexOf(text);
+  if (idx === -1) return;
+  var end = idx + text.length;
+  var startNode = null, startOff = 0, endNode = null, endOff = 0;
+  for (var i = 0; i < nodes.length; i++) {
+    var ns = nodes[i].start, ne = ns + nodes[i].node.textContent.length;
+    if (!startNode && idx >= ns && idx < ne) { startNode = nodes[i].node; startOff = idx - ns; }
+    if (end > ns && end <= ne) { endNode = nodes[i].node; endOff = end - ns; break; }
+  }
+  if (!startNode || !endNode) return;
+  var range = document.createRange();
+  range.setStart(startNode, startOff);
+  range.setEnd(endNode, endOff);
+  var mark = document.createElement('mark');
+  mark.className = 'ilmihal-highlight';
+  mark.dataset.renk = renk;
+  mark.style.backgroundColor = renk;
+  try { range.surroundContents(mark); }
+  catch(e) {
+    try {
+      var frag = range.extractContents();
+      mark.appendChild(frag);
+      range.insertNode(mark);
+    } catch(e2) {}
+  }
 }
 initMetinSecimPaylas();
 
@@ -5433,19 +5667,29 @@ async function splitViewMaddeAc(kisim, maddeNo) {
 }
 
 // ===== Madde açılınca yeni özellikleri entegre et =====
+// Not: Sözlük katmanı scheduleMaddeSozlukEnhancement ile uygulanır; burada yalnız
+// çapraz bağlantılar + kayıtlı vurgular bağlanır. Geri besleme döngüsüne karşı
+// madde başına tek atımlık (data-zengin) + zamanlayıcı korumalıdır (Nisan 2026 donma kökeni).
 (function() {
-  var _maddeObserver = new MutationObserver(function(mutations) {
+  var _zenginlestirmeBekliyor = false;
+  function maddeZenginlestir() {
+    var body = document.querySelector('#madde-detay .madde-text');
+    if (!body || body.textContent.length < 50) return;
+    if (body.dataset.zengin === '1') return;
+    body.dataset.zengin = '1';
+    try { aktivCrossLinks(body); } catch(e) {}
+    try { yukleVurgulamalar(body); } catch(e) {}
+  }
+  var _maddeObserver = new MutationObserver(function() {
     if (MADDE_SAFE_MODE) return;
-    mutations.forEach(function(m) {
-      if (m.type === 'childList' && m.addedNodes.length) {
-        var body = document.querySelector('#madde-detay .madde-text');
-        if (body && body.textContent.length > 50) {
-          if (window.sozlukData) initInlineSozluk(body);
-          aktivCrossLinks(body);
-          yukleVurgulamalar(body);
-        }
-      }
-    });
+    if (_zenginlestirmeBekliyor) return;
+    var body = document.querySelector('#madde-detay .madde-text');
+    if (!body || body.dataset.zengin === '1') return;
+    _zenginlestirmeBekliyor = true;
+    setTimeout(function() {
+      _zenginlestirmeBekliyor = false;
+      maddeZenginlestir();
+    }, 60);
   });
   document.addEventListener('DOMContentLoaded', function() {
     var maddeBody = document.getElementById('madde-body');
@@ -5601,3 +5845,45 @@ function kisimIlerlemeGuncelle() {
 
 okumaAyarlariUygula();
 kisimIlerlemeGuncelle();
+
+// ---- Vurgu kaldırma (madde içinde vurguya tıklayınca) ----
+function vurguKaldirPopupGoster(mark) {
+  vurguKaldirPopupGizle();
+  var rect = mark.getBoundingClientRect();
+  var popup = document.createElement('div');
+  popup.id = 'vurgu-kaldir-popup';
+  popup.className = 'metin-paylas-bar';
+  popup.style.display = 'flex';
+  popup.style.position = 'fixed';
+  popup.style.top = Math.max(8, rect.top - 48) + 'px';
+  popup.style.left = Math.max(8, Math.min(window.innerWidth - 180, rect.left + rect.width / 2 - 80)) + 'px';
+  var btn = document.createElement('button');
+  btn.type = 'button';
+  btn.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18"/><path d="M8 6V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>Vurguyu kaldır';
+  btn.onclick = function(e) {
+    e.stopPropagation();
+    var parent = mark.parentNode;
+    while (mark.firstChild) parent.insertBefore(mark.firstChild, mark);
+    parent.removeChild(mark);
+    parent.normalize();
+    if (typeof kaydetVurgulamalar === 'function') kaydetVurgulamalar();
+    vurguKaldirPopupGizle();
+  };
+  popup.appendChild(btn);
+  document.body.appendChild(popup);
+}
+function vurguKaldirPopupGizle() {
+  var p = document.getElementById('vurgu-kaldir-popup');
+  if (p) p.remove();
+}
+document.addEventListener('click', function(e) {
+  var mark = e.target && e.target.closest ? e.target.closest('mark.ilmihal-highlight') : null;
+  if (mark && mark.closest('#madde-detay')) {
+    var sel = window.getSelection();
+    if (sel && !sel.isCollapsed) return; // seçim varken karışma
+    e.stopPropagation();
+    vurguKaldirPopupGoster(mark);
+    return;
+  }
+  if (!e.target.closest || !e.target.closest('#vurgu-kaldir-popup')) vurguKaldirPopupGizle();
+});
