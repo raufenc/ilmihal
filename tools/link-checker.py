@@ -15,8 +15,8 @@ def check_html_links():
     # SPA rotaları (Vercel rewrite ile index.html'e yönlenir)
     spa_routes = {
         "/anasayfa", "/icerik", "/fevaid", "/sozluk", "/arama", "/sahislar",
-        "/hakkinda", "/quiz", "/ayet-hadis", "/okuma-plani", "/gunun-bilgisi",
-        "/rehberler", "/fikih-karsilastirma", "/calisma-alanim"
+        "/hakkinda", "/quiz", "/ayet-hadis", "/gunun-bilgisi",
+        "/rehberler", "/calisma-alanim", "/gizlilik", "/hukumler"
     }
     for ref in refs:
         if ref.startswith("http") or ref.startswith("//") or ref.startswith("data:"):
@@ -37,8 +37,8 @@ def check_sitemap():
 
     valid_pages = [
         "anasayfa", "icerik", "fevaid", "sozluk", "arama", "sahislar",
-        "hakkinda", "quiz", "ayet-hadis", "okuma-plani", "gunun-bilgisi",
-        "rehberler", "fikih-karsilastirma", "calisma-alanim"
+        "hakkinda", "quiz", "ayet-hadis", "gunun-bilgisi",
+        "rehberler", "calisma-alanim", "gizlilik", "hukumler"
     ]
 
     errors = []
@@ -56,6 +56,11 @@ def check_sitemap():
         if path.startswith("silsile-atlasi"):
             if not (ROOT / "silsile-atlasi" / "index.html").exists():
                 errors.append(f"Silsile atlası index.html eksik")
+            continue
+        # namaz-vakitleri ayrı dizin
+        if path.startswith("namaz-vakitleri"):
+            if not (ROOT / "namaz-vakitleri" / "index.html").exists():
+                errors.append(f"Namaz vakitleri index.html eksik")
             continue
         # Sayfa rotası
         if path not in valid_pages:

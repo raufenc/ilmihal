@@ -2458,6 +2458,18 @@ mark.search-highlight {
   top: 0;
 }
 
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 /* ===== GÜNÜN MADDESİ ===== */
 .gunun-maddesi {
   padding: 32px 0 0;
@@ -2513,14 +2525,6 @@ mark.search-highlight {
 .arama-ipuclari {
   margin-top: 32px;
   text-align: center;
-}
-.arama-ipucu-baslik {
-  font-size: 0.85rem;
-  color: var(--text-muted);
-  margin-bottom: 12px;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  font-weight: 600;
 }
 .arama-etiketler {
   display: flex;
@@ -3427,73 +3431,6 @@ mark.search-highlight {
   border-radius: 2px;
 }
 :root.dark #sync-indicator { opacity: 0.4; }
-
-/* ===== Fıkıh Karşılaştırma ===== */
-.fikih-card {
-  background: var(--card-bg);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 24px;
-  margin-bottom: 24px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-}
-.fikih-baslik {
-  font-size: 1.2rem;
-  font-weight: 700;
-  color: var(--primary-dark);
-  margin-bottom: 8px;
-}
-.fikih-aciklama {
-  color: var(--text-muted);
-  font-size: 0.9rem;
-  margin-bottom: 16px;
-}
-.fikih-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 12px;
-}
-.fikih-mezhep {
-  border-radius: 8px;
-  overflow: hidden;
-  border: 1px solid var(--border);
-}
-.fikih-mezhep-baslik {
-  color: #fff;
-  padding: 8px 12px;
-  font-weight: 600;
-  font-size: 0.85rem;
-  text-align: center;
-}
-.fikih-mezhep-icerik {
-  padding: 12px;
-  font-size: 0.85rem;
-  line-height: 1.6;
-  min-height: 80px;
-}
-.fikih-kaynak {
-  margin-top: 12px;
-  font-size: 0.8rem;
-  color: var(--text-muted);
-  border-top: 1px solid var(--border);
-  padding-top: 8px;
-}
-.fikih-kaynak a { color: var(--primary); }
-
-@media (max-width: 768px) {
-  .fikih-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-@media (max-width: 480px) {
-  .fikih-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-:root.dark .fikih-card { background: var(--card-bg); }
-:root.dark .fikih-baslik { color: var(--gold-light); }
-:root.dark .fikih-mezhep { border-color: rgba(255,255,255,0.1); }
 
 /* ===== Gunun Bilgisi ===== */
 .gunun-bilgisi-card {
