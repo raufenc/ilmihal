@@ -30,10 +30,11 @@
   <link rel="manifest" href="manifest.json">
   <link rel="alternate" type="application/rss+xml" title="Se'âdet-i Ebediyye - Günün Maddesi" href="/rss.xml">
   <meta name="theme-color" content="#1a6b4e">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=2026-04-24-r1">
+  <link rel="preload" href="/fonts/literata-400-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/literata-400-normal-latin-ext.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/inter-400-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/inter-400-normal-latin-ext.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="style.css?v=2026-06-11-r1">
   <script type="application/ld+json">
   [{
     "@context": "https://schema.org",
@@ -146,18 +147,21 @@
             <h4>Birinci Kısım</h4>
             <p>İman, ibadetler (namaz, oruç, zekât, hac), Peygamber Efendimiz'in hayatı ve ahlâkı</p>
             <span class="madde-count">98 Madde</span>
+            <div class="kisim-ilerleme" data-kisim="1"></div>
           </div>
           <div class="kisim-card" onclick="showKisim(2)">
             <div class="kisim-num">II</div>
             <h4>İkinci Kısım</h4>
             <p>Ahlâk, tasavvuf, fıkıh ilmi, nikâh, aile hukuku, helal-haram, yeme-içme, ölüm ve kabir</p>
             <span class="madde-count">73 Madde</span>
+            <div class="kisim-ilerleme" data-kisim="2"></div>
           </div>
           <div class="kisim-card" onclick="showKisim(3)">
             <div class="kisim-num">III</div>
             <h4>Üçüncü Kısım</h4>
             <p>Ticaret, alışveriş, şirketler, ceza hukuku, tasavvuf yolu, cenaze ve miras</p>
             <span class="madde-count">70 Madde</span>
+            <div class="kisim-ilerleme" data-kisim="3"></div>
           </div>
         </div>
       </div>
@@ -222,18 +226,57 @@
   <div id="madde-detay" class="madde-overlay" style="display:none" role="dialog" aria-modal="true" aria-labelledby="madde-body" aria-hidden="true">
     <div class="madde-overlay-wrap">
       <div class="madde-toolbar">
-        <button type="button" class="toolbar-btn toolbar-audio-btn" onclick="toggleAudio()" id="audio-btn" title="Sesli dinle" aria-label="Sesli dinle">&#9654;</button>
-        <button type="button" class="toolbar-btn" onclick="adjustFontSize(-1)" title="Yazıyı küçült" aria-label="Yazıyı küçült">A-</button>
-        <button type="button" class="toolbar-btn" onclick="adjustFontSize(1)" title="Yazıyı büyüt" aria-label="Yazıyı büyüt">A+</button>
-        <button type="button" class="toolbar-btn" onclick="cycleReadingMode()" id="reading-mode-btn" title="Okuma modu" aria-label="Okuma modu değiştir">&#9788;</button>
-        <button type="button" class="toolbar-btn" onclick="toggleBookmark()" id="bookmark-btn" title="Yer imi ekle" aria-label="Yer imi ekle veya kaldır">&#9734;</button>
-        <button type="button" class="toolbar-btn" onclick="shareMadde()" title="Paylaş" aria-label="Bu maddeyi paylaş">&#8599;</button>
-        <button type="button" class="toolbar-btn" onclick="printMadde()" title="Yazdır" aria-label="Bu maddeyi yazdır">&#128424;</button>
-        <button type="button" class="toolbar-btn" onclick="toggleFullscreenRead()" id="fullscreen-btn" title="Tam ekran" aria-label="Tam ekran okuma modu">&#8862;</button>
-        <button type="button" class="toolbar-btn" onclick="sunumModuAc()" title="Sunum modu" aria-label="Sunum modu">&#128253;</button>
-        <button type="button" class="toolbar-btn" onclick="splitViewAc()" title="Yan yana okuma" aria-label="İkinci madde aç">&#9109;</button>
-        <button type="button" class="madde-close" onclick="closeMadde()" aria-label="Maddeyi kapat">&times;</button>
+        <button type="button" class="toolbar-btn toolbar-audio-btn" onclick="toggleAudio()" id="audio-btn" title="Sesli dinle" aria-label="Sesli dinle"><svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="7 4.5 19.5 12 7 19.5 7 4.5"/></svg></button>
+        <button type="button" class="toolbar-btn aa-btn" onclick="okumaPaneliToggle()" id="okuma-panel-btn" title="Okuma ayarları" aria-label="Okuma ayarları" aria-expanded="false">Aa</button>
+        <button type="button" class="toolbar-btn" onclick="toggleBookmark()" id="bookmark-btn" title="Yer imi ekle" aria-label="Yer imi ekle veya kaldır"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 17.3l-6.2 3.3 1.2-6.9-5-4.9 6.9-1L12 1.5l3.1 6.3 6.9 1-5 4.9 1.2 6.9z"/></svg></button>
+        <button type="button" class="toolbar-btn" onclick="shareMadde()" title="Paylaş" aria-label="Bu maddeyi paylaş"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="18" cy="5" r="2.6"/><circle cx="6" cy="12" r="2.6"/><circle cx="18" cy="19" r="2.6"/><line x1="8.4" y1="10.8" x2="15.6" y2="6.2"/><line x1="8.4" y1="13.2" x2="15.6" y2="17.8"/></svg></button>
+        <button type="button" class="toolbar-btn" onclick="tasmaMenuToggle()" id="tasma-menu-btn" title="Daha fazla" aria-label="Daha fazla seçenek" aria-haspopup="true" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="5" cy="12" r="1.7" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.7" fill="currentColor" stroke="none"/><circle cx="19" cy="12" r="1.7" fill="currentColor" stroke="none"/></svg></button>
+        <button type="button" class="madde-close" onclick="closeMadde()" aria-label="Maddeyi kapat"><svg viewBox="0 0 24 24" aria-hidden="true"><line x1="6.5" y1="6.5" x2="17.5" y2="17.5"/><line x1="17.5" y1="6.5" x2="6.5" y2="17.5"/></svg></button>
+        <div class="tasma-menu" id="tasma-menu" role="menu" aria-label="Diğer madde işlemleri">
+          <button type="button" class="tasma-menu-item" role="menuitem" onclick="tasmaMenuKapat();printMadde()"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9V3h12v6"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8" rx="1"/></svg> Yazdır</button>
+          <button type="button" class="tasma-menu-item" role="menuitem" onclick="tasmaMenuKapat();toggleFullscreenRead()" id="fullscreen-btn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3H5a2 2 0 0 0-2 2v3"/><path d="M16 3h3a2 2 0 0 1 2 2v3"/><path d="M8 21H5a2 2 0 0 1-2-2v-3"/><path d="M16 21h3a2 2 0 0 0 2-2v-3"/></svg> Tam ekran</button>
+          <button type="button" class="tasma-menu-item" role="menuitem" onclick="tasmaMenuKapat();sunumModuAc()"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="4" width="20" height="13" rx="2"/><line x1="12" y1="17" x2="12" y2="21"/><line x1="8" y1="21" x2="16" y2="21"/></svg> Sunum modu</button>
+          <button type="button" class="tasma-menu-item" role="menuitem" onclick="tasmaMenuKapat();splitViewAc()"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="8" height="16" rx="1.5"/><rect x="13" y="4" width="8" height="16" rx="1.5"/></svg> Yan yana okuma</button>
+        </div>
+        <div class="okuma-panel" id="okuma-panel" role="dialog" aria-label="Okuma ayarları">
+          <div class="okuma-panel-grup">
+            <div class="okuma-panel-etiket">Yazı Boyutu</div>
+            <div class="boyut-kontrol">
+              <button type="button" class="boyut-btn" onclick="adjustFontSize(-1)" aria-label="Yazıyı küçült">A&#8722;</button>
+              <span class="boyut-deger" id="boyut-deger">%100</span>
+              <button type="button" class="boyut-btn" onclick="adjustFontSize(1)" aria-label="Yazıyı büyüt">A+</button>
+            </div>
+          </div>
+          <div class="okuma-panel-grup">
+            <div class="okuma-panel-etiket">Satır Aralığı</div>
+            <div class="segment-grup" id="aralik-grup">
+              <button type="button" class="segment-btn" data-aralik="1.7" onclick="setOkumaAralik('1.7')">Sık</button>
+              <button type="button" class="segment-btn secili" data-aralik="2" onclick="setOkumaAralik('2')">Normal</button>
+              <button type="button" class="segment-btn" data-aralik="2.3" onclick="setOkumaAralik('2.3')">Ferah</button>
+            </div>
+          </div>
+          <div class="okuma-panel-grup">
+            <div class="okuma-panel-etiket">Hizalama</div>
+            <div class="segment-grup" id="hiza-grup">
+              <button type="button" class="segment-btn secili" data-hiza="left" onclick="setOkumaHiza('left')">Sol</button>
+              <button type="button" class="segment-btn" data-hiza="justify" onclick="setOkumaHiza('justify')">İki Yana</button>
+            </div>
+          </div>
+          <div class="okuma-panel-grup">
+            <div class="okuma-panel-etiket">Tema</div>
+            <div class="tema-grup" id="tema-grup">
+              <button type="button" class="tema-btn tema-acik" data-tema="light" onclick="setOkumaTema('light')">Açık</button>
+              <button type="button" class="tema-btn tema-sepya" data-tema="sepia" onclick="setOkumaTema('sepia')">Sepya</button>
+              <button type="button" class="tema-btn tema-koyu" data-tema="dark" onclick="setOkumaTema('dark')">Koyu</button>
+            </div>
+          </div>
+          <div class="okuma-panel-grup anahtar-satir">
+            <div class="okuma-panel-etiket">Lügat Çizgileri</div>
+            <button type="button" class="anahtar acik" id="lugat-anahtar" onclick="toggleLugatCizgi()" role="switch" aria-checked="true" aria-label="Lügat çizgilerini aç veya kapat"></button>
+          </div>
+        </div>
       </div>
+      <div class="panel-perde" id="panel-perde" onclick="okumaPaneliKapat();tasmaMenuKapat()"></div>
       <div id="audio-player-bar" class="audio-player-bar" style="display:none">
         <audio id="madde-audio" preload="none"></audio>
         <button type="button" class="audio-ctrl" id="audio-prev" onclick="audioNav(-1)" aria-label="Önceki sayfa">&#9664;</button>
@@ -523,7 +566,7 @@
         <p>Bu site, o arayışı kolaylaştırmak için yapıldı. Hepsi bu.</p>
 
         <h3>Kitabın Tamamı, Aranabilir Şekilde</h3>
-        <p>241 maddenin tam metni, üç kısmıyla birlikte burada. İstediğiniz konuyu başlıktan bulabilir, isterseniz <a href="/arama" class="hakkinda-link">tam metin aramasıyla</a> kitabın herhangi bir yerinde geçen bir kelimeyi veya ifadeyi saniyeler içinde bulabilirsiniz. Her maddenin orijinal PDF'deki sayfa numarası bağlantılıdır — tıklayınca kitabın o sayfasını açar.</p>
+        <p>241 maddenin tam metni, üç kısmıyla birlikte burada. İstediğiniz konuyu başlıktan bulabilir, isterseniz <a href="/arama" class="hakkinda-link" onclick="navigateTo('arama');return false;">tam metin aramasıyla</a> kitabın herhangi bir yerinde geçen bir kelimeyi veya ifadeyi saniyeler içinde bulabilirsiniz. Her maddenin orijinal PDF'deki sayfa numarası bağlantılıdır — tıklayınca kitabın o sayfasını açar.</p>
 
         <h3>Konuya Göre Rehberler</h3>
         <p>Namaz, oruç, hac, zekât, iman, ahlâk, âile ve yeni Müslümanlar için hazırlanmış <a href="/rehberler" class="hakkinda-link">8 adım adım rehber</a> ile bir konuyu baştan sona takip edebilirsiniz. Her rehber bölümlere ayrılmış, bölümlerdeki maddeler sırasıyla okunacak şekilde düzenlenmiştir.</p>
@@ -722,12 +765,12 @@
     })();
   </script>
   <!-- Tüm script'lerde tek versiyon: BUILD ile aynı. Her release'te üstteki BUILD sabitini + buradaki ?v= değerlerini birlikte bump'la. -->
-  <script defer src="/data.js?v=2026-04-24-r1"></script>
-  <script defer src="/tanimlar.js?v=2026-04-24-r1"></script>
-  <script defer src="/crossref.js?v=2026-04-24-r1"></script>
-  <script defer src="/search-engine.js?v=2026-04-24-r1"></script>
-  <script defer src="/arama-sozluk.js?v=2026-04-24-r1"></script>
-  <script defer src="/app.js?v=2026-04-24-r1"></script>
+  <script defer src="/data.js?v=2026-06-11-r1"></script>
+  <script defer src="/tanimlar.js?v=2026-06-11-r1"></script>
+  <script defer src="/crossref.js?v=2026-06-11-r1"></script>
+  <script defer src="/search-engine.js?v=2026-06-11-r1"></script>
+  <script defer src="/arama-sozluk.js?v=2026-06-11-r1"></script>
+  <script defer src="/app.js?v=2026-06-11-r1"></script>
   <script>
     // PWA kapatıldı. Eski SW kayıtlı kullanıcılar için kurtarma: bir kez çağrılır, kamikaze SW cache'leri siler ve kendini unregister eder.
     if ('serviceWorker' in navigator) {

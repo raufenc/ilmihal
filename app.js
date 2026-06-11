@@ -1,7 +1,7 @@
 // ===== Se'âdet-i Ebediyye - İnteraktif İlmihâl =====
 const PDF_URL = 'https://www.hakikatkitabevi.net/downloads/001.pdf';
 // Her release'te index.html'deki BUILD sabitiyle birlikte bump edilir — lazy-load edilen data/kod dosyalarının cache key'i.
-const ASSET_VERSION = '2026-04-24-r1';
+const ASSET_VERSION = '2026-06-11-r1';
 function vQuery() { return '?v=' + ASSET_VERSION; }
 
 // ===== URL ROUTING (Clean URL + Hash Fallback) =====
@@ -39,7 +39,7 @@ function nextFrame() {
 }
 
 async function navigateAndRun(page, runner) {
-  navigateTo(page, true);
+  _navigateToCore(page, true);
   await nextFrame();
   return runner();
 }
@@ -343,6 +343,7 @@ function applyTheme(mode) {
   if (mode === 'dark') document.documentElement.classList.add('dark');
   if (mode === 'sepia') document.documentElement.classList.add('sepia');
   updateThemeButton(mode);
+  if (typeof temaSecimiGuncelle === 'function') temaSecimiGuncelle(mode);
 }
 
 function toggleDarkMode() {
@@ -446,6 +447,15 @@ document.querySelectorAll('.nav-btn').forEach(btn => {
 });
 
 function navigateTo(page, fromRoute) {
+  var rm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)');
+  if (document.startViewTransition && !(rm && rm.matches)) {
+    document.startViewTransition(function() { _navigateToCore(page, fromRoute); });
+  } else {
+    _navigateToCore(page, fromRoute);
+  }
+}
+
+function _navigateToCore(page, fromRoute) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-btn').forEach(b => { b.classList.remove('active'); b.removeAttribute('aria-current'); });
   const target = document.getElementById('page-' + page);
@@ -608,12 +618,14 @@ function renderFilteredMaddeler(filtered) {
   const list = document.getElementById('icerik-list');
   const kisimLabels = { 1: 'Birinci K\u0131s\u0131m', 2: '\u0130kinci K\u0131s\u0131m', 3: '\u00dc\u00e7\u00fcnc\u00fc K\u0131s\u0131m' };
   let html = '';
+  const okundular = new Set(getReadMaddes());
   filtered.forEach(m => {
+    const okundu = okundular.has(m.kisim + '/' + m.madde_no);
     html += `
-      <div class="madde-item" onclick="openMadde(${m.kisim}, ${m.madde_no})">
+      <div class="madde-item${okundu ? ' okundu' : ''}" data-madde-key="${m.kisim}/${m.madde_no}" onclick="openMadde(${m.kisim}, ${m.madde_no})">
         <div class="madde-badge">${m.madde_no}</div>
         <div class="madde-info">
-          <div class="madde-title">${m.baslik}</div>
+          <div class="madde-title">${m.baslik}${okundu ? OKUNDU_TIK_HTML : ''}</div>
           <div class="madde-meta">${kisimLabels[m.kisim]}${m.mektup_ref ? ' \u00B7 Mektup: ' + m.mektup_ref : ''}</div>
         </div>
         <div class="madde-sayfa">${sayfaLink(m.sayfa_no)}</div>
@@ -861,9 +873,9 @@ async function openMadde(kisim, maddeNo, fromRoute, searchQuery) {
   // AŞAMA 0 — Modal'ı HEMEN aç, her şeyden önce. Sonraki satırlar hata atsa bile modal görünür.
   const _overlay = document.getElementById('madde-detay');
   const body = document.getElementById('madde-body');
-  if (_overlay) { _overlay.style.display = 'flex'; _overlay.setAttribute('aria-hidden', 'false'); }
+  if (_overlay) { _overlay.classList.remove('kapaniyor'); _overlay.style.display = 'flex'; _overlay.setAttribute('aria-hidden', 'false'); }
   document.body.style.overflow = 'hidden';
-  if (body) body.innerHTML = '<div style="text-align:center;padding:60px;color:var(--text-muted);">Yükleniyor…</div>';
+  if (body) body.innerHTML = iskeletHTML();
 
   let madde = getMaddeMeta(kisim, maddeNo);
   debugLog('openMadde:meta-initial', kisim, maddeNo, !!madde);
@@ -1229,8 +1241,24 @@ function getRelatedTables(kisim, maddeNo) {
 
 function closeMadde() {
   _maddeOpenRequestId++;
+  if (typeof okumaPaneliKapat === 'function') okumaPaneliKapat();
+  if (typeof tasmaMenuKapat === 'function') tasmaMenuKapat();
   var _m = document.getElementById('madde-detay');
-  if (_m) { _m.style.display = 'none'; _m.setAttribute('aria-hidden', 'true'); }
+  if (_m && _m.style.display !== 'none') {
+    var rm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)');
+    if (!(rm && rm.matches)) {
+      _m.classList.add('kapaniyor');
+      _m.setAttribute('aria-hidden', 'true');
+      setTimeout(function() {
+        if (_m.classList.contains('kapaniyor')) {
+          _m.classList.remove('kapaniyor');
+          _m.style.display = 'none';
+        }
+      }, 165);
+    } else {
+      _m.style.display = 'none'; _m.setAttribute('aria-hidden', 'true');
+    }
+  }
   document.body.style.overflow = '';
   // Restore hash to parent page
   const activePage = document.querySelector('.page.active');
@@ -1241,6 +1269,9 @@ function closeMadde() {
 
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') {
+    if (document.getElementById('okuma-panel')?.classList.contains('acik') || document.getElementById('tasma-menu')?.classList.contains('acik')) {
+      okumaPaneliKapat(); tasmaMenuKapat(); return;
+    }
     if (document.getElementById('tablo-modal')?.style.display === 'flex') {
       closeTabloModal();
     } else if (document.getElementById('sahis-detay')?.style.display === 'flex') {
@@ -3093,6 +3124,7 @@ function adjustFontSize(delta) {
   currentFontSize = Math.max(0.8, Math.min(1.6, currentFontSize + delta * 0.1));
   document.documentElement.style.setProperty('--madde-font-size', currentFontSize + 'rem');
   localStorage.setItem('ilmihal-font-size', String(currentFontSize));
+  boyutGostergeGuncelle();
 }
 
 if (localStorage.getItem('ilmihal-font-size')) {
@@ -3132,11 +3164,11 @@ function updateBookmarkBtn(kisim, maddeNo) {
   const btn = document.getElementById('bookmark-btn');
   if (!btn) return;
   if (bm.some(b => b.key === key)) {
-    btn.innerHTML = '&#9733;';
     btn.classList.add('bookmarked');
+    btn.title = 'Yer imini kaldır';
   } else {
-    btn.innerHTML = '&#9734;';
     btn.classList.remove('bookmarked');
+    btn.title = 'Yer imi ekle';
   }
 }
 
@@ -3177,7 +3209,14 @@ function markAsRead(kisim, maddeNo) {
   if (read.indexOf(key) === -1) {
     read.push(key);
     localStorage.setItem('ilmihal-read', JSON.stringify(read));
+    var item = document.querySelector('.madde-item[data-madde-key="' + key + '"]');
+    if (item && !item.classList.contains('okundu')) {
+      item.classList.add('okundu');
+      var t = item.querySelector('.madde-title');
+      if (t) t.insertAdjacentHTML('beforeend', OKUNDU_TIK_HTML);
+    }
   }
+  try { kisimIlerlemeGuncelle(); } catch(e) {}
 }
 
 // ===== OKUMA MODLARI (Normal / Sepia / Dark) =====
@@ -3602,7 +3641,7 @@ async function initAudioForMadde(madde) {
 
   if (btn) {
     btn.style.display = 'flex';
-    btn.innerHTML = '&#9654;';
+    btn.innerHTML = SVG_OYNAT;
     btn.classList.remove('playing');
   }
   if (bar) bar.style.display = 'none';
@@ -3698,10 +3737,10 @@ function updateAudioUI() {
   var playBtn = document.getElementById('audio-play-pause');
   if (btn) {
     if (audioState.playing) {
-      btn.innerHTML = '&#9646;&#9646;';
+      btn.innerHTML = SVG_DURAKLAT;
       btn.classList.add('playing');
     } else {
-      btn.innerHTML = '&#9654;';
+      btn.innerHTML = SVG_OYNAT;
       btn.classList.remove('playing');
     }
   }
@@ -3956,7 +3995,8 @@ function toggleFullscreenRead() {
   overlay.classList.toggle('fullscreen-mode');
   var btn = document.getElementById('fullscreen-btn');
   if (btn) {
-    btn.innerHTML = overlay.classList.contains('fullscreen-mode') ? '⊠' : '⊡';
+    var fsAcik = overlay.classList.contains('fullscreen-mode');
+    btn.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3H5a2 2 0 0 0-2 2v3"/><path d="M16 3h3a2 2 0 0 1 2 2v3"/><path d="M8 21H5a2 2 0 0 1-2-2v-3"/><path d="M16 21h3a2 2 0 0 0 2-2v-3"/></svg> ' + (fsAcik ? 'Tam ekrandan çık' : 'Tam ekran');
   }
 }
 
@@ -5221,11 +5261,14 @@ function gosterMetinPaylas(text, rect) {
     el.className = 'metin-paylas-bar';
     document.body.appendChild(el);
   }
-  el.innerHTML = '<button type="button" onclick="metinPaylasKopyala()" title="Kopyala">&#128203; Kopyala</button><button type="button" onclick="metinPaylasKart()" title="Görsel Kart">&#127912; Kart</button><button type="button" onclick="metinPaylasVurgula()" title="Vurgula">&#128396; Vurgula</button>';
+  el.innerHTML = '<button type="button" onclick="metinPaylasKopyala()" title="Kopyala"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>Kopyala</button><button type="button" onclick="metinPaylasVurgula()" title="Vurgula"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L8 18l-4 1 1-4z"/></svg>Vurgula</button><button type="button" onclick="metinPaylasKart()" title="Görsel kart oluştur"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>Kart</button>';
   el.dataset.metin = text;
   el.style.display = 'flex';
-  el.style.top = (rect.top + window.scrollY - 44) + 'px';
-  el.style.left = Math.max(8, rect.left + rect.width / 2 - 100) + 'px';
+  el.style.position = 'fixed';
+  var ustKonum = rect.top - 48;
+  if (ustKonum < 8) ustKonum = rect.bottom + 10;
+  el.style.top = ustKonum + 'px';
+  el.style.left = Math.max(8, Math.min(window.innerWidth - 248, rect.left + rect.width / 2 - 120)) + 'px';
 }
 function gizleMetinPaylas() {
   var el = document.getElementById('metin-paylas-bar');
@@ -5412,3 +5455,149 @@ async function splitViewMaddeAc(kisim, maddeNo) {
   });
 })();
 
+
+
+// ============================================================
+// PREMIUM OKUYUCU (Haziran 2026)
+// Aa okuma paneli, taşma menüsü, okuma haritası, iskelet yükleme
+// ============================================================
+var SVG_OYNAT = '<svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="7 4.5 19.5 12 7 19.5 7 4.5"/></svg>';
+var SVG_DURAKLAT = '<svg viewBox="0 0 24 24" aria-hidden="true"><line x1="8.5" y1="5" x2="8.5" y2="19"/><line x1="15.5" y1="5" x2="15.5" y2="19"/></svg>';
+var OKUNDU_TIK_HTML = '<span class="okundu-tik" title="Okundu"><svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="4.5 12.5 9.5 17.5 19.5 7"/></svg></span>';
+
+function iskeletHTML() {
+  var s = '<div class="iskelet-sargi" aria-label="Yükleniyor" role="status"><div class="iskelet-satir iskelet-baslik"></div>';
+  for (var i = 0; i < 7; i++) s += '<div class="iskelet-satir' + (i === 6 ? ' kisa' : '') + '"></div>';
+  return s + '</div>';
+}
+
+// ---- Aa okuma ayarları paneli ----
+function getOkumaAyarlari() {
+  try { return JSON.parse(localStorage.getItem('ilmihal-okuma-ayarlari') || '{}'); }
+  catch(e) { return {}; }
+}
+function saveOkumaAyar(k, v) {
+  var a = getOkumaAyarlari(); a[k] = v;
+  try { localStorage.setItem('ilmihal-okuma-ayarlari', JSON.stringify(a)); } catch(e) {}
+}
+function okumaPaneliToggle() {
+  var p = document.getElementById('okuma-panel');
+  if (!p) return;
+  if (p.classList.contains('acik')) { okumaPaneliKapat(); return; }
+  tasmaMenuKapat();
+  p.classList.add('acik');
+  var btn = document.getElementById('okuma-panel-btn');
+  if (btn) btn.setAttribute('aria-expanded', 'true');
+  if (window.innerWidth <= 640) {
+    var perde = document.getElementById('panel-perde');
+    if (perde) perde.classList.add('acik');
+  }
+  boyutGostergeGuncelle();
+}
+function okumaPaneliKapat() {
+  var p = document.getElementById('okuma-panel');
+  if (p) p.classList.remove('acik');
+  var btn = document.getElementById('okuma-panel-btn');
+  if (btn) btn.setAttribute('aria-expanded', 'false');
+  var perde = document.getElementById('panel-perde');
+  if (perde) perde.classList.remove('acik');
+}
+function tasmaMenuToggle() {
+  var m = document.getElementById('tasma-menu');
+  if (!m) return;
+  if (m.classList.contains('acik')) { tasmaMenuKapat(); return; }
+  okumaPaneliKapat();
+  m.classList.add('acik');
+  var btn = document.getElementById('tasma-menu-btn');
+  if (btn) btn.setAttribute('aria-expanded', 'true');
+}
+function tasmaMenuKapat() {
+  var m = document.getElementById('tasma-menu');
+  if (m) m.classList.remove('acik');
+  var btn = document.getElementById('tasma-menu-btn');
+  if (btn) btn.setAttribute('aria-expanded', 'false');
+}
+document.addEventListener('click', function(e) {
+  var p = document.getElementById('okuma-panel');
+  if (p && p.classList.contains('acik') && !p.contains(e.target) && !e.target.closest('#okuma-panel-btn')) okumaPaneliKapat();
+  var m = document.getElementById('tasma-menu');
+  if (m && m.classList.contains('acik') && !m.contains(e.target) && !e.target.closest('#tasma-menu-btn')) tasmaMenuKapat();
+});
+
+function setOkumaAralik(v, kaydetme) {
+  document.documentElement.style.setProperty('--okuma-aralik', v);
+  document.querySelectorAll('#aralik-grup .segment-btn').forEach(function(b) {
+    b.classList.toggle('secili', b.dataset.aralik === String(v));
+  });
+  if (!kaydetme) saveOkumaAyar('aralik', String(v));
+}
+function setOkumaHiza(v, kaydetme) {
+  document.documentElement.style.setProperty('--okuma-hiza', v);
+  document.querySelectorAll('#hiza-grup .segment-btn').forEach(function(b) {
+    b.classList.toggle('secili', b.dataset.hiza === v);
+  });
+  if (!kaydetme) saveOkumaAyar('hiza', v);
+}
+function setOkumaTema(mode) {
+  try { localStorage.setItem('ilmihal-theme', mode); } catch(e) {}
+  applyTheme(mode);
+}
+function temaSecimiGuncelle(mode) {
+  document.querySelectorAll('#tema-grup .tema-btn').forEach(function(b) {
+    b.classList.toggle('secili', b.dataset.tema === mode);
+  });
+}
+function toggleLugatCizgi(force) {
+  var root = document.documentElement;
+  var acik; // çizgiler görünür mü
+  if (typeof force === 'boolean') {
+    root.classList.toggle('lugat-cizgisiz', !force);
+    acik = force;
+  } else {
+    acik = !root.classList.toggle('lugat-cizgisiz');
+  }
+  var sw = document.getElementById('lugat-anahtar');
+  if (sw) {
+    sw.classList.toggle('acik', acik);
+    sw.setAttribute('aria-checked', acik ? 'true' : 'false');
+  }
+  saveOkumaAyar('lugat', acik);
+}
+function boyutGostergeGuncelle() {
+  var el = document.getElementById('boyut-deger');
+  if (el) el.textContent = '%' + Math.round(((typeof currentFontSize === 'number' ? currentFontSize : 1)) * 100);
+}
+function okumaAyarlariUygula() {
+  var a = getOkumaAyarlari();
+  if (a.aralik) setOkumaAralik(a.aralik, true);
+  if (a.hiza) setOkumaHiza(a.hiza, true);
+  if (a.lugat === false) toggleLugatCizgi(false);
+  temaSecimiGuncelle(localStorage.getItem('ilmihal-theme') || 'light');
+  boyutGostergeGuncelle();
+}
+
+// ---- Okuma haritası: kısım ilerleme çubukları ----
+function kisimIlerlemeGuncelle() {
+  var alanlar = document.querySelectorAll('.kisim-ilerleme');
+  if (!alanlar.length) return;
+  var read = getReadMaddes();
+  var sayilar = { '1': 0, '2': 0, '3': 0 };
+  read.forEach(function(k) {
+    var p = String(k).split('/')[0];
+    if (sayilar[p] !== undefined) sayilar[p]++;
+  });
+  alanlar.forEach(function(el) {
+    var n = el.dataset.kisim;
+    var card = el.closest('.kisim-card');
+    var toplamEl = card && card.querySelector('.madde-count');
+    var toplam = toplamEl ? parseInt(toplamEl.textContent, 10) : 0;
+    var okunan = Math.min(sayilar[n] || 0, toplam);
+    if (!toplam || !okunan) { el.innerHTML = ''; return; }
+    var yuzde = Math.round(okunan / toplam * 100);
+    el.innerHTML = '<div class="kisim-ilerleme-bar"><div class="kisim-ilerleme-dolu" style="width:' + yuzde + '%"></div></div>' +
+      '<div class="kisim-ilerleme-etiket">' + okunan + ' / ' + toplam + ' madde okundu</div>';
+  });
+}
+
+okumaAyarlariUygula();
+kisimIlerlemeGuncelle();
