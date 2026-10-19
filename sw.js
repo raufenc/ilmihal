@@ -12,7 +12,7 @@
 //    arka planda tazele (stale-while-revalidate).
 //  - Çapraz kaynak istekleri SW'ye hiç takılmaz.
 // ============================================================
-var SURUM = '2026-10-19-r3';
+var SURUM = '2026-10-19-r5';
 var KABUK_CACHE = 'ilmihal-kabuk-' + SURUM;
 var VERI_CACHE = 'ilmihal-veri-' + SURUM;
 
@@ -25,6 +25,7 @@ var CEKIRDEK = [
   '/search-engine.js?v=' + SURUM,
   '/arama-sozluk.js?v=' + SURUM,
   '/app.js?v=' + SURUM,
+  '/okuma-plani.js?v=' + SURUM,
   '/manifest.json',
   '/favicon.svg',
   '/gorsel/desen.svg',
@@ -73,6 +74,7 @@ self.addEventListener('fetch', function(e) {
 
   var url = new URL(istek.url);
   if (url.origin !== self.location.origin) return; // çapraz kaynak: dokunma
+  if (url.pathname.indexOf('/kitap/') === 0) return; // kitabın PDF'i parça parça (Range) okunur; önbelleğe alınmaz
 
   // 1) Sayfa navigasyonu: ağ öncelikli, offline'da kabuk
   if (istek.mode === 'navigate') {

@@ -1,6 +1,7 @@
 {
   "rewrites": [
     { "source": "/rss.xml", "destination": "/api/rss" },
+    { "source": "/kitap/seadet-i-ebediyye.pdf", "destination": "https://www.hakikatkitabevi.net/downloads/001.pdf" },
     { "source": "/anasayfa", "destination": "/index.html" },
     { "source": "/icindekiler", "destination": "/index.html" },
     { "source": "/madde/:kisim/:maddeNo", "destination": "/index.html" },
@@ -42,6 +43,12 @@
       "source": "/(.*\\.js|.*\\.css)",
       "headers": [
         { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }
+      ]
+    },
+    {
+      "source": "/vendor/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
       ]
     },
     {

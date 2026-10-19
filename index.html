@@ -34,7 +34,7 @@
   <link rel="preload" href="/fonts/literata-400-normal-latin-ext.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/fonts/inter-400-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/fonts/inter-400-normal-latin-ext.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="style.css?v=2026-10-19-r3">
+  <link rel="stylesheet" href="style.css?v=2026-10-19-r5">
   <script type="application/ld+json">
   [{
     "@context": "https://schema.org",
@@ -164,6 +164,12 @@
           <blockquote class="gunun-alinti" id="gunun-alinti" hidden></blockquote>
           <button type="button" class="btn btn-primary btn-sm" id="gunun-oku-btn">Maddeyi Okuyun</button>
         </article>
+      </div>
+    </section>
+
+    <section class="okuma-plani-bolum">
+      <div class="container">
+        <div class="okuma-plani-karti" id="okuma-plani-karti" aria-live="polite"></div>
       </div>
     </section>
 
@@ -338,6 +344,7 @@
           <span class="okuyucu-baslik-ad" id="okuyucu-baslik-ad"></span>
         </div>
         <button type="button" class="toolbar-btn toolbar-audio-btn" onclick="toggleAudio()" id="audio-btn" title="Sesli dinle" aria-label="Sesli dinle"><svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="7 4.5 19.5 12 7 19.5 7 4.5"/></svg></button>
+        <button type="button" class="toolbar-btn" onclick="sahifePaneliToggle()" id="sahife-btn" title="Kitabın aslı (PDF sahîfesi)" aria-label="Kitabın aslını yanda aç veya kapat" aria-expanded="false" aria-controls="okuyucu-sahife"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2.5h8.5L19 7v14.5H6z"/><path d="M14.5 2.5V7H19"/><path d="M9 11.5h7M9 15h7M9 18.5h4.5"/></svg></button>
         <button type="button" class="toolbar-btn aa-btn" onclick="okumaPaneliToggle()" id="okuma-panel-btn" title="Okuma ayarları" aria-label="Okuma ayarları" aria-expanded="false">Aa</button>
         <button type="button" class="toolbar-btn" onclick="toggleBookmark()" id="bookmark-btn" title="Yer imi ekle" aria-label="Yer imi ekle veya kaldır"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 17.3l-6.2 3.3 1.2-6.9-5-4.9 6.9-1L12 1.5l3.1 6.3 6.9 1-5 4.9 1.2 6.9z"/></svg></button>
         <button type="button" class="toolbar-btn" onclick="shareMadde()" title="Paylaş" aria-label="Bu maddeyi paylaş"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="18" cy="5" r="2.6"/><circle cx="6" cy="12" r="2.6"/><circle cx="18" cy="19" r="2.6"/><line x1="8.4" y1="10.8" x2="15.6" y2="6.2"/><line x1="8.4" y1="13.2" x2="15.6" y2="17.8"/></svg></button>
@@ -406,6 +413,24 @@
         <span class="audio-page-label" id="audio-page-label"></span>
       </div>
       <aside class="okuyucu-fihrist" id="okuyucu-fihrist" aria-label="Kısmın fihristi"></aside>
+      <aside class="okuyucu-sahife" id="okuyucu-sahife" aria-label="Kitabın aslı">
+        <div class="sahife-bas">
+          <span class="sahife-etiket">Kitabın Aslı</span>
+          <div class="sahife-gezinti">
+            <button type="button" class="sahife-dugme" id="sahife-onceki" onclick="sahifeGit(-1)" aria-label="Önceki sahîfe"><svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="15 5 8 12 15 19"/></svg></button>
+            <label class="sahife-no"><span class="visually-hidden">Sahîfe numarası</span><input type="number" id="sahife-no-input" min="1" max="1248" inputmode="numeric" onchange="sahifeCiz(parseInt(this.value, 10))"><span class="sahife-toplam">/ 1248</span></label>
+            <button type="button" class="sahife-dugme" id="sahife-sonraki" onclick="sahifeGit(1)" aria-label="Sonraki sahîfe"><svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="9 5 16 12 9 19"/></svg></button>
+          </div>
+          <button type="button" class="sahife-dugme" id="sahife-buyut" onclick="sahifeBuyutToggle()" aria-pressed="false" title="Büyüt / sığdır" aria-label="Sahîfeyi büyüt veya sığdır"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M20 20l-4.8-4.8"/><path d="M10.5 7.8v5.4M7.8 10.5h5.4"/></svg></button>
+          <a class="sahife-dugme" id="sahife-yeni-sekme" href="#" target="_blank" rel="noopener" title="PDF'i yeni sekmede aç" aria-label="Kitabın PDF'ini yeni sekmede aç"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6"/><path d="M20 4l-9 9"/><path d="M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg></a>
+          <button type="button" class="sahife-dugme" onclick="sahifePaneliKapat()" aria-label="Kitabın aslını kapat"><svg viewBox="0 0 24 24" aria-hidden="true"><line x1="6.5" y1="6.5" x2="17.5" y2="17.5"/><line x1="17.5" y1="6.5" x2="6.5" y2="17.5"/></svg></button>
+        </div>
+        <div class="sahife-tuval" id="sahife-tuval">
+          <canvas id="sahife-canvas" aria-label="Kitabın sahîfe görüntüsü" role="img"></canvas>
+          <div class="sahife-durum" id="sahife-durum" role="status"></div>
+        </div>
+        <p class="sahife-not">Hakîkat Kitâbevi, Tam İlmihâl Se’âdet-i Ebediyye, 2026 baskısı</p>
+      </aside>
       <div class="madde-overlay-content">
         <div id="madde-body"></div>
         <div class="madde-notlar" id="madde-notlar">
@@ -432,11 +457,20 @@
   <section id="page-sahislar" class="page">
     <div class="container">
       <h2 class="section-title">Hâl Tercemeleri</h2>
-      <p class="section-desc">Se'âdet-i Ebediyye'de adı geçenlerin hâl tercemeleri.</p>
-      <div class="sahis-filters">
-        <input type="text" id="sahis-search" placeholder="Şahıs ara..." aria-label="Şahıs ara">
+      <p class="section-desc">Kitabın sonundaki hâl tercemelerinden; Se’âdet-i Ebediyye'de adı geçen 1020 kişi.</p>
+      <div class="dizin-arac">
+        <input type="search" id="sahis-search" placeholder="İsim veya hâl tercemesinde arayın…" aria-label="Hâl tercemelerinde ara">
+        <div class="dizin-suzgec" id="sahis-kategoriler" role="group" aria-label="Kategori">
+          <button type="button" class="dizin-cip secili" data-kategori="">Tümü</button>
+          <button type="button" class="dizin-cip" data-kategori="peygamber">Peygamberler</button>
+          <button type="button" class="dizin-cip" data-kategori="sahabi">Eshâb-ı Kirâm</button>
+          <button type="button" class="dizin-cip" data-kategori="alim">Âlimler</button>
+          <button type="button" class="dizin-cip" data-kategori="hukumdar">Hükümdarlar</button>
+          <button type="button" class="dizin-cip" data-kategori="diger">Diğer</button>
+        </div>
       </div>
-      <div id="sahislar-list" class="sahislar-grid"></div>
+      <nav class="harf-fihristi" id="sahis-harfler" aria-label="Harfe göre git"></nav>
+      <div id="sahislar-list" class="sahislar-dizin"></div>
     </div>
   </section>
 
@@ -571,11 +605,13 @@
   <section id="page-sozluk" class="page">
     <div class="container">
       <h2 class="section-title">Dinî Lügat</h2>
-      <div class="sozluk-filters">
-        <input type="text" id="sozluk-search" placeholder="Kelime ara..." aria-label="Sözlükte kelime ara">
+      <p class="section-desc">Kitapta geçen 9.863 kelimenin Osmanlıca yazılışı, aslı ve mânâsı.</p>
+      <div class="dizin-arac">
+        <input type="search" id="sozluk-search" placeholder="Kelime veya mânâ arayın…" aria-label="Sözlükte kelime ara">
       </div>
+      <nav class="harf-fihristi" id="sozluk-harfler" aria-label="Harfe göre git"></nav>
       <div id="sozluk-count" class="sozluk-count"></div>
-      <div id="sozluk-list" class="sozluk-list"></div>
+      <div id="sozluk-list" class="sozluk-list lugat"></div>
     </div>
   </section>
 
@@ -681,6 +717,12 @@
         <h3>Kitabın Tamamı, Aranabilir Şekilde</h3>
         <p>241 maddenin tam metni, üç kısmıyla birlikte burada. İstediğiniz konuyu başlıktan bulabilir, isterseniz <a href="/arama" class="hakkinda-link" onclick="navigateTo('arama');return false;">tam metin aramasıyla</a> kitabın herhangi bir yerinde geçen bir kelimeyi veya ifadeyi saniyeler içinde bulabilirsiniz. Her maddenin orijinal PDF'deki sayfa numarası bağlantılıdır — tıklayınca kitabın o sayfasını açar.</p>
 
+        <h3>Kitabın Aslı Yanınızda</h3>
+        <p>Okurken araç çubuğundaki sahîfe düğmesiyle kitabın basılı hâlini, Hakîkat Kitâbevi'nin yayımladığı PDF'ten metnin hemen yanında açabilirsiniz. Madde değiştikçe sahîfe de o maddenin başladığı yere gelir; sahîfeler arasında gezinebilir, büyütebilirsiniz.</p>
+
+        <h3>Okuma Planı</h3>
+        <p>Kitabı 30 günde, 90 günde, 180 günde veya bir yılda baştan sona okumak için <a href="/calisma-alanim" class="hakkinda-link" onclick="navigateTo('calisma-alanim');return false;">bir plan</a> kurabilirsiniz. Her günün kısmı maddelerin uzunluğuna göre hesaplanır; bitirdiğiniz maddeler işaretlenir, uzun bir maddede kaldığınız yer hatırlanır. Bu kayıtların hepsi yalnızca sizin tarayıcınızda tutulur.</p>
+
         <h3>Konuya Göre Rehberler</h3>
         <p>Namaz, oruç, hac, zekât, iman, ahlâk, aile ve yeni Müslümanlar için hazırlanmış <a href="/rehberler" class="hakkinda-link" onclick="navigateTo('rehberler');return false;">8 adım adım rehber</a> ile bir konuyu baştan sona takip edebilirsiniz. Her rehber bölümlere ayrılmış, bölümlerdeki maddeler sırasıyla okunacak şekilde düzenlenmiştir.</p>
 
@@ -768,6 +810,7 @@
         <ul style="margin:0 0 16px 24px;line-height:1.8;">
           <li>Tema ve okuma ayarları (yazı boyutu, satır aralığı, hizalama)</li>
           <li>Son okunan madde, okunan maddeler ve okuma ilerlemesi</li>
+          <li>Okuma planı, bitirdiğiniz maddeler ve uzun maddelerde kaldığınız yer</li>
           <li>Yer imleri, notlar ve vurguladığınız cümleler</li>
           <li>Sesli dinlemede kaldığınız yer</li>
           <li>Bilgi testi sonuçları</li>
@@ -786,7 +829,7 @@
         <h3>Üçüncü Taraf Hizmetler</h3>
         <p>Yazı tipleri ve tüm kod dosyaları sitenin kendi sunucusundan yüklenir; Google Fonts veya benzeri üçüncü taraf kaynaklar kullanılmaz. Şu durumlarda tarayıcınız başka bir siteye bağlanır:</p>
         <ul style="margin:0 0 16px 24px;line-height:1.8;">
-          <li>Sesli dinlemeyi başlattığınızda ses dosyaları, sahîfe bağlantısına tıkladığınızda kitabın PDF'i Hakîkat Kitâbevi'nin sitesinden (hakikatkitabevi.net) yüklenir.</li>
+          <li>Sesli dinlemeyi başlattığınızda ses dosyaları, PDF'i yeni sekmede açtığınızda kitabın PDF'i Hakîkat Kitâbevi'nin sitesinden (hakikatkitabevi.net) yüklenir. Okuyucudaki "Kitabın Aslı" panelinde ise aynı PDF, ilmihal.org sunucusu aracılığıyla parça parça yüklenir.</li>
           <li>Silsile Atlası sayfası harita karolarını Esri'nin (ArcGIS) sunucularından yükler.</li>
         </ul>
         <p>Bu hizmetlerin kendi gizlilik politikaları geçerlidir. Arama kutusuna yazdıklarınız hiçbir sunucuya gönderilmez; arama tamamen tarayıcınızda yapılır.</p>
@@ -855,7 +898,7 @@
       // Offline katmanı: versiyonlu SW (sw.js kendi eski cache'lerini temizler).
       // Nisan 2026'daki "kamikaze" temizlik bloğunun yerine geçti.
       try {
-        localStorage.setItem('ilmihal-build-id', '2026-10-19-r3');
+        localStorage.setItem('ilmihal-build-id', '2026-10-19-r5');
         if ('serviceWorker' in navigator) {
           window.addEventListener('load', function() {
             navigator.serviceWorker.register('/sw.js').catch(function() {});
@@ -869,7 +912,7 @@
       var match = (location.pathname || '').match(/^\/madde\/(\d+)\/(\d+)/);
       if (!match) return;
       var kisim = match[1];
-      var AV = '2026-10-19-r3';
+      var AV = '2026-10-19-r5';
       // Kısım metnini erkenden iste; app.js'teki loadKisimTexts aynı isteği yeniden başlatmadan kullanır
       if (window.fetch) {
         try {
@@ -886,11 +929,12 @@
     })();
   </script>
   <!-- Tüm script'lerde tek versiyon: BUILD ile aynı. Her release'te üstteki BUILD sabitini + buradaki ?v= değerlerini birlikte bump'la. -->
-  <script defer src="/data.js?v=2026-10-19-r3"></script>
-  <script defer src="/tanimlar.js?v=2026-10-19-r3"></script>
-  <script defer src="/crossref.js?v=2026-10-19-r3"></script>
-  <script defer src="/search-engine.js?v=2026-10-19-r3"></script>
-  <script defer src="/arama-sozluk.js?v=2026-10-19-r3"></script>
-  <script defer src="/app.js?v=2026-10-19-r3"></script>
+  <script defer src="/data.js?v=2026-10-19-r5"></script>
+  <script defer src="/tanimlar.js?v=2026-10-19-r5"></script>
+  <script defer src="/crossref.js?v=2026-10-19-r5"></script>
+  <script defer src="/search-engine.js?v=2026-10-19-r5"></script>
+  <script defer src="/arama-sozluk.js?v=2026-10-19-r5"></script>
+  <script defer src="/app.js?v=2026-10-19-r5"></script>
+  <script defer src="/okuma-plani.js?v=2026-10-19-r5"></script>
 </body>
 </html>

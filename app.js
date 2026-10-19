@@ -1,7 +1,7 @@
 // ===== Se'âdet-i Ebediyye - İnteraktif İlmihâl =====
 const PDF_URL = 'https://www.hakikatkitabevi.net/downloads/001.pdf';
 // Her release'te index.html'deki BUILD sabitiyle birlikte bump edilir — lazy-load edilen data/kod dosyalarının cache key'i.
-const ASSET_VERSION = '2026-10-19-r3';
+const ASSET_VERSION = '2026-10-19-r5';
 function vQuery() { return '?v=' + ASSET_VERSION; }
 
 // ===== URL ROUTING (Clean URL + Hash Fallback) =====
@@ -411,6 +411,25 @@ function escapeHtml(str) {
   return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
 }
 
+// Ekranın altında kısa süreli bildirim; isteğe bağlı tek eylem düğmesi ({ ad, fn })
+var _bildirimZamani = null;
+function bildirimGoster(metin, eylem) {
+  var el = document.getElementById('bildirim');
+  if (!el) {
+    el = document.createElement('div');
+    el.id = 'bildirim';
+    el.className = 'bildirim';
+    el.setAttribute('role', 'status');
+    el.setAttribute('aria-live', 'polite');
+    document.body.appendChild(el);
+  }
+  el.innerHTML = '<span class="bildirim-metin">' + escapeHtml(metin) + '</span>' + (eylem ? '<button type="button" class="bildirim-eylem">' + escapeHtml(eylem.ad) + '</button>' : '');
+  if (eylem) el.querySelector('.bildirim-eylem').onclick = function() { el.classList.remove('gorunur'); try { eylem.fn(); } catch (e) {} };
+  el.classList.add('gorunur');
+  clearTimeout(_bildirimZamani);
+  _bildirimZamani = setTimeout(function() { el.classList.remove('gorunur'); }, eylem ? 6500 : 4500);
+}
+
 function escapeRegex(str) {
   return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
@@ -481,6 +500,7 @@ function _navigateToCore(page, fromRoute) {
   // Lazy load content
   if (page === 'icerik') { if (!icerikLoaded) loadIcerik(); else okunduIsaretleriniTazele(); }
   if (page === 'anasayfa' && typeof renderDevamEt === 'function') renderDevamEt();
+  if (page === 'anasayfa' && window.okumaPlani) window.okumaPlani.kartiTazele();
   if (page === 'sozluk' && !sozlukLoaded) { ensureSozlukData().then(function() { loadSozluk(); }); }
   if (page === 'fevaid' && !fevaidLoaded) loadFevaid();
   if (page === 'sahislar') void loadSahislar();
@@ -829,7 +849,7 @@ function maddeBaslikHTML(madde) {
     '<p class="madde-ust">' + KISIM_ADLARI[madde.kisim] + ' · Madde ' + madde.madde_no + '</p>' +
     '<h3>' + madde.baslik + '</h3>' +
     '<div class="madde-detail-meta">' +
-      '<span>' + sayfaLinkPdf(madde.sayfa_no, sayfaLabel(madde)) + '</span>' +
+      '<span><a href="' + PDF_URL + '#page=' + madde.sayfa_no + '" class="sayfa-link" onclick="sahifePaneliAc(' + madde.sayfa_no + ');return false" title="Kitabın aslını yanda aç">' + sayfaLabel(madde) + '</a></span>' +
       (madde.mektup_ref ? mektubEtiketi(madde.mektup_ref) : '') +
     '</div>' +
     SUSLU_AYRAC_HTML +
@@ -840,6 +860,10 @@ function maddeBaslikHTML(madde) {
 var _okuyucuFihristKisim = null;
 
 function okuyucuCercevesiniHazirla(madde) {
+  _sahife.madde = madde;
+  var detayEl = document.getElementById('madde-detay');
+  if (detayEl && detayEl.classList.contains('sahife-acik')) sahifeCiz(madde.sayfa_no);
+  else if (sahifeTercihiAcik() && window.matchMedia('(min-width: 1100px)').matches) sahifePaneliAc(madde.sayfa_no);
   var ust = document.getElementById('okuyucu-baslik-ust');
   var ad = document.getElementById('okuyucu-baslik-ad');
   if (ust) ust.textContent = KISIM_ADLARI[madde.kisim] + ' · Madde ' + madde.madde_no;
@@ -888,6 +912,155 @@ function okuyucuCercevesiniHazirla(madde) {
   okumaIlerlemesiniGuncelle();
 }
 
+// ---- Kitabın aslı: PDF sahîfesi paneli ----
+// PDF.js ilk kullanımda yüklenir. PDF, Vercel'de yayınevinin dosyasına aktarılan
+// aynı kaynaklı yoldan (/kitap/...) parça parça (Range) okunur.
+var KITAP_PDF_YOLU = '/kitap/seadet-i-ebediyye.pdf';
+var PDFJS_YOLU = '/vendor/pdfjs-5.4.624/';
+var KITAP_SAHIFE_SAYISI = 1248;
+var _pdfBelge = null;
+var _pdfYukleniyor = null;
+var _sahife = { no: null, cizim: null, madde: null, buyuk: false };
+
+function sahifeBuyutToggle() {
+  _sahife.buyuk = !_sahife.buyuk;
+  var btn = document.getElementById('sahife-buyut');
+  if (btn) { btn.setAttribute('aria-pressed', _sahife.buyuk ? 'true' : 'false'); btn.classList.toggle('secili', _sahife.buyuk); }
+  var tuval = document.getElementById('sahife-tuval');
+  if (tuval) tuval.classList.toggle('buyuk', _sahife.buyuk);
+  if (_sahife.no) sahifeCiz(_sahife.no);
+}
+document.getElementById('sahife-canvas')?.addEventListener('dblclick', sahifeBuyutToggle);
+
+function kitapPdfYukle() {
+  if (_pdfBelge) return Promise.resolve(_pdfBelge);
+  if (_pdfYukleniyor) return _pdfYukleniyor;
+  _pdfYukleniyor = import(PDFJS_YOLU + 'pdf.min.mjs').then(function(pdfjs) {
+    pdfjs.GlobalWorkerOptions.workerSrc = PDFJS_YOLU + 'pdf.worker.min.mjs';
+    return pdfjs.getDocument({
+      url: KITAP_PDF_YOLU,
+      disableAutoFetch: true,
+      disableStream: true,
+      rangeChunkSize: 262144,
+      isEvalSupported: false,
+      enableXfa: false
+    }).promise;
+  }).then(function(belge) {
+    _pdfBelge = belge;
+    return belge;
+  }).catch(function(e) {
+    _pdfYukleniyor = null;
+    throw e;
+  });
+  return _pdfYukleniyor;
+}
+
+function sahifeRenkleri() {
+  var kok = document.documentElement;
+  if (kok.classList.contains('dark')) return { background: '#1f1f25', foreground: '#dcdcdc' };
+  if (kok.classList.contains('sepia')) return { background: '#f7f0da', foreground: '#3a2a18' };
+  return null;
+}
+
+function sahifeTercihiAcik() {
+  try { return localStorage.getItem('ilmihal-sahife-acik') === '1'; } catch (e) { return false; }
+}
+
+function sahifeCiz(no) {
+  no = Math.max(1, Math.min(KITAP_SAHIFE_SAYISI, parseInt(no, 10) || 1));
+  _sahife.no = no;
+  var input = document.getElementById('sahife-no-input');
+  var yeni = document.getElementById('sahife-yeni-sekme');
+  var onceki = document.getElementById('sahife-onceki');
+  var sonraki = document.getElementById('sahife-sonraki');
+  var tuval = document.getElementById('sahife-tuval');
+  var canvas = document.getElementById('sahife-canvas');
+  var durum = document.getElementById('sahife-durum');
+  if (!tuval || !canvas || !durum) return;
+  if (input) input.value = no;
+  if (yeni) yeni.href = PDF_URL + '#page=' + no;
+  if (onceki) onceki.disabled = no <= 1;
+  if (sonraki) sonraki.disabled = no >= KITAP_SAHIFE_SAYISI;
+  durum.textContent = 'Sahîfe ' + no + ' yükleniyor…';
+  durum.hidden = false;
+  tuval.classList.add('yukleniyor');
+
+  kitapPdfYukle().then(function(belge) {
+    if (_sahife.no !== no) return null;
+    return belge.getPage(no);
+  }).then(function(sayfa) {
+    if (!sayfa || _sahife.no !== no) return;
+    if (_sahife.cizim) { try { _sahife.cizim.cancel(); } catch (e) {} }
+    var genislik = Math.max(220, tuval.clientWidth - 32) * (_sahife.buyuk ? 1.8 : 1);
+    var olcek = genislik / sayfa.getViewport({ scale: 1 }).width;
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var vp = sayfa.getViewport({ scale: olcek * dpr });
+    canvas.width = Math.floor(vp.width);
+    canvas.height = Math.floor(vp.height);
+    canvas.style.width = Math.floor(vp.width / dpr) + 'px';
+    canvas.style.height = Math.floor(vp.height / dpr) + 'px';
+    var cizim = sayfa.render({ canvasContext: canvas.getContext('2d'), viewport: vp, annotationMode: 0, pageColors: sahifeRenkleri() });
+    _sahife.cizim = cizim;
+    return cizim.promise.then(function() {
+      if (_sahife.no !== no) return;
+      durum.hidden = true;
+      tuval.classList.remove('yukleniyor');
+      canvas.setAttribute('aria-label', 'Kitabın ' + no + '. sahîfesi');
+      // bir sonraki sahîfeyi önceden hazırla
+      if (no < KITAP_SAHIFE_SAYISI) _pdfBelge.getPage(no + 1).catch(function() {});
+    });
+  }).catch(function(e) {
+    if (e && e.name === 'RenderingCancelledException') return;
+    if (_sahife.no !== no) return;
+    tuval.classList.remove('yukleniyor');
+    durum.innerHTML = 'Sahîfe yüklenemedi. <a href="' + PDF_URL + '#page=' + no + '" target="_blank" rel="noopener">PDF’i yeni sekmede açın</a>.';
+    durum.hidden = false;
+  });
+}
+
+function sahifeGit(yon) {
+  if (_sahife.no) sahifeCiz(_sahife.no + yon);
+}
+
+function sahifePaneliAc(no) {
+  var detay = document.getElementById('madde-detay');
+  if (!detay) return;
+  detay.classList.add('sahife-acik');
+  var btn = document.getElementById('sahife-btn');
+  if (btn) { btn.setAttribute('aria-expanded', 'true'); btn.classList.add('secili'); }
+  try { localStorage.setItem('ilmihal-sahife-acik', '1'); } catch (e) {}
+  okuyucuFihristKapatMobil();
+  // panel görünür olduktan sonra genişliği ölçülerek çizilir
+  requestAnimationFrame(function() { sahifeCiz(no || (_sahife.madde && _sahife.madde.sayfa_no) || 1); });
+}
+
+function sahifePaneliKapat() {
+  var detay = document.getElementById('madde-detay');
+  if (!detay) return;
+  detay.classList.remove('sahife-acik');
+  var btn = document.getElementById('sahife-btn');
+  if (btn) { btn.setAttribute('aria-expanded', 'false'); btn.classList.remove('secili'); }
+  try { localStorage.setItem('ilmihal-sahife-acik', '0'); } catch (e) {}
+  if (_sahife.cizim) { try { _sahife.cizim.cancel(); } catch (e) {} }
+}
+
+function sahifePaneliToggle() {
+  var detay = document.getElementById('madde-detay');
+  if (detay && detay.classList.contains('sahife-acik')) sahifePaneliKapat();
+  else sahifePaneliAc(_sahife.madde ? _sahife.madde.sayfa_no : 1);
+}
+
+// Pencere boyu ya da tema değişince açık sahîfe yeniden çizilir
+(function() {
+  var bekle = null;
+  function yenidenCiz() {
+    var detay = document.getElementById('madde-detay');
+    if (detay && detay.classList.contains('sahife-acik') && detay.style.display !== 'none' && _sahife.no) sahifeCiz(_sahife.no);
+  }
+  window.addEventListener('resize', function() { clearTimeout(bekle); bekle = setTimeout(yenidenCiz, 200); });
+  if (window.MutationObserver) new MutationObserver(yenidenCiz).observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+})();
+
 function okumaIlerlemesiniGuncelle() {
   var icerik = document.querySelector('#madde-detay .madde-overlay-content');
   var dolu = document.getElementById('okuma-ilerleme-dolu');
@@ -895,6 +1068,7 @@ function okumaIlerlemesiniGuncelle() {
   var max = icerik.scrollHeight - icerik.clientHeight;
   var oran = max > 0 ? Math.min(1, icerik.scrollTop / max) : 0;
   dolu.style.transform = 'scaleX(' + oran.toFixed(4) + ')';
+  try { if (window.okumaPlani) window.okumaPlani.kaydirildi(oran, max > 40); } catch (e) {}
   var detay = document.getElementById('madde-detay');
   if (detay) detay.classList.toggle('kaydirildi', icerik.scrollTop > 120);
 }
@@ -1081,6 +1255,7 @@ async function openMadde(kisim, maddeNo, fromRoute, searchQuery) {
     </nav>
     ${maddeBaslikHTML(madde)}
     <div class="madde-text">${metin}</div>
+    <div class="madde-bitir" id="madde-bitir"></div>
     <div class="madde-paylasim-bar">
       <button type="button" class="btn btn-sm" onclick="maddePaylasText(${kisim},${maddeNo})">Paylaş</button>
       <button type="button" class="btn btn-sm btn-secondary" style="background:var(--primary-light);color:#fff;" onclick="maddePaylasimKarti(${kisim},${maddeNo})">Görsel Kart</button>
@@ -1136,6 +1311,7 @@ async function openMadde(kisim, maddeNo, fromRoute, searchQuery) {
   try {
     renderBody(maddeMetniHTML(rawMetinSafe, false));
     debugLog('openMadde:renderBody:done', kisim, maddeNo);
+    try { if (window.okumaPlani) window.okumaPlani.maddeAcildi(madde, !!searchQuery); } catch (e) {}
   } catch (e) {
     console.error('Madde render hatası:', e);
     debugLog('openMadde:renderBody:error', kisim, maddeNo, String(e && e.message || e));
@@ -1355,6 +1531,7 @@ function getRelatedTables(kisim, maddeNo) {
 
 function closeMadde() {
   _maddeOpenRequestId++;
+  try { if (window.okumaPlani) window.okumaPlani.maddeKapandi(); } catch (e) {}
   if (typeof okumaPaneliKapat === 'function') okumaPaneliKapat();
   if (typeof tasmaMenuKapat === 'function') tasmaMenuKapat();
   var _m = document.getElementById('madde-detay');
@@ -1388,6 +1565,9 @@ document.addEventListener('keydown', e => {
     }
     if (document.getElementById('madde-detay')?.classList.contains('fihrist-acik')) {
       okuyucuFihristKapatMobil(); return;
+    }
+    if (document.getElementById('madde-detay')?.classList.contains('sahife-acik') && !window.matchMedia('(min-width: 1100px)').matches) {
+      sahifePaneliKapat(); return;
     }
     if (document.getElementById('tablo-modal')?.style.display === 'flex') {
       closeTabloModal();
@@ -1732,18 +1912,68 @@ function closeSozlukModal() {
   }
 }
 
+// ===== HARF FİHRİSTİ (Lügat ve Hâl Tercemeleri) =====
+var TR_HARFLER = ['A','B','C','Ç','D','E','F','G','H','I','İ','J','K','L','M','N','O','Ö','P','R','S','Ş','T','U','Ü','V','W','Y','Z'];
+var HARF_DUZELT = { 'Â': 'A', 'Î': 'İ', 'Û': 'U', 'Ô': 'O', 'Ê': 'E' };
+
+function harfAnahtari(metin) {
+  var h = String(metin || '').trim().charAt(0).toLocaleUpperCase('tr');
+  return HARF_DUZELT[h] || h;
+}
+
+// sayimlar: { 'A': 12, ... }; secili: '' (hepsi) veya harf; secince: function(harf)
+function harfFihristiCiz(elId, sayimlar, secili, secince, hepsiEtiketi) {
+  var el = document.getElementById(elId);
+  if (!el) return;
+  var html = hepsiEtiketi ? '<button type="button" class="harf' + (!secili ? ' secili' : '') + '" data-harf="" aria-pressed="' + !secili + '">' + hepsiEtiketi + '</button>' : '';
+  TR_HARFLER.forEach(function(h) {
+    var n = sayimlar[h] || 0;
+    if (!n && h === 'W') return;
+    html += '<button type="button" class="harf' + (secili === h ? ' secili' : '') + '" data-harf="' + h + '"' + (n ? '' : ' disabled') + ' aria-pressed="' + (secili === h) + '" title="' + h + ' (' + n + ')">' + h + '</button>';
+  });
+  el.innerHTML = html;
+  el.onclick = function(e) {
+    var b = e.target.closest('button.harf');
+    if (!b || b.disabled) return;
+    secince(b.getAttribute('data-harf'));
+  };
+}
+
+// Yapışkan çubuklar üst menünün hemen altına otursun
+function ustYuksekliginiOlc() {
+  var h = document.querySelector('.site-header');
+  if (h) document.documentElement.style.setProperty('--ust-yukseklik', h.offsetHeight + 'px');
+}
+window.addEventListener('resize', ustYuksekliginiOlc);
+ustYuksekliginiOlc();
+
 // ===== SÖZLÜK =====
 let sozlukLoaded = false;
 const SOZLUK_SAYFA_BOYUTU = 100;
 let _sozlukSayfa = 1;
+let _sozlukHarf = '';
+var SOZLUK_KOKEN = { A: 'Arapça', F: 'Farsça', T: 'Türkçe', Fr: 'Fransızca', Y: 'Yunanca', 'İt': 'İtalyanca', L: 'Latince' };
+
+function sozlukSayfaGit(n) {
+  _sozlukSayfa = n;
+  loadSozluk();
+  var liste = document.getElementById('sozluk-harfler');
+  if (liste) window.scrollTo({ top: liste.getBoundingClientRect().top + window.scrollY - 70, behavior: 'smooth' });
+}
 
 function loadSozluk(filterText) {
   sozlukLoaded = true;
   const list = document.getElementById('sozluk-list');
   const countEl = document.getElementById('sozluk-count');
-  if (!window.sozlukData) { list.innerHTML = '<div class="loading">S\u00f6zl\u00fck y\u00fckleniyor...</div>'; return; }
+  if (!window.sozlukData) { list.innerHTML = '<div class="loading">Sözlük yükleniyor...</div>'; return; }
 
   const rawSozlukSearch = filterText || document.getElementById('sozluk-search')?.value || '';
+
+  // Harf sayımları (fihrist çubuğu için)
+  if (!window._sozlukHarfSayim) {
+    window._sozlukHarfSayim = {};
+    window.sozlukData.forEach(function(s) { var h = harfAnahtari(s.k); window._sozlukHarfSayim[h] = (window._sozlukHarfSayim[h] || 0) + 1; });
+  }
 
   let filtered = window.sozlukData;
   if (rawSozlukSearch) {
@@ -1754,9 +1984,18 @@ function loadSozluk(filterText) {
       const check = v => includesWordStart(nk, v) || includesWordStart(na, v);
       return szVarLists.every(wvars => wvars.some(check));
     });
+  } else if (_sozlukHarf) {
+    filtered = filtered.filter(s => harfAnahtari(s.k) === _sozlukHarf);
   }
+  harfFihristiCiz('sozluk-harfler', window._sozlukHarfSayim, rawSozlukSearch ? null : _sozlukHarf, function(h) {
+    var kutu = document.getElementById('sozluk-search');
+    if (kutu) kutu.value = '';
+    _sozlukHarf = h;
+    _sozlukSayfa = 1;
+    loadSozluk();
+  }, 'Tümü');
 
-  filtered.sort((a, b) => a.k.localeCompare(b.k, 'tr'));
+  filtered = filtered.slice().sort((a, b) => a.k.localeCompare(b.k, 'tr'));
 
   // Sayfalama
   const toplam = filtered.length;
@@ -1765,36 +2004,41 @@ function loadSozluk(filterText) {
   const baslangic = (_sozlukSayfa - 1) * SOZLUK_SAYFA_BOYUTU;
   const sayfaVerisi = filtered.slice(baslangic, baslangic + SOZLUK_SAYFA_BOYUTU);
 
-  let html = '';
+  let html = '<div class="lugat-sutunlar">';
   sayfaVerisi.forEach(s => {
-    const osmanli = s.o ? `<div class="sozluk-osmanli">${s.o}</div>` : '';
-    const bkzHtml = s.b ? `<div class="sozluk-bkz">Bkz. ${s.b}</div>` : '';
+    const osmanli = s.o ? `<span class="sozluk-osmanli" lang="ar" dir="rtl">${s.o}</span>` : '';
+    const koken = SOZLUK_KOKEN[s.d] ? `<span class="sozluk-koken">${SOZLUK_KOKEN[s.d]}</span>` : '';
     html += `
-      <div class="sozluk-item" id="sozluk-entry-${s.i}">
+      <article class="sozluk-item" id="sozluk-entry-${s.i}">
         <div class="sozluk-kelime-row">
-          <div class="sozluk-kelime">${s.k}</div>
+          <h3 class="sozluk-kelime">${s.k}</h3>
           ${osmanli}
         </div>
-        <div class="sozluk-anlam">${s.a}</div>
-        ${s.m ? `<div class="sozluk-misal">${s.m}</div>` : ''}
-        ${bkzHtml}
-      </div>
+        ${koken}
+        <p class="sozluk-anlam">${s.a}</p>
+        ${s.m ? `<blockquote class="sozluk-misal">${s.m}</blockquote>` : ''}
+        ${s.b ? `<p class="sozluk-bkz">Bkz. ${s.b}</p>` : ''}
+      </article>
     `;
   });
+  html += '</div>';
 
   // Sayfalama kontrolleri
   if (toplamSayfa > 1) {
-    html += '<div class="sozluk-pagination">';
-    html += `<button onclick="_sozlukSayfa=1;loadSozluk()" ${_sozlukSayfa===1?'disabled':''}>&#171;</button>`;
-    html += `<button onclick="_sozlukSayfa--;loadSozluk()" ${_sozlukSayfa===1?'disabled':''}>&#8249;</button>`;
+    html += '<nav class="sozluk-pagination" aria-label="Sayfalar">';
+    html += `<button type="button" onclick="sozlukSayfaGit(1)" ${_sozlukSayfa===1?'disabled':''} aria-label="İlk sayfa">&#171;</button>`;
+    html += `<button type="button" onclick="sozlukSayfaGit(${_sozlukSayfa - 1})" ${_sozlukSayfa===1?'disabled':''} aria-label="Önceki sayfa">&#8249;</button>`;
     html += `<span class="sozluk-sayfa-bilgi">${_sozlukSayfa} / ${toplamSayfa}</span>`;
-    html += `<button onclick="_sozlukSayfa++;loadSozluk()" ${_sozlukSayfa===toplamSayfa?'disabled':''}>&#8250;</button>`;
-    html += `<button onclick="_sozlukSayfa=${toplamSayfa};loadSozluk()" ${_sozlukSayfa===toplamSayfa?'disabled':''}>&#187;</button>`;
-    html += '</div>';
+    html += `<button type="button" onclick="sozlukSayfaGit(${_sozlukSayfa + 1})" ${_sozlukSayfa===toplamSayfa?'disabled':''} aria-label="Sonraki sayfa">&#8250;</button>`;
+    html += `<button type="button" onclick="sozlukSayfaGit(${toplamSayfa})" ${_sozlukSayfa===toplamSayfa?'disabled':''} aria-label="Son sayfa">&#187;</button>`;
+    html += '</nav>';
   }
 
-  list.innerHTML = html || '<p style="text-align:center;color:var(--text-muted);padding:40px;">Kelime bulunamad\u0131.</p>';
-  countEl.textContent = `${toplam.toLocaleString("tr-TR")} kelime${toplam > SOZLUK_SAYFA_BOYUTU ? ' \u00b7 Sayfa ' + _sozlukSayfa + '/' + toplamSayfa : ''}`;
+  list.innerHTML = toplam ? html : '<p style="text-align:center;color:var(--text-muted);padding:40px;">Kelime bulunamadı.</p>';
+  const ilk = sayfaVerisi[0], son = sayfaVerisi[sayfaVerisi.length - 1];
+  countEl.textContent = (rawSozlukSearch ? '“' + rawSozlukSearch + '” için ' : (_sozlukHarf ? _sozlukHarf + ' harfi · ' : '')) +
+    `${toplam.toLocaleString("tr-TR")} kelime` +
+    (toplam > SOZLUK_SAYFA_BOYUTU ? ' · Sayfa ' + _sozlukSayfa + '/' + toplamSayfa + (ilk && son ? ' (' + ilk.k + ' – ' + son.k + ')' : '') : '');
   // Sayfanın başına scroll
   list.scrollTop = 0;
 }
@@ -1806,6 +2050,18 @@ document.getElementById('sozluk-search')?.addEventListener('input', () => {
 
 // ===== ŞAHİSLAR =====
 let sahislarLoaded = false;
+let _sahisKategori = '';
+
+function sahisSatiriHTML(s) {
+  const bio = s.biyografi ? String(s.biyografi).replace(/\s+/g, ' ').slice(0, 180) : '';
+  const n = (s.gectigiMaddeler || []).length;
+  return `<a class="sahis-card sahis-satir" href="/sahis/${s.slug}" onclick="openSahis('${s.slug}');return false">
+      <span class="sahis-card-isim">${s.isim}</span>
+      ${s.unvan ? `<span class="sahis-card-unvan">${s.unvan}</span>` : ''}
+      ${bio ? `<span class="sahis-card-bio">${escapeHtml(bio)}</span>` : ''}
+      ${n ? `<span class="sahis-satir-sayi">${n} maddede geçer</span>` : ''}
+    </a>`;
+}
 
 async function loadSahislar() {
   sahislarLoaded = true;
@@ -1821,36 +2077,45 @@ async function loadSahislar() {
     }
   }
 
-  const searchText = (document.getElementById('sahis-search')?.value || '').toLowerCase();
+  const searchText = (document.getElementById('sahis-search')?.value || '').toLocaleLowerCase('tr');
 
   let filtered = window.sahislarData;
-
+  if (_sahisKategori) filtered = filtered.filter(s => s.kategori === _sahisKategori);
   if (searchText) filtered = filtered.filter(s =>
-    s.isim.toLowerCase().includes(searchText) ||
-    (s.unvan || '').toLowerCase().includes(searchText) ||
-    (s.biyografi || '').toLowerCase().includes(searchText)
+    s.isim.toLocaleLowerCase('tr').includes(searchText) ||
+    (s.unvan || '').toLocaleLowerCase('tr').includes(searchText) ||
+    (s.biyografi || '').toLocaleLowerCase('tr').includes(searchText)
   );
+  filtered = filtered.slice().sort((a, b) => a.isim.localeCompare(b.isim, 'tr'));
 
-  filtered.sort((a, b) => a.isim.localeCompare(b.isim, 'tr'));
-
-  let html = '';
-  filtered.forEach(s => {
-    const shortBio = s.biyografi ? s.biyografi.substring(0, 100) + (s.biyografi.length > 100 ? '...' : '') : '';
-    html += `
-      <div class="sahis-card" onclick="openSahis('${s.slug}')">
-        <div class="sahis-card-body">
-          <div class="sahis-card-isim">${s.isim}</div>
-          ${s.unvan ? `<div class="sahis-card-unvan">${s.unvan}</div>` : ''}
-          ${shortBio ? `<div class="sahis-card-bio">${shortBio}</div>` : ''}
-        </div>
-      </div>
-    `;
+  // Harflere göre grupla
+  const gruplar = {};
+  filtered.forEach(s => { const h = harfAnahtari(s.isim); (gruplar[h] = gruplar[h] || []).push(s); });
+  const sayim = {};
+  Object.keys(gruplar).forEach(h => { sayim[h] = gruplar[h].length; });
+  harfFihristiCiz('sahis-harfler', sayim, null, function(h) {
+    const hedef = document.getElementById('sahis-harf-' + h);
+    if (hedef) hedef.scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
 
-  list.innerHTML = html || '<p style="text-align:center;color:var(--text-muted);padding:40px;">Şahıs bulunamadı.</p>';
+  let html = searchText || _sahisKategori ? `<p class="dizin-sonuc">${filtered.length} kişi</p>` : '';
+  TR_HARFLER.concat(Object.keys(gruplar).filter(h => TR_HARFLER.indexOf(h) === -1)).forEach(h => {
+    if (!gruplar[h]) return;
+    html += `<section class="dizin-harf" id="sahis-harf-${h}"><h3 class="dizin-harf-bas"><span>${h}</span></h3><div class="dizin-izgara">` +
+      gruplar[h].map(sahisSatiriHTML).join('') + '</div></section>';
+  });
+
+  list.innerHTML = filtered.length ? html : '<p style="text-align:center;color:var(--text-muted);padding:40px;">Şahıs bulunamadı.</p>';
 }
 
 document.getElementById('sahis-search')?.addEventListener('input', () => { void loadSahislar(); });
+document.getElementById('sahis-kategoriler')?.addEventListener('click', function(e) {
+  const b = e.target.closest('.dizin-cip');
+  if (!b) return;
+  _sahisKategori = b.getAttribute('data-kategori') || '';
+  this.querySelectorAll('.dizin-cip').forEach(x => { x.classList.toggle('secili', x === b); x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+  void loadSahislar();
+});
 
 async function openSahis(slug, fromRoute) {
   if (!window.sahislarData) {
@@ -3356,12 +3621,13 @@ function toggleBookmark() {
   const key = currentMaddeForBookmark.kisim + '/' + currentMaddeForBookmark.madde_no;
   const idx = bm.findIndex(b => b.key === key);
   const btn = document.getElementById('bookmark-btn');
+  // Simge (SVG) yerinde kalır; dolu/boş görünümü .bookmarked sınıfı verir
   if (idx >= 0) {
     bm.splice(idx, 1);
-    if (btn) { btn.innerHTML = '&#9734;'; btn.classList.remove('bookmarked'); }
+    if (btn) { btn.classList.remove('bookmarked'); btn.title = 'Yer imi ekle'; }
   } else {
     bm.push({ key, kisim: currentMaddeForBookmark.kisim, madde_no: currentMaddeForBookmark.madde_no, baslik: currentMaddeForBookmark.baslik });
-    if (btn) { btn.innerHTML = '&#9733;'; btn.classList.add('bookmarked'); }
+    if (btn) { btn.classList.add('bookmarked'); btn.title = 'Yer imini kaldır'; }
   }
   saveBookmarks(bm);
 }
@@ -4299,6 +4565,8 @@ function updateDailyGoal(addMinutes) {
 
 var goalCelebrated = false;
 function checkGoalCompletion(goal) {
+  // Okuma planı açıksa günlük kutlamayı plan kendisi yapar
+  if (window.okumaPlani && window.okumaPlani.aktifMi()) return;
   if (goal.minutes >= goal.target && !goalCelebrated) {
     goalCelebrated = true;
     showCelebration();
@@ -4427,7 +4695,7 @@ function paylasGununBilgisi() {
   if (navigator.share) {
     navigator.share({ title: 'Günün Suâli - ilmihal.org', text: text }).catch(function(){});
   } else if (navigator.clipboard) {
-    navigator.clipboard.writeText(text).then(function() { alert('Kopyalandı!'); });
+    navigator.clipboard.writeText(text).then(function() { bildirimGoster('Panoya kopyalandı.'); });
   }
 }
 
@@ -4556,7 +4824,7 @@ function maddePaylasText(kisim, maddeNo) {
   if (navigator.share) {
     navigator.share({ title: madde.baslik, text: text, url: 'https://www.ilmihal.org/madde/' + kisim + '/' + maddeNo }).catch(function(){});
   } else if (navigator.clipboard) {
-    navigator.clipboard.writeText(text).then(function() { alert('Kopyalandı!'); });
+    navigator.clipboard.writeText(text).then(function() { bildirimGoster('Panoya kopyalandı.'); });
   }
 }
 
@@ -4870,7 +5138,8 @@ function togglePodcastMode() {
 
     var html = '';
 
-    // 0. Okuma İstatistikleri
+    // 0. Okuma planı (okuma-plani.js) ve istatistikler
+    html += '<div id="okuma-plani-calisma"></div>';
     html += '<div id="okuma-istatistik" style="margin-bottom:32px;"></div>';
 
     // 0b. Dışa aktarım
@@ -4888,7 +5157,8 @@ function togglePodcastMode() {
     } else {
       html += '<div class="iliskili-grid">';
       bookmarks.forEach(function(b) {
-        var parts = b.split('/');
+        // Yer imleri {key, kisim, madde_no, baslik} nesnesi olarak saklanır (eski kayıtlar "k/m" metni olabilir)
+        var parts = String(b && typeof b === 'object' ? b.key : b).split('/');
         if (parts.length === 2) {
           var kisim = parseInt(parts[0]), maddeNo = parseInt(parts[1]);
           var m = window.tocData?.find(function(t) { return t.kisim === kisim && t.madde_no === maddeNo; });
@@ -4997,6 +5267,7 @@ function togglePodcastMode() {
     }
 
     el.innerHTML = html;
+    if (window.okumaPlani) window.okumaPlani.calismaTazele();
     if (typeof renderOkumaIstatistik === 'function') renderOkumaIstatistik();
   }
 
@@ -5506,7 +5777,7 @@ function renderOkumaIstatistik() {
   read.forEach(function(r) { var p = r.split('/'); if (p[0]==='1') k1++; else if (p[0]==='2') k2++; else if (p[0]==='3') k3++; });
 
   el.innerHTML = '<div class="ist-grid">' +
-    '<div class="ist-card ist-buyuk"><div class="ist-daire"><svg viewBox="0 0 36 36" class="ist-svg"><path class="ist-bg-arc" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#e8e4dd" stroke-width="3"/><path class="ist-arc" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="var(--primary)" stroke-width="3" stroke-dasharray="' + yuzde + ', 100" stroke-linecap="round"/></svg><span class="ist-yuzde">%' + yuzde + '</span></div><div class="ist-etiket">Tamamlanan<br><strong>' + read.length + ' / ' + toplam + ' madde</strong></div></div>' +
+    '<div class="ist-card ist-buyuk"><div class="ist-daire"><svg viewBox="0 0 36 36" class="ist-svg"><path class="ist-bg-arc" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#e8e4dd" stroke-width="3"/><path class="ist-arc" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="var(--primary)" stroke-width="3" stroke-dasharray="' + yuzde + ', 100" stroke-linecap="round"/></svg><span class="ist-yuzde">%' + yuzde + '</span></div><div class="ist-etiket">Açılan<br><strong>' + read.length + ' / ' + toplam + ' madde</strong></div></div>' +
     '<div class="ist-card"><div class="ist-sayi">' + gunlukDk + '</div><div class="ist-etiket">dk bugün</div></div>' +
     '<div class="ist-card"><div class="ist-sayi">' + bmCount + '</div><div class="ist-etiket">yer imi</div></div>' +
     '<div class="ist-card"><div class="ist-sayi">' + notCount + '</div><div class="ist-etiket">not</div></div>' +
