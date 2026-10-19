@@ -225,6 +225,7 @@ body {
 #hero {
   min-height: 100vh; display: flex; align-items: center; justify-content: center;
   position: relative; overflow: hidden;
+  padding: calc(var(--header-h) + 32px) 0 88px;
   background: linear-gradient(135deg, #0f2b3d 0%, #1a4a5e 30%, #2d6b4f 70%, #1a4a5e 100%);
 }
 
@@ -381,8 +382,8 @@ section { padding: 80px 24px; }
 }
 
 .tanitim-card p {
-  font-size: 13px; color: var(--text-light);
-  line-height: 1.8; text-align: justify;
+  font-size: 13.5px; color: var(--text-light);
+  line-height: 1.8; text-align: left;
 }
 
 /* ========== MAP SECTION ========== */
@@ -402,6 +403,7 @@ section { padding: 80px 24px; }
 .map-wrapper {
   flex: 1; position: relative; min-height: 650px;
   overflow: hidden;
+  isolation: isolate; /* harita düğmeleri sabit başlığın üstüne çıkmasın */
 }
 
 #map {
@@ -744,7 +746,7 @@ section { padding: 80px 24px; }
 .panel-bio {
   font-family: var(--font-serif); font-size: 14px;
   color: var(--text-light); line-height: 1.9;
-  text-align: justify;
+  text-align: left;
 }
 .panel-bio p { margin: 0 0 10px; }
 .panel-bio p:last-child { margin-bottom: 0; }
@@ -986,7 +988,7 @@ footer {
 .modal-bio {
   font-family: var(--font-serif); font-size: 15px;
   line-height: 2; color: var(--text-light);
-  text-align: justify;
+  text-align: left;
 }
 .modal-bio p {
   margin-bottom: 0.8em;
@@ -1047,8 +1049,10 @@ footer {
 
 @media (max-width: 480px) {
   .hero-line2 { font-size: 28px; }
-  .hero-desc { font-size: 14px; }
-  .hero-stats { flex-direction: column; gap: 16px; }
+  .hero-desc { font-size: 14px; margin-bottom: 28px; }
+  .hero-stats { gap: 28px; margin-bottom: 28px; }
+  .stat-num { font-size: 30px; }
+  .hero-content { padding: 0 16px; }
 }
 
 /* ========== PRINT STYLES ========== */
@@ -1103,6 +1107,44 @@ footer {
   footer { background: #f0f0f0 !important; }
   .footer-inner p { color: #333 !important; }
 }
+
+/* ========== KİTAPTAKİ HÂL TERCEMESİ ========== */
+.bio-kitap {
+  margin-top: 14px; padding-top: 12px;
+  border-top: 1px dashed var(--border);
+}
+.bio-kitap-baslik {
+  font-family: var(--font-sans);
+  font-size: 10px; font-weight: 700; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--gold); margin-bottom: 8px;
+}
+.bio-kitap blockquote {
+  margin: 0; padding: 10px 14px;
+  border-left: 3px solid var(--gold);
+  background: rgba(200,150,62,0.06);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  color: var(--text); font-family: var(--font-serif);
+  font-size: 14px; line-height: 1.85; text-align: left;
+  overflow-wrap: anywhere;
+}
+.bio-kaynak {
+  margin-top: 6px; font-family: var(--font-sans);
+  font-size: 11px; color: var(--text-light); text-align: right;
+}
+.panel-bio, .modal-bio { overflow-wrap: anywhere; }
+
+/* Sıra listesinde halka etiketi */
+.silsile-node .sn-halka {
+  font-family: var(--font-sans);
+  font-size: 10px; font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase; opacity: 0.75; margin-bottom: 2px;
+}
+.silsile-node .sn-name { overflow-wrap: anywhere; }
+
+/* Ana siteye dönüş bağlantıları */
+#main-nav a.nav-geri { color: var(--gold); }
+.footer-link, .tanitim-link { color: var(--gold-light); text-decoration: underline; text-underline-offset: 2px; }
+.footer-link:hover, .tanitim-link:hover { color: #fff; }
 
 /* ========== SCROLLBAR ========== */
 ::-webkit-scrollbar { width: 8px; }

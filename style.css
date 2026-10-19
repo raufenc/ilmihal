@@ -365,6 +365,8 @@ body {
   padding: 80px 0 60px;
   position: relative;
   overflow: visible;
+  /* Süs dairesi (::before) sağdan taşıp masaüstünde yatay kaydırma çubuğu açıyordu; arama listesi aşağı taşabilsin diye yalnız yatay kırpılır */
+  overflow-x: clip;
 }
 
 .hero::before {
@@ -746,7 +748,8 @@ body {
   box-shadow: var(--shadow);
 }
 
-.konu-icon { font-size: 1.5rem; }
+.konu-icon { font-size: 1.5rem; display: inline-flex; color: var(--gold); }
+.konu-icon svg { width: 1.15em; height: 1.15em; stroke: currentColor; fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
 
 /* ===== İçindekiler ===== */
 #page-icerik .container { padding-top: 40px; padding-bottom: 60px; }
@@ -2631,6 +2634,9 @@ mark.search-highlight {
   transition: border-color 0.18s, box-shadow 0.18s, transform 0.15s;
   position: relative;
 }
+/* Kartlar klavye ile erişilebilsin diye <a> öğesidir */
+.tanimlar-terim, .tanimlar-cumle { overflow-wrap: anywhere; }
+a.fevaid-sec-card, a.kisim-card { display: block; color: inherit; text-decoration: none; }
 .fevaid-sec-card:hover {
   border-color: var(--gold);
   box-shadow: 0 4px 18px rgba(0,0,0,0.09);
@@ -3118,6 +3124,65 @@ mark.search-highlight {
   margin-bottom: 1em;
 }
 
+/* Kitabın paragraf düzeni (metin "\n\n" ile ayrılmış bloklardan dizilir) */
+.madde-text { white-space: normal; }
+.madde-text p { margin: 0 0 0.9em; text-indent: 1.4em; }
+.madde-text p.madde-ara-baslik {
+  text-indent: 0;
+  margin: 1.6em 0 0.8em;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--primary-dark);
+  text-align: center;
+}
+.madde-text p.madde-ara-baslik:first-child { margin-top: 0; }
+.madde-text p.madde-siir {
+  text-indent: 0;
+  text-align: center;
+  font-style: italic;
+  margin: 1.1em auto;
+}
+.madde-text p.madde-dipnot {
+  text-indent: 0;
+  font-size: 0.86em;
+  color: var(--text-light);
+  border-left: 2px solid var(--border);
+  padding-left: 0.8em;
+}
+.madde-text pre.madde-tablo,
+.madde-text .madde-cedvel pre {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.78em;
+  line-height: 1.5;
+  white-space: pre;
+  overflow-x: auto;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  margin: 1em 0;
+  text-align: left;
+}
+.madde-text .madde-cedvel { margin: 1em 0; }
+.madde-text .madde-cedvel pre { margin: 0; }
+.madde-text .madde-cedvel figcaption,
+.madde-text .madde-sekil {
+  font-family: var(--font-ui);
+  font-size: 0.82rem;
+  color: var(--text-light);
+  margin-top: 6px;
+}
+.madde-text .madde-sekil {
+  text-align: center;
+  border: 1px dashed var(--border);
+  border-radius: var(--radius-sm);
+  padding: 14px;
+  margin: 1em 0;
+}
+:root.dark .madde-text p.madde-ara-baslik { color: #4ec98e; }
+:root.dark .madde-text pre.madde-tablo,
+:root.dark .madde-text .madde-cedvel pre { background: rgba(255,255,255,0.04); }
+
 /* ===== QUIZ / BİLGİ TESTİ ===== */
 #page-quiz .container { padding-top: 40px; padding-bottom: 60px; }
 .quiz-setup { text-align: center; }
@@ -3143,7 +3208,9 @@ mark.search-highlight {
   background: var(--bg); border: 2px solid var(--border); border-radius: var(--radius-sm);
   padding: 14px 20px; cursor: pointer; font-size: 0.95rem; text-align: left;
   transition: all 0.2s; color: var(--text);
+  width: 100%; font-family: inherit; line-height: 1.5;
 }
+.quiz-secenek:disabled { cursor: default; opacity: 1; }
 .quiz-secenek:hover { border-color: var(--primary); background: rgba(26,107,78,0.05); }
 .quiz-secenek.dogru { border-color: #2d9d6f; background: rgba(45,157,111,0.1); color: #1a6b4e; font-weight: 600; }
 .quiz-secenek.yanlis { border-color: #e85555; background: rgba(232,85,85,0.08); color: #c44; }
@@ -4093,6 +4160,7 @@ a.rehber-madde-item:hover { background: rgba(26,107,78,0.08); color: var(--prima
 .hukum-tab.tab-mubah.active { background: #4e342e; border-color: #4e342e; }
 .hukum-tab.tab-mekruh.active { background: #bf360c; border-color: #bf360c; }
 .hukum-tab.tab-haram.active { background: #b71c1c; border-color: #b71c1c; }
+.hukum-tab[class*="tab-"].active { color: #fff; }
 
 .hukumler-alt-bar {
   display: flex;
@@ -4254,7 +4322,14 @@ a.rehber-madde-item:hover { background: rgba(26,107,78,0.08); color: var(--prima
 :root.dark .hukum-card { background: var(--bg-card); }
 :root.dark #hukumler-search { background: var(--bg-card); color: var(--text); }
 :root.dark .katman-btn { background: var(--bg-card); }
-:root.dark .hukum-tab { background: var(--bg-card); }
+:root.dark .hukum-tab:not(.active) { background: var(--bg-card); }
+:root.dark .hukum-tab.tab-farz:not(.active)     { color: #64a8f0; border-color: #64a8f0; }
+:root.dark .hukum-tab.tab-vacib:not(.active)    { color: #8fb4ff; border-color: #8fb4ff; }
+:root.dark .hukum-tab.tab-sunnet:not(.active)   { color: #7cc782; border-color: #7cc782; }
+:root.dark .hukum-tab.tab-mustehab:not(.active) { color: #c58ee0; border-color: #c58ee0; }
+:root.dark .hukum-tab.tab-mubah:not(.active)    { color: #c9a99c; border-color: #c9a99c; }
+:root.dark .hukum-tab.tab-mekruh:not(.active)   { color: #f0905f; border-color: #f0905f; }
+:root.dark .hukum-tab.tab-haram:not(.active)    { color: #f07a7a; border-color: #f07a7a; }
 
 /* Sepia tema */
 :root.sepia .hukum-badge.hukum-farz    { background: #1a5276; }
@@ -4482,6 +4557,8 @@ a.rehber-madde-item:hover { background: rgba(26,107,78,0.08); color: var(--prima
   font-size: 0.82rem;
   flex: 0 0 auto;
 }
+/* Genel .madde-close kuralı (position:absolute) araç çubuğundaki kapat düğmesini ⋯ düğmesinin üstüne bindiriyordu */
+.madde-toolbar .madde-close { position: static; }
 .toolbar-btn svg, .madde-close svg, .tasma-menu-item svg {
   width: 19px;
   height: 19px;
@@ -4817,3 +4894,5 @@ a.rehber-madde-item:hover { background: rgba(26,107,78,0.08); color: var(--prima
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
   ::view-transition-old(root), ::view-transition-new(root) { animation: none !important; }
 }
+.sahis-biyografi p { margin: 0 0 0.8em; }
+.sahis-biyografi p:last-child { margin-bottom: 0; }

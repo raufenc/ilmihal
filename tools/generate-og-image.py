@@ -3,6 +3,10 @@
 ilmihal.org için Open Graph paylaşım görseli üretir.
 Çıktı: og-image.png (1200x630)
 
+Sitenin kendi yazı tiplerini (fonts/ altındaki Literata ve Inter woff2
+alt kümeleri) kullanır; böylece görsel her makinede aynı çıkar.
+Sayılar sitedeki sayılarla aynı tutulmalıdır (index.html, manifest.json).
+
 Kullanım:
     python3 tools/generate-og-image.py
 """
@@ -12,32 +16,56 @@ from PIL import Image, ImageDraw, ImageFont
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "og-image.png"
+FONTS = ROOT / "fonts"
 
 W, H = 1200, 630
 
 # Renkler (style.css ile eşleşir)
 PRIMARY_DARK = (14, 74, 53)
 PRIMARY = (26, 107, 78)
-PRIMARY_LIGHT = (38, 140, 103)
 GOLD = (212, 168, 67)
 GOLD_SOFT = (232, 200, 124)
 CREAM = (250, 248, 244)
 MUTED = (200, 220, 210)
 
 
-def load_font(preferred, size):
-    candidates = preferred + [
-        "/System/Library/Fonts/Supplemental/Arial Bold.ttf",
-        "/System/Library/Fonts/Supplemental/Arial.ttf",
-        "/System/Library/Fonts/Helvetica.ttc",
-        "/Library/Fonts/Arial.ttf",
-    ]
-    for path in candidates:
-        try:
-            return ImageFont.truetype(path, size)
-        except (OSError, IOError):
-            continue
-    return ImageFont.load_default()
+def latin_alt_kumede(ch):
+    """fontlar.css'teki 'latin' alt kümesinin unicode-range'i"""
+    c = ord(ch)
+    return (
+        c <= 0xFF
+        or c in (0x131, 0x152, 0x153, 0x2BB, 0x2BC, 0x2C6, 0x2DA, 0x2DC)
+        or 0x2000 <= c <= 0x206F
+    )
+
+
+class Yazi:
+    """latin + latin-ext alt kümelerini birlikte kullanan yazı tipi"""
+
+    def __init__(self, aile, kalinlik, boyut):
+        self.latin = ImageFont.truetype(str(FONTS / f"{aile}-{kalinlik}-normal-latin.woff2"), boyut)
+        self.ext = ImageFont.truetype(str(FONTS / f"{aile}-{kalinlik}-normal-latin-ext.woff2"), boyut)
+        # woff2 dosyaları değişken yazı tipi; ağırlık ekseni ayrıca ayarlanmalı
+        for f in (self.latin, self.ext):
+            try:
+                f.set_variation_by_axes([kalinlik])
+            except (OSError, AttributeError):
+                pass
+
+    def parcalar(self, metin):
+        parca, font = "", None
+        for ch in metin:
+            f = self.latin if latin_alt_kumede(ch) else self.ext
+            if font is not None and f is not font:
+                yield parca, font
+                parca = ""
+            parca += ch
+            font = f
+        if parca:
+            yield parca, font
+
+    def genislik(self, metin):
+        return sum(f.getlength(p) for p, f in self.parcalar(metin))
 
 
 def vertical_gradient(size, top, bottom):
@@ -54,100 +82,51 @@ def vertical_gradient(size, top, bottom):
     return img
 
 
-def draw_centered(draw, xy_center, text, font, fill):
-    cx, cy = xy_center
-    bbox = draw.textbbox((0, 0), text, font=font)
-    tw, th = bbox[2] - bbox[0], bbox[3] - bbox[1]
-    draw.text((cx - tw / 2 - bbox[0], cy - th / 2 - bbox[1]), text, font=font, fill=fill)
+def draw_centered(draw, y_center, metin, yazi, fill):
+    """Metni yatayda ortalar; büyük harf yüksekliğini y_center'a oturtur."""
+    x = W / 2 - yazi.genislik(metin) / 2
+    bbox = yazi.latin.getbbox("H")
+    y = y_center - (bbox[1] + bbox[3]) / 2
+    for parca, font in yazi.parcalar(metin):
+        draw.text((x, y), parca, font=font, fill=fill)
+        x += font.getlength(parca)
+
+
+def suslu_cizgi(draw, y, yarim=180):
+    draw.line([(W / 2 - yarim, y), (W / 2 + yarim, y)], fill=GOLD, width=2)
+    for cx in (W / 2 - yarim - 16, W / 2 + yarim + 16):
+        draw.ellipse([cx - 4, y - 4, cx + 4, y + 4], fill=GOLD)
 
 
 def main():
     img = vertical_gradient((W, H), PRIMARY_DARK, PRIMARY)
-    draw = ImageDraw.Draw(img, "RGBA")
+    draw = ImageDraw.Draw(img)
 
-    # İnce altın süs çerçeve
+    # İnce altın çerçeve
     pad = 32
-    draw.rectangle(
-        [pad, pad, W - pad, H - pad],
-        outline=GOLD + (160,) if False else GOLD,  # pillow strict tuple
-        width=2,
-    )
+    draw.rectangle([pad, pad, W - pad, H - pad], outline=GOLD, width=2)
 
-    # Merkez altın süsleme çizgileri
-    cy_center = H // 2
-    line_w = 180
-    draw.line([(W / 2 - line_w, 150), (W / 2 + line_w, 150)], fill=GOLD, width=2)
-    draw.line([(W / 2 - line_w, H - 150), (W / 2 + line_w, H - 150)], fill=GOLD, width=2)
+    draw_centered(draw, 100, "TAM İLMİHÂL", Yazi("literata", 400, 30), GOLD_SOFT)
+    suslu_cizgi(draw, 145)
 
-    # Küçük baklava/nokta süsleme
-    for cx in [W / 2 - line_w - 16, W / 2 + line_w + 16]:
-        draw.ellipse([cx - 4, 146, cx + 4, 154], fill=GOLD)
-        draw.ellipse([cx - 4, H - 154, cx + 4, H - 146], fill=GOLD)
+    draw_centered(draw, 232, "Se’âdet-i Ebediyye", Yazi("literata", 700, 92), CREAM)
+    draw_centered(draw, 318, "İnteraktif İlmihâl", Yazi("literata", 400, 44), GOLD)
 
-    # Üst bant: "Tam İlmihâl"
-    top_label_font = load_font(
-        [
-            "/System/Library/Fonts/Supplemental/Georgia.ttf",
-            "/System/Library/Fonts/Supplemental/Times New Roman.ttf",
-        ],
-        30,
-    )
-    draw_centered(draw, (W / 2, 105), "TAM İLMİHÂL", top_label_font, GOLD_SOFT)
-
-    # Ana başlık — Se'âdet-i Ebediyye
-    title_font = load_font(
-        [
-            "/System/Library/Fonts/Supplemental/Georgia Bold.ttf",
-            "/System/Library/Fonts/Supplemental/Times New Roman Bold.ttf",
-        ],
-        96,
-    )
-    draw_centered(draw, (W / 2, 240), "Se'âdet-i Ebediyye", title_font, CREAM)
-
-    # Alt başlık
-    sub_font = load_font(
-        [
-            "/System/Library/Fonts/Supplemental/Georgia.ttf",
-            "/System/Library/Fonts/Supplemental/Times New Roman.ttf",
-        ],
-        46,
-    )
-    draw_centered(draw, (W / 2, 325), "İnteraktif İlmihâl", sub_font, GOLD)
-
-    # Açıklama
-    desc_font = load_font(
-        [
-            "/System/Library/Fonts/Supplemental/Arial.ttf",
-            "/System/Library/Fonts/Helvetica.ttc",
-        ],
-        28,
-    )
     draw_centered(
         draw,
-        (W / 2, 410),
-        "241 madde · 4400+ dinî terim · 1019 âlim biyografisi",
-        desc_font,
+        396,
+        "241 madde · 9.863 dinî terim · 1020 hâl tercemesi",
+        Yazi("inter", 400, 28),
         MUTED,
     )
 
-    # Alt — domain
-    domain_font = load_font(
-        [
-            "/System/Library/Fonts/Supplemental/Arial Bold.ttf",
-        ],
-        28,
-    )
-    draw_centered(draw, (W / 2, 485), "ilmihal.org", domain_font, GOLD)
-
-    # Kitap yazarı atıf
-    author_font = load_font(
-        ["/System/Library/Fonts/Supplemental/Arial.ttf"], 22
-    )
+    suslu_cizgi(draw, 450)
+    draw_centered(draw, 500, "ilmihal.org", Yazi("inter", 700, 30), GOLD)
     draw_centered(
         draw,
-        (W / 2, 540),
+        550,
         "Hüseyn Hilmi Işık hazretlerinin eseri · 1248 sayfa",
-        author_font,
+        Yazi("inter", 400, 22),
         MUTED,
     )
 

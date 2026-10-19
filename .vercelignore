@@ -1,0 +1,9 @@
+# Yayına çıkmaması gereken iç dosyalar (denetim raporları, araçlar, yerel ayarlar)
+.claude
+.git
+.DS_Store
+**/.DS_Store
+DENETIM_RAPORU_*.md
+tools
+og-image.html
+ayet_hadis_data.json

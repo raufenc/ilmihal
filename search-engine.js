@@ -420,7 +420,9 @@
       const cache = window.kisimTextsCache || {};
       fullTextCorpus = (window.tocData || []).map(m => {
         const kisimTexts = cache[m.kisim] || {};
-        const fullText = kisimTexts[String(m.madde_no)] || kisimTexts[m.madde_no] || '';
+        // Arama için paragraf/cedvel düzeni düz metne indirgenir; ⟦şekil:N⟧ işaretleri aranmaz
+        const fullText = String(kisimTexts[String(m.madde_no)] || kisimTexts[m.madde_no] || '')
+          .replace(/⟦(?:şekil|cedvel):\d+⟧/g, ' ').replace(/\s+/g, ' ').trim();
         return {
           id: m.kisim + '/' + m.madde_no,
           title: m.baslik,

@@ -1,12 +1,13 @@
 /* ========================================
    SİLSİLE-İ ALİYYE ATLASI — MAIN APP
+   Veri: veri.js (Se'âdet-i Ebediyye, s. 969 ve hâl tercemeleri)
    ======================================== */
 
 let map = null;
 let markers = [];
 let activeScholarIdx = null;
 
-// Campaign / Journey state
+// Sırayla gösterme durumu
 let campaignActive = false;
 let campaignPaused = false;
 let campaignTimer = null;
@@ -15,9 +16,71 @@ let campaignSpeed = 5000;
 let campaignTrailLine = null;
 let campaignTrailCoords = [];
 
+// ========== YARDIMCILAR ==========
+function esc(s) {
+  return String(s == null ? '' : s)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
+function yilSayisi(v) {
+  const m = String(v == null ? '' : v).match(/\d{3,4}/);
+  return m ? parseInt(m[0], 10) : NaN;
+}
+
+const ROMA = { I: 1, V: 5, X: 10, L: 50, C: 100 };
+function asirdanYil(asir) {
+  const m = String(asir || '').match(/^([IVXLC]+)/);
+  if (!m) return NaN;
+  let t = 0;
+  const r = m[1];
+  for (let i = 0; i < r.length; i++) {
+    const a = ROMA[r[i]], b = ROMA[r[i + 1]] || 0;
+    t += a < b ? -a : a;
+  }
+  return t * 100 - 50;
+}
+
+// Renk/çağ hesabı için temsilî yıl: vefât, yoksa doğum, yoksa asır
+function temsiliYil(s) {
+  let y = yilSayisi(s.vefat);
+  if (isNaN(y)) y = yilSayisi(s.dogum);
+  if (isNaN(y)) y = asirdanYil(s.asir);
+  return isNaN(y) ? 2000 : y;
+}
+
+// Mîlâdî tarih metni: "1563 – 1624", "v. 1180" veya ""
+function tarihMetni(s) {
+  const d = String(s.dogum || '').trim(), v = String(s.vefat || '').trim();
+  const dBilinir = d && d !== '?', vBilinir = v && v !== '?';
+  if (dBilinir && vBilinir) return d + ' – ' + v;
+  if (vBilinir) return 'v. ' + v;
+  if (dBilinir) return 'd. ' + d;
+  return '';
+}
+
+// Panel ve pencerede: mîlâdî + kitaptaki hicrî bilgi
+function tamTarihMetni(s) {
+  const m = tarihMetni(s);
+  if (m && s.hicri) return 'm. ' + m + '  ·  ' + s.hicri;
+  return m ? 'm. ' + m : (s.hicri || '');
+}
+
+function halkaEtiketi(s) {
+  if (s.halka === 0) return 'Menba-i feyz';
+  if (s.halka === null || s.halka === undefined) return "Se'âdet-i Ebediyye'yi hazırlayan";
+  return s.halka + '. halka';
+}
+
+function markerMetni(s) {
+  if (s.halka === 0) return '✦';
+  if (s.halka === null || s.halka === undefined) return '❖';
+  return String(s.halka);
+}
+
 // ========== ERA HELPERS ==========
 function getEraClass(scholar) {
-  const v = parseInt(scholar.vefat) || 2000;
+  const v = temsiliYil(scholar);
   if (v <= 770) return 'era-early';
   if (v <= 1090) return 'era-classic';
   if (v <= 1400) return 'era-golden';
@@ -42,13 +105,13 @@ function getEraColor(scholar) {
 
 function getEraName(scholar) {
   const names = {
-    'era-early': 'Sahabe-Tabiin',
+    'era-early': 'Sahâbe ve Tâbiîn',
     'era-classic': 'Horasan',
-    'era-golden': 'Maverauennehr',
-    'era-timurid': 'Timurlu-Babur',
+    'era-golden': 'Mâverâünnehr',
+    'era-timurid': 'Mâverâünnehr (Hâcegân)',
     'era-mughal': 'Hindistan',
-    'era-ottoman': 'Osmanli',
-    'era-modern': 'Modern'
+    'era-ottoman': 'Osmanlı',
+    'era-modern': 'Son asır'
   };
   return names[getEraClass(scholar)] || '';
 }
@@ -78,6 +141,22 @@ function lng(s) { return s._lng !== undefined ? s._lng : s.koordinat[1]; }
 
 // ========== DATA ==========
 const DATA = applyJitter(SILSILE);
+const ID_INDEX = {};
+DATA.forEach((s, i) => { ID_INDEX[s.id] = i; });
+
+// Feyz aldığı halkalar (veri.js'te "hoca" yoksa bir önceki sıradaki zât)
+function hocaIndeksleri(idx) {
+  const s = DATA[idx];
+  if (Array.isArray(s.hoca) && s.hoca.length) {
+    return s.hoca.map(id => ID_INDEX[id]).filter(i => i !== undefined);
+  }
+  return idx > 0 ? [idx - 1] : [];
+}
+function talebeIndeksleri(idx) {
+  const out = [];
+  DATA.forEach((s, j) => { if (j !== idx && hocaIndeksleri(j).indexOf(idx) !== -1) out.push(j); });
+  return out;
+}
 
 // ========== INIT ==========
 document.addEventListener('DOMContentLoaded', () => {
@@ -85,15 +164,39 @@ document.addEventListener('DOMContentLoaded', () => {
   // sayfanın geri kalanı görünür ve kullanılabilir kalır.
   const adim = (fn, ad) => { try { fn(); } catch (e) { console.error('Atlas init hatası [' + ad + ']:', e); } };
   adim(initScrollAnimations, 'animasyon'); // içerik görünürlüğü haritadan önce gelir
+  adim(initStats, 'sayılar');
   adim(initMap, 'harita');
   adim(initSilsile, 'silsile');
   adim(initGlobalSearch, 'arama');
   adim(initMobileMenu, 'menü');
-  adim(initJourneyButton, 'yolculuk');
-  adim(initCampaignControls, 'yolculuk-kontrol');
+  adim(initJourneyButton, 'sırayla-göster');
+  adim(initCampaignControls, 'sırayla-göster-kontrol');
   adim(initModal, 'modal');
   adim(injectPersonSchema, 'schema');
 });
+
+// ========== SAYILAR (veriden hesaplanır) ==========
+function initStats() {
+  const halkalar = DATA.map(s => s.halka).filter(h => typeof h === 'number' && h > 0);
+  const halkaSayisi = halkalar.length ? Math.max.apply(null, halkalar) : 0;
+  // Asır sayısı veri.js'teki "asir" alanlarından (ör. "VII. Yüzyıl" … "XX. Yüzyıl")
+  const asirlar = [];
+  DATA.forEach(s => {
+    (String(s.asir || '').match(/[IVXLC]+/g) || []).forEach(r => {
+      const y = asirdanYil(r);
+      if (!isNaN(y)) asirlar.push(Math.round((y + 50) / 100));
+    });
+  });
+  const asirSayisi = asirlar.length ? Math.max.apply(null, asirlar) - Math.min.apply(null, asirlar) + 1 : 0;
+  const bolgeSayisi = new Set(DATA.map(s => s.bolge)).size;
+  const yaz = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
+  yaz('stat-halka', halkaSayisi);
+  yaz('stat-asir', asirSayisi);
+  yaz('stat-bolge', bolgeSayisi);
+  yaz('campaignProgressLabel', '0 / ' + DATA.length);
+  const bar = document.getElementById('campaignProgressBar');
+  if (bar) bar.setAttribute('aria-valuemax', DATA.length);
+}
 
 // ========== MAP ==========
 function initMap() {
@@ -103,16 +206,29 @@ function initMap() {
     minZoom: 3,
     maxZoom: 12,
     zoomControl: true,
-    scrollWheelZoom: true,
+    scrollWheelZoom: false, // sayfa kaydırılırken harita yakalanmasın; +/− düğmeleri veya tıklayınca açılır
   });
+  map.on('focus', () => map.scrollWheelZoom.enable());
+  map.on('blur', () => map.scrollWheelZoom.disable());
 
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-    attribution: '&copy; OpenStreetMap &copy; CARTO',
-    subdomains: 'abcd',
+  // Altlık harita: Esri "Light Gray Canvas" (anahtarsız). Eski CARTO adresi artık
+  // "API KEY REQUIRED" filigranlı karo döndürdüğü için değiştirildi.
+  L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+    attribution: 'Harita: &copy; Esri, HERE, Garmin, &copy; OpenStreetMap katkıcıları',
+    maxNativeZoom: 16,
     maxZoom: 19
   }).addTo(map);
+  // Yer isimleri ayrı bir katmanda (altlığın üstünde, işaretlerin altında)
+  const etiketPane = map.createPane('etiketler');
+  etiketPane.style.zIndex = 250;
+  etiketPane.style.pointerEvents = 'none';
+  L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Reference/MapServer/tile/{z}/{y}/{x}', {
+    maxNativeZoom: 16,
+    maxZoom: 19,
+    pane: 'etiketler'
+  }).addTo(map);
 
-  // Draw silsile path (dashed line connecting all scholars)
+  // Silsile yolu (kesik çizgi)
   const pathCoords = DATA.map(s => [lat(s), lng(s)]);
   L.polyline(pathCoords, {
     color: '#c8963e',
@@ -126,29 +242,29 @@ function initMap() {
 
 function addMarkers() {
   DATA.forEach((scholar, i) => {
-    const isFirst = i === 0;
-    const isLast = i === DATA.length - 1;
-    const num = i + 1;
+    const isFirst = scholar.halka === 0;
+    const isLast = scholar.halka === null || scholar.halka === undefined;
 
     const extraClass = isFirst ? ' menba' : (isLast ? ' last' : '');
-    const shortName = scholar.ad.length > 20 ? scholar.ad.substring(0, 18) + '\u2026' : scholar.ad;
 
     const icon = L.divIcon({
       className: 'scholar-marker',
       html: `
-        <div class="marker-inner${extraClass}" data-idx="${i}">
-          ${num}
-        </div>
-        <div class="marker-label">${shortName}</div>
+        <div class="marker-inner${extraClass}" data-idx="${i}">${esc(markerMetni(scholar))}</div>
+        <div class="marker-label">${esc(scholar.ad)}</div>
       `,
       iconSize: isFirst ? [52, 52] : [44, 44],
       iconAnchor: isFirst ? [26, 26] : [22, 22],
     });
 
-    const marker = L.marker([lat(scholar), lng(scholar)], { icon }).addTo(map);
+    const marker = L.marker([lat(scholar), lng(scholar)], {
+      icon,
+      title: scholar.tam_ad,
+      alt: scholar.tam_ad,
+      keyboard: true
+    }).addTo(map);
     marker.on('click', () => {
       if (campaignActive) {
-        // During campaign, clicking a marker jumps to it
         campaignIndex = i;
         clearTimeout(campaignTimer);
         campaignTrailCoords = DATA.slice(0, i).map(s => [lat(s), lng(s)]);
@@ -163,115 +279,115 @@ function addMarkers() {
   });
 }
 
+// ========== BİYOGRAFİ (site metni + kitaptaki hâl tercemesi) ==========
+function bioHTML(scholar) {
+  let html = String(scholar.biyografi || '')
+    .split('\n\n')
+    .map(p => '<p>' + esc(p.replace(/\n/g, ' ').trim()) + '</p>')
+    .join('');
+  if (scholar.hal_tercemesi) {
+    html += '<div class="bio-kitap">'
+      + '<div class="bio-kitap-baslik">Kitaptaki hâl tercemesi</div>'
+      + '<blockquote>' + esc(scholar.hal_tercemesi) + '</blockquote>'
+      + (scholar.kaynak ? '<div class="bio-kaynak">' + esc(scholar.kaynak) + '</div>' : '')
+      + '</div>';
+  }
+  return html;
+}
+
 // ========== PANEL ==========
 function openPanel(idx) {
   activeScholarIdx = idx;
   const scholar = DATA[idx];
-  const isFirst = idx === 0;
+  const isFirst = scholar.halka === 0;
   const panel = document.getElementById('scholar-panel');
 
-  // Portrait
-  const portrait = document.getElementById('panel-portrait');
-  portrait.classList.toggle('menba', isFirst);
-
-  // Halka
-  document.getElementById('panel-halka').textContent = isFirst ? 'Menba-i Feyz' : (idx + 1) + '. Halka';
-
-  // Name
+  document.getElementById('panel-portrait').classList.toggle('menba', isFirst);
+  document.getElementById('panel-halka').textContent = halkaEtiketi(scholar);
   document.getElementById('panel-name').textContent = scholar.tam_ad;
-
-  // Lakap
   document.getElementById('panel-lakap').textContent = scholar.lakap || '';
-
-  // Dates
-  document.getElementById('panel-dates').textContent =
-    scholar.dogum && scholar.vefat ? scholar.dogum + ' \u2014 ' + scholar.vefat : '';
-
-  // Location
+  document.getElementById('panel-dates').textContent = tamTarihMetni(scholar);
   document.getElementById('panel-loc').textContent = scholar.sehir + ', ' + scholar.ulke;
 
-  // Tags
+  // Etiketler
   const tagsEl = document.getElementById('panel-tags');
   tagsEl.innerHTML = '';
   const eraTag = document.createElement('span');
   eraTag.className = 'panel-tag';
   eraTag.style.background = getEraColor(scholar);
+  eraTag.style.color = '#18181f';
   eraTag.textContent = scholar.asir;
   tagsEl.appendChild(eraTag);
 
   const bolgTag = document.createElement('span');
   bolgTag.className = 'panel-tag';
   bolgTag.style.background = 'rgba(200,150,62,0.25)';
-  bolgTag.style.color = '#c8963e';
+  bolgTag.style.color = '#e8d48b';
   bolgTag.textContent = scholar.bolge;
   tagsEl.appendChild(bolgTag);
 
-  // Cross-reference links
   buildXrefLinks(idx);
 
-  // Nav buttons
+  // Sıradaki önceki/sonraki
   const prev = idx > 0 ? DATA[idx - 1] : null;
   const next = idx < DATA.length - 1 ? DATA[idx + 1] : null;
   const btnPrev = document.getElementById('btn-prev');
   const btnNext = document.getElementById('btn-next');
   btnPrev.disabled = !prev;
   btnNext.disabled = !next;
+  btnPrev.title = prev ? 'Önceki: ' + prev.tam_ad : '';
+  btnNext.title = next ? 'Sonraki: ' + next.tam_ad : '';
   document.getElementById('prev-name').textContent = prev ? prev.ad : '';
   document.getElementById('next-name').textContent = next ? next.ad : '';
   btnPrev.onclick = prev ? () => openPanel(idx - 1) : null;
   btnNext.onclick = next ? () => openPanel(idx + 1) : null;
 
-  // Bio
-  const bioEl = document.getElementById('panel-bio');
-  bioEl.innerHTML = scholar.biyografi
-    .split('\n\n')
-    .map(p => '<p>' + p.replace(/\n/g, ' ').trim() + '</p>')
-    .join('');
+  document.getElementById('panel-bio').innerHTML = bioHTML(scholar);
 
-  // Show panel
   panel.classList.remove('hidden');
   panel.scrollTop = 0;
 
-  // Fly to scholar
   const isMobile = window.innerWidth <= 1024;
+  if (isMobile) {
+    // Dar ekranda panel haritanın altında açılır; görünür alana getir
+    const r = panel.getBoundingClientRect();
+    if (r.top > window.innerHeight - 120) panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
   map.flyTo([lat(scholar), lng(scholar)], Math.max(map.getZoom(), 5), { duration: isMobile ? 0.8 : 1 });
 
-  // Highlight marker
   highlightMarker(idx);
+}
+
+function iliskiEtiketi(fromIdx, toIdx, yon) {
+  // yon: 'hoca' | 'talebe'
+  const from = DATA[fromIdx], to = DATA[toIdx];
+  const kitapDisi = (s) => s.halka === null || s.halka === undefined;
+  if (yon === 'hoca') {
+    if (to.halka === 0) return 'Feyz kaynağı';
+    if (kitapDisi(from)) return 'Hocası';
+    return 'Feyz aldığı';
+  }
+  if (kitapDisi(to)) return 'Talebesi';
+  return 'Feyz verdiği';
 }
 
 function buildXrefLinks(idx) {
   const linksEl = document.getElementById('panel-xref-links');
   linksEl.innerHTML = '';
 
-  // Teacher (previous in chain)
-  if (idx > 0) {
-    const teacher = DATA[idx - 1];
+  const ekle = (etiket, ad, onClick) => {
     const btn = document.createElement('button');
     btn.className = 'xref-link';
-    btn.innerHTML = `<span class="xref-label">Hocası</span><span class="xref-name">${teacher.ad}</span>`;
-    btn.onclick = () => openPanel(idx - 1);
+    btn.innerHTML = `<span class="xref-label">${esc(etiket)}</span><span class="xref-name">${esc(ad)}</span>`;
+    btn.onclick = onClick;
     linksEl.appendChild(btn);
-  }
-
-  // Student (next in chain)
-  if (idx < DATA.length - 1) {
-    const student = DATA[idx + 1];
-    const btn = document.createElement('button');
-    btn.className = 'xref-link';
-    btn.innerHTML = `<span class="xref-label">Talebesi</span><span class="xref-name">${student.ad}</span>`;
-    btn.onclick = () => openPanel(idx + 1);
-    linksEl.appendChild(btn);
-  }
-
-  // Show on map link
-  const mapBtn = document.createElement('button');
-  mapBtn.className = 'xref-link';
-  mapBtn.innerHTML = `<span class="xref-label">Harita</span><span class="xref-name">${DATA[idx].sehir}</span>`;
-  mapBtn.onclick = () => {
-    map.flyTo([lat(DATA[idx]), lng(DATA[idx])], 8, { duration: 1.2 });
   };
-  linksEl.appendChild(mapBtn);
+
+  hocaIndeksleri(idx).forEach(j => ekle(iliskiEtiketi(idx, j, 'hoca'), DATA[j].ad, () => openPanel(j)));
+  talebeIndeksleri(idx).forEach(j => ekle(iliskiEtiketi(idx, j, 'talebe'), DATA[j].ad, () => openPanel(j)));
+  ekle('Harita', DATA[idx].sehir, () => {
+    map.flyTo([lat(DATA[idx]), lng(DATA[idx])], 8, { duration: 1.2 });
+  });
 }
 
 function closePanel() {
@@ -279,7 +395,7 @@ function closePanel() {
   const panel = document.getElementById('scholar-panel');
   panel.classList.add('hidden');
   clearMarkerHighlights();
-  map.flyTo([35, 55], 4, { duration: 1 });
+  if (map) map.flyTo([35, 55], 4, { duration: 1 });
 }
 
 function highlightMarker(idx) {
@@ -295,20 +411,17 @@ function highlightMarker(idx) {
 function clearMarkerHighlights() {
   markers.forEach(m => {
     const inner = m.marker.getElement()?.querySelector('.marker-inner');
-    if (inner) {
-      inner.classList.remove('active', 'highlight');
-    }
+    if (inner) inner.classList.remove('active', 'highlight');
   });
 }
 
-// Panel close
 document.addEventListener('click', (e) => {
-  if (e.target.id === 'panel-close') {
-    closePanel();
-  }
+  if (e.target.id === 'panel-close') closePanel();
 });
 
-// ========== GLOBAL SEARCH (Ctrl+K) ==========
+// ========== ARAMA (Ctrl+K) ==========
+function trKucuk(s) { return String(s || '').toLocaleLowerCase('tr'); }
+
 function initGlobalSearch() {
   const modal = document.getElementById('global-search-modal');
   const input = document.getElementById('gs-input');
@@ -332,70 +445,51 @@ function initGlobalSearch() {
     activeIdx = -1;
   }
 
-  // Trigger button
   trigger.addEventListener('click', openSearch);
 
-  // Ctrl+K
   document.addEventListener('keydown', (e) => {
-    if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+    if ((e.ctrlKey || e.metaKey) && (e.key === 'k' || e.key === 'K')) {
       e.preventDefault();
-      if (modal.classList.contains('hidden')) {
-        openSearch();
-      } else {
-        closeSearch();
-      }
+      if (modal.classList.contains('hidden')) openSearch(); else closeSearch();
     }
   });
 
-  // Backdrop close
   backdrop.addEventListener('click', closeSearch);
 
-  // Escape close
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
-      closeSearch();
-    }
+    if (e.key === 'Escape' && !modal.classList.contains('hidden')) closeSearch();
   });
 
-  // Search input
   input.addEventListener('input', () => {
-    const q = input.value.trim().toLowerCase();
+    const q = trKucuk(input.value.trim());
     activeIdx = -1;
 
-    if (q.length < 1) {
-      results.innerHTML = '';
-      return;
-    }
+    if (q.length < 1) { results.innerHTML = ''; return; }
 
     const matches = DATA.map((s, i) => ({ s, i })).filter(({ s }) => {
-      return s.ad.toLowerCase().includes(q) ||
-        s.tam_ad.toLowerCase().includes(q) ||
-        (s.lakap && s.lakap.toLowerCase().includes(q)) ||
-        s.sehir.toLowerCase().includes(q) ||
-        s.bolge.toLowerCase().includes(q) ||
-        s.ulke.toLowerCase().includes(q) ||
-        s.asir.toLowerCase().includes(q);
+      return [s.ad, s.tam_ad, s.lakap, s.sehir, s.bolge, s.ulke, s.asir].some(v => trKucuk(v).includes(q));
     }).slice(0, 12);
 
     if (!matches.length) {
-      results.innerHTML = '<div style="padding:16px 20px;color:var(--text-muted);font-size:13px;">Sonu\u00e7 bulunamad\u0131</div>';
+      results.innerHTML = '<div style="padding:16px 20px;color:var(--text-muted);font-size:13px;">Sonuç bulunamadı</div>';
       return;
     }
 
-    results.innerHTML = matches.map(({ s, i }) => `
+    results.innerHTML = matches.map(({ s, i }) => {
+      const t = tarihMetni(s);
+      return `
       <div class="gs-result-item" data-idx="${i}" role="option">
-        <div class="gs-result-num">${i + 1}</div>
+        <div class="gs-result-num">${esc(markerMetni(s))}</div>
         <div class="gs-result-info">
-          <div class="gs-result-name">${s.tam_ad}</div>
-          <div class="gs-result-meta">${s.sehir}, ${s.ulke} &bull; ${s.dogum}\u2013${s.vefat} &bull; ${s.bolge}</div>
+          <div class="gs-result-name">${esc(s.tam_ad)}</div>
+          <div class="gs-result-meta">${esc(s.sehir)}, ${esc(s.ulke)}${t ? ' &bull; ' + esc(t) : ''} &bull; ${esc(s.bolge)}</div>
         </div>
-      </div>
-    `).join('');
+      </div>`;
+    }).join('');
 
-    // Click handlers
     results.querySelectorAll('.gs-result-item').forEach(item => {
       item.addEventListener('click', () => {
-        const idx = parseInt(item.dataset.idx);
+        const idx = parseInt(item.dataset.idx, 10);
         closeSearch();
         openPanel(idx);
         scrollToMap();
@@ -403,11 +497,9 @@ function initGlobalSearch() {
     });
   });
 
-  // Keyboard navigation
   input.addEventListener('keydown', (e) => {
     const items = results.querySelectorAll('.gs-result-item');
     if (!items.length) return;
-
     if (e.key === 'ArrowDown') {
       e.preventDefault();
       activeIdx = Math.min(activeIdx + 1, items.length - 1);
@@ -430,29 +522,29 @@ function initGlobalSearch() {
   }
 }
 
-// ========== SILSILE CHAIN ==========
+// ========== SİLSİLE ZİNCİRİ ==========
 function initSilsile() {
   const container = document.getElementById('silsile');
   container.innerHTML = '';
 
   DATA.forEach((scholar, i) => {
-    const isFirst = i === 0;
-    const isLast = i === DATA.length - 1;
+    const isFirst = scholar.halka === 0;
+    const isLast = scholar.halka === null || scholar.halka === undefined;
 
     const node = document.createElement('div');
-    const cls = isFirst ? 'silsile-node menba' : (isLast ? 'silsile-node last' : 'silsile-node');
-    node.className = cls;
+    node.className = isFirst ? 'silsile-node menba' : (isLast ? 'silsile-node last' : 'silsile-node');
     node.dataset.idx = i;
     node.setAttribute('role', 'listitem');
     node.setAttribute('tabindex', '0');
-    node.setAttribute('aria-label', (i + 1) + '. halka: ' + scholar.tam_ad);
+    node.setAttribute('aria-label', halkaEtiketi(scholar) + ': ' + scholar.tam_ad);
 
-    const dates = scholar.dogum && scholar.vefat ? scholar.dogum + ' \u2013 ' + scholar.vefat : '';
+    const dates = tarihMetni(scholar);
 
     node.innerHTML = `
-      <div class="sn-name">${scholar.tam_ad}</div>
-      <div class="sn-dates">${dates}</div>
-      <div class="sn-loc">${scholar.sehir}, ${scholar.ulke}</div>
+      <div class="sn-halka">${esc(halkaEtiketi(scholar))}</div>
+      <div class="sn-name">${esc(scholar.tam_ad)}</div>
+      ${dates ? `<div class="sn-dates">${esc(dates)}</div>` : ''}
+      <div class="sn-loc">${esc(scholar.sehir)}, ${esc(scholar.ulke)}</div>
     `;
 
     node.addEventListener('click', () => showModal(i));
@@ -471,90 +563,87 @@ function initSilsile() {
 }
 
 // ========== MODAL ==========
+let modalOncekiOdak = null;
+
 function initModal() {
   const modal = document.getElementById('scholar-modal');
   modal.querySelector('.modal-close').addEventListener('click', closeModal);
   modal.querySelector('.modal-backdrop').addEventListener('click', closeModal);
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') closeModal();
+    if (e.key === 'Escape' && !modal.classList.contains('hidden')) closeModal();
   });
 }
 
 function showModal(idx) {
   const scholar = DATA[idx];
   const modal = document.getElementById('scholar-modal');
+  if (modal.classList.contains('hidden')) modalOncekiOdak = document.activeElement;
 
-  document.getElementById('modal-halka').textContent =
-    idx === 0 ? 'Menba-i Feyz' : (idx + 1) + '. Halka';
+  document.getElementById('modal-halka').textContent = halkaEtiketi(scholar);
   document.getElementById('modal-name').textContent = scholar.tam_ad;
   document.getElementById('modal-lakap').textContent = scholar.lakap || '';
-  document.getElementById('modal-dates').textContent =
-    scholar.dogum && scholar.vefat ? scholar.dogum + ' \u2014 ' + scholar.vefat : '';
-  document.getElementById('modal-location').textContent =
-    scholar.sehir + ', ' + scholar.ulke;
+  document.getElementById('modal-dates').textContent = tamTarihMetni(scholar);
+  document.getElementById('modal-location').textContent = scholar.sehir + ', ' + scholar.ulke;
 
-  // Tags
   const tagsEl = document.getElementById('modal-tags');
   tagsEl.innerHTML = '';
   const eraTag = document.createElement('span');
   eraTag.className = 'modal-tag';
   eraTag.style.background = getEraColor(scholar);
+  eraTag.style.color = '#18181f';
   eraTag.textContent = scholar.asir;
   tagsEl.appendChild(eraTag);
 
   const bolgTag = document.createElement('span');
   bolgTag.className = 'modal-tag';
   bolgTag.style.background = 'rgba(200,150,62,0.25)';
-  bolgTag.style.color = '#c8963e';
+  bolgTag.style.color = '#e8d48b';
   bolgTag.textContent = scholar.bolge;
   tagsEl.appendChild(bolgTag);
 
-  // Cross-reference buttons in modal
   const xrefEl = document.getElementById('modal-xref');
   xrefEl.innerHTML = '';
-  if (idx > 0) {
+  const ekle = (etiket, metin, onClick) => {
     const btn = document.createElement('button');
     btn.className = 'modal-xref-btn';
-    btn.innerHTML = `<span class="xref-dir">Hocas\u0131:</span> ${DATA[idx - 1].ad}`;
-    btn.onclick = () => { closeModal(); showModal(idx - 1); };
+    btn.innerHTML = `<span class="xref-dir">${esc(etiket)}:</span> ${esc(metin)}`;
+    btn.onclick = onClick;
     xrefEl.appendChild(btn);
-  }
-  if (idx < DATA.length - 1) {
-    const btn = document.createElement('button');
-    btn.className = 'modal-xref-btn';
-    btn.innerHTML = `<span class="xref-dir">Talebesi:</span> ${DATA[idx + 1].ad}`;
-    btn.onclick = () => { closeModal(); showModal(idx + 1); };
-    xrefEl.appendChild(btn);
-  }
-  // "Show on Map" button
-  const mapBtn = document.createElement('button');
-  mapBtn.className = 'modal-xref-btn';
-  mapBtn.innerHTML = `<span class="xref-dir">Harita:</span> G\u00f6ster`;
-  mapBtn.onclick = () => { closeModal(); openPanel(idx); scrollToMap(); };
-  xrefEl.appendChild(mapBtn);
+  };
+  hocaIndeksleri(idx).forEach(j => ekle(iliskiEtiketi(idx, j, 'hoca'), DATA[j].ad, () => showModal(j)));
+  talebeIndeksleri(idx).forEach(j => ekle(iliskiEtiketi(idx, j, 'talebe'), DATA[j].ad, () => showModal(j)));
+  ekle('Harita', 'Göster', () => { closeModal(); openPanel(idx); scrollToMap(); });
 
-  // Bio
-  const bioEl = document.getElementById('modal-bio');
-  bioEl.innerHTML = scholar.biyografi
-    .split('\n\n')
-    .map(p => '<p>' + p.replace(/\n/g, ' ').trim() + '</p>')
-    .join('');
+  document.getElementById('modal-bio').innerHTML = bioHTML(scholar);
 
   modal.classList.remove('hidden');
   document.body.style.overflow = 'hidden';
+  const icerik = modal.querySelector('.modal-content');
+  if (icerik) icerik.scrollTop = 0;
+  const kapat = modal.querySelector('.modal-close');
+  if (kapat) kapat.focus();
 }
 
 function closeModal() {
-  document.getElementById('scholar-modal').classList.add('hidden');
+  const modal = document.getElementById('scholar-modal');
+  if (modal.classList.contains('hidden')) return;
+  modal.classList.add('hidden');
   document.body.style.overflow = '';
+  if (modalOncekiOdak && typeof modalOncekiOdak.focus === 'function') modalOncekiOdak.focus();
+  modalOncekiOdak = null;
 }
 
-// ========== CAMPAIGN / YOLCULUK MODU ==========
+// ========== SIRAYLA GÖSTER ==========
+const METIN_BASLAT = '▶ Sırayla Göster';
+const METIN_BITIR = '■ Gösterimi Bitir';
+const METIN_DURAKLAT = '❘❘ Duraklat';
+const METIN_DEVAM = '▶ Devam';
+
 function initJourneyButton() {
   document.getElementById('btn-journey').addEventListener('click', (e) => {
     e.preventDefault();
     scrollToMap();
-    setTimeout(() => startCampaign(), 600);
+    setTimeout(() => { if (!campaignActive) startCampaign(); }, 600);
   });
 }
 
@@ -566,7 +655,6 @@ function initCampaignControls() {
   document.getElementById('speed3').addEventListener('click', () => setCampaignSpeed(1500));
   document.getElementById('campaignProgressBar').addEventListener('click', seekCampaign);
 
-  // Campaign card nav links
   document.getElementById('campaignPrevLink').addEventListener('click', () => {
     if (!campaignActive || campaignIndex <= 1) return;
     campaignIndex = campaignIndex - 2;
@@ -589,11 +677,7 @@ function scrollToMap() {
 }
 
 function toggleCampaign() {
-  if (campaignActive) {
-    stopCampaign();
-  } else {
-    startCampaign();
-  }
+  if (campaignActive) stopCampaign(); else startCampaign();
 }
 
 function startCampaign() {
@@ -604,16 +688,12 @@ function startCampaign() {
   campaignIndex = 0;
   campaignTrailCoords = [];
 
-  // Close panel if open
-  closePanel();
+  document.getElementById('scholar-panel').classList.add('hidden');
+  activeScholarIdx = null;
   clearMarkerHighlights();
 
-  // Remove old trail
-  if (campaignTrailLine && map.hasLayer(campaignTrailLine)) {
-    map.removeLayer(campaignTrailLine);
-  }
+  if (campaignTrailLine && map.hasLayer(campaignTrailLine)) map.removeLayer(campaignTrailLine);
 
-  // Create trail line
   campaignTrailLine = L.polyline([], {
     color: '#c8963e',
     weight: 2.5,
@@ -623,9 +703,10 @@ function startCampaign() {
   });
   campaignTrailLine.addTo(map);
 
-  // UI
-  document.getElementById('campaignStartBtn').textContent = '\u2716 Yolculu\u011fu Bitir';
-  document.getElementById('campaignStartBtn').classList.add('active');
+  const startBtn = document.getElementById('campaignStartBtn');
+  startBtn.textContent = METIN_BITIR;
+  startBtn.setAttribute('aria-label', 'Sırayla göstermeyi bitir');
+  startBtn.classList.add('active');
   document.getElementById('campaignPauseBtn').style.display = '';
   document.getElementById('campaignSpeedCtrl').style.display = '';
   document.getElementById('campaignProgress').classList.add('visible');
@@ -638,37 +719,32 @@ function stopCampaign() {
   campaignPaused = false;
   clearTimeout(campaignTimer);
 
-  // Remove trail
-  if (campaignTrailLine && map.hasLayer(campaignTrailLine)) {
-    map.removeLayer(campaignTrailLine);
-  }
+  if (campaignTrailLine && map.hasLayer(campaignTrailLine)) map.removeLayer(campaignTrailLine);
 
-  // Hide card
   document.getElementById('campaignCard').classList.remove('visible');
   document.getElementById('campaignProgress').classList.remove('visible');
 
-  // UI
-  document.getElementById('campaignStartBtn').textContent = '\u2694 Yolculuk Modu';
-  document.getElementById('campaignStartBtn').classList.remove('active');
+  const startBtn = document.getElementById('campaignStartBtn');
+  startBtn.textContent = METIN_BASLAT;
+  startBtn.setAttribute('aria-label', 'Silsileyi haritada sırayla göster');
+  startBtn.classList.remove('active');
   document.getElementById('campaignPauseBtn').style.display = 'none';
-  document.getElementById('campaignPauseBtn').textContent = '\u2758\u2758 Duraklat';
+  document.getElementById('campaignPauseBtn').textContent = METIN_DURAKLAT;
   document.getElementById('campaignSpeedCtrl').style.display = 'none';
 
   clearMarkerHighlights();
-
-  // Reset map
   map.flyTo([35, 55], 4, { duration: 1 });
 }
 
 function pauseCampaign() {
   if (campaignPaused) {
     campaignPaused = false;
-    document.getElementById('campaignPauseBtn').textContent = '\u2758\u2758 Duraklat';
+    document.getElementById('campaignPauseBtn').textContent = METIN_DURAKLAT;
     showCampaignStep();
   } else {
     campaignPaused = true;
     clearTimeout(campaignTimer);
-    document.getElementById('campaignPauseBtn').textContent = '\u25B6 Devam';
+    document.getElementById('campaignPauseBtn').textContent = METIN_DEVAM;
   }
 }
 
@@ -685,24 +761,16 @@ function setCampaignSpeed(ms) {
 
 function showCampaignStep() {
   if (!campaignActive || campaignPaused) return;
-  if (campaignIndex >= DATA.length) {
-    stopCampaign();
-    return;
-  }
+  if (campaignIndex >= DATA.length) { stopCampaign(); return; }
 
   const scholar = DATA[campaignIndex];
   const coords = [lat(scholar), lng(scholar)];
 
-  // Add to trail
   campaignTrailCoords.push(coords);
-  if (campaignTrailLine) {
-    campaignTrailLine.setLatLngs(campaignTrailCoords);
-  }
+  if (campaignTrailLine) campaignTrailLine.setLatLngs(campaignTrailCoords);
 
-  // Fly to location
   map.flyTo(coords, campaignIndex === 0 ? 5 : Math.max(map.getZoom(), 5), { duration: 1.2 });
 
-  // Highlight markers
   markers.forEach((m, i) => {
     const inner = m.marker.getElement()?.querySelector('.marker-inner');
     if (inner) {
@@ -711,42 +779,33 @@ function showCampaignStep() {
     }
   });
 
-  // Update card
   const card = document.getElementById('campaignCard');
-  document.getElementById('campaignNum').textContent = campaignIndex + 1;
+  document.getElementById('campaignNum').textContent = markerMetni(scholar);
   document.getElementById('campaignTitle').textContent = scholar.tam_ad;
-  document.getElementById('campaignDates').textContent =
-    scholar.dogum && scholar.vefat ? scholar.dogum + ' \u2013 ' + scholar.vefat : '';
-  document.getElementById('campaignLocation').textContent = '\uD83D\uDCCD ' + scholar.sehir + ', ' + scholar.ulke;
-  document.getElementById('campaignLakap').textContent = scholar.lakap || '';
+  document.getElementById('campaignDates').textContent = tarihMetni(scholar);
+  document.getElementById('campaignLocation').textContent = scholar.sehir + ', ' + scholar.ulke;
+  document.getElementById('campaignLakap').textContent = halkaEtiketi(scholar) + (scholar.lakap ? ' · ' + scholar.lakap : '');
 
-  // Summary: first ~150 chars of bio
-  const summary = scholar.biyografi.split('\n\n')[0];
+  const summary = String(scholar.biyografi || '').split('\n\n')[0];
   document.getElementById('campaignSummary').textContent =
-    summary.length > 180 ? summary.substring(0, 177) + '\u2026' : summary;
+    summary.length > 180 ? summary.substring(0, 177).replace(/\s+\S*$/, '') + '…' : summary;
 
-  // Nav links in card
   const prevLink = document.getElementById('campaignPrevLink');
   const nextLink = document.getElementById('campaignNextLink');
   prevLink.disabled = campaignIndex === 0;
   nextLink.disabled = campaignIndex >= DATA.length - 1;
-  document.getElementById('campaignPrevName').textContent =
-    campaignIndex > 0 ? DATA[campaignIndex - 1].ad : 'Hocas\u0131';
-  document.getElementById('campaignNextName').textContent =
-    campaignIndex < DATA.length - 1 ? DATA[campaignIndex + 1].ad : 'Talebesi';
+  document.getElementById('campaignPrevName').textContent = campaignIndex > 0 ? DATA[campaignIndex - 1].ad : 'Önceki';
+  document.getElementById('campaignNextName').textContent = campaignIndex < DATA.length - 1 ? DATA[campaignIndex + 1].ad : 'Sonraki';
 
-  // Show with animation
   card.classList.remove('visible');
   setTimeout(() => card.classList.add('visible'), 150);
 
-  // Update progress
   const total = DATA.length;
   const pct = ((campaignIndex + 1) / total * 100);
   document.getElementById('campaignProgressFill').style.width = pct + '%';
   document.getElementById('campaignProgressLabel').textContent = (campaignIndex + 1) + ' / ' + total;
   document.getElementById('campaignProgressBar').setAttribute('aria-valuenow', campaignIndex + 1);
 
-  // Next step
   campaignIndex++;
   campaignTimer = setTimeout(() => showCampaignStep(), campaignSpeed);
 }
@@ -759,17 +818,16 @@ function seekCampaign(e) {
   const idx = Math.floor(pct * DATA.length);
   campaignIndex = Math.max(0, Math.min(idx, DATA.length - 1));
 
-  // Rebuild trail up to this point
   campaignTrailCoords = DATA.slice(0, campaignIndex).map(s => [lat(s), lng(s)]);
   if (campaignTrailLine) campaignTrailLine.setLatLngs(campaignTrailCoords);
 
   clearTimeout(campaignTimer);
   campaignPaused = false;
-  document.getElementById('campaignPauseBtn').textContent = '\u2758\u2758 Duraklat';
+  document.getElementById('campaignPauseBtn').textContent = METIN_DURAKLAT;
   showCampaignStep();
 }
 
-// ========== MOBILE MENU ==========
+// ========== MOBİL MENÜ ==========
 function initMobileMenu() {
   const btn = document.getElementById('mobile-menu-btn');
   const nav = document.getElementById('main-nav');
@@ -777,69 +835,64 @@ function initMobileMenu() {
   btn.addEventListener('click', () => {
     const isOpen = nav.classList.toggle('open');
     btn.setAttribute('aria-expanded', isOpen);
+    btn.setAttribute('aria-label', isOpen ? 'Menüyü kapat' : 'Menüyü aç');
   });
 
   document.querySelectorAll('#main-nav a').forEach(a => {
     a.addEventListener('click', () => {
       nav.classList.remove('open');
       btn.setAttribute('aria-expanded', 'false');
+      btn.setAttribute('aria-label', 'Menüyü aç');
     });
   });
 }
 
-// ========== SCROLL ANIMATIONS ==========
+// ========== KAYDIRMA ANİMASYONLARI ==========
 function initScrollAnimations() {
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-      }
+  const hedefler = document.querySelectorAll('.section-header, .silsile-wrapper, .tanitim-content');
+  const azHareket = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (azHareket || !('IntersectionObserver' in window)) {
+    hedefler.forEach(el => el.classList.add('fade-in', 'visible'));
+  } else {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.01 });
+    hedefler.forEach(el => {
+      el.classList.add('fade-in');
+      observer.observe(el);
     });
-  }, { threshold: 0.1 });
+  }
 
-  document.querySelectorAll('.section-header, .silsile-wrapper, .tanitim-content').forEach(el => {
-    el.classList.add('fade-in');
-    observer.observe(el);
-  });
-
-  // Header scroll effect
   window.addEventListener('scroll', () => {
     const header = document.getElementById('main-header');
-    if (window.scrollY > 100) {
-      header.style.background = 'rgba(24,24,31,0.98)';
-    } else {
-      header.style.background = 'rgba(24,24,31,0.95)';
-    }
-  });
+    header.style.background = window.scrollY > 100 ? 'rgba(24,24,31,0.98)' : 'rgba(24,24,31,0.95)';
+  }, { passive: true });
 }
 
-// ========== SEO: JSON-LD Person Schema ==========
+// ========== SEO: JSON-LD ==========
 function injectPersonSchema() {
-  const persons = DATA.map((s, i) => ({
-    '@type': 'Person',
-    'name': s.tam_ad,
-    'alternateName': s.ad,
-    'description': s.lakap || '',
-    'birthDate': s.dogum,
-    'deathDate': s.vefat,
-    'birthPlace': {
-      '@type': 'Place',
-      'name': s.sehir + ', ' + s.ulke
-    },
-    'position': i + 1
-  }));
+  const persons = DATA.map((s) => {
+    const p = {
+      '@type': 'Person',
+      'name': s.tam_ad,
+      'alternateName': s.ad,
+      'description': s.lakap || ''
+    };
+    const d = yilSayisi(s.dogum), v = yilSayisi(s.vefat);
+    if (!isNaN(d) && !/[~?]/.test(String(s.dogum))) p.birthDate = String(d);
+    if (!isNaN(v) && !/[~?]/.test(String(s.vefat))) p.deathDate = String(v);
+    return p;
+  });
 
   const schema = {
     '@context': 'https://schema.org',
     '@type': 'ItemList',
-    'name': 'Silsile-i Aliyye - Nak\u015fibendiyye Alt\u0131n Zinciri',
-    'description': '37 halkal\u0131k manevi silsile',
-    'numberOfItems': 37,
-    'itemListElement': persons.map((p, i) => ({
-      '@type': 'ListItem',
-      'position': i + 1,
-      'item': p
-    }))
+    'name': 'Silsile-i Aliyye',
+    'description': "Se'âdet-i Ebediyye'deki Silsile-i aliyye büyüklerinin kabr-i şerîflerinin bulunduğu yerler",
+    'numberOfItems': DATA.length,
+    'itemListElement': persons.map((p, i) => ({ '@type': 'ListItem', 'position': i + 1, 'item': p }))
   };
 
   const script = document.createElement('script');

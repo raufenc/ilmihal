@@ -18,10 +18,13 @@ def check_html_links():
         "/hakkinda", "/quiz", "/ayet-hadis", "/gunun-bilgisi",
         "/rehberler", "/calisma-alanim", "/gizlilik", "/hukumler"
     }
+    # vercel.json rewrite kaynakları da geçerlidir (ör. /rss.xml → /api/rss, /fevaid/tablolar)
+    rewrites = json.loads((ROOT / "vercel.json").read_text(encoding="utf-8")).get("rewrites", [])
+    rewrite_res = [re.compile("^" + re.sub(r":\w+\*?", "[^/]+", r["source"]) + "$") for r in rewrites]
     for ref in refs:
         if ref.startswith("http") or ref.startswith("//") or ref.startswith("data:"):
             continue
-        if ref in spa_routes:
+        if ref in spa_routes or any(rx.match(ref) for rx in rewrite_res):
             continue
         path = ref.split("?")[0]
         full = ROOT / path.lstrip("/")

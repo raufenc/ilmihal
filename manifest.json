@@ -1,7 +1,7 @@
 {
   "name": "Se'âdet-i Ebediyye - İnteraktif İlmihâl",
   "short_name": "İlmihâl",
-  "description": "Se'âdet-i Ebediyye kitabının tamamı: 241 madde, 9800+ dini terim, 1019 âlim biyografisi, fıkhî hükümler ve tam metin arama.",
+  "description": "Se'âdet-i Ebediyye kitabının tamamı: 241 madde, 9.863 dinî terim, 1020 hâl tercemesi, fıkhî hükümler ve tam metin arama.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
@@ -44,10 +44,10 @@
       "description": "Kitapta ara"
     },
     {
-      "name": "Dini Lügat",
+      "name": "Dinî Lügat",
       "short_name": "Sözlük",
       "url": "/sozluk",
-      "description": "9800+ dini terim"
+      "description": "9.863 dinî terim"
     },
     {
       "name": "Fıkhî Hükümler",

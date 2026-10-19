@@ -1,7 +1,7 @@
 // ===== Se'âdet-i Ebediyye - İnteraktif İlmihâl =====
 const PDF_URL = 'https://www.hakikatkitabevi.net/downloads/001.pdf';
 // Her release'te index.html'deki BUILD sabitiyle birlikte bump edilir — lazy-load edilen data/kod dosyalarının cache key'i.
-const ASSET_VERSION = '2026-06-11-r2';
+const ASSET_VERSION = '2026-10-19-r1';
 function vQuery() { return '?v=' + ASSET_VERSION; }
 
 // ===== URL ROUTING (Clean URL + Hash Fallback) =====
@@ -49,7 +49,8 @@ async function handleRoute() {
   try {
     const fullPath = getRoutePath();
     const parts = fullPath.split('/');
-    const route = parts[0];
+    // vercel.json'daki /icindekiler yolu da İçindekiler sayfasını açar
+    const route = parts[0] === 'icindekiler' ? 'icerik' : parts[0];
 
     if (route === 'madde' && parts.length >= 3) {
       const kisim = parseInt(parts[1]);
@@ -317,7 +318,6 @@ function warmDirectRouteData(path) {
   var kisim = parseInt(match[1], 10);
   if (!kisim) return;
   loadKisimTexts(kisim).catch(function() {});
-  ensureMaddelerData().catch(function() {});
 }
 
 function scheduleBackgroundPreload(delay) {
@@ -378,9 +378,24 @@ function sayfaLabel(madde) {
   return 'Sayfa ' + madde.sayfa_no;
 }
 
+// Kitabın içindekilerindeki "Mektûb No." sütunu: 1-3. cildler İmâm-ı Rabbânî hazretlerinin,
+// 4-6. cildler Muhammed Ma'sûm-i Serhendî hazretlerinin (Mektûbât) kitâbıdır.
+function mektubEtiketi(ref, duzMetin) {
+  var m = /^(\d)—(\d+)$/.exec(ref || '');
+  if (!m) return duzMetin ? 'Mektûb: ' + ref : '<span>Mektûb: ' + escapeHtml(ref) + '</span>';
+  var c = parseInt(m[1], 10);
+  var rabbani = c <= 3;
+  var cild = rabbani ? c : c - 3;
+  var kisa = (rabbani ? 'Mektûbât ' : 'Mektûbât-ı Ma\'sûmiyye ') + cild + '/' + m[2];
+  if (duzMetin) return kisa;
+  var uzun = (rabbani ? 'İmâm-ı Rabbânî hazretlerinin' : 'Muhammed Ma\'sûm-i Serhendî hazretlerinin') +
+    ' (Mektûbât) kitâbı, ' + cild + '. cild, ' + m[2] + '. mektûb';
+  return '<span style="white-space:nowrap" title="' + uzun + '">' + kisa + '</span>';
+}
+
 function sayfaLinkPdf(sayfa, label) {
   if (!label) label = 'Sayfa ' + sayfa;
-  return `<a href="#" onclick="showPdfPage(${sayfa});return false" class="sayfa-link" title="PDF sayfasını göster">${label}</a>`;
+  return `<a href="${PDF_URL}#page=${parseInt(sayfa, 10)}" target="_blank" rel="noopener" class="sayfa-link" title="Kitabın aslını (PDF) bu sahîfede aç">${label}</a>`;
 }
 
 function escapeHtml(str) {
@@ -400,7 +415,9 @@ function slugify(text) {
     .replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
 }
 
-// ===== PDF VIEWER =====
+// ===== PDF (kitabın aslı) =====
+// Sitenin CSP'si başka alan adlarını iframe'de açmaya izin vermez; mobil tarayıcılar da
+// iframe içinde PDF göstermez. Bu yüzden kitabın aslı yeni sekmede, ilgili sahîfede açılır.
 function openSayfa(sayfa) {
   const madde = window.tocData?.find(m =>
     m.sayfa_no <= sayfa && (m.sayfa_bitis || m.sayfa_no) >= sayfa
@@ -411,34 +428,7 @@ function openSayfa(sayfa) {
 }
 
 function showPdfPage(sayfa) {
-  let viewer = document.getElementById('pdf-viewer');
-  if (viewer) viewer.remove();
-
-  viewer = document.createElement('div');
-  viewer.id = 'pdf-viewer';
-  viewer.innerHTML = `
-    <div class="pdf-viewer-header">
-      <span>Sayfa ${sayfa}</span>
-      <div class="pdf-nav">
-        <button onclick="changePdfPage(-1)">\u25C0</button>
-        <span id="pdf-page-num">${sayfa}</span>
-        <button onclick="changePdfPage(1)">\u25B6</button>
-      </div>
-      <button onclick="document.getElementById('pdf-viewer').remove()" class="pdf-close">\u2715</button>
-    </div>
-    <iframe src="${PDF_URL}#page=${sayfa}" id="pdf-iframe"></iframe>
-  `;
-  document.getElementById('madde-body')?.appendChild(viewer);
-}
-
-function changePdfPage(delta) {
-  const numEl = document.getElementById('pdf-page-num');
-  const iframe = document.getElementById('pdf-iframe');
-  if (!numEl || !iframe) return;
-  const newPage = parseInt(numEl.textContent) + delta;
-  if (newPage < 1 || newPage > 1248) return;
-  numEl.textContent = newPage;
-  iframe.src = `${PDF_URL}#page=${newPage}`;
+  window.open(PDF_URL + '#page=' + parseInt(sayfa, 10), '_blank', 'noopener');
 }
 
 // ===== NAVIGATION =====
@@ -557,9 +547,9 @@ function loadIcerik(filterKisim, filterText) {
         <div class="madde-badge">${m.madde_no}</div>
         <div class="madde-info">
           <div class="madde-title">${m.baslik}${okundu ? OKUNDU_TIK_HTML : ''}</div>
-          <div class="madde-meta">${kisimLabels[m.kisim]}${m.mektup_ref ? ' \u00B7 <span style="white-space:nowrap">Mektup: ' + m.mektup_ref + '</span>' : ''}</div>
+          <div class="madde-meta">${kisimLabels[m.kisim]}${m.mektup_ref ? ' \u00B7 ' + mektubEtiketi(m.mektup_ref) : ''}</div>
         </div>
-        <div class="madde-sayfa">${sayfaLink(m.sayfa_no)}</div>
+        <div class="madde-sayfa">s. ${m.sayfa_no}</div>
       </div>
     `;
   });
@@ -628,9 +618,9 @@ function renderFilteredMaddeler(filtered) {
         <div class="madde-badge">${m.madde_no}</div>
         <div class="madde-info">
           <div class="madde-title">${m.baslik}${okundu ? OKUNDU_TIK_HTML : ''}</div>
-          <div class="madde-meta">${kisimLabels[m.kisim]}${m.mektup_ref ? ' \u00B7 <span style="white-space:nowrap">Mektup: ' + m.mektup_ref + '</span>' : ''}</div>
+          <div class="madde-meta">${kisimLabels[m.kisim]}${m.mektup_ref ? ' \u00B7 ' + mektubEtiketi(m.mektup_ref) : ''}</div>
         </div>
-        <div class="madde-sayfa">${sayfaLink(m.sayfa_no)}</div>
+        <div class="madde-sayfa">s. ${m.sayfa_no}</div>
       </div>
     `;
   });
@@ -678,7 +668,7 @@ async function loadKisimTexts(kisim) {
     var timer = setTimeout(function() {
       try { ctrl.abort(); } catch (e) {}
       finish(null, new Error('timeout'));
-    }, 2500);
+    }, 30000); // ~1,6 MB'lık kısım dosyası yavaş mobil bağlantıda 2,5 sn'de inmiyordu
 
     function finish(data, err) {
       if (settled) return;
@@ -695,10 +685,18 @@ async function loadKisimTexts(kisim) {
       resolve(data || null);
     }
 
-    fetch(assetUrl('texts/kisim' + kisim + '.json' + vQuery()), { signal: ctrl.signal }).then(function(resp) {
-      if (!resp.ok) throw new Error('HTTP ' + resp.status);
-      return resp.json();
-    }).then(function(data) {
+    var onYukleme = window.__kisimOnYukleme;
+    var istek;
+    if (onYukleme && String(onYukleme.kisim) === String(kisim)) {
+      window.__kisimOnYukleme = null; // index.html'deki erken istek bir kez kullanılır
+      istek = onYukleme.istek;
+    } else {
+      istek = fetch(assetUrl('texts/kisim' + kisim + '.json' + vQuery()), { signal: ctrl.signal }).then(function(resp) {
+        if (!resp.ok) throw new Error('HTTP ' + resp.status);
+        return resp.json();
+      });
+    }
+    istek.then(function(data) {
       finish(data, null);
     }).catch(function(err) {
       finish(null, err);
@@ -733,74 +731,22 @@ function findMaddeTextInMaddelerData(kisim, maddeNo) {
   return fallbackMadde ? (fallbackMadde.metin || null) : null;
 }
 
-function resolveFirstTruthy(promises) {
-  return new Promise(function(resolve) {
-    if (!promises || promises.length === 0) {
-      resolve(null);
-      return;
-    }
-    var settled = false;
-    var pending = promises.length;
-    function finish(value) {
-      if (settled) return;
-      settled = true;
-      resolve(value || null);
-    }
-    promises.forEach(function(promise) {
-      Promise.resolve(promise).then(function(value) {
-        if (value) {
-          finish(value);
-          return;
-        }
-        pending -= 1;
-        if (pending <= 0) finish(null);
-      }).catch(function() {
-        pending -= 1;
-        if (pending <= 0) finish(null);
-      });
-    });
-  });
-}
-
 async function getMaddeText(kisim, maddeNo, options) {
   options = options || {};
   debugLog('getMaddeText:start', kisim, maddeNo);
   var cachedFallback = findMaddeTextInMaddelerData(kisim, maddeNo);
-  if (cachedFallback) {
-    debugLog('getMaddeText:cached-fallback-hit', kisim, maddeNo, cachedFallback.length);
-    return cachedFallback;
-  }
+  if (cachedFallback) return cachedFallback;
 
-  var candidates = [
-    settleWithTimeout(
-      loadKisimTexts(kisim).then(function(kisimTexts) {
-        return kisimTexts ? (kisimTexts[String(maddeNo)] || kisimTexts[maddeNo] || null) : null;
-      }),
-      4000,
-      null,
-      'Kısım ' + kisim + ' metin fetch'
-    )
-  ];
+  // Önce kısım dosyası (texts/kisimN.json); 4,5 MB'lık maddeler-data.js yalnız bu başarısız olursa iner.
+  var kisimTexts = null;
+  try { kisimTexts = await loadKisimTexts(kisim); } catch (e) {}
+  var metin = kisimTexts ? (kisimTexts[String(maddeNo)] || kisimTexts[maddeNo] || null) : null;
+  if (metin || options.allowFallback === false) return metin;
 
-  if (options.allowFallback !== false) {
-    candidates.push(
-      settleWithTimeout(
-        Promise.resolve().then(function() {
-          if (window.maddelerData) return findMaddeTextInMaddelerData(kisim, maddeNo);
-          return ensureMaddelerData().then(function() {
-            return findMaddeTextInMaddelerData(kisim, maddeNo);
-          });
-        }),
-        5000,
-        null,
-        'maddelerData fallback'
-      )
-    );
-  }
-
-  var resolved = await resolveFirstTruthy(candidates);
-  debugLog('getMaddeText:resolved', kisim, maddeNo, resolved ? resolved.length : 0);
-  return resolved;
+  try {
+    await settleWithTimeout(ensureMaddelerData(), 30000, null, 'maddelerData fallback');
+  } catch (e) {}
+  return findMaddeTextInMaddelerData(kisim, maddeNo);
 }
 
 function getMaddeMeta(kisim, maddeNo) {
@@ -862,7 +808,7 @@ function hydrateMaddeIliskiliMaddeler(requestId, kisim, maddeNo, baslik) {
   var slot = document.getElementById('madde-iliskili-slot');
   if (!slot || requestId !== _maddeOpenRequestId) return;
   try {
-    slot.innerHTML = getIliskiliMaddeler(kisim, maddeNo, baslik) || '';
+    slot.innerHTML = getIliskiliMaddeler(kisim, maddeNo) || '';
   } catch (e) {
     console.error('İlgili madde yükleme hatası:', e);
     slot.innerHTML = '';
@@ -923,7 +869,7 @@ async function openMadde(kisim, maddeNo, fromRoute, searchQuery) {
       <div class="madde-detail-meta">
         <span>${kisimLabels[madde.kisim]}, Madde ${madde.madde_no}</span>
         <span>${sayfaLinkPdf(madde.sayfa_no, sayfaLabel(madde))}</span>
-        ${madde.mektup_ref ? `<span>Mektup: ${madde.mektup_ref}</span>` : ''}
+        ${madde.mektup_ref ? mektubEtiketi(madde.mektup_ref) : ''}
       </div>
     </div>
     <div class="madde-text" style="text-align:center;padding:40px;color:var(--text-muted);">Metin y\u00fckleniyor...</div>
@@ -967,7 +913,7 @@ async function openMadde(kisim, maddeNo, fromRoute, searchQuery) {
       <div class="madde-detail-meta">
         <span>${kisimLabels[madde.kisim]}, Madde ${madde.madde_no}</span>
         <span>${sayfaLinkPdf(madde.sayfa_no, sayfaLabel(madde))}</span>
-        ${madde.mektup_ref ? `<span>Mektup: ${madde.mektup_ref}</span>` : ''}
+        ${madde.mektup_ref ? mektubEtiketi(madde.mektup_ref) : ''}
       </div>
     </div>
     <div class="madde-text">${metin}</div>
@@ -996,7 +942,7 @@ async function openMadde(kisim, maddeNo, fromRoute, searchQuery) {
     const textEl = body.querySelector('.madde-text');
     if (!textEl) return;
     try {
-      textEl.innerHTML = highlightWords(rawMetinSafe);
+      textEl.innerHTML = maddeMetniHTML(rawMetinSafe, true);
       bindMaddeTooltipListeners();
       if (typeof initInlineSozluk === 'function') initInlineSozluk(textEl);
       if (typeof aktivCrossLinks === 'function') { try { aktivCrossLinks(textEl); } catch(e2) {} }
@@ -1024,7 +970,7 @@ async function openMadde(kisim, maddeNo, fromRoute, searchQuery) {
 
   // Önce çıplak metni göster; sözlük vurgularını sonra bindir.
   try {
-    renderBody(escapeHtml(rawMetinSafe));
+    renderBody(maddeMetniHTML(rawMetinSafe, false));
     debugLog('openMadde:renderBody:done', kisim, maddeNo);
   } catch (e) {
     console.error('Madde render hatası:', e);
@@ -1213,7 +1159,7 @@ function getRelatedSahislar(kisim, maddeNo) {
   if (related.length === 0) return '';
 
   const items = related.slice(0, 12).map(s => {
-    return `<a href="#sahis/${s.slug}" onclick="event.preventDefault();openSahis('${s.slug}')" class="related-sahis-link">
+    return `<a href="/sahis/${s.slug}" onclick="event.preventDefault();openSahis('${s.slug}')" class="related-sahis-link">
       <span class="rs-icon">${s.kategori === 'sahabi' ? '\u2739' : '\u2605'}</span>
       <span class="rs-isim">${s.isim}</span>
     </a>`;
@@ -1432,25 +1378,74 @@ function highlightWords(text) {
   return result.join('');
 }
 
+// ===== MADDE METNİ DİZGİSİ =====
+// Metin kitabın düzeniyle saklanır: paragraflar boş satırla ayrılır; satır kırılımlı
+// bloklar şiir veya cedveldir; ⟦şekil:N⟧ ve ⟦cedvel:N⟧ işaretleri kitabın o sahîfesine bağlanır.
+function kitapSahifeBaglantisi(sayfa, etiket) {
+  var s = parseInt(sayfa, 10);
+  return '<a href="' + PDF_URL + '#page=' + s + '" target="_blank" rel="noopener" class="sayfa-link">' + escapeHtml(etiket || ('Kitabın ' + s + '. sahîfesi')) + '</a>';
+}
+
+function maddeAraBaslikMi(par) {
+  if (par.length > 160) return false;
+  var harfler = par.replace(/“[^”]*”/g, '').replace(/[^A-Za-zÇĞİÖŞÜÂÎÛçğıöşüâîû]/g, '');
+  if (harfler.length < 3) return false;
+  var buyuk = 0;
+  for (var i = 0; i < harfler.length; i++) {
+    var ch = harfler[i];
+    if (ch === ch.toLocaleUpperCase('tr') && ch !== ch.toLocaleLowerCase('tr')) buyuk++;
+  }
+  return buyuk / harfler.length >= 0.7;
+}
+
+function maddeMetniHTML(raw, sozluklu) {
+  var cevir = sozluklu ? highlightWords : escapeHtml;
+  return String(raw || '').split(/\n{2,}/).map(function(par) {
+    if (!par.trim()) return '';
+    var sekil = par.match(/^⟦şekil:(\d+)⟧$/);
+    if (sekil) {
+      return '<div class="madde-sekil">Kitapta burada bir şekil vardır: ' + kitapSahifeBaglantisi(sekil[1], 'şekli ' + sekil[1] + '. sahîfede görün') + '</div>';
+    }
+    var cedvel = par.match(/^⟦cedvel:(\d+)⟧\n([\s\S]*)$/);
+    if (cedvel) {
+      return '<figure class="madde-cedvel"><pre>' + escapeHtml(cedvel[2]) + '</pre><figcaption>' + kitapSahifeBaglantisi(cedvel[1], 'Kitaptaki aslı: ' + cedvel[1] + '. sahîfe') + '</figcaption></figure>';
+    }
+    if (par.indexOf('\n') !== -1) {
+      if (/\S {2,}\S/.test(par)) return '<pre class="madde-tablo">' + escapeHtml(par) + '</pre>';
+      return '<p class="madde-siir">' + cevir(par).replace(/\n/g, '<br>') + '</p>';
+    }
+    if (/^\[\d\] /.test(par)) return '<p class="madde-dipnot">' + cevir(par) + '</p>';
+    if (maddeAraBaslikMi(par)) return '<p class="madde-ara-baslik">' + cevir(par) + '</p>';
+    return '<p>' + cevir(par) + '</p>';
+  }).join('');
+}
+
 // ===== TOOLTIP =====
 let _tooltipHideTimer = null;
 
+// Sözlük ipucu ve açılır kutusu kapsayıcıya tek seferde bağlanır (olay delegasyonu). Kelime
+// başına dinleyici, metin innerHTML ile yeniden yazılınca (vurgu, çapraz bağlantı) kayboluyordu.
+function zorKelimeHedefi(e) {
+  return e.target && e.target.closest ? e.target.closest('.zor-kelime') : null;
+}
+
 function bindSozlukTooltipListeners(container) {
-  if (!container) return;
-  container.querySelectorAll('.zor-kelime').forEach(function(el) {
-    if (el.dataset.tooltipBound === '1') return;
-    el.dataset.tooltipBound = '1';
-    el.addEventListener('mouseenter', showTooltip);
-    el.addEventListener('mouseleave', hideTooltip);
+  if (!container || container.dataset.sozlukIpucu === '1') return;
+  container.dataset.sozlukIpucu = '1';
+  container.addEventListener('mouseover', function(e) {
+    var el = zorKelimeHedefi(e);
+    if (el) showTooltip({ target: el });
+  });
+  container.addEventListener('mouseout', function(e) {
+    var el = zorKelimeHedefi(e);
+    if (el && !(e.relatedTarget && el.contains(e.relatedTarget))) hideTooltip();
   });
 }
 
 function resetSozlukBindingState(container) {
   if (!container) return;
-  container.querySelectorAll('.zor-kelime').forEach(function(el) {
-    delete el.dataset.tooltipBound;
-    delete el.dataset.inlineSozlukBound;
-  });
+  delete container.dataset.sozlukIpucu;
+  delete container.dataset.sozlukKutusu;
 }
 
 function showTooltip(e) {
@@ -1632,7 +1627,7 @@ function loadSozluk(filterText) {
   }
 
   list.innerHTML = html || '<p style="text-align:center;color:var(--text-muted);padding:40px;">Kelime bulunamad\u0131.</p>';
-  countEl.textContent = `${toplam} kelime${toplam > SOZLUK_SAYFA_BOYUTU ? ' \u00b7 Sayfa ' + _sozlukSayfa + '/' + toplamSayfa : ''}`;
+  countEl.textContent = `${toplam.toLocaleString("tr-TR")} kelime${toplam > SOZLUK_SAYFA_BOYUTU ? ' \u00b7 Sayfa ' + _sozlukSayfa + '/' + toplamSayfa : ''}`;
   // Sayfanın başına scroll
   list.scrollTop = 0;
 }
@@ -1704,6 +1699,21 @@ async function openSahis(slug, fromRoute) {
 
   if (!fromRoute) updateHash(`sahis/${slug}`);
 
+  // SEO meta: kapatınca önceki sayfanınkine dönülür
+  try {
+    if (!window.__sahisOncekiSeo) {
+      var _can = document.querySelector('link[rel="canonical"]');
+      var _desc = document.querySelector('meta[name="description"]');
+      window.__sahisOncekiSeo = [document.title, _desc ? _desc.getAttribute('content') : '', _can ? _can.href : ''];
+    }
+    var _bio = String(sahis.biyografi || '').replace(/\s+/g, ' ').trim();
+    updateSeoMeta(
+      sahis.isim + ' - Se\'âdet-i Ebediyye',
+      (_bio ? _bio.slice(0, 155) + (_bio.length > 155 ? '…' : '') : sahis.isim + ' hakkında Se\'âdet-i Ebediyye\'deki hâl tercemesi.'),
+      'https://www.ilmihal.org/sahis/' + slug
+    );
+  } catch (e) {}
+
   const body = document.getElementById('sahis-body');
   var _s = document.getElementById('sahis-detay');
   if (_s) { _s.style.display = 'flex'; _s.setAttribute('aria-hidden', 'false'); }
@@ -1723,7 +1733,7 @@ async function openSahis(slug, fromRoute) {
   if (sahis.biyografi) {
     html += `<div class="sahis-detail-section">
       <h4>Hâl Tercemesi</h4>
-      <div class="sahis-biyografi">${sahis.biyografi}</div>
+      <div class="sahis-biyografi">${String(sahis.biyografi).split(/\n+/).map(function(p) { return '<p>' + escapeHtml(p) + '</p>'; }).join('')}</div>
     </div>`;
   }
 
@@ -1756,6 +1766,10 @@ async function openSahis(slug, fromRoute) {
 function closeSahis() {
   var _s = document.getElementById('sahis-detay');
   if (_s) { _s.style.display = 'none'; _s.setAttribute('aria-hidden', 'true'); }
+  if (window.__sahisOncekiSeo) {
+    try { updateSeoMeta.apply(null, window.__sahisOncekiSeo); } catch (e) {}
+    window.__sahisOncekiSeo = null;
+  }
   // If madde overlay is open behind, return to it (don't navigate away)
   const maddeOverlay = document.getElementById('madde-detay');
   if (maddeOverlay && maddeOverlay.style.display === 'flex') {
@@ -1892,9 +1906,9 @@ function renderTabloCard(tablo) {
       </div>
       <div class="tablo-card-body">
         ${renderTabloBody(tablo)}
-        <div class="tablo-kaynak">
+        ${tablo.kaynak_metin ? `<div class="tablo-kaynak">
           <strong>Kitaptan:</strong> ${tablo.kaynak_metin}
-        </div>
+        </div>` : ''}
       </div>
     </div>
   `;
@@ -1949,9 +1963,9 @@ function openTabloModal(id) {
       <div class="tablo-card-body" style="max-height:50vh;overflow-y:auto">
         ${renderTabloBody(tablo)}
       </div>
-      <div class="tablo-kaynak">
+      ${tablo.kaynak_metin ? `<div class="tablo-kaynak">
         <strong>Kitaptan:</strong> ${tablo.kaynak_metin}
-      </div>
+      </div>` : ''}
       <div class="tablo-modal-actions">
         <button type="button" class="btn btn-primary" onclick="closeTabloModal();closeMadde();goToTabloDetay('${tablo.id}')">
           Tablo Sayfasına Git \u2192
@@ -2026,9 +2040,9 @@ function openTabloDetay(id) {
         <div class="tablo-card-body">
           ${renderTabloBody(tablo)}
         </div>
-        <div class="tablo-kaynak">
+        ${tablo.kaynak_metin ? `<div class="tablo-kaynak">
           <strong>Kitaptan:</strong> ${tablo.kaynak_metin}
-        </div>
+        </div>` : ''}
       </div>
       <div class="tablo-detay-nav">
         ${prev ? `<button type="button" class="tablo-nav-btn tablo-nav-prev" onclick="openTabloDetay('${prev.id}')">
@@ -2045,9 +2059,9 @@ function openTabloDetay(id) {
   window.scrollTo(0, 0);
   updateUrl('fevaid/tablolar/' + id);
   updateSeoMeta(
-    tablo.baslik + ' — Se\u2019\u00e2det-i Ebediyye',
-    tablo.kaynak_metin,
-    'fevaid/tablolar/' + id
+    tablo.baslik + ' - Se\'âdet-i Ebediyye',
+    tablo.kaynak_metin || (tablo.baslik + '. Se\'âdet-i Ebediyye\'den derlenen tablo.'),
+    'https://www.ilmihal.org/fevaid/tablolar/' + id
   );
 }
 
@@ -2709,8 +2723,12 @@ async function doFullSearch(fromRoute) {
   if (requestId !== _searchRequestId) return;
 
   // 3. AI MADDE ÖNERİSİ (sadece sorularda, arka planda)
+  // Ekim 2026: raufenc.com/api/ilmihal-search uç noktası ilmihal.org'dan erişilemiyor (çapraz site
+  // isteği 403, eğik çizgili adres 404, OpenAI çağrısı hata) ve gönderilen sorular Gizlilik
+  // Bildirimi'nde yer almıyordu. Uç nokta düzelip bildirim güncellenene kadar kapalıdır.
+  var AI_ARAMA_ACIK = false;
   var aiPromise = null;
-  if (searchEngine && searchEngine.isQuestion && searchEngine.isQuestion(rawQuery) && searchEngine.aiSearch && !directMatch && matches.length < 4) {
+  if (AI_ARAMA_ACIK && searchEngine && searchEngine.isQuestion && searchEngine.isQuestion(rawQuery) && searchEngine.aiSearch && !directMatch && matches.length < 4) {
     aiPromise = searchEngine.aiSearch(rawQuery);
   }
 
@@ -2894,7 +2912,7 @@ document.getElementById('full-search')?.addEventListener('keydown', e => {
 
   const categoryLabels = {
     madde: 'Maddeler',
-    sozluk: 'Dini L\u00fcgat',
+    sozluk: 'Din\u00ee L\u00fcgat',
     sahis: '\u015eah\u0131slar',
     tablo: 'Tablolar'
   };
@@ -3117,7 +3135,7 @@ function loadGununMaddesi() {
 
   const kisimLabels = { 1: 'Birinci Kısım', 2: 'İkinci Kısım', 3: 'Üçüncü Kısım' };
   baslikEl.textContent = madde.baslik;
-  ozetEl.textContent = kisimLabels[madde.kisim] + ', Madde ' + madde.madde_no + (madde.mektup_ref ? ' · Mektup: ' + madde.mektup_ref : '');
+  ozetEl.textContent = kisimLabels[madde.kisim] + ', Madde ' + madde.madde_no + (madde.mektup_ref ? ' · ' + mektubEtiketi(madde.mektup_ref, true) : '');
   btn.onclick = () => { navigateTo('icerik'); openMadde(madde.kisim, madde.madde_no); };
 }
 
@@ -3179,7 +3197,7 @@ function updateBookmarkBtn(kisim, maddeNo) {
 // ===== PAYLAŞIM =====
 function shareMadde() {
   if (!currentMaddeForBookmark) return;
-  const url = window.location.origin + window.location.pathname + '#madde/' + currentMaddeForBookmark.kisim + '/' + currentMaddeForBookmark.madde_no;
+  const url = 'https://www.ilmihal.org/madde/' + currentMaddeForBookmark.kisim + '/' + currentMaddeForBookmark.madde_no;
   if (navigator.share) {
     navigator.share({
       title: currentMaddeForBookmark.baslik + ' - Se\'âdet-i Ebediyye',
@@ -3268,55 +3286,54 @@ function extractSearchHint(explanation) {
 }
 
 // ===== QUIZ SİSTEMİ =====
+// Sorular ve açıklamalardaki alıntılar kitabın metniyle karşılaştırılmıştır (Ekim 2026); m = kaynak madde
 var quizSorulari = {
   iman: [
-    {s:"İslâmın beş şartından ilki nedir?",c:["Kelime-i şehâdet söylemek","Namaz kılmak","Oruç tutmak","Zekât vermek"],d:0,a:"Kitapta 'Her müslimânın beş şeyi yapması farzdır: Birincisi, kelime-i şehâdet söylemekdir' buyurulmaktadır. (K1/M51)",m:{k:1,m:51}},
-    {s:"Ehl-i sünnet itikadında îmânın altı şartından biri değildir?",c:["Allahü teâlâya inanmak","Meleklere inanmak","Reenkarnasyona inanmak","Kadere inanmak"],d:2,a:"Kitapta, Âmentünün altı şartı bildirilmektedir: Allahü teâlâya, meleklerine, kitaplarına, peygamberlerine, âhiret gününe ve kadere inanmak. (K1/M3)",m:{k:1,m:3}},
-    {s:"Ehl-i sünnetin reîsi kimdir?",c:["İmâm-ı Şâfi'î","İmâm-ı a'zam Ebû Hanîfe","İmâm-ı Mâlik","İmâm-ı Ahmed bin Hanbel"],d:1,a:"Kitapta 'Ehl-i sünnetin reîsi, imâm-ı a'zam Ebû Hanîfedir' buyurulmaktadır. (K1/M5)",m:{k:1,m:5}},
-    {s:"Peygamber Efendimiz (sallallahü aleyhi ve sellem) hangi şehirde doğmuştur?",c:["Medîne","Mekke","Tâif","Kudüs"],d:1,a:"Kitapta Peygamber Efendimizin Mekke-i mükerremede doğduğu bildirilmektedir. (K1/M90)",m:{k:1,m:90}},
-    {s:"Dört büyük melekten biri değildir?",c:["Cebrâîl","Mikâîl","Münker","İsrâfîl"],d:2,a:"Kitapta dört büyük melek bildirilmektedir: Cebrâîl, Mikâîl, İsrâfîl ve Azrâîl aleyhimüsselâm. Münker ise kabir meleklerindendir. (K1/M3)",m:{k:1,m:3}},
-    {s:"Bid'at ne demektir?",c:["Güzel âdet","Dinde sonradan çıkarılan şey","Sünnet","Peygamberimizin emri"],d:1,a:"Kitapta 'Resûlullahın ve dört halîfesinin yapmadıkları şeyleri ibâdet olarak yapmağa bid'at denir' buyurulmaktadır. (K1/M1)",m:{k:1,m:1}},
-    {s:"Fıkıh ilmi ne demektir?",c:["Kur'ân-ı kerîm tefsîri","Hadîs-i şerîf ilmi","Helâl ve harâmları bildiren ilim","Tasavvuf ilmi"],d:2,a:"Kitapta 'Fıkıh ilmi, insanların yapması ve yapmaması lâzım olan şeyleri bildirir' buyurulmaktadır. (K1/M6)",m:{k:1,m:6}},
-    {s:"Kur'ân-ı kerîm kaç sûredir?",c:["100","110","114","120"],d:2,a:"Kur'ân-ı kerîm 114 sûre ve 6236 âyet-i kerîmedir. (K1/M5)",m:{k:1,m:5}}
+    {s:"İslâmın beş şartından ilki nedir?",c:["Kelime-i şehâdet söylemek","Namaz kılmak","Oruç tutmak","Zekât vermek"],d:0,a:"Kitapta Peygamber Efendimizin (sallallahü aleyhi ve sellem) 'İslâmın binâsı beş direk üzerine kurulmuşdur. Birincisi, Eşhedü en lâ ilâhe illallah ve eşhedü enne Muhammeden abdühu ve resûlüh, demek ve bunun ma’nâsına inanmakdır' buyurduğu bildirilmektedir. (K1/M46)",m:{k:1,m:46}},
+    {s:"Ehl-i sünnet itikadında îmânın altı şartından biri değildir?",c:["Allahü teâlâya inanmak","Meleklere inanmak","Tenâsühe inanmak","Kadere inanmak"],d:2,a:"Kitapta 'Îmânın altı şartından birincisi, Allahü teâlânın var olduğuna inanmakdır' buyurulmakta (K1/M24); tenâsühün, ya’nî rûhun başka bir bedenle tekrâr dünyâya geldiğine inanmanın küfr olduğu bildirilmektedir. (K1/M39)",m:{k:1,m:24}},
+    {s:"Ehl-i sünnetin reîsi kimdir?",c:["İmâm-ı Şâfi'î hazretleri","İmâm-ı a'zam Ebû Hanîfe hazretleri","İmâm-ı Mâlik hazretleri","İmâm-ı Ahmed bin Hanbel hazretleri"],d:1,a:"Kitapta 'Ehl-i sünnetin reîsi, imâm-ı a’zam Ebû Hanîfedir' buyurulmaktadır. (K1/M5)",m:{k:1,m:5}},
+    {s:"Peygamber Efendimiz (sallallahü aleyhi ve sellem) hangi şehirde dünyâya gelmiştir?",c:["Medîne-i münevvere","Mekke-i mükerreme","Tâif","Kudüs"],d:1,a:"Kitapta Peygamber Efendimizin (sallallahü aleyhi ve sellem) Mekke-i mükerreme şehrinde dünyâya geldiği bildirilmektedir. (K1/M95)",m:{k:1,m:95}},
+    {s:"Kabirde suâl soracak iki meleğin ismi nedir?",c:["Cebrâîl ve İsrâfîl","Münker ve Nekîr","Kirâmen kâtibîn","Azrâîl ve Mikâîl"],d:1,a:"Kitapta kabrde Münker ve Nekîr denilen iki meleğin suâl soracağına inanmak lâzım olduğu bildirilmektedir. (K1/M46)",m:{k:1,m:46}},
+    {s:"Bid'at ne demektir?",c:["Güzel âdet","Dinde sonradan çıkarılan şey","Sünnet","Peygamber Efendimizin (sallallahü aleyhi ve sellem) emri"],d:1,a:"Kitapta 'Bid’at, dinde sonradan yapılan şey demekdir' buyurulmakta; Peygamber Efendimizin (sallallahü aleyhi ve sellem) ve dört halîfesinin zemânlarında bulunmayıp sonradan ibâdet olarak çıkarılan şeyler olduğu bildirilmektedir. (K1/M34)",m:{k:1,m:34}},
+    {s:"Fıkıh ilmi ne demektir?",c:["Kur'ân-ı Kerîm tefsîri","Hadîs-i şerîf ilmi","Yapılması ve yapılmaması lâzım olan işleri bildiren ilim","Tasavvuf ilmi"],d:2,a:"Kitapta 'Fıkh ilmi, insanların yapması ve yapmaması lâzım olan işleri bildirir' buyurulmaktadır. (K2/M16)",m:{k:2,m:16}},
+    {s:"Kur'ân-ı Kerîm kaç sûredir?",c:["100","110","114","120"],d:2,a:"Kitapta 'Kur’ân-ı kerîmde yüzondört sûre ve altıbinikiyüzotuzaltı âyet vardır' buyurulmaktadır. (K1/M25)",m:{k:1,m:25}}
   ],
   namaz: [
-    {s:"Beş vakit namazda toplam kaç rekât farz vardır?",c:["17","20","25","40"],d:0,a:"Kitapta 'Beş vakt nemâz, otuzüç farz' başlığında, sabah 2, öğle 4, ikindi 4, akşam 3, yatsı 4 olmak üzere 17 rekât farz bildirilmektedir. (K1/M51)",m:{k:1,m:51}},
-    {s:"Nemâzın farzlarından (şartlarından) değildir?",c:["Kıbleye dönmek","Niyet etmek","Eûzü okumak","Abdest almak"],d:2,a:"Kitapta nemâzın farzları: Hadesten tahâret, necâsetten tahâret, setr-i avret, istikbâl-i kıble, vakit ve niyyet olarak bildirilmektedir. Eûzü okumak sünnet-i müekkededir. (K1/M52)",m:{k:1,m:52}},
-    {s:"Abdesti bozan hallerden değildir?",c:["Uyumak","Ağlamak","Kan gelmesi","Bayılmak"],d:1,a:"Kitapta abdesti bozan haller: Ön ve arkadan bir şey çıkması, kan gelmesi, uyumak, bayılmak gibi haller bildirilmektedir. Ağlamak abdesti bozmaz. (K1/M53)",m:{k:1,m:53}},
-    {s:"Sabah namazının sünneti kaç rekâttır?",c:["2","4","3","Sünnet yoktur"],d:0,a:"Kitapta sabah namazının farzından önce iki rekât sünnet-i müekkede kılınacağı bildirilmektedir. (K1/M59)",m:{k:1,m:59}},
-    {s:"Nemâzda secde kaç defa yapılır?",c:["Her rekâtta 1","Her rekâtta 2","Her rekâtta 3","Sadece son rekâtta"],d:1,a:"Kitapta her rekâtta iki secde yapılacağı bildirilmektedir. (K1/M62)",m:{k:1,m:62}},
-    {s:"Nemâzın vâciblerinden değildir?",c:["Fâtiha okumak","Rükû'da üç kerre tesbîh","Selâm vermek","Kıyâmda durmak"],d:3,a:"Kitapta kıyâmda durmak nemâzın farzlarındandır. Fâtiha okumak, vitir nemâzında kunût okumak, rükû' ve secdelerde tesbîh söylemek vâcibdir. (K1/M62)",m:{k:1,m:62}},
-    {s:"Seferde (yolculukda) dört rekâtlık farz nemâzlar kaç rekât kılınır?",c:["4 rekât","3 rekât","2 rekât","Kılınmaz"],d:2,a:"Kitapta seferde, ya'nî yolculukda dört rekâtlık farz nemâzların iki rekât kılınacağı bildirilmektedir. (K1/M72)",m:{k:1,m:72}},
-    {s:"Cenâze nemâzında rükû' ve secde var mıdır?",c:["Evet, ikisi de var","Sadece rükû' var","Sadece secde var","Hayır, ikisi de yok"],d:3,a:"Kitapta cenâze nemâzında rükû' ve secde olmadığı, dört tekbîr ile kılındığı bildirilmektedir. (K1/M77)",m:{k:1,m:77}}
+    {s:"Beş vakit namazda toplam kaç rekât farz vardır?",c:["17","20","25","40"],d:0,a:"Kitapta sabah 2, öğle 4, ikindi 4, akşam 3, yatsı 4 olmak üzere beş vakit namazın farzları bildirilmektedir; toplamı 17 rekâttır. (K1/M51)",m:{k:1,m:51}},
+    {s:"Namazın farzlarından (şartlarından) değildir?",c:["Kıbleye dönmek","Niyet etmek","Eûzü okumak","Abdest almak"],d:2,a:"Kitapta namazın dışındaki farzları (şartları) şöyle bildirilmektedir: Hadesden tahâret, necâsetden tahâret, setr-i avret, istikbâl-i kıble, vakt, niyyet, tahrîme tekbîri. Eûzü okumak ise sünnettir. (K1/M52)",m:{k:1,m:52}},
+    {s:"Abdesti bozan hallerden değildir?",c:["Uyumak","Ağlamak","Kan gelmesi","Bayılmak"],d:1,a:"Kitapta abdesti bozan şeyler arasında uyumak ve bayılmak sayılmakta; ağrı olmadan ağlamakla göz yaşı akınca abdestin bozulmadığı bildirilmektedir. (K1/M52)",m:{k:1,m:52}},
+    {s:"Sabah namazının sünneti kaç rekâttır?",c:["2","4","3","Sünnet yoktur"],d:0,a:"Kitapta sabah namazında 'Önce, iki rek’at sünneti, sonra iki rek’at farzı kılınır. Bu sünnet, çok kuvvetlidir' buyurulmaktadır. (K1/M51)",m:{k:1,m:51}},
+    {s:"Namazda her rekâtta kaç secde yapılır?",c:["1","2","3","Sadece son rekâtta"],d:1,a:"Her rekâtta iki secde yapılır. Kitapta secdeleri birbiri ardınca yapmanın namazın vâciblerinden olduğu bildirilmektedir. (K1/M66)",m:{k:1,m:66}},
+    {s:"Namazın vâciblerinden değildir?",c:["Fâtiha okumak","Ta’dîl-i erkân","Selâm vermek","Kıyâmda durmak"],d:3,a:"Kıyâmda durmak namazın farzlarındandır. Kitapta Fâtiha okumak, rükû’da ve secdelerde ta’dîl-i erkân ve namazın sonunda selâm vermek vâciblerden sayılmaktadır. (K1/M66)",m:{k:1,m:66}},
+    {s:"Seferde (yolculukta) dört rekâtlık farz namazlar kaç rekât kılınır?",c:["4 rekât","3 rekât","2 rekât","Kılınmaz"],d:2,a:"Kitapta seferde, ya’nî yolculukta dört rekâtlık farz namazların iki rekât kılınacağı bildirilmektedir. (K1/M65)",m:{k:1,m:65}},
+    {s:"Cenâze namazında rükû ve secde var mıdır?",c:["Evet, ikisi de var","Sadece rükû var","Sadece secde var","Hayır, ikisi de yok"],d:3,a:"Cenâze namazı dört tekbîr ile kılınır; rükû ve secdesi yoktur. Kitapta 'Cenâze nemâzının dört tekbîrinden herbiri, bir rek’at gibidir' buyurulmaktadır. (K3/M57)",m:{k:3,m:57}}
   ],
   oruc: [
-    {s:"Ramazan orucu ne zaman farz oldu?",c:["Hicretin 1. yılında","Hicretin 2. yılında","Mekke'de","Hicretin 5. yılında"],d:1,a:"Kitapta Ramazan orucunun hicretin ikinci yılında, Şa'bân ayının onuncu günü farz olduğu bildirilmektedir. (K1/M79)",m:{k:1,m:79}},
-    {s:"Orucu bozmayan hallerden biri hangisidir?",c:["Yemek yemek","Unutarak su içmek","Bilerek su içmek","İğne yaptırmak"],d:1,a:"Kitapta 'Unutarak yimek ve içmek orucu bozmaz. Hâtırlayınca bırakılır, oruca devâm edilir' buyurulmaktadır. (K1/M80)",m:{k:1,m:80}},
-    {s:"İftar vakti ne zamandır?",c:["Güneş doğunca","Öğle ezanında","İkindi ezanında","Güneş batınca"],d:3,a:"Kitapta oruç, güneş batınca açılır denilmektedir. (K1/M79)",m:{k:1,m:79}},
-    {s:"İmsâk vakti ne demektir?",c:["Güneşin doğma vakti","Oruç yeme-içmeyi bırakma vakti","Öğle vakti","Akşam vakti"],d:1,a:"Kitapta imsâk vaktinde yemenin, içmenin bırakılması gerektiği bildirilmektedir. (K1/M79)",m:{k:1,m:79}},
-    {s:"Oruçlu iken misvâk kullanmak orucu bozar mı?",c:["Evet bozar","Hayır bozmaz","Sadece sabah bozar","Mekrûhdur"],d:1,a:"Kitapta misvâk kullanmanın orucu bozmadığı bildirilmektedir. (K1/M80)",m:{k:1,m:80}}
+    {s:"Ramazan orucu ne zaman farz oldu?",c:["Hicretin 1. yılında","Hicretin 2. yılında","Mekke'de","Hicretin 5. yılında"],d:1,a:"Kitapta Ramazan orucunun hicretten on sekiz ay sonra, Şa’bân ayının onuncu günü farz olduğu bildirilmektedir; bu, hicretin ikinci yılıdır. (K1/M79)",m:{k:1,m:79}},
+    {s:"Orucu bozmayan hallerden biri hangisidir?",c:["Yemek yemek","Unutarak su içmek","Bilerek su içmek","Sigara içmek"],d:1,a:"Kitapta orucu bozmayan şeyler arasında, oruçlu olduğunu unutarak yemek ve içmek bildirilmektedir. (K1/M79)",m:{k:1,m:79}},
+    {s:"İftar vakti ne zamandır?",c:["Güneş doğunca","Öğle ezanında","İkindi ezanında","Güneş batınca"],d:3,a:"Kitapta orucun güneş batınca açılacağı bildirilmektedir. (K1/M79)",m:{k:1,m:79}},
+    {s:"İmsâk vakti ne demektir?",c:["Güneşin doğma vakti","Oruca başlanan, yeme-içmenin bırakıldığı vakit","Öğle vakti","Akşam vakti"],d:1,a:"Kitapta oruca imsâk vaktinde başlanacağı ve bu vaktin fecr-i sâdık ile başladığı bildirilmektedir. (K1/M60)",m:{k:1,m:60}},
+    {s:"Oruçlu iken misvâk kullanmak orucu bozar mı?",c:["Evet bozar","Hayır bozmaz","Sadece sabah bozar","Mekrûhtur"],d:1,a:"Kitapta 'Misvâk, hacamat mekrûh değildir' buyurulmaktadır. (K1/M79)",m:{k:1,m:79}}
   ],
   zekat: [
-    {s:"Zekât vermek için en az ne kadar altın gerekir?",c:["20 miskal (96 gram)","10 miskal","50 miskal","100 miskal"],d:0,a:"Kitapta, altının nisâbının 20 miskal, ya'nî 96 gram olduğu bildirilmektedir. '4x20=80 gramdır demek doğru olmaz' diye açıkça yazılıdır. (K1/M78)",m:{k:1,m:78}},
-    {s:"Zekât malın yüzde kaçıdır?",c:["Yüzde 1","Yüzde 2.5","Yüzde 5","Yüzde 10"],d:1,a:"Kitapta zekâtın, nisâb mikdârı malın kırkta biri, ya'nî yüzde iki buçuğu olduğu bildirilmektedir. (K1/M78)",m:{k:1,m:78}},
-    {s:"Zekât kimlere verilmez?",c:["Fakirlere","Borçlulara","Ana-babaya","Yolda kalmışlara"],d:2,a:"Kitapta zekâtın usûl (ana, baba, dede, nine) ve fürûa (evlât, torun) verilmeyeceği bildirilmektedir. (K1/M78)",m:{k:1,m:78}},
-    {s:"Gümüşün zekât nisâbı kaç dirhemdir?",c:["100 dirhem","200 dirhem","300 dirhem","400 dirhem"],d:1,a:"Kitapta gümüşün nisâbının ikiyüz dirhem-i şer'î, ya'nî 672 gram olduğu bildirilmektedir. (K1/M78)",m:{k:1,m:78}},
-    {s:"Zekât ne zaman farz olmuştur?",c:["Mekke'de","Hicretin 1. yılında","Hicretin 2. yılında","Hicretin 5. yılında"],d:2,a:"Kitapta zekâtın hicretin ikinci yılında farz olduğu bildirilmektedir. (K1/M78)",m:{k:1,m:78}}
+    {s:"Zekât vermek için en az ne kadar altın gerekir?",c:["20 miskal (96 gram)","10 miskal","50 miskal","100 miskal"],d:0,a:"Kitapta altının nisâbının yirmi miskal, ya’nî 96 gram olduğu bildirilmektedir. '4x20=80 gramdır demek de doğru olmaz' diye açıkça yazılıdır. (K1/M78)",m:{k:1,m:78}},
+    {s:"Zekât, nisâb miktarı malın ne kadarıdır?",c:["Yüzde 1","Kırkta biri (yüzde 2,5)","Yüzde 5","Onda biri"],d:1,a:"Kitapta para ve ticâret malında zekâtın kırkta bir olduğu bildirilmektedir. (K1/M78)",m:{k:1,m:78}},
+    {s:"Zekât kimlere verilmez?",c:["Fakirlere","Borçlulara","Ana-babaya","Yolda kalmışlara"],d:2,a:"Kitapta 'Anaya, babaya ve dedelerin, ninelerin hiçbirine ve kendi çocuklarına ve torunlara zekât verilmez' buyurulmaktadır. (K1/M78)",m:{k:1,m:78}},
+    {s:"Gümüşün zekât nisâbı kaç dirhemdir?",c:["100 dirhem","200 dirhem","300 dirhem","400 dirhem"],d:1,a:"Kitapta gümüşün nisâbının ikiyüz dirhem-i şer’î, ya’nî 672 gram olduğu bildirilmektedir. (K1/M78)",m:{k:1,m:78}},
+    {s:"Zekât ne zaman farz olmuştur?",c:["Mekke'de","Hicretin 1. yılında","Hicretin 2. yılında","Hicretin 5. yılında"],d:2,a:"Kitapta zekâtın hicretin ikinci senesinde, Ramazan ayında farz olduğu bildirilmektedir. (K1/M78)",m:{k:1,m:78}}
   ],
   hac: [
-    {s:"Hac ibâdeti ne zaman farz olmuştur?",c:["Hicretin 6. yılında","Hicretin 9. yılında","Mekke'de","Hicretin 2. yılında"],d:1,a:"Kitapta hac ibâdetinin hicretin dokuzuncu yılında farz olduğu bildirilmektedir. (K1/M84)",m:{k:1,m:84}},
-    {s:"Haccın farzlarından değildir?",c:["İhrâm","Vakfe","Tavâf","Sa'y"],d:3,a:"Kitapta haccın farzlarının üç olduğu bildirilmektedir: İhrâm, Arafat'ta vakfe ve ziyâret tavâfı. Sa'y ise vâcibdir. (K1/M84)",m:{k:1,m:84}},
-    {s:"Arafat vakfesi hangi gün yapılır?",c:["Zilhicce 8","Zilhicce 9","Zilhicce 10","Zilhicce 11"],d:1,a:"Kitapta Arafat vakfesinin Zilhicce ayının dokuzuncu günü yapılacağı bildirilmektedir. (K1/M85)",m:{k:1,m:85}},
-    {s:"İhrâmda iken yapılması yasak olan hallerden değildir?",c:["Tıraş olmak","Güzel koku sürmek","Yemek yemek","Dikişli elbise giymek"],d:2,a:"Kitapta ihrâm yasakları bildirilmektedir: Tıraş, güzel koku, dikişli elbise harâmdır. Yemek serbesttir. (K1/M86)",m:{k:1,m:86}},
-    {s:"Umre ile hac arasındaki fark nedir?",c:["Umrede vakfe yoktur","Umrede tavâf yoktur","Umrede sa'y yoktur","Fark yoktur"],d:0,a:"Kitapta umrede Arafat vakfesinin olmadığı bildirilmektedir. (K1/M88)",m:{k:1,m:88}}
+    {s:"Peygamber Efendimiz (sallallahü aleyhi ve sellem) hicretin kaçıncı yılında hacca gitmiştir?",c:["Sekizinci","Dokuzuncu","Onuncu","On birinci"],d:2,a:"Kitapta 'Resûlullah “sallallahü aleyhi ve sellem”, hicretin onuncu yılında, Kusvâ adındaki devesine binerek hacca gitdi' buyurulmaktadır. (K1/M84)",m:{k:1,m:84}},
+    {s:"Haccın farzlarından değildir?",c:["İhrâm","Vakfe","Tavâf","Sa'y"],d:3,a:"Kitapta 'Haccın farzı üçdür' buyurulmakta; bunların ihrâm, Arafât’ta vakfe ve ziyâret tavâfı olduğu, Safâ ile Merve arasında sa’y etmenin ise vâcib olduğu bildirilmektedir. (K1/M84)",m:{k:1,m:84}},
+    {s:"Arafat vakfesi hangi gün yapılır?",c:["Zilhicce 8","Zilhicce 9 (Arefe günü)","Zilhicce 10","Zilhicce 11"],d:1,a:"Kitapta Arefe günü Arafât’ta vakfeye durmanın haccın farzlarından olduğu bildirilmektedir. (K1/M84)",m:{k:1,m:84}},
+    {s:"İhrâmda iken yapılması yasak olan hallerden değildir?",c:["Tıraş olmak","Güzel koku sürmek","Yemek yemek","Dikişli elbise giymek"],d:2,a:"Kitapta ihrâmlı iken tıraş olmanın, güzel koku sürmenin ve erkeklerin dikişli elbise giymesinin yasak olduğu bildirilmektedir. Yemek yemek yasak değildir. (K1/M84)",m:{k:1,m:84}},
+    {s:"Umre ile hac arasındaki fark nedir?",c:["Umrede vakfe yoktur","Umrede tavâf yoktur","Umrede sa'y yoktur","Fark yoktur"],d:0,a:"Kitapta umrenin ihrâm ile yapılan tavâf ve sa’y ile saçı kazımak veya kısaltmaktan ibâret olduğu bildirilmektedir; umrede Arafât vakfesi yoktur. (K1/M84)",m:{k:1,m:84}}
   ],
   ahlak: [
-    {s:"Kitapta nefs-i emmâre ne olarak tanımlanmıştır?",c:["İnsanın rûhu","Hep kötülük emreden nefs","Akıl","Kalb"],d:1,a:"Kitapta 'Nefs-i emmâre dâimâ kötülük emr eder' buyurulmaktadır. (K2/M4)",m:{k:2,m:4}},
-    {s:"Büyük günahlardan biri değildir?",c:["Yalan söylemek","Gıybet etmek","Erken kalkmak","İçki içmek"],d:2,a:"Kitapta büyük günahlar arasında adam öldürmek, zinâ, içki, yalan, gıybet, hırsızlık bildirilmektedir. (K2/M1)",m:{k:2,m:1}},
-    {s:"Hadîs-i şerîfte en çok tavsiye edilen ahlâk?",c:["Sabır","Cömertlik","Doğruluk","Tevâzu"],d:2,a:"Kitapta 'Doğrulukdan ayrılmayınız. Doğruluk iyiliğe, iyilik Cennete götürür' hadîs-i şerîfi bildirilmektedir. (K2/M1)",m:{k:2,m:1}},
-    {s:"Kitapta tevbenin şartlarından biri değildir?",c:["Günâha pişmân olmak","Günâhı terk etmek","Bir daha yapmamağa azm etmek","Sadaka vermek"],d:3,a:"Kitapta tevbenin üç şartı bildirilmektedir: Pişmân olmak, terk etmek ve bir daha yapmamağa azm etmek. (K2/M1)",m:{k:2,m:1}},
-    {s:"Riyâ ne demektir?",c:["Yalan söylemek","İbâdeti gösteriş için yapmak","Hased etmek","Gıybet etmek"],d:1,a:"Kitapta 'İbâdetini başkalarına gösteriş için yapmak riyâdır. Riyâ, gizli şirkdir' buyurulmaktadır. (K2/M3)",m:{k:2,m:3}},
-    {s:"Tövbe-i nasûh ne demektir?",c:["Samîmî tevbe","Gizli tevbe","Topluluk önünde tevbe","Günde beş kez tevbe"],d:0,a:"Kitapta tövbe-i nasûh, samîmî olarak yapılan, bir daha günâha dönmemek üzere yapılan tevbe olarak bildirilmektedir. (K2/M1)",m:{k:2,m:1}}
+    {s:"Kitapta nefs-i emmâre nasıl anlatılmaktadır?",c:["İnsanın rûhu","Şehvetlere kavuşmak için insanı zorlayan, sınır tanımayan kuvvet","Akıl","Kalb"],d:1,a:"Kitapta '(Nefs-i emmâre) kuvvetidir. Bu kuvvet, şehvetlere kavuşmak ve gadab edilenlerle döğüşmek için insanı zorlar. Fekat insanın nefsi, bu işinde bir sınır tanımaz' buyurulmaktadır. (K2/M28)",m:{k:2,m:28}},
+    {s:"Büyük günahlardan biri değildir?",c:["Gıybet etmek","Farz namazı özürsüz vaktinde kılmamak","Erken kalkmak","Şarap içmek"],d:2,a:"Kitapta 'Özrsüz, tenbellikle farz nemâzı vaktinde kılmamak, büyük günâhdır' (K1/M74), müslümanı kötüleyerek 'gıybet yapmak, elbet büyük günâhdır' (K2/M72) ve 'Şerâb içmek, büyük günâhların en büyüğüdür' (K2/M42) buyurulmaktadır.",m:{k:1,m:74}},
+    {s:"Kitapta tevbenin şartlarından biri değildir?",c:["Günâha pişmân olmak","Günâha devâm etmemek","Bir daha yapmamaya karar vermek","Sadaka vermek"],d:3,a:"Kitapta 'Tevbenin sahîh olması için dört şart vardır. Bunlar, pişmân olup, günâha devâm etmemek, bir dahâ yapmamağa karâr vermek, afv olması için düâ ve istigfâr etmek, Allah ve kul haklarını ödemekdir' buyurulmaktadır. (K1/M74)",m:{k:1,m:74}},
+    {s:"Riyâ ne demektir?",c:["Yalan söylemek","İbâdeti başkasına göstermek için yapmak","Hased etmek","Gıybet etmek"],d:1,a:"Kitapta Peygamber Efendimizin (sallallahü aleyhi ve sellem) 'Küçük şirkden korununuz!' buyurduğu, küçük şirkin ne olduğu sorulunca 'Riyâ' buyurduğu ve bunun başkasına göstermek için ibâdet etmek olduğu bildirilmektedir. (K3/M2)",m:{k:3,m:2}}
   ],
   karisik: []
 };
@@ -3354,7 +3371,7 @@ function renderQuizSoru() {
   var html = '<div class="quiz-ilerleme"><div class="quiz-ilerleme-bar"><div class="quiz-ilerleme-fill" style="width:' + pct + '%"></div></div><span class="quiz-ilerleme-text">' + (quizState.current + 1) + '/' + quizState.toplam + '</span></div>';
   html += '<div class="quiz-soru"><div class="quiz-soru-num">Soru ' + (quizState.current + 1) + '</div><div class="quiz-soru-text">' + s.s + '</div><div class="quiz-secenekler">';
   s.c.forEach(function(c, i) {
-    html += '<div class="quiz-secenek" onclick="quizCevapla(' + i + ')" data-idx="' + i + '">' + c + '</div>';
+    html += '<button type="button" class="quiz-secenek" onclick="quizCevapla(' + i + ')" data-idx="' + i + '">' + c + '</button>';
   });
   html += '</div><div class="quiz-aciklama" id="quiz-aciklama" style="display:none"></div></div>';
   area.innerHTML = html;
@@ -3370,6 +3387,7 @@ function quizCevapla(idx) {
     if (i === s.d) el.classList.add('dogru');
     if (i === idx && idx !== s.d) el.classList.add('yanlis');
     el.style.pointerEvents = 'none';
+    el.disabled = true;
   });
   if (idx === s.d) quizState.dogru++;
   var aciklama = document.getElementById('quiz-aciklama');
@@ -3377,7 +3395,7 @@ function quizCevapla(idx) {
   var butonlar = '<div class="quiz-butonlar">';
   if (s.m) {
     var hint = escapeSearchQ(extractSearchHint(s.a));
-    butonlar += '<a href="#madde/' + s.m.k + '/' + s.m.m + '" onclick="openMadde(' + s.m.k + ',' + s.m.m + ',false,\'' + hint + '\');return false" class="quiz-bolum-btn">📖 Kitap Bölümüne Git</a>';
+    butonlar += '<a href="/madde/' + s.m.k + '/' + s.m.m + '" onclick="openMadde(' + s.m.k + ',' + s.m.m + ',false,\'' + hint + '\');return false" class="quiz-bolum-btn">Kitaptaki yerini oku</a>';
   }
   if (quizState.current < quizState.toplam - 1) {
     butonlar += '<button type="button" class="btn btn-primary quiz-sonraki-btn" onclick="quizState.current++;renderQuizSoru()">Sonraki Soruya Geç →</button>';
@@ -3424,21 +3442,24 @@ function findDirectMatch(query) {
 // searchInBook kaldırıldı — doFullSearch içinde BM25 scoring ile birleştirildi
 
 // ===== FAQ SCHEMA (dinamik) =====
+// Madde sayfası için yapılandırılmış veri: kitabın bir bölümü (Article). Önceki FAQPage
+// işaretlemesi, soru-cevap olmayan madde başlıklarını "soru" diye bildiriyordu.
 function addFaqSchema(madde, metin) {
   var existing = document.getElementById('faq-schema');
   if (existing) existing.remove();
   var script = document.createElement('script');
   script.type = 'application/ld+json';
   script.id = 'faq-schema';
-  var snippet = metin.replace(/<[^>]+>/g, '').substring(0, 300);
+  var ozet = String(metin || '').replace(/⟦[^⟧]*⟧/g, ' ').replace(/\s+/g, ' ').trim().substring(0, 300);
   script.textContent = JSON.stringify({
     "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [{
-      "@type": "Question",
-      "name": madde.baslik,
-      "acceptedAnswer": { "@type": "Answer", "text": snippet + '...' }
-    }]
+    "@type": "Article",
+    "headline": madde.baslik,
+    "url": 'https://www.ilmihal.org/madde/' + madde.kisim + '/' + madde.madde_no,
+    "inLanguage": "tr",
+    "description": ozet + '…',
+    "isPartOf": { "@type": "Book", "name": "Se'âdet-i Ebediyye", "author": { "@type": "Person", "name": "Hüseyn Hilmi Işık" } },
+    "pagination": String(madde.sayfa_no) + (madde.sayfa_bitis > madde.sayfa_no ? '-' + madde.sayfa_bitis : '')
   });
   document.head.appendChild(script);
 }
@@ -3450,7 +3471,7 @@ function updateOgMeta(madde) {
     if (el) el.setAttribute('content', content);
   };
   setMeta('og:title', madde.baslik + ' - Se\'âdet-i Ebediyye');
-  setMeta('og:url', 'https://www.ilmihal.org/#madde/' + madde.kisim + '/' + madde.madde_no);
+  setMeta('og:url', 'https://www.ilmihal.org/madde/' + madde.kisim + '/' + madde.madde_no);
   setMeta('og:description', 'Kısım ' + madde.kisim + ', Madde ' + madde.madde_no + ' - Se\'âdet-i Ebediyye İnteraktif İlmihâl');
   setMeta('twitter:title', madde.baslik + ' - Se\'âdet-i Ebediyye');
   setMeta('twitter:description', 'Kısım ' + madde.kisim + ', Madde ' + madde.madde_no);
@@ -3561,13 +3582,6 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 });
 
-// Fevâid'den gelen sahislar count
-document.addEventListener('DOMContentLoaded', function() {
-  if (window.sahislarData) {
-    var el = document.getElementById('fevaid-count-sahislar');
-    if (el) el.textContent = window.sahislarData.length + ' şahıs';
-  }
-});
 
 // ===== SESLİ DİNLEME SİSTEMİ =====
 var audioState = {
@@ -3579,28 +3593,36 @@ var audioState = {
 
 var AUDIO_BASE = 'https://www.hakikatkitabevi.net';
 
-// Madde başlangıç offset'leri (saniye) — sayfanın ortasında başlayan maddeler için
-// Whisper speech-to-text ile tespit edildi
-var audioOffsetMap = {
-  "1/2": 175.0, "1/3": 272.0, "1/5": 53.0, "1/6": 84.0, "1/7": 115.0,
-  "1/8": 105.9, "1/9": 115.9, "1/10": 296.9, "1/11": 282.9, "1/12": 255.7,
-  "1/13": 294.4, "1/14": 129.0, "1/15": 325.0, "1/17": 117.6,
-  "1/18": 149.0, "1/19": 155.5, "1/20": 64.0, "1/22": 65.0,
-  "1/23": 187.0, "1/25": 166.8, "1/26": 173.8, "1/28": 329.2,
-  "1/29": 198.8, "1/34": 74.5, "1/35": 86.2, "1/40": 11.1,
-  "1/43": 12.1, "1/44": 347.0, "1/45": 172.2, "1/52": 82.3,
-  "1/73": 18.0, "1/75": 63.8, "1/93": 120.0, "1/94": 130.6,
-  "2/10": 34.5, "2/12": 10.0, "2/14": 12.0, "2/27": 245.0,
-  "2/56": 146.5, "2/61": 42.0, "2/64": 14.2, "2/66": 61.5,
-  "2/70": 12.0, "2/73": 5.0, "3/9": 9.5, "3/14": 1.5,
-  "3/23": 27.4, "3/24": 2.1, "3/25": 104.7, "3/31": 14.2,
-  "3/46": 15.3, "3/47": 4.8
+// Maddelerin ses kayıtlarındaki yerleri:
+//   "kısım/madde": [başlangıç kaydı, başlangıç saniyesi, bitiş kaydı, bitiş saniyesi]
+// Ses kayıtları kitabın 2026 baskısının sayfa sınırlarıyla örtüşmediğinden her maddenin
+// kayıttaki başlangıcı konuşma tanıma (Whisper) ile metne hizalanarak bulunmuştur.
+// Bitiş saniyesi null ise son kayıt sonuna kadar çalınır. Haritada olmayan maddede
+// kitabın sayfa aralığı kullanılır.
+var sesAraligiMap = {
+  "1/1": [17, 0, 21, 173.7], "1/2": [21, 173.7, 21, 271.6], "1/3": [21, 271.6, 21, null],
+  "1/4": [22, 0, 22, 51.8], "1/5": [22, 51.8, 22, 82.9], "1/6": [22, 82.9, 22, 113.8],
+  "1/7": [22, 113.8, 23, 58.8], "1/8": [23, 58.8, 23, 114.7], "1/9": [23, 114.7, 23, 159.8],
+  "1/10": [23, 159.8, 23, 283.5], "1/11": [23, 283.5, 30, 254.6], "1/12": [30, 254.6, 30, 294.4],
+  "1/13": [30, 294.4, 32, 133.5], "1/14": [32, 133.5, 32, 323.9], "1/15": [32, 323.9, 33, 12.6],
+  "1/16": [33, 12.6, 33, 119.2], "1/17": [33, 119.2, 34, 147.5], "1/18": [34, 147.5, 38, 153.5],
+  "1/19": [38, 153.5, 39, 76.3], "1/20": [39, 76.3, 40, 17.7], "1/21": [40, 17.7, 40, 64.0],
+  "1/22": [40, 64.0, 40, 192.4], "1/23": [40, 192.4, 41, 22.7], "1/24": [41, 22.7, 43, 164.0],
+  "1/25": [43, 164.0, 48, 172.1], "1/26": [48, 172.1, 50, 271.4], "1/27": [50, 271.4, 51, 328.2],
+  "1/28": [51, 328.2, 52, 202.8], "1/29": [52, 202.8, 53, 113.4], "1/30": [53, 113.4, 53, null],
+  "1/31": [54, 0, 67, null], "1/33": [68, 0, 68, null], "1/34": [69, 0, 69, null],
+  "1/35": [70, 0, 72, null], "1/36": [73, 0, 76, null], "1/37": [77, 0, 78, null],
+  "1/39": [79, 0, 86, null], "1/40": [87, 0, 88, null], "1/41": [89, 0, 95, null],
+  "1/42": [96, 0, 96, null], "1/43": [97, 0, 99, null], "1/44": [100, 0, 100, null],
+  "1/45": [101, 0, 101, null], "1/46": [102, 0, 114, null], "1/47": [115, 0, 115, null],
+  "1/49": [116, 0, 117, null]
 };
 
 function getAudioPagesForMadde(madde) {
   if (!window.audioMap) return [];
-  var start = madde.sayfa_no;
-  var end = Math.max(madde.sayfa_bitis || madde.sayfa_no, madde.pdf_sayfa_bitis || madde.sayfa_no, madde.sayfa_no);
+  var aralik = sesAraligiMap[madde.kisim + '/' + madde.madde_no];
+  var start = aralik ? aralik[0] : madde.sayfa_no;
+  var end = aralik ? aralik[2] : Math.max(madde.sayfa_bitis || madde.sayfa_no, madde.pdf_sayfa_bitis || madde.sayfa_no, madde.sayfa_no);
   var pages = [];
   for (var p = start; p <= end; p++) {
     if (window.audioMap[p]) {
@@ -3684,20 +3706,19 @@ function loadAudioPage(idx) {
   audio.src = AUDIO_BASE + encodeURI(page.path).replace(/%20/g, '%20');
   audio.load();
 
-  // İlk sayfada offset varsa, madde başlangıcına atla
-  if (idx === 0 && audioState.madde) {
-    var key = audioState.madde.kisim + '/' + audioState.madde.madde_no;
-    var offset = audioOffsetMap[key];
-    if (offset && offset > 0) {
-      audio.addEventListener('loadedmetadata', function onMeta() {
-        audio.removeEventListener('loadedmetadata', onMeta);
-        audio.currentTime = offset;
-      });
-    }
+  // Madde kaydın ortasında başlıyorsa başlangıcına atla; son kayıtta maddenin bittiği yerde dur
+  var aralik = audioState.madde ? sesAraligiMap[audioState.madde.kisim + '/' + audioState.madde.madde_no] : null;
+  audioState.bitisSaniye = (aralik && idx === audioState.pages.length - 1 && page.page === aralik[2]) ? aralik[3] : null;
+  if (idx === 0 && aralik && page.page === aralik[0] && aralik[1] > 0) {
+    var offset = aralik[1];
+    audio.addEventListener('loadedmetadata', function onMeta() {
+      audio.removeEventListener('loadedmetadata', onMeta);
+      audio.currentTime = offset;
+    });
   }
 
   var label = document.getElementById('audio-page-label');
-  if (label) label.textContent = 'Sayfa ' + page.page + ' (' + (idx + 1) + '/' + audioState.pages.length + ')';
+  if (label) label.textContent = 'Kayıt ' + (idx + 1) + '/' + audioState.pages.length;
 }
 
 function playAudio() {
@@ -3760,6 +3781,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
   audio.addEventListener('timeupdate', function() {
     if (!audio.duration) return;
+    if (audioState.bitisSaniye && audio.currentTime >= audioState.bitisSaniye) {
+      audioState.bitisSaniye = null;
+      audio.pause();
+      sesKaydiBitti();
+      return;
+    }
     var pct = (audio.currentTime / audio.duration) * 100;
     var prog = document.getElementById('audio-progress');
     if (prog) prog.style.width = pct + '%';
@@ -3771,17 +3798,19 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 
-  audio.addEventListener('ended', function() {
-    if (audioState.currentIdx < audioState.pages.length - 1) {
-      audioNav(1); playAudio();
-    } else if (continuousPlay) {
-      navMadde(1);
-      setTimeout(function() { toggleAudio(); }, 1500);
-    } else {
-      audioState.playing = false; updateAudioUI();
-    }
-  });
+  audio.addEventListener('ended', sesKaydiBitti);
 });
+
+function sesKaydiBitti() {
+  if (audioState.currentIdx < audioState.pages.length - 1) {
+    audioNav(1); playAudio();
+  } else if (continuousPlay) {
+    navMadde(1);
+    setTimeout(function() { toggleAudio(); }, 1500);
+  } else {
+    audioState.playing = false; updateAudioUI();
+  }
+}
 
 // closeMadde'de audio'yu durdur
 var _origCloseMadde = closeMadde;
@@ -4030,7 +4059,7 @@ function checkGoalCompletion(goal) {
 function showCelebration() {
   var el = document.createElement('div');
   el.className = 'celebration-overlay';
-  el.innerHTML = '<div class="celebration-content"><div class="celebration-icon">🎉</div><h3>Tebrikler!</h3><p>Bugünkü okuma hedefinizi tamamladınız.</p><button type="button" class="btn btn-primary" onclick="this.parentElement.parentElement.remove()">Devam Et</button></div>';
+  el.innerHTML = '<div class="celebration-content"><div class="celebration-icon">✓</div><h3>Bugünkü okuma hedefiniz tamam</h3><p>Allahü teâlâ okuduklarınızla amel etmeyi nasîb eylesin.</p><button type="button" class="btn btn-primary" onclick="this.parentElement.parentElement.remove()">Devam Et</button></div>';
   document.body.appendChild(el);
   setTimeout(function() { el.remove(); }, 8000);
 }
@@ -4066,15 +4095,15 @@ function showSplash() {
 
 // ===== SAYFA SEO META GÜNCELLEMELERİ =====
 var pageSeoMap = {
-  'anasayfa': ["Se'âdet-i Ebediyye - İnteraktif İlmihâl", "Se'âdet-i Ebediyye kitabının tamamı, aranabilir 241 madde, 9800+ terimlik dini lügat, 1019 âlim biyografisi ve interaktif silsile atlası."],
-  'sozluk': ["Dini Lügat (9800+ Terim) - Se'âdet-i Ebediyye", "Akâid, ibâdet, tasavvuf, fıkıh ve daha birçok kategoride 9800+ dini terimin Türkçe ve Osmanlıca karşılıkları."],
-  'sahislar': ["İslâm Âlimleri (1019 Biyografi) - Se'âdet-i Ebediyye", "Kitapta adı geçen 1019 İslâm âlimi ve velîsinin hâl tercemeleri, eserleri ve yaşadıkları dönemler."],
-  'fevaid': ["Fevâid - Se'âdet-i Ebediyye", "Tablolar, diyagramlar, fıkıh karşılaştırmaları, dini lügat, âlim biyografileri ve daha fazlası."],
-  'arama': ["Arama - Se'âdet-i Ebediyye", "Se'âdet-i Ebediyye kitabının 241 maddesinde tam metin arama. Yapay zeka destekli soru-cevap."],
+  'anasayfa': ["Se'âdet-i Ebediyye - İnteraktif İlmihâl", "Se'âdet-i Ebediyye kitabının tamamı, aranabilir 241 madde, 9.863 terimlik dinî lügat, 1020 hâl tercemesi ve interaktif silsile atlası."],
+  'sozluk': ["Dinî Lügat (9.863 Terim) - Se'âdet-i Ebediyye", "Se'âdet-i Ebediyye'de geçen 9.863 dinî terimin Osmanlıca yazılışları ve anlamları."],
+  'sahislar': ["Hâl Tercemeleri (1020 Kişi) - Se'âdet-i Ebediyye", "Se'âdet-i Ebediyye'de adı geçen 1020 kişinin, kitabın kendi hâl tercemeleri bölümünden alınmış biyografileri."],
+  'fevaid': ["Fevâid - Se'âdet-i Ebediyye", "Fıkhî hükümler, tablolar, âyet-i kerîme ve hadîs-i şerîf indeksi, dinî lügat, hâl tercemeleri ve kitabın kendi tanımları."],
+  'arama': ["Arama - Se'âdet-i Ebediyye", "Se'âdet-i Ebediyye kitabının 241 maddesinde, dinî lügatte ve hâl tercemelerinde tam metin arama."],
   'quiz': ["Bilgi Testi - Se'âdet-i Ebediyye", "İmân, namaz, oruç, zekât, hac ve ahlâk konularında bilgilerinizi test edin."],
-  'ayet-hadis': ["Âyet-i Kerîme ve Hadîs-i Şerîf İndeksi - Se'âdet-i Ebediyye", "Kitapta geçen 232 âyet-i kerîme ve 231 hadîs-i şerîfin referanslı listesi."],
+  'ayet-hadis': ["Âyet-i Kerîme ve Hadîs-i Şerîf İndeksi - Se'âdet-i Ebediyye", "Kitapta geçen 193 âyet-i kerîme ve 449 hadîs-i şerîfin, kitaptaki yerleriyle listesi."],
   'hakkinda': ["Hakkında - Se'âdet-i Ebediyye İnteraktif İlmihâl", "Se'âdet-i Ebediyye interaktif ilmihâl platformu hakkında bilgi."],
-  'gunun-bilgisi': ["Günün Bilgisi - Se'âdet-i Ebediyye", "Her gün kitaptan bir hadîs-i şerîf veya âyet-i kerîme. Paylaşılabilir görsel kartlar."],
+  'gunun-bilgisi': ["Günün Suâli - Se'âdet-i Ebediyye", "Her gün Se'âdet-i Ebediyye kitabından bir suâl; cevabı ilgili maddede. Paylaşılabilir görsel kartlar."],
   'rehberler': ["Konuya Göre Rehberler - Se'âdet-i Ebediyye", "Namaz, oruç, hac, zekât, iman ve ahlâk konularında adım adım rehberler."],
   'icerik': ["İçindekiler - Se'âdet-i Ebediyye", "Se'âdet-i Ebediyye kitabının 241 maddesinin tam listesi. Üç kısım halinde konulara göre düzenlenmiş."],
   'calisma-alanim': ["Çalışma Alanım - Se'âdet-i Ebediyye", "Kişisel okuma ilerlemesi, notlar ve çalışma takibi. Veriler yalnızca tarayıcınızda saklanır."],
@@ -4084,8 +4113,8 @@ var pageSeoMap = {
 
 // ===== GÜNÜN BİLGİSİ =====
 function getGununBilgisiIdx() {
-  var daysSinceEpoch = Math.floor(Date.now() / 86400000);
-  return daysSinceEpoch;
+  // Gün, kullanıcının yerel gece yarısında değişir (UTC'ye göre hesap Türkiye'de sabah 03:00'te değiştiriyordu)
+  return Math.floor((Date.now() - new Date().getTimezoneOffset() * 60000) / 86400000);
 }
 
 function getGununBilgisi(offset) {
@@ -4317,7 +4346,7 @@ async function renderRehberler() {
       '<div class="rehber-ikon">' + r.ikon + '</div>' +
       '<h3>' + escapeHtml(r.baslik) + '</h3>' +
       '<p>' + escapeHtml(r.aciklama) + '</p>' +
-      '<span class="fevaid-sec-count">' + r.bolumler.length + ' bolum, ' + toplamMadde + ' madde</span>' +
+      '<span class="fevaid-sec-count">' + r.bolumler.length + ' bölüm, ' + toplamMadde + ' madde</span>' +
       '</div>';
   }).join('');
 }
@@ -4366,48 +4395,33 @@ function renderRehberDetay(id) {
 }
 
 // ===== UX-03: İLİŞKİSEL ÖNERİ MODÜLLERİ =====
-function getIliskiliMaddeler(kisim, maddeNo, baslik) {
-  if (!window.tocData) return '';
-  var current = window.tocData.find(function(m) { return m.kisim === kisim && m.madde_no === maddeNo; });
-  if (!current) return '';
-
-  // Aynı kısımdaki yakın maddeler (önceki/sonraki 2)
-  var related = [];
-  window.tocData.forEach(function(m) {
-    if (m.kisim === kisim && m.madde_no !== maddeNo) {
-      var diff = Math.abs(m.madde_no - maddeNo);
-      if (diff <= 3 && diff > 0) {
-        related.push(m);
-      }
-    }
-  });
-
-  // Başlıktaki anahtar kelimelerle diğer kısımlarda eşleşen maddeler
-  if (baslik) {
-    var keywords = normalizeSearch(baslik).split(/\s+/).filter(function(w) { return w.length >= 4; });
-    if (keywords.length > 0) {
-      window.tocData.forEach(function(m) {
-        if (m.kisim === kisim && Math.abs(m.madde_no - maddeNo) <= 3) return;
-        if (related.some(function(r) { return r.kisim === m.kisim && r.madde_no === m.madde_no; })) return;
-        var normBaslik = normalizeSearch(m.baslik || '');
-        var matchCount = 0;
-        keywords.forEach(function(kw) { if (normBaslik.indexOf(kw) !== -1) matchCount++; });
-        if (matchCount >= 1 && related.length < 8) {
-          m._matchScore = matchCount;
-          related.push(m);
-        }
-      });
-      related.sort(function(a, b) { return (b._matchScore || 0) - (a._matchScore || 0); });
-    }
-  }
-
+// İlgili maddeler crossref.js'ten gelir: kitaptaki açık atıflar ("… maddeye bakınız"), bu maddeye
+// atıf yapan maddeler ve metin benzerliğiyle bulunan yakın konular. Önceki/sonraki madde zaten
+// alttaki gezinme düğmelerinde olduğu için burada gösterilmez.
+function getIliskiliMaddeler(kisim, maddeNo) {
+  if (!window.tocData || !window.crossRefData) return '';
+  var kayitlar = window.crossRefData[kisim + '/' + maddeNo] || [];
+  var oncelik = { 'madde referansı': 0, 'atıf yapan madde': 1, 'aynı konu': 2 };
+  var etiket = { 'madde referansı': 'Kitapta atıf', 'atıf yapan madde': 'Bu maddeye atıf yapan', 'aynı konu': 'Yakın konu' };
+  var gorulen = {};
+  var related = kayitlar.filter(function(r) { return r.neden in oncelik; })
+    .sort(function(a, b) { return oncelik[a.neden] - oncelik[b.neden]; })
+    .map(function(r) {
+      var key = r.kisim + '/' + r.madde_no;
+      if (gorulen[key]) return null;
+      gorulen[key] = true;
+      var m = getMaddeMeta(r.kisim, r.madde_no);
+      return m ? { m: m, neden: r.neden } : null;
+    })
+    .filter(Boolean);
   if (related.length === 0) return '';
 
   var kisimLabels = {1:'K1', 2:'K2', 3:'K3'};
   var html = '<div class="iliskili-maddeler"><h4>İlgili Maddeler</h4><div class="iliskili-grid">';
-  related.slice(0, 6).forEach(function(m) {
-    html += '<a href="#" class="iliskili-item" onclick="openMadde(' + m.kisim + ',' + m.madde_no + ');return false">' +
-      '<span class="iliskili-kisim">' + kisimLabels[m.kisim] + '/M' + m.madde_no + '</span> ' +
+  related.slice(0, 8).forEach(function(r) {
+    var m = r.m;
+    html += '<a href="/madde/' + m.kisim + '/' + m.madde_no + '" class="iliskili-item" onclick="openMadde(' + m.kisim + ',' + m.madde_no + ');return false">' +
+      '<span class="iliskili-kisim">' + kisimLabels[m.kisim] + '/M' + m.madde_no + ' · ' + etiket[r.neden] + '</span> ' +
       escapeHtml(m.baslik) + '</a>';
   });
   html += '</div></div>';
@@ -4552,7 +4566,7 @@ function togglePodcastMode() {
     html += '</div>';
 
     if (pct >= 100) {
-      html += '<div style="text-align:center;padding:16px;margin-bottom:16px;background:rgba(26,107,78,0.1);border-radius:var(--radius);color:var(--primary-dark);font-weight:500;">🎉 Bu rehberi tamamladınız!</div>';
+      html += '<div style="text-align:center;padding:16px;margin-bottom:16px;background:rgba(26,107,78,0.1);border-radius:var(--radius);color:var(--primary-dark);font-weight:500;">Bu rehberi tamamladınız. Allahü teâlâ ilminizi artırsın.</div>';
     }
 
     r.bolumler.forEach(function(b, bi) {
@@ -5096,7 +5110,7 @@ function gosterGeriBildirim() {
   overlay = document.createElement('div');
   overlay.id = 'geri-bildirim-overlay';
   overlay.className = 'gb-overlay';
-  overlay.innerHTML = '<div class="gb-modal"><div class="gb-header"><h3>Geri Bildirim</h3><button type="button" class="gb-kapat" onclick="kapatGeriBildirim()">&times;</button></div><form id="gb-form" onsubmit="gonderGeriBildirim(event)"><label class="gb-label">Tür<select id="gb-tur" required><option value="oneri">Öneri / İstek</option><option value="hata">Hata Bildirimi</option><option value="icerik">İçerik Hatası</option></select></label><label class="gb-label">Mesajınız<textarea id="gb-mesaj" rows="4" required placeholder="Lütfen detaylı yazınız..."></textarea></label><label class="gb-label">E-posta (isteğe bağlı)<input type="email" id="gb-email" placeholder="ornek@email.com"></label><div class="gb-actions"><button type="submit" class="btn btn-primary">Gönder</button><button type="button" class="btn btn-secondary" onclick="kapatGeriBildirim()">İptal</button></div></form><div id="gb-basarili" style="display:none;text-align:center;padding:32px"><div style="font-size:2.5rem;margin-bottom:12px">&#10004;</div><h4>Teşekkürler!</h4><p style="color:var(--text-light);margin-top:8px">Geri bildiriminiz alındı.</p></div></div>';
+  overlay.innerHTML = '<div class="gb-modal"><div class="gb-header"><h3>Geri Bildirim</h3><button type="button" class="gb-kapat" onclick="kapatGeriBildirim()">&times;</button></div><form id="gb-form" onsubmit="gonderGeriBildirim(event)"><label class="gb-label">Tür<select id="gb-tur" required><option value="oneri">Öneri / İstek</option><option value="hata">Hata Bildirimi</option><option value="icerik">İçerik Hatası</option></select></label><label class="gb-label">Mesajınız<textarea id="gb-mesaj" rows="4" required placeholder="Lütfen detaylı yazınız..."></textarea></label><label class="gb-label">E-posta (isteğe bağlı)<input type="email" id="gb-email" placeholder="ornek@email.com"></label><div class="gb-actions"><button type="submit" class="btn btn-primary">Gönder</button><button type="button" class="btn btn-secondary" onclick="kapatGeriBildirim()">İptal</button></div></form><div id="gb-basarili" style="display:none;text-align:center;padding:32px"><div style="font-size:2.5rem;margin-bottom:12px">&#10004;</div><h4>E-posta uygulamanız açılıyor</h4><p style="color:var(--text-light);margin-top:8px">Hazırlanan e-postayı gönderdiğinizde mesajınız bize ulaşır. Uygulama açılmadıysa info@ilmihal.org adresine yazabilirsiniz.</p><button type="button" class="btn btn-secondary" style="margin-top:16px" onclick="kapatGeriBildirim()">Kapat</button></div></div>';
   document.body.appendChild(overlay);
   overlay.style.display = 'flex';
   document.body.style.overflow = 'hidden';
@@ -5108,19 +5122,16 @@ function kapatGeriBildirim() {
 }
 function gonderGeriBildirim(e) {
   e.preventDefault();
-  var tur = document.getElementById('gb-tur').value;
+  var tur = document.getElementById('gb-tur');
+  var turAdi = tur.options[tur.selectedIndex].text;
   var mesaj = document.getElementById('gb-mesaj').value;
   var email = document.getElementById('gb-email').value;
-  var bildirimler = [];
-  try { bildirimler = JSON.parse(localStorage.getItem('ilmihal-geribildirim') || '[]'); } catch(ex) {}
-  bildirimler.push({tur: tur, mesaj: mesaj, email: email, tarih: new Date().toISOString()});
-  localStorage.setItem('ilmihal-geribildirim', JSON.stringify(bildirimler));
-  var konu = encodeURIComponent('İlmihal.org Geri Bildirim: ' + tur);
-  var govde = encodeURIComponent(mesaj + (email ? '\n\nGönderen: ' + email : ''));
-  window.open('mailto:info@ilmihal.org?subject=' + konu + '&body=' + govde, '_blank');
+  var konu = encodeURIComponent('ilmihal.org geri bildirim: ' + turAdi);
+  var govde = encodeURIComponent(mesaj + (email ? '\n\nGönderen: ' + email : '') + '\n\nSayfa: ' + location.href);
+  // Site mesajı kendisi göndermez: e-posta uygulaması hazır metinle açılır
+  window.location.href = 'mailto:info@ilmihal.org?subject=' + konu + '&body=' + govde;
   document.getElementById('gb-form').style.display = 'none';
   document.getElementById('gb-basarili').style.display = '';
-  setTimeout(kapatGeriBildirim, 2500);
 }
 
 // ===== OZELLIK 3: ONBOARDING / HOSGELDIN REHBERI =====
@@ -5130,7 +5141,7 @@ function showOnboarding() {
     {title:'Hoş Geldiniz!', desc:'Se\'âdet-i Ebediyye\'nin interaktif dijital platformuna hoş geldiniz. Size sitenin özelliklerini tanıtalım.', icon:'&#128075;'},
     {title:'Tam Metin Arama', desc:'Üstteki arama kutusuyla kitabın tamamında, sözlükte ve şahıslarda arama yapabilirsiniz.', icon:'&#128269;'},
     {title:'Sesli Dinleme', desc:'Her maddeyi sesli olarak dinleyebilirsiniz. Madde açıldığında ses butonuna tıklayın.', icon:'&#127911;'},
-    {title:'Sözlük ve Lügat', desc:'4.400+ dini terim ve kelime anlamı. Fevâid menüsünden erişebilirsiniz.', icon:'&#128214;'},
+    {title:'Sözlük ve Lügat', desc:'9.863 dinî terim ve kelime anlamı. Fevâid menüsünden erişebilirsiniz.', icon:'&#128214;'},
     {title:'Not ve Yer İmi', desc:'Maddeleri işaretleyip kişisel notlar ekleyebilirsiniz. Verileriniz cihazınızda kalır.', icon:'&#128278;'},
     {title:'Tema ve Özelleştirme', desc:'Sağ üstteki tema butonuyla gündüz, sepya ve gece modları arasında geçiş yapın.', icon:'&#127769;'},
     {title:'Bilgi Testi', desc:'Fevâid bölümünden bilgi testine girerek öğrendiklerinizi pekiştirin.', icon:'&#127942;'},
@@ -5203,15 +5214,17 @@ document.addEventListener('keydown', function(e) {
 });
 
 // ===== OZELLIK 5: DUYURU ALANI =====
+// bitis: bu tarihten sonra duyuru kendiliğinden gösterilmez (eski duyurular herkese aylarca görünmesin)
 var DUYURULAR = [
-  {id:'v25-yeni', baslik:'Yeni Özellikler Eklendi!', metin:'Klavye kısayolları, geri bildirim formu, metin vurgulama ve daha fazlası. ? tuşuna basarak kısayolları görebilirsiniz.', tarih:'2026-04-13', tur:'yeni'},
+  {id:'metin-2026-10', baslik:'Kitabın metni yenilendi', metin:'Madde metinleri, başlıklar ve sahîfe numaraları Hakîkat Kitâbevi’nin 2026 baskısıyla karşılaştırılarak düzeltildi; paragraflar artık kitaptaki gibi gösteriliyor.', tarih:'2026-10-19', bitis:'2026-12-31', tur:'bilgi'},
 ];
 function renderDuyurular() {
   var el = document.getElementById('duyuru-alani');
   if (!el) return;
   var kapatilanlar = [];
   try { kapatilanlar = JSON.parse(localStorage.getItem('ilmihal-duyuru-kapatilan') || '[]'); } catch(e) {}
-  var aktif = DUYURULAR.filter(function(d) { return kapatilanlar.indexOf(d.id) === -1; });
+  var bugun = new Date().toISOString().slice(0, 10);
+  var aktif = DUYURULAR.filter(function(d) { return kapatilanlar.indexOf(d.id) === -1 && (!d.bitis || bugun <= d.bitis); });
   if (aktif.length === 0) { el.style.display = 'none'; return; }
   el.style.display = '';
   el.innerHTML = aktif.map(function(d) {
@@ -5269,40 +5282,40 @@ function initInlineSozluk(container) {
     _sozlukPopupEl = document.createElement('div');
     _sozlukPopupEl.id = 'sozluk-popup';
     _sozlukPopupEl.className = 'sozluk-popup';
+    _sozlukPopupEl.setAttribute('role', 'dialog');
+    _sozlukPopupEl.setAttribute('aria-label', 'Kelimenin anlamı');
     document.body.appendChild(_sozlukPopupEl);
     document.addEventListener('click', function(e) {
-      if (!e.target.classList.contains('zor-kelime') && _sozlukPopupEl && !_sozlukPopupEl.contains(e.target)) _sozlukPopupEl.style.display = 'none';
+      if (!zorKelimeHedefi(e) && _sozlukPopupEl && !_sozlukPopupEl.contains(e.target)) _sozlukPopupEl.style.display = 'none';
     });
   }
-  container.querySelectorAll('.zor-kelime').forEach(function(el) {
-    if (el.dataset.inlineSozlukBound === '1') return;
-    el.dataset.inlineSozlukBound = '1';
-    el.addEventListener('click', function(e) {
-      e.stopPropagation();
-      var kelime = el.dataset.kelime || el.textContent.trim();
-      var entry = window.sozlukData.find(function(s) {
-        var value = s.k || s.kelime || '';
-        return value && trLower(value) === trLower(kelime);
-      });
-      if (!entry) {
-        entry = window.sozlukData.find(function(s) {
-          var value = s.k || s.kelime || '';
-          return value && trLower(value).indexOf(trLower(kelime)) !== -1;
-        });
-      }
-      if (entry) {
-        var entryKelime = entry.k || entry.kelime || kelime;
-        var anlam = entry.a || entry.anlam || entry.tanim || '';
-        var osmanlica = entry.o || entry.osmanlica || '';
-        var kategori = entry.kat || entry.kategori || '';
-        if (anlam.length > 300) anlam = anlam.substring(0, 300) + '...';
-        _sozlukPopupEl.innerHTML = '<div class="sp-header"><strong>' + entryKelime + '</strong>' + (osmanlica ? '<span class="sp-osmanlica">' + osmanlica + '</span>' : '') + '<button type="button" class="sp-kapat" onclick="document.getElementById(\'sozluk-popup\').style.display=\'none\'">&times;</button></div><p class="sp-anlam">' + anlam + '</p>' + (kategori ? '<span class="sp-kat">' + kategori + '</span>' : '') + '<a class="sp-detay" href="#" onclick="event.preventDefault();goToSozlukSearch(\'' + escapeHtml(entryKelime).replace(/'/g, "\\'") + '\');document.getElementById(\'sozluk-popup\').style.display=\'none\';return false">Sözlükte Aç</a>';
-        var rect = el.getBoundingClientRect();
-        _sozlukPopupEl.style.display = 'block';
-        _sozlukPopupEl.style.top = (rect.bottom + window.scrollY + 8) + 'px';
-        _sozlukPopupEl.style.left = Math.max(8, Math.min(rect.left, window.innerWidth - 320)) + 'px';
-      }
-    });
+  if (container.dataset.sozlukKutusu === '1') return;
+  container.dataset.sozlukKutusu = '1';
+  container.addEventListener('click', function(e) {
+    var el = zorKelimeHedefi(e);
+    if (!el) return;
+    e.stopPropagation();
+    hideTooltip();
+    var id = parseInt(el.dataset.id, 10);
+    var kelime = el.dataset.kelime || el.textContent.trim();
+    var entry = window.sozlukData.find(function(s) { return s.i === id; }) ||
+      window.sozlukData.find(function(s) { return s.k && trLower(s.k) === trLower(kelime); });
+    if (!entry) return;
+    var anlam = entry.a || '';
+    if (anlam.length > 300) anlam = anlam.substring(0, 300) + '…';
+    _sozlukPopupEl.innerHTML = '<div class="sp-header"><strong>' + escapeHtml(entry.k) + '</strong>' +
+      (entry.o ? '<span class="sp-osmanlica" lang="ar" dir="rtl">' + escapeHtml(entry.o) + '</span>' : '') +
+      '<button type="button" class="sp-kapat" aria-label="Kapat" onclick="document.getElementById(\'sozluk-popup\').style.display=\'none\'">&times;</button></div>' +
+      '<p class="sp-anlam">' + escapeHtml(anlam) + '</p>' +
+      '<a class="sp-detay" href="#" onclick="event.preventDefault();goToSozlukSearch(\'' + escapeHtml(entry.k).replace(/'/g, "\\'") + '\');document.getElementById(\'sozluk-popup\').style.display=\'none\';return false">Lügatte aç</a>';
+    var rect = el.getBoundingClientRect();
+    _sozlukPopupEl.style.position = 'fixed';
+    _sozlukPopupEl.style.display = 'block';
+    var h = _sozlukPopupEl.offsetHeight;
+    var top = rect.bottom + 8;
+    if (top + h > window.innerHeight - 8 && rect.top - h - 8 > 8) top = rect.top - h - 8;
+    _sozlukPopupEl.style.top = top + 'px';
+    _sozlukPopupEl.style.left = Math.max(8, Math.min(rect.left, window.innerWidth - _sozlukPopupEl.offsetWidth - 8)) + 'px';
   });
 }
 
@@ -5340,20 +5353,35 @@ function sunumFontDegistir(dir) {
 }
 
 // ===== OZELLIK 9: CAPRAZ REFERANS NAVIGASYONU =====
+// Kitaptaki "[Madde 54’e bakınız!]" gibi atıfları aynı kısmın maddesine bağlar. Yalnız metin
+// düğümleri işlenir (innerHTML yeniden yazılmaz); "Mecelle, Madde 855" gibi başka eserlerin
+// madde numaraları bağlanmaz.
 function aktivCrossLinks(container) {
-  if (!container) return;
-  var html = container.innerHTML;
-  html = html.replace(/((?:Bkz\.?\s*)?(?:Madde|madde)\s*(\d{1,3}))/gi, function(match, full, no) {
-    var maddeNo = parseInt(no);
-    if (maddeNo < 1 || maddeNo > 241) return match;
-    var kisim = maddeNo <= 98 ? 1 : (maddeNo <= 171 ? 2 : 3);
-    if (window.tocData) {
-      var m = window.tocData.find(function(t) { return t.madde_no === maddeNo; });
-      if (m) kisim = m.kisim;
+  if (!container || !currentMaddeForBookmark) return;
+  var kisim = currentMaddeForBookmark.kisim;
+  var desen = /Madde (\d{1,3})(?=[’']?[ea] bak)/g;
+  var tw = document.createTreeWalker(container, NodeFilter.SHOW_TEXT);
+  var dugumler = [], n;
+  while ((n = tw.nextNode())) { if (/Madde \d/.test(n.nodeValue) && !n.parentElement.closest('a')) dugumler.push(n); }
+  dugumler.forEach(function(dugum) {
+    var metin = dugum.nodeValue, parca = document.createDocumentFragment(), son = 0, m;
+    desen.lastIndex = 0;
+    while ((m = desen.exec(metin))) {
+      var no = parseInt(m[1], 10);
+      if (!getMaddeMeta(kisim, no)) continue;
+      parca.appendChild(document.createTextNode(metin.slice(son, m.index)));
+      var a = document.createElement('a');
+      a.href = '/madde/' + kisim + '/' + no;
+      a.className = 'crossref-link';
+      a.textContent = m[0];
+      a.addEventListener('click', function(no2) { return function(e) { e.preventDefault(); openMadde(kisim, no2); }; }(no));
+      parca.appendChild(a);
+      son = m.index + m[0].length;
     }
-    return '<a href="/madde/' + kisim + '/' + maddeNo + '" class="crossref-link" onclick="event.preventDefault();openMadde(' + kisim + ',' + maddeNo + ')" title="Madde ' + maddeNo + '">' + full + '</a>';
+    if (son === 0) return;
+    parca.appendChild(document.createTextNode(metin.slice(son)));
+    dugum.parentNode.replaceChild(parca, dugum);
   });
-  container.innerHTML = html;
 }
 
 // ===== OZELLIK 10: METIN PAYLASIM KARTI (text selection) =====
@@ -5663,7 +5691,7 @@ async function splitViewMaddeAc(kisim, maddeNo) {
   var metin = texts?.[String(maddeNo)] || '(Metin bulunamadı)';
   var madde = window.tocData?.find(function(m) { return m.kisim === kisim && m.madde_no === maddeNo; });
   var baslik = madde ? madde.baslik : 'Madde ' + maddeNo;
-  icerik.innerHTML = '<div class="split-madde-header"><h4>' + baslik + '</h4><button type="button" class="btn btn-sm btn-secondary" onclick="document.getElementById(\'split-liste\').style.display=\'\';document.getElementById(\'split-icerik\').innerHTML=\'\'">Değiştir</button></div><div class="split-madde-text">' + metin + '</div>';
+  icerik.innerHTML = '<div class="split-madde-header"><h4>' + baslik + '</h4><button type="button" class="btn btn-sm btn-secondary" onclick="document.getElementById(\'split-liste\').style.display=\'\';document.getElementById(\'split-icerik\').innerHTML=\'\'">Değiştir</button></div><div class="split-madde-text">' + maddeMetniHTML(metin, false) + '</div>';
 }
 
 // ===== Madde açılınca yeni özellikleri entegre et =====
