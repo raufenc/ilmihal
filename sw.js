@@ -12,7 +12,7 @@
 //    arka planda tazele (stale-while-revalidate).
 //  - Çapraz kaynak istekleri SW'ye hiç takılmaz.
 // ============================================================
-var SURUM = '2026-10-19-r2';
+var SURUM = '2026-10-19-r3';
 var KABUK_CACHE = 'ilmihal-kabuk-' + SURUM;
 var VERI_CACHE = 'ilmihal-veri-' + SURUM;
 
@@ -27,6 +27,10 @@ var CEKIRDEK = [
   '/app.js?v=' + SURUM,
   '/manifest.json',
   '/favicon.svg',
+  '/gorsel/desen.svg',
+  '/gorsel/madalyon.svg',
+  '/gorsel/ayrac.svg',
+  '/gorsel/kapak.svg',
   '/icon-192.png',
   '/fonts/literata-400-normal-latin.woff2',
   '/fonts/literata-400-normal-latin-ext.woff2',

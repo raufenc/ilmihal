@@ -1,7 +1,7 @@
 // ===== Se'âdet-i Ebediyye - İnteraktif İlmihâl =====
 const PDF_URL = 'https://www.hakikatkitabevi.net/downloads/001.pdf';
 // Her release'te index.html'deki BUILD sabitiyle birlikte bump edilir — lazy-load edilen data/kod dosyalarının cache key'i.
-const ASSET_VERSION = '2026-10-19-r2';
+const ASSET_VERSION = '2026-10-19-r3';
 function vQuery() { return '?v=' + ASSET_VERSION; }
 
 // ===== URL ROUTING (Clean URL + Hash Fallback) =====
@@ -308,6 +308,11 @@ function ensureRehberlerData() {
   return loadScript('rehberler.js' + vQuery());
 }
 
+function ensureOzetlerData() {
+  if (window.maddeOzetleri) return Promise.resolve();
+  return loadScript('ozetler.js' + vQuery());
+}
+
 function preloadBackgroundData() {
   ensureSozlukData().catch(function() {});
 }
@@ -358,7 +363,11 @@ function updateThemeButton(mode) {
   var btn = document.querySelector('.dark-mode-toggle');
   if (!btn) return;
   var labels = { light: 'Gündüz', sepia: 'Sepya', dark: 'Gece' };
-  var icons = { light: '\u263C', sepia: '\u2600', dark: '\u263D' };
+  var icons = {
+    light: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></svg>',
+    sepia: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>',
+    dark: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.8 6.8 0 0 0 10.7 10.7z"/></svg>'
+  };
   btn.innerHTML = '<span class="dm-icon">' + icons[mode] + '</span><span class="dm-label">' + labels[mode] + '</span>';
   btn.title = 'Tema: ' + labels[mode];
 }
@@ -436,13 +445,16 @@ document.querySelectorAll('.nav-btn').forEach(btn => {
   btn.addEventListener('click', () => navigateTo(btn.dataset.page));
 });
 
+// Sayfa değişimi geçiş animasyonunda bir sonraki karede yapılır; dönen söz, yeni sayfa
+// kurulduktan sonra tamamlanır (peşinden sayfaya iş yapan çağrılar bunu beklemelidir).
 function navigateTo(page, fromRoute) {
   var rm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)');
   if (document.startViewTransition && !(rm && rm.matches)) {
-    document.startViewTransition(function() { _navigateToCore(page, fromRoute); });
-  } else {
-    _navigateToCore(page, fromRoute);
+    var gecis = document.startViewTransition(function() { _navigateToCore(page, fromRoute); });
+    return gecis.updateCallbackDone.catch(function() {});
   }
+  _navigateToCore(page, fromRoute);
+  return Promise.resolve();
 }
 
 function _navigateToCore(page, fromRoute) {
@@ -467,7 +479,8 @@ function _navigateToCore(page, fromRoute) {
   }
 
   // Lazy load content
-  if (page === 'icerik' && !icerikLoaded) loadIcerik();
+  if (page === 'icerik') { if (!icerikLoaded) loadIcerik(); else okunduIsaretleriniTazele(); }
+  if (page === 'anasayfa' && typeof renderDevamEt === 'function') renderDevamEt();
   if (page === 'sozluk' && !sozlukLoaded) { ensureSozlukData().then(function() { loadSozluk(); }); }
   if (page === 'fevaid' && !fevaidLoaded) loadFevaid();
   if (page === 'sahislar') void loadSahislar();
@@ -512,6 +525,49 @@ document.querySelector('.mobile-menu-btn')?.addEventListener('click', () => {
 // ===== İÇİNDEKİLER =====
 let icerikLoaded = false;
 
+var KISIM_ADLARI = { 1: 'Birinci Kısım', 2: 'İkinci Kısım', 3: 'Üçüncü Kısım' };
+var KISIM_ROMEN = { 1: 'I', 2: 'II', 3: 'III' };
+var KISIM_ACIKLAMA = {
+  1: 'İman ve Ehl-i sünnet itikadı; abdest, namaz, zekât, oruç, kurban ve hac; Peygamber Efendimizin (sallallahü aleyhi ve sellem) hilyesi ve güzel ahlâkı',
+  2: 'Tefsir, hadis ve fıkıh ilmi; mezhepler ve bozuk fırkalar; İslâm ve fen; nikâh, talâk ve aile hukuku; helâl-haram; kazâ-kader ve tasavvuf',
+  3: 'Ticaret ve alışveriş, faiz ve şirketler, ceza hukuku, tasavvuf yolu; ölüm, cenaze, kabir ziyareti ve miras'
+};
+
+// Fihrist satırı: madde no · başlık ........ sahîfe (kitabın fihristi gibi)
+function fihristSatiriHTML(m, okundu, kisimGoster) {
+  var alt = [];
+  if (kisimGoster) alt.push(KISIM_ADLARI[m.kisim]);
+  if (m.mektup_ref) alt.push(mektubEtiketi(m.mektup_ref));
+  return '<a class="madde-item fihrist-satir' + (okundu ? ' okundu' : '') + '" href="/madde/' + m.kisim + '/' + m.madde_no + '" data-madde-key="' + m.kisim + '/' + m.madde_no + '" onclick="openMadde(' + m.kisim + ', ' + m.madde_no + ');return false">' +
+    '<span class="madde-badge">' + m.madde_no + '</span>' +
+    '<span class="madde-info">' +
+      '<span class="madde-title">' + m.baslik + (okundu ? OKUNDU_TIK_HTML : '') + '</span>' +
+      (alt.length ? '<span class="madde-meta">' + alt.join(' · ') + '</span>' : '') +
+    '</span>' +
+    '<span class="fihrist-cizgi" aria-hidden="true"></span>' +
+    '<span class="madde-sayfa"><span class="visually-hidden">Sahîfe </span>' + m.sayfa_no + '</span>' +
+  '</a>';
+}
+
+function fihristKisimBasligiHTML(k, okunan, toplam) {
+  return '<header class="fihrist-kisim">' +
+    '<span class="fihrist-kisim-no" aria-hidden="true">' + KISIM_ROMEN[k] + '</span>' +
+    '<div class="fihrist-kisim-yazi">' +
+      '<h3>' + KISIM_ADLARI[k] + '</h3>' +
+      '<p>' + KISIM_ACIKLAMA[k] + '</p>' +
+      '<span class="fihrist-kisim-sayi">' + toplam + ' madde' + (okunan ? ' · ' + okunan + ' okundu' : '') + '</span>' +
+    '</div>' +
+  '</header>';
+}
+
+function kisimSekmeleriniGuncelle(deger) {
+  document.querySelectorAll('.kisim-sekme').forEach(function(b) {
+    var secili = b.getAttribute('data-kisim') === String(deger);
+    b.classList.toggle('secili', secili);
+    b.setAttribute('aria-pressed', secili ? 'true' : 'false');
+  });
+}
+
 function loadIcerik(filterKisim, filterText) {
   const list = document.getElementById('icerik-list');
   if (!window.tocData) { list.innerHTML = '<div class="loading">Veriler yükleniyor...</div>'; return; }
@@ -520,6 +576,7 @@ function loadIcerik(filterKisim, filterText) {
   const kisimFilter = filterKisim || document.getElementById('kisim-filter')?.value || 'all';
   const rawSearch = filterText || document.getElementById('icerik-search')?.value || '';
   const searchText = rawSearch.toLowerCase();
+  kisimSekmeleriniGuncelle(kisimFilter);
 
   let filtered = window.tocData;
   if (kisimFilter !== 'all') filtered = filtered.filter(m => m.kisim == kisimFilter);
@@ -531,43 +588,61 @@ function loadIcerik(filterKisim, filterText) {
     });
   }
 
-  const kisimLabels = { 1: 'Birinci K\u0131s\u0131m', 2: '\u0130kinci K\u0131s\u0131m', 3: '\u00dc\u00e7\u00fcnc\u00fc K\u0131s\u0131m' };
-  let currentKisim = 0;
-  let html = '';
   const okundular = new Set(getReadMaddes());
+  // Arama yokken kısımlar süslü başlıklarla ayrılır
+  let html = '';
+  if (!searchText) {
+    [1, 2, 3].forEach(function(k) {
+      var grup = filtered.filter(function(m) { return m.kisim === k; });
+      if (!grup.length) return;
+      var okunan = grup.filter(function(m) { return okundular.has(m.kisim + '/' + m.madde_no); }).length;
+      html += '<section class="fihrist-bolum">' + fihristKisimBasligiHTML(k, okunan, grup.length) +
+        '<div class="fihrist-liste">' + grup.map(function(m) { return fihristSatiriHTML(m, okundular.has(m.kisim + '/' + m.madde_no), false); }).join('') + '</div></section>';
+    });
+  } else if (filtered.length) {
+    html = '<p class="fihrist-sonuc">' + filtered.length + ' madde bulundu</p><div class="fihrist-liste">' +
+      filtered.map(function(m) { return fihristSatiriHTML(m, okundular.has(m.kisim + '/' + m.madde_no), true); }).join('') + '</div>';
+  }
 
-  filtered.forEach(m => {
-    if (m.kisim !== currentKisim && kisimFilter === 'all') {
-      currentKisim = m.kisim;
-      html += `<div style="padding:24px 0 8px;"><h3 style="font-family:var(--font-okuma);color:var(--primary-dark);font-size:1.3rem;">${kisimLabels[m.kisim]}</h3></div>`;
-    }
-    const okundu = okundular.has(m.kisim + '/' + m.madde_no);
-    html += `
-      <div class="madde-item${okundu ? ' okundu' : ''}" data-madde-key="${m.kisim}/${m.madde_no}" onclick="openMadde(${m.kisim}, ${m.madde_no})">
-        <div class="madde-badge">${m.madde_no}</div>
-        <div class="madde-info">
-          <div class="madde-title">${m.baslik}${okundu ? OKUNDU_TIK_HTML : ''}</div>
-          <div class="madde-meta">${kisimLabels[m.kisim]}${m.mektup_ref ? ' \u00B7 ' + mektubEtiketi(m.mektup_ref) : ''}</div>
-        </div>
-        <div class="madde-sayfa">s. ${m.sayfa_no}</div>
-      </div>
-    `;
-  });
-
-  list.innerHTML = html || '<p style="text-align:center;color:var(--text-muted);padding:40px;">Sonu\u00e7 bulunamad\u0131.</p>';
+  list.innerHTML = html || '<p style="text-align:center;color:var(--text-muted);padding:40px;">Sonuç bulunamadı.</p>';
 }
+
+// Okuyucudan dönünce fihristi baştan çizmeden okundu işaretlerini tazele
+function okunduIsaretleriniTazele() {
+  var okundular = new Set(getReadMaddes());
+  document.querySelectorAll('#icerik-list .madde-item').forEach(function(el) {
+    var key = el.getAttribute('data-madde-key');
+    if (okundular.has(key) && !el.classList.contains('okundu')) {
+      el.classList.add('okundu');
+      var t = el.querySelector('.madde-title');
+      if (t) t.insertAdjacentHTML('beforeend', OKUNDU_TIK_HTML);
+    }
+  });
+}
+
+document.querySelectorAll('.kisim-sekme').forEach(function(b) {
+  b.addEventListener('click', function() {
+    var sel = document.getElementById('kisim-filter');
+    if (sel) sel.value = b.getAttribute('data-kisim');
+    loadIcerik();
+  });
+});
 
 document.getElementById('kisim-filter')?.addEventListener('change', () => loadIcerik());
 document.getElementById('icerik-search')?.addEventListener('input', () => loadIcerik());
 
 function showKisim(k) {
-  navigateTo('icerik');
-  document.getElementById('kisim-filter').value = k;
-  loadIcerik();
+  return navigateTo('icerik').then(function() {
+    document.getElementById('kisim-filter').value = k;
+    loadIcerik();
+  });
 }
 
 function filterByCategory(cat) {
-  navigateTo('icerik');
+  return navigateTo('icerik').then(function() { kategoriyiUygula(cat); });
+}
+
+function kategoriyiUygula(cat) {
   const categoryMap = {
     'iman': [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50],
     'temizlik': [52,53,54,55,56,57,58],
@@ -591,7 +666,7 @@ function filterByCategory(cat) {
           const key = `K${m.kisim}/M${m.madde_no}`;
           return maddeler.includes(key);
         });
-        renderFilteredMaddeler(filtered);
+        renderFilteredMaddeler(filtered, kategori.baslik);
         return;
       }
     }
@@ -606,25 +681,13 @@ function filterByCategory(cat) {
   loadIcerik();
 }
 
-function renderFilteredMaddeler(filtered) {
+function renderFilteredMaddeler(filtered, konuAdi) {
   const list = document.getElementById('icerik-list');
-  const kisimLabels = { 1: 'Birinci K\u0131s\u0131m', 2: '\u0130kinci K\u0131s\u0131m', 3: '\u00dc\u00e7\u00fcnc\u00fc K\u0131s\u0131m' };
-  let html = '';
   const okundular = new Set(getReadMaddes());
-  filtered.forEach(m => {
-    const okundu = okundular.has(m.kisim + '/' + m.madde_no);
-    html += `
-      <div class="madde-item${okundu ? ' okundu' : ''}" data-madde-key="${m.kisim}/${m.madde_no}" onclick="openMadde(${m.kisim}, ${m.madde_no})">
-        <div class="madde-badge">${m.madde_no}</div>
-        <div class="madde-info">
-          <div class="madde-title">${m.baslik}${okundu ? OKUNDU_TIK_HTML : ''}</div>
-          <div class="madde-meta">${kisimLabels[m.kisim]}${m.mektup_ref ? ' \u00B7 ' + mektubEtiketi(m.mektup_ref) : ''}</div>
-        </div>
-        <div class="madde-sayfa">s. ${m.sayfa_no}</div>
-      </div>
-    `;
-  });
-  list.innerHTML = html || '<p style="text-align:center;color:var(--text-muted);padding:40px;">Sonu\u00e7 bulunamad\u0131.</p>';
+  kisimSekmeleriniGuncelle('all');
+  list.innerHTML = filtered.length
+    ? '<p class="fihrist-sonuc">' + (konuAdi ? '<strong>' + escapeHtml(konuAdi) + '</strong> konusunda ' : '') + filtered.length + ' madde <button type="button" class="fihrist-temizle" onclick="document.getElementById(\'icerik-search\').value=\'\';loadIcerik()">Tüm fihrist</button></p><div class="fihrist-liste">' + filtered.map(function(m) { return fihristSatiriHTML(m, okundular.has(m.kisim + '/' + m.madde_no), true); }).join('') + '</div>'
+    : '<p style="text-align:center;color:var(--text-muted);padding:40px;">Sonu\u00e7 bulunamad\u0131.</p>';
 }
 
 // ===== MADDE DETAY =====
@@ -758,6 +821,123 @@ function getMaddeMeta(kisim, maddeNo) {
   }) || null;
 }
 
+var SUSLU_AYRAC_HTML = '<svg class="suslu-ayrac" viewBox="0 0 260 20" aria-hidden="true"><path d="M0 10h104M156 10h104"/><path d="M110 10h6M144 10h6"/><circle cx="104" cy="10" r="1.6" class="dolu"/><circle cx="156" cy="10" r="1.6" class="dolu"/><g transform="translate(130 10)"><path d="M0-8l2.3 5.7L8 0 2.3 2.3 0 8-2.3 2.3-8 0-2.3-2.3z" class="dolu"/><rect x="-5" y="-5" width="10" height="10" transform="rotate(45)"/></g></svg>';
+
+function maddeBaslikHTML(madde) {
+  return '<header class="madde-detail-header">' +
+    '<span class="madde-madalyon" aria-hidden="true">' + madde.madde_no + '</span>' +
+    '<p class="madde-ust">' + KISIM_ADLARI[madde.kisim] + ' · Madde ' + madde.madde_no + '</p>' +
+    '<h3>' + madde.baslik + '</h3>' +
+    '<div class="madde-detail-meta">' +
+      '<span>' + sayfaLinkPdf(madde.sayfa_no, sayfaLabel(madde)) + '</span>' +
+      (madde.mektup_ref ? mektubEtiketi(madde.mektup_ref) : '') +
+    '</div>' +
+    SUSLU_AYRAC_HTML +
+  '</header>';
+}
+
+// ---- Okuyucu çerçevesi: üst çubuk başlığı, kısım fihristi, önceki/sonraki ----
+var _okuyucuFihristKisim = null;
+
+function okuyucuCercevesiniHazirla(madde) {
+  var ust = document.getElementById('okuyucu-baslik-ust');
+  var ad = document.getElementById('okuyucu-baslik-ad');
+  if (ust) ust.textContent = KISIM_ADLARI[madde.kisim] + ' · Madde ' + madde.madde_no;
+  if (ad) ad.textContent = madde.baslik;
+
+  var aside = document.getElementById('okuyucu-fihrist');
+  if (aside) {
+    if (_okuyucuFihristKisim !== madde.kisim) {
+      _okuyucuFihristKisim = madde.kisim;
+      var okundular = new Set(getReadMaddes());
+      aside.innerHTML = '<div class="okuyucu-fihrist-bas"><span class="okuyucu-fihrist-romen">' + KISIM_ROMEN[madde.kisim] + '</span>' + KISIM_ADLARI[madde.kisim] + '</div>' +
+        '<ol class="okuyucu-fihrist-liste">' + getKisimMaddeler(madde.kisim).map(function(m) {
+          var key = m.kisim + '/' + m.madde_no;
+          return '<li><a href="/madde/' + key + '" data-madde-key="' + key + '"' + (okundular.has(key) ? ' class="okundu"' : '') +
+            ' onclick="okuyucuFihristKapatMobil();openMadde(' + m.kisim + ',' + m.madde_no + ');return false">' +
+            '<span class="no">' + m.madde_no + '</span><span class="ad">' + m.baslik + '</span></a></li>';
+        }).join('') + '</ol>';
+    }
+    var onceki = aside.querySelector('a.aktif');
+    if (onceki) { onceki.classList.remove('aktif'); onceki.removeAttribute('aria-current'); }
+    var aktif = aside.querySelector('a[data-madde-key="' + madde.kisim + '/' + madde.madde_no + '"]');
+    if (aktif) {
+      aktif.classList.add('aktif', 'okundu');
+      aktif.setAttribute('aria-current', 'page');
+      var liste = aktif.closest('.okuyucu-fihrist');
+      if (liste) {
+        var hedef = aktif.offsetTop - liste.clientHeight / 2 + aktif.offsetHeight / 2;
+        liste.scrollTop = Math.max(0, hedef);
+      }
+    }
+  }
+
+  // Önceki / sonraki madde adları
+  var idx = (window.tocData || []).findIndex(function(m) { return m.kisim === madde.kisim && m.madde_no === madde.madde_no; });
+  [['madde-prev', -1], ['madde-next', 1]].forEach(function(p) {
+    var btn = document.getElementById(p[0]);
+    var adEl = document.getElementById(p[0] + '-ad');
+    var hedef = idx >= 0 ? window.tocData[idx + p[1]] : null;
+    if (btn) btn.disabled = !hedef;
+    if (adEl) adEl.textContent = hedef ? (hedef.kisim !== madde.kisim ? KISIM_ADLARI[hedef.kisim] + ' · ' : '') + hedef.madde_no + ' — ' + hedef.baslik : '';
+  });
+
+  // Yeni madde en baştan başlar
+  var icerik = document.querySelector('#madde-detay .madde-overlay-content');
+  if (icerik) icerik.scrollTop = 0;
+  okumaIlerlemesiniGuncelle();
+}
+
+function okumaIlerlemesiniGuncelle() {
+  var icerik = document.querySelector('#madde-detay .madde-overlay-content');
+  var dolu = document.getElementById('okuma-ilerleme-dolu');
+  if (!icerik || !dolu) return;
+  var max = icerik.scrollHeight - icerik.clientHeight;
+  var oran = max > 0 ? Math.min(1, icerik.scrollTop / max) : 0;
+  dolu.style.transform = 'scaleX(' + oran.toFixed(4) + ')';
+  var detay = document.getElementById('madde-detay');
+  if (detay) detay.classList.toggle('kaydirildi', icerik.scrollTop > 120);
+}
+
+(function() {
+  var icerik = document.querySelector('#madde-detay .madde-overlay-content');
+  if (!icerik) return;
+  var bekliyor = false;
+  icerik.addEventListener('scroll', function() {
+    if (bekliyor) return;
+    bekliyor = true;
+    requestAnimationFrame(function() { bekliyor = false; okumaIlerlemesiniGuncelle(); });
+  }, { passive: true });
+})();
+
+function okuyucuFihristToggle() {
+  var detay = document.getElementById('madde-detay');
+  var btn = document.getElementById('okuyucu-fihrist-btn');
+  if (!detay) return;
+  // Geniş ekranda fihrist varsayılan açıktır; düğme gizler/gösterir. Dar ekranda çekmece olarak açılır.
+  var genis = window.matchMedia('(min-width: 1100px)').matches;
+  var sinif = genis ? 'fihrist-gizli' : 'fihrist-acik';
+  detay.classList.toggle(sinif);
+  var acik = genis ? !detay.classList.contains('fihrist-gizli') : detay.classList.contains('fihrist-acik');
+  if (btn) btn.setAttribute('aria-expanded', acik ? 'true' : 'false');
+  try { if (genis) localStorage.setItem('ilmihal-fihrist-gizli', detay.classList.contains('fihrist-gizli') ? '1' : '0'); } catch (e) {}
+}
+
+function okuyucuFihristKapatMobil() {
+  var detay = document.getElementById('madde-detay');
+  if (!detay || !detay.classList.contains('fihrist-acik')) return;
+  detay.classList.remove('fihrist-acik');
+  var btn = document.getElementById('okuyucu-fihrist-btn');
+  if (btn) btn.setAttribute('aria-expanded', 'false');
+}
+
+// Çekmece açıkken metne dokunmak çekmeceyi kapatır
+document.querySelector('#madde-detay .madde-overlay-content')?.addEventListener('click', okuyucuFihristKapatMobil);
+
+try {
+  if (localStorage.getItem('ilmihal-fihrist-gizli') === '1') document.getElementById('madde-detay')?.classList.add('fihrist-gizli');
+} catch (e) {}
+
 function renderMaddeError(body, kisim, maddeNo, title, detail) {
   if (!body) return;
   body.innerHTML = '<div class="madde-detail-header">' +
@@ -863,17 +1043,8 @@ async function openMadde(kisim, maddeNo, fromRoute, searchQuery) {
   if (!fromRoute) { try { updateHash(`madde/${kisim}/${maddeNo}`); } catch(e) {} }
   try { if (typeof updateBookmarkBtn === 'function') updateBookmarkBtn(kisim, maddeNo); } catch(e) {}
 
-  body.innerHTML = `
-    <div class="madde-detail-header">
-      <h3>${madde.baslik}</h3>
-      <div class="madde-detail-meta">
-        <span>${kisimLabels[madde.kisim]}, Madde ${madde.madde_no}</span>
-        <span>${sayfaLinkPdf(madde.sayfa_no, sayfaLabel(madde))}</span>
-        ${madde.mektup_ref ? mektubEtiketi(madde.mektup_ref) : ''}
-      </div>
-    </div>
-    <div class="madde-text" style="text-align:center;padding:40px;color:var(--text-muted);">Metin y\u00fckleniyor...</div>
-  `;
+  okuyucuCercevesiniHazirla(madde);
+  body.innerHTML = maddeBaslikHTML(madde) + iskeletHTML();
 
   var rawMetin = null;
   try {
@@ -904,18 +1075,11 @@ async function openMadde(kisim, maddeNo, fromRoute, searchQuery) {
       <span class="breadcrumb-sep">›</span>
       <a href="#" onclick="closeMadde();navigateTo('icerik');return false">İçindekiler</a>
       <span class="breadcrumb-sep">›</span>
-      <a href="#" onclick="closeMadde();navigateTo('icerik');showKisim(${kisim});return false">${kisimLabels[madde.kisim]}</a>
+      <a href="#" onclick="closeMadde();showKisim(${kisim});return false">${kisimLabels[madde.kisim]}</a>
       <span class="breadcrumb-sep">›</span>
       <span class="breadcrumb-current">Madde ${madde.madde_no}</span>
     </nav>
-    <div class="madde-detail-header">
-      <h3>${madde.baslik}</h3>
-      <div class="madde-detail-meta">
-        <span>${kisimLabels[madde.kisim]}, Madde ${madde.madde_no}</span>
-        <span>${sayfaLinkPdf(madde.sayfa_no, sayfaLabel(madde))}</span>
-        ${madde.mektup_ref ? mektubEtiketi(madde.mektup_ref) : ''}
-      </div>
-    </div>
+    ${maddeBaslikHTML(madde)}
     <div class="madde-text">${metin}</div>
     <div class="madde-paylasim-bar">
       <button type="button" class="btn btn-sm" onclick="maddePaylasText(${kisim},${maddeNo})">Paylaş</button>
@@ -1221,6 +1385,9 @@ document.addEventListener('keydown', e => {
   if (e.key === 'Escape') {
     if (document.getElementById('okuma-panel')?.classList.contains('acik') || document.getElementById('tasma-menu')?.classList.contains('acik')) {
       okumaPaneliKapat(); tasmaMenuKapat(); return;
+    }
+    if (document.getElementById('madde-detay')?.classList.contains('fihrist-acik')) {
+      okuyucuFihristKapatMobil(); return;
     }
     if (document.getElementById('tablo-modal')?.style.display === 'flex') {
       closeTabloModal();
@@ -2913,14 +3080,15 @@ document.getElementById('full-search')?.addEventListener('keydown', e => {
   const categoryLabels = {
     madde: 'Maddeler',
     sozluk: 'Din\u00ee L\u00fcgat',
-    sahis: '\u015eah\u0131slar',
+    sahis: 'H\u00e2l Tercemeleri',
     tablo: 'Tablolar'
   };
+  const _ikon = function(d) { return '<svg class="search-cat-ikon" viewBox="0 0 24 24" aria-hidden="true">' + d + '</svg>'; };
   const categoryIcons = {
-    madde: '\u{1F4D6}',
-    sozluk: '\u{1F4DD}',
-    sahis: '\u{1F464}',
-    tablo: '\u{1F4CA}'
+    madde: _ikon('<path d="M2 5h6a4 4 0 0 1 4 4v11a3 3 0 0 0-3-3H2z"/><path d="M22 5h-6a4 4 0 0 0-4 4v11a3 3 0 0 1 3-3h7z"/>'),
+    sozluk: _ikon('<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>'),
+    sahis: _ikon('<circle cx="12" cy="8" r="3.5"/><path d="M5.5 20a6.5 6.5 0 0 1 13 0"/>'),
+    tablo: _ikon('<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18"/><path d="M10 4v16"/>')
   };
 
   function showDropdown(results, query, hasAI) {
@@ -3137,6 +3305,24 @@ function loadGununMaddesi() {
   baslikEl.textContent = madde.baslik;
   ozetEl.textContent = kisimLabels[madde.kisim] + ', Madde ' + madde.madde_no + (madde.mektup_ref ? ' · ' + mektubEtiketi(madde.mektup_ref, true) : '');
   btn.onclick = () => { navigateTo('icerik'); openMadde(madde.kisim, madde.madde_no); };
+  var tarihEl = document.getElementById('gunun-tarih');
+  if (tarihEl) {
+    try { tarihEl.textContent = today.toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric', weekday: 'long' }); } catch (e) {}
+  }
+  // Kitaptan ilk satırlar: hafif özet dosyası boşta yüklenir
+  var alintiEl = document.getElementById('gunun-alinti');
+  if (alintiEl) {
+    var yaz = function() {
+      var ozet = window.maddeOzetleri && window.maddeOzetleri[madde.kisim + '/' + madde.madde_no];
+      if (!ozet) return;
+      alintiEl.textContent = ozet;
+      alintiEl.hidden = false;
+    };
+    var yukle = function() { ensureOzetlerData().then(yaz).catch(function() {}); };
+    if (window.maddeOzetleri) yaz();
+    else if (typeof requestIdleCallback === 'function') requestIdleCallback(yukle, { timeout: 2500 });
+    else setTimeout(yukle, 600);
+  }
 }
 
 // ===== FONT BOYUTU AYARI =====
@@ -3555,7 +3741,7 @@ async function renderAyetHadis(filterText) {
       maddeHtml = '<div class="ah-item" onclick="openMadde(' + item.kisim + ',' + item.madde + ',false,\'' + searchQ + '\')" style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px;margin-bottom:10px;cursor:pointer;transition:all 0.2s;">' +
         kaynakEtiket +
         '<div style="font-family:Amiri,serif;font-size:0.95rem;line-height:1.8;color:var(--text);margin-bottom:8px;">' + escapeHtml(item.metin) + '</div>' +
-        '<div style="font-size:0.8rem;color:var(--text-muted);">\u{1F4D6} ' + escapeHtml(baslik) + ' \u2014 <span style="color:var(--primary)">Maddenin bu yerine git \u2192</span></div>' +
+        '<div style="font-size:0.8rem;color:var(--text-muted);">' + escapeHtml(baslik) + ' \u2014 <span style="color:var(--primary)">Maddenin bu yerine git \u2192</span></div>' +
         '</div>';
     } else {
       maddeHtml = '<div class="ah-item" style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px;margin-bottom:10px;">' +
@@ -4092,7 +4278,7 @@ function toggleFullscreenRead() {
   var btn = document.getElementById('fullscreen-btn');
   if (btn) {
     var fsAcik = overlay.classList.contains('fullscreen-mode');
-    btn.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3H5a2 2 0 0 0-2 2v3"/><path d="M16 3h3a2 2 0 0 1 2 2v3"/><path d="M8 21H5a2 2 0 0 1-2-2v-3"/><path d="M16 21h3a2 2 0 0 0 2-2v-3"/></svg> ' + (fsAcik ? 'Tam ekrandan çık' : 'Tam ekran');
+    btn.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3H5a2 2 0 0 0-2 2v3"/><path d="M16 3h3a2 2 0 0 1 2 2v3"/><path d="M8 21H5a2 2 0 0 1-2-2v-3"/><path d="M16 21h3a2 2 0 0 0 2-2v-3"/></svg> ' + (fsAcik ? 'Odak modundan çık' : 'Odak modu');
   }
 }
 
@@ -4556,8 +4742,8 @@ function filtreAramaSonuclari(tip) {
   if (!hakkindaContent) return;
   var metaDiv = document.createElement('div');
   metaDiv.className = 'icerik-meta';
-  metaDiv.innerHTML = '<span class="icerik-meta-item">&#128197; Son güncelleme: Mart 2026</span>' +
-    '<span class="icerik-meta-item">&#128214; Kaynak: Se\'âdet-i Ebediyye, Hakîkat Kitâbevi</span>';
+  metaDiv.innerHTML = '<span class="icerik-meta-item">Son güncelleme: Ekim 2026</span>' +
+    '<span class="icerik-meta-item">Kaynak: Se\'âdet-i Ebediyye, Hakîkat Kitâbevi, 2026 baskısı</span>';
   hakkindaContent.insertBefore(metaDiv, hakkindaContent.querySelector('h3'));
 })();
 
@@ -4676,15 +4862,7 @@ function togglePodcastMode() {
     if (footer) footer.parentNode.insertBefore(calismaPage, footer);
   }
 
-  // Footer'a link ekle
-  var kesfetLinks = document.querySelectorAll('.footer-links');
-  if (kesfetLinks.length >= 2) {
-    var link = document.createElement('a');
-    link.href = '/calisma-alanim';
-    link.textContent = 'Çalışma Alanım';
-    link.onclick = function() { navigateTo('calisma-alanim'); return false; };
-    kesfetLinks[1].appendChild(link);
-  }
+  // Alt bilgideki "Çalışma Alanım" bağlantısı index.html'de yer alıyor
 
   function renderCalismaAlanim() {
     var el = document.getElementById('calisma-icerik');
@@ -5144,25 +5322,28 @@ function renderHukumler() {
 
 // ===== OZELLIK 1: KALDIGINIZ YERDEN DEVAM EDIN =====
 function renderDevamEt() {
-  var el = document.getElementById('devam-et-banner');
-  if (!el) return;
+  var btn = document.getElementById('hero-oku-btn');
+  var satir = document.getElementById('hero-son-okunan');
+  if (!btn) return;
   try {
     var son = JSON.parse(localStorage.getItem('ilmihal-son-okunan'));
     if (son && son.kisim && son.madde_no && son.baslik) {
       var sure = '';
       if (son.zaman) {
-        var fark = Date.now() - son.zaman;
-        var dk = Math.floor(fark / 60000);
-        if (dk < 60) sure = dk + ' dk önce';
+        var dk = Math.floor((Date.now() - son.zaman) / 60000);
+        if (dk < 1) sure = 'az önce';
+        else if (dk < 60) sure = dk + ' dk önce';
         else if (dk < 1440) sure = Math.floor(dk / 60) + ' saat önce';
         else sure = Math.floor(dk / 1440) + ' gün önce';
       }
-      el.innerHTML = '<div class="devam-et-inner"><div class="devam-et-icon">&#128214;</div><div class="devam-et-text"><span class="devam-et-label">Kaldığınız yerden devam edin</span><strong>' + son.baslik + '</strong>' + (sure ? '<span class="devam-et-sure">' + sure + '</span>' : '') + '</div><button type="button" class="btn btn-primary btn-sm" onclick="openMadde(' + son.kisim + ',' + son.madde_no + ')">Devam Et</button><button type="button" class="devam-et-kapat" onclick="this.closest(\'.devam-et-banner\').style.display=\'none\'" aria-label="Kapat">&times;</button></div>';
-      el.style.display = '';
-    } else {
-      el.style.display = 'none';
+      btn.textContent = 'Kaldığınız Yerden Devam Edin';
+      btn.onclick = function() { openMadde(son.kisim, son.madde_no); };
+      if (satir) {
+        satir.innerHTML = 'Son okunan: <a href="/madde/' + son.kisim + '/' + son.madde_no + '" onclick="openMadde(' + son.kisim + ',' + son.madde_no + ');return false">' + escapeHtml(son.baslik) + '</a>' + (sure ? ' · ' + sure : '');
+        satir.hidden = false;
+      }
     }
-  } catch(e) { el.style.display = 'none'; }
+  } catch (e) {}
 }
 document.addEventListener('DOMContentLoaded', renderDevamEt);
 
@@ -5263,7 +5444,7 @@ document.addEventListener('keydown', function(e) {
   switch(e.key) {
     case '?': e.preventDefault(); gosterKisayollar(); break;
     case '/':
-      if (!e.ctrlKey && !e.metaKey) { e.preventDefault(); navigateTo('arama'); var si = document.getElementById('search-input'); if (si) si.focus(); }
+      if (!e.ctrlKey && !e.metaKey) { e.preventDefault(); navigateTo('arama').then(function() { var si = document.getElementById('search-input'); if (si) si.focus(); }); }
       break;
     case 'h': if (!maddeAcik) navigateTo('anasayfa'); break;
     case 'i': if (!maddeAcik) navigateTo('icerik'); break;
@@ -5279,7 +5460,7 @@ document.addEventListener('keydown', function(e) {
 // ===== OZELLIK 5: DUYURU ALANI =====
 // bitis: bu tarihten sonra duyuru kendiliğinden gösterilmez (eski duyurular herkese aylarca görünmesin)
 var DUYURULAR = [
-  {id:'metin-2026-10', baslik:'Kitabın metni yenilendi', metin:'Madde metinleri, başlıklar ve sahîfe numaraları Hakîkat Kitâbevi’nin 2026 baskısıyla karşılaştırılarak düzeltildi; paragraflar artık kitaptaki gibi gösteriliyor.', tarih:'2026-10-19', bitis:'2026-12-31', tur:'bilgi'},
+  {id:'metin-2026-10', baslik:'Kitabın metni yenilendi', metin:'Metin, başlıklar ve sahîfe numaraları Hakîkat Kitâbevi’nin 2026 baskısına göre düzeltildi.', tarih:'2026-10-19', bitis:'2026-12-31', tur:'bilgi'},
 ];
 function renderDuyurular() {
   var el = document.getElementById('duyuru-alani');
