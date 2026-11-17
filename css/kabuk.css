@@ -91,6 +91,12 @@ html[data-gorunum="okuyucu"] .ust, html[data-gorunum="okuyucu"] .kunye-alt { dis
 .yeni-surum { width: max-content; max-width: calc(100vw - 2rem); white-space: nowrap; position: fixed; left: 50%; bottom: calc(var(--a-5) + env(safe-area-inset-bottom)); transform: translateX(-50%); z-index: var(--kat-bildirim); display: flex; align-items: center; gap: var(--a-4); padding: 0.6em 0.7em 0.6em 1.3em; border-radius: 999px; background: var(--murekkep); color: var(--zemin); font: 500 var(--boy-2) var(--arayuz); box-shadow: var(--golge); }
 .yeni-surum button { min-height: 34px; padding: 0 1em; border-radius: 999px; background: var(--zemin); color: var(--murekkep); font: 600 var(--boy-1) var(--arayuz); }
 
+/* Gezinme adları uzun ("Kitaptan Derlenenler"): 1180px'in altında açılır menüye geçilir */
+@media (max-width: 1180px) {
+  .ust-gez { display: none; }
+  .ust-arac { margin-left: auto; }
+  #dg-menu { display: inline-grid; }
+}
 @media (max-width: 980px) {
   .ust-gez { display: none; }
   .ust-arac { margin-left: auto; }

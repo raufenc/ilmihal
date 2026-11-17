@@ -88,7 +88,7 @@ function bulunamadi(kap, baglam, tur) {
     h('p.ust-yazi.surh', 'Bulunamadı'),
     h('h1.baslik-2', 'Böyle bir hüküm türü yok'),
     h('p.giris-yazi', `“${tur}” adında bir hüküm türü bulunmuyor. Kitaptaki hükümler yedi türe ayrılmıştır; aşağıdaki fihristten seçebilirsiniz.`),
-    h('.sira', h('a.dugme.dugme-ana', { href: '/hukumler' }, 'Hüküm türleri'), h('a.dugme', { href: '/fevaid' }, 'Fevâid'))));
+    h('.sira', h('a.dugme.dugme-ana', { href: '/hukumler' }, 'Hüküm türleri'), h('a.dugme', { href: '/fevaid' }, 'Kitaptan Derlenenler'))));
 }
 
 function hataGoster(kap, hata, yeniden) {
@@ -100,7 +100,7 @@ function hataGoster(kap, hata, yeniden) {
 
 function basKur(altBaslik) {
   return h('header.hk-bas',
-    h('a.ust-yazi.surh.hk-ust', { href: '/fevaid' }, 'Fevâid'),
+    h('a.ust-yazi.surh.hk-ust', { href: '/fevaid' }, 'Kitaptan Derlenenler'),
     h('h1.baslik-2', 'Fıkhî Hükümler'),
     h('p.giris-yazi', ACIKLAMA),
     altBaslik || null);

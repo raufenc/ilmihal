@@ -61,7 +61,7 @@ function hataCiz(kap, e, yeniden, baglam) {
   doldur(kap, h('.kap', durum(cevrimdisi ? 'Bağlantı yok' : 'Tablolar yüklenemedi',
     cevrimdisi ? 'İnternet bağlantınız kesik görünüyor. Bağlandığınızda yeniden deneyin.' : 'Veri zamanında gelmedi. Yeniden deneyebilirsiniz.',
     h('button.dugme.dugme-ana', { type: 'button', onclick: yeniden }, 'Yeniden deneyin'),
-    h('a.dugme', { href: '/fevaid' }, 'Fevâid'))));
+    h('a.dugme', { href: '/fevaid' }, 'Kitaptan Derlenenler'))));
 }
 
 function bulunamadiCiz(kap, id, baglam) {
@@ -71,7 +71,7 @@ function bulunamadiCiz(kap, id, baglam) {
     h('p.ust-yazi.surh', 'Bulunamadı'),
     h('h1.baslik-2', 'Bu adreste bir tablo yok'),
     h('p.giris-yazi', `“${id}” kimliğiyle kayıtlı bir tablo bulunamadı. Adres değişmiş ya da yanlış yazılmış olabilir; bütün tabloları fihristte görebilirsiniz.`),
-    h('.sira', h('a.dugme.dugme-ana', { href: '/fevaid/tablolar' }, 'Bütün tablolar'), h('a.dugme', { href: '/fevaid' }, 'Fevâid'))));
+    h('.sira', h('a.dugme.dugme-ana', { href: '/fevaid/tablolar' }, 'Bütün tablolar'), h('a.dugme', { href: '/fevaid' }, 'Kitaptan Derlenenler'))));
 }
 
 /* ── Liste ── */
@@ -133,7 +133,7 @@ function listeCiz(kap, o, baglam) {
 
   doldur(kap, h('.kap.tb',
     h('header.tb-bas',
-      h('a.ust-yazi.surh.tb-ust', { href: '/fevaid' }, 'Fevâid'),
+      h('a.ust-yazi.surh.tb-ust', { href: '/fevaid' }, 'Kitaptan Derlenenler'),
       h('h1.baslik-2', 'Tablolar'),
       h('p.giris-yazi', ACIKLAMA)),
     h('.tb-arac', h('.tb-ara-kap', araAlan), kategoriSec),

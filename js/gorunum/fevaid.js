@@ -1,4 +1,4 @@
-/* Fevâid (/fevaid, /icerik): kitabın içinden derlenen dizinlerin fihristi.
+/* Kitaptan Derlenenler (/fevaid, /icerik; eski adı Fevâid): kitabın içinden derlenen dizinlerin fihristi.
    Kart ızgarası yok: her dizin büyük bir fihrist satırıdır (ad, tek cümle açıklama, noktalı kılavuz, sayı).
    Sayılar veriden gelir; satırlar hemen çizilir, sayılar indikçe yerine oturur. */
 
@@ -51,7 +51,7 @@ const GRUPLAR = [
 
 export default {
   ad: 'fevaid',
-  baslik: 'Fevâid',
+  baslik: 'Kitaptan Derlenenler',
 
   async kur(kap, p, baglam) {
     await cssYukle('/css/sayfa.css');
@@ -82,9 +82,9 @@ export default {
     kap.append(h('.kap.kap-dar.fevaid',
       h('header.fevaid-bas',
         h('.fevaid-bas-yazi',
-          h('p.ust-yazi', 'Kitabın içinden'),
-          h('h1.baslik-1', 'Fevâid'),
-          h('p.giris-yazi', 'Kitabın içinden derlenen dizinler. Her kayıt sizi kitaptaki yerine götürür.')),
+          h('p.ust-yazi', 'Dizinler ve cedveller'),
+          h('h1.baslik-1', 'Kitaptan Derlenenler'),
+          h('p.giris-yazi', 'Bu dizinler kitabın kendisi değildir; kitaptan sonradan derlenmiştir. Her kayıt sizi kitaptaki yerine götürür; esas olan kitabın metnidir.')),
         h('figure.fevaid-gorsel', h('img', {
           src: '/gorsel/kitap-kapak.webp', width: 484, height: 581, alt: 'Tam İlmihâl Se’âdet-i Ebediyye kitabının kapağı', decoding: 'async',
           onerror: e => { const f = e.target.closest('figure'); if (f) f.hidden = true; }

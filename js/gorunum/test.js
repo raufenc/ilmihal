@@ -45,7 +45,7 @@ export default {
       S = null;
       doldur(kok,
         h('header.ts-ust',
-          h('p.ust-yazi', 'Fevâid'),
+          h('p.ust-yazi', 'Kitaptan Derlenenler'),
           h('h1.baslik-2', 'Bilgi Testi'),
           h('p.giris-yazi', 'Okuduklarınızı kitaptan alınmış sorularla tekrar edin. Her cevabın altında kitaptaki yeri yazılıdır.')),
         h('h2.ts-alt', 'Bir konu seçin'),

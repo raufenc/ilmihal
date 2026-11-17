@@ -74,7 +74,7 @@ function liste() {
   const ilerleme = kullanici.rehber.hepsi();
   return h('.kap.kap-dar.rh',
     h('header.rh-ust',
-      h('p.ust-yazi', 'Fevâid'),
+      h('p.ust-yazi', 'Kitaptan Derlenenler'),
       h('h1.baslik-2', 'Konu Rehberleri'),
       h('p.giris-yazi', 'Bir konuyu kitabın sırasıyla, adım adım okumak için hazırlanmış yollar. Okuduğunuz maddeleri işaretlerseniz kaldığınız yer burada durur.')),
     h('ol.rh-liste', etkin.R.map((r, i) => {

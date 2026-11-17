@@ -97,7 +97,7 @@ dgMenu.addEventListener('click', () => {
       h('button.dugme-simge', { type: 'button', 'aria-label': 'Menüyü kapatın', onclick: menuKapat },
         h('svg', { viewBox: '0 0 24 24', 'aria-hidden': 'true', style: { width: '22px', height: '22px', fill: 'none', stroke: 'currentColor', strokeWidth: '1.6', strokeLinecap: 'round' } }, h('path', { d: 'M6 6l12 12M18 6 6 18' })))),
     grup('Kitap', [['Fihrist', '/icindekiler'], ['Kitapta arayın', '/arama'], ['Dinî lügat', '/sozluk'], ['Hâl tercemeleri', '/sahislar'], ['Çalışma alanım', '/calisma-alanim']]),
-    grup('Fevâid', [['Fıkhî hükümler', '/hukumler'], ['Âyet-i kerîme ve hadîs-i şerîfler', '/ayet-hadis'], ['Tablolar', '/fevaid/tablolar'], ['Konu rehberleri', '/rehberler'], ['Günün suâli', '/gunun-bilgisi'], ['Bilgi testi', '/quiz']]),
+    grup('Kitaptan Derlenenler', [['Fıkhî hükümler', '/hukumler'], ['Âyet-i kerîme ve hadîs-i şerîfler', '/ayet-hadis'], ['Tablolar', '/fevaid/tablolar'], ['Konu rehberleri', '/rehberler'], ['Günün suâli', '/gunun-bilgisi'], ['Bilgi testi', '/quiz']]),
     grup('Yer ve gök', [['Silsile-i Aliyye Atlası', '/silsile-atlasi/'], ['Nemâz vakitleri', '/namaz-vakitleri/']]),
     grup('Site', [['Hakkında', '/hakkinda'], ['Gizlilik', '/gizlilik']]));
   document.body.appendChild(menu);

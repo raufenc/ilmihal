@@ -130,8 +130,8 @@ export default {
     ];
     const fevaid = h('section.bolum.kap', { 'aria-labelledby': 'b-fevaid' },
       h('.bolum-bas',
-        h('div', h('p.ust-yazi', 'Fevâid'), h('h2.baslik-3', { id: 'b-fevaid' }, 'Kitabın içinden derlenenler')),
-        h('p.kunye', 'Her kayıt sizi kitaptaki yerine götürür.')),
+        h('div', h('p.ust-yazi', 'Dizinler ve cedveller'), h('h2.baslik-3', { id: 'b-fevaid' }, 'Kitaptan Derlenenler')),
+        h('p.kunye', 'Kitabın kendisi değil, kitaptan derlenmiş dizinlerdir; her kayıt sizi kitaptaki yerine götürür.')),
       h('ol.fihrist.dizinler', dizinler.map(([adi, aciklama, n, href]) => h('li', { style: { display: 'block', padding: 0 } },
         h('a.fihrist-satir.dizin', { href },
           h('span.fihrist-ad', h('span', adi)),

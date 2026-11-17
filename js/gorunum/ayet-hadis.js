@@ -200,7 +200,7 @@ async function ciz(kap, baglam) {
   secenekleriKur();
   doldur(kap, h('.kap.ah',
     h('header.ah-bas',
-      h('a.ust-yazi.surh.ah-ust', { href: '/fevaid' }, 'Fevâid'),
+      h('a.ust-yazi.surh.ah-ust', { href: '/fevaid' }, 'Kitaptan Derlenenler'),
       h('h1.baslik-2', bitisik('Âyet-i Kerîme ve Hadîs-i Şerîf İndeksi')),
       h('p.giris-yazi', ACIKLAMA)),
     h('.ah-arac', sekmeler, h('.ah-suzgec', h('.ah-ara-kap', araAlan), degerSec)),
