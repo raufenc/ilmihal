@@ -1,36 +1,37 @@
 {
-  "name": "Se'âdet-i Ebediyye - İnteraktif İlmihâl",
+  "id": "/",
+  "name": "Se’âdet-i Ebediyye — Tam İlmihâl",
   "short_name": "İlmihâl",
-  "description": "Se'âdet-i Ebediyye kitabının tamamı: 241 madde, 9.863 dinî terim, 1020 hâl tercemesi, fıkhî hükümler ve tam metin arama.",
+  "description": "Hüseyn Hilmi Işık hazretlerinin hazırladığı Tam İlmihâl Se’âdet-i Ebediyye kitabının tamamı: okuyun, sesli dinleyin, lügatiyle ve kaynağıyla araştırın.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
   "orientation": "any",
-  "background_color": "#faf8f4",
-  "theme_color": "#0d3a2b",
+  "background_color": "#f4efe4",
+  "theme_color": "#0f3b2d",
   "lang": "tr",
   "dir": "ltr",
   "icons": [
     {
-      "src": "favicon.svg",
+      "src": "/favicon.svg",
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "any"
     },
     {
-      "src": "icon-192.png",
+      "src": "/icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "icon-512.png",
+      "src": "/icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "apple-touch-icon.png",
+      "src": "/apple-touch-icon.png",
       "sizes": "180x180",
       "type": "image/png"
     }
@@ -38,22 +39,22 @@
   "categories": ["education", "books", "reference"],
   "shortcuts": [
     {
-      "name": "Arama",
-      "short_name": "Ara",
+      "name": "Fihrist",
+      "short_name": "Fihrist",
+      "url": "/icindekiler",
+      "description": "Kitabın fihristi: üç kısım, bütün maddeler"
+    },
+    {
+      "name": "Kitapta arayın",
+      "short_name": "Arayın",
       "url": "/arama",
-      "description": "Kitapta ara"
+      "description": "Maddelerde, lügatte ve hâl tercemelerinde arayın"
     },
     {
-      "name": "Dinî Lügat",
-      "short_name": "Sözlük",
+      "name": "Dinî lügat",
+      "short_name": "Lügat",
       "url": "/sozluk",
-      "description": "9.863 dinî terim"
-    },
-    {
-      "name": "Fıkhî Hükümler",
-      "short_name": "Hükümler",
-      "url": "/hukumler",
-      "description": "Farz, vâcib, sünnet, müstehab, mekruh, haram"
+      "description": "Kitapta geçen kelimelerin Osmanlıca yazılışı, aslı ve mânâsı"
     }
   ]
 }

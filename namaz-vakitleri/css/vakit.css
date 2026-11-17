@@ -442,7 +442,7 @@ body.duz #levha { width: min(620px, calc(100vw - 2 * var(--kenar))); }
 
 /* ── Dar ekran ─────────────────────────────────────── */
 @media (max-width: 860px) {
-  :root { --levha-boy: 44dvh; --serit-boy: 104px; }
+  :root { --levha-boy: 42dvh; --serit-boy: 104px; }
   .marka-yazi i { display: none; }
   .marka-yazi b { font-size: 14px; }
   .marka .semse { width: 22px; height: 22px; }
@@ -466,6 +466,8 @@ body.duz #levha { width: min(620px, calc(100vw - 2 * var(--kenar))); }
   .levha-tutamac { display: block; position: absolute; left: 50%; top: 0; width: 96px; height: 28px; margin-left: -48px; }
   .levha-tutamac i { position: absolute; left: 50%; top: 9px; width: 38px; height: 3px; margin-left: -19px; border-radius: 2px; background: rgba(236, 229, 211, 0.34); }
   .levha-bas h1 { font-size: 32px; margin-top: 10px; }
+  body:not(.kip-cedvel) .levha-bas { display: none; }
+  body:not(.kip-cedvel) .geri { margin-top: 4px; }
   .lv-tarih { font-size: 15.5px; margin-top: 6px; }
   .lv-sira-ad b, .lv-sira-ad em { font-size: 21px; }
   .vk-ad, .fs-ad { font-size: 26px; }
@@ -474,14 +476,16 @@ body.duz #levha { width: min(620px, calc(100vw - 2 * var(--kenar))); }
   .gez b { font-size: 13.5px; }
   .cedvel tbody th button { min-height: 44px; font-size: 15.5px; }
 
-  #serit { left: 14px; right: 14px; bottom: calc(var(--levha-boy) + 6px); gap: 2px; }
+  #serit { left: 14px; right: 14px; bottom: calc(var(--levha-boy) + 4px); gap: 0; height: auto; }
   body.levha-acik #serit { opacity: 0; visibility: hidden; }
-  .serit-bas { flex-wrap: wrap; gap: 8px 10px; }
-  .serit-an { order: -1; flex: 1 1 100%; }
-  .serit-an b { font-size: 25px; }
-  .serit-an span { font-size: 13.5px; }
-  .serit-tarih { margin-left: auto; }
-  .tarih-kutu input { width: 132px; padding: 0 8px; font-size: 12px; }
+  .serit-bas { flex-wrap: wrap; gap: 6px 8px; margin-bottom: 4px; }
+  .serit-an { order: -1; flex: 1 1 100%; gap: 10px; }
+  .serit-an b { font-size: 23px; }
+  .serit-an span { font-size: 13px; }
+  .serit-tarih { margin-left: auto; gap: 4px; }
+  .tarih-kutu input { width: 124px; padding: 0 6px; font-size: 12px; }
+  #dg-izle { width: 32px; padding: 0; justify-content: center; }
+  #dg-izle span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
   .ray-yil { height: 22px; }
   .ray-aylar span:nth-child(even)::after { display: none; }
   .ray-gun { height: 34px; }
@@ -492,7 +496,9 @@ body.duz #levha { width: min(620px, calc(100vw - 2 * var(--kenar))); }
   .etiket.etk-cizgi { font-size: 11.5px; }
   .yukleme { right: 16px; top: calc(60px + env(safe-area-inset-top)); }
 
-  body.duz #levha { top: calc(64px + env(safe-area-inset-top)); height: auto; bottom: calc(var(--serit-boy) + 20px); border-top: 0; }
+  body.duz #levha { top: calc(64px + env(safe-area-inset-top)); height: auto; width: auto; bottom: calc(var(--serit-boy) + 50px); border-top: 0; }
+  .lv-sira { grid-template-columns: 1fr; gap: 2px; }
+  .lv-sira-kalan { text-align: left; font-size: 14px; }
   body.duz #serit { bottom: calc(10px + env(safe-area-inset-bottom)); }
 }
 

@@ -1,0 +1,55 @@
+# Duman sınaması yolları: dene.py duman (her yol masaüstü + telefon boyutunda açılır)
+# Satır başına bir yol; '#' ile başlayan satır yorumdur. Sitenin her yol türünden örnek.
+
+# Ana sayfa ve fihrist
+/
+/anasayfa
+/icindekiler
+/icerik
+
+# Okuyucu: kitabın ilk ve son maddesi, en uzun madde (2/17), cedvelli ve şekilli maddeler (1/59, 1/60, 1/89), kısım geçişi
+/madde/1/1
+/madde/3/70
+/madde/2/17
+/madde/1/59
+/madde/1/60
+/madde/1/89
+/madde/2/1
+
+# Lügat, hâl tercemeleri
+/sozluk
+/sahislar
+/sahis/abbas
+/sahis/adem
+/sahis/imam-i-rabbani
+/sahis/zuvavi-isa
+
+# Arama
+/arama
+/arama/nemaz
+
+# Fevâid ve tablolar (her tipten bir tablo: tablo, liste, akış, iki liste, ağaç, tanımlar) + eski adresler
+/fevaid
+/fevaid/tablolar
+/fevaid/tablolar/iman_sartlari
+/fevaid/tablolar/abdesti_bozanlar
+/fevaid/tablolar/tovbe_sartlari
+/fevaid/tablolar/necaset_turleri
+/fevaid/tablolar/konu_haritasi
+/fevaid/tablolar/kitabin_tanimlari
+/fevaid/tablo/iman_sartlari
+/tablo/iman_sartlari
+
+# Fıkhî hükümler
+/hukumler
+/hukumler/farz
+/hukumler/haram
+
+# Diğer görünümler
+/ayet-hadis
+/rehberler
+/gunun-bilgisi
+/quiz
+/calisma-alanim
+/hakkinda
+/gizlilik

@@ -1,137 +1,461 @@
 {
   "redirects": [
-    { "source": "/silsile-atlasi", "destination": "/silsile-atlasi/", "permanent": true },
-    { "source": "/namaz-vakitleri", "destination": "/namaz-vakitleri/", "permanent": true }
+    {
+      "source": "/silsile-atlasi",
+      "destination": "/silsile-atlasi/",
+      "permanent": true
+    },
+    {
+      "source": "/namaz-vakitleri",
+      "destination": "/namaz-vakitleri/",
+      "permanent": true
+    },
+    {
+      "source": "/anasayfa/",
+      "destination": "/anasayfa",
+      "permanent": true
+    },
+    {
+      "source": "/icindekiler/",
+      "destination": "/icindekiler",
+      "permanent": true
+    },
+    {
+      "source": "/icerik/",
+      "destination": "/icerik",
+      "permanent": true
+    },
+    {
+      "source": "/sozluk/",
+      "destination": "/sozluk",
+      "permanent": true
+    },
+    {
+      "source": "/sahislar/",
+      "destination": "/sahislar",
+      "permanent": true
+    },
+    {
+      "source": "/arama/",
+      "destination": "/arama",
+      "permanent": true
+    },
+    {
+      "source": "/fevaid/",
+      "destination": "/fevaid",
+      "permanent": true
+    },
+    {
+      "source": "/fevaid/tablolar/",
+      "destination": "/fevaid/tablolar",
+      "permanent": true
+    },
+    {
+      "source": "/hukumler/",
+      "destination": "/hukumler",
+      "permanent": true
+    },
+    {
+      "source": "/quiz/",
+      "destination": "/quiz",
+      "permanent": true
+    },
+    {
+      "source": "/ayet-hadis/",
+      "destination": "/ayet-hadis",
+      "permanent": true
+    },
+    {
+      "source": "/gunun-bilgisi/",
+      "destination": "/gunun-bilgisi",
+      "permanent": true
+    },
+    {
+      "source": "/rehberler/",
+      "destination": "/rehberler",
+      "permanent": true
+    },
+    {
+      "source": "/calisma-alanim/",
+      "destination": "/calisma-alanim",
+      "permanent": true
+    },
+    {
+      "source": "/hakkinda/",
+      "destination": "/hakkinda",
+      "permanent": true
+    },
+    {
+      "source": "/gizlilik/",
+      "destination": "/gizlilik",
+      "permanent": true
+    },
+    {
+      "source": "/madde/:kisim/:no/",
+      "destination": "/madde/:kisim/:no",
+      "permanent": true
+    },
+    {
+      "source": "/sahis/:slug/",
+      "destination": "/sahis/:slug",
+      "permanent": true
+    },
+    {
+      "source": "/fevaid/tablolar/:id/",
+      "destination": "/fevaid/tablolar/:id",
+      "permanent": true
+    },
+    {
+      "source": "/fevaid/tablo/:id/",
+      "destination": "/fevaid/tablo/:id",
+      "permanent": true
+    },
+    {
+      "source": "/tablo/:id/",
+      "destination": "/tablo/:id",
+      "permanent": true
+    },
+    {
+      "source": "/hukumler/:tur/",
+      "destination": "/hukumler/:tur",
+      "permanent": true
+    }
   ],
   "rewrites": [
-    { "source": "/rss.xml", "destination": "/api/rss" },
-    { "source": "/kitap/seadet-i-ebediyye.pdf", "destination": "https://www.hakikatkitabevi.net/downloads/001.pdf" },
-    { "source": "/anasayfa", "destination": "/index.html" },
-    { "source": "/icindekiler", "destination": "/index.html" },
-    { "source": "/madde/:kisim/:maddeNo", "destination": "/index.html" },
-    { "source": "/sahis/:slug", "destination": "/index.html" },
-    { "source": "/arama/:query*", "destination": "/index.html" },
-    { "source": "/sozluk", "destination": "/index.html" },
-    { "source": "/fevaid", "destination": "/index.html" },
-    { "source": "/fevaid/tablolar", "destination": "/index.html" },
-    { "source": "/fevaid/tablolar/:id", "destination": "/index.html" },
-    { "source": "/fevaid/tablo/:id", "destination": "/index.html" },
-    { "source": "/tablo/:id", "destination": "/index.html" },
-    { "source": "/sahislar", "destination": "/index.html" },
-    { "source": "/quiz", "destination": "/index.html" },
-    { "source": "/hakkinda", "destination": "/index.html" },
-    { "source": "/ayet-hadis", "destination": "/index.html" },
-    { "source": "/gunun-bilgisi", "destination": "/index.html" },
-    { "source": "/rehberler", "destination": "/index.html" },
-    { "source": "/icerik", "destination": "/index.html" },
-    { "source": "/arama", "destination": "/index.html" },
-    { "source": "/calisma-alanim", "destination": "/index.html" },
-    { "source": "/gizlilik", "destination": "/index.html" },
-    { "source": "/hukumler", "destination": "/index.html" },
-    { "source": "/hukumler/:tur", "destination": "/index.html" }
+    {
+      "source": "/rss.xml",
+      "destination": "/api/rss"
+    },
+    {
+      "source": "/kitap/seadet-i-ebediyye.pdf",
+      "destination": "https://www.hakikatkitabevi.net/downloads/001.pdf"
+    },
+    {
+      "source": "/anasayfa",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/icindekiler",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/madde/:kisim/:maddeNo",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/sahis/:slug",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/arama/:query*",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/sozluk",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/fevaid",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/fevaid/tablolar",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/fevaid/tablolar/:id",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/fevaid/tablo/:id",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/tablo/:id",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/sahislar",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/quiz",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/hakkinda",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/ayet-hadis",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/gunun-bilgisi",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/rehberler",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/icerik",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/arama",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/calisma-alanim",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/gizlilik",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/hukumler",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/hukumler/:tur",
+      "destination": "/index.html"
+    }
   ],
   "headers": [
     {
       "source": "/(.*)",
       "headers": [
-        { "key": "X-Content-Type-Options", "value": "nosniff" },
-        { "key": "X-Frame-Options", "value": "DENY" },
-        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
-        { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=(self), payment=(), usb=()" },
-        { "key": "Strict-Transport-Security", "value": "max-age=63072000; includeSubDomains; preload" },
-        { "key": "Content-Security-Policy", "value": "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: blob: https:; media-src 'self' https://www.hakikatkitabevi.net; connect-src 'self' https:; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'; upgrade-insecure-requests" },
-        { "key": "X-XSS-Protection", "value": "0" }
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "camera=(), microphone=(), geolocation=(self), payment=(), usb=()"
+        },
+        {
+          "key": "Strict-Transport-Security",
+          "value": "max-age=63072000; includeSubDomains; preload"
+        },
+        {
+          "key": "Content-Security-Policy",
+          "value": "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: blob: https:; media-src 'self' https://www.hakikatkitabevi.net; connect-src 'self' https:; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'; upgrade-insecure-requests"
+        },
+        {
+          "key": "X-XSS-Protection",
+          "value": "0"
+        }
       ]
     },
     {
-      "source": "/(.*\\.js|.*\\.css)",
+      "source": "/",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }
-      ]
-    },
-    {
-      "source": "/vendor/(.*)",
-      "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
-      ]
-    },
-    {
-      "source": "/gorsel/(.*)",
-      "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=604800" }
-      ]
-    },
-    {
-      "source": "/fonts/(.*)",
-      "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
-      ]
-    },
-    {
-      "source": "/sw.js",
-      "headers": [
-        { "key": "Cache-Control", "value": "no-cache, no-store, must-revalidate" }
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        }
       ]
     },
     {
       "source": "/index.html",
       "headers": [
-        { "key": "Cache-Control", "value": "no-cache, must-revalidate" }
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        }
       ]
     },
     {
-      "source": "/.well-known/(.*)",
+      "source": "/404.html",
       "headers": [
-        { "key": "Content-Type", "value": "text/plain; charset=utf-8" },
-        { "key": "Cache-Control", "value": "public, max-age=86400" }
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        }
       ]
     },
     {
-      "source": "/favicon.ico",
+      "source": "/sw.js",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=604800, immutable" }
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        }
       ]
     },
     {
-      "source": "/favicon.svg",
+      "source": "/(anasayfa|icindekiler|icerik|madde|sahis|sahislar|arama|sozluk|fevaid|tablo|hukumler|quiz|ayet-hadis|gunun-bilgisi|rehberler|calisma-alanim|hakkinda|gizlilik)(.*)",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=604800, immutable" }
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        }
       ]
     },
     {
-      "source": "/apple-touch-icon.png",
+      "source": "/(silsile-atlasi|namaz-vakitleri)/(index\\.html)?",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=604800, immutable" }
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        }
       ]
     },
     {
-      "source": "/icon-192.png",
+      "source": "/(js|css)/(.*)",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=604800, immutable" }
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        }
       ]
     },
     {
-      "source": "/icon-512.png",
+      "source": "/(silsile-atlasi|namaz-vakitleri)/(js|css)/(.*)",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=604800, immutable" }
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        }
       ]
     },
     {
-      "source": "/og-image.png",
+      "source": "/silsile-atlasi/veri.js",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=604800, immutable" }
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/fonts/(.*)\\.css",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/vendor/three/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/veri/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=300, stale-while-revalidate=3600"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        }
+      ]
+    },
+    {
+      "source": "/veri-arama/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=300, stale-while-revalidate=3600"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        }
+      ]
+    },
+    {
+      "source": "/silsile-atlasi/doku/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=300, stale-while-revalidate=3600"
+        }
+      ]
+    },
+    {
+      "source": "/fonts/(.*)\\.woff2",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/vendor/pdfjs-(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/gorsel/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400, stale-while-revalidate=604800"
+        }
+      ]
+    },
+    {
+      "source": "/(favicon\\.ico|favicon\\.svg|apple-touch-icon\\.png|icon-192\\.png|icon-512\\.png|og-image\\.png)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=604800"
+        }
       ]
     },
     {
       "source": "/manifest.json",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=86400" }
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400"
+        }
       ]
     },
     {
-      "source": "/sitemap.xml",
+      "source": "/(sitemap\\.xml|robots\\.txt)",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=3600" }
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600"
+        }
+      ]
+    },
+    {
+      "source": "/.well-known/(.*)",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/plain; charset=utf-8"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400"
+        }
       ]
     }
   ]

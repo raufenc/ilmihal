@@ -102,8 +102,9 @@ export function sonBolumCiz(S, kap) {
       h('h2.oku-son-baslik#bu-maddede', 'Bu maddede'),
       ...bolumler));
   }
-  kap.append(komsular(S));
 }
+
+export function komsuCiz(S, kap) { kap.replaceChildren(komsular(S)); }
 
 function komsular(S) {
   const m = S.madde;

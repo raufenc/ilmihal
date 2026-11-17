@@ -26,11 +26,18 @@ export const maddeYolu = (kisim, no, sorgu) => `/madde/${kisim}/${no}` + (sorgu 
     gösterim işlevi (yalnız başlık ve isimlerde: ad()); kitap metninde verilmez. */
 export function vurguluMetin(metin, vurgular = [], { basKesik = false, sonKesik = false, bicim = null } = {}) {
   const b = bicim || (x => x);
-  const parca = document.createDocumentFragment();
   metin = String(metin ?? '');
+  const parca = document.createDocumentFragment();
   if (basKesik) parca.append('… ');
-  let i = 0;
+  // Yalnız boşlukla ayrılan bitişik vurgular tek işaret olsun ("Ebû Hanîfe")
+  const birlesik = [];
   for (const [bas, son] of vurgular || []) {
+    const o = birlesik[birlesik.length - 1];
+    if (o && bas >= o[1] && /^[ \u00a0]*$/.test(metin.slice(o[1], bas))) o[1] = Math.max(o[1], son);
+    else birlesik.push([bas, son]);
+  }
+  let i = 0;
+  for (const [bas, son] of birlesik) {
     if (bas < i || son <= bas || bas >= metin.length) continue;
     if (bas > i) parca.append(b(metin.slice(i, bas)));
     const m = document.createElement('mark');

@@ -20,7 +20,7 @@ import { sahifePaneliKur } from './okuyucu/sahife.js';
 import { ayarlarAc, ayarUygula } from './okuyucu/ayarlar.js';
 import { cekmeceAc } from './okuyucu/cekmece.js';
 import { secimKur } from './okuyucu/secim.js';
-import { sonBolumCiz, notlarCiz } from './okuyucu/son.js';
+import { sonBolumCiz, notlarCiz, komsuCiz } from './okuyucu/son.js';
 import { digerAc, kisayollarAc } from './okuyucu/menu.js';
 import { YOL } from './okuyucu/simgeler.js';
 
@@ -70,6 +70,10 @@ function hataCiz(hata, kimlik) {
     cevrimdisi ? 'İnternet bağlantınız kesik görünüyor. Bağlantı gelince yeniden deneyin.' : 'Maddenin metni şu an getirilemedi. Biraz sonra yeniden deneyin.',
     yeniden, h('a.dugme', { href: '/icindekiler' }, 'Fihrist'));
   if (S.kabuk) {
+    S.madde = null;
+    S.dg.yer.firstChild.textContent = `${kisimAdi(kimlik.kisim)} · Madde ${kimlik.no}`;
+    S.dg.yer.lastChild.textContent = `${roma(kimlik.kisim)} · ${kimlik.no}`;
+    S.baglam.baslikYaz(cevrimdisi ? 'Bağlantı yok' : 'Madde yüklenemedi');
     doldur(S.sayfa, h('.oku-sayfa-ic', blok));
   } else {
     S.baglam.baslikYaz(cevrimdisi ? 'Bağlantı yok' : 'Madde yüklenemedi');
@@ -208,7 +212,13 @@ async function maddeAc(kimlik, baglam, { ilk = false } = {}) {
   S.maddeIptal = ic;
   if (baglam.sinyal.aborted) return;
   baglam.sinyal.addEventListener('abort', () => ic.abort(), { once: true });
-  if (S.kabuk && S.calar) S.calar.yukle(null);
+  if (S.kabuk && S.calar) {
+    S.calar.yukle(null);
+    S.secim.kapat();
+    S.hasiye.kapat();
+    const sec = document.getSelection();
+    if (sec && sec.rangeCount && S.sayfa.contains(sec.anchorNode)) sec.removeAllRanges();
+  }
 
   let madde;
   try {
@@ -287,12 +297,14 @@ function sayfaCiz(madde, baglam, sinyal, { ilk }) {
       S.bitirAlan,
       S.sonAlan,
       S.notAlan,
+      S.komsuAlan = h('.oku-komsu-kap'),
       h('p.oku-ketebe.kunye', 'Se’âdet-i Ebediyye · ', kisim, ', Madde ', String(madde.no), ' · Sahîfe ', sahifeYaz(madde.sahife[0], madde.sahife[1]),
         h('span.yalniz-baski', ' · ', location.origin + `/madde/${madde.kisim}/${madde.no}`))));
 
   bitirCiz();
   sonBolumCiz(S, S.sonAlan);
   notlarCiz(S, S.notAlan);
+  komsuCiz(S, S.komsuAlan);
   S.sahife.maddeDegisti(madde, { ilk });
   S.ilerleme.style.transform = 'scaleX(0)';
   S.cubuk.classList.remove('gizli');

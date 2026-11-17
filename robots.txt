@@ -1,6 +1,8 @@
 User-agent: *
 Allow: /
-Sitemap: https://www.ilmihal.org/sitemap.xml
+Disallow: /arama/
+Disallow: /calisma-alanim
+Disallow: /kitap/
+Disallow: /api/
 
-User-agent: Googlebot
-Allow: /
+Sitemap: https://www.ilmihal.org/sitemap.xml

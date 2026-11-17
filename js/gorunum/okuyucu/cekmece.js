@@ -36,7 +36,7 @@ export async function cekmeceAc(S, dugme) {
         h('span.fihrist-sayfa', String(m.sahife[0]))));
     }));
   };
-  for (const k of fihrist.kisimlar) sekme.append(h('button', { type: 'button', dataset: { k: String(k.no) }, title: k.ad, onclick: () => { kisim = k.no; ciz(); liste.scrollTop = 0; } }, roma(k.no) + '. Kısım'));
+  for (const k of fihrist.kisimlar) sekme.append(h('button', { type: 'button', dataset: { k: String(k.no) }, title: k.ad, onclick: () => { kisim = k.no; ciz(); liste.parentElement.scrollTop = 0; } }, roma(k.no) + '. Kısım'));
   ciz();
 
   const d = h('dialog.oku-pencere.oku-cekmece', { 'aria-labelledby': 'cekmece-baslik' },
@@ -51,7 +51,9 @@ export async function cekmeceAc(S, dugme) {
   pencereAc(d, dugme, { konumla: false });
   const simdiki = liste.querySelector('[aria-current="page"]');
   if (simdiki) {
-    simdiki.scrollIntoView({ block: 'center' });
+    const kaydir = d.querySelector('.cekmece-kaydir');
+    kaydir.scrollTop = Math.max(0, simdiki.offsetTop - kaydir.clientHeight / 2 + simdiki.offsetHeight / 2);
+    d.scrollTop = 0;
     simdiki.focus({ preventScroll: true });
   }
 }

@@ -267,6 +267,7 @@ function siraYaz() {
 
 function bolumGoster(kip) {
   D.levhaKip = kip;
+  govde.classList.toggle('kip-cedvel', kip === 'cedvel');
   $('bolum-cedvel').hidden = kip !== 'cedvel';
   $('bolum-vakit').hidden = kip !== 'vakit';
   $('bolum-fasil').hidden = kip !== 'fasil';
@@ -720,7 +721,7 @@ const GLSL_GOLGE = /* glsl */`
     float m = max(m0 * 0.8, max(m1, m2));
     c = mix(c, c * 0.22, m * gun * 0.9);
     vec3 altin = vec3(0.95, 0.62, 0.24);
-    float isik = m0 * (0.25 + 0.6 * uDegme.x) + m1 * (0.32 + 0.9 * uDegme.y) + m2 * (0.28 + 0.9 * uDegme.z);
+    float isik = m0 * (0.22 + 0.5 * uDegme.x) + m1 * (0.42 + 0.9 * uDegme.y) + m2 * (0.38 + 0.9 * uDegme.z);
     c += altin * isik * mix(0.55, 0.75, 1.0 - gun);
     return c;
   }
@@ -747,10 +748,10 @@ const GOK_FS = /* glsl */`
     float gun = smoothstep(-5.0, 12.0, h);
     vec2 dh = d.xz; float ld = length(dh); dh = ld > 1e-4 ? dh / ld : vec2(0.0, 1.0);
     vec2 sh = uGunes.xz; float ls = length(sh); sh = ls > 1e-4 ? sh / ls : vec2(0.0, 1.0);
-    float yakin = 0.5 + 0.5 * dot(dh, sh);
-    float mu = max(dot(d, uGunes), 0.0);
-    vec3 c = mix(vec3(0.010, 0.016, 0.034), vec3(0.0025, 0.0045, 0.011), pow(yu, 0.5));
-    vec3 gu = mix(vec3(0.24, 0.31, 0.42), vec3(0.026, 0.080, 0.215), pow(yu, 0.42));
+    float yakin = clamp(0.5 + 0.5 * dot(dh, sh), 0.0, 1.0);
+    float mu = clamp(dot(d, uGunes), 0.0, 1.0);
+    vec3 c = mix(vec3(0.010, 0.016, 0.034), vec3(0.0025, 0.0045, 0.011), sqrt(yu));
+    vec3 gu = mix(vec3(0.24, 0.31, 0.42), vec3(0.026, 0.080, 0.215), pow(yu + 1e-6, 0.42));
     gu += vec3(1.0, 0.86, 0.62) * (0.07 * pow(mu, 8.0) + 0.28 * pow(mu, 120.0));
     gu = mix(gu, gu * vec3(1.25, 0.95, 0.70), (1.0 - smoothstep(3.0, 22.0, h)) * exp(-yu * 3.5) * yakin);
     c = mix(c, gu, gun);
@@ -760,12 +761,14 @@ const GOK_FS = /* glsl */`
     kizil = mix(kizil, vec3(0.20, 0.25, 0.42), smoothstep(0.10, 0.42, yu));
     vec3 beyaz = vec3(0.22, 0.26, 0.34);
     vec3 renk = mix(beyaz, kizil, sig);
-    float guc = 0.80 * exp(-pow((h + 2.5) / 7.0, 2.0)) + 0.42 * exp(-pow((h + 14.5) / 5.0, 2.0));
+    float g1 = (h + 2.5) / 7.0, g2 = (h + 14.5) / 5.0;
+    float guc = 0.80 * exp(-g1 * g1) + 0.42 * exp(-g2 * g2);
     float yonlu = pow(yakin, mix(2.2, 3.0, sig));
     c += renk * band * yonlu * guc * (1.0 - 0.65 * gun);
     float kusak = smoothstep(-7.0, -1.5, h) * (1.0 - smoothstep(0.5, 6.0, h));
-    float karsi = pow(1.0 - yakin, 2.0);
-    c += vec3(0.18, 0.085, 0.12) * kusak * karsi * exp(-pow((yu - 0.13) / 0.09, 2.0));
+    float karsi = (1.0 - yakin) * (1.0 - yakin);
+    float kb = (yu - 0.13) / 0.09;
+    c += vec3(0.18, 0.085, 0.12) * kusak * karsi * exp(-kb * kb);
     c *= 1.0 - kusak * karsi * exp(-yu / 0.06) * 0.35;
     return c;
   }
@@ -777,7 +780,7 @@ const GOK_FS = /* glsl */`
     if (y < sinr) {
       float gun = smoothstep(-8.0, 10.0, uIrt);
       vec3 yer = mix(vec3(0.0035, 0.0045, 0.007), vec3(0.042, 0.040, 0.034), gun);
-      float k = uYerAlt < -0.01 ? smoothstep(0.0, 0.0015, sinr - y) : smoothstep(0.0, 0.045, sinr - y);
+      float k = uYerAlt < -0.01 ? smoothstep(0.0, 0.0015, sinr - y) : smoothstep(0.01, 0.32, sinr - y);
       c = mix(c, yer, k);
     }
     float g = fract(sin(dot(gl_FragCoord.xy + fract(uZaman) * 37.0, vec2(12.9898, 78.233))) * 43758.5453);
@@ -819,7 +822,7 @@ const TABLA_FS = /* glsl */`
       // kenar
       float dif = max(dot(N, uGunes), 0.0) * step(0.0, uGunes.y);
       vec3 c = vec3(0.30, 0.21, 0.10) * (mix(vec3(0.03, 0.035, 0.05), vec3(0.22, 0.24, 0.28), gun) + dif);
-      c += vec3(0.85, 0.60, 0.30) * pow(1.0 - abs(dot(N, V)), 4.0) * mix(0.08, 0.3, uGece);
+      c += vec3(0.85, 0.60, 0.30) * pow(clamp(1.0 - abs(dot(N, V)), 0.0, 1.0), 4.0) * mix(0.08, 0.3, uGece);
       gl_FragColor = vec4(c, uSaydam);
       return;
     }
@@ -855,7 +858,7 @@ const MIL_FS = /* glsl */`
     vec3 c = alb * (mix(vec3(0.04, 0.045, 0.06), vec3(0.22, 0.24, 0.28), gun) + vec3(1.0, 0.9, 0.75) * dif * 1.15);
     float sp = pow(max(dot(reflect(-uGunes, N), V), 0.0), 36.0) * acik;
     c += vec3(1.0, 0.86, 0.6) * sp * 0.9;
-    c += vec3(0.95, 0.70, 0.36) * pow(1.0 - max(dot(N, V), 0.0), 3.0) * mix(0.12, 0.6, uGece);
+    c += vec3(0.95, 0.70, 0.36) * pow(clamp(1.0 - dot(N, V), 0.0, 1.0), 3.0) * mix(0.12, 0.6, uGece);
     gl_FragColor = vec4(c, 1.0);
   }
 `;
@@ -943,24 +946,29 @@ const GUNES_VS = /* glsl */`
   }
 `;
 const GUNES_FS = /* glsl */`
-  uniform float uDisk; uniform float uKizil; uniform float uKes; uniform float uHayalet; uniform float uGuc;
+  uniform float uDisk; uniform float uKizil; uniform float uKes; uniform float uKesYum; uniform float uHayalet; uniform float uGuc;
   varying vec2 vUv; varying vec3 vW;
   void main(){
-    float alti = (uKes > -89.0 && asin(normalize(vW).y) < radians(uKes)) ? 1.0 : 0.0;
+    float ad = degrees(asin(clamp(normalize(vW).y, -1.0, 1.0)));
+    float alti = (uKes > -89.0 && ad < uKes) ? 1.0 : 0.0;
+    float altiH = uKes > -89.0 ? smoothstep(uKes + uKesYum, uKes - uKesYum, ad) : 0.0;
     float r = length(vUv);
     if (uHayalet > 0.5) {
-      float halka = exp(-pow((r - uDisk) / (uDisk * 0.16), 2.0));
-      float ic = exp(-pow(r / (uDisk * 0.18), 2.0)) * 0.5;
+      float hq = (r - uDisk) / (uDisk * 0.16), iq = r / (uDisk * 0.18);
+      float halka = exp(-hq * hq);
+      float ic = exp(-iq * iq) * 0.5;
       vec3 c = vec3(0.98, 0.78, 0.45) * (halka * 0.9 + ic) * uGuc;
       gl_FragColor = vec4(c, 1.0);
       return;
     }
     float disk = (1.0 - smoothstep(uDisk * 0.97, uDisk * 1.03, r)) * (1.0 - alti);
-    float kenarK = sqrt(max(1.0 - pow(r / uDisk, 2.0), 0.0));
-    vec3 ic = mix(vec3(1.0, 0.95, 0.84), vec3(1.0, 0.52, 0.22), uKizil);
-    vec3 c = ic * disk * (0.55 + 0.45 * kenarK) * mix(5.0, 2.1, uKizil);
-    float hale = exp(-pow(r / (uDisk * 2.4), 2.0)) * 0.55 + exp(-r / (uDisk * 1.6)) * 0.18;
-    c += mix(vec3(1.0, 0.82, 0.52), vec3(1.0, 0.45, 0.18), uKizil) * hale * (1.0 - disk) * 1.4 * (1.0 - 0.75 * alti);
+    float kq = r / uDisk;
+    float kenarK = sqrt(max(1.0 - kq * kq, 0.0));
+    vec3 ic = mix(vec3(1.0, 0.95, 0.84), vec3(1.0, 0.46, 0.13), uKizil);
+    vec3 c = ic * disk * (0.55 + 0.45 * kenarK) * mix(3.6, 2.4, uKizil);
+    float hl = r / (uDisk * 2.4);
+    float hale = exp(-hl * hl) * 0.55 + exp(-r / (uDisk * 1.6)) * 0.18;
+    c += mix(vec3(1.0, 0.82, 0.52), vec3(1.0, 0.45, 0.18), uKizil) * hale * (1.0 - disk) * 1.4 * (1.0 - 0.75 * altiH);
     gl_FragColor = vec4(c * uGuc * (1.0 - smoothstep(0.75, 1.0, r)), 1.0);
   }
 `;
@@ -983,7 +991,8 @@ const NOKTA_FS = /* glsl */`
     if (r > 1.0 || vGuc < 0.004) discard;
     float cek = 1.0 - smoothstep(0.42, 0.62, r);
     float hal = exp(-r * r * 3.0) * 0.35;
-    float halka = exp(-pow((r - 0.86) / 0.07, 2.0)) * 0.6;
+    float hq = (r - 0.86) / 0.07;
+    float halka = exp(-hq * hq) * 0.6;
     gl_FragColor = vec4(uRenk * (cek * 1.4 + hal + halka) * vGuc, 1.0);
   }
 `;
@@ -1179,7 +1188,7 @@ function tepelerKur() {
       const ekle = (r, y, f) => { konum.push(c * r, y, s * r); yukA.push(f); };
       ekle(K.r, ZEMIN_Y - 0.5, 0);
       ekle(K.r + 9, ZEMIN_Y + h, 1);
-      ekle(K.r + 30, ZEMIN_Y + h * 0.45, 0.6);
+      ekle(K.r + 60, ZEMIN_Y + h * 0.92, 0.9);
       if (i < N) {
         const b = i * 3, n = b + 3;
         indis.push(b, n, b + 1, b + 1, n, n + 1, b + 1, n + 1, b + 2, b + 2, n + 1, n + 2);
@@ -1386,8 +1395,8 @@ function temkinCizgileri() {
   const p3 = cizgiAg([dikey(kb, -dip - sd, -dip - sd - ref), uc(kb, -dip - sd), uc(kb, -dip - sd - ref)], { kalin: 1.6, opak: 0.95, renk: [0.98, 0.62, 0.38], alt: 1, yakin: 1 });
   G.temkin.push(hk, sr, p1, p2, p3);
   for (const m of G.temkin) { m.renderOrder = 10; m.visible = false; sahne.add(m); }
-  etiketKonum('t-hak', kubbe(0.16, az - 2.3));
-  etiketKonum('t-ser', kubbe(-dip - 0.13, az - 2.3));
+  etiketKonum('t-hak', kubbe(0.13, az + 0.9));
+  etiketKonum('t-ser', kubbe(-dip - 0.13, az + 0.9));
   etiketMetin('t-ser', 'Şer’î ufuk', `−${aciDkSn(t.inhitatDk)}`);
   etiketKonum('t-inh', kubbe(-dip / 2, kb - 0.04));
   etiketMetin('t-inh', 'İnhitât', aciDkSn(t.inhitatDk));
@@ -1406,6 +1415,10 @@ function seciliAnalemma() {
 }
 
 async function sahneKur() {
+  let dene = null;
+  try { dene = document.createElement('canvas').getContext('webgl2'); } catch (e) { dene = null; }
+  if (!dene) throw new Error('WebGL2 açılamadı');
+  dene.getExtension('WEBGL_lose_context')?.loseContext();
   cizici = new THREE.WebGLRenderer({ canvas: tuval, antialias: false, alpha: false, powerPreference: 'high-performance' });
   if (!cizici.capabilities.isWebGL2) throw new Error('WebGL2 yok');
   const kucuk = darEkran() || (navigator.deviceMemory && navigator.deviceMemory <= 4);
@@ -1456,7 +1469,7 @@ async function sahneKur() {
   kubbeKur();
   // güneş ve hayaleti
   const kare = new THREE.PlaneGeometry(1, 1);
-  const gunesU = () => ({ uMerkez: { value: new THREE.Vector3() }, uBoy: { value: 1 }, uDisk: { value: 0.25 }, uKizil: { value: 0 }, uKes: { value: -90 }, uHayalet: { value: 0 }, uGuc: { value: 1 } });
+  const gunesU = () => ({ uMerkez: { value: new THREE.Vector3() }, uBoy: { value: 1 }, uDisk: { value: 0.25 }, uKizil: { value: 0 }, uKes: { value: -90 }, uKesYum: { value: 0.8 }, uHayalet: { value: 0 }, uGuc: { value: 1 } });
   G.gunes = new THREE.Mesh(kare, new THREE.ShaderMaterial({ uniforms: gunesU(), vertexShader: GUNES_VS, fragmentShader: GUNES_FS, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending }));
   G.hayalet = new THREE.Mesh(kare, new THREE.ShaderMaterial({ uniforms: { ...gunesU(), uHayalet: { value: 1 } }, vertexShader: GUNES_VS, fragmentShader: GUNES_FS, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending }));
   G.gunes.frustumCulled = G.hayalet.frustumCulled = false;
@@ -1540,7 +1553,7 @@ function grupGorunur(g) {
   switch (g) {
     case 'vakit': return !an;
     case 'yon': return true;
-    case 'daire': return !an && (fs === 1 || fs === 4 || fs === 0 || ['imsak', 'istibak', 'yatsiEvvel', 'yatsiSani', 'israk', 'isfirar'].includes(D.levhaKip === 'vakit' ? D.secili : ''));
+    case 'daire': return !an && (fs === 1 || fs === 4 || ['imsak', 'istibak', 'yatsiEvvel', 'yatsiSani', 'israk', 'isfirar'].includes(D.levhaKip === 'vakit' ? D.secili : ''));
     case 'halka': return fs === 2 || fs === 3 || (D.levhaKip === 'vakit' && ['ogle', 'zevalBaslangici', 'asrEvvel', 'asrSani'].includes(D.secili));
     case 'gece': return U.uIrt.value < -8 && !an && kamera.position.length() < R * 0.8;
     case 'genel': return fs === 0 || fs === 2;
@@ -1556,8 +1569,8 @@ const _p = new THREE.Vector3(), _q = new THREE.Vector3(), _r = new THREE.Vector3
 function etiketGuncelle() {
   const adaylar = [];
   const ileri = kamera.getWorldDirection(_r);
-  const solSinir = !darEkran() ? Math.min(440, W * 0.35) + 60 : -40;
-  const altSinir = darEkran() ? H - levhaBoy - 118 : H - 150;
+  const solSinir = !darEkran() ? Math.min(440, W * 0.35) + 60 : 4;
+  const altSinir = seritUst - 8;
   for (const e of ETK.values()) {
     let goster = e.aktif && grupGorunur(e.grup);
     if (goster) {
@@ -1579,7 +1592,7 @@ function etiketGuncelle() {
     if (!a.e.en) a.e.en = a.e.el.offsetWidth || 100;
     const x0 = a.e.ortala ? a.x - a.e.en / 2 : a.e.sol ? a.x - a.e.en - 8 : a.x + 6;
     const kutu = { x0, x1: x0 + a.e.en, y0: a.y - 10, y1: a.y + 10 };
-    const cakisma = yerler.some(k => kutu.x0 < k.x1 && kutu.x1 > k.x0 && kutu.y0 < k.y1 && kutu.y1 > k.y0);
+    const cakisma = kutu.x1 > W - 6 || kutu.x0 < solSinir - 50 || yerler.some(k => kutu.x0 < k.x1 && kutu.x1 > k.x0 && kutu.y0 < k.y1 && kutu.y1 > k.y0);
     const goster = !cakisma;
     if (goster) {
       yerler.push(kutu);
@@ -1602,8 +1615,11 @@ function yorunge(hedef, semt, irt, uzak, gor, bak = 0) {
 const genis = () => kamera ? kamera.aspect : W / H;
 function pozGenel() {
   const z = D.zevalSemt ?? 180, a = genis();
-  const uzak = a < 0.8 ? 74 : a < 1.3 ? 60 : 50;
-  return yorunge(V3(0, a < 0.8 ? 7 : 4, 0), z, a < 0.8 ? -18 : -15, uzak, a < 0.8 ? 58 : 50);
+  // gün yayı genişse (yaz) kubbeye biraz daha yukarıdan bakılır
+  const dogus = D.hk && D.hk.gunes ? Math.abs(aciFark(D.hk.gunes.semt, z)) : 70;
+  const g = yumusak(60, 115, dogus);
+  const uzak = (a < 0.8 ? 76 : a < 1.3 ? 62 : 50) * ara(1, 1.14, g);
+  return yorunge(V3(0, a < 0.8 ? 7 : 4, 0), z, ara(a < 0.8 ? -18 : -15, -25, g), uzak, a < 0.8 ? 58 : 50);
 }
 function pozGunYayi() { const z = D.zevalSemt ?? 180, a = genis(); return yorunge(V3(0, 4, 0), z + 28, -21, a < 0.8 ? 78 : a < 1.3 ? 64 : 54, a < 0.8 ? 58 : 50); }
 function semtVakit(k, yedek) { return D.hk[k] ? D.hk[k].semt : yedek; }
@@ -1633,7 +1649,7 @@ function pozAnalemma() {
   const z = D.zevalSemt ?? 180, a = genis();
   const orta = 90 - Math.abs(D.yer.enlem);
   const kb = z === 180 ? -1 : 1;
-  return { P: V3(0, 1.2, kb * 9), T: kubbe(kis(orta, 8, 80), z), gor: a < 0.8 ? 84 : 62, bak: 1 };
+  return { P: V3(0, MIL + 0.6, 0), T: kubbe(kis(orta + 2, 8, 80), z), gor: a < 0.8 ? 88 : 70, bak: 1 };
 }
 
 function kameraKur(t) {
@@ -1914,6 +1930,7 @@ function dongu(simdi) {
   gm.uMerkez.value.copy(gorunen); gm.uBoy.value = boy; gm.uDisk.value = 0.2;
   gm.uKizil.value = 1 - yumusak(-1, 14, g.irtifa);
   gm.uKes.value = tk > 0.5 ? -dip : -0.05;
+  gm.uKesYum.value = tk > 0.5 ? 0.1 : 0.9;
   gm.uGuc.value = 1;
   G.gunes.visible = g.irtifa + ink > (tk > 0.5 ? -2.5 : -0.75);
   // güneş ufkun altındayken yerini gösteren halka
@@ -1929,7 +1946,7 @@ function dongu(simdi) {
   etiketMetin('gunes', '', `İrtifâ’ ${isaretli(g.irtifa, 1)}°`);
   etiketKonum('t-mer', kubbe(g.irtifa, g.semt));
   const sabah = g.saatAcisi < 0;
-  const odak = sabah ? (D.hk.imsak ? D.hk.imsak.semt : 110) - 13 : (D.hk.yatsiSani ? D.hk.yatsiSani.semt : 250) + 13;
+  const odak = sabah ? (D.hk.imsak ? D.hk.imsak.semt : 110) - 21 : (D.hk.yatsiSani ? D.hk.yatsiSani.semt : 250) + 21;
   for (const i of [5, -10, -17, -19]) etiketKonum('d' + i, kubbe(i + 0.5, odak));
 
   // gölge ve halkalara değme
@@ -2023,7 +2040,8 @@ function dongu(simdi) {
   // temkin faslında tabla, mil, yer ve tepeler gizlenir
   const dunya = tk < 0.5;
   G.tabla.visible = G.mil.visible = G.yer.visible = dunya;
-  for (const m of G.tepeler) m.visible = dunya;
+  const tepeGor = dunya && kamera.position.y < 15;
+  for (const m of G.tepeler) m.visible = tepeGor;
 
   kameraKur(t);
   etiketGuncelle();
@@ -2046,10 +2064,11 @@ function dongu(simdi) {
   }
 }
 
-let levhaBoy = 0;
+let levhaBoy = 0, seritUst = 0;
 function boyutla() {
   W = innerWidth; H = innerHeight;
   levhaBoy = levha.offsetHeight;
+  seritUst = document.querySelector('.serit-bas').getBoundingClientRect().top;
   seritGuncelle();
   if (!cizici || !bestec) return;
   cizici.setPixelRatio(PO);
@@ -2173,7 +2192,7 @@ sahneKur().then(() => {
 // Hata ayıklama ve denetim için
 window.__vakit = {
   D, V, git: (k) => (typeof k === 'number' ? fasilAc(k) : vakitSec(k)), fasilAc, vakitSec, zamanAyarla, tarihAyarla,
-  yerSec, simdiyeDon, gunesAn, MIL, R, TABLA,
-  kamera: () => kamera, ucusBitir: () => { if (D.ucus) { D.ucus.t0 = -1e9; } },
+  yerSec, simdiyeDon, gunesAn, MIL, R, TABLA, U, G,
+  kamera: () => kamera, isilti: () => isilti, ucusBitir: () => { if (D.ucus) { D.ucus.t0 = -1e9; } },
   zamanBitir: () => { if (D.zaman) { const a = D.zaman.adim; D.dk = a[a.length - 1][0]; D.zaman = null; } },
 };

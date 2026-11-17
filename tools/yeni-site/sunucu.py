@@ -97,4 +97,7 @@ class Istek(SimpleHTTPRequestHandler):
 
 if __name__ == "__main__":
     print(f"ilmihal yerel sunucu: http://localhost:{PORT}/  (kök: {KOK})")
+    # Birkaç başsız tarayıcı aynı anda yüzlerce modül isteyebilir; varsayılan kuyruk (5) bağlantıları düşürür
+    ThreadingHTTPServer.request_queue_size = 256
+    ThreadingHTTPServer.daemon_threads = True
     ThreadingHTTPServer(("127.0.0.1", PORT), Istek).serve_forever()

@@ -27,7 +27,7 @@ export const VAKIT_METIN = {
     ],
   },
   zevalBaslangici: {
-    kisa: 'Zevâl', olay: 'Zevâl — kerâhet vakti', arabi: 'الزَّوَال',
+    kisa: 'Zevâl (kerâhet)', olay: 'Zevâl — kerâhet vakti', arabi: 'الزَّوَال',
     paragraflar: [
       'Zevâl (kerâhet) vakti, güneşin ön kenârının şer’î zevâl dâiresine girdiği ve arka kenârının çıktığı vakit arasıdır; İstanbul için hakîkî zevâlden 10 dakika önce başlar, 10 dakika sonra biter (s. 182, 202).',
       'Güneş, nısf-ün-nehâr dâiresine (meridyen) gelince en yükseğe çıkar; bu ana hakîkî zevâl denir. Bu anda her şeyin gölgesi en kısadır ve tam kuzey-güney doğrultusundadır.',

@@ -18,6 +18,7 @@ export function secimKur(S) {
   let cubuk = null;
   let secili = null;       // {bas, son, metin}
   let basili = false;
+  let hedefMark = null;
   let zaman = null;
   const dokunmatik = () => matchMedia('(pointer: coarse)').matches;
 
@@ -27,6 +28,7 @@ export function secimKur(S) {
     cubuk.remove();
     cubuk = null;
     secili = null;
+    hedefMark = null;
     return true;
   }
 
@@ -37,7 +39,9 @@ export function secimKur(S) {
     const cubukAlti = (S.cubuk && !S.cubuk.classList.contains('gizli')) ? S.cubuk.getBoundingClientRect().bottom : 0;
     let top = ust && !dokunmatik() ? rect.top - y - 10 : rect.bottom + 12;
     if (top < cubukAlti + 6) top = rect.bottom + 12;
-    if (top + y > innerHeight - 8) top = Math.max(cubukAlti + 6, rect.top - y - 10);
+    const serit = document.querySelector('.ses-serit:not([hidden])');
+    const alt = serit ? serit.getBoundingClientRect().top : innerHeight;
+    if (top + y > alt - 8) top = Math.max(cubukAlti + 6, rect.top - y - 10);
     cubuk.style.left = Math.round(x) + 'px';
     cubuk.style.top = Math.round(top) + 'px';
   }
@@ -76,6 +80,7 @@ export function secimKur(S) {
 
   function secimCubugu(s) {
     secili = { bas: s.bas, son: s.son, metin: s.metin };
+    hedefMark = null;
     const vurgula = renk => {
       if (!secili) return;
       const sira = kullanici.vurgular.ekle(S.key, secili.metin, renk);
@@ -105,6 +110,7 @@ export function secimKur(S) {
     const v = kullanici.vurgular.liste(S.key)[sira];
     if (!v) return;
     const rect = mark.getBoundingClientRect();
+    hedefMark = mark;
     cubukKur(h('.secim-ana',
       renkSecici(renk => { kullanici.vurgular.ekle(S.key, v.text, renk); kapat(); S.vurgulariYerlestir(); }, v.renk),
       h('span.secim-ayrac', { 'aria-hidden': 'true' }),
@@ -149,7 +155,14 @@ export function secimKur(S) {
     const m = e.target.closest && e.target.closest('mark.vurgu');
     if (m && e.target === m) { e.preventDefault(); vurguCubugu(m); }
   }, sec);
-  addEventListener('scroll', () => { if (cubuk && !secili) kapat(); else if (cubuk && secili) { const s = document.getSelection(); if (s && s.rangeCount && !s.isCollapsed) yerlestir(s.getRangeAt(0).getBoundingClientRect()); } }, { ...sec, passive: true });
+  addEventListener('scroll', () => {
+    if (!cubuk) return;
+    let rect = null;
+    if (hedefMark && hedefMark.isConnected) rect = hedefMark.getBoundingClientRect();
+    else if (secili) { const s = document.getSelection(); if (s && s.rangeCount && !s.isCollapsed) rect = s.getRangeAt(0).getBoundingClientRect(); }
+    if (!rect || rect.bottom < 0 || rect.top > innerHeight) { kapat(); return; }
+    yerlestir(rect);
+  }, { ...sec, passive: true });
 
   return {
     kapat,

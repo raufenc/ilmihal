@@ -1,10 +1,41 @@
-# Yayına çıkmaması gereken iç dosyalar (denetim raporları, araçlar, yerel ayarlar)
+# Yayına çıkmayan dosyalar (depoda kalır). Belge: tools/yeni-site/ALTYAPI.md
+# DİKKAT: kalıplar .gitignore sözdizimindedir; başında "/" olmayan ad HER klasörde eşleşir.
+# Kökteki eski dosya adları yeni sitede de var (js/gorunum/sahislar.js, js/cekirdek/okuma-plani.js …),
+# bu yüzden hepsi "/" ile köke sabitlenmiştir.
+
+# Yerel ayarlar, depo, işletim sistemi artıkları
 .claude
 .git
 .DS_Store
 **/.DS_Store
-DENETIM_RAPORU_*.md
-tools
-og-image.html
-ayet_hadis_data.json
-eski
+# Eşitleme/kopya artıkları ("fihrist 2.json", "dizin 2.json" …)
+* 2
+* 2.*
+
+# Araçlar, eski site, raporlar
+/tools
+/eski
+/DENETIM_RAPORU_*.md
+/PREMIUM_PLAN.md
+/og-image.html
+
+# Eski uygulama ve kaynak veri dosyaları (yeni site veri/ ve veri-arama/ kullanır)
+/app.js
+/style.css
+/search-engine.js
+/data.js
+/maddeler-data.js
+/sozluk-data.js
+/sahislar.js
+/hukumler-data.js
+/ayet-hadis.js
+/ayet_hadis_data.json
+/tanimlar.js
+/crossref.js
+/ozetler.js
+/rehberler.js
+/gunun-sorusu-data.js
+/audio-map.js
+/arama-sozluk.js
+/okuma-plani.js
+/texts

@@ -1,8 +1,10 @@
-// Günün Maddesi RSS akışı — ana sayfadaki "Günün Maddesi" kartıyla aynı seçimi yapar
-// (yılın günü % 241, Türkiye saatine göre). Statik rss.xml Mart 2026'da donup kalmıştı.
+// Günün Maddesi RSS akışı (Vercel Edge işlevi; /rss.xml buraya yazılır).
+// BU DOSYA ÜRETİLMİŞTİR: node tools/yeni-site/rss-uret.mjs (kaynak: veri/fihrist.json). Elle düzenlemeyin.
+// Seçim sitedeki "Günün Maddesi" ile aynıdır: Türkiye saatine göre yılın günü % madde sayısı
+// (js/cekirdek/okuma-plani.js → gununMaddesi).
 export const config = { runtime: 'edge' };
 
-// [kısım, madde no, başlık] — data.js tocData ile aynı sıra (kitabın İçindekiler'i)
+// [kısım, madde no, başlık] — kitabın sırası (fihrist)
 const MADDELER = [
   [1, 1, "Muhammed aleyhisselâma uymak, se’âdete kavuşdurur"],
   [1, 2, "Allahü teâlâya itâ’at için, Resûlüne itâ’at lâzımdır"],
@@ -247,7 +249,8 @@ const MADDELER = [
   [3, 70, "(Se’âdet-i Ebediyye)nin son sözü"]
 ];
 
-const KISIM_ADI = { 1: 'Birinci Kısım', 2: 'İkinci Kısım', 3: 'Üçüncü Kısım' };
+const KISIM_ADI = {"1":"Birinci Kısım","2":"İkinci Kısım","3":"Üçüncü Kısım"};
+const KITAP = "Se’âdet-i Ebediyye";
 const GUN_MS = 86400000;
 const TR_FARK_MS = 3 * 3600000; // Türkiye, yaz saati uygulamadan UTC+3
 
@@ -255,7 +258,7 @@ function xmlKacis(s) {
   return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&apos;');
 }
 
-// app.js loadGununMaddesi ile aynı hesap: yerel tarihin yılın kaçıncı günü olduğu
+// Yerel (Türkiye) tarihin yılın kaçıncı günü olduğu
 function yilinGunu(yil, ay, gun) {
   return Math.round((Date.UTC(yil, ay, gun) - Date.UTC(yil, 0, 0)) / GUN_MS);
 }
@@ -274,7 +277,7 @@ export default function handler() {
       '      <title>' + xmlKacis(baslik) + '</title>\n' +
       '      <link>' + url + '</link>\n' +
       '      <guid isPermaLink="false">madde-' + kisim + '-' + no + '-' + tarih + '</guid>\n' +
-      '      <description>' + xmlKacis("Se'âdet-i Ebediyye, " + KISIM_ADI[kisim] + ', Madde ' + no) + '</description>\n' +
+      '      <description>' + xmlKacis(KITAP + ', ' + KISIM_ADI[kisim] + ', Madde ' + no) + '</description>\n' +
       '      <pubDate>' + yayin.toUTCString() + '</pubDate>\n' +
       '    </item>'
     );
@@ -282,9 +285,9 @@ export default function handler() {
   const govde = '<?xml version="1.0" encoding="UTF-8"?>\n' +
     '<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">\n' +
     '  <channel>\n' +
-    '    <title>Se&apos;âdet-i Ebediyye - Günün Maddesi</title>\n' +
+    '    <title>' + xmlKacis(KITAP + ' - Günün Maddesi') + '</title>\n' +
     '    <link>https://www.ilmihal.org/</link>\n' +
-    '    <description>Her gün Se&apos;âdet-i Ebediyye kitabından bir madde</description>\n' +
+    '    <description>' + xmlKacis('Her gün ' + KITAP + ' kitabından bir madde') + '</description>\n' +
     '    <language>tr</language>\n' +
     '    <lastBuildDate>' + new Date().toUTCString() + '</lastBuildDate>\n' +
     '    <atom:link href="https://www.ilmihal.org/rss.xml" rel="self" type="application/rss+xml"/>\n' +

@@ -262,7 +262,7 @@ textarea.not-alan { display: block; min-height: 6.5rem; padding: 0.8em 1em; resi
 .vurgu-metin { padding-left: var(--a-3); border-left: 3px solid var(--vr, var(--altin)); display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
 
 /* ── Önceki / sonraki ─────────────────────────────────────── */
-.oku-komsu { display: grid; margin-top: var(--a-9); border-top: 1px solid var(--cizgi); }
+.oku-komsu { display: grid; margin-top: var(--a-8); border-top: 1px solid var(--cizgi); }
 .oku-komsu-satir {
   display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; column-gap: var(--a-4); row-gap: 4px;
   padding: var(--a-5) 0; border-bottom: 1px solid var(--cizgi-2); color: var(--murekkep); text-decoration: none;
@@ -374,7 +374,7 @@ dialog.oku-cekmece[open] { display: flex; flex-direction: column; animation: sol
 .cekmece-ust { padding: var(--a-3) var(--a-5) var(--a-3); border-bottom: 1px solid var(--cizgi-2); }
 .cekmece-kisim { display: grid; grid-template-columns: repeat(3, 1fr); }
 .cekmece-aciklama { margin-top: var(--a-3); font: 400 var(--boy-1)/1.5 var(--arayuz); color: var(--murekkep-3); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-.cekmece-kaydir { flex: 1; overflow-y: auto; overscroll-behavior: contain; padding: var(--a-2) var(--a-4) var(--a-4); }
+.cekmece-kaydir { position: relative; flex: 1; overflow-y: auto; overscroll-behavior: contain; padding: var(--a-2) var(--a-4) var(--a-4); }
 .cekmece-liste .fihrist-satir { --fihrist-no: 2rem; padding: 0.55em var(--a-2); border-radius: 6px; font-size: 0.94rem; line-height: 1.4; }
 .cekmece-liste .fihrist-satir:hover { background: var(--zemin-2); }
 .cekmece-liste .fihrist-satir[aria-current="page"] { background: var(--vurgu-zemin); box-shadow: inset 2px 0 0 var(--surh); }
@@ -383,7 +383,7 @@ dialog.oku-cekmece[open] { display: flex; flex-direction: column; animation: sol
 .cekmece-liste .fihrist-satir[data-durum] .fihrist-no { position: relative; }
 .cekmece-liste .fihrist-satir[data-durum="okundu"] .fihrist-no::before,
 .cekmece-liste .fihrist-satir[data-durum="bitirildi"] .fihrist-no::before {
-  content: ''; position: absolute; left: -2px; top: 50%; width: 5px; height: 5px; margin-top: -2px; border-radius: 50%; border: 1px solid var(--altin);
+  content: ''; position: absolute; left: 0; top: 50%; width: 5px; height: 5px; margin-top: -2px; border-radius: 50%; border: 1px solid var(--altin);
 }
 .cekmece-liste .fihrist-satir[data-durum="bitirildi"] .fihrist-no::before { background: var(--altin); }
 .cekmece-alt { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: var(--a-2); padding: var(--a-3) var(--a-5) calc(var(--a-3) + env(safe-area-inset-bottom)); border-top: 1px solid var(--cizgi-2); }
@@ -487,7 +487,7 @@ dialog.oku-sunum::backdrop { background: var(--zemin); }
   .okuyucu { --cubuk-boy: 52px; }
   .genis-yalniz { display: none; }
   .dar-yalniz { display: list-item; }
-  .oku-cubuk-ic { gap: 0; padding-inline: 4px; }
+  .oku-cubuk-ic { grid-template-columns: auto minmax(0, 1fr) auto; gap: 0; padding-inline: 4px; }
   .oku-yer-uzun { display: none; }
   .oku-yer-kisa { display: inline; }
   .oku-yer { padding-inline: 0.5em; }
@@ -520,7 +520,7 @@ dialog.oku-sunum::backdrop { background: var(--zemin); }
 /* ── Baskı ────────────────────────────────────────────────── */
 @media print {
   html[data-gorunum="okuyucu"] body { background: var(--zemin); }
-  .oku-cubuk, .oku-arama, .ses-serit, .oku-sahife, .secim-cubugu, .hasiye, .oku-bitir, .oku-son-kap, .oku-notlar, .oku-komsu, dialog { display: none !important; }
+  .oku-cubuk, .oku-arama, .ses-serit, .oku-sahife, .secim-cubugu, .hasiye, .oku-bitir, .oku-son-kap, .oku-notlar, .oku-komsu-kap, dialog { display: none !important; }
   .oku-govde { padding: 0 !important; }
   .oku-sayfa { max-width: none; padding: 0; }
   .oku-kapak > * { animation: none; }
@@ -534,3 +534,5 @@ dialog.oku-sunum::backdrop { background: var(--zemin); }
   .oku-ara-baslik { break-after: avoid; }
   .yalniz-baski { display: inline; }
 }
+.oku-dg:focus-visible, .oku-yer:focus-visible { outline-offset: -2px; }
+dialog.pencere.oku-kisayol { width: min(32rem, calc(100vw - 2 * var(--a-4))); }

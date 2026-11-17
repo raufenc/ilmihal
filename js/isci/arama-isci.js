@@ -11,7 +11,8 @@ import {
 
 const TUR_SIRASI = ['madde', 'lugat', 'tanim', 'sahis', 'hukum'];
 const K1 = 1.2, B = 0.75;
-const DILIM_MS = 8;                         // bu kadar çalışınca araya gir (iletiler ve arayüz nefes alsın)
+const DILIM_MS = 8;
+const KISA_KAYIT = 420;                    // bundan kısa lügat/tanım/hüküm/şahıs metni kesilmeden gösterilir                         // bu kadar çalışınca araya gir (iletiler ve arayüz nefes alsın)
 
 // Ek ağırlığı: "hac" sorgusu "hacca"yı (hac + ek) tam sayar, "hâcet"i (başka kelime) az sayar.
 // Kısa kelimelerde yalnız isim çekim ekleri; uzunlarda yapım ve fiil ekleri de kabul edilir.
@@ -305,6 +306,12 @@ export function motorKur({ veriKoku = '/veri-arama/', yukle = null, bekle = null
     if (!eslesmeler.length) return [kesit(b.govde, [0, 0], { once: 0, sonra: tur === 'madde' ? 200 : 260, vurgular: [] })];   // yalnız başlıkta: metnin başı
     const { konum } = duzleEslemeli(b.govde);
     const tumu = eslesmeler.slice().sort((x, y) => x[0] - y[0]);
+    // Kısa kayıt (lügat mânâsı, tanım, hüküm cümlesi): bütünü tek kesit; yoksa cümle sınırı yalnız eşleşmenin
+    // bulunduğu son cümleyi bırakabiliyordu ("ABDEST" → "… Vüdû’.").
+    if (tur !== 'madde' && b.govde.length <= KISA_KAYIT) {
+      const asilHepsi = araliklariBirlestir(tumu.map(([s, e]) => asilAralik(b.govde, konum, s, e)));
+      return [kesit(b.govde, [0, b.govde.length], { once: 0, sonra: 0, vurgular: asilHepsi })];
+    }
     const once = tur === 'madde' ? 70 : 90, sonra = tur === 'madde' ? 160 : 220;
     let merkez = pencere;
     if (!merkez) {                                       // tek terim: en yoğun 250 harflik bölge

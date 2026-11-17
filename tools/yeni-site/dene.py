@@ -148,7 +148,11 @@ def duman_kos(a):
                     durum = "temiz"
                     try:
                         s.goto(a.taban + yol, wait_until="domcontentloaded", timeout=30000)
-                        s.wait_for_function("document.body && document.body.dataset.hazir === '1'", timeout=15000)
+                        # Sitenin güvenlik başlığı sayfa içinde eval'i yasaklar; wait_for_function dizgi ile çalışmaz. Dışarıdan yokla.
+                        bitis = time.time() + 15
+                        while s.evaluate("document.body ? document.body.dataset.hazir : ''") != '1':
+                            if time.time() > bitis: raise TimeoutError('hazır olmadı')
+                            time.sleep(0.1)
                     except Exception as e:
                         durum = "HAZIR OLMADI"
                     time.sleep(0.4)
