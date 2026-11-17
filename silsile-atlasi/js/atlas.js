@@ -48,6 +48,7 @@ const yilSayi = s => { const m = String(s || '').match(/\d{3,4}/); return m ? +m
 const bilinir = s => { const t = String(s || '').trim(); return !!t && t !== '?'; };
 const kitapDisi = s => s.halka === null || s.halka === undefined;      // kitabı hazırlayan âlim
 const kesme = s => String(s || '').replace(/'/g, '’');
+const bitisik = s => String(s || '').replace(/(\p{L})-(?=\p{L})/gu, '$1-\u2060');   // izâfet çizgisinde satır bölünmesin
 
 // Sıra ve adlandırma veri.js'teki "halka" alanına göredir: 0 feyz kaynağı, 1–35 halkalar, null kitabı hazırlayan
 const halkaEtiketi = s => (s.halka === 0 ? 'Menba-i feyz' : kitapDisi(s) ? 'Se’âdet-i Ebediyye’yi hazırlayan' : `${s.halka}. halka`);
@@ -81,9 +82,9 @@ const HALKA = SILSILE.map((s, i) => {
   const cekirdek = m[2].trim(), hazretleri = /\s+hazretleri$/.test(cekirdek);
   return {
     i, no: s.id, ham: s,
-    on: (m[1] || '').trim(), ad: kesme(cekirdek.replace(/\s+hazretleri$/, '')),
+    on: (m[1] || '').trim(), ad: bitisik(kesme(cekirdek.replace(/\s+hazretleri$/, ''))),
     hurmet: (hazretleri ? 'hazretleri ' : '') + (m[3] ? `(${m[3]})` : ''),
-    tam: kesme(s.ad), etiket: halkaEtiketi(s), isaret: halkaIsareti(s),
+    tam: bitisik(kesme(s.ad)), etiket: halkaEtiketi(s), isaret: halkaIsareti(s),
     lat: s.koordinat[0], lon: s.koordinat[1],
     yil: temsiliYil(s), yerKisa: kesme(s.sehir.replace(/\s*\(.*\)\s*/, '').trim()),
     durak: -1
