@@ -2,3 +2,6 @@
 **/.claude/
 __pycache__/
 *.pyc
+
+# Silsile Atlası arazi üretimi için indirilen ham veriler
+tools/silsile-kaynak/

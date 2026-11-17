@@ -2,28 +2,24 @@
 <html lang="tr" dir="ltr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Silsile-i Aliyye Atlası | Se'âdet-i Ebediyye</title>
-  <meta name="description" content="Se'âdet-i Ebediyye'de bildirilen Silsile-i aliyye büyüklerinin kabr-i şerîflerini gösteren harita: Peygamber Efendimiz (sallallahü aleyhi ve sellem)'den Seyyid Abdülhakîm-i Arvâsî hazretlerine kadar, kitaptaki hâl tercemeleriyle.">
+  <meta name="description" content="Se'âdet-i Ebediyye'de bildirilen Silsile-i aliyye büyüklerinin kabr-i şerîflerini üç boyutlu yeryüzü üzerinde gösteren atlas: Peygamber Efendimiz (sallallahü aleyhi ve sellem)'den Seyyid Abdülhakîm-i Arvâsî hazretlerine kadar, kitaptaki hâl tercemeleriyle.">
 
-  <!-- Open Graph -->
   <meta property="og:title" content="Silsile-i Aliyye Atlası">
   <meta property="og:description" content="Peygamber Efendimiz (sallallahü aleyhi ve sellem)'den Seyyid Abdülhakîm-i Arvâsî hazretlerine uzanan Silsile-i aliyye büyüklerinin kabr-i şerîfleri ve Se'âdet-i Ebediyye'deki hâl tercemeleri.">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="tr_TR">
   <meta property="og:site_name" content="ilmihal.org">
+  <meta property="og:image" content="https://www.ilmihal.org/og-image.png">
 
-  <!-- SEO JSON-LD -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
     "name": "Silsile-i Aliyye Atlası",
-    "description": "Se'âdet-i Ebediyye'de bildirilen Silsile-i aliyye büyüklerinin kabr-i şerîflerini gösteren harita.",
-    "publisher": {
-      "@type": "Organization",
-      "name": "ilmihal.org"
-    },
+    "description": "Se'âdet-i Ebediyye'de bildirilen Silsile-i aliyye büyüklerinin kabr-i şerîflerini gösteren atlas.",
+    "publisher": { "@type": "Organization", "name": "ilmihal.org" },
     "mainEntity": {
       "@type": "ItemList",
       "name": "Silsile-i Aliyye",
@@ -34,273 +30,183 @@
   }
   </script>
 
-  <!-- Leaflet (self-host; CSP script-src 'self' ile uyumlu) -->
-  <link rel="stylesheet" href="vendor/leaflet/leaflet.css" />
-
-  <!-- Marka fontları (self-host) -->
   <link rel="stylesheet" href="/fonts/fontlar.css">
+  <link rel="preload" href="/fonts/literata-400-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/literata-400-normal-latin-ext.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="icon" href="/favicon.ico" sizes="any">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-  <meta name="theme-color" content="#18181f">
+  <meta name="theme-color" content="#05070d">
 
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/atlas.css?v=2026-11-17a">
+  <script type="importmap">
+  { "imports": { "three": "./vendor/three/three.module.min.js" } }
+  </script>
+  <script defer src="/_vercel/insights/script.js"></script>
+  <script defer src="/_vercel/speed-insights/script.js"></script>
 </head>
-<body>
+<body class="yukleniyor giris-acik">
 
-  <!-- SKIP LINK -->
-  <a href="#map-section" class="skip-link">Haritaya geç</a>
+  <a href="#levha" class="atla">Hâl tercemesine geç</a>
 
-  <!-- HEADER -->
-  <header id="main-header" role="banner">
-    <div class="header-inner">
-      <div class="logo-area">
-        <a href="/" class="logo-link" title="Se'âdet-i Ebediyye — Ana Sayfa">
-          <div class="logo-icon" aria-hidden="true">&#10022;</div>
-          <div class="logo-text">
-            <span class="logo-title">Silsile-i Aliyye Atlası</span>
-            <span class="logo-subtitle">ilmihal.org &middot; Se'âdet-i Ebediyye</span>
-          </div>
-        </a>
-      </div>
-      <nav id="main-nav" role="navigation" aria-label="Ana menü">
-        <a href="/" class="nav-geri">&larr; Se'âdet-i Ebediyye</a>
-        <a href="#tanitim-section">Silsile-i Aliyye</a>
-        <a href="#map-section">Harita</a>
-        <a href="#silsile-section">Sıra</a>
-      </nav>
-      <div class="header-controls">
-        <button id="global-search-btn" class="global-search-trigger" title="Ara (Ctrl+K)" aria-label="Arama aç">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M11.742 10.344a6.5 6.5 0 10-1.397 1.398h-.001l3.85 3.85a1 1 0 001.415-1.414l-3.85-3.85zm-5.242.156a5 5 0 110-10 5 5 0 010 10z"/></svg>
-          <span class="search-shortcut">Ctrl+K</span>
-        </button>
-        <button id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Menüyü aç" aria-expanded="false">&#9776;</button>
-      </div>
-    </div>
+  <!-- 3B sahne -->
+  <canvas id="sahne" aria-hidden="true"></canvas>
+  <div id="etiketler" aria-hidden="true"></div>
+  <div class="perde perde-sol" aria-hidden="true"></div>
+  <div class="perde perde-alt" aria-hidden="true"></div>
+
+  <!-- Üst çubuk -->
+  <header class="ust" role="banner">
+    <a class="marka" href="/" title="Se'âdet-i Ebediyye — ana sayfa">
+      <svg class="semse" viewBox="-12 -12 24 24" aria-hidden="true"><rect x="-7" y="-7" width="14" height="14"/><rect x="-7" y="-7" width="14" height="14" transform="rotate(45)"/><circle r="2.6"/></svg>
+      <span class="marka-yazi"><b>Silsile-i Aliyye Atlası</b><i>ilmihal.org · Se’âdet-i Ebediyye</i></span>
+    </a>
+    <nav class="ust-dugmeler" aria-label="Atlas denetimleri">
+      <button type="button" id="dg-hakkinda" class="dg" aria-haspopup="dialog">
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 4.2C6.6 3.2 4.6 2.9 2.6 3.1v9c2-.2 4 .1 5.4 1.1 1.4-1 3.4-1.3 5.4-1.1v-9c-2-.2-4 .1-5.4 1.1zM8 4.2v9"/></svg><span>Kaynak</span>
+      </button>
+      <button type="button" id="dg-dizin" class="dg" aria-haspopup="dialog">
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 4h12M2 8h12M2 12h8"/></svg><span>Silsile</span>
+      </button>
+      <button type="button" id="dg-butun" class="dg" aria-pressed="false">
+        <svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="5.6"/><path d="M2.4 8h11.2M8 2.4c2 2 2 9.2 0 11.2M8 2.4c-2 2-2 9.2 0 11.2"/></svg><span>Bütün zincir</span>
+      </button>
+      <button type="button" id="dg-oynat" class="dg dg-altin" aria-pressed="false">
+        <svg viewBox="0 0 16 16" aria-hidden="true" class="ik-oynat"><path d="M5 3.2v9.6L12.6 8z"/></svg>
+        <svg viewBox="0 0 16 16" aria-hidden="true" class="ik-dur"><path d="M4.6 3.4v9.2M11.4 3.4v9.2"/></svg>
+        <span>Sırayla göster</span>
+      </button>
+    </nav>
   </header>
 
-  <!-- GLOBAL SEARCH MODAL -->
-  <div id="global-search-modal" class="gs-modal hidden" role="dialog" aria-label="Arama" aria-modal="true">
-    <div class="gs-backdrop"></div>
-    <div class="gs-container">
-      <div class="gs-input-wrap">
-        <svg class="gs-icon" width="18" height="18" viewBox="0 0 16 16" fill="currentColor"><path d="M11.742 10.344a6.5 6.5 0 10-1.397 1.398h-.001l3.85 3.85a1 1 0 001.415-1.414l-3.85-3.85zm-5.242.156a5 5 0 110-10 5 5 0 010 10z"/></svg>
-        <input type="text" id="gs-input" placeholder="İsim, şehir, bölge veya asır…" autocomplete="off" aria-label="Arama terimi">
-        <kbd class="gs-esc">Esc</kbd>
-      </div>
-      <div id="gs-results" class="gs-results" role="listbox"></div>
-      <div class="gs-footer">
-        <span><kbd>&uarr;</kbd><kbd>&darr;</kbd> ile geç</span>
-        <span><kbd>Enter</kbd> ile seç</span>
-        <span><kbd>Esc</kbd> ile kapat</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- HERO -->
-  <section id="hero" aria-label="Giriş">
-    <div class="hero-overlay"></div>
-    <div class="hero-pattern"></div>
-    <div class="hero-content">
-      <div class="hero-badge">Büyük Âlimler &middot; Se'âdet-i Ebediyye</div>
-      <h1>
-        <span class="hero-line1">Silsile-i Aliyye</span>
-        <span class="hero-line2">Büyüklerimizin Kabr-i Şerîfleri</span>
-      </h1>
-      <p class="hero-desc">Peygamber Efendimiz (sallallahü aleyhi ve sellem)'den Seyyid Abdülhakîm-i Arvâsî hazretlerine uzanan Silsile-i aliyye büyüklerinin ve Se'âdet-i Ebediyye'yi hazırlayan Hüseyn Hilmi Işık hazretlerinin kabr-i şerîfleri, kitaptaki hâl tercemeleriyle</p>
-      <div class="hero-stats" aria-label="Sayılar">
-        <div class="stat">
-          <span class="stat-num" id="stat-halka">35</span>
-          <span class="stat-label">Halka</span>
-        </div>
-        <div class="stat">
-          <span class="stat-num" id="stat-asir">14</span>
-          <span class="stat-label">Asır</span>
-        </div>
-        <div class="stat">
-          <span class="stat-num" id="stat-bolge">9</span>
-          <span class="stat-label">Bölge</span>
-        </div>
-      </div>
-      <div class="hero-buttons">
-        <a href="#map-section" class="hero-cta">Haritaya Git</a>
-        <button id="btn-journey" class="hero-cta-secondary">
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor" aria-hidden="true"><path d="M3 2l9 5-9 5V2z"/></svg>
-          Sırayla Göster
+  <!-- Giriş -->
+  <section id="giris" aria-label="Giriş">
+    <div class="giris-ic">
+      <p class="ust-yazi">Büyük Âlimler · Se’âdet-i Ebediyye</p>
+      <h1>Silsile-i<br><em>Aliyye</em></h1>
+      <p class="giris-alt">Peygamber Efendimiz (sallallahü aleyhi ve sellem)’den Seyyid Abdülhakîm-i Arvâsî hazretlerine uzanan Silsile-i aliyye büyüklerinin ve Se’âdet-i Ebediyye’yi hazırlayan Hüseyn Hilmi Işık hazretlerinin kabr-i şerîfleri, kitaptaki hâl tercemeleriyle.</p>
+      <dl class="giris-sayi">
+        <div><dt id="sayi-halka">35</dt><dd>halka</dd></div>
+        <div><dt>14</dt><dd>asır</dd></div>
+        <div><dt id="sayi-durak">30</dt><dd>belde</dd></div>
+      </dl>
+      <div class="giris-dugme">
+        <button type="button" id="dg-basla" class="ana-dugme">
+          <span>Sırayla göster</span>
+          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5.5 15.5 10 11 14.5"/></svg>
         </button>
+        <button type="button" id="dg-giris-dizin" class="yan-dugme">Kitaptaki sıra</button>
+        <button type="button" id="dg-giris-hakkinda" class="yan-dugme">Silsile-i Aliyye nedir?</button>
       </div>
+      <p class="giris-ipucu"><kbd>←</kbd> <kbd>→</kbd> ile sırayla ilerleyin, sürükleyerek etrafa bakın.</p>
     </div>
-    <div class="scroll-indicator" aria-hidden="true">
-      <div class="scroll-arrow"></div>
+    <div class="yukleme" role="status" aria-live="polite"><span class="yukleme-cizgi"><i id="yukleme-dolgu"></i></span><span id="yukleme-yazi">Yeryüzü hazırlanıyor…</span></div>
+  </section>
+
+  <!-- Hâl tercemesi levhası -->
+  <article id="levha" aria-live="polite" tabindex="-1">
+    <div class="levha-kaydir" id="levha-kaydir">
+      <header class="levha-bas">
+        <p class="halka-no" id="lv-halka"><span id="lv-no">1</span><i id="lv-no-ek">. halka</i><em id="lv-toplam">35 halkadan</em></p>
+        <p class="lv-on" id="lv-on"></p>
+        <h2 id="lv-ad"></h2>
+        <p class="lv-hurmet" id="lv-hurmet"></p>
+        <p class="lv-lakap" id="lv-lakap"></p>
+        <dl class="lv-kunye">
+          <div><dt>Doğumu</dt><dd id="lv-dogum"></dd></div>
+          <div><dt>Vefâtı</dt><dd id="lv-vefat"></dd></div>
+          <div class="genis"><dt>Hicrî</dt><dd id="lv-hicri"></dd></div>
+          <div class="genis"><dt>Kabr-i şerîfi</dt><dd id="lv-yer"></dd></div>
+        </dl>
+        <div class="lv-yeri" id="lv-yeri" aria-label="Silsiledeki yeri" hidden></div>
+      </header>
+      <div class="ayrac" aria-hidden="true"><i></i><svg class="semse" viewBox="-12 -12 24 24"><rect x="-7" y="-7" width="14" height="14"/><rect x="-7" y="-7" width="14" height="14" transform="rotate(45)"/></svg><i></i></div>
+      <div class="lv-metin" id="lv-metin"></div>
+      <section class="lv-kitap-kutu" id="lv-kitap-kutu">
+        <h3>Kitaptaki hâl tercemesi</h3>
+        <div class="lv-kitap" id="lv-kitap"></div>
+        <p class="lv-devam" id="lv-devam"></p>
+      </section>
+    </div>
+    <nav class="lv-gez" aria-label="Silsilede gezin">
+      <button type="button" id="dg-once" class="gez gez-once">
+        <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M16 10H5M9 5.5 4.5 10 9 14.5"/></svg>
+        <span><i>Önceki</i><b id="gz-once-ad"></b></span>
+      </button>
+      <button type="button" id="dg-sonra" class="gez gez-sonra">
+        <span><i>Sonraki</i><b id="gz-sonra-ad"></b></span>
+        <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5.5 15.5 10 11 14.5"/></svg>
+      </button>
+    </nav>
+    <button type="button" id="dg-levha-ac" class="levha-tutamac" aria-label="Levhayı büyüt veya küçült" aria-expanded="false"><i></i></button>
+  </article>
+
+  <!-- Zaman şeridi -->
+  <nav id="serit" aria-label="Zaman şeridi">
+    <div class="serit-yil" id="serit-yil" aria-hidden="true"></div>
+    <div class="serit-ray" id="serit-ray">
+      <div class="serit-dolgu" id="serit-dolgu"></div>
+      <div class="serit-asirlar" id="serit-asirlar" aria-hidden="true"></div>
+      <ol class="serit-centik" id="serit-centik"></ol>
+    </div>
+  </nav>
+
+  <!-- Bitiş -->
+  <section id="bitis" aria-label="Silsilenin tamamı" hidden>
+    <p class="ust-yazi">Silsile-i Aliyye</p>
+    <h2>Otuz beş halka,<br>on dört asır.</h2>
+    <p class="bitis-alt" id="bitis-alt"></p>
+    <div class="giris-dugme">
+      <button type="button" id="dg-bastan" class="ana-dugme"><span>Baştan göster</span></button>
+      <a class="yan-dugme" href="/">Se’âdet-i Ebediyye ana sayfasına dön</a>
     </div>
   </section>
 
-  <!-- TANITIM SECTION -->
-  <section id="tanitim-section" aria-label="Tanıtım">
-    <div class="section-header">
-      <h2>Silsile-i Aliyye Nedir?</h2>
-      <p>Kitapta &ldquo;Büyük Âlimler&rdquo; başlığıyla bildirilen, Peygamber Efendimiz (sallallahü aleyhi ve sellem)'den gelen feyzi asırlar boyunca taşıyan büyükler</p>
-    </div>
-    <div class="tanitim-content">
-      <div class="tanitim-card">
-        <div class="tanitim-icon" aria-hidden="true">&#10038;</div>
-        <h3>Büyük Âlimler</h3>
-        <p>Se'âdet-i Ebediyye'de Silsile-i aliyye, &ldquo;büyük âlimlerin ismleri&rdquo; olarak anılır (s. 993). Kitapta bildirildiğine göre Evliyânın sohbetleri, sözleri ve yazıları, hep Resûlullahın (sallallahü aleyhi ve sellem) mübârek kalbinden gelen nûrlarla hâsıl olmuştur (s. 1140). Sessiz zikir yapılan bu yol Hazret-i Ebû Bekr'den (radıyallahü anh) gelmiştir (s. 1087).</p>
-      </div>
-      <div class="tanitim-card">
-        <div class="tanitim-icon" aria-hidden="true">&#9733;</div>
-        <h3>Sıra ve Halkalar</h3>
-        <p>Sıra, kitaptaki manzûmeye göredir (s. 969): Hazret-i Ebû Bekr'den Seyyid Fehîm-i Arvâsî hazretlerine kadar &ldquo;otuzdört Velî&rdquo; sayılır ve &ldquo;bütün bu nûrlar en son&rdquo; Seyyid Abdülhakîm-i Arvâsî hazretlerinde toplanır. Bu sayıma göre Seyyid Sâlih hazretleri 32., Seyyid Sıbgatullah hazretleri 33., Seyyid Fehîm hazretleri 34. halkadır; Seyyid Abdülhakîm-i Arvâsî hazretleri 35. halka olarak gösterilmiştir. Kitapta Dervîş Muhammed hazretleri &ldquo;Silsile-i aliyyenin yirminci ferd-i kâmili&rdquo; diye anılır (s. 1089). Hüseyn Hilmi Işık hazretleri, Seyyid Abdülhakîm-i Arvâsî hazretlerinin yetiştirdiği ve bu kitabı hazırlayan âlim olarak gösterilmiştir.</p>
-      </div>
-      <div class="tanitim-card">
-        <div class="tanitim-icon" aria-hidden="true">&#128218;</div>
-        <h3>Kaynak</h3>
-        <p>İsimler ve sıra: Se'âdet-i Ebediyye, &ldquo;Büyük Âlimler (Silsile-i aliyye)&rdquo;, s. 969 (<a href="/madde/3/53" class="tanitim-link">3. kısım, 53. madde</a>). Doğum ve vefat târihleri, vefat yerleri ve hâl tercemeleri: kitabın sonundaki &ldquo;Hâl Tercemeleri&rdquo;, s. 1059–1207. Kitapta bildirilmeyen birkaç kabir yeri ve târih ayrıca belirtilmiştir; haritadaki yerler yaklaşıktır.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- MAP SECTION -->
-  <section id="map-section" aria-label="İnteraktif harita">
-    <div class="section-header">
-      <h2>Harita</h2>
-      <p>Her işaret, bir büyüğün kabr-i şerîfinin bulunduğu yeri gösterir; işarete dokununca hâl tercemesi açılır</p>
-    </div>
-    <div class="map-container">
-      <div class="map-wrapper" id="map-wrapper">
-        <div id="map" role="application" aria-label="Silsile-i Aliyye haritası"></div>
-
-        <!-- Sefer Modu Controls -->
-        <div class="campaign-controls" role="toolbar" aria-label="Sırayla gösterme kontrolleri">
-          <button class="campaign-btn" id="campaignStartBtn" aria-label="Silsileyi haritada sırayla göster">&#9654; Sırayla Göster</button>
-          <button class="campaign-btn pause" id="campaignPauseBtn" style="display:none;" aria-label="Duraklat">&#10074;&#10074; Duraklat</button>
-          <div class="campaign-speed" id="campaignSpeedCtrl" style="display:none;" role="group" aria-label="Hız kontrolü">
-            <span>Hız:</span>
-            <button id="speed1" class="active-speed" aria-label="Normal hız" aria-pressed="true">1x</button>
-            <button id="speed2" aria-label="2 kat hız" aria-pressed="false">2x</button>
-            <button id="speed3" aria-label="3 kat hız" aria-pressed="false">3x</button>
-          </div>
-        </div>
-
-        <!-- Campaign Card -->
-        <div class="campaign-card" id="campaignCard" role="status" aria-live="polite">
-          <div class="campaign-card-header">
-            <div class="campaign-card-num" id="campaignNum">1</div>
-            <div>
-              <div class="campaign-card-title" id="campaignTitle"></div>
-              <div class="campaign-card-meta">
-                <span id="campaignDates"></span>
-                <span id="campaignLocation"></span>
-              </div>
-            </div>
-          </div>
-          <div class="campaign-card-lakap" id="campaignLakap"></div>
-          <div class="campaign-card-summary" id="campaignSummary"></div>
-          <div class="campaign-card-nav">
-            <button class="campaign-nav-link" id="campaignPrevLink" title="Önceki">
-              <span class="nav-arrow">&larr;</span> <span id="campaignPrevName">Önceki</span>
-            </button>
-            <button class="campaign-nav-link" id="campaignNextLink" title="Sonraki">
-              <span id="campaignNextName">Sonraki</span> <span class="nav-arrow">&rarr;</span>
-            </button>
-          </div>
-        </div>
-
-        <!-- Campaign Progress -->
-        <div class="campaign-progress" id="campaignProgress">
-          <div class="campaign-progress-bar" id="campaignProgressBar" role="progressbar" aria-valuemin="0" aria-valuemax="37" aria-valuenow="0">
-            <div class="campaign-progress-fill" id="campaignProgressFill"></div>
-          </div>
-          <div class="campaign-progress-label" id="campaignProgressLabel">0 / 37</div>
-        </div>
-      </div>
-
-      <div id="scholar-panel" class="scholar-panel hidden" role="complementary" aria-label="Hâl tercemesi">
-        <button id="panel-close" class="panel-close" aria-label="Paneli kapat">&times;</button>
-        <div class="panel-portrait-wrap">
-          <div class="panel-portrait" id="panel-portrait">
-            <svg viewBox="0 0 48 48" fill="none" aria-hidden="true"><circle cx="24" cy="18" r="9" fill="currentColor" opacity="0.5"/><path d="M6 44c0-9.94 8.06-18 18-18s18 8.06 18 18" fill="currentColor" opacity="0.3"/></svg>
-          </div>
-          <div class="panel-halka" id="panel-halka"></div>
-        </div>
-        <h3 id="panel-name"></h3>
-        <div id="panel-lakap" class="panel-lakap"></div>
-        <div id="panel-dates" class="panel-dates"></div>
-        <div class="panel-location">
-          <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 1.5C5.51 1.5 3.5 3.51 3.5 6c0 3.75 4.5 8.5 4.5 8.5s4.5-4.75 4.5-8.5c0-2.49-2.01-4.5-4.5-4.5zm0 6.1a1.6 1.6 0 110-3.2 1.6 1.6 0 010 3.2z" fill="currentColor"/></svg>
-          <span id="panel-loc"></span>
-        </div>
-        <div class="panel-tags" id="panel-tags"></div>
-        <hr class="panel-divider">
-        <!-- Cross-reference links -->
-        <div class="panel-xref" id="panel-xref">
-          <div class="panel-xref-label">Silsiledeki Yeri</div>
-          <div class="panel-xref-links" id="panel-xref-links"></div>
-        </div>
-        <hr class="panel-divider">
-        <div class="panel-nav">
-          <button class="nav-btn" id="btn-prev" disabled>
-            <span class="nav-arrow">&larr;</span>
-            <span class="nav-name" id="prev-name"></span>
-          </button>
-          <button class="nav-btn next" id="btn-next" disabled>
-            <span class="nav-name" id="next-name"></span>
-            <span class="nav-arrow">&rarr;</span>
-          </button>
-        </div>
-        <hr class="panel-divider">
-        <div class="panel-bio-label">Hâl Tercemesi</div>
-        <div id="panel-bio" class="panel-bio"></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- SILSILE SECTION -->
-  <section id="silsile-section" aria-label="Silsile zinciri">
-    <div class="section-header">
-      <h2>Silsile-i Aliyye</h2>
-      <p>Kitaptaki sıraya göre; bir isme dokununca hâl tercemesi açılır</p>
-    </div>
-    <div class="silsile-wrapper">
-      <div id="silsile" class="silsile" role="list" aria-label="Silsile-i aliyye sırası"></div>
-    </div>
-  </section>
-
-  <!-- FOOTER -->
-  <footer role="contentinfo">
-    <div class="footer-inner">
-      <p>Silsile-i Aliyye Atlası</p>
-      <p class="footer-sub">Kaynak: Se'âdet-i Ebediyye (Hakîkat Kitâbevi), s. 969 ve Hâl Tercemeleri, s. 1059–1207</p>
-      <p class="footer-sub"><a href="/" class="footer-link">&larr; Se'âdet-i Ebediyye ana sayfasına dön</a></p>
-    </div>
-  </footer>
-
-  <!-- SCHOLAR MODAL (for silsile section clicks) -->
-  <div id="scholar-modal" class="modal hidden" role="dialog" aria-modal="true" aria-label="Hâl tercemesi">
-    <div class="modal-backdrop"></div>
-    <div class="modal-content">
-      <button class="modal-close" aria-label="Kapat">&times;</button>
-      <div class="modal-header">
-        <div class="modal-halka" id="modal-halka"></div>
-        <h2 id="modal-name"></h2>
-        <div class="modal-meta">
-          <span id="modal-lakap" class="modal-lakap"></span>
-          <span id="modal-dates" class="modal-dates"></span>
-        </div>
-      </div>
-      <div class="modal-body">
-        <div class="modal-location" id="modal-location"></div>
-        <div class="modal-tags" id="modal-tags"></div>
-        <!-- Cross-reference in modal -->
-        <div class="modal-xref" id="modal-xref"></div>
-        <div id="modal-bio" class="modal-bio"></div>
-      </div>
+  <!-- Kitaptaki sıra -->
+  <div id="dizin" class="dizin" role="dialog" aria-modal="true" aria-labelledby="dizin-baslik" hidden>
+    <div class="dizin-ic">
+      <header>
+        <p class="ust-yazi">Büyük Âlimler · Se’âdet-i Ebediyye</p>
+        <h2 id="dizin-baslik">Silsile-i Aliyye</h2>
+        <p class="dizin-alt">Kitaptaki sıraya göre; bir isme dokununca hâl tercemesi açılır.</p>
+        <button type="button" id="dg-dizin-kapat" class="kapat" aria-label="Listeyi kapat"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 5l10 10M15 5 5 15"/></svg></button>
+      </header>
+      <ol id="dizin-liste" class="dizin-liste"></ol>
     </div>
   </div>
 
-  <!-- Leaflet JS -->
-  <script src="vendor/leaflet/leaflet.js"></script>
-  <script src="veri.js"></script>
-  <script src="js/app.js"></script>
+  <!-- Silsile-i Aliyye nedir? -->
+  <div id="hakkinda" class="dizin" role="dialog" aria-modal="true" aria-labelledby="hakkinda-baslik" hidden>
+    <div class="dizin-ic hakkinda-ic">
+      <header>
+        <p class="ust-yazi">Büyük Âlimler · Se’âdet-i Ebediyye</p>
+        <h2 id="hakkinda-baslik">Silsile-i Aliyye nedir?</h2>
+        <p class="dizin-alt">Kitapta “Büyük Âlimler” başlığıyla bildirilen, Peygamber Efendimiz (sallallahü aleyhi ve sellem)’den gelen feyzi asırlar boyunca taşıyan büyükler.</p>
+        <button type="button" id="dg-hakkinda-kapat" class="kapat" aria-label="Pencereyi kapat"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 5l10 10M15 5 5 15"/></svg></button>
+      </header>
+      <div class="hakkinda-govde">
+        <section>
+          <h3>Büyük Âlimler</h3>
+          <p>Se’âdet-i Ebediyye’de Silsile-i aliyye, “büyük âlimlerin ismleri” olarak anılır (s. 993). Kitapta bildirildiğine göre Evliyânın sohbetleri, sözleri ve yazıları, hep Resûlullahın (sallallahü aleyhi ve sellem) mübârek kalbinden gelen nûrlarla hâsıl olmuştur (s. 1140). Sessiz zikir yapılan bu yol Hazret-i Ebû Bekr’den (radıyallahü anh) gelmiştir (s. 1087).</p>
+        </section>
+        <section>
+          <h3>Sıra ve Halkalar</h3>
+          <p>Sıra, kitaptaki manzûmeye göredir (s. 969): Hazret-i Ebû Bekr’den Seyyid Fehîm-i Arvâsî hazretlerine kadar “otuzdört Velî” sayılır ve “bütün bu nûrlar en son” Seyyid Abdülhakîm-i Arvâsî hazretlerinde toplanır. Bu sayıma göre Seyyid Sâlih hazretleri 32., Seyyid Sıbgatullah hazretleri 33., Seyyid Fehîm hazretleri 34. halkadır; Seyyid Abdülhakîm-i Arvâsî hazretleri 35. halka olarak gösterilmiştir. Kitapta Dervîş Muhammed hazretleri “Silsile-i aliyyenin yirminci ferd-i kâmili” diye anılır (s. 1089). Hüseyn Hilmi Işık hazretleri, Seyyid Abdülhakîm-i Arvâsî hazretlerinin yetiştirdiği ve bu kitabı hazırlayan âlim olarak gösterilmiştir.</p>
+        </section>
+        <section>
+          <h3>Kaynak</h3>
+          <p>İsimler ve sıra: Se’âdet-i Ebediyye, “Büyük Âlimler (Silsile-i aliyye)”, s. 969 (<a href="/madde/3/53">3. kısım, 53. madde</a>). Doğum ve vefat târihleri, vefat yerleri ve hâl tercemeleri: kitabın sonundaki “Hâl Tercemeleri”, s. 1059–1207. Kitapta bildirilmeyen birkaç kabir yeri ve târih ayrıca belirtilmiştir; atlastaki yerler yaklaşıktır.</p>
+        </section>
+      </div>
+      <p class="hakkinda-son">Kaynak: Se’âdet-i Ebediyye (Hakîkat Kitâbevi), s. 969 ve Hâl Tercemeleri, s. 1059–1207</p>
+    </div>
+  </div>
+
+  <noscript>
+    <div class="noscript">Bu atlas JavaScript ile çalışır. Silsile-i aliyye büyüklerinin hâl tercemeleri için <a href="/sahislar">ilmihal.org şahıslar bölümüne</a> bakabilirsiniz.</div>
+  </noscript>
+
+  <script src="veri.js?v=2026-11-17a"></script>
+  <script type="module" src="js/atlas.js?v=2026-11-17a"></script>
 </body>
 </html>
