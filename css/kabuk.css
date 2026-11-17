@@ -1,0 +1,105 @@
+/* Kabuk: üst çubuk, açılır menü, hızlı arama penceresi, künye (altbilgi).
+   Belirteçler css/temel.css içindedir. */
+
+body { display: flex; flex-direction: column; }
+main { flex: 1; display: block; min-width: 0; }
+main:focus { outline: none; }
+.gorunum { min-height: 60vh; }
+
+/* ── Üst çubuk ──────────────────────────────────────── */
+.ust {
+  position: sticky; top: 0; z-index: var(--kat-ust);
+  background: color-mix(in srgb, var(--zemin) 86%, transparent);
+  -webkit-backdrop-filter: saturate(1.4) blur(14px); backdrop-filter: saturate(1.4) blur(14px);
+  border-bottom: 1px solid transparent;
+  transition: border-color var(--sure), transform 0.35s var(--yay);
+}
+.ust.kaydi { border-bottom-color: var(--cizgi-2); }
+.ust-ic { display: flex; align-items: center; gap: var(--a-5); min-height: 64px; }
+
+.marka { display: inline-flex; align-items: center; gap: 0.7em; color: var(--murekkep); text-decoration: none; flex: none; }
+.marka .semse { width: 26px; height: 26px; color: var(--altin); stroke-width: 1.1; }
+.marka b { font: 600 1.06rem/1 var(--yazi); letter-spacing: -0.005em; white-space: nowrap; }
+
+.ust-gez { display: flex; align-items: center; gap: var(--a-1); margin-left: auto; }
+.ust-gez a {
+  position: relative; padding: 0.5em 0.85em; border-radius: 999px;
+  font: 500 var(--boy-2)/1 var(--arayuz); color: var(--murekkep-2); text-decoration: none; white-space: nowrap;
+  transition: color var(--sure), background var(--sure);
+}
+.ust-gez a:hover { color: var(--murekkep); background: var(--zemin-2); }
+.ust-gez a[aria-current="page"] { color: var(--murekkep); }
+.ust-gez a[aria-current="page"]::after { content: ''; position: absolute; left: 0.85em; right: 0.85em; bottom: 0.1em; height: 1px; background: var(--surh); }
+.ust-gez .gece-bag { color: var(--altin-yazi); }
+.ust-gez .ayri { width: 1px; height: 18px; margin-inline: var(--a-2); background: var(--cizgi); }
+
+.ust-arac { display: flex; align-items: center; gap: var(--a-1); }
+.ara-dugme {
+  display: inline-flex; align-items: center; gap: 0.7em; min-height: 40px; padding: 0 0.7em 0 0.9em;
+  border: 1px solid var(--cizgi); border-radius: 999px; color: var(--murekkep-3);
+  font: 400 var(--boy-2)/1 var(--arayuz); transition: border-color var(--sure), color var(--sure);
+}
+.ara-dugme:hover { border-color: var(--murekkep-3); color: var(--murekkep); }
+.ara-dugme svg, .ust-arac .dugme-simge svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.ara-dugme kbd { font-size: 0.72rem; border-bottom-width: 1px; }
+.ust-arac .dugme-simge { width: 40px; min-height: 40px; border-radius: 999px; color: var(--murekkep-2); display: inline-grid; place-items: center; }
+.ust-arac .dugme-simge:hover { background: var(--zemin-2); color: var(--murekkep); }
+#dg-menu { display: none; }
+
+/* Tema seçici: üç küçük daire */
+.tema-secici { position: absolute; right: var(--kenar); top: 58px; z-index: 2; padding: var(--a-3); border: 1px solid var(--cizgi); border-radius: 14px; background: var(--yuzey); box-shadow: var(--golge); display: grid; gap: var(--a-3); min-width: 15rem; }
+.tema-secici h2 { font: 600 var(--boy-0) var(--arayuz); letter-spacing: 0.2em; text-transform: uppercase; color: var(--murekkep-3); }
+.tema-sira { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--a-2); }
+.tema-sira button { display: grid; gap: 6px; justify-items: center; padding: var(--a-3) var(--a-2); border: 1px solid var(--cizgi); border-radius: 10px; font: 500 var(--boy-1) var(--arayuz); color: var(--murekkep-2); }
+.tema-sira button i { width: 26px; height: 26px; border-radius: 50%; border: 1px solid rgba(0, 0, 0, 0.18); }
+.tema-sira button[aria-pressed="true"] { border-color: var(--altin); color: var(--murekkep); box-shadow: 0 0 0 3px var(--vurgu-zemin); }
+
+/* ── Açılır menü (dar ekran) ─────────────────────────── */
+.menu { position: fixed; inset: 0; z-index: var(--kat-pencere); background: var(--zemin); overflow-y: auto; overscroll-behavior: contain; padding: var(--a-4) var(--kenar) calc(var(--a-8) + env(safe-area-inset-bottom)); animation: menu-ac 0.3s var(--yay); }
+@keyframes menu-ac { from { opacity: 0; transform: translateY(-10px); } }
+.menu-bas { display: flex; align-items: center; justify-content: space-between; min-height: 48px; margin-bottom: var(--a-6); }
+.menu h2 { margin: var(--a-6) 0 var(--a-2); }
+.menu .fihrist a { font-size: var(--boy-4); padding-block: 0.7em; }
+
+/* ── Hızlı arama penceresi ───────────────────────────── */
+dialog.hizli { width: min(46rem, calc(100vw - 2 * var(--a-4))); margin-top: min(14vh, 7rem); }
+.hizli-alan { display: flex; align-items: center; gap: var(--a-3); padding: var(--a-3) var(--a-5); border-bottom: 1px solid var(--cizgi-2); }
+.hizli-alan svg { width: 20px; height: 20px; fill: none; stroke: var(--murekkep-3); stroke-width: 1.6; stroke-linecap: round; flex: none; }
+.hizli-alan input { flex: 1; min-width: 0; min-height: 44px; border: 0; background: none; font: 400 var(--boy-4) var(--yazi); color: var(--murekkep); }
+.hizli-alan input::placeholder { color: var(--murekkep-3); }
+.hizli-alan input:focus-visible { outline: none; }
+.hizli-sonuc { max-height: min(60vh, 32rem); overflow-y: auto; overscroll-behavior: contain; padding: var(--a-2) var(--a-3) var(--a-4); }
+.hizli-grup { padding: var(--a-3) var(--a-2) var(--a-1); }
+.hizli-sonuc a { display: grid; grid-template-columns: 2.6rem minmax(0, 1fr) auto; align-items: baseline; column-gap: var(--a-3); padding: 0.55em var(--a-2); border-radius: 8px; color: var(--murekkep); text-decoration: none; }
+.hizli-sonuc a[aria-selected="true"], .hizli-sonuc a:hover { background: var(--zemin-2); }
+.hizli-sonuc a small { grid-column: 2 / -1; font: 400 var(--boy-1)/1.5 var(--arayuz); color: var(--murekkep-3); display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; }
+.hizli-alt { display: flex; justify-content: space-between; gap: var(--a-4); padding: var(--a-3) var(--a-5); border-top: 1px solid var(--cizgi-2); }
+
+/* ── Künye (altbilgi) ────────────────────────────────── */
+.kunye-alt { margin-top: var(--a-10); border-top: 1px solid var(--cizgi); background: var(--zemin-2); }
+.kunye-ic { display: grid; grid-template-columns: minmax(0, 1.5fr) repeat(3, minmax(0, 1fr)); gap: var(--a-7) var(--a-6); padding-block: var(--a-8) var(--a-7); }
+.kunye-ic h2 { margin-bottom: var(--a-3); }
+.kunye-ic p { color: var(--murekkep-2); font-size: var(--boy-2); max-width: 26rem; }
+.kunye-ic li a { display: inline-block; padding: 0.24em 0; font: 400 var(--boy-2) var(--arayuz); color: var(--murekkep-2); text-decoration: none; }
+.kunye-ic li a:hover { color: var(--yesil-yazi); }
+.kunye-son { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--a-3) var(--a-6); padding-block: var(--a-5); border-top: 1px solid var(--cizgi-2); }
+
+/* Okuyucu ve tam ekran görünümler kendi çubuğunu taşır */
+html[data-gorunum="okuyucu"] .ust, html[data-gorunum="okuyucu"] .kunye-alt { display: none; }
+
+/* Sürüm yenilendi bandı */
+.yeni-surum { position: fixed; left: 50%; bottom: calc(var(--a-5) + env(safe-area-inset-bottom)); transform: translateX(-50%); z-index: var(--kat-bildirim); display: flex; align-items: center; gap: var(--a-4); padding: 0.6em 0.7em 0.6em 1.3em; border-radius: 999px; background: var(--murekkep); color: var(--zemin); font: 500 var(--boy-2) var(--arayuz); box-shadow: var(--golge); }
+.yeni-surum button { min-height: 34px; padding: 0 1em; border-radius: 999px; background: var(--zemin); color: var(--murekkep); font: 600 var(--boy-1) var(--arayuz); }
+
+@media (max-width: 980px) {
+  .ust-gez { display: none; }
+  .ust-arac { margin-left: auto; }
+  #dg-menu { display: inline-grid; }
+  .ara-dugme { width: 40px; padding: 0; justify-content: center; border-color: transparent; color: var(--murekkep-2); }
+  .ara-dugme span, .ara-dugme kbd { display: none; }
+  .ust-ic { min-height: 56px; gap: var(--a-2); }
+  .kunye-ic { grid-template-columns: 1fr 1fr; }
+  .kunye-ic > :first-child { grid-column: 1 / -1; }
+  .tema-secici { top: 52px; }
+}
+@media print { .ust, .kunye-alt, .menu, .yeni-surum { display: none !important; } }

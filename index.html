@@ -1,940 +1,134 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="tr" dir="ltr">
 <head>
   <meta charset="UTF-8">
-  <base href="/">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Se'âdet-i Ebediyye - İnteraktif İlmihâl</title>
-  <meta name="description" content="Se'âdet-i Ebediyye kitabının tamamı, aranabilir 241 madde, 9.863 terimlik dinî lügat, kitapta adı geçen 1020 kişinin hâl tercemesi ve silsile-i aliyye atlası.">
-  <meta name="keywords" content="ilmihal, Se'âdet-i Ebediyye, Hüseyn Hilmi Işık, İslam, namaz, oruç, zekât, hac, fıkıh, dinî bilgiler">
-  <meta name="author" content="ilmihal.org">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Se’âdet-i Ebediyye — Tam İlmihâl</title>
+  <meta name="description" content="Hüseyn Hilmi Işık hazretlerinin hazırladığı Tam İlmihâl Se'âdet-i Ebediyye kitabının tamamı: okuyun, sesli dinleyin, her kelimesini lügatiyle, her hükmünü kaynağıyla araştırın.">
+  <meta property="og:title" content="Se'âdet-i Ebediyye — Tam İlmihâl">
+  <meta property="og:description" content="Tam İlmihâl Se'âdet-i Ebediyye kitabının tamamı; lügati, hâl tercemeleri, fıkhî hükümleri ve sesli okunuşuyla.">
   <meta property="og:type" content="website">
-  <meta property="og:site_name" content="ilmihal.org">
-  <meta property="og:url" content="https://www.ilmihal.org/">
-  <meta property="og:title" content="Se'âdet-i Ebediyye - İnteraktif İlmihâl">
-  <meta property="og:description" content="1248 sayfalık kapsamlı ilmihâl eseri, tam metin arama, dinî lügat ve interaktif silsile atlası.">
-  <meta property="og:image" content="https://www.ilmihal.org/og-image.png">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="Se'âdet-i Ebediyye - İnteraktif İlmihâl">
   <meta property="og:locale" content="tr_TR">
+  <meta property="og:site_name" content="ilmihal.org">
+  <meta property="og:image" content="https://www.ilmihal.org/og-image.png">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Se'âdet-i Ebediyye - İnteraktif İlmihâl">
-  <meta name="twitter:description" content="1248 sayfalık kapsamlı ilmihâl eseri, tam metin arama, dinî lügat ve interaktif silsile atlası.">
-  <meta name="twitter:image" content="https://www.ilmihal.org/og-image.png">
-  <meta name="twitter:image:alt" content="Se'âdet-i Ebediyye - İnteraktif İlmihâl">
-  <link rel="canonical" href="https://www.ilmihal.org/">
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-  <link rel="icon" type="image/x-icon" href="/favicon.ico" sizes="32x32">
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-  <link rel="manifest" href="manifest.json">
-  <link rel="alternate" type="application/rss+xml" title="Se'âdet-i Ebediyye - Günün Maddesi" href="/rss.xml">
-  <meta name="theme-color" content="#0d3a2b">
+  <meta name="theme-color" content="#f4efe4">
+  <meta name="color-scheme" content="light dark">
+
+  <!-- Tema, ilk boyamadan önce (eski 'ilmihal-theme' anahtarı korunur) -->
+  <script>
+    (function () {
+      var t = null;
+      try { t = localStorage.getItem('ilmihal-theme'); } catch (e) {}
+      var tema = { light: 'gunduz', sepia: 'sepya', dark: 'gece' }[t] || (window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'gece' : 'gunduz');
+      document.documentElement.dataset.tema = tema;
+    })();
+  </script>
+
   <link rel="preload" href="/fonts/literata-400-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/fonts/literata-400-normal-latin-ext.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="/fonts/inter-400-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="/fonts/inter-400-normal-latin-ext.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="style.css?v=2026-10-19-r5">
-  <script type="application/ld+json">
-  [{
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    "name": "Se'âdet-i Ebediyye - İnteraktif İlmihâl",
-    "url": "https://www.ilmihal.org",
-    "description": "Se'âdet-i Ebediyye kitabının tamamı, aranabilir 241 madde, 9.863 terimlik dinî lügat, 1020 hâl tercemesi.",
-    "inLanguage": "tr",
-    "potentialAction": {
-      "@type": "SearchAction",
-      "target": "https://www.ilmihal.org/arama/{search_term_string}",
-      "query-input": "required name=search_term_string"
-    }
-  },
-  {
-    "@context": "https://schema.org",
-    "@type": "Book",
-    "name": "Se'âdet-i Ebediyye (Tam İlmihâl)",
-    "author": {"@type": "Person", "name": "Hüseyn Hilmi Işık"},
-    "publisher": {"@type": "Organization", "name": "Hakîkat Kitâbevi"},
-    "inLanguage": "tr",
-    "genre": "İslâm ilmihâli",
-    "numberOfPages": 1248,
-    "description": "Se'âdet-i Ebediyye, Ehl-i sünnet itikâdını, fıkıh hükümlerini ve ahlâk bilgilerini kapsamlı şekilde anlatan bir ilmihâl eseridir."
-  },
-  {
-    "@context": "https://schema.org",
-    "@type": "EducationalOrganization",
-    "name": "ilmihal.org",
-    "url": "https://www.ilmihal.org",
-    "description": "Se'âdet-i Ebediyye kitabının interaktif dijital platformu",
-    "sameAs": ["https://github.com/raufenc/ilmihal"]
-  }]
-  </script>
+  <link rel="stylesheet" href="/fonts/fontlar.css">
+  <link rel="stylesheet" href="/css/temel.css">
+  <link rel="stylesheet" href="/css/kabuk.css">
+
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="alternate" type="application/rss+xml" title="Se'âdet-i Ebediyye — Günün Maddesi" href="/rss.xml">
+
+  <script type="module" src="/js/ana.js"></script>
+  <script defer src="/_vercel/insights/script.js"></script>
+  <script defer src="/_vercel/speed-insights/script.js"></script>
 </head>
-<body>
-  <a href="#page-anasayfa" class="skip-link">İçeriğe Geç</a>
-  <!-- Header -->
-  <header class="site-header">
-    <div class="container">
-      <div class="header-content">
-        <a class="logo" href="/" onclick="navigateTo('anasayfa');return false" style="text-decoration:none;color:inherit;">
-          <svg class="logo-amblem" viewBox="0 0 64 64" aria-hidden="true"><path d="M32 2L40.79 10.79L53.21 10.79L53.21 23.21L62 32L53.21 40.79L53.21 53.21L40.79 53.21L32 62L23.21 53.21L10.79 53.21L10.79 40.79L2 32L10.79 23.21L10.79 10.79L23.21 10.79Z"/><path d="M32 8L39.03 15.03L48.97 15.03L48.97 24.97L56 32L48.97 39.03L48.97 48.97L39.03 48.97L32 56L24.97 48.97L15.03 48.97L15.03 39.03L8 32L15.03 24.97L15.03 15.03L24.97 15.03Z" class="ic"/><circle cx="32" cy="32" r="9"/></svg>
-          <span class="logo-yazi">
-            <h1 class="site-title">Se'âdet-i Ebediyye</h1>
-            <p class="site-subtitle">İnteraktif İlmihâl</p>
-          </span>
-        </a>
-        <nav class="main-nav">
-          <button type="button" class="nav-btn active" data-page="anasayfa">Ana Sayfa</button>
-          <button type="button" class="nav-btn" data-page="icerik">İçindekiler</button>
-          <button type="button" class="nav-btn" data-page="fevaid">Fevâid</button>
-          <button type="button" class="nav-btn" data-page="arama">Arama</button>
-          <button type="button" class="nav-btn" data-page="hakkinda">Hakkında</button>
-        </nav>
-        <button type="button" class="dark-mode-toggle" onclick="toggleDarkMode()" aria-label="Tema değiştir" title="Tema: Gündüz / Sepya / Gece">
-          <span class="dm-icon">&#9788;</span><span class="dm-label">Gündüz</span>
+<body data-hazir="0">
+  <a class="atla" href="#icerik">İçeriğe geçin</a>
+
+  <header class="ust baskida-yok" id="ust">
+    <div class="ust-ic kap">
+      <a class="marka" href="/" aria-label="Se’âdet-i Ebediyye — ana sayfa">
+        <svg class="semse" viewBox="-12 -12 24 24" aria-hidden="true"><rect x="-7" y="-7" width="14" height="14"/><rect x="-7" y="-7" width="14" height="14" transform="rotate(45)"/><circle r="2.6"/></svg>
+        <b>Se’âdet-i Ebediyye</b>
+      </a>
+      <nav class="ust-gez" aria-label="Ana gezinme">
+        <a href="/icindekiler">Fihrist</a>
+        <a href="/sozluk">Lügat</a>
+        <a href="/sahislar">Hâl Tercemeleri</a>
+        <a href="/fevaid">Fevâid</a>
+        <span class="ayri" aria-hidden="true"></span>
+        <a href="/silsile-atlasi/" class="gece-bag">Atlas</a>
+        <a href="/namaz-vakitleri/" class="gece-bag">Vakitler</a>
+      </nav>
+      <div class="ust-arac">
+        <button type="button" class="ara-dugme" id="dg-ara" aria-haspopup="dialog" aria-keyshortcuts="/">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg>
+          <span>Kitapta arayın</span><kbd>/</kbd>
         </button>
-        <button type="button" class="mobile-menu-btn" aria-label="Menü">
-          <span></span><span></span><span></span>
+        <button type="button" class="dugme-simge" id="dg-tema" aria-haspopup="true" aria-expanded="false" aria-label="Görünüm: gündüz, sepya, gece">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v2M12 19v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M3 12h2M19 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"/><circle cx="12" cy="12" r="4"/></svg>
+        </button>
+        <button type="button" class="dugme-simge" id="dg-menu" aria-haspopup="dialog" aria-expanded="false" aria-label="Menü">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h16M4 16h16"/></svg>
         </button>
       </div>
     </div>
   </header>
 
-  <!-- Duyuru Alanı -->
-  <div id="duyuru-alani" class="duyuru-alani" style="display:none"></div>
-
-  <!-- Ana Sayfa -->
-  <main id="app-root" role="main">
-  <section id="page-anasayfa" class="page active">
-    <section class="hero">
-      <div class="hero-desen" aria-hidden="true"></div>
-      <div class="container hero-izgara">
-        <div class="hero-content">
-          <p class="hero-ust">Tam İlmihâl</p>
-          <h2>Se’âdet-i Ebediyye</h2>
-          <p class="hero-desc">Hüseyn Hilmi Işık hazretlerinin hazırladığı 1248 sahîfelik ilmihâl. Kitabın tamamını okuyun, sesli dinleyin; her kelimesini lügatiyle, her hükmünü kaynağıyla araştırın.</p>
-          <div class="hero-search-wrapper">
-            <div class="hero-search-box">
-              <svg class="hero-search-icon" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-              <input type="text" id="hero-search" class="hero-search-input" placeholder="Kitapta ve lügatte arayın…" autocomplete="off" aria-label="Kitapta, sözlükte veya şahıslarda ara">
-              <kbd class="hero-search-kbd">Enter</kbd>
-            </div>
-            <div id="hero-search-dropdown" class="search-dropdown" style="display:none"></div>
-          </div>
-          <div class="hero-actions">
-            <button type="button" class="btn btn-primary" id="hero-oku-btn" onclick="openMadde(1, 1)">Okumaya Başlayın</button>
-            <button type="button" class="btn btn-secondary" onclick="navigateTo('icerik')">İçindekiler</button>
-          </div>
-          <p class="hero-son-okunan" id="hero-son-okunan" hidden></p>
-        </div>
-        <div class="hero-kitap" aria-hidden="true">
-          <div class="kitap">
-            <div class="kitap-kapak">
-              <img src="/gorsel/kapak.svg" alt="" width="228" height="328">
-              <div class="kitap-yazi">
-                <span class="kitap-ust">TAM İLMİHÂL</span>
-                <span class="kitap-baslik">Se’âdet-i<br>Ebediyye</span>
-              </div>
-            </div>
-            <div class="kitap-sayfalar"></div>
-          </div>
-        </div>
-      </div>
-      <div class="container">
-        <ul class="hero-sayilar">
-          <li><a href="/icerik" onclick="navigateTo('icerik');return false"><strong>241</strong><span>madde</span></a></li>
-          <li><a href="/sozluk" onclick="navigateTo('sozluk');return false"><strong>9.863</strong><span>lügat terimi</span></a></li>
-          <li><a href="/sahislar" onclick="navigateTo('sahislar');return false"><strong>1020</strong><span>hâl tercemesi</span></a></li>
-          <li><a href="/ayet-hadis" onclick="navigateTo('ayet-hadis');return false"><strong>193</strong><span>âyet-i kerîme</span></a></li>
-          <li><a href="/ayet-hadis" onclick="navigateTo('ayet-hadis').then(function(){switchAHTab('hadis')});return false"><strong>449</strong><span>hadîs-i şerîf</span></a></li>
-          <li><a href="/hukumler" onclick="navigateTo('hukumler');return false"><strong>2.864</strong><span>fıkhî hüküm</span></a></li>
-        </ul>
-      </div>
-    </section>
-
-    <section class="gunun-maddesi">
-      <div class="container">
-        <article class="gunun-card" id="gunun-maddesi-card">
-          <div class="gunun-ust">
-            <span class="gunun-label">Günün Maddesi</span>
-            <span class="gunun-tarih" id="gunun-tarih"></span>
-          </div>
-          <h3 class="gunun-baslik" id="gunun-baslik"></h3>
-          <p class="gunun-ozet" id="gunun-ozet"></p>
-          <blockquote class="gunun-alinti" id="gunun-alinti" hidden></blockquote>
-          <button type="button" class="btn btn-primary btn-sm" id="gunun-oku-btn">Maddeyi Okuyun</button>
-        </article>
-      </div>
-    </section>
-
-    <section class="okuma-plani-bolum">
-      <div class="container">
-        <div class="okuma-plani-karti" id="okuma-plani-karti" aria-live="polite"></div>
-      </div>
-    </section>
-
-    <section class="kisimlar-ozet">
-      <div class="container">
-        <h3 class="section-title">Kitabın Üç Kısmı</h3>
-        <div class="kisim-cards">
-          <a class="kisim-card" href="/icerik" onclick="showKisim(1);return false">
-            <div class="kisim-num">I</div>
-            <h4>Birinci Kısım</h4>
-            <p>İman ve Ehl-i sünnet itikadı; abdest, namaz, zekât, oruç, kurban ve hac; Peygamber Efendimizin (sallallahü aleyhi ve sellem) hilyesi ve güzel ahlâkı</p>
-            <span class="madde-count">98 Madde</span>
-            <div class="kisim-ilerleme" data-kisim="1"></div>
-          </a>
-          <a class="kisim-card" href="/icerik" onclick="showKisim(2);return false">
-            <div class="kisim-num">II</div>
-            <h4>İkinci Kısım</h4>
-            <p>Tefsir, hadis ve fıkıh ilmi; mezhepler ve bozuk fırkalar; İslâm ve fen; nikâh, talâk ve aile hukuku; helâl-haram ve yeme-içme; kazâ-kader ve tasavvuf</p>
-            <span class="madde-count">73 Madde</span>
-            <div class="kisim-ilerleme" data-kisim="2"></div>
-          </a>
-          <a class="kisim-card" href="/icerik" onclick="showKisim(3);return false">
-            <div class="kisim-num">III</div>
-            <h4>Üçüncü Kısım</h4>
-            <p>Ticaret ve alışveriş, faiz ve şirketler, ceza hukuku, tasavvuf yolu; ölüm, cenaze, kabir ziyareti ve miras</p>
-            <span class="madde-count">70 Madde</span>
-            <div class="kisim-ilerleme" data-kisim="3"></div>
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <section class="kesfet">
-      <div class="container">
-        <div class="bolum-baslik">
-          <p class="bolum-ust">Fevâid</p>
-          <h3 class="section-title">Kitabı Derinlemesine Keşfedin</h3>
-          <p class="bolum-aciklama">Kitabın içinden derlenen indeksler, tablolar ve rehberler. Her kayıt sizi kitaptaki yerine götürür.</p>
-        </div>
-        <div class="kesfet-izgara">
-          <a class="kesfet-kart" href="/hukumler" onclick="navigateTo('hukumler');return false">
-            <span class="kesfet-ikon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v16"/><path d="M7 20h10"/><path d="M5 7h14"/><path d="M5 7l-2.5 6a2.5 2.5 0 0 0 5 0z"/><path d="M19 7l-2.5 6a2.5 2.5 0 0 0 5 0z"/></svg></span>
-            <h4>Fıkhî Hükümler</h4>
-            <p>Farz, vâcib, sünnet, mekruh, harâm; her hüküm kitaptaki cümlesiyle.</p>
-            <span class="kesfet-sayi">2.864 açık hüküm</span>
-          </a>
-          <a class="kesfet-kart" href="/ayet-hadis" onclick="navigateTo('ayet-hadis');return false">
-            <span class="kesfet-ikon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 5h6a4 4 0 0 1 4 4v11a3 3 0 0 0-3-3H2z"/><path d="M22 5h-6a4 4 0 0 0-4 4v11a3 3 0 0 1 3-3h7z"/></svg></span>
-            <h4>Âyet-i Kerîme ve Hadîs-i Şerîf</h4>
-            <p>Kitapta geçen meâller ve hadîs-i şerîfler, bulundukları yerle.</p>
-            <span class="kesfet-sayi">193 âyet · 449 hadîs</span>
-          </a>
-          <a class="kesfet-kart" href="/sozluk" onclick="navigateTo('sozluk');return false">
-            <span class="kesfet-ikon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/><path d="M9 7h7"/><path d="M9 11h5"/></svg></span>
-            <h4>Dinî Lügat</h4>
-            <p>Kitaptaki kelimelerin Osmanlıca yazılışları ve mânâları.</p>
-            <span class="kesfet-sayi">9.863 terim</span>
-          </a>
-          <a class="kesfet-kart" href="/sahislar" onclick="navigateTo('sahislar');return false">
-            <span class="kesfet-ikon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7"/><path d="M18 14a6.5 6.5 0 0 1 3.5 6"/></svg></span>
-            <h4>Hâl Tercemeleri</h4>
-            <p>Kitapta adı geçen büyüklerin ve şahısların hayatları.</p>
-            <span class="kesfet-sayi">1020 kişi</span>
-          </a>
-          <a class="kesfet-kart" href="/fevaid/tablolar" onclick="navigateTo('fevaid').then(function(){openFevaidSection('tablolar')});return false">
-            <span class="kesfet-ikon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18"/><path d="M3 15h18"/><path d="M10 4v16"/></svg></span>
-            <h4>Tablolar</h4>
-            <p>Namaz rekâtları, nisâb mikdârları, mezheb farkları ve daha fazlası.</p>
-            <span class="kesfet-sayi">128 tablo</span>
-          </a>
-          <a class="kesfet-kart" href="/rehberler" onclick="navigateTo('rehberler');return false">
-            <span class="kesfet-ikon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/></svg></span>
-            <h4>Konu Rehberleri</h4>
-            <p>Bir konuyu kitabın sırasıyla adım adım okuma yolları.</p>
-            <span class="kesfet-sayi">Adım adım</span>
-          </a>
-          <a class="kesfet-kart" href="/gunun-bilgisi" onclick="navigateTo('gunun-bilgisi');return false">
-            <span class="kesfet-ikon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.3-1 .8-1 1.5v.7"/><path d="M12 17h.01"/></svg></span>
-            <h4>Günün Suâli</h4>
-            <p>Her gün kitaptan bir suâl; cevabı ilgili maddede.</p>
-            <span class="kesfet-sayi">155 suâl</span>
-          </a>
-          <a class="kesfet-kart" href="/quiz" onclick="navigateTo('quiz');return false">
-            <span class="kesfet-ikon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg></span>
-            <h4>Bilgi Testi</h4>
-            <p>Okuduklarınızı kitaptan alınmış sorularla tekrar edin.</p>
-            <span class="kesfet-sayi">7 konu</span>
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <section class="hizli-erisim">
-      <div class="container">
-        <h3 class="section-title">Konulara Hızlı Erişim</h3>
-        <div class="konu-grid">
-          <button type="button" class="konu-btn" onclick="filterByCategory('iman')"><span class="konu-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15.5 4.5a8 8 0 1 0 4 10 6.5 6.5 0 1 1-4-10z"/><path d="M17.5 7.5l.6 1.4 1.4.2-1 1 .3 1.5-1.3-.7-1.3.7.3-1.5-1-1 1.4-.2z"/></svg></span><span>İman ve İtikat</span></button>
-          <button type="button" class="konu-btn" onclick="filterByCategory('temizlik')"><span class="konu-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3c3 4.2 6 7.6 6 11a6 6 0 0 1-12 0c0-3.4 3-6.8 6-11z"/></svg></span><span>Temizlik</span></button>
-          <button type="button" class="konu-btn" onclick="filterByCategory('namaz')"><span class="konu-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 21v-9a7 7 0 0 1 14 0v9"/><path d="M3 21h18"/><path d="M12 5V2"/><path d="M10 21v-4a2 2 0 0 1 4 0v4"/></svg></span><span>Namaz</span></button>
-          <button type="button" class="konu-btn" onclick="filterByCategory('oruc')"><span class="konu-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17h18"/><path d="M7 17a5 5 0 0 1 10 0"/><path d="M12 6v3"/><path d="M5.6 9.6l1.8 1.8"/><path d="M18.4 9.6l-1.8 1.8"/><path d="M6 21h12"/></svg></span><span>Oruç</span></button>
-          <button type="button" class="konu-btn" onclick="filterByCategory('zekat')"><span class="konu-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4.5"/></svg></span><span>Zekât ve Kurban</span></button>
-          <button type="button" class="konu-btn" onclick="filterByCategory('hac')"><span class="konu-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8l8-4 8 4v10l-8 3-8-3z"/><path d="M4 8l8 3 8-3"/><path d="M12 11v10"/><path d="M4 11.5l8 3 8-3"/></svg></span><span>Hac</span></button>
-          <button type="button" class="konu-btn" onclick="filterByCategory('ticaret')"><span class="konu-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v16"/><path d="M7 20h10"/><path d="M5 7h14"/><path d="M5 7l-2.5 6a2.5 2.5 0 0 0 5 0z"/><path d="M19 7l-2.5 6a2.5 2.5 0 0 0 5 0z"/></svg></span><span>Ticaret</span></button>
-          <button type="button" class="konu-btn" onclick="filterByCategory('aile')"><span class="konu-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-7 9 7"/><path d="M5 9.5V20h14V9.5"/><path d="M10 20v-5h4v5"/></svg></span><span>Aile Hukuku</span></button>
-          <button type="button" class="konu-btn" onclick="filterByCategory('ahlak')"><span class="konu-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19c0-8 5-13 14-14-1 9-6 14-14 14z"/><path d="M5 19l7-7"/></svg></span><span>Ahlâk</span></button>
-          <button type="button" class="konu-btn" onclick="filterByCategory('cenaze')"><span class="konu-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 21V9a5 5 0 0 1 10 0v12"/><path d="M4 21h16"/><path d="M12 10v5"/><path d="M10 12h4"/></svg></span><span>Cenaze ve Miras</span></button>
-        </div>
-      </div>
-    </section>
-
-    <section class="silsile-promo">
-      <div class="container tanitim-ikili">
-        <a href="silsile-atlasi/" class="silsile-card">
-          <div class="silsile-card-content">
-            <p class="tanitim-ust"><span class="kesfet-ikon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6-5.5-6-10a6 6 0 0 1 12 0c0 4.5-6 10-6 10z"/><circle cx="12" cy="11" r="2.2"/></svg></span> Atlas</p>
-            <h3>Silsile-i Aliyye Atlası</h3>
-            <p>Peygamber Efendimiz Muhammed Mustafâ (sallallahü aleyhi ve sellem) ile başlayıp Seyyid Abdülhakîm-i Arvâsî hazretlerine uzanan Silsile-i aliyye büyüklerinin kabr-i şerîflerini harita üzerinde görün.</p>
-            <span class="silsile-cta">Haritayı Açın &rarr;</span>
-          </div>
-          <div class="silsile-card-visual">
-            <span class="silsile-num">35</span>
-            <span class="silsile-label">Halka</span>
-          </div>
-        </a>
-        <a href="namaz-vakitleri/" class="silsile-card namaz-card">
-          <div class="silsile-card-content">
-            <p class="tanitim-ust"><span class="kesfet-ikon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span> Takvim</p>
-            <h3>Namaz Vakitleri</h3>
-            <p>Kitabın 60. maddesinde bildirilen usûle göre, temkinler dâhil, bulunduğunuz yerin namaz vakitleri ve hesabın açıklaması.</p>
-            <span class="silsile-cta">Vakitleri Görün &rarr;</span>
-          </div>
-        </a>
-      </div>
-    </section>
-  </section>
-
-  <!-- İçindekiler -->
-  <section id="page-icerik" class="page">
-    <div class="container">
-      <div class="icerik-header">
-        <div class="bolum-baslik sola">
-          <p class="bolum-ust">Fihrist</p>
-          <h2 class="section-title">İçindekiler</h2>
-        </div>
-        <div class="icerik-filters">
-          <div class="kisim-sekmeler" role="group" aria-label="Kısım seçin">
-            <button type="button" class="kisim-sekme secili" data-kisim="all" aria-pressed="true">Tümü</button>
-            <button type="button" class="kisim-sekme" data-kisim="1" aria-pressed="false">I. Kısım</button>
-            <button type="button" class="kisim-sekme" data-kisim="2" aria-pressed="false">II. Kısım</button>
-            <button type="button" class="kisim-sekme" data-kisim="3" aria-pressed="false">III. Kısım</button>
-          </div>
-          <select id="kisim-filter" class="visually-hidden" tabindex="-1" aria-hidden="true">
-            <option value="all">Tüm Kısımlar</option>
-            <option value="1">Birinci Kısım</option>
-            <option value="2">İkinci Kısım</option>
-            <option value="3">Üçüncü Kısım</option>
-          </select>
-          <input type="search" id="icerik-search" placeholder="Başlıklarda ara…" aria-label="İçindekiler listesinde ara">
-        </div>
-      </div>
-      <div id="icerik-list" class="icerik-list"></div>
-    </div>
-  </section>
-
-  <!-- Madde Detay -->
-  <div id="madde-detay" class="madde-overlay okuyucu" style="display:none" role="dialog" aria-modal="true" aria-labelledby="okuyucu-baslik-ad" aria-hidden="true">
-    <div class="madde-overlay-wrap">
-      <div class="madde-toolbar">
-        <button type="button" class="toolbar-btn okuyucu-fihrist-btn" onclick="okuyucuFihristToggle()" id="okuyucu-fihrist-btn" title="Kısmın fihristi" aria-label="Kısmın fihristini aç veya kapat" aria-expanded="false" aria-controls="okuyucu-fihrist"><svg viewBox="0 0 24 24" aria-hidden="true"><line x1="9" y1="6" x2="20" y2="6"/><line x1="9" y1="12" x2="20" y2="12"/><line x1="9" y1="18" x2="20" y2="18"/><circle cx="4.5" cy="6" r="1" fill="currentColor" stroke="none"/><circle cx="4.5" cy="12" r="1" fill="currentColor" stroke="none"/><circle cx="4.5" cy="18" r="1" fill="currentColor" stroke="none"/></svg></button>
-        <div class="okuyucu-baslik">
-          <span class="okuyucu-baslik-ust" id="okuyucu-baslik-ust"></span>
-          <span class="okuyucu-baslik-ad" id="okuyucu-baslik-ad"></span>
-        </div>
-        <button type="button" class="toolbar-btn toolbar-audio-btn" onclick="toggleAudio()" id="audio-btn" title="Sesli dinle" aria-label="Sesli dinle"><svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="7 4.5 19.5 12 7 19.5 7 4.5"/></svg></button>
-        <button type="button" class="toolbar-btn" onclick="sahifePaneliToggle()" id="sahife-btn" title="Kitabın aslı (PDF sahîfesi)" aria-label="Kitabın aslını yanda aç veya kapat" aria-expanded="false" aria-controls="okuyucu-sahife"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2.5h8.5L19 7v14.5H6z"/><path d="M14.5 2.5V7H19"/><path d="M9 11.5h7M9 15h7M9 18.5h4.5"/></svg></button>
-        <button type="button" class="toolbar-btn aa-btn" onclick="okumaPaneliToggle()" id="okuma-panel-btn" title="Okuma ayarları" aria-label="Okuma ayarları" aria-expanded="false">Aa</button>
-        <button type="button" class="toolbar-btn" onclick="toggleBookmark()" id="bookmark-btn" title="Yer imi ekle" aria-label="Yer imi ekle veya kaldır"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 17.3l-6.2 3.3 1.2-6.9-5-4.9 6.9-1L12 1.5l3.1 6.3 6.9 1-5 4.9 1.2 6.9z"/></svg></button>
-        <button type="button" class="toolbar-btn" onclick="shareMadde()" title="Paylaş" aria-label="Bu maddeyi paylaş"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="18" cy="5" r="2.6"/><circle cx="6" cy="12" r="2.6"/><circle cx="18" cy="19" r="2.6"/><line x1="8.4" y1="10.8" x2="15.6" y2="6.2"/><line x1="8.4" y1="13.2" x2="15.6" y2="17.8"/></svg></button>
-        <button type="button" class="toolbar-btn" onclick="tasmaMenuToggle()" id="tasma-menu-btn" title="Daha fazla" aria-label="Daha fazla seçenek" aria-haspopup="true" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="5" cy="12" r="1.7" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.7" fill="currentColor" stroke="none"/><circle cx="19" cy="12" r="1.7" fill="currentColor" stroke="none"/></svg></button>
-        <button type="button" class="madde-close" onclick="closeMadde()" aria-label="Maddeyi kapat"><svg viewBox="0 0 24 24" aria-hidden="true"><line x1="6.5" y1="6.5" x2="17.5" y2="17.5"/><line x1="17.5" y1="6.5" x2="6.5" y2="17.5"/></svg></button>
-        <div class="tasma-menu" id="tasma-menu" role="menu" aria-label="Diğer madde işlemleri">
-          <button type="button" class="tasma-menu-item" role="menuitem" onclick="tasmaMenuKapat();printMadde()"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9V3h12v6"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8" rx="1"/></svg> Yazdır</button>
-          <button type="button" class="tasma-menu-item" role="menuitem" onclick="tasmaMenuKapat();toggleFullscreenRead()" id="fullscreen-btn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3H5a2 2 0 0 0-2 2v3"/><path d="M16 3h3a2 2 0 0 1 2 2v3"/><path d="M8 21H5a2 2 0 0 1-2-2v-3"/><path d="M16 21h3a2 2 0 0 0 2-2v-3"/></svg> Odak modu</button>
-          <button type="button" class="tasma-menu-item" role="menuitem" onclick="tasmaMenuKapat();sunumModuAc()"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="4" width="20" height="13" rx="2"/><line x1="12" y1="17" x2="12" y2="21"/><line x1="8" y1="21" x2="16" y2="21"/></svg> Sunum modu</button>
-          <button type="button" class="tasma-menu-item" role="menuitem" onclick="tasmaMenuKapat();splitViewAc()"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="8" height="16" rx="1.5"/><rect x="13" y="4" width="8" height="16" rx="1.5"/></svg> Yan yana okuma</button>
-        </div>
-        <div class="okuma-panel" id="okuma-panel" role="dialog" aria-label="Okuma ayarları">
-          <div class="okuma-panel-grup">
-            <div class="okuma-panel-etiket">Yazı Boyutu</div>
-            <div class="boyut-kontrol">
-              <button type="button" class="boyut-btn" onclick="adjustFontSize(-1)" aria-label="Yazıyı küçült">A&#8722;</button>
-              <span class="boyut-deger" id="boyut-deger">%100</span>
-              <button type="button" class="boyut-btn" onclick="adjustFontSize(1)" aria-label="Yazıyı büyüt">A+</button>
-            </div>
-          </div>
-          <div class="okuma-panel-grup">
-            <div class="okuma-panel-etiket">Satır Aralığı</div>
-            <div class="segment-grup" id="aralik-grup">
-              <button type="button" class="segment-btn" data-aralik="1.7" onclick="setOkumaAralik('1.7')">Sık</button>
-              <button type="button" class="segment-btn secili" data-aralik="2" onclick="setOkumaAralik('2')">Normal</button>
-              <button type="button" class="segment-btn" data-aralik="2.3" onclick="setOkumaAralik('2.3')">Ferah</button>
-            </div>
-          </div>
-          <div class="okuma-panel-grup">
-            <div class="okuma-panel-etiket">Hizalama</div>
-            <div class="segment-grup" id="hiza-grup">
-              <button type="button" class="segment-btn secili" data-hiza="left" onclick="setOkumaHiza('left')">Sol</button>
-              <button type="button" class="segment-btn" data-hiza="justify" onclick="setOkumaHiza('justify')">İki Yana</button>
-            </div>
-          </div>
-          <div class="okuma-panel-grup">
-            <div class="okuma-panel-etiket">Tema</div>
-            <div class="tema-grup" id="tema-grup">
-              <button type="button" class="tema-btn tema-acik" data-tema="light" onclick="setOkumaTema('light')">Açık</button>
-              <button type="button" class="tema-btn tema-sepya" data-tema="sepia" onclick="setOkumaTema('sepia')">Sepya</button>
-              <button type="button" class="tema-btn tema-koyu" data-tema="dark" onclick="setOkumaTema('dark')">Koyu</button>
-            </div>
-          </div>
-          <div class="okuma-panel-grup anahtar-satir">
-            <div class="okuma-panel-etiket">Lügat Çizgileri</div>
-            <button type="button" class="anahtar acik" id="lugat-anahtar" onclick="toggleLugatCizgi()" role="switch" aria-checked="true" aria-label="Lügat çizgilerini aç veya kapat"></button>
-          </div>
-        </div>
-        <div class="okuma-ilerleme" aria-hidden="true"><span id="okuma-ilerleme-dolu"></span></div>
-      </div>
-      <div class="panel-perde" id="panel-perde" onclick="okumaPaneliKapat();tasmaMenuKapat()"></div>
-      <div id="audio-player-bar" class="audio-player-bar" style="display:none">
-        <audio id="madde-audio" preload="none"></audio>
-        <button type="button" class="audio-ctrl" id="audio-prev" onclick="audioNav(-1)" aria-label="Önceki sayfa">&#9664;</button>
-        <button type="button" class="audio-ctrl audio-sm" onclick="audioSkip(-10)" aria-label="10 saniye geri" title="10sn geri">-10</button>
-        <button type="button" class="audio-ctrl audio-play-btn" id="audio-play-pause" onclick="toggleAudioPlay()" aria-label="Oynat veya duraklat">&#9654;</button>
-        <button type="button" class="audio-ctrl audio-sm" onclick="audioSkip(10)" aria-label="10 saniye ileri" title="10sn ileri">+10</button>
-        <button type="button" class="audio-ctrl" id="audio-next" onclick="audioNav(1)" aria-label="Sonraki sayfa">&#9654;</button>
-        <div class="audio-progress-wrap" onclick="audioSeek(event)">
-          <div class="audio-progress" id="audio-progress"></div>
-        </div>
-        <span class="audio-time" id="audio-time">0:00</span>
-        <button type="button" class="audio-ctrl audio-sm" id="audio-speed-btn" onclick="cycleAudioSpeed()" title="Hız" aria-label="Oynatma hızını değiştir">1x</button>
-        <button type="button" class="audio-ctrl audio-sm" id="sleep-btn" onclick="cycleSleepTimer()" title="Uyku zamanlayıcı" aria-label="Uyku zamanlayıcısı"><svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:currentColor;stroke-width:1.8;fill:none;stroke-linecap:round;stroke-linejoin:round;" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
-        <button type="button" class="audio-ctrl audio-sm" id="continuous-btn" onclick="toggleContinuousPlay()" title="Sürekli dinleme" aria-label="Sürekli dinleme modu" style="opacity:0.5">&#8646;</button>
-        <span class="audio-page-label" id="audio-page-label"></span>
-      </div>
-      <aside class="okuyucu-fihrist" id="okuyucu-fihrist" aria-label="Kısmın fihristi"></aside>
-      <aside class="okuyucu-sahife" id="okuyucu-sahife" aria-label="Kitabın aslı">
-        <div class="sahife-bas">
-          <span class="sahife-etiket">Kitabın Aslı</span>
-          <div class="sahife-gezinti">
-            <button type="button" class="sahife-dugme" id="sahife-onceki" onclick="sahifeGit(-1)" aria-label="Önceki sahîfe"><svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="15 5 8 12 15 19"/></svg></button>
-            <label class="sahife-no"><span class="visually-hidden">Sahîfe numarası</span><input type="number" id="sahife-no-input" min="1" max="1248" inputmode="numeric" onchange="sahifeCiz(parseInt(this.value, 10))"><span class="sahife-toplam">/ 1248</span></label>
-            <button type="button" class="sahife-dugme" id="sahife-sonraki" onclick="sahifeGit(1)" aria-label="Sonraki sahîfe"><svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="9 5 16 12 9 19"/></svg></button>
-          </div>
-          <button type="button" class="sahife-dugme" id="sahife-buyut" onclick="sahifeBuyutToggle()" aria-pressed="false" title="Büyüt / sığdır" aria-label="Sahîfeyi büyüt veya sığdır"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M20 20l-4.8-4.8"/><path d="M10.5 7.8v5.4M7.8 10.5h5.4"/></svg></button>
-          <a class="sahife-dugme" id="sahife-yeni-sekme" href="#" target="_blank" rel="noopener" title="PDF'i yeni sekmede aç" aria-label="Kitabın PDF'ini yeni sekmede aç"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6"/><path d="M20 4l-9 9"/><path d="M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg></a>
-          <button type="button" class="sahife-dugme" onclick="sahifePaneliKapat()" aria-label="Kitabın aslını kapat"><svg viewBox="0 0 24 24" aria-hidden="true"><line x1="6.5" y1="6.5" x2="17.5" y2="17.5"/><line x1="17.5" y1="6.5" x2="6.5" y2="17.5"/></svg></button>
-        </div>
-        <div class="sahife-tuval" id="sahife-tuval">
-          <canvas id="sahife-canvas" aria-label="Kitabın sahîfe görüntüsü" role="img"></canvas>
-          <div class="sahife-durum" id="sahife-durum" role="status"></div>
-        </div>
-        <p class="sahife-not">Hakîkat Kitâbevi, Tam İlmihâl Se’âdet-i Ebediyye, 2026 baskısı</p>
-      </aside>
-      <div class="madde-overlay-content">
-        <div id="madde-body"></div>
-        <div class="madde-notlar" id="madde-notlar">
-          <div class="notlar-header">
-            <span class="notlar-title"><svg viewBox="0 0 24 24" style="width:16px;height:16px;stroke:currentColor;stroke-width:1.8;fill:none;stroke-linecap:round;stroke-linejoin:round;vertical-align:-2px;margin-right:5px;" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L8 18l-4 1 1-4z"/></svg>Notlarım</span>
-            <button type="button" class="notlar-toggle" id="notlar-toggle" onclick="toggleNotlar()" aria-label="Notları aç veya kapat" aria-expanded="false">+</button>
-          </div>
-          <div id="notlar-area" style="display:none">
-            <label for="not-input" class="visually-hidden">Madde hakkında not</label>
-            <textarea id="not-input" placeholder="Bu madde hakkında not yazın..." rows="3" aria-label="Madde hakkında not"></textarea>
-            <button type="button" class="btn btn-sm" onclick="saveNot()" style="margin-top:6px;">Kaydet</button>
-            <div id="not-list"></div>
-          </div>
-        </div>
-        <nav class="madde-nav-bar" aria-label="Önceki ve sonraki madde">
-          <button type="button" class="madde-nav-btn" id="madde-prev" onclick="navMadde(-1)"><span class="nav-yon">&#8592; Önceki Madde</span><span class="nav-ad" id="madde-prev-ad"></span></button>
-          <button type="button" class="madde-nav-btn" id="madde-next" onclick="navMadde(1)"><span class="nav-yon">Sonraki Madde &#8594;</span><span class="nav-ad" id="madde-next-ad"></span></button>
-        </nav>
-      </div>
-    </div>
-  </div>
-
-  <!-- Şahıslar -->
-  <section id="page-sahislar" class="page">
-    <div class="container">
-      <h2 class="section-title">Hâl Tercemeleri</h2>
-      <p class="section-desc">Kitabın sonundaki hâl tercemelerinden; Se’âdet-i Ebediyye'de adı geçen 1020 kişi.</p>
-      <div class="dizin-arac">
-        <input type="search" id="sahis-search" placeholder="İsim veya hâl tercemesinde arayın…" aria-label="Hâl tercemelerinde ara">
-        <div class="dizin-suzgec" id="sahis-kategoriler" role="group" aria-label="Kategori">
-          <button type="button" class="dizin-cip secili" data-kategori="">Tümü</button>
-          <button type="button" class="dizin-cip" data-kategori="peygamber">Peygamberler</button>
-          <button type="button" class="dizin-cip" data-kategori="sahabi">Eshâb-ı Kirâm</button>
-          <button type="button" class="dizin-cip" data-kategori="alim">Âlimler</button>
-          <button type="button" class="dizin-cip" data-kategori="hukumdar">Hükümdarlar</button>
-          <button type="button" class="dizin-cip" data-kategori="diger">Diğer</button>
-        </div>
-      </div>
-      <nav class="harf-fihristi" id="sahis-harfler" aria-label="Harfe göre git"></nav>
-      <div id="sahislar-list" class="sahislar-dizin"></div>
-    </div>
-  </section>
-
-  <!-- Şahıs Detay -->
-  <div id="sahis-detay" class="madde-overlay" style="display:none" role="dialog" aria-modal="true" aria-labelledby="sahis-body" aria-hidden="true">
-    <div class="madde-overlay-content sahis-overlay-content">
-      <button type="button" class="madde-close" onclick="closeSahis()" aria-label="Şahıs sayfasını kapat">&times;</button>
-      <div id="sahis-body"></div>
-    </div>
-  </div>
-
-  <!-- Tablo Modal Overlay -->
-  <div id="tablo-modal" class="madde-overlay" style="display:none" role="dialog" aria-modal="true" aria-labelledby="tablo-modal-body" aria-hidden="true">
-    <div class="madde-overlay-content tablo-modal-content">
-      <div id="tablo-modal-body"></div>
-    </div>
-  </div>
-
-  <!-- Fevâid -->
-  <section id="page-fevaid" class="page">
-    <div class="container">
-      <h2 class="section-title">Fevâid</h2>
-      <!-- Ana ekran: bölüm kartları -->
-      <div id="fevaid-home" class="fevaid-home">
-        <div class="fevaid-sec-grid">
-          <a class="fevaid-sec-card fevaid-highlight" href="/hukumler" onclick="navigateTo('hukumler');return false">
-            <div class="fevaid-sec-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v16"/><path d="M7 20h10"/><path d="M5 7h14"/><path d="M5 7l-2.5 6a2.5 2.5 0 0 0 5 0z"/><path d="M19 7l-2.5 6a2.5 2.5 0 0 0 5 0z"/></svg></div>
-            <h3>Fıkhî Hükümler</h3>
-            <p>Kitapta geçen farz, vâcib, sünnet, müstehab, mübah, mekruh ve haram hükümlerinin tam listesi</p>
-            <span class="fevaid-sec-count" id="fevaid-count-hukumler">2.864 açık hüküm</span>
-          </a>
-          <a class="fevaid-sec-card fevaid-highlight" href="/gunun-bilgisi" onclick="navigateTo('gunun-bilgisi');return false">
-            <div class="fevaid-sec-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.3-1 .8-1 1.5v.7"/><path d="M12 17h.01"/></svg></div>
-            <h3>Günün Suâli</h3>
-            <p>Her gün kitaptan bir suâl; cevabı ilgili maddededir</p>
-            <span class="fevaid-sec-count">155 suâl</span>
-          </a>
-          <a class="fevaid-sec-card" href="/ayet-hadis" onclick="navigateTo('ayet-hadis');return false">
-            <div class="fevaid-sec-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 5h6a4 4 0 0 1 4 4v11a3 3 0 0 0-3-3H2z"/><path d="M22 5h-6a4 4 0 0 0-4 4v11a3 3 0 0 1 3-3h7z"/></svg></div>
-            <h3>Âyet-i Kerîme ve Hadîs-i Şerîf İndeksi</h3>
-            <p>Kitapta geçen âyet-i kerîme meâlleri ve hadîs-i şerîfler, kitaptaki yerleriyle</p>
-            <span class="fevaid-sec-count">642 kayıt</span>
-          </a>
-          <a class="fevaid-sec-card" href="/fevaid/tablolar" onclick="openFevaidSection('tablolar');return false">
-            <div class="fevaid-sec-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18"/><path d="M3 15h18"/><path d="M10 4v16"/></svg></div>
-            <h3>Tablolar ve Diyagramlar</h3>
-            <p>Kitaptaki bilgilerin özet tabloları ve akış şemaları</p>
-            <span class="fevaid-sec-count" id="fevaid-count-tablolar"></span>
-          </a>
-          <a class="fevaid-sec-card" href="/sozluk" onclick="navigateTo('sozluk');return false">
-            <div class="fevaid-sec-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/><path d="M9 7h7"/><path d="M9 11h5"/></svg></div>
-            <h3>Dinî Lügat</h3>
-            <p>Kitapta geçen kelimelerin Osmanlıca yazılışları ve anlamları</p>
-            <span class="fevaid-sec-count">9.863 terim</span>
-          </a>
-          <a class="fevaid-sec-card" href="/fevaid" onclick="openFevaidSection('tanimlar');return false">
-            <div class="fevaid-sec-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16"/><path d="M4 12h10"/><path d="M4 18h13"/><path d="M18 10.5l2 1.5-2 1.5"/></svg></div>
-            <h3>Kitabın Kendi Tanımları</h3>
-            <p>Kitapta geçen terimlerin kitabın kendi cümleleriyle açıklaması</p>
-            <span class="fevaid-sec-count">510 tanım</span>
-          </a>
-          <a class="fevaid-sec-card" href="/sahislar" onclick="navigateTo('sahislar');return false">
-            <div class="fevaid-sec-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7"/><path d="M18 14a6.5 6.5 0 0 1 3.5 6"/></svg></div>
-            <h3>Hâl Tercemeleri</h3>
-            <p>Kitapta adı geçenlerin hâl tercemeleri</p>
-            <span class="fevaid-sec-count" id="fevaid-count-sahislar">1020 kişi</span>
-          </a>
-          <a class="fevaid-sec-card" href="/silsile-atlasi/">
-            <div class="fevaid-sec-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6-5.5-6-10a6 6 0 0 1 12 0c0 4.5-6 10-6 10z"/><circle cx="12" cy="11" r="2.2"/></svg></div>
-            <h3>Silsile-i Aliyye Atlası</h3>
-            <p>Silsile-i aliyye büyüklerinin kabr-i şerîfleri harita üzerinde</p>
-            <span class="fevaid-sec-count">35 halka</span>
-          </a>
-          <a class="fevaid-sec-card" href="/namaz-vakitleri/">
-            <div class="fevaid-sec-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
-            <h3>Namaz Vakitleri</h3>
-            <p>Kitaptaki usûle göre namaz vakitlerinin hesabı ve gösterimi</p>
-            <span class="fevaid-sec-count">Temkinli hesap</span>
-          </a>
-          <a class="fevaid-sec-card" href="/calisma-alanim" onclick="navigateTo('calisma-alanim');return false">
-            <div class="fevaid-sec-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L8 18l-4 1 1-4z"/></svg></div>
-            <h3>Çalışma Alanım</h3>
-            <p>Yer imleriniz, notlarınız ve okuma geçmişiniz</p>
-            <span class="fevaid-sec-count">Kişisel</span>
-          </a>
-          <a class="fevaid-sec-card" href="/quiz" onclick="navigateTo('quiz');return false">
-            <div class="fevaid-sec-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg></div>
-            <h3>Bilgi Testi</h3>
-            <p>Öğrendiklerinizi sınayın, kendinizi test edin</p>
-            <span class="fevaid-sec-count">7 konu</span>
-          </a>
-        </div>
-      </div>
-      <!-- Tablolar bölümü -->
-      <div id="fevaid-section-tablolar" class="fevaid-section" style="display:none">
-        <button type="button" class="fevaid-back-btn" onclick="closeFevaidSection()">&#8592; Fevâid</button>
-        <div class="tablolar-toolbar">
-          <div class="tablo-sort-toggle">
-            <button type="button" class="tablo-sort-btn active" data-sort="kategori">Kategorik</button>
-            <button type="button" class="tablo-sort-btn" data-sort="kitap">Kitap Sırası</button>
-          </div>
-          <input type="text" id="tablo-search" placeholder="Tablo ara...">
-          <div class="tablo-kat-filters">
-            <button type="button" class="tablo-filter-btn active" data-kat="all">Tümü</button>
-            <button type="button" class="tablo-filter-btn" data-kat="itikat">İman ve İtikat</button>
-            <button type="button" class="tablo-filter-btn" data-kat="temizlik">Temizlik</button>
-            <button type="button" class="tablo-filter-btn" data-kat="namaz">Namaz</button>
-            <button type="button" class="tablo-filter-btn" data-kat="oruc">Oruç</button>
-            <button type="button" class="tablo-filter-btn" data-kat="zekat">Zekât</button>
-            <button type="button" class="tablo-filter-btn" data-kat="hac">Hac ve Umre</button>
-            <button type="button" class="tablo-filter-btn" data-kat="aile">Aile Hukuku</button>
-            <button type="button" class="tablo-filter-btn" data-kat="cenaze">Cenâze</button>
-            <button type="button" class="tablo-filter-btn" data-kat="muamelat">Mu'âmelât</button>
-          </div>
-        </div>
-        <div id="tablo-count" class="tablo-count"></div>
-        <div id="tablolar-grid" class="tablolar-grid"></div>
-      </div>
-      <!-- Tablo Detay bölümü -->
-      <div id="fevaid-section-tablo-detay" class="fevaid-section" style="display:none">
-        <div id="tablo-detay-content"></div>
-      </div>
-      <!-- Tanımlar bölümü -->
-      <div id="fevaid-section-tanimlar" class="fevaid-section" style="display:none">
-        <button type="button" class="fevaid-back-btn" onclick="closeFevaidSection()">&#8592; Fevâid</button>
-        <div id="tanimlar-fevaid-wrapper"></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Sözlük -->
-  <section id="page-sozluk" class="page">
-    <div class="container">
-      <h2 class="section-title">Dinî Lügat</h2>
-      <p class="section-desc">Kitapta geçen 9.863 kelimenin Osmanlıca yazılışı, aslı ve mânâsı.</p>
-      <div class="dizin-arac">
-        <input type="search" id="sozluk-search" placeholder="Kelime veya mânâ arayın…" aria-label="Sözlükte kelime ara">
-      </div>
-      <nav class="harf-fihristi" id="sozluk-harfler" aria-label="Harfe göre git"></nav>
-      <div id="sozluk-count" class="sozluk-count"></div>
-      <div id="sozluk-list" class="sozluk-list lugat"></div>
-    </div>
-  </section>
-
-  <!-- Arama & Soru-Cevap (Birleşik) -->
-  <section id="page-arama" class="page">
-    <div class="container">
-      <h2 class="section-title">Kitapta Arama</h2>
-      <p class="section-desc">241 maddenin tam metninde, sözlükte ve şahıslarda arayın</p>
-      <div class="arama-box">
-        <input type="text" id="full-search" placeholder="Örn: Abdest nasıl alınır? veya namaz, zekât..." autocomplete="off" aria-label="Kitapta arama yap" role="searchbox">
-        <button type="button" class="btn btn-primary" onclick="doFullSearch()">Ara</button>
-      </div>
-      <div class="arama-ipuclari" id="arama-ipuclari">
-        <div class="arama-etiketler">
-          <button type="button" class="arama-etiket" onclick="aramaEtiketTikla('Abdest nasıl alınır')">Abdest nasıl alınır?</button>
-          <button type="button" class="arama-etiket" onclick="aramaEtiketTikla('namaz')">Namaz</button>
-          <button type="button" class="arama-etiket" onclick="aramaEtiketTikla('Namazın farzları nelerdir')">Namazın farzları</button>
-          <button type="button" class="arama-etiket" onclick="aramaEtiketTikla('oruç')">Oruç</button>
-          <button type="button" class="arama-etiket" onclick="aramaEtiketTikla('Zekât kimlere verilir')">Zekât kimlere verilir?</button>
-          <button type="button" class="arama-etiket" onclick="aramaEtiketTikla('İmanın şartları nelerdir')">İmanın şartları</button>
-          <button type="button" class="arama-etiket" onclick="aramaEtiketTikla('nikâh')">Nikâh</button>
-          <button type="button" class="arama-etiket" onclick="aramaEtiketTikla('cenâze')">Cenaze</button>
-          <button type="button" class="arama-etiket" onclick="aramaEtiketTikla('bid\'at')">Bid'at</button>
-        </div>
-      </div>
-      <div id="arama-results" class="arama-results" aria-live="polite" aria-label="Arama sonuçları"></div>
-    </div>
-  </section>
-
-  <!-- Quiz / Bilgi Testi -->
-  <section id="page-quiz" class="page">
-    <div class="container">
-      <h2 class="section-title">Bilgi Testi</h2>
-      <p class="section-desc">Se'âdet-i Ebediyye'den sorularla kendinizi sınayın.</p>
-      <div id="quiz-container">
-        <div class="quiz-setup">
-          <h3>Konu Seçin</h3>
-          <div class="quiz-konu-grid">
-            <button type="button" class="quiz-konu-btn" onclick="startQuiz('iman')">İman ve İtikat</button>
-            <button type="button" class="quiz-konu-btn" onclick="startQuiz('namaz')">Namaz</button>
-            <button type="button" class="quiz-konu-btn" onclick="startQuiz('oruc')">Oruç</button>
-            <button type="button" class="quiz-konu-btn" onclick="startQuiz('zekat')">Zekât</button>
-            <button type="button" class="quiz-konu-btn" onclick="startQuiz('hac')">Hac</button>
-            <button type="button" class="quiz-konu-btn" onclick="startQuiz('ahlak')">Ahlâk</button>
-            <button type="button" class="quiz-konu-btn" onclick="startQuiz('karisik')">Karışık</button>
-          </div>
-          <div class="quiz-skor-ozet" id="quiz-skor-ozet"></div>
-        </div>
-        <div id="quiz-area" style="display:none"></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- İstatistiklerim -->
-  <!-- Âyet-i Kerîme ve Hadîs-i Şerîf İndeksi -->
-  <section id="page-ayet-hadis" class="page">
-    <div class="container">
-      <h2 class="section-title">Âyet-i Kerîme ve Hadîs-i Şerîf İndeksi</h2>
-      <p class="section-desc">Kitapta geçen âyet-i kerîmelerin ve hadîs-i şerîflerin toplu listesi.</p>
-      <div class="ayet-hadis-tabs">
-        <button type="button" class="ah-tab active" onclick="switchAHTab('ayet')">Âyet-i Kerîmeler</button>
-        <button type="button" class="ah-tab" onclick="switchAHTab('hadis')">Hadîs-i Şerîfler</button>
-      </div>
-      <input type="text" id="ah-search" placeholder="İndekste ara..." aria-label="Âyet ve hadîs indeksinde ara" style="width:100%;padding:12px 16px;border:2px solid var(--border);border-radius:var(--radius);font-size:0.95rem;margin-bottom:16px;background:var(--bg-card);color:var(--text);">
-      <div id="ah-count" style="color:var(--text-muted);font-size:0.85rem;margin-bottom:12px;"></div>
-      <div id="ayet-hadis-list" class="ayet-hadis-list"></div>
-    </div>
-  </section>
-
-  <!-- Günün Sorusu -->
-  <section id="page-gunun-bilgisi" class="page">
-    <div class="container">
-      <h2 class="section-title">Günün Suâli</h2>
-      <p class="section-desc">Her gün kitaptan bir suâl. Cevabı için ilgili maddeyi okuyunuz.</p>
-      <div id="gunun-bilgisi-card" class="gunun-bilgisi-card"></div>
-      <div id="gunun-bilgisi-paylasim" style="text-align:center;margin-top:20px;"></div>
-      <canvas id="paylasim-canvas" style="display:none"></canvas>
-      <h3 style="margin-top:48px;color:var(--primary-dark);">Önceki Günler</h3>
-      <div id="onceki-bilgiler" style="margin-top:16px;"></div>
-    </div>
-  </section>
-
-  <!-- Rehberler -->
-  <section id="page-rehberler" class="page">
-    <div class="container">
-      <h2 class="section-title">Konuya Göre Rehberler</h2>
-      <p class="section-desc">Adım adım öğrenme yolları. Bir konuyu baştan sona takip edin.</p>
-      <div id="rehber-list" class="rehber-grid"></div>
-      <div id="rehber-detay" style="display:none"></div>
-    </div>
-  </section>
-
-  <!-- Hakkında -->
-  <section id="page-hakkinda" class="page">
-    <div class="container">
-      <div class="hakkinda-content">
-        <h2 class="section-title">Hakkında</h2>
-
-        <p class="hakkinda-lead">Se'âdet-i Ebediyye'yi tanıyanlar bilir: bu kitap bir kere okunup bırakılacak bir eser değildir. Bir mesele aklınıza düştüğünde açar, arar, bulur, tekrar okursunuz. Yıllar geçtikçe aynı satırlardan yeni şeyler anlarsınız.</p>
-
-        <p>Bu site, o arayışı kolaylaştırmak için yapıldı. Hepsi bu.</p>
-
-        <h3>Kitabın Tamamı, Aranabilir Şekilde</h3>
-        <p>241 maddenin tam metni, üç kısmıyla birlikte burada. İstediğiniz konuyu başlıktan bulabilir, isterseniz <a href="/arama" class="hakkinda-link" onclick="navigateTo('arama');return false;">tam metin aramasıyla</a> kitabın herhangi bir yerinde geçen bir kelimeyi veya ifadeyi saniyeler içinde bulabilirsiniz. Her maddenin orijinal PDF'deki sayfa numarası bağlantılıdır — tıklayınca kitabın o sayfasını açar.</p>
-
-        <h3>Kitabın Aslı Yanınızda</h3>
-        <p>Okurken araç çubuğundaki sahîfe düğmesiyle kitabın basılı hâlini, Hakîkat Kitâbevi'nin yayımladığı PDF'ten metnin hemen yanında açabilirsiniz. Madde değiştikçe sahîfe de o maddenin başladığı yere gelir; sahîfeler arasında gezinebilir, büyütebilirsiniz.</p>
-
-        <h3>Okuma Planı</h3>
-        <p>Kitabı 30 günde, 90 günde, 180 günde veya bir yılda baştan sona okumak için <a href="/calisma-alanim" class="hakkinda-link" onclick="navigateTo('calisma-alanim');return false;">bir plan</a> kurabilirsiniz. Her günün kısmı maddelerin uzunluğuna göre hesaplanır; bitirdiğiniz maddeler işaretlenir, uzun bir maddede kaldığınız yer hatırlanır. Bu kayıtların hepsi yalnızca sizin tarayıcınızda tutulur.</p>
-
-        <h3>Konuya Göre Rehberler</h3>
-        <p>Namaz, oruç, hac, zekât, iman, ahlâk, aile ve yeni Müslümanlar için hazırlanmış <a href="/rehberler" class="hakkinda-link" onclick="navigateTo('rehberler');return false;">8 adım adım rehber</a> ile bir konuyu baştan sona takip edebilirsiniz. Her rehber bölümlere ayrılmış, bölümlerdeki maddeler sırasıyla okunacak şekilde düzenlenmiştir.</p>
-
-        <h3>Günün Suâli</h3>
-        <p>Her gün kitaptan bir suâl <a href="/gunun-bilgisi" class="hakkinda-link" onclick="navigateTo('gunun-bilgisi');return false;">Günün Suâli</a> sayfasında yer alır; cevabı, bağlantısı verilen maddededir. Paylaş butonuyla veya görsel kart oluşturarak paylaşabilirsiniz.</p>
-
-        <h3>Kitap İçinde Pratik Sözlük</h3>
-        <p>Bir maddeyi okurken anlamını bilmediğiniz kelimelerin <span class="hakkinda-ornek-kelime">altı çizilidir</span>. Üzerine geldiğinizde veya dokunduğunuzda anlamı hemen görünür. Osmanlıca yazılışı ve anlamı bu küçük kutucukta yer alır.</p>
-
-        <h3>9.863 Terimlik Dinî Lügat</h3>
-        <p>Ayrı bir <a href="/sozluk" class="hakkinda-link" onclick="navigateTo('sozluk');return false;">sözlük sayfasında</a> 9.863 dinî terim alfabetik olarak listelenmiştir. Osmanlıca yazılışları, alternatif imlâları ve bağlama göre değişen manaları kayıtlıdır.</p>
-
-        <h3>Âyet-i Kerîme ve Hadîs-i Şerîf İndeksi</h3>
-        <p>Kitapta geçen 193 âyet-i kerîme ve 449 hadîs-i şerîf <a href="/ayet-hadis" class="hakkinda-link" onclick="navigateTo('ayet-hadis');return false;">ayrı bir indekste</a> toplanmıştır. Her birinin kitapta geçtiği yer bağlantılıdır — tıklayınca maddenin tam o yerine gider.</p>
-
-        <h3>Hâl Tercemeleri</h3>
-        <p>Kitapta adı geçenlerin hâl tercemeleri ayrı bir <a href="/sahislar" class="hakkinda-link" onclick="navigateTo('sahislar');return false;">bölümde</a> toplanmıştır. Her şahsın biyografisi, unvanı ve kitapta geçtiği maddelere doğrudan bağlantıları vardır.</p>
-
-        <h3>Tablolar ve Diyagramlar</h3>
-        <p>Kitaptaki bilgileri özetleyen <a href="/fevaid/tablolar" class="hakkinda-link" onclick="navigateTo('fevaid').then(function(){openFevaidSection('tablolar')});return false;">tablolar ve akış şemaları</a> konularına göre düzenlenmiştir. Her tablo, kaynağı olan maddeye bağlıdır.</p>
-
-        <h3>Paylaşım Kartları</h3>
-        <p>Her maddenin altındaki paylaş butonuyla maddeyi metin olarak paylaşabilir veya görsel kart oluşturup indirebilirsiniz.</p>
-
-        <h3>Sesli Dinleme</h3>
-        <p>Maddeleri, Hakîkat Kitâbevi'nin sahîfe sahîfe hazırladığı ses kayıtlarından dinleyebilirsiniz. Okuma, maddenin kayıttaki başladığı yerden açılır ve bittiği yerde durur. Hız ayarı, uyku zamanlayıcısı ve sürekli dinleme modu vardır. Kayıtlar kitabın daha önceki bir baskısından yapıldığı için sonradan eklenen 14 maddenin sesi bulunmamaktadır.</p>
-
-        <h3>Silsile-i Aliyye Atlası</h3>
-        <p>Silsile-i aliyye büyüklerini <a href="silsile-atlasi/" class="hakkinda-link">etkileşimli bir haritada</a> görebilirsiniz. Her büyüğün kabr-i şerîfinin bulunduğu şehir harita üzerinde işaretlenmiştir.</p>
-
-        <h3>Her Şey Birbirine Bağlı</h3>
-        <p>Bir maddeyi açtığınızda ilgili şahısları, konuyla ilgili tabloları ve metindeki terimlerin anlamlarını hep bir arada görürsünüz. Herhangi bir sayfanın bağlantısını birine gönderebilirsiniz — doğrudan o madde, o şahıs veya o arama sonucu açılır.</p>
-
-        <h3>Ne Yok Burada</h3>
-        <p>Yorum yok, tefsir yok, kendi aklımızdan bir şey yok. Kitaba bir harf eklenmedi, bir harf çıkarılmadı. Gece modu, sepya modu, telefon uyumluluğu gibi kolaylıklar dışında yapılan tek şey, kitaptaki bilgiyi olduğu gibi sunmak ve ulaşılabilir kılmaktır.</p>
-
-        <p>Maksat, bu kıymetli esere hizmet etmektir. Kitabın yerini tutmaz; ama kitaba müracaatı kolaylaştırır.</p>
-
-        <p class="hakkinda-dua">Kusurlar bizden, istifade Allahü teâlâdandır.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Fıkhî Hükümler -->
-  <section id="page-hukumler" class="page">
-    <div class="container">
-      <h2 class="section-title">Fıkhî Hükümler</h2>
-      <p class="section-desc">Kitapta geçen fıkhî hükümlerin kategorik listesi. Her cümleye tıklayarak kitaptaki yerine gidebilirsiniz.</p>
-      <div class="hukumler-toolbar">
-        <div class="hukumler-tabs" id="hukumler-tabs">
-          <button type="button" class="hukum-tab active" data-tur="all">Tümü</button>
-          <button type="button" class="hukum-tab tab-farz" data-tur="farz">Farz</button>
-          <button type="button" class="hukum-tab tab-vacib" data-tur="vacib">Vâcib</button>
-          <button type="button" class="hukum-tab tab-sunnet" data-tur="sunnet">Sünnet</button>
-          <button type="button" class="hukum-tab tab-mustehab" data-tur="mustehab">Müstehab</button>
-          <button type="button" class="hukum-tab tab-mubah" data-tur="mubah">Mübah</button>
-          <button type="button" class="hukum-tab tab-mekruh" data-tur="mekruh">Mekruh</button>
-          <button type="button" class="hukum-tab tab-haram" data-tur="haram">Haram</button>
-        </div>
-        <div class="hukumler-alt-bar">
-          <div class="katman-toggle" id="katman-toggle">
-            <button type="button" class="katman-btn active" data-katman="acik">Açık Hükümler</button>
-            <button type="button" class="katman-btn" data-katman="tum">Tüm Geçişler</button>
-          </div>
-          <input type="text" id="hukumler-search" placeholder="Hüküm ara..." autocomplete="off">
-        </div>
-      </div>
-      <div id="hukumler-sonuc" class="hukumler-sonuc"></div>
-      <div id="hukumler-list"></div>
-    </div>
-  </section>
-
-  <!-- Gizlilik -->
-  <section id="page-gizlilik" class="page">
-    <div class="container page-container">
-      <div class="hakkinda-content">
-        <h2>Gizlilik Bildirimi</h2>
-        <p><strong>Son güncelleme:</strong> 19 Ekim 2026</p>
-
-        <h3>Veri Toplama</h3>
-        <p>ilmihal.org, kullanıcılarından herhangi bir kişisel veri <strong>toplamaz</strong>, sunucuya <strong>göndermez</strong> ve üçüncü taraflarla <strong>paylaşmaz</strong>. Sitede üyelik sistemi, hesap oluşturma veya oturum açma mekanizması yoktur.</p>
-
-        <h3>Yerel Depolama (localStorage)</h3>
-        <p>Aşağıdaki veriler yalnızca tarayıcınızda (localStorage) saklanır ve hiçbir sunucuya iletilmez:</p>
-        <ul style="margin:0 0 16px 24px;line-height:1.8;">
-          <li>Tema ve okuma ayarları (yazı boyutu, satır aralığı, hizalama)</li>
-          <li>Son okunan madde, okunan maddeler ve okuma ilerlemesi</li>
-          <li>Okuma planı, bitirdiğiniz maddeler ve uzun maddelerde kaldığınız yer</li>
-          <li>Yer imleri, notlar ve vurguladığınız cümleler</li>
-          <li>Sesli dinlemede kaldığınız yer</li>
-          <li>Bilgi testi sonuçları</li>
-        </ul>
-        <p>Bu verileri tarayıcınızın ayarlarından istediğiniz zaman silebilirsiniz.</p>
-
-        <h3>Çerezler (Cookies)</h3>
-        <p>ilmihal.org birinci taraf veya üçüncü taraf çerez <strong>kullanmaz</strong>.</p>
-
-        <h3>Analitik ve İzleme</h3>
-        <p>Sitede Google Analytics, Facebook Pixel veya benzeri herhangi bir izleme/analitik aracı <strong>bulunmamaktadır</strong>.</p>
-
-        <h3>Konum Verisi</h3>
-        <p>Namaz vakitleri hesaplaması için konum bilgisi kullanılabilir. Bu veri yalnızca tarayıcınızda işlenir, herhangi bir sunucuya gönderilmez ve saklanmaz.</p>
-
-        <h3>Üçüncü Taraf Hizmetler</h3>
-        <p>Yazı tipleri ve tüm kod dosyaları sitenin kendi sunucusundan yüklenir; Google Fonts veya benzeri üçüncü taraf kaynaklar kullanılmaz. Şu durumlarda tarayıcınız başka bir siteye bağlanır:</p>
-        <ul style="margin:0 0 16px 24px;line-height:1.8;">
-          <li>Sesli dinlemeyi başlattığınızda ses dosyaları, PDF'i yeni sekmede açtığınızda kitabın PDF'i Hakîkat Kitâbevi'nin sitesinden (hakikatkitabevi.net) yüklenir. Okuyucudaki "Kitabın Aslı" panelinde ise aynı PDF, ilmihal.org sunucusu aracılığıyla parça parça yüklenir.</li>
-          <li>Silsile Atlası sayfası harita karolarını Esri'nin (ArcGIS) sunucularından yükler.</li>
-        </ul>
-        <p>Bu hizmetlerin kendi gizlilik politikaları geçerlidir. Arama kutusuna yazdıklarınız hiçbir sunucuya gönderilmez; arama tamamen tarayıcınızda yapılır.</p>
-
-        <h3>İletişim</h3>
-        <p>Gizlilikle ilgili sorularınız için <strong>info@ilmihal.org</strong> adresine yazabilirsiniz.</p>
-      </div>
-    </div>
-  </section>
+  <main id="icerik">
+    <div class="kap"><div class="iskelet" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
   </main>
 
-  <!-- Footer -->
-  <footer class="site-footer">
-    <div class="footer-desen" aria-hidden="true"></div>
-    <div class="container">
-      <div class="footer-grid">
-        <div class="footer-col footer-marka">
-          <a class="footer-logo" href="/" onclick="navigateTo('anasayfa');return false">
-            <svg class="logo-amblem" viewBox="0 0 64 64" aria-hidden="true"><path d="M32 2L40.79 10.79L53.21 10.79L53.21 23.21L62 32L53.21 40.79L53.21 53.21L40.79 53.21L32 62L23.21 53.21L10.79 53.21L10.79 40.79L2 32L10.79 23.21L10.79 10.79L23.21 10.79Z"/><circle cx="32" cy="32" r="9"/></svg>
-            <span>Se'âdet-i Ebediyye</span>
+  <footer class="kunye-alt baskida-yok" id="kunye">
+    <div class="kap">
+      <div class="kunye-ic">
+        <div>
+          <a class="marka" href="/">
+            <svg class="semse" viewBox="-12 -12 24 24" aria-hidden="true"><rect x="-7" y="-7" width="14" height="14"/><rect x="-7" y="-7" width="14" height="14" transform="rotate(45)"/><circle r="2.6"/></svg>
+            <b>Se’âdet-i Ebediyye</b>
           </a>
-          <p class="footer-desc">Hüseyn Hilmi Işık hazretlerinin hazırladığı Tam İlmihâl Se’âdet-i Ebediyye kitabının interaktif dijital baskısı. Metin, Hakîkat Kitâbevi'nin 2026 baskısına göredir.</p>
+          <p style="margin-top: var(--a-4)">Hüseyn Hilmi Işık hazretlerinin hazırladığı Tam İlmihâl Se’âdet-i Ebediyye kitabının etkileşimli baskısı. Metin, Hakîkat Kitâbevi’nin 2026 baskısına göredir.</p>
         </div>
-        <div class="footer-col">
-          <h4 class="footer-title">Kitap</h4>
-          <nav class="footer-links">
-            <a href="/icerik" onclick="navigateTo('icerik');return false">İçindekiler</a>
-            <a href="/arama" onclick="navigateTo('arama');return false">Arama</a>
-            <a href="/rehberler" onclick="navigateTo('rehberler');return false">Konu Rehberleri</a>
-            <a href="/calisma-alanim" onclick="navigateTo('calisma-alanim');return false">Çalışma Alanım</a>
-          </nav>
-        </div>
-        <div class="footer-col">
-          <h4 class="footer-title">Fevâid</h4>
-          <nav class="footer-links">
-            <a href="/hukumler" onclick="navigateTo('hukumler');return false">Fıkhî Hükümler</a>
-            <a href="/ayet-hadis" onclick="navigateTo('ayet-hadis');return false">Âyet ve Hadîs İndeksi</a>
-            <a href="/sozluk" onclick="navigateTo('sozluk');return false">Dinî Lügat</a>
-            <a href="/sahislar" onclick="navigateTo('sahislar');return false">Hâl Tercemeleri</a>
-            <a href="/gunun-bilgisi" onclick="navigateTo('gunun-bilgisi');return false">Günün Suâli</a>
-          </nav>
-        </div>
-        <div class="footer-col">
-          <h4 class="footer-title">Site</h4>
-          <nav class="footer-links">
-            <a href="silsile-atlasi/">Silsile Atlası</a>
-            <a href="namaz-vakitleri/">Namaz Vakitleri</a>
-            <a href="/hakkinda" onclick="navigateTo('hakkinda');return false">Hakkında</a>
-            <a href="/gizlilik" onclick="navigateTo('gizlilik');return false">Gizlilik</a>
-            <a href="#" onclick="event.preventDefault();gosterGeriBildirim()">Geri Bildirim</a>
-          </nav>
-        </div>
+        <nav aria-labelledby="kn-kitap">
+          <h2 class="ust-yazi" id="kn-kitap">Kitap</h2>
+          <ul>
+            <li><a href="/icindekiler">Fihrist</a></li>
+            <li><a href="/arama">Arama</a></li>
+            <li><a href="/sozluk">Dinî lügat</a></li>
+            <li><a href="/sahislar">Hâl tercemeleri</a></li>
+            <li><a href="/calisma-alanim">Çalışma alanım</a></li>
+          </ul>
+        </nav>
+        <nav aria-labelledby="kn-fevaid">
+          <h2 class="ust-yazi" id="kn-fevaid">Fevâid</h2>
+          <ul>
+            <li><a href="/hukumler">Fıkhî hükümler</a></li>
+            <li><a href="/ayet-hadis">Âyet-i kerîme ve hadîs-i şerîfler</a></li>
+            <li><a href="/fevaid/tablolar">Tablolar</a></li>
+            <li><a href="/rehberler">Konu rehberleri</a></li>
+            <li><a href="/gunun-bilgisi">Günün suâli</a></li>
+            <li><a href="/quiz">Bilgi testi</a></li>
+          </ul>
+        </nav>
+        <nav aria-labelledby="kn-yer">
+          <h2 class="ust-yazi" id="kn-yer">Yer ve gök</h2>
+          <ul>
+            <li><a href="/silsile-atlasi/">Silsile-i Aliyye Atlası</a></li>
+            <li><a href="/namaz-vakitleri/">Nemâz vakitleri</a></li>
+            <li><a href="/hakkinda">Hakkında</a></li>
+            <li><a href="/gizlilik">Gizlilik</a></li>
+            <li><a href="/rss.xml">RSS</a></li>
+          </ul>
+        </nav>
       </div>
-      <div class="footer-bottom">
-        <p>Maksat, bu kıymetli esere hizmet etmektir.</p>
-        <a href="/rss.xml" class="footer-rss">Günün Maddesi RSS</a>
+      <div class="kunye-son kunye">
+        <span>Se’âdet-i Ebediyye · Hakîkat Kitâbevi, 2026 baskısı · 1248 sahîfe</span>
+        <span>ilmihal.org</span>
       </div>
     </div>
   </footer>
 
-  <!-- Tooltip -->
-  <div id="sozluk-tooltip" class="sozluk-tooltip" style="display:none"></div>
-
-  <script>
-    (function() {
-      // Offline katmanı: versiyonlu SW (sw.js kendi eski cache'lerini temizler).
-      // Nisan 2026'daki "kamikaze" temizlik bloğunun yerine geçti.
-      try {
-        localStorage.setItem('ilmihal-build-id', '2026-10-19-r5');
-        if ('serviceWorker' in navigator) {
-          window.addEventListener('load', function() {
-            navigator.serviceWorker.register('/sw.js').catch(function() {});
-          });
-        }
-      } catch (e) {}
-    })();
-  </script>
-  <script>
-    (function() {
-      var match = (location.pathname || '').match(/^\/madde\/(\d+)\/(\d+)/);
-      if (!match) return;
-      var kisim = match[1];
-      var AV = '2026-10-19-r5';
-      // Kısım metnini erkenden iste; app.js'teki loadKisimTexts aynı isteği yeniden başlatmadan kullanır
-      if (window.fetch) {
-        try {
-          window.__kisimOnYukleme = {
-            kisim: kisim,
-            istek: fetch('/texts/kisim' + kisim + '.json?v=' + AV).then(function(r) {
-              if (!r.ok) throw new Error('HTTP ' + r.status);
-              return r.json();
-            })
-          };
-          window.__kisimOnYukleme.istek.catch(function() {});
-        } catch (e) {}
-      }
-    })();
-  </script>
-  <!-- Tüm script'lerde tek versiyon: BUILD ile aynı. Her release'te üstteki BUILD sabitini + buradaki ?v= değerlerini birlikte bump'la. -->
-  <script defer src="/data.js?v=2026-10-19-r5"></script>
-  <script defer src="/tanimlar.js?v=2026-10-19-r5"></script>
-  <script defer src="/crossref.js?v=2026-10-19-r5"></script>
-  <script defer src="/search-engine.js?v=2026-10-19-r5"></script>
-  <script defer src="/arama-sozluk.js?v=2026-10-19-r5"></script>
-  <script defer src="/app.js?v=2026-10-19-r5"></script>
-  <script defer src="/okuma-plani.js?v=2026-10-19-r5"></script>
+  <noscript>
+    <div class="kap" style="padding-block: 3rem"><p>Bu site JavaScript ile çalışır. Kitabın aslını <a href="/kitap/seadet-i-ebediyye.pdf">PDF olarak</a> açabilirsiniz.</p></div>
+  </noscript>
 </body>
 </html>

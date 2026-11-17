@@ -1,0 +1,444 @@
+### 1. tocData
+yinelenen anahtar: []
+kısım 1: 98 madde, ardışık mı: true
+kısım 2: 73 madde, ardışık mı: true
+kısım 3: 70 madde, ardışık mı: true
+sayfa_no===pdf_sayfa_baslangic: 241 / 241 ; sayfa_bitis===pdf_sayfa_bitis: 241
+sayfa_bitis<sayfa_no: []
+sayfa sırası geri giden: []
+sayfa aralığı: 17 - 1058
+mektup_ref dolu: 108 biçim örnekleri: [
+  '1—114', '1—152',
+  '1—193', '2—55',
+  '1—234', '1—213',
+  '1—163', '1—191'
+] biçime uymayan (^\d—\d+$): []
+
+### 2. maddelerData vs tocData vs texts
+meta farkı: 0 []
+metin aynı: 241 farklı: 0 [] textsde yok: []
+texts/kisim1.json: 98 anahtar, tocda olmayan: 
+texts/kisim2.json: 73 anahtar, tocda olmayan: 
+texts/kisim3.json: 70 anahtar, tocda olmayan: 
+toplam karakter: 3993613 en kısa: [ '1/6:277', '1/5:282', '1/87:363' ] en uzun: [ '1/60:114462', '2/17:114184', '2/46:98360' ]
+
+### 3. Metin biçimi ve işaretler (texts/*.json, 241 madde)
+  (  : 10114 (madde: 227)
+  )  : 10163 (madde: 227)
+  [ : 2888 (madde: 209)
+  ] : 2886 (madde: 209)
+  “ (U+201C) : 2723 (madde: 205)
+  ” (U+201D) : 2718 (madde: 205)
+  ‘ (U+2018) : 0 (madde: 0)
+  ’ (U+2019) : 15553 (madde: 237)
+  ' (düz kesme) : 42 (madde: 3)
+  " (düz tırnak) : 4 (madde: 1)
+  « » : 0 (madde: 0)
+  — (U+2014) : 1552 (madde: 240)
+  – (U+2013) : 92 (madde: 4)
+  … (U+2026) : 0 (madde: 0)
+  ... (üç nokta) : 109 (madde: 37)
+  * yıldız : 0 (madde: 0)
+  ⟦şekil:N⟧ : 5 (madde: 3)
+  ⟦cedvel:N⟧ : 27 (madde: 3)
+  ⟦ diğer : 0 (madde: 0)
+  [N] dipnot paragrafı : 10 (madde: 9)
+  [rakam] metin içi : 248 (madde: 72)
+  [m. YYYY] miladi : 269 (madde: 59)
+  Madde N’e bak (çapraz atıf) : 1 (madde: 1)
+  N. ci/cı sahîfe atfı : 134 (madde: 66)
+  sahîfe kelimesi : 540 (madde: 108)
+  sekme \t : 0 (madde: 0)
+  NBSP U+00A0 : 0 (madde: 0)
+  yumuşak tire U+00AD : 0 (madde: 0)
+  sıfır genişlik U+200B-200D/FEFF : 0 (madde: 0)
+  � U+FFFD : 0 (madde: 0)
+  HTML etiketi <..> : 0 (madde: 0)
+  HTML varlığı &x; : 0 (madde: 0)
+  çift boşluk (tablo dışı da dahil) : 954 (madde: 11)
+  satır sonu boşluk : 0 (madde: 0)
+  3+ satır sonu : 0 (madde: 0)
+  \r : 0 (madde: 0)
+  Arapça harf : 0 (madde: 0)
+  ﷺ vb. özel : 0 (madde: 0)
+metni "N — " ile başlayan: 237 / 241; başlamayan: [
+  '1/1: "TAM İLMİHÂL\\n\\nSE’ÂDET-İ EBEDİYYE\\n\\nBesmele"',
+  '1/59: "59 – İSTİKBÂL-İ KIBLE\\n\\nNemâzı Kâ’beye ka"',
+  '2/1: "İKİNCİ KISM\\n\\n1 — ÜÇÜNCÜ CİLD, 105. ci ME"',
+  '3/1: "ÜÇÜNCÜ KISM\\n\\n1 — İKİNCİ CİLD, 23. cü MEK"'
+]
+paragraf türleri: {
+  'ara-baslik': 239,
+  'siir(br)': 214,
+  paragraf: 6232,
+  'tablo(pre)': 5,
+  dipnot: 10,
+  cedvel: 27,
+  sekil: 5
+}
+   örnek ara-baslik = 1/1: "TAM İLMİHÂL"
+   örnek siir(br) = 1/1: "Besmeleyle başlıyalım kitâba!\nAllah adı, en iyi bir sığnakdır.\nNi’metleri sığmaz ölçü hisâba\nÇok acıyan, afvı seven bir "
+   örnek paragraf = 1/1: "(Se’âdet-i Ebediyye) kitâbını yazmağa, Besmele ile başlıyorum. Dünyâda bütün insanlara acıyarak, fâideli şeyleri yaratıp"
+   örnek tablo(pre) = 1/51: "Îmânın şartı             : ALTI          (6)\nİslâmın şartı            : BEŞ           (5)\nNemâzın farzı            : ONİ"
+   örnek dipnot = 1/54: "[1] Mâlikî mezhebinde, ikinci kavle göre, her necâset, ne kadar çok olsa dahî, nemâza mâni’ değildir. Yıkaması farz deği"
+   örnek cedvel = 1/59: "⟦cedvel:170⟧\n         sin (39,83° – t) sin 10° 50' 0,18795\ntan K = ______________ = _________ = _________ = 0,56121\n    "
+   örnek sekil = 1/59: "⟦şekil:170⟧"
+parantez/tırnak dengesiz madde: 24 [
+  '1/31 ():-3',       '1/61 ():+1',
+  '1/66 ():+1',       '1/68 ():+1',
+  '1/78 ():+2 []:+1', '1/83 ():-3',
+  '1/95 ():+1',       '1/96 ():+1',
+  '1/98 []:+1',       '2/15 ():+1',
+  '2/17 “”:+1',       '2/22 []:+1',
+  '2/38 []:-1',       '2/42 ():-2',
+  '2/46 ():-11',      '2/47 ():-15',
+  '3/20 ():-13',      '3/22 ():-3',
+  '3/24 ():-2',       '3/42 “”:+1'
+]
+olağan dışı karakterler (ilk 60): "=" U+003D×387, "_" U+005F×174, "°" U+00B0×122, "+" U+002B×99, "–" U+2013×92, "′" U+2032×59, "″" U+2033×59, "÷" U+00F7×44, "×" U+00D7×38, "é" U+00E9×37, "⟦" U+27E6×32, "⟧" U+27E7×32, "⟶" U+27F6×27, "%" U+0025×15, "δ" U+03B4×12, "φ" U+03C6×9, "±" U+00B1×9, "Δ" U+0394×8, "α" U+03B1×7, "β" U+03B2×7, "²" U+00B2×6, "´" U+00B4×4, "è" U+00E8×3, "⁸" U+2078×3, "√" U+221A×2, "³" U+00B3×2, "<" U+003C×1, "◊" U+25CA×1, "∫" U+222B×1, "~" U+007E×1, "∂" U+2202×1, "ä" U+00E4×1, "⁻" U+207B×1, "⁶" U+2076×1
+metin içi "Madde N’e bak" kırık (aynı kısımda yok): 0 []
+⟦şekil/cedvel⟧ sayfası madde aralığı dışında: 0 []
+
+### 4. tablolarData
+id yinelenen: []
+tip dağılımı: {
+  agac: 3,
+  flowchart: 10,
+  tablo: 85,
+  liste: 21,
+  iki_liste: 10,
+  tanimlar: 1
+}
+kategori dağılımı: {
+  genel: 41,
+  itikat: 14,
+  namaz: 12,
+  temizlik: 9,
+  zekat: 6,
+  oruc: 2,
+  hac: 4,
+  cenaze: 2,
+  muamelat: 13,
+  aile: 27
+}
+kaynak_madde biçime uymayan: [ 'Tüm Kısımlar' ]
+kaynak_madde kırık: []
+kaynak_madde boş: [ 'konu_haritasi', 'islamiyyetin_temeli' ]
+veriler yok/null: [
+  'kitabin_tanimlari tip=tanimlar anahtarlar=id,baslik,tip,kaynak_madde,sayfa_no,kaynak_metin,veriler,kategori',
+  'yemin_turleri tip=agac anahtarlar=id,baslik,tip,kaynak_madde,sayfa_no,kaynak_metin,dallar,kategori',
+  'fikh_dort_kisim tip=agac anahtarlar=id,baslik,tip,kaynak_madde,sayfa_no,kaynak_metin,dallar,kategori'
+]
+sayfa_no kaynak madde aralığı dışında: 0 []
+  tip agac : array[id,baslik,maddeler] || undefined +dallar
+  tip flowchart : array[baslik,aciklama]
+  tip tablo : array[No,Şart,Açıklama] +kolonlar || array[Sıfat,Tür,Anlamı] +kolonlar || array[Sıfat,Anlamı,Açıklama] +kolonlar || array[Vakit,İlk Sünnet,Farz,Son Sünnet,Vâcib,Toplam] +kolonlar || array[No,Farz,Tür,Açıklama] +kolonlar || array[Mal Türü,Nisâb Mikdârı,Zekât Oranı,Açıklama] +kolonlar || array[Tür,Hüküm,Örnekler] +kolonlar || array[No,Gece,Târih,Fazîleti] +kolonlar || array[Kategori,Farz Sayısı,Açıklama] +kolonlar || array[No,Kelime,Mânâsı] +kolonlar || array[Tür,Tanım,Yapılış] +kolonlar || array[Kısım,Açıklama,Örnekler,Vekâlet] +kolonlar || array[Tür,Tanım,Kaved,Diyet,Keffâret] +kolonlar || array[Hüküm,Tanım,Örnek] +kolonlar || array[Durum,Erkek,Kadın] +kolonlar || array[Husûs,Açıklama] +kolonlar || array[Husûs,Hüküm] +kolonlar || array[Hadîs Türü,Tanım] +kolonlar || array[Namaz,Vakit,Rekat,Açıklama] +kolonlar || array[No,Esâs,Açıklama] +kolonlar || array[Kısım,Açıklama] +kolonlar || array[Ana Kısım,Alt Ayrım,Açıklama] +kolonlar || array[Sünnet Nev'i,Açıklama] +kolonlar || array[No,Bid'at Nev'i,Açıklama] +kolonlar || array[Grup,Alyuvarlarında,Serumlarında,Kan Alabilir,Kan Verebilir] +kolonlar || array[No,Vazîfe,Açıklama] +kolonlar || array[Nev'i,Açıklama] +kolonlar || array[No,Grup,Açıklama] +kolonlar || array[Derece,Açıklama] +kolonlar || array[No,Kısım,Açıklama] +kolonlar || array[Hüküm,Açıklama] +kolonlar || array[No,Yol,Açıklama] +kolonlar || array[Unsur,Açıklama] +kolonlar || array[Aşama,Açıklama] +kolonlar || array[Mezheb,Açıklama] +kolonlar || array[Delîl,Açıklama] +kolonlar || array[No,Şekil,Açıklama] +kolonlar || array[No,Nev'i,Açıklama,Ek Kayıt] +kolonlar || array[Şart,Hanefî,Şâfi'î / Hanbelî,Mâlikî] +kolonlar || array[Sınıf,Açıklama] +kolonlar || array[Kâide,Açıklama] +kolonlar || array[No,Keffâret Şekli,Açıklama] +kolonlar || array[Kayıt,Açıklama] +kolonlar || array[Hâl,Açıklama] +kolonlar || array[Kaynak,Açıklama] +kolonlar || array[No,Sebeb,Misâl] +kolonlar
+  tip liste : array[madde,durum]
+  tip iki_liste : object{necaset_i_galiza,necaset_i_hafife} +sol/sag_baslik || object{verilir,verilmez} +sol/sag_baslik || object{bozanlar,bozmayalar} +sol/sag_baslik || object{helal,haram} +sol/sag_baslik || object{sol,sag} +sol/sag_baslik || object{temiz,pis} +sol/sag_baslik || object{olmaz,olur} +sol/sag_baslik
+  tip tanimlar : null
+veriler/dallar içindeki K/M atıfları: 265 kırık: 0 []
+kaynak tablosu olmayan madde: 179 / 241
+
+### 5. sahislarData
+slug yinelenen: []
+slug = slugify(isim) [+ "-N" yinelenmede, N=sıra]: 852 / 1024 uymayan: 172 [
+  'Abdülfettâh-ı Bağdâdî Akrî → abdulfettah-i-bagdadi-akri-rahmetullahi-teala-al (beklenen abdulfettah-i-bagdadi-akri)',
+  'Abdülhak-ı Sücâdil Serhendî → abdulhak-i-sucadil-serhendi-rahmetullahi-teala-a (beklenen abdulhak-i-sucadil-serhendi)',
+  'Abdüllah bin Abdülmuttalib → abdullah-bin-abdulmuttalib-rahmetullahi-teala-a (beklenen abdullah-bin-abdulmuttalib)',
+  'Abdüllah bin Muhammed Bitûşî → abdullah-bin-muhammed-bitusi-rahmetullahi-teala (beklenen abdullah-bin-muhammed-bitusi)',
+  'Abdüllah Hâşimî → abdullah-ha-simi (beklenen abdullah-hasimi)',
+  'Abdürrahmân bin Muhammed → abdurrahman-bin-muhammed-rahmetullahi-teala-aley (beklenen abdurrahman-bin-muhammed)',
+  'Abdürrahmân İmâdî → abdurrahmanimadi (beklenen abdurrahman-i-madi)',
+  'Ahmed ibni Kemâl → ahmedibni-kemal (beklenen ahmed-ibni-kemal)',
+  'Akreme (yâhud İkrime) → akreme-yahud-ikrime (beklenen akreme-yahud-i-krime)',
+  "Alâ'üddîn-i Bağdâdî → ala-uddin-i-bagdadi (beklenen alauddin-i-bagdadi)",
+  "Alâ'üddîn-i Haskefî → ala-uddin-i-haskefi (beklenen alauddin-i-haskefi)",
+  "Alî bin İsmâ'îl → ali-bin-ismail (beklenen ali-bin-i-smail)",
+  'Alî Efendi (Çatalcalı) → ali-efendirahmetullahi-teala-aleyh (beklenen ali-efendi-catalcali)',
+  'Alî Haydar Beğ → ali-haydar-be-g (beklenen ali-haydar-beg)',
+  'Aliyy-ül-Kârî → alyy-ul-kari (beklenen aliyy-ul-kari)',
+  'Amr ibni Âs → amribni-as (beklenen amr-ibni-as)',
+  'Amr ibni Luhay → amribni-luhay (beklenen amr-ibni-luhay)',
+  'Arşimed → ar-simed (beklenen arsimed)',
+  'Âtıf Beğ → atif-be-g (beklenen atif-beg)',
+  'Bâbür Şâh → babursah (beklenen babur-sah)',
+  'Behâeddîn Muhammed bin Muhammed Buhârî → behaeddin-muhammed-bin-muhammed-buhari-rahme-tu (beklenen behaeddin-muhammed-bin-muhammed-buhari)',
+  'Burhâneddîn-i Mergınânî → burhaneddin-i-merginani-rahmetullahi-teala-aleyh (beklenen burhaneddin-i-merginani)',
+  "Burhân-üş-Şerî'a → burhan-u-s-seria (beklenen burhan-us-seria)",
+  'Celâleddîn Muhammed Rûmî → celaleddin-muhammed-rumi-rahmetullahi-teala-aleyh (beklenen celaleddin-muhammed-rumi)',
+  'Cihângîr Şâh → cihangirsah (beklenen cihangir-sah)'
+]
+isim yinelenen: 18 [
+  [ "Abdül'azîz-i Dehlevî", 2 ],
+  [ 'Abdüllah bin Zübeyr', 2 ],
+  [ 'Âlûsî', 3 ],
+  [ 'Ebû Seleme', 2 ],
+  [ 'Fâtıma Sultân', 2 ],
+  [ 'İbrâhîm', 2 ],
+  [ 'İbrâhîm Pâşa (Dâmâd)', 2 ],
+  [ 'İshak Efendi', 2 ],
+  [ "Kâ'b", 2 ],
+  [ 'Kâdî-Zâde', 3 ]
+]
+no yinelenen: [] aralık 1 - 1020 eksik numaralar: [] no=null olanlar: [
+  "Hempher | Se'âdet-i Ebediyye, Hâl Tercemeleri, s. 1109 (404. sıradan sonra, numarasız)",
+  "Manastırlı İsmâ'îl Hakkı | Se'âdet-i Ebediyye, Hâl Tercemeleri, s. 1133 (588. sıradan sonra, numarasız)",
+  "Me'mûn bin Hârûn | Se'âdet-i Ebediyye, Hâl Tercemeleri, s. 1134 (596. sıradan sonra, numarasız)",
+  "Yûşa' | Se'âdet-i Ebediyye, Hâl Tercemeleri, s. 1193 (984. sıradan sonra, numarasız)"
+]
+kategori: { sahabi: 97, diger: 261, alim: 592, hukumdar: 49, peygamber: 25 }
+unvan değerleri: {
+  'radıyallahü anh': 70,
+  '': 271,
+  'rahmetullahi teâlâ aleyh': 613,
+  'radıyallahü anhümâ': 7,
+  'aleyhisselâm': 25,
+  'radıyallahü anhâ': 21,
+  'rahmetullahi aleyh': 1,
+  'rahmetullahi teâlâ aleyhâ': 12,
+  aleyhirrahme: 1,
+  'radıyallahü teâlâ anhâ': 1,
+  'rahmetullahi teâlâ aleyhim ecma’în': 1,
+  'rahmetullahi teâlâ aleyhinne': 1
+}
+gectigiMaddeler toplam atıf: 2593 biçim bozuk: 0 [] kırık: 0 []
+gectigiMaddeler içinde yinelenen olan şahıs: 0
+sayfalar 1-1248 dışı/sayı değil: 1 [ 'ibni-cezeri' ]
+gectigiMaddeler sayfalar listesiyle örtüşmeyen şahıs: 0 []
+kaynak biçimleri: [
+  "Se'âdet-i Ebediyye, Hâl Tercemeleri, s. N (N. sıra)",
+  "Se'âdet-i Ebediyye, Hâl Tercemeleri, s. N (N. sıradan sonra, numarasız)"
+]
+biyografisi "… ismine bakınız" yönlendirmesi olan: 81
+biyografide \n olan: 37
+
+### 6. hukumlerData
+id yinelenen: 0 id aralığı 2 - 7772
+tur: {
+  farz: 1381,
+  sunnet: 1301,
+  mustehab: 491,
+  mekruh: 1033,
+  mubah: 332,
+  vacib: 636,
+  haram: 1984
+} katman: { acik: 2864, tum: 4294 } alt_tur farklı değer: 53
+madde kırık/null: 1 [ 'id 3917 null/null s.1173 konu=Hâl tercemeleri' ]
+konu ≠ madde başlığı: 0 []
+sayfa madde aralığı dışında: 0 []
+hüküm metni kendi maddesinde aynen geçen: 7116 / 7158 geçmeyen: 42 [
+  'id 241',  'id 854',
+  'id 872',  'id 1011',
+  'id 1208', 'id 1700',
+  'id 1714', 'id 3134',
+  'id 3301', 'id 3660'
+]
+metin yinelenen (aynı metin birden çok kayıt): 2421
+hükmü olmayan madde: [
+  '1/2',  '1/4',  '1/5',  '1/6',  '1/7',  '1/8',  '1/9',
+  '1/10', '1/13', '1/14', '1/15', '1/16', '1/17', '1/21',
+  '1/22', '1/23', '1/24', '1/32', '1/33', '1/38', '1/39',
+  '1/45', '1/48', '1/49', '1/62', '1/86', '1/87', '1/88',
+  '1/91', '1/92', '1/93', '1/94', '2/2',  '2/7',  '2/8',
+  '2/9',  '2/10', '2/11', '2/12', '2/20', '2/27', '2/28',
+  '2/32', '2/33', '2/50', '2/54', '2/55', '2/56', '2/58',
+  '2/59', '2/61', '2/62', '2/63', '2/65', '2/66', '2/68',
+  '2/69', '2/70', '2/71', '3/7',  '3/9',  '3/10', '3/18',
+  '3/25', '3/29', '3/30', '3/31', '3/32', '3/33', '3/34',
+  '3/36', '3/38', '3/40', '3/41', '3/42', '3/43', '3/46',
+  '3/48', '3/61', '3/62', '3/67', '3/69'
+]
+
+### 7. ayetHadisData
+ayetler 193 madde null/kırık: 3 [
+  'null/null s.3: Kur’ân-ı kerîm okuyacağın zemân E’ûzü... söyle',
+  'null/null s.6: Ni’metlerimin kıymetini bilir, şükr ederseniz, ya’',
+  'null/null s.1170: Mü’minlere saldıran zâlimlerle cihâd etmeğe izn ve'
+]
+  sayfa madde aralığı dışında: 0 []
+  metni kendi maddesinde aynen geçen: 189 / 193
+  yinelenen metin: 0
+hadisler 449 madde null/kırık: 4 [
+  'null/null s.2: Ümmetim arasında fitne, fesâd yayıldığı zemân, sün',
+  'null/null s.3: Kur’ân-ı kerîme saygı göstermek, E’ûzü okuyarak ba',
+  'null/null s.3: Hoca çocuğa, Besmele okur, çocuk da söyleyince, Al',
+  'null/null s.7: Hikmet [ya’nî fen ve san’at], mü’minin gayb etdiği'
+]
+  sayfa madde aralığı dışında: 0 []
+  metni kendi maddesinde aynen geçen: 444 / 449
+  yinelenen metin: 0
+
+### 8. tanimlarData
+t yinelenen: [ [ 'Dünyâ', 2 ], [ 'Mevdû’', 2 ] ]
+sayfası hiçbir madde aralığına düşmeyen: 32 [
+  'Akl s.1248',          'Arab-ı âribe s.1128',
+  'Arab-ı bâide s.1128', 'Benî-Hâşim s.1108',
+  'Besmele s.3',         'Bid’at sâhibi s.16',
+  'Dürzî s.1089',        'Ehl-i sünnet âlimi s.2',
+  'Eski serây s.1100',   'E’ûzü s.3',
+  'Hâfız s.1113',        'Halîfe s.1138',
+  'Havârî s.1108',       'Hicret s.1139',
+  'İslâm âlimi s.16',    'İsmâ’îlî s.1084',
+  'İşrâkıyyun s.1161',   'Kureyşî s.1101',
+  'Mi’râc s.1139',       'Mudmerât s.1192'
+]
+tanım cümlesi kitap metninde aynen geçen: 455 / 510 geçmeyen: 55 [
+  'Akl',
+  'Arab-ı âribe',
+  'Arab-ı bâide',
+  'Benî-Hâşim',
+  'Besmele',
+  'Bid’at sâhibi',
+  'Dürzî',
+  'Ehl-i sünnet âlimi',
+  'Emvâl-i zâhire',
+  'Eski serây'
+]
+
+### 9. crossRefData
+anahtar tocda olmayan: [] toc maddesi anahtarsız: 0
+neden dağılımı: {
+  'atıf yapan madde': 111,
+  'aynı konu': 693,
+  'sonraki madde': 233,
+  'önceki madde': 233,
+  'madde referansı': 121
+} kırık: [] kendine: [] aynı hedef yinelenen: 0 []
+madde başına ilişki: en az 2 en çok 15
+"madde referansı" ilişkisinde hedef numara kaynak metinde geçiyor: 57 / 121 [
+  '1/11→2/26', '1/11→3/3',
+  '1/31→1/11', '1/35→1/46',
+  '1/37→3/3',  '1/41→2/38',
+  '1/52→1/56', '1/54→2/38',
+  '1/54→2/17', '1/56→2/42'
+]
+"atıf yapan madde" karşılığında "madde referansı" bulunmayan: 0 []
+
+### 10. ozetler / maddeUzunluklari
+özet anahtarı tocda olmayan: [] özeti olmayan madde: []
+özet metnin içinde aynen geçen: 237 / 241 [ '1/51', '2/4', '2/5', '3/61' ]
+… ile biten özet: 214
+maddeUzunluklari = metin.length: 0 / 241 [
+  '1/1 16658 vs 16682 (fark -24)',
+  '1/2 993 vs 997 (fark -4)',
+  '1/3 1295 vs 1299 (fark -4)',
+  '1/4 526 vs 530 (fark -4)',
+  '1/5 278 vs 282 (fark -4)',
+  '1/6 273 vs 277 (fark -4)',
+  '1/7 3667 vs 3673 (fark -6)',
+  '1/8 551 vs 555 (fark -4)'
+]
+
+### 11. rehberler
+rehber sayısı 8 bölüm 42 madde atfı 142 kırık: [] not≠başlık: 1 [
+  'zekat-rehberi 1/46: "Îmân, ibâdetler ve lüzûmlu nasîhatler (islâmın beş şartı)"'
+]
+bölüm alanları [ 'baslik', 'maddeler' ] madde alanları [ 'kisim', 'maddeNo', 'not' ]
+
+### 12. gununSorusuData
+kırık: [] başlık≠toc: 0 [] resmi true: 90 false: 65 yinelenen soru: 0
+soru metni kendi maddesinde aynen geçen: 155 / 155
+
+### 13. arama-sozluk
+soruMaddeMap kırık: [] toplam soru ifadesi: 702
+aramaSynonyms boş dizi: []
+
+### 14. sozlukData
+i yinelenen: 0 i aralığı 1 - 9864 eksik i: [ 2435 ]
+k yinelenen (birebir): 55 [
+  'ÂBÂD×2', 'ÂCİL×2',
+  'ÂH×2',   'AHLÂF×2',
+  'ARZ×2',  'AZM×2',
+  'BÂDÎ×2', 'BEHÂİYYE×2',
+  'CÂNÎ×2', 'CÂR×2'
+]
+k yinelenen (küçük harf): 57
+d (köken) dağılımı: {
+  A: 8264,
+  F: 553,
+  T: 872,
+  Y: 31,
+  'İt': 20,
+  L: 13,
+  Fr: 97,
+  'İ': 11,
+  E: 1,
+  B: 1
+}
+s sayı olmayan: 0 [] s aralığı 7 - 677
+s sıralı mı: geri giden 0
+k BÜYÜK harf: 7380 karışık: 2483
+b örnekleri: [
+  'ABDÂL → b=Ebdâl',
+  'ABDİYYET → b=Ubûdiyyet',
+  'ÂBİD → b=Ubbâd',
+  'Adâlet-i İctimâiyye → b=Sosyal Adâlet',
+  'ÂDİL → b=Adâlet'
+]
+b değeri sözlükte madde başı olarak yok: 100 [
+  'ÂDİL→Adâlet',
+  'Ahkâm-ı Fıkhiyye→Fıkh',
+  'AKIL→Akl',
+  'ÂKİBET→Âkıbet',
+  'ARBÛN→Urbûn',
+  'AYÂL→Iyâl',
+  'AYNE→Iyne',
+  'CEZVİT→Cizvit',
+  'CU‘ÂLE→Ci‘âle',
+  'EHL-İ İSLÂM→Müslüman'
+]
+a içinde "bk." / "bakınız": 718
+
+### 15. audioMap ve ses aralıkları
+anahtar sayısı 1194 aralık 0 - 1249
+aralıkta ses dosyası olmayan sayfa: 56 2,12,13,14,15,180,192,196,197,199,200,1204,1205,1206,1207,1208,1209,1210,1211,1212,1213,1214,1215,1216,1217,1218,1219,1220,1221,1222,1223,1224,1225,1226,1227,1228,1229,1230,1231,1232,1233,1234,1235,1236,1237,1238,1239,1240,1241,1242,1243,1244,1245,1246,1247,1248
+klasörler: { '001': 1194 }
+dosya adı sayfa no ile uyuşmayan: 0 []
+URL yinelenen: 0
+sesAraligiMap anahtar: 241 null (seslendirilmemiş): [
+  '1/32', '1/38', '1/48',
+  '1/86', '1/88', '2/7',
+  '2/9',  '2/11', '2/55',
+  '2/58', '2/63', '2/65',
+  '2/68', '3/48'
+]
+saniyeli (ortadan başlayan/biten) aralık: 30
+sesi olmayan madde: 14 [
+  '1/32', '1/38', '1/48',
+  '1/86', '1/88', '2/7',
+  '2/9',  '2/11', '2/55',
+  '2/58', '2/63', '2/65',
+  '2/68', '3/48'
+]
+aralığında kaydı olmayan kayıt no: 6 [
+  '1/60 kayıt 180',
+  '1/60 kayıt 192',
+  '1/60 kayıt 196',
+  '1/60 kayıt 197',
+  '1/60 kayıt 199',
+  '1/60 kayıt 200'
+]
+sesAraligiMap tocda olmayan anahtar: []
+
+### 16. quizSorulari (app.js içinde)
+kategoriler iman:8, namaz:8, oruc:5, zekat:5, hac:5, ahlak:4, karisik:0 toplam 35 alanlar [ 's', 'c', 'd', 'a', 'm' ] kırık: []
+
+### 17. tüm veri dosyalarında kodlama bozuklukları
+data.js                  �: 0 mojibake(Ã/Ä/Å): 0 çift boşluk: 0 \u00a0: 0 sıfır-gen: 0 kontrol kar.: 0 <etiket: 0 BOM: false
+maddeler-data.js         �: 0 mojibake(Ã/Ä/Å): 0 çift boşluk: 3 \u00a0: 0 sıfır-gen: 0 kontrol kar.: 0 <etiket: 0 BOM: false
+texts/kisim1.json        �: 0 mojibake(Ã/Ä/Å): 0 çift boşluk: 3 \u00a0: 0 sıfır-gen: 0 kontrol kar.: 0 <etiket: 0 BOM: false
+texts/kisim2.json        �: 0 mojibake(Ã/Ä/Å): 0 çift boşluk: 0 \u00a0: 0 sıfır-gen: 0 kontrol kar.: 0 <etiket: 0 BOM: false
+texts/kisim3.json        �: 0 mojibake(Ã/Ä/Å): 0 çift boşluk: 0 \u00a0: 0 sıfır-gen: 0 kontrol kar.: 0 <etiket: 0 BOM: false
+sozluk-data.js           �: 0 mojibake(Ã/Ä/Å): 0 çift boşluk: 0 \u00a0: 0 sıfır-gen: 0 kontrol kar.: 0 <etiket: 0 BOM: false
+arama-sozluk.js          �: 0 mojibake(Ã/Ä/Å): 0 çift boşluk: 0 \u00a0: 0 sıfır-gen: 0 kontrol kar.: 0 <etiket: 0 BOM: false
+sahislar.js              �: 0 mojibake(Ã/Ä/Å): 0 çift boşluk: 0 \u00a0: 0 sıfır-gen: 0 kontrol kar.: 0 <etiket: 0 BOM: false
+hukumler-data.js         �: 0 mojibake(Ã/Ä/Å): 0 çift boşluk: 0 \u00a0: 0 sıfır-gen: 0 kontrol kar.: 0 <etiket: 0 BOM: false
+ayet-hadis.js            �: 0 mojibake(Ã/Ä/Å): 0 çift boşluk: 0 \u00a0: 0 sıfır-gen: 0 kontrol kar.: 0 <etiket: 0 BOM: false
+ayet_hadis_data.json     �: 0 mojibake(Ã/Ä/Å): 0 çift boşluk: 0 \u00a0: 0 sıfır-gen: 0 kontrol kar.: 0 <etiket: 0 BOM: false
+tanimlar.js              �: 0 mojibake(Ã/Ä/Å): 0 çift boşluk: 0 \u00a0: 0 sıfır-gen: 0 kontrol kar.: 0 <etiket: 0 BOM: false
+crossref.js              �: 0 mojibake(Ã/Ä/Å): 0 çift boşluk: 0 \u00a0: 0 sıfır-gen: 0 kontrol kar.: 0 <etiket: 0 BOM: false
+ozetler.js               �: 0 mojibake(Ã/Ä/Å): 0 çift boşluk: 0 \u00a0: 0 sıfır-gen: 0 kontrol kar.: 0 <etiket: 0 BOM: false
+rehberler.js             �: 0 mojibake(Ã/Ä/Å): 0 çift boşluk: 0 \u00a0: 0 sıfır-gen: 0 kontrol kar.: 0 <etiket: 26 BOM: false
+gunun-sorusu-data.js     �: 0 mojibake(Ã/Ä/Å): 0 çift boşluk: 0 \u00a0: 0 sıfır-gen: 0 kontrol kar.: 0 <etiket: 0 BOM: false
+audio-map.js             �: 0 mojibake(Ã/Ä/Å): 0 çift boşluk: 0 \u00a0: 0 sıfır-gen: 0 kontrol kar.: 0 <etiket: 0 BOM: false
+silsile-atlasi/veri.js   �: 0 mojibake(Ã/Ä/Å): 0 çift boşluk: 0 \u00a0: 0 sıfır-gen: 0 kontrol kar.: 0 <etiket: 0 BOM: false

@@ -1,0 +1,110 @@
+"1)" / "a)" biçimli liste işareti (kapanış parantezi dengesizliğini açıklayabilir): 182
+1/31: "\n1)" "\n2)" "\n3)"
+2/46: "\nA)" "\nB)" "\na)" "\nb)"
+2/47: "\na)" "\nb)" "\nc)" "\n1)"
+3/20: "\nA)" "\nB)" "\nC)" "\nD)"
+tek satırlık paragraflarda çift boşluk: 9 [
+  '1/46: ":          V" … "Nazm:          Vücûdümün her zerre"',
+  '1/46: ":          H" … "Nazm:          Hücûm edilemez, her"',
+  '1/46: ":         O" … "Nazm:         Onu düşün, oldukça c"',
+  `1/60: "°                 0" … "cos 15° 58' x cos 41°                 0,9614 x 0,7"`,
+  '1/60: "6      0" … "0,7256      0,7256"',
+  '1/60: "=                      I" … " ÷ 75 °′″ 10 °′″ sin ÷ 49 sin =                      INV sin"',
+  '2/42: "6                         2" … "C6 H12 O6                         2C2 "',
+  '3/37: "]                                       Z" … "31 Mayıs 1339 [1923]                             "',
+  '3/53: "]   İ" … "[1]   İstigfâr düâsı, (Estagfiru"'
+]
+hüküm bulunamayan 41
+ id 241 1/65 ilk 30 harf metinde: true | "İmâm-ı Şâfi’îyi “rahmetullahi teâlâ aleyh” taklîd eden bir hanefî, mezhebinden çıkmaz.] Yola çıkmadan ve yolculuk bitdik" 
+    kitap: "İmâm-ı Şâfi’îyi “rahmetullahi teâlâ aleyh” taklîd eden bir hanefî, mezhebinden çıkmaz.] Yola çıkmadan ve yolculuk bitdik"
+ id 854 1/52 ilk 30 harf metinde: true | "16 — Tertîbdir. Ya’nî, sıra ile iki eli, ağzı, burnu, yüzü, kolları, başı, kulakları, enseyi ve ayakları yıkamak ve mesh" 
+    kitap: "16 — Tertîbdir. Ya’nî, sıra ile iki eli, ağzı, burnu, yüzü, kolları, başı, kulakları, enseyi ve ayakları yıkamak ve mesh"
+ id 872 2/38 ilk 30 harf metinde: true | "(Nikâye) kitâbının fârisî şerhinde buyuruyor ki: Nafaka, insanın yaşayabilmesi için lâzım olan şey demekdir. Bu da, yiye" 
+    kitap: "(Nikâye) kitâbının fârisî şerhinde buyuruyor ki: Nafaka, insanın yaşayabilmesi için lâzım olan şey demekdir. Bu da, yiye"
+ id 1011 1/79 ilk 30 harf metinde: true | "İftâr edince, (Zehebezzama’ vebtelletil urûk ve sebe-tel-ecr inşâallahü teâlâ) okumak [sünnet olduğu (Tebyîn)in Şelbî hâ" 
+    kitap: "İftâr edince, (Zehebezzama’ vebtelletil urûk ve sebetel-ecr inşâallahü teâlâ) okumak [sünnet olduğu (Tebyîn)in Şelbî hâş"
+ bulunamayanların tümü: 241,854,872,1011,1208,1700,1714,3134,3301,3660,3913,4038,4172,4186,4210,4384,4653,4861,5043,5129,5144,5180,5557,6299,6430,6484,6487,6496,6530,6538,6559,6654,6687,6691,6703,7341,7358,7474,7743,7755,7771
+tanım bulunamayan 55 — bunlardan madde aralığındaki sayfada olan: [
+  'Emvâl-i zâhire s.309',
+  'Esmâ-i hüsnâ s.431',
+  'Ezân-ı Cavk s.205',
+  'Farz s.230',
+  'Gasb etmek s.536',
+  'Hek s.424',
+  'İhtiyâc maddeleri s.647',
+  'İslâm bilgileri s.260',
+  'Meskûkât s.802',
+  'Müleffık s.843',
+  'Mülhid s.463',
+  'Ölüm hastası s.816',
+  'Sâ’î s.309',
+  'Sanem s.628',
+  'Silis-ül-bevl s.128',
+  'Sun’î ilkâh s.605',
+  'Şî’î s.408',
+  'Takdîr s.702',
+  'Tenvîr dâiresi s.183',
+  'Tevbe etmek s.64',
+  'Vera’ s.96',
+  'Zındık s.463',
+  'Zühd s.96'
+]
+ayetler bulunamayan [
+  '2/48 s.698 "Allahü teâlâ, dilediğini siler. Dilediğini değişdirmez. Ümmül-kitâb, O"'
+]
+hadisler bulunamayan [
+  '3/59 s.1008 "Anababasının veyâ ikisinden birinin kabrini her Cum’a günleri ziyâret "'
+]
+ayetler madde dışı sayfa (önsöz/hâl tercemeleri): 3
+hadisler madde dışı sayfa (önsöz/hâl tercemeleri): 4
+özet 1/51 "Her müslimânın, otuzüç farzı bilmesi lâzımdır. Otuzüç farz şunlardır: Teyemmümün farzına iki diyenler de vardır. Bu zemân, hepsi otuziki far"
+özet 2/4 "Bu mektûb, derin ilmi, hâlleri ve sözleri ile her ihtisâs sâhibini hayretde bırakan, kerâmet ve fazîletler hazînesi, Eshâb-ı kirâmın ve islâ"
+özet 2/5 "Bu mektûb, râsih ilmli, hakîkî din âlimi, seyyid Abdülhakîm Efendinin “rahmetullahi aleyh” bir mektûba cevâbı olup, tefsîri ve hadîs-i şerîf"
+özet 3/61 "RESÛLULLAHIN (Sallallahü aleyhi ve sellem) Bu mektûb, Allahü teâlânın Peygamberi, Muhammed “aleyhisselâm” tarafından, Mu’âz bin Cebele “radı"
+şahıs sayfalar toplam 4637 madde aralığı dışı 1323
+gectigiMaddeler boş: 278 sayfalar boş: 169
+biyografi uzunluğu min/medyan/max 14 254 6035
+sahîfe atfı hedef aralığı 2 - 2361 1248 üstü: 4
+köşeli parantez içerik türleri: {
+  '[açıklama]': 1434,
+  '[m. yıl]': 264,
+  '[sayı]': 245,
+  '[sayı-sayı]': 1
+}
+kısa (≤60) parantez 7725 büyük harfle başlayan (kitap adı/terim/alıntı): 7115
+“…” en sık içerikler: [
+  [ 'sallallahü aleyhi ve sellem', 705 ],
+  [ 'rahmetullahi teâlâ aleyh', 481 ],
+  [ 'radıyallahü anh', 247 ],
+  [ 'aleyhisselâm', 184 ],
+  [ 'rahmetullahi aleyh', 141 ],
+  [ 'kuddise sirruh', 96 ],
+  [ 'rahmetullahi teâlâ aleyhim ecma’în', 92 ],
+  [ 'aleyhimüssalevâtü vetteslîmât', 72 ],
+  [ 'sallallahü teâlâ aleyhi ve sellem', 69 ],
+  [ 'radıyallahü teâlâ anhüm ecma’în', 51 ],
+  [ 'aleyhimüsselâm', 44 ],
+  [ 'radıyallahü anhümâ', 42 ]
+]
+d nadir: [
+  'AZÂZÎL:İ',
+  'AZRÂİL (aleyhisselâm):İ',
+  'GAMÂRÂ (Gemara):İ',
+  'HAÇ:E',
+  'HAGADA (Agada):İ',
+  'HAHAM:İ',
+  'HÂRUT ve MÂRUT:İ',
+  'HAVRÂ:İ',
+  'HAYDÛD:B',
+  'KAŞER (Koşer):İ',
+  'MİKÂİL (aleyhisselâm):İ',
+  'MİŞNÂ:İ',
+  'TALMÛD:İ'
+]
+sözlük o (Osmanlıca) içinde Arap harfi olmayan: 0
+sözlük a/m içinde HTML: 0
+"N — BAŞLIK" satırı bulunan madde 241
+"1 — Cenâb-ı Hak, hepimizi dünyâ ve âhıretin efendisi ve bütün insanların her bakımdan en   ⇔ toc: Muhammed aleyhisselâma uymak, se’âdete kavuşdurur
+"2 — Cenâb-ı Hak, Kur’ân-ı kerîmde, Nisâ sûresi, sekseninci âyetinde, Muhammed aleyhisselâ  ⇔ toc: Allahü teâlâya itâ’at için, Resûlüne itâ’at lâzımdır
+"3 — Se’âdet-i ebediyyeye kavuşmak için, müslimân olmak lâzımdır. Müslimân olmak için, hiç  ⇔ toc: Müslimân olmak için, ne yapmalı? Kelime-i şehâdet
+"4 — Bütün insanlara önce lâzım olan şey, (Ehl-i sünnet) âlimlerinin kitâblarında bildirdi  ⇔ toc: Ehl-i sünnet âlimleri

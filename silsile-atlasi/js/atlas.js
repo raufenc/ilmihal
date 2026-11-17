@@ -2,11 +2,11 @@
    Veri: veri.js (SILSILE), arazi dokuları: doku/ (tools/silsile-arazi.py üretir). */
 
 import * as THREE from 'three';
-import { EffectComposer } from '../vendor/three/addons/postprocessing/EffectComposer.js';
-import { RenderPass } from '../vendor/three/addons/postprocessing/RenderPass.js';
-import { UnrealBloomPass } from '../vendor/three/addons/postprocessing/UnrealBloomPass.js';
-import { ShaderPass } from '../vendor/three/addons/postprocessing/ShaderPass.js';
-import { OutputPass } from '../vendor/three/addons/postprocessing/OutputPass.js';
+import { EffectComposer } from '/vendor/three/addons/postprocessing/EffectComposer.js';
+import { RenderPass } from '/vendor/three/addons/postprocessing/RenderPass.js';
+import { UnrealBloomPass } from '/vendor/three/addons/postprocessing/UnrealBloomPass.js';
+import { ShaderPass } from '/vendor/three/addons/postprocessing/ShaderPass.js';
+import { OutputPass } from '/vendor/three/addons/postprocessing/OutputPass.js';
 
 /* ════════════════════════════════════════════════════════════════
    1. Sabitler ve küçük yardımcılar

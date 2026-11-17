@@ -5,3 +5,8 @@ __pycache__/
 
 # Silsile Atlası arazi üretimi için indirilen ham veriler
 tools/silsile-kaynak/
+
+# Yeni site: Codex ham görselleri (seçilenler /gorsel altına optimize edilerek alınır)
+tools/yeni-site/gorsel-ham/
+tools/yeni-site/kare/
+tools/yeni-site/hata-kanit/

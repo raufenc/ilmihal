@@ -1,0 +1,151 @@
+
+######## data.js
+-- tocData: 241 kayıt
+   kisim: tür={"number":241} bulunan=241 eksik=0 boş/null=0 örnek=1 | 2 | 3
+   madde_no: tür={"number":241} bulunan=241 eksik=0 boş/null=0 örnek=1 | 2 | 3 | 4 | 5 | 6
+   mektup_ref: tür={"string":241} bulunan=241 eksik=0 boş/null=133 örnek="1—114" | "1—152" | "" | "1—193" | "2—55" | "1—234"
+   baslik: tür={"string":241} bulunan=241 eksik=0 boş/null=0 örnek="Ehl-i sünnet âlimleri" | "İslâm âlimlerinin kitâbları" | "Uydurma tefsîr yazan kâfir olur" | "Din hırsızları" | "Îmânın gitmesine sebeb olan şeyler" | "Âhıretde kâfire merhamet yokdur"
+   sayfa_no: tür={"number":241} bulunan=241 eksik=0 boş/null=0 örnek=17 | 21 | 22 | 23 | 30 | 32
+   sayfa_bitis: tür={"number":241} bulunan=241 eksik=0 boş/null=0 örnek=21 | 22 | 23 | 30 | 32 | 33
+   pdf_sayfa_baslangic: tür={"number":241} bulunan=241 eksik=0 boş/null=0 örnek=17 | 21 | 22 | 23 | 30 | 32
+   pdf_sayfa_bitis: tür={"number":241} bulunan=241 eksik=0 boş/null=0 örnek=21 | 22 | 23 | 30 | 32 | 33
+   ÖRNEK[0]: {"kisim":1,"madde_no":1,"mektup_ref":"1—114","baslik":"Muhammed aleyhisselâma uymak, se’âdete kavuşdurur","sayfa_no":17,"sayfa_bitis":21,"pdf_sayfa_baslangic":17,"pdf_sayfa_bitis":21}
+   ÖRNEK[son]: {"kisim":3,"madde_no":70,"mektup_ref":"","baslik":"(Se’âdet-i Ebediyye)nin son sözü","sayfa_no":1040,"sayfa_bitis":1058,"pdf_sayfa_baslangic":1040,"pdf_sayfa_bitis":1058}
+-- tablolarData: 130 kayıt
+   id: tür={"string":130} bulunan=130 eksik=0 boş/null=0 örnek="konu_haritasi" | "tovbe_sartlari" | "iman_sartlari" | "islam_sartlari" | "allahin_sifatlari" | "peygamber_sifatlari"
+   baslik: tür={"string":130} bulunan=130 eksik=0 boş/null=0 örnek="Konu Haritası" | "Tevbe Şartları" | "İmanın Altı Şartı (Âmentü)" | "İslâm'ın Beş Şartı" | "Allahü Teâlânın Sıfatları" | "Peygamberlerin Sıfatları"
+   tip: tür={"string":130} bulunan=130 eksik=0 boş/null=0 örnek="agac" | "flowchart" | "tablo" | "liste" | "iki_liste" | "tanimlar"
+   kaynak_madde: tür={"string":130} bulunan=130 eksik=0 boş/null=2 örnek="" | "K1/M43" | "K1/M24" | "K1/M46" | "K2/M30" | "K1/M51"
+   sayfa_no: tür={"number":130} bulunan=130 eksik=0 boş/null=0 örnek=11 | 98 | 42 | 109 | 103 | 545
+   kaynak_metin: tür={"string":130} bulunan=130 eksik=0 boş/null=1 örnek=""
+   veriler: tür={"array":117,"object":10,"null":1} bulunan=128 eksik=2 boş/null=1 örnek=
+   kategori: tür={"string":130} bulunan=130 eksik=0 boş/null=0 örnek="genel" | "itikat" | "namaz" | "temizlik" | "zekat" | "oruc"
+   kolonlar: tür={"array":85} bulunan=85 eksik=45 boş/null=0 örnek=
+   sol_baslik: tür={"string":10} bulunan=10 eksik=120 boş/null=0 örnek="Necâset-i Galîza (Kaba Pislik)" | "Zekât Verilecek Kimseler" | "Orucu Bozan Şeyler" | "Helâl Hayvanlar" | "Helâl Yiyecek/İçecekler" | "Vücûb Şartları (8)"
+   sag_baslik: tür={"string":10} bulunan=10 eksik=120 boş/null=0 örnek="Necâset-i Hafîfe (Hafîf Pislik)" | "Zekât Verilmeyecek Kimseler" | "Orucu Bozmayan Şeyler" | "Harâm Hayvanlar" | "Harâm Yiyecek/İçecekler" | "Edâ Şartları (4)"
+   aciklama: tür={"string":1} bulunan=1 eksik=129 boş/null=0 örnek=
+   dallar: tür={"array":2} bulunan=2 eksik=128 boş/null=0 örnek=
+   ÖRNEK[0]: {"id":"konu_haritasi","baslik":"Konu Haritası","tip":"agac","kaynak_madde":"","sayfa_no":11,"kaynak_metin":"(Se’âdet-i Ebediyye) kitâbında ikiyüzkırkbir [241] madde vardır. Kitâb üç kısma ayrılmışdır.","veriler":[{"id":"iman","baslik":"İman ve İtikat","maddeler":["K1/M1","K1/M2","K1/M3","…(+81)"]},{"id":"temizlik","baslik":"Temizlik (Tahâret)","maddeler":["K1/M52","K1/M53","K1/M54","…(+3)"]},{"id":"namaz","baslik":"Namaz","maddeler":["K1/M51","K1/M58","K1/M59","…(+22)"]},"…(+7)"],"kategori":"genel"}
+   ÖRNEK[son]: {"id":"yimek_adabi","baslik":"Yimek Âdâbında Başlıca Sünnetler","tip":"liste","kaynak_madde":"K2/M45","sayfa_no":648,"kaynak_metin":"45 — YİMEK, İÇMEK ÂDÂBI Yimeğe ve içmeğe başlarken, (Besmele) okumalıdır. Yimek ve içmek sonunda (Elhamdülillah) demelidir. Bunları söylemek…","veriler":[{"madde":"Yimeğe ve içmeğe başlarken Besmele okumalıdır.","durum":"sunnet"},{"madde":"Yimek ve içmek sonunda Elhamdülillah demelidir.","durum":"sunnet"},{"madde":"Yimekden önce ve yimekden sonra el yıkamak sünnetdir.","durum":"sunnet"},"…(+8)"],"kategori":"genel"}
+
+######## maddeler-data.js
+-- maddelerData: 241 kayıt
+   kisim: tür={"number":241} bulunan=241 eksik=0 boş/null=0 örnek=1 | 2 | 3
+   madde_no: tür={"number":241} bulunan=241 eksik=0 boş/null=0 örnek=1 | 2 | 3 | 4 | 5 | 6
+   mektup_ref: tür={"string":241} bulunan=241 eksik=0 boş/null=133 örnek="1—114" | "1—152" | "" | "1—193" | "2—55" | "1—234"
+   baslik: tür={"string":241} bulunan=241 eksik=0 boş/null=0 örnek="Ehl-i sünnet âlimleri" | "İslâm âlimlerinin kitâbları" | "Uydurma tefsîr yazan kâfir olur" | "Din hırsızları" | "Îmânın gitmesine sebeb olan şeyler" | "Âhıretde kâfire merhamet yokdur"
+   sayfa_no: tür={"number":241} bulunan=241 eksik=0 boş/null=0 örnek=17 | 21 | 22 | 23 | 30 | 32
+   sayfa_bitis: tür={"number":241} bulunan=241 eksik=0 boş/null=0 örnek=21 | 22 | 23 | 30 | 32 | 33
+   metin: tür={"string":241} bulunan=241 eksik=0 boş/null=0 örnek=
+   pdf_sayfa_baslangic: tür={"number":241} bulunan=241 eksik=0 boş/null=0 örnek=17 | 21 | 22 | 23 | 30 | 32
+   pdf_sayfa_bitis: tür={"number":241} bulunan=241 eksik=0 boş/null=0 örnek=21 | 22 | 23 | 30 | 32 | 33
+   ÖRNEK[0]: {"kisim":1,"madde_no":1,"mektup_ref":"1—114","baslik":"Muhammed aleyhisselâma uymak, se’âdete kavuşdurur","sayfa_no":17,"sayfa_bitis":21,"metin":"TAM İLMİHÂL\n\nSE’ÂDET-İ EBEDİYYE\n\nBesmeleyle başlıyalım kitâba!\nAllah adı, en iyi bir sığnakdır.\nNi’metleri sığmaz ölçü hisâba\nÇok acıyan, af…","pdf_sayfa_baslangic":17,"pdf_sayfa_bitis":21}
+   ÖRNEK[son]: {"kisim":3,"madde_no":70,"mektup_ref":"","baslik":"(Se’âdet-i Ebediyye)nin son sözü","sayfa_no":1040,"sayfa_bitis":1058,"metin":"70 — SE’ÂDET-İ EBEDİYYENİN SON SÖZÜ\n\nEtrâfımızı beş duygu organımız ile tanıyoruz. His organlarımız olmasaydı, hiçbir şeyden haberimiz olmıy…","pdf_sayfa_baslangic":1040,"pdf_sayfa_bitis":1058}
+
+######## sozluk-data.js
+-- sozlukData: 9863 kayıt
+   i: tür={"number":9863} bulunan=9863 eksik=0 boş/null=0 örnek=1 | 2 | 3 | 4 | 5 | 6
+   k: tür={"string":9863} bulunan=9863 eksik=0 boş/null=0 örnek="ÂBÂ" | "ABÂ" | "ÂBÂD" | "ABÂDİLE" | "Abâdile-i Erba‘a" | "ABÂNÎ"
+   o: tür={"string":9824} bulunan=9824 eksik=39 boş/null=0 örnek="آباء" | "عباء" | "آباد" | "عبادله" | "عبادلۀ اربعه" | "عبانى"
+   a: tür={"string":9863} bulunan=9863 eksik=0 boş/null=0 örnek="Mâmur, şen." | "Sonsuz gelecek. Ebed’in çokluk hâli." | "1.Köle, memlûk, kul. 2.İnsan." | "Boş, faydasız, lüzumsuz şey." | "Kaçak köle." | "Yâdigâr kalacak eser, anıt."
+   d: tür={"string":9863} bulunan=9863 eksik=0 boş/null=0 örnek="A" | "F" | "T" | "Y" | "İt" | "L"
+   s: tür={"string":9863} bulunan=9863 eksik=0 boş/null=0 örnek="7" | "8" | "9" | "10" | "11" | "12"
+   m: tür={"string":3689} bulunan=3689 eksik=6174 boş/null=0 örnek="hususlar anlatılmaktadır. (Kurtubî)" | "olduğu hatırlatılmaktadır. (Taberî)" | "nama)" | "(Mefâtihü’l-Gayb)" | "sıfatı da dine uymayan satış." | "(Kurtubî, Celâleyn)"
+   b: tür={"string":219} bulunan=219 eksik=9644 boş/null=0 örnek="Ebdâl" | "Ubûdiyyet" | "Ubbâd" | "Sosyal Adâlet" | "Adâlet" | "Afv"
+   ÖRNEK[0]: {"i":1,"k":"ÂBÂ","o":"آباء","a":"Baba ve dedeler. Eb (baba) kelimesinin çokluk hâli.","d":"A","s":"7"}
+   ÖRNEK[son]: {"i":9864,"k":"ZÜYÛF","o":"زيوف","a":"Altın ve gümüş nisbeti yarıdan az olan paralar. Mağşuş paralar. Zeyf’in çokluk hâli.","m":"Züyûf ile ödünç verdikten sonra, o züyûfun kıymeti kalmasa, İmâmeyne yani İmâm-ı Ebû Yûsuf ve Muhammed’e göre teslim ettiği zamandaki kıymet…","d":"A","s":"677"}
+
+######## sahislar.js
+-- sahislarData: 1024 kayıt
+   isim: tür={"string":1024} bulunan=1024 eksik=0 boş/null=0 örnek="Abbâs" | "Abduh" | "Abdül'azîm-i Münzirî" | "Abdül'azîz Hân" | "Abdül'azîz-i Dehlevî" | "Abdül'azîz bin Sü'ûd"
+   slug: tür={"string":1024} bulunan=1024 eksik=0 boş/null=0 örnek="abbas" | "abduh" | "abdulazim-i-munziri" | "abdulaziz-han" | "abdulaziz-i-dehlevi" | "abdulaziz-i-dehlevi-2"
+   unvan: tür={"string":1024} bulunan=1024 eksik=0 boş/null=271 örnek="radıyallahü anh" | "" | "rahmetullahi teâlâ aleyh" | "radıyallahü anhümâ" | "aleyhisselâm" | "radıyallahü anhâ"
+   kategori: tür={"string":1024} bulunan=1024 eksik=0 boş/null=0 örnek="sahabi" | "diger" | "alim" | "hukumdar" | "peygamber"
+   biyografi: tür={"string":1024} bulunan=1024 eksik=0 boş/null=0 örnek="551. ci sırada Kurtubî ismine bakınız!" | "717. ci sırada Nesefî ismine bakınız!" | "Babası Hasendir. [601] de vefât etdi." | "Hindistânda kâdî idi. Derin âlim idi." | "Ensâr-i kirâmdan idi." | "Sôfiyyedendir."
+   gectigiMaddeler: tür={"array":1024} bulunan=1024 eksik=0 boş/null=278 örnek=
+   kaynak: tür={"string":1024} bulunan=1024 eksik=0 boş/null=0 örnek=
+   no: tür={"number":1020,"null":4} bulunan=1024 eksik=0 boş/null=4 örnek=1 | 2 | 3 | 4 | 5 | 6
+   sayfalar: tür={"array":1024} bulunan=1024 eksik=0 boş/null=169 örnek=
+   ÖRNEK[0]: {"isim":"Abbâs","slug":"abbas","unvan":"radıyallahü anh","kategori":"sahabi","biyografi":"Abdülmuttalibin en küçük oğludur. Resûlullahın amcasıdır. Üç yaş büyükdür. Bedr gazâsında düşman askeri arasında idi. Müslimânların eline es…","gectigiMaddeler":["1/31","1/84","1/95","…(+4)"],"kaynak":"Se'âdet-i Ebediyye, Hâl Tercemeleri, s. 1059 (1. sıra)","no":1,"sayfalar":[62,350,376,"…(+10)"]}
+   ÖRNEK[son]: {"isim":"Züvâvî Îsâ","slug":"zuvavi-isa","unvan":"rahmetullahi teâlâ aleyh","kategori":"alim","biyografi":"Mâlikî fıkh âlimidir. İbni Teymiyyeyi red eden risâlesi ve (Müdevvene) şerhı meşhûrdur. 743 [m. 1342] de Kâhirede vefât etdi.","gectigiMaddeler":[],"kaynak":"Se'âdet-i Ebediyye, Hâl Tercemeleri, s. 1198 (1020. sıra)","no":1020,"sayfalar":[]}
+
+######## hukumler-data.js
+-- hukumlerData: 7158 kayıt
+   id: tür={"number":7158} bulunan=7158 eksik=0 boş/null=0 örnek=2 | 3 | 4 | 5 | 6 | 7
+   tur: tür={"string":7158} bulunan=7158 eksik=0 boş/null=0 örnek="farz" | "sunnet" | "mustehab" | "mekruh" | "mubah" | "vacib"
+   katman: tür={"string":7158} bulunan=7158 eksik=0 boş/null=0 örnek="acik" | "tum"
+   metin: tür={"string":7158} bulunan=7158 eksik=0 boş/null=0 örnek="Otuzüç farz meşhûrdur." | "Bunları, lüzûmu kadar öğrenmek farzdır." | "Cevâb: Bunlar nass ile farzdır." | "Farzlar herkes içindir." | "Mühim bir farzı yapmakdır." | "Bu emrlere (Farz) denir."
+   sayfa: tür={"number":7158} bulunan=7158 eksik=0 boş/null=0 örnek=17 | 18 | 19 | 20 | 25 | 35
+   sayfa_bitis: tür={"null":7025,"number":133} bulunan=7158 eksik=0 boş/null=7025 örnek=19 | 92 | 130 | 279 | 284 | 303
+   alt_tur: tür={"string":7158} bulunan=7158 eksik=0 boş/null=310 örnek="farz / farzları" | "diğer geçiş" | "farz-ı kifâye" | "farzdır / farz olur" | "farz değildir / olmaz" | "farz"
+   baglam: tür={"string":7158} bulunan=7158 eksik=0 boş/null=5201 örnek=""
+   konu: tür={"string":7158} bulunan=7158 eksik=0 boş/null=0 örnek="Îmânın gitmesine sebeb olan şeyler" | "Sünnet-i müekkede, sünnet-i zevâid" | "Tevbe, vera’ ve takvâ" | "Îmân, ibâdetler ve lüzûmlu nasîhatler" | "Beş vakt nemâz, otuzüç farz" | "Abdest almak. Abdesti bozan şeyler"
+   kisim: tür={"number":7157,"null":1} bulunan=7158 eksik=0 boş/null=1 örnek=1 | 2 | 3
+   madde_no: tür={"number":7157,"null":1} bulunan=7158 eksik=0 boş/null=1 örnek=1 | 11 | 18 | 19 | 27 | 28
+   ÖRNEK[0]: {"id":2,"tur":"farz","katman":"acik","metin":"Ona uymak için, önce îmân etmek, sonra müslimânlığı iyice öğrenmek, sonra farzları edâ edip harâmlardan kaçınmak, dahâ sonra, sünnetleri yap…","sayfa":17,"sayfa_bitis":null,"alt_tur":"farz / farzları","baglam":"","konu":"Muhammed aleyhisselâma uymak, se’âdete kavuşdurur","kisim":1,"madde_no":1}
+   ÖRNEK[son]: {"id":7772,"tur":"vacib","katman":"tum","metin":"(Hadîka)da, dil âfetlerinin sonunda diyor ki, (Birinin evine, odasına, bağçesine girileceği zemân izn istemek vâcibdir. Kapıya vurarak, zili…","sayfa":365,"sayfa_bitis":null,"alt_tur":"vâcibdir","baglam":"","konu":"Selâmlaşmak nasıl olur? Müsâfeha nasıl yapılır?","kisim":1,"madde_no":90}
+
+######## tanimlar.js
+-- tanimlarData: 510 kayıt
+   t: tür={"string":510} bulunan=510 eksik=0 boş/null=0 örnek="Acrabadin" | "Adâlet" | "Âdetde bid’at" | "Âdet zemânı" | "Âdil" | "Âhıret hayâtı"
+   c: tür={"string":510} bulunan=510 eksik=0 boş/null=0 örnek="İnsana, (Âlem-i sagîr) denir." | "(Âmîn), (Kabûl et) demekdir." | "Geceye (Cünn-i leyl) denir." | "Gusl abdesti olmıyana (Cünüb) denir." | "Mubâhların fazlasına (Fudûl) denir." | "Umreye (Hacc-ı asgar) denir."
+   s: tür={"number":510} bulunan=510 eksik=0 boş/null=0 örnek=652 | 403 | 631 | 136 | 884 | 78
+   ÖRNEK[0]: {"t":"Acrabadin","c":"Hastalıkların ilâclarını bildiren kitâblara, (Kitâb-ül-edviye), (formüler farmasötik) ve (Acrabadin) denir.","s":652}
+   ÖRNEK[son]: {"t":"Züyûf","c":"Altını, gümüşü yarıdan fazla olan nukûddan; altını, gümüşü en çok olanına (Ceyyid), dahâ az olanlarına (Züyûf) denir.","s":793}
+
+######## gunun-sorusu-data.js
+-- gununSorusuData: 155 kayıt
+   soru: tür={"string":155} bulunan=155 eksik=0 boş/null=0 örnek="Fenâ ve Bekâyı soruyorsunuz." | "Tütün içmek isrâf mıdır?" | "Sinemaya gitmek günâh mıdır?"
+   kisim: tür={"number":155} bulunan=155 eksik=0 boş/null=0 örnek=1 | 2 | 3
+   madde: tür={"number":155} bulunan=155 eksik=0 boş/null=0 örnek=11 | 13 | 39 | 40 | 41 | 54
+   baslik: tür={"string":155} bulunan=155 eksik=0 boş/null=0 örnek="Îmânın gitmesine sebeb olan şeyler" | "Nemâzda otururken parmak kaldırmak" | "Büyüklerin Allahü teâlâ ile konuşmaları" | "Vahdet-i vücûd bilgisi. Vücûd-i vehmî" | "(Se’âdet-i Ebediyye)nin son sözü" | "Îmân, ibâdetler ve lüzûmlu nasîhatler"
+   resmi: tür={"boolean":155} bulunan=155 eksik=0 boş/null=0 örnek=true | false
+   ÖRNEK[0]: {"soru":"Kimseye sû’i zan etmemeli, kötü gözle bakmamalı, kâfir olduğunu gösteren işine, sözüne değil, îmânı olduğunu gösteren işine ve sözüne bakmal…","kisim":1,"madde":11,"baslik":"Îmânın gitmesine sebeb olan şeyler","resmi":true}
+   ÖRNEK[son]: {"soru":"İslâmiyyete ilm ile nasıl karşı durulabilir?","kisim":3,"madde":70,"baslik":"(Se’âdet-i Ebediyye)nin son sözü","resmi":false}
+
+######## arama-sozluk.js
+-- aramaSynonyms: nesne, 392 anahtar; ilk anahtarlar: namaz, namaz kilmak, namaz vakitleri, namaz kilinir, abdest, abdest almak, abdesti bozan, gusul ; son: harac, mudaraba, murabaha
+   değer türleri: {"array":392}
+-- aramaSynonyms (değer dizilerinin elemanları): 651 kayıt
+   <ilkel>: tür={"string":651} bulunan=0 eksik=651 boş/null=0 örnek=
+   ÖRNEK: ["nemaz","salat","salah"]
+-- soruMaddeMap: 229 kayıt
+   soru: tür={"array":229} bulunan=229 eksik=0 boş/null=0 örnek=
+   kisim: tür={"number":229} bulunan=229 eksik=0 boş/null=0 örnek=1 | 2 | 3
+   maddeNo: tür={"number":229} bulunan=229 eksik=0 boş/null=0 örnek=1 | 2 | 3 | 4 | 5 | 6
+   cevapOzet: tür={"string":229} bulunan=229 eksik=0 boş/null=0 örnek="Ezan ve ikamet bildirilmektedir." | "Namaz, ibadetlerin en üstünüdür." | "Tevbe, verâ ve takvâ anlatılmaktadır." | "Üzüntü ve sıkıntıları nimet bilmelidir." | "Dert ve belâlar, günahlara keffârettir." | "Hurûfîlik hakkında bilgi verilmektedir."
+   ÖRNEK[0]: {"soru":["peygambere uymak","saadet nedir","resulullaha uymak"],"kisim":1,"maddeNo":1,"cevapOzet":"Peygamber Efendimize (sallallahü aleyhi ve sellem) uymak, insanı ebedî saadete kavuşturur."}
+   ÖRNEK[son]: {"soru":["madde ilahiden nasibi","alemin nasibi","zat i ilahi"],"kisim":3,"maddeNo":53,"cevapOzet":"Âlemin ve maddenin, Zât-ı ilâhîden nasibi yoktur."}
+
+######## crossref.js
+-- crossRefData: nesne, 241 anahtar; ilk anahtarlar: 1/1, 1/2, 1/3, 1/4, 1/5, 1/6, 1/7, 1/8 ; son: 3/68, 3/69, 3/70
+   değer türleri: {"array":241}
+-- crossRefData (değer dizilerinin elemanları): 1391 kayıt
+   kisim: tür={"number":1391} bulunan=1391 eksik=0 boş/null=0 örnek=1 | 2 | 3
+   madde_no: tür={"number":1391} bulunan=1391 eksik=0 boş/null=0 örnek=74 | 21 | 28 | 41 | 46 | 2
+   neden: tür={"string":1391} bulunan=1391 eksik=0 boş/null=0 örnek="atıf yapan madde" | "aynı konu" | "sonraki madde" | "önceki madde" | "madde referansı"
+   ÖRNEK: [{"kisim":1,"madde_no":74,"neden":"atıf yapan madde"},{"kisim":1,"madde_no":21,"neden":"aynı konu"},{"kisim":1,"madde_no":28,"neden":"aynı konu"},"…(+3)"]
+
+######## ozetler.js
+-- maddeOzetleri: nesne, 241 anahtar; ilk anahtarlar: 1/1, 1/2, 1/3, 1/4, 1/5, 1/6, 1/7, 1/8 ; son: 3/68, 3/69, 3/70
+   değer türleri: {"string":241}
+   ÖRNEK: "(Se’âdet-i Ebediyye) kitâbını yazmağa, Besmele ile başlıyorum. Dünyâda bütün insanlara acıyarak, fâideli şeyleri yaratıp göndermekdedir. Âhı…"
+-- maddeUzunluklari: nesne, 241 anahtar; ilk anahtarlar: 1/1, 1/2, 1/3, 1/4, 1/5, 1/6, 1/7, 1/8 ; son: 3/68, 3/69, 3/70
+   değer türleri: {"number":241}
+   ÖRNEK: 16658
+
+######## audio-map.js
+-- audioMap: nesne, 1194 anahtar; ilk anahtarlar: 0, 1, 3, 4, 5, 6, 7, 8 ; son: 1202, 1203, 1249
+   değer türleri: {"string":1194}
+   ÖRNEK: "/audio/001/TISE-0000 Ön Kapak İçi.mp3"
+
+######## rehberler.js
+-- rehberlerData: 8 kayıt
+   id: tür={"string":8} bulunan=8 eksik=0 boş/null=0 örnek="namaz-rehberi" | "oruc-rehberi" | "zekat-rehberi" | "hac-rehberi" | "iman-rehberi" | "yeni-musluman"
+   baslik: tür={"string":8} bulunan=8 eksik=0 boş/null=0 örnek="Namaz Rehberi" | "Oruç ve Ramazan Rehberi" | "Zekât Rehberi" | "Hac ve Umre Rehberi" | "İman ve İtikat Rehberi" | "Yeni Müslümanlar İçin Rehber"
+   aciklama: tür={"string":8} bulunan=8 eksik=0 boş/null=0 örnek=
+   ikon: tür={"string":8} bulunan=8 eksik=0 boş/null=0 örnek=
+   renk: tür={"string":8} bulunan=8 eksik=0 boş/null=0 örnek="#1a6b4e" | "#6b1a5e" | "#6b4e1a" | "#1a3d6b" | "#6b1a1a" | "#1a6b6b"
+   bolumler: tür={"array":8} bulunan=8 eksik=0 boş/null=0 örnek=
+   ÖRNEK[0]: {"id":"namaz-rehberi","baslik":"Namaz Rehberi","aciklama":"Abdest ve gusl ile başlayıp namazın farzlarını, vâciblerini, kılınışını ve çeşitli namazları kitabın sırasıyla adım adım anlatan rehber","ikon":"<svg viewBox=\"0 0 24 24\" width=\"1em\" height=\"1em\" style=\"vertical-align:-0.125em;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linec…","renk":"#1a6b4e","bolumler":[{"baslik":"Temizlik (Tahâret)","maddeler":[{"kisim":1,"maddeNo":52,"not":"Abdest almak. Abdesti bozan şeyler"},{"kisim":1,"maddeNo":53,"not":"Mest üzerine mesh, özr sâhibi olmak"},{"kisim":1,"maddeNo":54,"not":"Gusl abdesti nasıl alınır? Ne zemân alınır?"},"…(+3)"]},{"baslik":"Namaza Hazırlık","maddeler":[{"kisim":1,"maddeNo":51,"not":"Beş vakt nemâz, otuzüç farz"},{"kisim":1,"maddeNo":58,"not":"Setr-i avret. Kadınların örtünmesi"},{"kisim":1,"maddeNo":59,"not":"İstikbâl-i kıble. Kıble ta’yîni"},"…(+1)"]},{"baslik":"Ezân ve İkâmet","maddeler":[{"kisim":1,"maddeNo":61,"not":"Ezân ve ikâmet. Hoparlörle nemâz"},{"kisim":1,"maddeNo":62,"not":"Ezân kelimelerinin ma’nâları"}]},"…(+3)"]}
+   ÖRNEK[son]: {"id":"aile-rehberi","baslik":"Aile ve Nikâh Rehberi","aciklama":"Nikâh, talâk, süt kardeşliği, nafaka, kadının hakları, evlâd terbiyesi ve mîrâs hakkında bilgiler","ikon":"<svg viewBox=\"0 0 24 24\" width=\"1em\" height=\"1em\" style=\"vertical-align:-0.125em;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linec…","renk":"#4a1a6b","bolumler":[{"baslik":"Nikâh Hükümleri","maddeler":[{"kisim":2,"maddeNo":34,"not":"İslâmiyyetde nikâh. Evlenmesi câiz olmıyan kadınlar"},{"kisim":2,"maddeNo":35,"not":"Kâfirlerin evlenmesi. Çocuğa îmânı, islâmı öğretmelidir"}]},{"baslik":"Talâk ve Ayrılık","maddeler":[{"kisim":2,"maddeNo":36,"not":"İslâmiyyetdeki talâk. Hul’. Zihâr. Li’ân. İddet. Hıdâne"}]},{"baslik":"Süt Kardeşliği ve Akrabalık","maddeler":[{"kisim":2,"maddeNo":37,"not":"Süt kardeşlik. Süt ile akrabâ olanlar"}]},"…(+3)"]}
