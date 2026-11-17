@@ -26,6 +26,7 @@ const BURASI = path.dirname(fileURLToPath(import.meta.url));
 export const KOK = path.resolve(BURASI, '../..');
 export const CIKTI = path.join(KOK, 'veri');
 const { yukle } = require('./incele/yukle.js');
+import { yayinDisiUygula, kenarNotuAtla } from './yayin-disi.mjs';
 
 /* ───────────────────────── Kaynakları okuma ───────────────────────── */
 
@@ -67,7 +68,7 @@ export function kaynaklariOku() {
   const appKod = fs.readFileSync(path.join(KOK, 'app.js'), 'utf8');
   const ozet = oku('ozetler.js');
   const arama = oku('arama-sozluk.js');
-  return {
+  const K = {
     toc: data.tocData,
     tablolar: data.tablolarData,
     texts,
@@ -100,6 +101,9 @@ export function kaynaklariOku() {
     },
     okumaPlaniKod: fs.readFileSync(path.join(KOK, 'okuma-plani.js'), 'utf8'),
   };
+  // Denetimde yayından çekilen kayıtlar burada süzülür (tools/yeni-site/yayin-disi.mjs); kaynak dosyalar değişmez
+  K.yayinDisi = yayinDisiUygula(K);
+  return K;
 }
 
 /* ───────────────────────── Ortak yardımcılar ───────────────────────── */
@@ -173,8 +177,9 @@ export function eskiKokBul(lower, wordMap, ekler) {
   return null;
 }
 
-/** app.js highlightWords: kaçışlı HTML döndürür; zor kelimeler <span data-id="i">…</span>. */
-export function eskiVurgu(text, wordMap, ekler, bulunca) {
+/** app.js highlightWords: kaçışlı HTML döndürür; zor kelimeler <span data-id="i">…</span>.
+    atla(lower, entry) doğru dönerse o eşleşme işaretlenmez (yayından çekilen kenar notları). */
+export function eskiVurgu(text, wordMap, ekler, bulunca, atla) {
   const html = escapeHtml(text);
   return html.split(/(\s+|<[^>]+>)/).map(token => {
     if (/^\s+$/.test(token) || token.startsWith('<')) return token;
@@ -182,7 +187,7 @@ export function eskiVurgu(text, wordMap, ekler, bulunca) {
     if (clean.length < 2) return token;
     const lower = trLower(clean);
     const entry = wordMap.get(lower) || eskiKokBul(lower, wordMap, ekler);
-    if (entry) {
+    if (entry && !(atla && atla(lower, entry))) {
       if (bulunca) bulunca(clean, entry);
       const prefix = token.substring(0, token.indexOf(clean));
       const suffix = token.substring(token.indexOf(clean) + clean.length);
@@ -425,6 +430,8 @@ export function uret(K) {
       return (x < 0 ? 99 : x) - (y < 0 ? 99 : y) || (a < b ? -1 : 1);
     }).map(k => ({ ad: k, etiket: K.app.tabloKatLabels[k] ?? null, sayi: tkSayim[k] })),
     tablolar: tabloDizin,
+    // Denetimde yayından çekilen tablolar: adresi açana "gözden geçiriliyor" notu gösterilir
+    geriCekilen: (K.geriCekilenTablolar || []).map(t => ({ id: t.id, baslik: t.baslik })),
   });
   // Konu haritası (fihristte konuya göre süzme için)
   const kh = K.tablolar.find(t => t.id === 'konu_haritasi');
@@ -470,7 +477,7 @@ export function uret(K) {
         const k = trLower(unescapeHtml(clean));
         if (harita.has(k) && harita.get(k) !== entry.i) lugatCakisma++;
         else harita.set(k, entry.i);
-      });
+      }, kenarNotuAtla);
     }
     const kelimeler = Object.fromEntries([...harita.keys()].sort().map(k => [k, harita.get(k)]));
     const terimIdleri = [...new Set(harita.values())].sort((x, y) => x - y);

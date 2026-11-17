@@ -74,6 +74,18 @@ function bulunamadiCiz(kap, id, baglam) {
     h('.sira', h('a.dugme.dugme-ana', { href: '/fevaid/tablolar' }, 'Bütün tablolar'), h('a.dugme', { href: '/fevaid' }, 'Kitaptan Derlenenler'))));
 }
 
+/* Denetimde yayından çekilen tablo (tools/yeni-site/yayin-disi.mjs): veri yüklenmez, not gösterilir. */
+function geriCekildiCiz(kap, kayit, baglam) {
+  baglam.metaYaz({ robots: 'noindex' });
+  baglam.baslikYaz('Tablo gözden geçiriliyor');
+  doldur(kap, h('.kap.kap-dar.tb-yok',
+    h('p.ust-yazi.surh', 'Kitaptan Derlenenler'),
+    h('h1.baslik-2', 'Bu tablo gözden geçiriliyor'),
+    h('p.giris-yazi', `“${ad(kayit.baslik)}” tablosu kitabın kendisi değildi; kitaptan sonradan derlenmişti. Yapılan denetimde kitabın metnine uymayan yerleri görüldü. Tablo düzeltilip yeniden denetlenene kadar yayından kaldırılmıştır.`),
+    h('p.giris-yazi', 'Konuyu kitabın kendi metninden okuyunuz; fihristten ilgili maddeyi açabilir ya da kitabın tamamında arayabilirsiniz.'),
+    h('.sira', h('a.dugme.dugme-ana', { href: '/icindekiler' }, 'Fihrist'), h('a.dugme', { href: '/arama' }, 'Kitapta arayın'), h('a.dugme', { href: '/fevaid/tablolar' }, 'Bütün tablolar'))));
+}
+
 /* ── Liste ── */
 function listeCiz(kap, o, baglam) {
   const { dizin, kunyeler } = o;
@@ -248,7 +260,11 @@ async function tabloCiz(kap, id, o, baglam, { listedenGeldi }) {
   // Dizinde olmayan kimlik için istek gönderme (boşuna 404 olmasın)
   const ara = String(id).toLowerCase().replace(/-/g, '_');
   const kayit = o.dizin.tablolar.find(x => x.id === ara);
-  if (!kayit) { bulunamadiCiz(kap, id, baglam); return; }
+  if (!kayit) {
+    const cekilen = (o.dizin.geriCekilen || []).find(x => x.id === ara);
+    if (cekilen) geriCekildiCiz(kap, cekilen, baglam); else bulunamadiCiz(kap, id, baglam);
+    return;
+  }
   let t;
   try { t = await veri.tablo(kayit.id, { sinyal: baglam.sinyal }); }
   catch (e) {

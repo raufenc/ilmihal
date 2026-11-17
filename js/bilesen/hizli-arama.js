@@ -181,7 +181,7 @@ function kur(ilk) {
     const tanimlar = [];
 
     const kumeler = [
-      soru ? grup('Bu suâlin cevabı', [secenek(maddeYolu(soru.kisim, soru.no), { class: 'hizli-soru' },
+      soru ? grup('İlgili madde', [secenek(maddeYolu(soru.kisim, soru.no), { class: 'hizli-soru' },
         no(soru.kisim, soru.no), h('span.hizli-ad', ad(soru.baslik)), null,
         soru.cevapOzet ? h('small', soru.cevapOzet) : null)]) : null,
       grup('Maddeler', maddeler.map(m => secenek(maddeYolu(m.kisim, m.no, q), {},

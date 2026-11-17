@@ -13,6 +13,7 @@ import {
   KOK, CIKTI, kaynaklariOku, uret, eskiSozlukDizini, eskiVurgu, eskiParagraflar, escapeHtml,
 } from './veri-uret.mjs';
 
+const { kenarNotuAtla, YAYIN_DISI } = await import(pathToFileURL(path.join(KOK, 'tools/yeni-site/yayin-disi.mjs')).href);
 const { veri, maddeKimlik, paragraflar, lugatIsaretle, VeriHatasi } = await import(pathToFileURL(path.join(KOK, 'js/cekirdek/veri.js')).href);
 
 const sonuclar = [];   // {bolum, ad, gecti, ayrinti}
@@ -255,7 +256,7 @@ bolum = 'e. Lügat vurgusu';
     let j = 0;
     for (const p of paragraflar(metin)) {
       if (!p.lugat) continue;
-      const eski = eskiVurgu(p.metin, wordMap, K.app.trSuffixes);
+      const eski = eskiVurgu(p.metin, wordMap, K.app.trSuffixes, null, kenarNotuAtla);
       let yeni = '', kon = p.bas;
       while (j < araliklar.length && araliklar[j].bas < p.son) {
         const r = araliklar[j++];
@@ -268,6 +269,46 @@ bolum = 'e. Lügat vurgusu';
     if (tamam) ayni++; else farkli.push(a);
   }
   denetle(`lugatIsaretle() eski highlightWords ile birebir aynı HTML (${ayni}/241; ${toplamVurgu} vurgu)`, ayni === 241, farkli.slice(0, 10).join(', '));
+}
+
+/* ── e2. Yayın dışı listesi (tools/yeni-site/yayin-disi.mjs) ── */
+bolum = 'e2. Yayın dışı';
+{
+  const td = oku('tablolar/dizin.json');
+  const cekilen = YAYIN_DISI.tablolar;
+  denetle(`Çekilen ${cekilen.length} tablo dizinde ve parçalarda yok, geriCekilen listesinde var`,
+    cekilen.every(id => !td.tablolar.some(t => t.id === id) && !hepsi.includes(`tablolar/${id.replace(/_/g, '-')}.json`) && td.geriCekilen.some(t => t.id === id)) && td.geriCekilen.length === cekilen.length);
+  const ham = JSON.stringify(hepsi.filter(y => y.startsWith('madde/') || y === 'konular.json' || y === 'rehberler.json').map(y => oku(y)));
+  denetle('Hiçbir madde parçası çekilen tabloya bağlanmıyor', cekilen.every(id => !ham.includes(`"${id}"`)));
+  const gs = oku('gunun-sualleri.json').sualler;
+  denetle(`Günün suâli: ${gs.length} kayıt; çekilen itirazlar yok`, gs.length === YAYIN_DISI.gununSualleri.beklenenSayi - YAYIN_DISI.gununSualleri.itiraz.length - YAYIN_DISI.gununSualleri.baglamsiz.length &&
+    !gs.some(g => g.soru.startsWith('Müslimânları sevmemiz, vehhâbîleri') || g.soru.startsWith('Kusûrlu olan, günâhı olan')));
+  const ah = oku('ayet-hadis.json');
+  denetle('Hadîs olmayan iki kayıt yok; hadîslerde kaynak alanı boş', !ah.hadisler.some(x => YAYIN_DISI.hadisDegil.some(b => x.metin.startsWith(b))) && ah.hadisler.every(x => x.kaynak === null));
+  denetle('Maddelerdeki hadîslerde de kaynak alanı boş', hepsi.filter(y => y.startsWith('madde/')).every(y => (oku(y).hadisler || []).every(x => !x.kaynak)));
+  denetle('Arama cevap özetleri boş', oku('arama.json').sorular.every(s => !s.cevapOzet));
+  const tl = oku('lugat/terimler.json').terimler;
+  denetle('Çekilen lügat kayıtları yok', YAYIN_DISI.lugatKayitlari.every(id => !tl.some(t => t.id === id)));
+  const lugatParca = id => { const d = oku('lugat/dizin.json'); const p = d.parcalar.find(x => x.araliklar.some(([a, b]) => id >= a && id <= b)); return p && oku(`lugat/${p.ad}.json`).terimler.find(t => t.id === id); };
+  denetle('Bozuk Arap harfli yazım gösterilmiyor (607 AZÎMET, 3421 HÜDÂ)', [607, 3421].every(id => { const t = lugatParca(id); return t && t.osmanlica === null; }));
+  // Kenar notları
+  const say = (a, kelime, kurali) => { const md = oku(`madde/${a}.json`), lm = oku(`lugat-madde/${a}.json`); return lugatIsaretle(md.metin, lm.kelimeler, kurali ? lm.terimler : null).filter(x => md.metin.slice(x.bas, x.son).startsWith(kelime)).length; };
+  const bicimler = hepsi.filter(y => y.startsWith('lugat-madde/')).flatMap(y => Object.keys(oku(y).kelimeler));
+  denetle('Kara listedeki biçimler hiçbir maddede yok (zemân, kadın, bekr, mest, hakkında, fazla)', !bicimler.some(k => /^(zemân|kadın|bekr|mest|hakkında|fazla|geri|cild)/.test(k)));
+  const yalnizBkz = hepsi.filter(y => y.startsWith('lugat-madde/')).flatMap(y => Object.values(oku(y).terimler)).filter(t => kenarNotuAtla('x', { a: t.anlam }));
+  denetle('Açıklaması yalnız "Bkz." olan kayıt kenar notu değil', yalnizBkz.length === 0, yalnizBkz.slice(0, 3).map(t => t.kelime).join(', '));
+  const m154 = oku('madde/1-54.json').metin;
+  denetle('1-54: "İmâm-ı Muhammed" geçiyor, kuralla işaretlenmiyor', /İmâm-ı Muhammed/.test(m154) && say('1-54', 'Muhammed', false) > 0 &&
+    (() => { const lm = oku('lugat-madde/1-54.json'); return lugatIsaretle(m154, lm.kelimeler, lm.terimler).every(x => !/İmâm-ı $/.test(m154.slice(Math.max(0, x.bas - 8), x.bas))); })());
+  let salavatli = 0, salavatsiz = 0;
+  for (const m of toc) {
+    const a = anahtar(m.kisim, m.madde_no); const md = oku(`madde/${a}.json`), lm = oku(`lugat-madde/${a}.json`);
+    for (const x of lugatIsaretle(md.metin, lm.kelimeler, lm.terimler)) {
+      if (!/\(aleyhisselâm/.test(lm.terimler[x.id].kelime)) continue;
+      if (/^[^\p{L}]{0,3}(aleyh|sallallah|alâ nebiyyinâ|salevât)/iu.test(md.metin.slice(x.son, x.son + 30))) salavatli++; else salavatsiz++;
+    }
+  }
+  denetle(`Peygamber adı kayıtları yalnız ardından salât ve selâm gelince işaretli (${salavatli} yer; salavâtsız ${salavatsiz})`, salavatli > 300 && salavatsiz === 0);
 }
 
 /* ── f. veri.js canlı (yerel http sunucusu) ── */
@@ -303,7 +344,7 @@ try {
     ozetler: () => veri.ozetler(), konular: () => veri.konular(), lugatDizin: () => veri.lugatDizin(), lugatParca: () => veri.lugatParca('b'),
     lugatHarf: () => veri.lugatHarf('M'), lugatTerimler: () => veri.lugatTerimler(), lugatTerim: () => veri.lugatTerim(3),
     sahislarDizin: () => veri.sahislarDizin(), sahis: () => veri.sahis('abbas'), hukumlerDizin: () => veri.hukumlerDizin(), hukumler: () => veri.hukumler('farz', 'acik'),
-    ayetHadis: () => veri.ayetHadis(), tanimlar: () => veri.tanimlar(), tablolar: () => veri.tablolar(), tablo: () => veri.tablo('iman_sartlari'),
+    ayetHadis: () => veri.ayetHadis(), tanimlar: () => veri.tanimlar(), tablolar: () => veri.tablolar(), tablo: () => veri.tablo('islam_sartlari'),
     rehberler: () => veri.rehberler(), rehber: () => veri.rehber('namaz-rehberi'), gununSualleri: () => veri.gununSualleri(), gununSuali: () => veri.gununSuali('2026-11-17'),
     testSorulari: () => veri.testSorulari(), arama: () => veri.arama(), okumaPlani: () => veri.okumaPlani(),
   };
@@ -321,7 +362,7 @@ try {
   denetle('lugatTerim(olmayan kimlik) → null', (await veri.lugatTerim(2)) === null || K.sozluk.some(e => e.i === 2));
   denetle(`lugatHarf('M') ${sonuc.lugatHarf?.length} terim (birden çok parça birleşir)`, sonuc.lugatHarf?.length === K.sozluk.filter(e => /^M/.test(e.k.trim().charAt(0).toLocaleUpperCase('tr'))).length);
   denetle("sahis('abbas') biyografi kaynakla aynı; olmayan slug → null", sonuc.sahis?.biyografi === K.sahislar.find(s => s.slug === 'abbas').biyografi && (await veri.sahis('yok-boyle-biri')) === null && (await veri.sahis('')) === null);
-  denetle("tablo('iman_sartlari') = tablo('iman-sartlari')", (await veri.tablo('iman-sartlari')) === sonuc.tablo);
+  denetle("tablo('islam_sartlari') = tablo('islam-sartlari')", (await veri.tablo('islam-sartlari')) === sonuc.tablo);
   // Günün suâli eski algoritmayla
   const eskiGun = d => { const idx = Math.floor((d.getTime() - d.getTimezoneOffset() * 60000) / 86400000) % K.gunun.length; return K.gunun[idx < 0 ? idx + K.gunun.length : idx].soru; };
   let gunAyni = 0;

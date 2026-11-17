@@ -31,14 +31,14 @@
 # Fevâid ve tablolar (her tipten bir tablo: tablo, liste, akış, iki liste, ağaç, tanımlar) + eski adresler
 /fevaid
 /fevaid/tablolar
-/fevaid/tablolar/iman_sartlari
+/fevaid/tablolar/islam_sartlari
 /fevaid/tablolar/abdesti_bozanlar
 /fevaid/tablolar/tovbe_sartlari
 /fevaid/tablolar/necaset_turleri
 /fevaid/tablolar/konu_haritasi
 /fevaid/tablolar/kitabin_tanimlari
-/fevaid/tablo/iman_sartlari
-/tablo/iman_sartlari
+/fevaid/tablo/islam_sartlari
+/tablo/islam_sartlari
 
 # Fıkhî hükümler
 /hukumler

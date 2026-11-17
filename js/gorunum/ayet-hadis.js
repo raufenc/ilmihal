@@ -117,6 +117,7 @@ async function ciz(kap, baglam) {
     const ds = degerler(kumeler[st.sekme], S.alan);
     if (st.deger && !ds.some(x => x.anahtar === st.deger)) st.deger = '';
     degerSec.setAttribute('aria-label', S.suzgecAd);
+    degerSec.hidden = !ds.length;   // hadîslerin kaynak alanı yayında değil (tools/yeni-site/yayin-disi.mjs): boş süzgeç gösterilmez
     doldur(degerSec, h('option', { value: '' }, S.hepsi),
       ds.map(x => h('option', { value: x.anahtar, selected: x.anahtar === st.deger ? true : null }, `${x.ad} (${sayi(x.sayi)})`)));
     sonuc.setAttribute('aria-labelledby', 'ah-sekme-' + st.sekme);

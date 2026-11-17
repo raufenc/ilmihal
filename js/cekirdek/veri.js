@@ -231,9 +231,31 @@ const KACIS = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#3
 const kacisCoz = s => s.replace(/&#39;/g, "'").replace(/&quot;/g, '"').replace(/&gt;/g, '>').replace(/&lt;/g, '<').replace(/&amp;/g, '&');
 const KIRP = /^[.,;:!?()\[\]"'&;#\d]+|[.,;:!?()\[\]"'&;#\d]+$/g;
 
+/* Kenar notu kuralları (denetim: tools/yeni-site/denetim/lugat.md). Lügat kelimeye bakarak bağlanır;
+   özel isimlerde yanlış kayda düşer ("İmâm-ı Muhammed"e Peygamber efendimizin, "Fahreddîn-i Râzî"ye
+   "râzı" kelimesinin açıklaması). Bu yüzden terimler verildiğinde:
+   - isimden önce "İmâm-ı, bin, Ebû, ibni, Seyyid, Sultân, hâce, Mevlânâ, Fahreddîn-i" varsa not gösterilmez;
+   - cümle ortasında büyük harfle başlayan kelimede not gösterilmez (mübârek isimler hâriç);
+   - başlığı "(aleyhisselâm)" olan kayıt yalnız kelimenin ardından salât ve selâm geliyorsa gösterilir. */
+const ONCE_OZEL = /(imâm-ı |İmâm-ı |bin |Ebû |ibni |İbni |Seyyid |Sultân |sultân |hâce |Hâce |Mevlânâ |Fahreddîn-i )$/;
+const CUMLE_BASI = /[.!?:\n(\[“"]\s*$/;
+const MUBAREK = /aleyh|Allah|Resûl|Peygamber|Kur/;
+const SALAVATLI_BASLIK = /\((aleyhisselâm|aleyhimesselâm|aleyhimüsselâm)/;
+const SALAVAT_ARDINDA = /^[^\p{L}\p{N}_]{0,3}(“|")?\s*(aleyh|sallallah|alâ nebiyyinâ|salevât)/iu;
+const buyukBasliyor = s => { const c = s.charAt(0); return c !== c.toLowerCase() && c === c.toUpperCase(); };
+
+function kenarNotuGizle(par, b, e, terim) {
+  const kelime = par.slice(b, e);
+  if (buyukBasliyor(kelime) && ONCE_OZEL.test(par.slice(Math.max(0, b - 12), b))) return true;   // "bin sene" değil, "bin Abdülvehhâb"
+  const baslik = terim ? String(terim.kelime || '') : '';
+  if (SALAVATLI_BASLIK.test(baslik)) return !SALAVAT_ARDINDA.test(par.slice(e, e + 30));
+  const basta = b === 0 || CUMLE_BASI.test(par.slice(Math.max(0, b - 3), b));
+  return buyukBasliyor(kelime) && !basta && !MUBAREK.test(baslik + kelime);
+}
+
 /** Bir metin parçasında lügat kelimelerini bulur. kelimeler: madde lügat parçasının `kelimeler` nesnesi.
-    Dönüş: [{bas, son, id}] (parçanın içindeki konumlar + ofset). */
-function lugatParca(par, harita, ofset) {
+    terimler verilirse kenar notu kuralları uygulanır. Dönüş: [{bas, son, id}] (parçanın içindeki konumlar + ofset). */
+function lugatParca(par, harita, ofset, terimler) {
   // Eski kod kaçışlı HTML üzerinde çalışıyordu; aynı sonuç için kaçışla birlikte konum eşlemi tutulur
   let esc = '';
   const kaynak = [];
@@ -254,6 +276,7 @@ function lugatParca(par, harita, ofset) {
     const id = harita.get(trLower(kacisCoz(clean)));
     if (id === undefined) continue;
     const b = m.index + token.indexOf(clean);
+    if (terimler && kenarNotuGizle(par, kaynak[b], kaynak[b + clean.length], terimler[id])) continue;
     sonuc.push({ bas: ofset + kaynak[b], son: ofset + kaynak[b + clean.length], id });
   }
   return sonuc;
@@ -261,13 +284,14 @@ function lugatParca(par, harita, ofset) {
 
 const haritaOnbellek = new WeakMap();
 /** Madde metnindeki lügat kelimelerinin konumları: [{bas, son, id}] (metin içinde, artan sırayla).
-    kelimeler: veri.maddeLugat(...) sonucundaki `kelimeler`. Yalnız lügat alan paragraflarda (paragraflar()[i].lugat). */
-export function lugatIsaretle(metin, kelimeler) {
+    kelimeler: veri.maddeLugat(...) sonucundaki `kelimeler`. Yalnız lügat alan paragraflarda (paragraflar()[i].lugat).
+    terimler: aynı sonucun `terimler` nesnesi; verilirse özel isim ve salât-selâm kuralları uygulanır (okuyucu böyle çağırır). */
+export function lugatIsaretle(metin, kelimeler, terimler = null) {
   if (!kelimeler) return [];
   let harita = haritaOnbellek.get(kelimeler);
   if (!harita) { harita = new Map(Object.entries(kelimeler)); haritaOnbellek.set(kelimeler, harita); }
   const sonuc = [];
-  for (const p of paragraflar(metin)) if (p.lugat) sonuc.push(...lugatParca(p.metin, harita, p.bas));
+  for (const p of paragraflar(metin)) if (p.lugat) sonuc.push(...lugatParca(p.metin, harita, p.bas, terimler));
   return sonuc;
 }
 

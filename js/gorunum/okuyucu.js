@@ -354,7 +354,7 @@ async function lugatYukle(madde, sinyal) {
   if (sinyal.aborted || S.madde !== madde) return;
   S.lugat = lugat;
   await kare();
-  const konumlar = lugatIsaretle(madde.metin, lugat.kelimeler);
+  const konumlar = lugatIsaretle(madde.metin, lugat.kelimeler, lugat.terimler);
   const kapali = S.kok.classList.contains('lugat-kapali');
   await lugatUygula(S.bloklar, konumlar, sinyal, {
     pdfAdres: S.pdfAdres,

@@ -196,9 +196,22 @@ Lügat harf adları: `ç→cc, ğ→gg, ı→ii, ö→oo, ş→ss, ü→uu` (adl
 
 ## Sınama sonucu
 <!-- sinama-basla -->
-Son çalıştırma: 2026-11-17 · 82 denetim, **82 geçti**, 0 kaldı.
+Son çalıştırma: 2026-11-17 · 94 denetim, **94 geçti**, 0 kaldı.
 
-0. Genel 8/8 · a. Metin sadakati 4/4 · b. Kayıt sayıları 20/20 · c. Bağlar 6/6 · d. maddeKimlik 17/17 · e. Lügat vurgusu 1/1 · f. veri.js canlı 26/26
+0. Genel 8/8 · a. Metin sadakati 4/4 · b. Kayıt sayıları 20/20 · c. Bağlar 6/6 · d. maddeKimlik 17/17 · e. Lügat vurgusu 1/1 · e2. Yayın dışı 12/12 · f. veri.js canlı 26/26
 
 Her denetimin adı için: `node tools/yeni-site/veri-sina.mjs -v`
 <!-- sinama-bitis -->
+
+## Yayın dışı listesi
+
+Kitaptan sonradan derlenmiş veriden, denetimde (tools/yeni-site/denetim/) kitaba aykırı ya da dayanaksız
+çıkan kayıtlar **`tools/yeni-site/yayin-disi.mjs`** içinde listelenir ve üretim sırasında süzülür
+(`veri-uret.mjs` → `kaynaklariOku()`, `arama-uret.mjs`). Kaynak dosyalar değişmez; çekilen kayıt `veri/` ve
+`veri-arama/` altına hiç yazılmaz. Kapsam: çekilen tablolar (`tablolar/dizin.json` → `geriCekilen`; adresi
+açana not gösterilir), günün suâlinden çıkarılan kayıtlar, hadîs olmayan kayıtlar ve hadîslerin `kaynak`
+alanı, arama cevap özetleri, lügatten çekilen kayıtlar ve bozuk Arap harfli yazımlar, okuyucudaki kenar
+notlarının kara listesi. Kenar notlarında özel isim ve salât-selâm kuralı çalışma zamanındadır:
+`lugatIsaretle(metin, kelimeler, terimler)` (üçüncü bağımsız değişken verilince uygulanır).
+Fıkhî hükümler dizini ayrı anahtarla kapalıdır: `js/cekirdek/ayar.js` → `HUKUMLER_ACIK`.
+Bir kayıt, düzeltilip kitabın metniyle yeniden denetlenmeden ve Rauf onaylamadan listeden çıkarılmaz.

@@ -17,7 +17,7 @@
 'use strict';
 
 // ── ÜRETİLMİŞ BÖLÜM: tools/yeni-site/surum-uret.mjs yazar; elle değiştirmeyin ──
-const SURUM = '799d548ee626.46654fc16e26.e297a916d529';
+const SURUM = '00fcd03db4ab.d355d3d61864.e297a916d529';
 const ON_YUKLE = [
   '/index.html',
   '/css/fihrist.css',

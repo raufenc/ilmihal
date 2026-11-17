@@ -379,8 +379,9 @@ function durumKur(kap, baglam, fihrist) {
     const bloklar = [];
     if (S.soru && S.q) {
       const s = S.soru;
-      bloklar.push(h('aside.as-soru.cetvel', { 'aria-label': 'Bu suâlin cevabı' },
-        h('p.ust-yazi.surh', 'Bu suâlin cevabı şu maddede'),
+      bloklar.push(h('aside.as-soru.cetvel', { 'aria-label': 'İlgili madde' },
+        // Sitenin yazdığı kısa cevaplar denetimde kitaba aykırı çıktı; yalnız ilgili madde gösterilir (tools/yeni-site/yayin-disi.mjs)
+        h('p.ust-yazi.surh', 'İlgili madde'),
         h('a.as-soru-bas', { href: maddeYolu(s.kisim, s.no) },
           h('span.as-no', `${roma(s.kisim)}·${s.no}`), h('span', ad(s.baslik))),
         s.cevapOzet ? h('p.as-soru-ozet', s.cevapOzet) : null,

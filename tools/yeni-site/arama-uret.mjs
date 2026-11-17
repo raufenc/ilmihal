@@ -13,6 +13,7 @@ import zlib from 'node:zlib';
 import crypto from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import { duzle, duzleEslemeli, asilAralik } from '../../js/cekirdek/metin.js';
+import { yayinDisiUygula } from './yayin-disi.mjs';
 
 const KOK = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 const CIKTI = path.join(KOK, 'veri-arama');
@@ -40,12 +41,16 @@ const gz = s => zlib.gzipSync(Buffer.from(s), { level: 9 }).length;
 
 // ---------------------------------------------------------------- kaynaklar
 
-const { tocData, tablolarData } = jsVeri('data.js', ['tocData', 'tablolarData']);
-const { sozlukData } = jsVeri('sozluk-data.js', ['sozlukData']);
+const { tocData, tablolarData: tablolarHam } = jsVeri('data.js', ['tocData', 'tablolarData']);
+const { sozlukData: sozlukHam } = jsVeri('sozluk-data.js', ['sozlukData']);
 const { sahislarData } = jsVeri('sahislar.js', ['sahislarData']);
 const { hukumlerData } = jsVeri('hukumler-data.js', ['hukumlerData']);
 const { tanimlarData } = jsVeri('tanimlar.js', ['tanimlarData']);
-const { aramaSynonyms, soruMaddeMap } = jsVeri('arama-sozluk.js', ['aramaSynonyms', 'soruMaddeMap']);
+const { aramaSynonyms, soruMaddeMap: soruMaddeHam } = jsVeri('arama-sozluk.js', ['aramaSynonyms', 'soruMaddeMap']);
+// Denetimde yayından çekilen kayıtlar aramaya da girmez (tools/yeni-site/yayin-disi.mjs)
+const suzulmus = { tablolar: tablolarHam, sozluk: sozlukHam, soruMadde: soruMaddeHam };
+yayinDisiUygula(suzulmus);
+const tablolarData = suzulmus.tablolar, sozlukData = suzulmus.sozluk, soruMaddeMap = suzulmus.soruMadde;
 const metinler = {};
 for (const k of [1, 2, 3]) metinler[k] = JSON.parse(oku(`texts/kisim${k}.json`));
 
