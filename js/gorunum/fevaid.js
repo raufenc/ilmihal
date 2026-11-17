@@ -86,8 +86,7 @@ export default {
           h('h1.baslik-1', 'Fevâid'),
           h('p.giris-yazi', 'Kitabın içinden derlenen dizinler. Her kayıt sizi kitaptaki yerine götürür.')),
         h('figure.fevaid-gorsel', h('img', {
-          src: '/gorsel/nesne/kitaplar-k.webp', srcset: '/gorsel/nesne/kitaplar-k.webp 768w, /gorsel/nesne/kitaplar.webp 1536w',
-          sizes: '(min-width: 800px) 22rem, 100vw', width: 768, height: 512, alt: '', loading: 'lazy', decoding: 'async',
+          src: '/gorsel/kitap-kapak.webp', width: 484, height: 581, alt: 'Tam İlmihâl Se’âdet-i Ebediyye kitabının kapağı', decoding: 'async',
           onerror: e => { const f = e.target.closest('figure'); if (f) f.hidden = true; }
         }))),
       gruplar));

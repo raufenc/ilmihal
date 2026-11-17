@@ -49,8 +49,10 @@ Belirteç adlarıyla yaz; onaltılık renk kodu görünüm CSS'ine yazılmaz.
 - Yazı `--murekkep`, ikincil `--murekkep-2`, en soluk `--murekkep-3` (daha soluğu yok;
   erişilebilirlik sınırı).
 - Altın iki tonludur: süs ve büyük başlıkta `--altin`, küçük yazıda `--altin-yazi`.
-- Bağlantı ve tek birincil eylem yeşildir (`--yesil-yazi`, `.dugme-ana`). Bir ekranda
-  bir tane birincil düğme olur.
+- Birincil eylem kitabın cildinin rengindedir: bordo (`--cilt`, `.dugme-ana`; yayınevinin
+  kapak görselinden). Bağlantılar koyu yeşildir (`--yesil-yazi`). Bir ekranda bir tane birincil düğme olur.
+- Kitabı gösteren tek görsel kitabın GERÇEK kapağıdır (`gorsel/kitap-kapak.webp`). Üretilmiş
+  bir kitap resmi kitabın yerine konmaz.
 - Üç tema: `gunduz` (varsayılan), `sepya`, `gece`. `<html data-tema="…">`. Her görünüm
   üçünde de denenir. Gece teması atlasın göğüyle aynı zemindir.
 - Renk tek başına anlam taşımaz (hüküm türleri renkle birlikte yazıyla da belirtilir).

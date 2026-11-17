@@ -34,8 +34,8 @@
   --sure: 0.24s;
 
   /* Sabit renkler (temadan bağımsız) */
-  --cilt: #0f3b2d;            /* kitabın bez cildi */
-  --cilt-2: #16503d;
+  --cilt: #7b1e2a;            /* kitabın cildi: bordo (yayınevinin kapak görselinden) */
+  --cilt-2: #8f2734;
   --gece: #05070d;            /* atlas ve vakitler göğü */
   --gece-2: #0b1020;
   --altin-isik: #d8b26a;      /* koyu zemin üstünde altın */

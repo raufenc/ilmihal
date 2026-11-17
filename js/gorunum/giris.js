@@ -58,9 +58,11 @@ export default {
               : h('a.dugme.dugme-ana', { href: yol(maddeler[0]) }, 'Okumaya başlayın', ok()),
             h('a.dugme', { href: '/icindekiler' }, 'Fihrist')),
           son ? h('p.kunye.serlevha-son', `${son.kisim}. kısım, ${son.no}. madde · `, h('span', ad(son.baslik))) : null),
-        h('.serlevha-resim', { 'aria-hidden': 'true' },
-          resim('nesne/rahle-gunduz', 'gunduz-resim', { oncelik: true }),
-          resim('nesne/rahle-gece', 'gece-resim'))));
+        // Kitabın kendi kapağı (Hakîkat Kitâbevi'nin yayınladığı görsel); üretilmiş bir kitap resmi kullanılmaz
+        h('.serlevha-resim',
+          h('figure.serlevha-kitap',
+            h('img', { src: '/gorsel/kitap-kapak.webp', width: 484, height: 581, alt: 'Tam İlmihâl Se’âdet-i Ebediyye kitabının kapağı', decoding: 'async', fetchpriority: 'high' }),
+            h('figcaption.kunye', 'Hakîkat Kitâbevi · 2026 baskısı')))));
 
     /* 3 — Kitabın tamamı: sahîfe şeridi */
     const okunanSayi = maddeler.filter(m => okunan.has(tireli(m))).length;

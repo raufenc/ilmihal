@@ -32,8 +32,8 @@ diliyle konuşan, hatasız bir bölüm. Hazır şablon görünümü ("AI slop") 
 - Veriden/kullanıcıdan gelen metin HTML olarak basılmaz (`h()` ve `textContent`). Regex lookbehind yasak.
 - Sayılar veriden gelir; koda sabit yazılmaz.
 - Görseller: `gorsel/ebru/*.webp` (battal-yesil, gelgit-yesil, tarakli-zeytin, bulbul-lacivert, sal-bordo, kumlu,
-  neftli-gece, somaki-yesil, hafif, tarakli-lacivert) ve `gorsel/nesne/*.webp` (rahle-gece, rahle-gunduz, kitaplar,
-  cilt-kose, usturlab-rubu, usturlab-gece, mil-golge, divit-kalem, rahle-bos); her birinin `-k` ekli küçük boyu var
+  neftli-gece, somaki-yesil, hafif, tarakli-lacivert) ve `gorsel/nesne/*.webp` (usturlab-rubu, usturlab-gece, mil-golge, divit-kalem,
+  rahle-bos) ve kitabın GERÇEK kapağı `gorsel/kitap-kapak.webp` (yayınevinin görseli; üretilmiş kitap resmi KULLANILMAZ); her birinin `-k` ekli küçük boyu var
   (768px). Kullanırsan `loading="lazy"`, `decoding="async"`, genişlik/yükseklik (3:2) ve boş `alt` (süs) ver.
   TASARIM.md'deki ebru kuralına uy: az ve yerinde.
 
