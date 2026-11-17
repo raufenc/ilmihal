@@ -26,7 +26,10 @@ export function h(tanim, ozellik, ...cocuklar) {
     if (deger === null || deger === undefined || deger === false) continue;
     if (ad === 'class') el.setAttribute('class', [el.getAttribute('class'), deger].filter(Boolean).join(' '));
     else if (ad === 'dataset') Object.assign(el.dataset, deger);
-    else if (ad === 'style' && typeof deger === 'object') Object.assign(el.style, deger);
+    else if (ad === 'style' && typeof deger === 'object') {
+      // '--degisken' anahtarları setProperty ister; Object.assign onları sessizce atlar
+      for (const [k, v] of Object.entries(deger)) { if (k.startsWith('--')) el.style.setProperty(k, v); else el.style[k] = v; }
+    }
     else if (ad === 'html') el.innerHTML = deger;
     else if (ad.startsWith('on') && typeof deger === 'function') el.addEventListener(ad.slice(2).toLowerCase(), deger);
     else if (deger === true) el.setAttribute(ad, '');

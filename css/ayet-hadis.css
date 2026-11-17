@@ -4,7 +4,7 @@
 .ah-bas { max-width: 46rem; }
 .ah-ust { display: inline-block; text-decoration: none; }
 .ah-ust:hover { text-decoration: underline; text-decoration-color: currentColor; }
-.ah-bas h1 { margin-top: var(--a-3); max-width: 15ch; }
+.ah-bas h1 { margin-top: var(--a-3); max-width: 13em; }
 .ah-bas .giris-yazi { margin-top: var(--a-4); }
 
 .ah-arac { margin-top: var(--a-7); padding-block: var(--a-5) var(--a-4); border-block: 1px solid var(--cizgi); display: grid; gap: var(--a-4); }

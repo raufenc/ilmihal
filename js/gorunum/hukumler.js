@@ -122,7 +122,9 @@ async function turCiz(kap, tur, baglam) {
   baglam.baslikYaz(`${T.ad} · Fıkhî Hükümler`);
   baglam.metaYaz({ aciklama: `Se’âdet-i Ebediyye’de ${T.kucuk} hükmü bildiren cümleler, kitaptaki yerleriyle.`, kanonik: location.origin + `/hukumler/${tur}` });
 
-  const kayitlar = parca.hukumler.map(x => ({ x, duz: null, kisim: x.madde ? +x.madde.split('-')[0] : 0 }));
+  // Kitap sırası: sahîfeye göre (aynı sahîfede kaynaktaki sıra korunur)
+  const kayitlar = parca.hukumler.map((x, i) => ({ x, i, duz: null, kisim: x.madde ? +x.madde.split('-')[0] : 0 }))
+    .sort((a, b) => (a.x.sahife || 0) - (b.x.sahife || 0) || a.i - b.i);
   if (s.alt && !kayitlar.some(k => k.x.altTur === s.alt)) s.alt = '';
   const durumu = { tur, s, kayitlar, suzulmus: kayitlar, cizilen: 0, kelimeler: [], pdf: fihrist.kitap.pdf, kunyeler };
   d.tur = durumu;
@@ -299,7 +301,7 @@ async function ciz(kap, p, baglam) {
   } catch (e) {
     if (e && e.name === 'AbortError') return;
     if (e && (e.tur === 'bulunamadi' || e.tur === 'gecersiz')) { bulunamadi(kap, baglam, p.tur); return; }
-    console.error('Hükümler:', e);
+    if (!e || e.tur !== 'cevrimdisi') console.error('Hükümler:', e);
     hataGoster(kap, e, yeniden);
   }
 }

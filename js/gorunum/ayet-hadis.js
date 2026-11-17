@@ -4,7 +4,7 @@
 import { h, doldur, durum, iskelet } from '../cekirdek/dom.js';
 import { veri } from '../cekirdek/veri.js';
 import { cssYukle } from '../cekirdek/css.js';
-import { sayi, ad, sahife } from '../cekirdek/bicim.js';
+import { sayi, ad, sahife, bitisik } from '../cekirdek/bicim.js';
 import { duzle, duzleEslemeli, asilAralik, araliklariBirlestir } from '../cekirdek/metin.js';
 
 const PARTI = 60;
@@ -201,7 +201,7 @@ async function ciz(kap, baglam) {
   doldur(kap, h('.kap.ah',
     h('header.ah-bas',
       h('a.ust-yazi.surh.ah-ust', { href: '/fevaid' }, 'Fevâid'),
-      h('h1.baslik-2', 'Âyet-i Kerîme ve Hadîs-i Şerîf İndeksi'),
+      h('h1.baslik-2', bitisik('Âyet-i Kerîme ve Hadîs-i Şerîf İndeksi')),
       h('p.giris-yazi', ACIKLAMA)),
     h('.ah-arac', sekmeler, h('.ah-suzgec', h('.ah-ara-kap', araAlan), degerSec)),
     sonuc));
@@ -219,7 +219,7 @@ export default {
       try { await ciz(kap, baglam); }
       catch (e) {
         if (e && e.name === 'AbortError') return;
-        console.error('Âyet-hadîs:', e);
+        if (!e || e.tur !== 'cevrimdisi') console.error('Âyet-hadîs:', e);
         const cevrimdisi = e && e.tur === 'cevrimdisi';
         baglam.baslikYaz('Âyet-i Kerîme ve Hadîs-i Şerîf İndeksi');
         doldur(kap, h('.kap', durum(cevrimdisi ? 'Bağlantı yok' : 'İndeks yüklenemedi',

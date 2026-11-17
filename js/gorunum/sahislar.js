@@ -176,7 +176,7 @@ export default {
 
     D.girdi = h('input.alan.sh-girdi#sh-ara', {
       type: 'search', autocomplete: 'off', spellcheck: 'false', enterkeyhint: 'search', value: ilk.sorgu,
-      placeholder: 'İsim ya da hâl tercemesinde arayın'
+      placeholder: 'Bir isim yazın: ebû, alî…'
     });
     D.girdi.value = ilk.sorgu;
     D.temiz = h('button.sh-temizle', { type: 'button', hidden: !ilk.sorgu, 'aria-label': 'Aramayı temizleyin',

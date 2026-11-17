@@ -1,0 +1,64 @@
+/* Bir hâl tercemesi (/sahis/:slug). Belirteçler css/temel.css'te. Sınıflar sk- önekli. */
+
+.sk { padding-top: var(--a-6); padding-bottom: var(--a-8); }
+.sk-ust { margin-bottom: var(--a-7); }
+.sk-geri { display: inline-flex; align-items: center; gap: 0.5em; min-height: 44px; font: 500 var(--boy-2) var(--arayuz); color: var(--murekkep-2); text-decoration: none; }
+.sk-geri:hover { color: var(--yesil-yazi); }
+.sk-geri span { transition: transform var(--sure) var(--yay); }
+.sk-geri:hover span { transform: translateX(-3px); }
+
+.sk-bas { text-align: center; }
+.sk-isim { margin-top: var(--a-4); font-size: clamp(2.2rem, 1.5rem + 3vw, 3.4rem); font-weight: 600; letter-spacing: -0.02em; line-height: 1.08; }
+.sk-unvan { margin-top: var(--a-3); font: italic 400 var(--boy-4)/1.4 var(--yazi); color: var(--murekkep-2); }
+.sk-sira { margin-top: var(--a-3); }
+.sk .ayrac { margin-block: var(--a-6) var(--a-7); }
+.sk .ayrac .semse { width: 1.3em; height: 1.3em; }
+
+/* Metin: kitabın dizgisi */
+.sk-metin { font-size: 1.06rem; line-height: 1.78; hyphens: auto; -webkit-hyphens: auto; }
+.sk-metin p + p { margin-top: 0.9em; }
+.sk-metin a { color: var(--yesil-yazi); }
+.sk-ilk::first-letter {
+  float: left; margin: 0.06em 0.12em 0 0; padding-top: 0.02em;
+  font: 600 3.55em/0.82 var(--yazi); color: var(--surh);
+}
+
+/* Kitapta geçtiği yerler */
+.sk-yerler:empty { display: none; }
+.sk-yerler { margin-top: var(--a-8); padding-top: var(--a-6); border-top: 1px solid var(--altin-ince); }
+.sk-yer-baslik { font: 600 var(--boy-5)/1.2 var(--yazi); }
+.sk-yer { margin-top: var(--a-5); }
+.sk-yer > .ust-yazi { margin-bottom: var(--a-2); }
+.sk-maddeler { --fihrist-no: 3.2rem; }
+.sk-maddeler > li { display: block; padding: 0; border: 0; }
+.sk-maddeler .fihrist-no { font-size: var(--boy-1); text-align: left; }
+.sk-maddeler .fihrist-ad span { font-size: var(--boy-3); line-height: 1.45; color: var(--murekkep); }
+.sk-maddeler a:hover .fihrist-ad span { color: var(--yesil-yazi); }
+.sk-sahifeler { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: var(--a-2); }
+.sk-sahife {
+  display: inline-grid; place-items: center; min-width: 52px; min-height: 40px; padding-inline: 0.7em;
+  border: 1px solid var(--cizgi); border-radius: 8px; font: 500 var(--boy-2) var(--arayuz); color: var(--murekkep);
+  text-decoration: none; font-variant-numeric: lining-nums tabular-nums; transition: border-color var(--sure), background var(--sure);
+}
+.sk-sahife:hover { border-color: var(--altin); background: var(--vurgu-zemin); }
+
+.sk-kaynak { margin-top: var(--a-7); padding-top: var(--a-4); border-top: 1px solid var(--cizgi-2); }
+
+/* Önceki / sonraki (aynı sınıftan) */
+.sk-komsu { display: grid; grid-template-columns: 1fr 1fr; gap: var(--a-4); margin-top: var(--a-6); min-height: 5.6rem; }
+.sk-komsu-bag { display: grid; align-content: start; gap: 2px; padding: var(--a-3) 0; border-top: 1px solid var(--cizgi); color: inherit; text-decoration: none; }
+.sk-komsu-bag.sonraki { text-align: right; }
+.sk-komsu-ad { font: 500 var(--boy-4)/1.3 var(--yazi); color: var(--murekkep); transition: color var(--sure); }
+.sk-komsu-bag:hover .sk-komsu-ad { color: var(--yesil-yazi); }
+.sk-komsu-unvan { font: italic 400 var(--boy-2)/1.4 var(--yazi); color: var(--murekkep-3); }
+
+.sk-yok { padding-block: var(--a-9); display: grid; gap: var(--a-4); }
+.sk-yok .sira { margin-top: var(--a-3); }
+
+@media (max-width: 600px) {
+  .sk-ust { margin-bottom: var(--a-5); }
+  .sk-metin { font-size: 1rem; }
+  .sk-komsu-ad { font-size: var(--boy-3); }
+  .sk-maddeler .fihrist-ad::after { display: none; }
+}
+@media print { .sk-geri, .sk-komsu { display: none !important; } }

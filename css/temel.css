@@ -213,7 +213,8 @@ kbd { font: 500 0.78em var(--arayuz); padding: 0.12em 0.5em; border: 1px solid v
   transition: background var(--sure), border-color var(--sure), color var(--sure);
 }
 .secim button:hover, .secim a:hover { border-color: var(--murekkep-3); color: var(--murekkep); }
-.secim [aria-pressed="true"], .secim [aria-current="true"], .secim [aria-selected="true"] { background: var(--murekkep); border-color: var(--murekkep); color: var(--zemin); }
+.secim [aria-pressed="true"], .secim [aria-current="true"], .secim [aria-selected="true"],
+.secim [aria-pressed="true"]:hover, .secim [aria-current="true"]:hover, .secim [aria-selected="true"]:hover { background: var(--murekkep); border-color: var(--murekkep); color: var(--zemin); }
 
 /* Fihrist: noktalı kılavuz çizgili dizin satırı. Sitenin ana liste biçimi. */
 .fihrist { display: grid; }
@@ -229,6 +230,8 @@ kbd { font: 500 0.78em var(--arayuz); padding: 0.12em 0.5em; border: 1px solid v
 .fihrist-sayfa { font: 400 var(--boy-2) var(--arayuz); color: var(--murekkep-3); font-variant-numeric: lining-nums tabular-nums; }
 .fihrist-alt { grid-column: 2 / -1; font: 400 var(--boy-1)/1.5 var(--arayuz); color: var(--murekkep-3); }
 a.fihrist-satir:hover .fihrist-ad > span:first-child, .fihrist > li > a:hover { color: var(--yesil-yazi); }
+/* Satır bir bağlantıysa ızgara bağlantının kendisidir; li yalnız sarar */
+.fihrist > li:has(> a.fihrist-satir) { display: block; padding: 0; border-bottom: 0; }
 
 /* Rozet: şemse içinde numara (kısım, madde) */
 .rozet { position: relative; display: inline-grid; place-items: center; width: 3.2rem; height: 3.2rem; color: var(--altin); font: 600 var(--boy-3) var(--yazi); flex: none; }

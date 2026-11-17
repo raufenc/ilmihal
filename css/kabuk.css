@@ -2,7 +2,7 @@
    Belirteçler css/temel.css içindedir. */
 
 body { display: flex; flex-direction: column; }
-main { flex: 1; display: block; min-width: 0; }
+main { flex: 1; display: block; min-width: 0; min-height: 100dvh; }   /* künye ilk boyamada ekranın üstüne çizilip sonra aşağı itilmesin */
 main:focus { outline: none; }
 .gorunum { min-height: 60vh; }
 

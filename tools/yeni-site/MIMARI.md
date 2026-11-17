@@ -47,6 +47,7 @@ export default {
 `baglam`: `sinyal` (AbortSignal; görünümden çıkılınca iptal), `yol`, `sorgu`
 (URLSearchParams), `karma`, `git(adres, {yerine})`, `yerineYaz(adres)`,
 `baslikYaz(metin)`, `metaYaz({aciklama, kanonik, robots})`, `temizle(fn)`.
+`sorgu` ve `karma` görünüm kurulurken alınır; `yerineYaz`'dan sonra güncel değer için `location.search` okuyun.
 
 Kurallar:
 - `kur()` ilk içeriği koyup döner; yönlendirici ancak o zaman `<body data-hazir="1">`

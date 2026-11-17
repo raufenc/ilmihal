@@ -21,7 +21,7 @@ rotaEkle('/sozluk', g('lugat'));
 rotaEkle('/sahislar', g('sahislar'));
 rotaEkle('/sahis/:slug', g('sahis'));
 rotaEkle('/fevaid', g('fevaid'));
-rotaEkle('/icerik', g('fevaid'));
+rotaEkle('/icerik', g('fihrist'));   // eski sitede /icerik İçindekiler'di; paylaşılmış bağlantılar çalışsın
 rotaEkle('/fevaid/tablolar/:id?', g('tablolar'));
 rotaEkle('/fevaid/tablo/:id', g('tablolar'));
 rotaEkle('/tablo/:id', g('tablolar'));

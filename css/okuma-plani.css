@@ -64,9 +64,8 @@ button.op-isaret:hover path { opacity: 0.4; }
 .op-hedef::after { content: ''; position: absolute; top: -3px; left: -2.5px; width: 6px; height: 6px; background: var(--murekkep-2); transform: rotate(45deg); }
 .op-yer { position: absolute; top: 2px; width: 8px; height: 8px; margin-left: -4px; border: 1.5px solid var(--surh); background: var(--zemin); border-radius: 50%; }
 .op-serit-olcek { position: relative; height: 1.2em; font: 500 var(--boy-0)/1 var(--arayuz); color: var(--murekkep-3); font-variant-numeric: lining-nums tabular-nums; }
-.op-serit-olcek span { position: absolute; top: 0; transform: translateX(-50%); }
-.op-serit-olcek span:first-child { transform: none; }
-.op-serit-olcek span:last-child { transform: translateX(-100%); }
+.op-serit-olcek span { position: absolute; top: 0; transform: translateX(-50%); white-space: nowrap; }
+.op-serit-olcek .op-son { transform: translateX(-100%); }
 .op-serit-olcek .op-kisim { color: var(--altin-yazi); letter-spacing: 0.06em; }
 .op-serit figcaption { color: var(--murekkep-2); }
 

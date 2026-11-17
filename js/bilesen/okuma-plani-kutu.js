@@ -271,9 +271,8 @@ export function okumaPlaniKutu(baglam, { kisa = false, birincil = true } = {}) {
         h('i.op-hedef', { style: { left: yuzde(hedef) + '%' }, title: `Bugünkü hedef: ${hedef}. sahîfe` }),
         d.bitenSayi ? h('i.op-yer', { style: { left: yuzde(yer) + '%' } }) : null),
       h('.op-serit-olcek', { 'aria-hidden': 'true' },
-        h('span', { style: { left: '0%' } }, '1'),
         kisimBaslari.map(k => h('span.op-kisim', { style: { left: yuzde(k.s) + '%' } }, k.romen)),
-        h('span', { style: { left: '100%' } }, String(S))),
+        h('span.op-son', { style: { left: '100%' } }, S + '. sahîfe')),
       h('figcaption.kunye', ozet));
   }
 

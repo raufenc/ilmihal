@@ -164,7 +164,13 @@ async function goster({ geri }) {
 
     const tak = () => doldur(kap, yeni);
     if (document.startViewTransition && !azHareket() && kap.childElementCount) {
-      try { await document.startViewTransition(tak).updateCallbackDone; } catch (e) { tak(); }
+      try {
+        const gecis = document.startViewTransition(tak);
+        // Geçiş yarıda kesilirse (pencere boyutu değişti, yeni gezinme başladı) bu sözler reddedilir; yakalanmazsa konsola hata düşer
+        gecis.ready.catch(() => {});
+        gecis.finished.catch(() => {});
+        await gecis.updateCallbackDone;
+      } catch (e) { if (!yeni.isConnected) tak(); }
     } else tak();
     document.documentElement.dataset.gorunum = gorunum.ad || '';
     konumla(geri);

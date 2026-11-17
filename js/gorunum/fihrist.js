@@ -8,6 +8,7 @@ import { cssYukle } from '../cekirdek/css.js';
 import { ad, sayi, sure, okumaDakikasi, kisimAdi } from '../cekirdek/bicim.js';
 import { kullanici } from '../cekirdek/kullanici.js';
 import { okumaPlani } from '../cekirdek/okuma-plani.js';
+import { yenile } from '../cekirdek/yonlendirici.js';
 import { duzleEslemeli, sorguCoz, terimEslesmeleri, vurguAraliklari, esAnlamTablosu } from '../cekirdek/metin.js';
 
 /* Kısım kapaklarının ebrusu (kısım no → dosya) */
@@ -74,7 +75,17 @@ export default {
 
   async kur(kap, p, baglam) {
     const sinyal = baglam.sinyal;
-    const [, fihrist] = await Promise.all([cssYukle('/css/fihrist.css'), veri.fihrist({ sinyal })]);
+    let fihrist;
+    try {
+      [, fihrist] = await Promise.all([cssYukle('/css/fihrist.css'), veri.fihrist({ sinyal })]);
+    } catch (e) {
+      if (e.name === 'AbortError') throw e;
+      console.warn('Fihrist yüklenemedi:', e);
+      kap.append(h('.kap.kap-dar', durum('Fihrist yüklenemedi',
+        e.tur === 'cevrimdisi' ? 'İnternet bağlantınız yok gibi görünüyor. Bağlantı gelince yeniden deneyin.' : 'Fihrist şu an alınamadı. Biraz sonra yeniden deneyin.',
+        h('button.dugme.dugme-ana', { type: 'button', onclick: () => yenile() }, 'Yeniden deneyin'))));
+      return;
+    }
     const konularSoz = veri.konular({ sinyal }).catch(e => { if (e.name === 'AbortError') throw e; console.warn('Konular yüklenemedi:', e); return null; });
 
     const { kitap, kisimlar, maddeler } = fihrist;
@@ -230,6 +241,7 @@ export default {
     const konuSec = h('select.alan.suzgec-konu', { id: 'fihrist-konu' }, h('option', { value: '' }, 'Bütün konular'));
     const konuKutu = h('.suzgec-grup.suzgec-konu-grup', { hidden: true }, h('label.suzgec-etiket', { for: 'fihrist-konu' }, 'Konu'), konuSec);
     const sonucYazi = h('p.suzgec-sonuc.kunye', { id: 'suzgec-sonuc', 'aria-live': 'polite' });
+    const metindeAra = h('a.ok-bag.metinde-ara', { href: '/arama', hidden: true }, 'Kitabın metninde arayın');
     const temizleDugme = h('button.bag.suzgec-temizle', { type: 'button', hidden: true, onclick: () => { Object.assign(s, { kisim: 0, konu: '', durum: '', q: '' }); ara.value = ''; uygula(true); ara.focus(); } }, 'Süzgeçleri kaldırın');
 
     const suzgec = h('form.suzgec', { role: 'search', 'aria-label': 'Fihristi süzün', onsubmit: e => { e.preventDefault(); ara.blur(); } },
@@ -241,7 +253,7 @@ export default {
         h('.suzgec-grup', { role: 'group', 'aria-labelledby': 'sz-kisim' }, h('span.suzgec-etiket', { id: 'sz-kisim' }, 'Kısım'), h('.secim', kisimDugmeleri)),
         konuKutu,
         h('.suzgec-grup', { role: 'group', 'aria-labelledby': 'sz-durum' }, h('span.suzgec-etiket', { id: 'sz-durum' }, 'Durum'), h('.secim', durumDugmeleri))),
-      h('.suzgec-alt', sonucYazi, temizleDugme));
+      h('.suzgec-alt', h('.suzgec-alt-sol', sonucYazi, metindeAra), temizleDugme));
 
     const bos = h('.fihrist-bos', { hidden: true },
       h('img', { src: '/gorsel/ebru/hafif-k.webp', width: 768, height: 512, alt: '', loading: 'lazy', decoding: 'async' }),
@@ -311,8 +323,11 @@ export default {
       }
       govde.classList.toggle('suzgecli', suzgecli);
       bos.hidden = toplam > 0;
+      const araAdres = '/arama' + (s.q.trim() ? '/' + encodeURIComponent(s.q.trim()) : '');
       const bosAra = bos.querySelector('.bos-ara');
-      if (bosAra) bosAra.setAttribute('href', '/arama' + (s.q.trim() ? '/' + encodeURIComponent(s.q.trim()) : ''));
+      if (bosAra) bosAra.setAttribute('href', araAdres);
+      metindeAra.setAttribute('href', araAdres);
+      metindeAra.hidden = !s.q.trim() || toplam === 0;
       const herhangi = suzgecli || !!s.kisim;
       temizleDugme.hidden = !herhangi;
       sonucYazi.textContent = !herhangi ? '' : toplam ? `Süzgece uyan ${sayi(toplam)} madde` : 'Süzgece uyan madde yok';

@@ -1,0 +1,91 @@
+/* Fevâid ana sayfası, Hakkında ve Gizlilik: büyük fihrist ve okunaklı metin sayfaları.
+   Belirteçler ve ortak bileşenler css/temel.css içindedir. */
+
+/* ── Fevâid ─────────────────────────────────────────── */
+.fevaid { padding-block: var(--a-8) var(--a-9); }
+.fevaid-bas { display: grid; gap: var(--a-6); align-items: end; }
+.fevaid-bas .baslik-1 { margin-top: var(--a-3); }
+.fevaid-bas .giris-yazi { margin-top: var(--a-5); max-width: 30rem; }
+.fevaid-gorsel { margin: 0; padding: 3px; border: 1px solid var(--altin-ince); background: var(--zemin); }
+.fevaid-gorsel img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; }
+@media (min-width: 800px) {
+  .fevaid-bas { grid-template-columns: minmax(0, 1fr) 19rem; gap: var(--a-8); }
+}
+@media (max-width: 799px) {
+  .fevaid-gorsel { max-width: 30rem; }
+  .fevaid-gorsel img { aspect-ratio: 16 / 6; object-position: 15% 72%; }
+  .dizin-grup { margin-top: var(--a-7); }
+}
+
+.dizin-grup { margin-top: var(--a-9); }
+.dizin-grup + .dizin-grup { margin-top: var(--a-8); }
+.dizin-grup > .ust-yazi { padding-bottom: var(--a-3); border-bottom: 1px solid var(--cizgi); }
+
+.dizin-satir {
+  display: grid; grid-template-columns: 2.6rem minmax(0, 1fr) auto; align-items: baseline; column-gap: var(--a-4);
+  padding: 1.15em 0 1.25em; border-bottom: 1px solid var(--cizgi-2);
+  color: inherit; text-decoration: none;
+}
+.dizin-no { font: 500 var(--boy-2) var(--arayuz); color: var(--surh); text-align: right; font-variant-numeric: lining-nums tabular-nums; }
+.dizin-ad { display: flex; align-items: baseline; gap: 0.5em; min-width: 0; font: 500 var(--boy-6)/1.15 var(--yazi); letter-spacing: -0.015em; }
+.dizin-ad > span { min-width: 0; transition: color var(--sure); }
+.dizin-ad::after { content: ''; flex: 1 1 2rem; min-width: 2rem; border-bottom: 1px dotted var(--murekkep-3); opacity: 0.5; transform: translateY(-0.3em); }
+.dizin-sag { display: inline-flex; align-items: baseline; justify-content: flex-end; gap: 0.4em; min-width: 4.5rem; white-space: nowrap; }
+.dizin-sayi { font: 400 var(--boy-5)/1 var(--yazi); color: var(--murekkep); font-variant-numeric: lining-nums tabular-nums; }
+.dizin-birim { font: 400 var(--boy-1) var(--arayuz); color: var(--murekkep-3); }
+.dizin-aciklama { grid-column: 2 / 3; margin-top: 0.45em; max-width: 34rem; color: var(--murekkep-2); font-size: var(--boy-3); line-height: 1.55; }
+.dizin-satir:hover .dizin-ad > span { color: var(--yesil-yazi); }
+.dizin-grup:last-child .dizin-ad { font-size: var(--boy-5); }
+
+@media (max-width: 640px) {
+  .fevaid { padding-top: var(--a-6); }
+  .dizin-satir { grid-template-columns: minmax(0, 1fr) auto; column-gap: var(--a-3); padding-block: 1em; }
+  .dizin-no { display: none; }
+  .dizin-ad { font-size: var(--boy-5); }
+  .dizin-grup:last-child .dizin-ad { font-size: var(--boy-4); }
+  .dizin-sayi { font-size: var(--boy-4); }
+  .dizin-sag { flex-direction: column; align-items: flex-end; gap: 0; }
+  .dizin-aciklama { grid-column: 1 / -1; font-size: var(--boy-2); }
+}
+
+/* ── Metin sayfaları (Hakkında, Gizlilik) ────────────── */
+.metin-sayfa { padding-block: var(--a-8) var(--a-9); }
+.metin-sayfa > header .baslik-2 { margin-top: var(--a-3); }
+.metin-sayfa > header .giris-yazi { margin-top: var(--a-6); }
+.metin-sayfa > header p + p { margin-top: var(--a-4); }
+.metin-tarih { margin-top: var(--a-4); }
+.metin-sayfa p { hyphens: auto; -webkit-hyphens: auto; }
+.metin-grup { margin-top: var(--a-8); }
+.metin-grup > h2 { padding-bottom: var(--a-3); border-bottom: 1px solid var(--cizgi); }
+.metin-grup > h2 + p, .metin-grup > h2 + .metin-bolum { margin-top: var(--a-5); }
+.metin-grup > p + p, .metin-grup > p + ul, .metin-grup > ul + p { margin-top: var(--a-4); }
+.metin-bolum + .metin-bolum { margin-top: var(--a-6); }
+.metin-bolum h3 { font-size: var(--boy-4); font-weight: 600; }
+.metin-bolum h3 + p { margin-top: var(--a-2); }
+.metin-bolum h3::before { content: ''; display: inline-block; width: 0.42em; height: 0.42em; margin-right: 0.55em; border: 1px solid var(--altin); transform: rotate(45deg) translateY(-0.12em); }
+.ornek-kelime { text-decoration: underline dotted var(--altin); text-decoration-thickness: 1.5px; text-underline-offset: 0.22em; }
+
+.metin-liste { display: grid; gap: var(--a-2); }
+.metin-liste li { position: relative; padding-left: 1.4em; }
+.metin-liste li::before { content: ''; position: absolute; left: 0.2em; top: 0.78em; width: 0.5em; height: 1px; background: var(--surh); }
+
+.metin-sayfa .ayrac { margin-block: var(--a-8) var(--a-5); }
+.dua { text-align: center; font-style: italic; font-size: var(--boy-4); color: var(--murekkep-2); }
+
+/* Geri bildirim: konulu e-posta bağlantıları */
+.eposta-liste { margin-top: var(--a-5); border-top: 1px solid var(--cizgi-2); }
+.eposta-liste a { display: grid; gap: 2px; padding: 0.8em 0; border-bottom: 1px solid var(--cizgi-2); text-decoration: none; color: inherit; }
+.eposta-liste b { font: 600 var(--boy-2) var(--arayuz); color: var(--yesil-yazi); }
+.eposta-liste b::after { content: ' →'; transition: margin var(--sure) var(--yay); }
+.eposta-liste a:hover b::after { margin-left: 4px; }
+.eposta-liste span { font-size: var(--boy-2); color: var(--murekkep-2); }
+
+/* Künye: kitabın künyesi, cetvel içinde */
+.kunye-blok { margin-top: var(--a-9); }
+.kunye-liste { display: grid; grid-template-columns: 9rem minmax(0, 1fr); gap: var(--a-3) var(--a-5); margin-top: var(--a-4); padding: var(--a-6); }
+.kunye-liste dt { font: 600 var(--boy-0)/1.9 var(--arayuz); letter-spacing: 0.16em; text-transform: uppercase; color: var(--murekkep-3); }
+.kunye-liste dd { margin: 0; }
+@media (max-width: 520px) {
+  .kunye-liste { grid-template-columns: 1fr; gap: 0; padding: var(--a-5); }
+  .kunye-liste dd + dt { margin-top: var(--a-3); }
+}

@@ -47,7 +47,9 @@
 }
 .suzgec-konu option { color: var(--murekkep); background: var(--yuzey); }
 .suzgec-alt { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: var(--a-2) var(--a-4); min-height: 1.6rem; margin-top: var(--a-4); }
+.suzgec-alt-sol { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--a-1) var(--a-5); }
 .suzgec-sonuc { font-size: var(--boy-2); color: var(--murekkep-2); }
+.metinde-ara { font-size: var(--boy-1); }
 .suzgec-temizle { font: 500 var(--boy-1) var(--arayuz); min-height: 32px; }
 
 /* ── Kısım ── */

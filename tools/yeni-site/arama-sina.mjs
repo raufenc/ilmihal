@@ -397,10 +397,13 @@ if (process.argv.includes('--yaz')) {
     `Son çalıştırma: \`node tools/yeni-site/arama-sina.mjs --yaz\` — **${sonuclar.length} denetim, ${gecen} geçti, ${sonuclar.length - gecen} kaldı** (${bolumler}).`,
     ...kaldi,
     `- veri-arama/: ${olcum.dosyalar.length} dosya, ${kb(ham)} ham, **${kb(gz)} gzip**; hizli.json gzip ${kb(hizliGz)}; madde parçaları gzip ${kb(maddeGz)}.`,
-    `- Süreler (node, M1): hızlı dizin yükleme ${f(sureler.hizliYukleme)} ms; hızlı arama ortanca ${f(sureler.hizliOrtanca)} ms (en çok ${f(sureler.hizliEnCok)});` +
+    `- Süreler (node 22, Apple M4; ağ hariç): hızlı dizin yükleme ${f(sureler.hizliYukleme)} ms; hızlı arama ortanca ${f(sureler.hizliOrtanca)} ms (en çok ${f(sureler.hizliEnCok)});` +
       ` tam/madde soğuk ${f(sureler.tamSoguk)} ms (ilk parça ${f(sureler.tamIlkParca)} ms), sıcak ortanca ${f(sureler.tamOrtanca)} ms (en çok ${f(sureler.tamEnCok)});` +
-      ` bütün türler soğuk ${f(sureler.tumTurlerSoguk)} ms. Ağ süresi dahil değil.`,
-    `- Eski motorla ilk 10: ${karsilastirma.filter(k => k.ortak === 10).length}/${karsilastirma.length} sorguda aynı küme; farklı olanlar: ${farkli}.`,
+      ` bütün türler soğuk ${f(sureler.tumTurlerSoguk)} ms.`,
+    `- Eski motorla ilk 10 (${karsilastirma.length} sorgu): ${karsilastirma.filter(k => k.ortak === 10).length} sorguda aynı küme; ortalama ortak ` +
+      `${f(karsilastirma.reduce((t, k) => t + k.ortak, 0) / karsilastirma.length)}/10. Farklı madde: lehine ${karsilastirma.reduce((t, k) => t + k.lehine, 0)}, ` +
+      `nötr ${karsilastirma.reduce((t, k) => t + k.notr, 0)}, aleyhine ${karsilastirma.reduce((t, k) => t + k.aleyhine, 0)} (ölçüt: betikteki "Hüküm" yorumu; ayrıntı: \`--ayrinti\`).`,
+    `  Ortak sayısı: ${farkli}.`,
   ];
   const md = path.join(KOK, 'tools/yeni-site/ARAMA.md');
   const eski = fs.readFileSync(md, 'utf8');

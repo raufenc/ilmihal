@@ -93,7 +93,7 @@ export default {
     const planYeri = h('section.bolum.kap.kap-dar', { hidden: true, 'aria-label': 'Okuma planı' });
     import('../bilesen/okuma-plani-kutu.js').then(m => {
       if (baglam.sinyal.aborted) return;
-      const dugum = m.okumaPlaniKutu(baglam, { kisa: true });
+      const dugum = m.okumaPlaniKutu(baglam, { kisa: true, birincil: false });
       if (dugum) { planYeri.append(dugum); planYeri.hidden = false; }
     }).catch(e => console.warn('Okuma planı parçası yüklenemedi:', e));
 

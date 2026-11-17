@@ -61,8 +61,6 @@
 .hk-kunye { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--a-2) var(--a-4); margin-top: var(--a-3); }
 .hk-kunye .kaynak { min-height: 28px; align-items: center; }
 .hk-alt { font-size: var(--boy-0); letter-spacing: 0.03em; }
-.hk-madde span { color: var(--murekkep-2); max-width: 26rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.hk-madde:hover span { color: var(--yesil-yazi); }
 .hk-gozcu { height: 1px; }
 .hk-gozcu .dugme { margin-top: var(--a-5); }
 
@@ -79,14 +77,15 @@
   .hk-turad { font-size: var(--boy-5); }
   .hk-tursatir { grid-template-columns: 1.6rem minmax(0, 1fr) auto; column-gap: var(--a-3); padding-inline: 0; }
   .hk-tursayi b { font-size: var(--boy-4); }
-  .hk-turler .secim { flex-wrap: nowrap; overflow-x: auto; margin-inline: calc(-1 * var(--kenar)); padding: 2px var(--kenar) 6px; scrollbar-width: none; }
+  .hk-turler .secim { display: flex; flex-wrap: nowrap; overflow-x: auto; margin-inline: calc(-1 * var(--kenar)); padding: 2px var(--kenar) 6px; scrollbar-width: none; }
   .hk-turler .secim::-webkit-scrollbar { display: none; }
-  .hk-turler .secim a { flex: none; }
+  .hk-turler .secim a, .hk-kisim button { flex: none; }
+  .hk-kisim { flex: none; display: flex; flex-wrap: nowrap; overflow-x: auto; width: calc(100% + 2 * var(--kenar)); margin-inline: calc(-1 * var(--kenar)); padding: 2px var(--kenar) 4px; scrollbar-width: none; }
+  .hk-kisim::-webkit-scrollbar { display: none; }
   .hk-kayit { grid-template-columns: 1.9rem minmax(0, 1fr); column-gap: var(--a-3); }
   .hk-sayac, .hk-bos { padding-left: calc(1.9rem + var(--a-3)); }
   .hk-metin { font-size: 1.08rem; }
   .hk-ara-kap, .hk-altsec { flex: 1 1 100%; max-width: none; }
-  .hk-madde span { max-width: 15rem; }
 }
 
 @media print {
@@ -96,7 +95,7 @@
 }
 
 /* Fasıl başlığı: hükümler madde madde gruplanır */
-.hk-fasil { padding: var(--a-7) 0 var(--a-2) calc(2.6rem + var(--a-4)); border-bottom: 1px solid var(--altin-ince); }
+.hk-fasil { padding: var(--a-6) 0 var(--a-2) calc(2.6rem + var(--a-4)); border-bottom: 1px solid var(--altin-ince); }
 .hk-liste > .hk-fasil:first-child { padding-top: var(--a-4); }
 .hk-fasil-bag { display: inline-flex; align-items: baseline; gap: 0.7em; color: var(--murekkep-2); text-decoration: none; font: 600 var(--boy-3)/1.4 var(--yazi); }
 .hk-fasil-bag b { font: 600 var(--boy-1) var(--arayuz); color: var(--surh); letter-spacing: 0.02em; }
