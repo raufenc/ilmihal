@@ -27,7 +27,7 @@ Yükleyiciler `VeriHatasi` ile reddeder: `{ name, message, parca, tur, durum }`.
 |---|---|---|---|
 | `bulunamadi` | 404 | hayır | "bulunamadı" sayfası |
 | `gecersiz` | kimlik/ad tanınmadı; istek gitmez | — | "bulunamadı" sayfası |
-| `cevrimdisi` | `navigator.onLine === false` | hayır | "Bağlantı yok" + Yeniden dene düğmesi |
+| `cevrimdisi` | istek düştü ve `navigator.onLine === false` (istek yine gönderilir: service worker önbellekten verebilir) | hayır | "Bağlantı yok" + Yeniden dene düğmesi |
 | `zaman-asimi` | 20 sn'de cevap yok | 1 kez | Yeniden dene düğmesi |
 | `ag` / `sunucu` | fetch düştü / 5xx | 1 kez | Yeniden dene düğmesi |
 | `bozuk` | JSON okunamadı | 1 kez | Yeniden dene düğmesi |

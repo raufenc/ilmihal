@@ -274,6 +274,7 @@ body.yukleniyor #levha { opacity: 0; transform: translateX(-12px); }
 .vk-saat dd { margin: 5px 0 0; font: 400 21px/1.15 var(--yazi); font-variant-numeric: lining-nums tabular-nums; }
 .vk-saat dd.altin { color: var(--altin-acik); }
 .vk-saat dd small { display: block; margin-top: 3px; font: 400 12px/1.4 var(--yazi); font-style: italic; color: var(--fildisi-3); }
+.vk-not { margin: 12px 0 0; font: 400 13.5px/1.55 var(--yazi); font-style: italic; color: var(--fildisi-3); }
 .vk-metin, .fs-metin { margin-top: 18px; hyphens: auto; -webkit-hyphens: auto; }
 .vk-metin p, .fs-metin p { margin: 0 0 1em; font: 400 16px/1.72 var(--yazi); color: rgba(236, 229, 211, 0.88); text-wrap: pretty; }
 .fs-metin p:first-child { font-size: 17px; color: var(--fildisi); }

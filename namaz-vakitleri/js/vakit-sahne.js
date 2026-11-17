@@ -236,7 +236,7 @@ function siradaki() {
   liste.sort((a, b) => a[1] - b[1]);
   let gecerli = null;
   for (const [k, t] of liste) if (t <= D.dk + 1e-6) gecerli = k;
-  let sonra = liste.find(([, t]) => t > D.dk + 1e-6);
+  let sonra = liste.find(([k, t]) => ANA.has(k) && t > D.dk + 1e-6);
   if (!sonra && D.yarin && !isNaN(D.yarin.vakitler.imsak.temkinli)) sonra = ['imsak', D.yarin.vakitler.imsak.temkinli + 1440, true];
   return { gecerli, sonra };
 }
@@ -297,6 +297,7 @@ function vakitYaz(k) {
     <div><dt>Hakîkî vakit</dt><dd>${saatSn(x.hakiki)}</dd></div>
     <div><dt>Güneş merkezinin irtifâı</dt><dd>${irtM}<small>hakîkî ufka göre</small></dd></div>
     <div><dt>Temkin</dt><dd>${x.temkinYonu === 0 ? 'yok' : (x.temkinYonu < 0 ? '−' : '+') + v.temkin + ' dk'}<small>${yonM}</small></dd></div>`;
+  $('vk-not').textContent = 'Sahne bu vaktin hakîkî ânını gösteriyor (güneş merkezi tam vaktin irtifâında); takvim vakti buna temkin eklenerek ya da çıkarılarak bulunur.';
   paragrafYaz($('vk-metin'), m.paragraflar);
 
   const kutu = $('vk-hesap');
@@ -561,14 +562,14 @@ function tarihAyarla(t, sec = {}) {
   sahneyiGuncelle();
 }
 
-function raySurukle(ray, deger) {
+function raySurukle(ray, deger, bitince) {
   let surukleniyor = false;
   const al = e => { const r = ray.getBoundingClientRect(); return kis((e.clientX - r.left) / r.width, 0, 1); };
   ray.addEventListener('pointerdown', e => {
-    surukleniyor = true; ray.setPointerCapture(e.pointerId); deger(al(e)); e.preventDefault();
+    surukleniyor = true; try { ray.setPointerCapture(e.pointerId); } catch (h) { /* yoksay */ } deger(al(e)); e.preventDefault();
   });
   ray.addEventListener('pointermove', e => { if (surukleniyor) deger(al(e)); });
-  const bitir = () => { surukleniyor = false; };
+  const bitir = () => { if (surukleniyor && bitince) bitince(); surukleniyor = false; };
   ray.addEventListener('pointerup', bitir); ray.addEventListener('pointercancel', bitir);
 }
 let yilBekleyen = null;
@@ -577,7 +578,7 @@ raySurukle(rayYil, f => {
   izleDur(); fasilBirak();
   const n = artikMi(D.tarih.yil) ? 366 : 365;
   yilBekleyen = gundenTarih(D.tarih.yil, Math.round(1 + f * (n - 1)));
-});
+}, () => { setTimeout(() => { if (D.levhaKip === 'cedvel' && !D.izle) ucusBaslat(pozGenel(), 1.8); }, 60); });
 rayGun.addEventListener('keydown', e => {
   const adim = e.shiftKey ? 60 : 5;
   if (e.key === 'ArrowRight' || e.key === 'ArrowUp') { e.preventDefault(); e.stopPropagation(); izleDur(); zamanAyarla(D.dk + adim); }
@@ -592,7 +593,7 @@ rayYil.addEventListener('keydown', e => {
 });
 $('tarih-gir').addEventListener('change', e => {
   const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(e.target.value);
-  if (m) tarihAyarla({ yil: +m[1], ay: +m[2], gun: +m[3] });
+  if (m) { tarihAyarla({ yil: +m[1], ay: +m[2], gun: +m[3] }); if (D.levhaKip === 'cedvel') ucusBaslat(pozGenel(), 1.8); }
 });
 $('dg-gun-once').addEventListener('click', () => tarihAyarla(gunEkle(D.tarih, -1)));
 $('dg-gun-sonra').addEventListener('click', () => tarihAyarla(gunEkle(D.tarih, 1)));
@@ -1122,7 +1123,7 @@ function oymaDokusu() {
   for (let s = 30; s < 360; s += 30) {
     if (s % 90 === 0) continue;
     const a = (s - 90) * RAD, r = TABLA * 0.87;
-    x.save(); x.rotate(a + Math.PI / 2); x.fillText(String(s), 0, -r * k); x.restore();
+    x.save(); x.rotate(a - Math.PI / 2); x.fillText(String(s), 0, r * k); x.restore();
   }
   // yön yazıları
   x.font = '600 66px Literata, Georgia, serif';
@@ -1130,12 +1131,12 @@ function oymaDokusu() {
     const harf = [...metin];
     const en = harf.map(h => x.measureText(h).width);
     const top = en.reduce((p, q) => p + q, 0) + aralik * (harf.length - 1);
-    let aci = (s - 90) * RAD - top / 2 / (r * k);
+    let aci = (s - 90) * RAD + top / 2 / (r * k);
     harf.forEach((h, i) => {
       const yarim = en[i] / 2 / (r * k);
-      aci += yarim;
-      x.save(); x.rotate(aci + Math.PI / 2); x.fillText(h, 0, -r * k); x.restore();
-      aci += yarim + aralik / (r * k);
+      aci -= yarim;
+      x.save(); x.rotate(aci - Math.PI / 2); x.fillText(h, 0, r * k); x.restore();
+      aci -= yarim + aralik / (r * k);
     });
   };
   yaz('KUZEY', 0, TABLA * 0.83, 14); yaz('DOĞU', 90, TABLA * 0.83, 14); yaz('GÜNEY', 180, TABLA * 0.83, 14); yaz('BATI', 270, TABLA * 0.83, 14);
@@ -1155,7 +1156,7 @@ function oymaDokusu() {
   for (let b = 1; b <= 4; b++) daire(MIL * b, 1.0, [3, 9]);
   x.globalAlpha = 1;
   x.font = '500 24px Inter, system-ui, sans-serif';
-  for (let b = 1; b <= 4; b++) { x.save(); x.rotate(Math.PI / 4); x.fillText(`${b} boy`, 0, -(MIL * b * k) - 16); x.restore(); }
+  for (let b = 1; b <= 4; b++) { x.save(); x.rotate(Math.PI / 4 + Math.PI); x.fillText(`${b} boy`, 0, MIL * b * k + 16); x.restore(); }
   // ortada şemse
   x.lineWidth = 1.6;
   const r8 = 0.42 * k;
@@ -1618,10 +1619,10 @@ function pozGenel() {
   // gün yayı genişse (yaz) kubbeye biraz daha yukarıdan bakılır
   const dogus = D.hk && D.hk.gunes ? Math.abs(aciFark(D.hk.gunes.semt, z)) : 70;
   const g = yumusak(60, 115, dogus);
-  const uzak = (a < 0.8 ? 76 : a < 1.3 ? 62 : 50) * ara(1, 1.14, g);
+  const uzak = (a < 0.8 ? 98 : a < 1.3 ? 64 : 50) * ara(1, 1.14, g);
   return yorunge(V3(0, a < 0.8 ? 7 : 4, 0), z, ara(a < 0.8 ? -18 : -15, -25, g), uzak, a < 0.8 ? 58 : 50);
 }
-function pozGunYayi() { const z = D.zevalSemt ?? 180, a = genis(); return yorunge(V3(0, 4, 0), z + 28, -21, a < 0.8 ? 78 : a < 1.3 ? 64 : 54, a < 0.8 ? 58 : 50); }
+function pozGunYayi() { const z = D.zevalSemt ?? 180, a = genis(); return yorunge(V3(0, 4, 0), z + 28, -21, a < 0.8 ? 98 : a < 1.3 ? 66 : 54, a < 0.8 ? 58 : 50); }
 function semtVakit(k, yedek) { return D.hk[k] ? D.hk[k].semt : yedek; }
 function pozUfuk(semt, irt = -3) {
   const a = genis();
@@ -1649,7 +1650,7 @@ function pozAnalemma() {
   const z = D.zevalSemt ?? 180, a = genis();
   const orta = 90 - Math.abs(D.yer.enlem);
   const kb = z === 180 ? -1 : 1;
-  return { P: V3(0, MIL + 0.6, 0), T: kubbe(kis(orta + 2, 8, 80), z), gor: a < 0.8 ? 88 : 70, bak: 1 };
+  return { P: V3(0, MIL + 0.6, 0), T: kubbe(kis(orta, 8, 80), z), gor: a < 0.8 ? 88 : 74, bak: 1 };
 }
 
 function kameraKur(t) {
@@ -1679,8 +1680,10 @@ function kameraKur(t) {
   // levhaya yer açmak için görüntü merkezini kaydır
   const dar = darEkran();
   let hx = 0, hy = 0;
-  if (!dar) hx = Math.min(440, W * 0.35) * 0.5 + 14;
+  seritUst = seritBas.getBoundingClientRect().top || seritUst;
+  if (!dar) { hx = Math.min(440, W * 0.35) * 0.5 + 14; hy = kis(H - seritUst, 0, H * 0.3) * 0.45; }
   else hy = levhaBoy * 0.5 + 40;
+  if (D.temizKare) { hx = 0; hy = 0; D.ofs.x = 0; D.ofs.y = 0; }
   const hiz = D.hazir ? 1 - Math.exp(-0.016 * 3) : 1;
   D.ofs.x += (hx - D.ofs.x) * hiz; D.ofs.y += (hy - D.ofs.y) * hiz;
   kamera.setViewOffset(W, H, -D.ofs.x, D.ofs.y, W, H);
@@ -2065,6 +2068,7 @@ function dongu(simdi) {
 }
 
 let levhaBoy = 0, seritUst = 0;
+const seritBas = document.querySelector('.serit-bas');
 function boyutla() {
   W = innerWidth; H = innerHeight;
   levhaBoy = levha.offsetHeight;
@@ -2122,7 +2126,7 @@ addEventListener('keydown', e => {
 const parmak = new Map();
 let surukle = null, cimdik = 0;
 tuval.addEventListener('pointerdown', e => {
-  tuval.setPointerCapture(e.pointerId);
+  try { tuval.setPointerCapture(e.pointerId); } catch (h) { /* yoksay */ }
   parmak.set(e.pointerId, { x: e.clientX, y: e.clientY });
   if (parmak.size === 1) surukle = { x: e.clientX, y: e.clientY };
   else if (parmak.size === 2) { const [a, b] = [...parmak.values()]; cimdik = Math.hypot(a.x - b.x, a.y - b.y); surukle = null; }
@@ -2193,6 +2197,7 @@ sahneKur().then(() => {
 window.__vakit = {
   D, V, git: (k) => (typeof k === 'number' ? fasilAc(k) : vakitSec(k)), fasilAc, vakitSec, zamanAyarla, tarihAyarla,
   yerSec, simdiyeDon, gunesAn, MIL, R, TABLA, U, G,
+  poz: (semt, irt, uzak, gor, hedef = [0, 2.5, 0]) => ucusBaslat(yorunge(V3(...hedef), semt, irt, uzak, gor), 0.01),
   kamera: () => kamera, isilti: () => isilti, ucusBitir: () => { if (D.ucus) { D.ucus.t0 = -1e9; } },
   zamanBitir: () => { if (D.zaman) { const a = D.zaman.adim; D.dk = a[a.length - 1][0]; D.zaman = null; } },
 };

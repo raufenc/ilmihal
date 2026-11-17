@@ -32,9 +32,14 @@ function gokRengi(irtifa) {
 }
 
 function yerOku() {
+  // Nemâz Vakitleri sayfasının yazdığı kayıt: { tur: 'sehir', ad } ya da { tur: 'konum', enlem, boylam }
   const k = depo.al('ilmihal-vakit-yer', null);
-  if (k && Number.isFinite(+k.enlem) && Number.isFinite(+k.boylam) && Number.isFinite(+k.saatDilimi)) {
-    return { ad: String(k.ad || 'Seçtiğiniz yer'), enlem: +k.enlem, boylam: +k.boylam, saatDilimi: +k.saatDilimi };
+  if (k && k.tur === 'sehir') {
+    const s = ESKI_SEHIRLER.find(x => x.name === k.ad);
+    if (s) return { ad: s.name, enlem: s.lat, boylam: s.lon, saatDilimi: s.tz };
+  }
+  if (k && k.tur === 'konum' && Number.isFinite(+k.enlem) && Number.isFinite(+k.boylam)) {
+    return { ad: 'Konumunuz', enlem: +k.enlem, boylam: +k.boylam, saatDilimi: -new Date().getTimezoneOffset() / 60 };
   }
   const i = ESKI_SEHIRLER[0];
   return { ad: i.name, enlem: i.lat, boylam: i.lon, saatDilimi: i.tz };

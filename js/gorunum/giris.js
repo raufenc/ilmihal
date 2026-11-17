@@ -146,7 +146,7 @@ export default {
             h('p', 'Silsile-i aliyye büyüklerinin kabr-i şerîfleri, üç boyutlu gece yeryüzünde; kitaptaki hâl tercemeleriyle.'),
             h('span.ok-bag', 'Atlası açın'))),
         h('a.kapi', { href: '/namaz-vakitleri/' },
-          resim('nesne/usturlab-gece', 'kapi-resim'),
+          resim('gok-vakit', 'kapi-resim'),
           h('.kapi-yazi', h('p.ust-yazi', 'Gök'), h('h3', 'Nemâz Vakitleri'),
             h('p', 'Güneşin gün yayı, milin gölgesi ve vakitlerin nasıl bulunduğu; kitabın altmışıncı maddesindeki usûlle.'),
             h('span.ok-bag', 'Göğü açın')))));

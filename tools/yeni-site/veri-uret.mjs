@@ -590,7 +590,8 @@ function main() {
   const { dosyalar, uyarilar } = uret(K);
 
   if (path.basename(CIKTI) !== 'veri' || path.dirname(CIKTI) !== KOK) throw new Error('Beklenmeyen çıktı yolu: ' + CIKTI);
-  fs.rmSync(CIKTI, { recursive: true, force: true });
+  // Klasör topluca silinip yeniden yazılmaz: proje bulut eşitlemeli bir klasörde durursa (iCloud) her dosyanın
+  // " 2.json" kopyası oluşuyordu. Yalnız içeriği değişen dosya yazılır; üretilmeyen dosyalar sonda silinir.
 
   const yollar = [...dosyalar.keys()].sort();
   const icerik = new Map(yollar.map(y => [y, JSON.stringify(dosyalar.get(y))]));
@@ -606,11 +607,22 @@ function main() {
     const tam = path.join(CIKTI, y);
     fs.mkdirSync(path.dirname(tam), { recursive: true });
     const b = Buffer.from(icerik.get(y), 'utf8');
-    fs.writeFileSync(tam, b);
+    let ayni = false;
+    try { ayni = fs.readFileSync(tam).equals(b); } catch (e) { /* dosya yok */ }
+    if (!ayni) fs.writeFileSync(tam, b);
     const gz = zlib.gzipSync(b, { level: 9 }).length;
     toplam += b.length; toplamGz += gz;
     boylar.push({ y, ham: b.length, gz });
   }
+  // Bu çalıştırmanın üretmediği her şeyi kaldır (eski parça, eşitleme kopyası, boş klasör)
+  const uretilen = new Set(yollar);
+  (function temizle(dizin) {
+    for (const f of fs.readdirSync(dizin, { withFileTypes: true })) {
+      const tam = path.join(dizin, f.name);
+      if (f.isDirectory()) { temizle(tam); if (!fs.readdirSync(tam).length) fs.rmdirSync(tam); }
+      else if (!uretilen.has(path.relative(CIKTI, tam).split(path.sep).join('/'))) fs.unlinkSync(tam);
+    }
+  })(CIKTI);
   const fih = boylar.find(b => b.y === 'fihrist.json');
   console.log(`veri/ üretildi (${Date.now() - t0} ms) — sürüm ${surum}`);
   console.log(`  dosya: ${yollar.length}   toplam: ${kb(toplam)}   gzip: ${kb(toplamGz)}`);

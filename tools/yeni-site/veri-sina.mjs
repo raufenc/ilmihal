@@ -18,6 +18,7 @@ const { veri, maddeKimlik, paragraflar, lugatIsaretle, VeriHatasi } = await impo
 const sonuclar = [];   // {bolum, ad, gecti, ayrinti}
 let bolum = '';
 function denetle(ad, kosul, ayrinti = '') {
+  if (process.env.CANLI) console.error((kosul ? 'ok    ' : 'KALDI ') + ad);   // CANLI=1: her denetimi anında yazar (takılan adımı bulmak için)
   sonuclar.push({ bolum, ad, gecti: !!kosul, ayrinti: kosul ? '' : String(ayrinti) });
 }
 const oku = y => JSON.parse(fs.readFileSync(path.join(CIKTI, y), 'utf8'));
@@ -366,9 +367,14 @@ try {
   // Çevrimdışı
   const aslNav = Object.getOwnPropertyDescriptor(globalThis, 'navigator');
   Object.defineProperty(globalThis, 'navigator', { value: { onLine: false }, configurable: true });
-  const tc = await hataTuru(veri.madde(1, 7));
+  // Çevrimdışıyken de istek gönderilir: service worker açılmış parçayı önbellekten verebilir (burada sunucu onun yerini tutar)
+  const onbellekten = (await veri.madde(1, 7)).madde === '1-7' && say('madde/1-7.json') === 1;
+  // Ağ da yoksa hata 'cevrimdisi' olarak sınıflanır
+  veri.ayarla({ kok: 'http://127.0.0.1:9/veri/' });
+  const tc = await hataTuru(veri.madde(1, 9));
+  veri.ayarla({ kok: `http://127.0.0.1:${port}/veri/` });
   Object.defineProperty(globalThis, 'navigator', aslNav);
-  denetle("Çevrimdışı → tur 'cevrimdisi', istek gitmez; sonra çevrimiçi çağrı başarılı", tc === 'cevrimdisi' && say('madde/1-7.json') === 0 && (await veri.madde(1, 7)).madde === '1-7');
+  denetle("Çevrimdışı → istek yine gönderilir (önbellek verebilir); ağ da yoksa tur 'cevrimdisi'", onbellekten && tc === 'cevrimdisi');
   // Ağ hatası (kapalı port)
   veri.ayarla({ kok: 'http://127.0.0.1:9/veri/' });
   denetle("Ağ hatası → tur 'ag'", (await hataTuru(veri.madde(1, 8))) === 'ag');

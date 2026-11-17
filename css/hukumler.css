@@ -104,3 +104,31 @@ a.hk-fasil-bag:hover span { color: var(--yesil-yazi); text-decoration: underline
 .hk-metin mark, .hk-baglam mark { padding: 0; }
 .hk-ara::-webkit-search-cancel-button { -webkit-appearance: none; appearance: none; }
 .hk-bos-tam { margin-top: var(--a-6); border-top: 1px solid var(--cizgi-2); }
+
+/* ── Bir maddenin hükümleri (/hukumler?madde=…) ── */
+.hk-madde-don { display: flex; width: fit-content; align-items: baseline; gap: 0.6em; margin-bottom: var(--a-6); padding: var(--a-2) 0; color: var(--murekkep-2); text-decoration: none; font: 500 var(--boy-2)/1.4 var(--arayuz); }
+.hk-madde-don b { color: var(--surh); font-weight: 600; margin-right: 0.5em; }
+.hk-madde-don:hover .hk-don-ic span { color: var(--yesil-yazi); }
+.hk-don-ok { color: var(--murekkep-3); }
+.hk-maddeli .hk-katman { margin-top: var(--a-6); padding-top: var(--a-5); border-top: 1px solid var(--cizgi); }
+.hk-msayac { padding-left: 0; }
+.hk-mbekle { max-width: 40rem; }
+.hk-mbolum { margin-top: var(--a-7); }
+.hk-mbaslik { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.3em 0.7em; padding-bottom: var(--a-3); border-bottom: 1px solid var(--altin-ince); font: 600 var(--boy-5)/1.2 var(--yazi); letter-spacing: -0.01em; }
+.hk-mbsayi { font: 500 var(--boy-1) var(--arayuz); color: var(--murekkep-3); letter-spacing: 0; }
+.hk-mbtum { margin-left: auto; font: 500 var(--boy-1) var(--arayuz); letter-spacing: 0; }
+.hk-mbolum .hk-liste { margin-top: 0; }
+.hk-mhata { margin-top: var(--a-5); padding: var(--a-4) 0; border-block: 1px solid var(--cizgi-2); color: var(--murekkep-2); font: 400 var(--boy-2) var(--arayuz); display: flex; flex-wrap: wrap; gap: var(--a-3); align-items: baseline; }
+.hk-maddeli .hk-bos { padding-left: 0; }
+
+/* tür sayfasında madde süzgeci etiketi */
+.hk-madde-suzgec { display: flex; flex-wrap: wrap; align-items: center; gap: var(--a-2) var(--a-4); margin-top: var(--a-5); }
+.hk-madde-etiket { display: inline-flex; align-items: baseline; gap: 0.4em; max-width: 100%; min-height: 40px; padding: 0.45em 0.9em 0.45em 1em; border: 1px solid var(--altin-ince); border-radius: 999px; background: var(--vurgu-zemin); font: 500 var(--boy-2)/1.35 var(--arayuz); color: var(--murekkep); text-align: left; }
+.hk-madde-etiket b { color: var(--surh); }
+.hk-madde-etiket > span:not(.hk-kaldir) { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 30rem; }
+.hk-kaldir { margin-left: 0.35em; font-size: 1.15em; line-height: 1; color: var(--murekkep-3); }
+.hk-madde-etiket:hover .hk-kaldir { color: var(--surh); }
+@media (max-width: 640px) {
+  .hk-mbtum { margin-left: 0; flex-basis: 100%; }
+  .hk-madde-etiket > span:not(.hk-kaldir) { max-width: 13rem; }
+}

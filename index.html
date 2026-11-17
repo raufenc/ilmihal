@@ -37,6 +37,36 @@
   <link rel="manifest" href="/manifest.json">
   <link rel="alternate" type="application/rss+xml" title="Se'âdet-i Ebediyye — Günün Maddesi" href="/rss.xml">
 
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "https://www.ilmihal.org/#site",
+        "url": "https://www.ilmihal.org/",
+        "name": "Se'âdet-i Ebediyye — Tam İlmihâl",
+        "inLanguage": "tr",
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "https://www.ilmihal.org/arama/{search_term_string}",
+          "query-input": "required name=search_term_string"
+        }
+      },
+      {
+        "@type": "Book",
+        "@id": "https://www.ilmihal.org/#kitap",
+        "name": "Tam İlmihâl Se'âdet-i Ebediyye",
+        "author": { "@type": "Person", "name": "Hüseyn Hilmi Işık" },
+        "publisher": { "@type": "Organization", "name": "Hakîkat Kitâbevi" },
+        "inLanguage": "tr",
+        "numberOfPages": 1248,
+        "url": "https://www.ilmihal.org/"
+      }
+    ]
+  }
+  </script>
+
   <script type="module" src="/js/ana.js"></script>
 </head>
 <body data-hazir="0">

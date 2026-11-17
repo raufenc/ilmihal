@@ -46,7 +46,8 @@ const bekle = ms => new Promise(r => setTimeout(r, ms));
 
 /* ───────────── İndirme ───────────── */
 async function tekDeneme(yol, oncelik) {
-  if (cevrimdisiMi()) throw new VeriHatasi(`"${yol}" yüklenemedi: ${TUR_ACIKLAMA.cevrimdisi}`, { parca: yol, tur: 'cevrimdisi' });
+  // Çevrimdışıyken de istek GÖNDERİLİR: service worker daha önce açılmış parçayı önbellekten verebilir.
+  // Ağ gerçekten yoksa fetch düşer ve aşağıda 'cevrimdisi' olarak sınıflanır.
   const denetim = new AbortController();
   let zamanDoldu = false;
   const sayac = setTimeout(() => { zamanDoldu = true; denetim.abort(); }, ayar.zamanAsimi);

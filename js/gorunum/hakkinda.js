@@ -47,17 +47,20 @@ export default {
     const bolum = (baslik, ...icerik) => h('section.metin-bolum', h('h3', baslik), icerik);
     const yazilar = [
       bolum('Kitabın tamamı, aranabilir şekilde',
-        h('p', n(maddeSayisi, 'Bütün maddelerin', x => `${sayi(x)} maddenin`), ' tam metni, ', n(kisimSayisi, 'kısımlarıyla', x => x === 3 ? 'üç kısmıyla' : `${x} kısmıyla`), ' birlikte burada. İstediğiniz konuyu başlıktan bulabilir, isterseniz ', bag('/arama', 'tam metin aramasıyla'), ' kitabın herhangi bir yerinde geçen bir kelimeyi veya ifadeyi saniyeler içinde bulabilirsiniz. Her maddenin orijinal PDF’deki sayfa numarası bağlantılıdır — tıklayınca kitabın o sayfasını açar.')),
+        h('p', n(maddeSayisi, 'Bütün maddelerin', x => `${sayi(x)} maddenin`), ' tam metni, ', n(kisimSayisi, 'kısımlarıyla', x => x === 3 ? 'üç kısmıyla' : `${x} kısmıyla`), ' birlikte burada. İstediğiniz konuyu ', bag('/icindekiler', 'fihristte'), ' başlıktan bulabilir, isterseniz ', bag('/arama', 'tam metin aramasıyla'), ' kitabın herhangi bir yerinde geçen bir kelimeyi veya ifadeyi saniyeler içinde bulabilirsiniz. Aramayı her sayfada ', h('kbd', '/'), ' tuşuyla ya da üstteki düğmeyle açabilirsiniz; şapkalı veya şapkasız yazmanız aynı sonucu verir, tırnak içinde yazdığınız ifade aynen aranır.'),
+        h('p', 'Site bağlantı olmadan da açılır; daha önce açtığınız maddeleri çevrimdışı okuyabilirsiniz.')),
       bolum('Kitabın aslı yanınızda',
-        h('p', 'Okurken araç çubuğundaki sahîfe düğmesiyle kitabın basılı hâlini, Hakîkat Kitâbevi’nin yayımladığı PDF’ten metnin hemen yanında açabilirsiniz. Madde değiştikçe sahîfe de o maddenin başladığı yere gelir; sahîfeler arasında gezinebilir, büyütebilirsiniz.')),
+        h('p', 'Okurken sahîfe numarasına ya da “Kitabın aslı” düğmesine bastığınızda kitabın o basılı sahîfesi, Hakîkat Kitâbevi’nin yayımladığı PDF’ten, metnin hemen yanındaki panelde açılır.')),
+      bolum('Okurken',
+        h('p', 'Cümleleri dört renkle vurgulayabilir, maddelere not ve yer imi ekleyebilirsiniz. Seçtiğiniz bir cümleyi künyesiyle birlikte kopyalayabilir ya da paylaşabilir, maddeyi yazdırabilirsiniz. Kitaptaki “… maddeye bakınız” atıfları bağlantıdır. Klavyeyle de okunabilir: J, K, +, −, B, L, F ve ? tuşları.')),
       bolum('Okuma planı',
-        h('p', `Kitabı ${sureListesi()} baştan sona okumak için `, bag('/calisma-alanim', 'bir plan'), ' kurabilirsiniz. Her günün kısmı maddelerin uzunluğuna göre hesaplanır; bitirdiğiniz maddeler işaretlenir, uzun bir maddede kaldığınız yer hatırlanır. Bu kayıtların hepsi yalnızca sizin tarayıcınızda tutulur.')),
+        h('p', `Kitabı ${sureListesi()} baştan sona okumak için ana sayfadan ya da `, bag('/calisma-alanim', 'Çalışma Alanım'), '’dan bir plan kurabilirsiniz. Her günün kısmı maddelerin uzunluğuna göre hesaplanır; bitirdiğiniz maddeler işaretlenir, uzun bir maddede kaldığınız yer hatırlanır. Bu kayıtların hepsi yalnızca sizin tarayıcınızda tutulur; Çalışma Alanım’dan dosya olarak indirip sonra geri yükleyebilirsiniz.')),
       bolum('Konuya göre rehberler',
         h('p', 'Namaz, oruç, hac, zekât, iman, ahlâk, aile ve yeni Müslümanlar için hazırlanmış ', bag('/rehberler', n(rehberler && rehberler.rehberler.length, 'adım adım rehberler', x => `${sayi(x)} adım adım rehber`)), ' ile bir konuyu baştan sona takip edebilirsiniz. Her rehber bölümlere ayrılmış, bölümlerdeki maddeler sırasıyla okunacak şekilde düzenlenmiştir.')),
       bolum('Günün suâli',
-        h('p', 'Her gün kitaptan bir suâl ', bag('/gunun-bilgisi', 'Günün Suâli'), ' sayfasında yer alır; cevabı, bağlantısı verilen maddededir. Paylaş butonuyla veya görsel kart oluşturarak paylaşabilirsiniz.')),
+        h('p', 'Her gün kitaptan bir suâl ', bag('/gunun-bilgisi', 'Günün Suâli'), ' sayfasında yer alır; cevabı, bağlantısı verilen maddededir. Suâli görsel bir kart olarak da paylaşabilirsiniz.')),
       bolum('Kitap içinde pratik sözlük',
-        h('p', 'Bir maddeyi okurken anlamını bilmediğiniz kelimelerin ', h('span.ornek-kelime', 'altı çizilidir'), '. Üzerine geldiğinizde veya dokunduğunuzda anlamı hemen görünür. Osmanlıca yazılışı ve anlamı bu küçük kutucukta yer alır.')),
+        h('p', 'Bir maddeyi okurken anlamını bilmediğiniz kelimeler ', h('span.ornek-kelime', 'işaretlidir'), '. Kelimeye bastığınızda Osmanlıca yazılışı ve anlamı, geniş ekranda sayfanın kenarında bir not olarak, dar ekranda alttan açılan küçük bir sayfada görünür.')),
       bolum(n(lugat && lugat.sayi, 'Dinî lügat', x => `${sayi(x)} terimlik Dinî Lügat`),
         h('p', 'Ayrı bir ', bag('/sozluk', 'sözlük sayfasında'), ' ', n(lugat && lugat.sayi, 'dinî terimler', x => `${sayi(x)} dinî terim`), ' alfabetik olarak listelenmiştir. Osmanlıca yazılışları, alternatif imlâları ve bağlama göre değişen manaları kayıtlıdır.')),
       bolum('Âyet-i kerîme ve hadîs-i şerîf indeksi',
@@ -66,13 +69,12 @@ export default {
         h('p', 'Kitapta adı geçenlerin hâl tercemeleri ayrı bir ', bag('/sahislar', 'bölümde'), ' toplanmıştır. Her şahsın biyografisi, unvanı ve kitapta geçtiği maddelere doğrudan bağlantıları vardır.')),
       bolum('Tablolar ve diyagramlar',
         h('p', 'Kitaptaki bilgileri özetleyen ', bag('/fevaid/tablolar', 'tablolar ve akış şemaları'), ' konularına göre düzenlenmiştir. Her tablo, kaynağı olan maddeye bağlıdır.')),
-      bolum('Paylaşım kartları',
-        h('p', 'Her maddenin altındaki paylaş butonuyla maddeyi metin olarak paylaşabilir veya görsel kart oluşturup indirebilirsiniz.')),
       bolum('Sesli dinleme',
-        h('p', 'Maddeleri, Hakîkat Kitâbevi’nin sahîfe sahîfe hazırladığı ses kayıtlarından dinleyebilirsiniz. Okuma, maddenin kayıttaki başladığı yerden açılır ve bittiği yerde durur. Hız ayarı, uyku zamanlayıcısı ve sürekli dinleme modu vardır. Kayıtlar kitabın daha önceki bir baskısından yapıldığı için sonradan eklenen ',
+        h('p', 'Maddeleri, Hakîkat Kitâbevi’nin sahîfe sahîfe hazırladığı ses kayıtlarından dinleyebilirsiniz. Okuma, maddenin kayıttaki başladığı yerden açılır ve bittiği yerde durur. Kaydı duraklatabilir, 15 saniye ileri ya da geri alabilir, hızını ayarlayabilirsiniz; kaldığınız yer hatırlanır. Kayıtlar kitabın daha önceki bir baskısından yapıldığı için sonradan eklenen ',
           n(sessiz, 'bazı maddelerin', x => `${sayi(x)} maddenin`), ' sesi bulunmamaktadır.')),
-      bolum('Silsile-i Aliyye Atlası',
-        h('p', 'Silsile-i aliyye büyüklerini ', bag('/silsile-atlasi/', 'etkileşimli bir haritada'), ' görebilirsiniz. Her büyüğün kabr-i şerîfinin bulunduğu şehir harita üzerinde işaretlenmiştir.')),
+      bolum('Silsile-i Aliyye Atlası ve Nemâz Vakitleri',
+        h('p', 'Silsile-i aliyye büyüklerini ', bag('/silsile-atlasi/', 'üç boyutlu, etkileşimli bir haritada'), ' görebilirsiniz. Her büyüğün kabr-i şerîfinin bulunduğu şehir harita üzerinde işaretlenmiştir.'),
+        h('p', bag('/namaz-vakitleri/', 'Nemâz Vakitleri'), ' sayfası, vakitleri kitabın ', bag('/madde/1/60', '60. maddesindeki'), ' usûlle hesaplar ve güneşin yolunu üç boyutlu gösterir; temkin 10 dakikadır. Bir takvimin yerini tutmaz.')),
       bolum('Her şey birbirine bağlı',
         h('p', 'Bir maddeyi açtığınızda ilgili şahısları, konuyla ilgili tabloları ve metindeki terimlerin anlamlarını hep bir arada görürsünüz. Herhangi bir sayfanın bağlantısını birine gönderebilirsiniz — doğrudan o madde, o şahıs veya o arama sonucu açılır.'))
     ];
@@ -87,7 +89,7 @@ export default {
         kitap ? kunyeSatir('Sahîfe', h('span.sayi', sayi(kitap.sahifeSayisi))) : null,
         maddeSayisi ? kunyeSatir('Madde', h('span.sayi', sayi(maddeSayisi)), kisimSayisi ? `, ${kisimSayisi === 3 ? 'üç' : kisimSayisi} kısım` : '') : null,
         kitap && kitap.pdf ? kunyeSatir('Kitabın aslı', h('a', { href: kitap.pdf, target: '_blank', rel: 'noopener', dataset: { dis: '' } }, 'Hakîkat Kitâbevi’nin sitesinde PDF olarak'), h('span.gizli-yazi', ' (yeni sekmede açılır)')) : null,
-        kunyeSatir('Son güncelleme', 'Ekim 2026')));
+        kunyeSatir('Son güncelleme', 'Kasım 2026')));
 
     kap.append(h('article.kap.kap-okuma.metin-sayfa',
       h('header',

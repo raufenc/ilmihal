@@ -1,8 +1,9 @@
-/* Fıkhî Hükümler: /hukumler (tür fihristi) ve /hukumler/:tur (?katman=tum&ara=…&alt=…&kisim=…).
+/* Fıkhî Hükümler: /hukumler (tür fihristi), /hukumler?madde=1-60 (bir maddenin hükümleri, türlere göre)
+   ve /hukumler/:tur (?katman=tum&ara=…&alt=…&kisim=…&madde=…).
    Her hüküm kitaptaki cümlesiyle aynen basılır; künyesi sahîfeye (kitabın aslı) ve maddeye götürür.
    "Açık" ve "tamamı" katmanları ayrı parçalardır, birleştirilmez. */
 import { h, doldur, durum, iskelet } from '../cekirdek/dom.js';
-import { veri } from '../cekirdek/veri.js';
+import { veri, maddeKimlik } from '../cekirdek/veri.js';
 import { cssYukle } from '../cekirdek/css.js';
 import { sayi, ad, sahife, kisimAdi } from '../cekirdek/bicim.js';
 import { duzle, duzleEslemeli, asilAralik, araliklariBirlestir } from '../cekirdek/metin.js';
@@ -47,6 +48,38 @@ function sahifeBag(pdf, bas, bit) {
   return h('a.kaynak', { href: `${pdf}#page=${Math.min(bas, 1248)}`, target: '_blank', rel: 'noopener', title: 'Kitabın aslında bu sahîfeyi açın (yeni sekme)' },
     'sahîfe ', h('span.sayi', sahife(bas, son)));
 }
+
+/** Tek hüküm satırı. sec: { kel (vurgu kelimeleri), pdf, T (tür) } */
+function kayitCiz(x, no, { kel = [], pdf, T }) {
+  const uzun = x.metin.length > UZUN && !kel.length;
+  const metin = h('p.hk-metin', { class: uzun ? 'kisa' : null }, isaretli(x.metin, kel));
+  const ac = uzun ? h('button.bag.hk-ac', { type: 'button', 'aria-expanded': 'false', onclick: () => {
+    const acik = metin.classList.toggle('kisa');
+    ac.setAttribute('aria-expanded', String(!acik));
+    ac.textContent = acik ? 'Tamamını okuyun' : 'Kısaltın';
+  } }, 'Tamamını okuyun') : null;
+  let baglamEl = null;
+  if (x.baglam) {
+    const uzunB = x.baglam.length > 170;
+    const p = h('p.hk-baglam', { class: uzunB ? 'kisa' : null }, h('span.hk-baglam-ad', 'Bağlam '), x.baglam);
+    baglamEl = uzunB ? [p, h('button.bag.hk-ac.hk-ac-baglam', { type: 'button', 'aria-expanded': 'false', onclick: e => {
+      const kapali = p.classList.toggle('kisa');
+      e.currentTarget.setAttribute('aria-expanded', String(!kapali));
+      e.currentTarget.textContent = kapali ? 'Bağlamın tamamı' : 'Bağlamı kısaltın';
+    } }, 'Bağlamın tamamı')] : p;
+  }
+  return h('li.hk-kayit',
+    h('span.hk-no.sayi', { 'aria-hidden': 'true' }, sayi(no)),
+    h('.hk-govde',
+      metin, ac, baglamEl,
+      h('.hk-kunye',
+        h('span.gizli-yazi', `${T.ad}.`),
+        x.altTur ? h('span.etiket.hk-alt', x.altTur) : null,
+        sahifeBag(pdf, x.sahife, x.sahifeBitis))));
+}
+
+const kitapSirasi = liste => liste.map((x, i) => ({ x, i, duz: null, kisim: x.madde ? +x.madde.split('-')[0] : 0 }))
+  .sort((a, b) => (a.x.sahife || 0) - (b.x.sahife || 0) || a.i - b.i);
 
 function bulunamadi(kap, baglam, tur) {
   baglam.metaYaz({ robots: 'noindex' });
@@ -99,7 +132,8 @@ function sorguOku() {
     katman: q.get('katman') === 'tum' ? 'tum' : 'acik',
     ara: q.get('ara') || '',
     alt: q.get('alt') || '',
-    kisim: ['1', '2', '3'].includes(q.get('kisim')) ? +q.get('kisim') : 0
+    kisim: ['1', '2', '3'].includes(q.get('kisim')) ? +q.get('kisim') : 0,
+    madde: q.get('madde') ? maddeKimlik.anahtar(q.get('madde')) || '' : ''   // geçersiz kimlik: süzgeç yok sayılır
   };
 }
 
@@ -109,8 +143,9 @@ function adresYap(tur, s, { altsiz = false } = {}) {
   if (s.ara) q.set('ara', s.ara);
   if (s.alt && !altsiz) q.set('alt', s.alt);
   if (s.kisim) q.set('kisim', String(s.kisim));
+  if (s.madde) q.set('madde', s.madde);
   const qs = q.toString();
-  return `/hukumler/${tur}${qs ? '?' + qs : ''}`;
+  return `/hukumler${tur ? '/' + tur : ''}${qs ? '?' + qs : ''}`;
 }
 
 async function turCiz(kap, tur, baglam) {
@@ -122,9 +157,9 @@ async function turCiz(kap, tur, baglam) {
   baglam.baslikYaz(`${T.ad} · Fıkhî Hükümler`);
   baglam.metaYaz({ aciklama: `Se’âdet-i Ebediyye’de ${T.kucuk} hükmü bildiren cümleler, kitaptaki yerleriyle.`, kanonik: location.origin + `/hukumler/${tur}` });
 
-  // Kitap sırası: sahîfeye göre (aynı sahîfede kaynaktaki sıra korunur)
-  const kayitlar = parca.hukumler.map((x, i) => ({ x, i, duz: null, kisim: x.madde ? +x.madde.split('-')[0] : 0 }))
-    .sort((a, b) => (a.x.sahife || 0) - (b.x.sahife || 0) || a.i - b.i);
+  // Kitap sırası: sahîfeye göre (aynı sahîfede kaynaktaki sıra korunur); madde süzgeci baştan uygulanır
+  const kayitlar = kitapSirasi(s.madde ? parca.hukumler.filter(x => x.madde === s.madde) : parca.hukumler);
+  const mk = s.madde ? kunyeler.get(s.madde) : null;
   if (s.alt && !kayitlar.some(k => k.x.altTur === s.alt)) s.alt = '';
   const durumu = { tur, s, kayitlar, suzulmus: kayitlar, cizilen: 0, kelimeler: [], pdf: fihrist.kitap.pdf, kunyeler };
   d.tur = durumu;
@@ -135,17 +170,17 @@ async function turCiz(kap, tur, baglam) {
       href: adresYap(t, s, { altsiz: true }),
       'aria-current': t === tur ? 'true' : null,
       onclick: e => { if (e.button || e.metaKey || e.ctrlKey || e.shiftKey) return; e.preventDefault(); if (t !== tur) baglam.git(adresYap(t, durumu.s, { altsiz: true }), { yerine: true }); }
-    }, TURLER[t].ad, ' ', h('span.hk-secsayi.sayi', sayi(dizin.sayilar[t][s.katman]))))));
+    }, TURLER[t].ad, s.madde ? null : [' ', h('span.hk-secsayi.sayi', sayi(dizin.sayilar[t][s.katman]))]))));
 
   /* Katman anahtarı */
   const katmanDugme = (k, etiket, n) => h('button', {
     type: 'button', 'aria-pressed': String(s.katman === k),
     onclick: () => { if (durumu.s.katman === k) return; durumu.s.katman = k; durumu.s.alt = ''; baglam.yerineYaz(adresYap(tur, durumu.s)); yenidenCiz(); }
-  }, etiket, ' ', h('span.hk-secsayi.sayi', sayi(n)));
+  }, etiket, n === null ? null : [' ', h('span.hk-secsayi.sayi', sayi(n))]);
   const katman = h('.hk-katman',
     h('.secim', { role: 'group', 'aria-label': 'Katman' },
-      katmanDugme('acik', 'Açık hükümler', dizin.sayilar[tur].acik),
-      katmanDugme('tum', 'Tamamı', dizin.sayilar[tur].tum)),
+      katmanDugme('acik', 'Açık hükümler', s.madde ? null : dizin.sayilar[tur].acik),
+      katmanDugme('tum', 'Tamamı', s.madde ? null : dizin.sayilar[tur].tum)),
     h('p.kunye', `Açık hükümler, bir şeyin ${T.kucuk} olduğunu açıkça bildiren cümlelerdir. Tamamı, ${T.kucuk} hükmünün kitapta geçtiği bütün yerleri ayrı bir liste olarak verir.`));
 
   /* Süzgeçler */
@@ -164,7 +199,13 @@ async function turCiz(kap, tur, baglam) {
       onclick: () => { durumu.s.kisim = n; for (const b of kisimSec.children) b.setAttribute('aria-pressed', String(+b.dataset.kisim === n)); suz(); }
     }, n ? kisimAdi(n) : 'Bütün kısımlar')));
 
-  const suzgecKutu = h('.hk-suzgec', h('.hk-ara-kap', araAlan), altSec, kisimSec);
+  const maddeEtiket = s.madde ? h('.hk-madde-suzgec',
+    h('span.kunye', 'Madde süzgeci'),
+    h('button.hk-madde-etiket', { type: 'button', 'aria-label': `Madde süzgecini kaldırın: ${s.madde.replace('-', '/')}`, onclick: () => {
+      durumu.s.madde = ''; baglam.yerineYaz(adresYap(tur, durumu.s)); yenidenCiz();
+    } }, h('b.sayi', s.madde.replace('-', '/')), mk ? [' · ', h('span', ad(mk.baslik))] : null, h('span.hk-kaldir', { 'aria-hidden': 'true' }, '×')),
+    h('a.kaynak', { href: maddeKimlik.yol(s.madde) }, 'Maddeye dönün')) : null;
+  const suzgecKutu = h('.hk-suzgec', h('.hk-ara-kap', araAlan), altSec, s.madde ? null : kisimSec);
   const sayac = h('p.hk-sayac.kunye', { 'aria-live': 'polite' });
   const liste = h('ol.hk-liste');
   const gozcu = h('.hk-gozcu', { 'aria-hidden': 'true' });
@@ -192,7 +233,7 @@ async function turCiz(kap, tur, baglam) {
       return true;
     });
     const n = durumu.suzulmus.length, top = kayitlar.length;
-    const temel = st.katman === 'acik' ? `${sayi(top)} açık ${T.kucuk} hükmü` : `${T.kucuk} hükmünün geçtiği ${sayi(top)} yer`;
+    const temel = (st.madde ? `${st.madde.replace('-', '/')} maddesinde ` : '') + (st.katman === 'acik' ? `${sayi(top)} açık ${T.kucuk} hükmü` : `${T.kucuk} hükmünün geçtiği ${sayi(top)} yer`);
     const suzgecli = kelimeler.length || st.alt || st.kisim;
     sayac.textContent = suzgecli ? `${sayi(n)} sonuç · ${temel}` : temel;
     liste.replaceChildren();
@@ -200,9 +241,10 @@ async function turCiz(kap, tur, baglam) {
     if (!top) {
       suzgecKutu.hidden = true;
       sonuc.replaceChildren(h('.hk-bos.hk-bos-tam',
-        h('p', st.katman === 'tum' ? `${T.ad} için ayrıca “tamamı” listesi hazırlanmamıştır.` : 'Bu türde kayıt yok.'),
-        st.katman === 'tum' ? h('p.kunye', `Açık hükümlerin hepsi (${sayi(dizin.sayilar[tur].acik)} cümle) diğer katmandadır.`) : null,
-        st.katman === 'tum' ? h('button.dugme', { type: 'button', onclick: () => katman.querySelector('button').click() }, 'Açık hükümleri gösterin') : null));
+        h('p', st.madde ? `Bu maddede ${st.katman === 'acik' ? 'açık ' : ''}${T.kucuk} hükmü bulunmuyor.` : st.katman === 'tum' ? `${T.ad} için ayrıca “tamamı” listesi hazırlanmamıştır.` : 'Bu türde kayıt yok.'),
+        st.madde ? h('.sira', h('a.dugme.dugme-kucuk', { href: `/hukumler?madde=${st.madde}${st.katman === 'tum' ? '&katman=tum' : ''}` }, 'Maddenin bütün hükümleri'), h('a.dugme.dugme-kucuk', { href: maddeKimlik.yol(st.madde) }, 'Maddeye dönün')) : null,
+        !st.madde && st.katman === 'tum' ? h('p.kunye', `Açık hükümlerin hepsi (${sayi(dizin.sayilar[tur].acik)} cümle) diğer katmandadır.`) : null,
+        !st.madde && st.katman === 'tum' ? h('button.dugme', { type: 'button', onclick: () => katman.querySelector('button').click() }, 'Açık hükümleri gösterin') : null));
       return;
     }
     if (!sonuc.contains(liste)) sonuc.replaceChildren(sayac, liste, gozcu);
@@ -227,7 +269,7 @@ async function turCiz(kap, tur, baglam) {
     parti.forEach((k, i) => {
       if (k.x.madde !== onceki) parcalar.push(fasilCiz(k.x));
       onceki = k.x.madde;
-      parcalar.push(kayitCiz(k.x, durumu.cizilen + i + 1));
+      parcalar.push(kayitCiz(k.x, durumu.cizilen + i + 1, { kel: durumu.kelimeler, pdf: durumu.pdf, T }));
     });
     liste.append(...parcalar);
     durumu.cizilen += parti.length;
@@ -241,35 +283,6 @@ async function turCiz(kap, tur, baglam) {
     return h('li.hk-fasil', h('a.hk-fasil-bag', { href: `/madde/${k}/${n}` }, h('b.sayi', `${k}/${n}`), h('span', m ? ad(m.baslik) : 'Madde')));
   }
 
-  function kayitCiz(x, no) {
-    const kel = durumu.kelimeler;
-    const uzun = x.metin.length > UZUN && !kel.length;
-    const metin = h('p.hk-metin', { class: uzun ? 'kisa' : null }, isaretli(x.metin, kel));
-    const ac = uzun ? h('button.bag.hk-ac', { type: 'button', 'aria-expanded': 'false', onclick: () => {
-      const acik = metin.classList.toggle('kisa');
-      ac.setAttribute('aria-expanded', String(!acik));
-      ac.textContent = acik ? 'Tamamını okuyun' : 'Kısaltın';
-    } }, 'Tamamını okuyun') : null;
-    let baglamEl = null;
-    if (x.baglam) {
-      const uzunB = x.baglam.length > 170;
-      const p = h('p.hk-baglam', { class: uzunB ? 'kisa' : null }, h('span.hk-baglam-ad', 'Bağlam '), x.baglam);
-      baglamEl = uzunB ? [p, h('button.bag.hk-ac.hk-ac-baglam', { type: 'button', 'aria-expanded': 'false', onclick: e => {
-        const kapali = p.classList.toggle('kisa');
-        e.currentTarget.setAttribute('aria-expanded', String(!kapali));
-        e.currentTarget.textContent = kapali ? 'Bağlamın tamamı' : 'Bağlamı kısaltın';
-      } }, 'Bağlamın tamamı')] : p;
-    }
-    return h('li.hk-kayit',
-      h('span.hk-no.sayi', { 'aria-hidden': 'true' }, sayi(no)),
-      h('.hk-govde',
-        metin, ac, baglamEl,
-        h('.hk-kunye',
-          h('span.gizli-yazi', `${T.ad}.`),
-          x.altTur ? h('span.etiket.hk-alt', x.altTur) : null,
-          sahifeBag(durumu.pdf, x.sahife, x.sahifeBitis))));
-  }
-
   const gozlemci = 'IntersectionObserver' in window
     ? new IntersectionObserver(es => { if (es.some(e => e.isIntersecting) && durumu.cizilen < durumu.suzulmus.length) devam(); }, { rootMargin: '900px 0px' })
     : null;
@@ -280,9 +293,88 @@ async function turCiz(kap, tur, baglam) {
     basKur(),
     turCubugu,
     katman,
+    maddeEtiket,
     suzgecKutu,
     sonuc));
   suz();
+}
+
+/* ── Bir maddenin hükümleri (/hukumler?madde=1-60) ── */
+async function maddeCiz(kap, madde, baglam) {
+  const s = sorguOku();
+  const sec = { sinyal: baglam.sinyal };
+  const [dizin, fihrist] = await Promise.all([veri.hukumlerDizin(sec), veri.fihrist(sec)]);
+  const kunyeler = new Map(fihrist.maddeler.map(m => [`${m.kisim}-${m.no}`, m]));
+  const mk = kunyeler.get(madde);
+  const [k, n] = madde.split('-');
+  const yol = maddeKimlik.yol(madde);
+  const katmanAd = s.katman === 'acik' ? 'açık hükümler' : 'hükümlerin geçtiği bütün yerler';
+  baglam.baslikYaz(`${k}/${n} maddesindeki hükümler · Fıkhî Hükümler`);
+  baglam.metaYaz({ aciklama: `Se’âdet-i Ebediyye ${k}/${n}${mk ? ' “' + mk.baslik + '”' : ''} maddesinde geçen fıkhî hükümler, türlerine göre.`, kanonik: location.origin + `/hukumler?madde=${madde}` });
+
+  const katmanSec = h('.secim', { role: 'group', 'aria-label': 'Katman' },
+    [['acik', 'Açık hükümler'], ['tum', 'Tamamı']].map(([kt, etiket]) => h('button', {
+      type: 'button', 'aria-pressed': String(s.katman === kt),
+      onclick: () => { if (s.katman === kt) return; baglam.yerineYaz(adresYap('', { katman: kt, madde })); ciz(kap, {}, baglam); }
+    }, etiket)));
+  const sayac = h('p.hk-sayac.hk-msayac.kunye', { 'aria-live': 'polite' }, 'Hükümler yükleniyor…');
+  const bolumler = h('.hk-mbolumler');
+  const yuvalar = new Map(dizin.turler.map(t => [t, h('section.hk-mbolum', { hidden: true, 'aria-labelledby': 'hk-mb-' + t })]));
+  bolumler.append(...yuvalar.values());
+  const bekleme = h('.hk-mbekle', iskelet(5));
+  const bos = h('.hk-bos.hk-bos-tam', { hidden: true },
+    h('p', s.katman === 'acik' ? 'Bu maddede açık bir fıkhî hüküm kaydı bulunmuyor.' : 'Bu maddede hüküm geçen bir yer kaydı bulunmuyor.'),
+    s.katman === 'acik' ? h('p.kunye', '“Tamamı” katmanında hükmün geçtiği yerlere de bakabilirsiniz.') : null,
+    h('.sira', h('a.dugme.dugme-kucuk', { href: yol }, 'Maddeye dönün'),
+      s.katman === 'acik' ? h('button.dugme.dugme-kucuk', { type: 'button', onclick: () => katmanSec.children[1].click() }, 'Tamamını gösterin') : null));
+
+  doldur(kap, h('.kap.hk.hk-maddeli',
+    h('header.hk-bas',
+      h('a.hk-madde-don', { href: yol },
+        h('span.hk-don-ok', { 'aria-hidden': 'true' }, '←'),
+        h('span.hk-don-ic', h('b.sayi', `${k}/${n}`), h('span', mk ? ad(mk.baslik) : `Madde ${k}/${n}`))),
+      h('a.ust-yazi.surh.hk-ust', { href: '/hukumler' }, 'Fıkhî Hükümler'),
+      h('h1.baslik-2', 'Bu maddedeki hükümler'),
+      h('p.giris-yazi', 'Maddede geçen fıkhî hükümler, kitaptaki cümleleriyle ve türlerine göre. Her türün başlığından o türün bütün hükümlerine geçebilirsiniz.')),
+    h('.hk-katman', katmanSec,
+      h('p.kunye', 'Açık hükümler, hükmü açıkça bildiren cümlelerdir. Tamamı, hükmün kitapta geçtiği bütün yerleri ayrı bir liste olarak verir.')),
+    h('.hk-sonuc', sayac, bekleme, bolumler, bos)));
+
+  // Yedi parça paralel iner; gelen tür geldikçe kendi yuvasına çizilir (yuvalar kitap sırasında durur).
+  const sonuclar = new Map();
+  const ozetYaz = () => {
+    const bitti = sonuclar.size === dizin.turler.length;
+    const toplam = [...sonuclar.values()].reduce((t, v) => t + (v || 0), 0);
+    const hatali = [...sonuclar.values()].filter(v => v === null).length;
+    bekleme.hidden = bitti || toplam > 0;
+    if (!bitti) { sayac.textContent = toplam ? `${sayi(toplam)} kayıt · yükleniyor…` : 'Hükümler yükleniyor…'; return; }
+    sayac.textContent = toplam ? `${k}/${n} maddesinde ${sayi(toplam)} ${s.katman === 'acik' ? 'açık hüküm' : 'kayıt'}` : '';
+    sayac.hidden = !toplam;
+    bos.hidden = !!(toplam || hatali);
+  };
+  const yukle = async t => {
+    const yuva = yuvalar.get(t);
+    const T = TURLER[t] || { ad: t, kucuk: t };
+    try {
+      const parca = await veri.hukumler(t, s.katman, sec);
+      const kayitlar = kitapSirasi(parca.hukumler.filter(x => x.madde === madde));
+      sonuclar.set(t, kayitlar.length);
+      if (!kayitlar.length) { yuva.hidden = true; doldur(yuva); ozetYaz(); return; }
+      doldur(yuva,
+        h('h2.hk-mbaslik#hk-mb-' + t, h('span', T.ad), h('span.hk-mbsayi.sayi', sayi(kayitlar.length)),
+          h('a.hk-mbtum', { href: adresYap(t, { katman: s.katman, madde }) }, `${T.ad} hükümlerinde süzün`)),
+        h('ol.hk-liste', kayitlar.map((r, i) => kayitCiz(r.x, i + 1, { pdf: fihrist.kitap.pdf, T }))));
+      yuva.hidden = false;
+    } catch (e) {
+      if (e && e.name === 'AbortError') return;
+      sonuclar.set(t, null);
+      doldur(yuva, h('p.hk-mhata', `${T.ad} hükümleri yüklenemedi.`,
+        h('button.bag', { type: 'button', onclick: () => { sonuclar.delete(t); doldur(yuva, h('p.hk-mhata', `${T.ad} hükümleri yükleniyor…`)); ozetYaz(); yukle(t); } }, 'Yeniden deneyin')));
+      yuva.hidden = false;
+    }
+    ozetYaz();
+  };
+  dizin.turler.forEach(t => { yukle(t); });
 }
 
 async function ciz(kap, p, baglam) {
@@ -290,7 +382,10 @@ async function ciz(kap, p, baglam) {
   const tur = p.tur ? String(p.tur).toLowerCase() : '';
   const yeniden = () => { doldur(kap, h('.kap', iskelet(8))); ciz(kap, p, baglam); };
   try {
-    if (!tur) {
+    const madde = sorguOku().madde;
+    if (!tur && madde) {
+      await maddeCiz(kap, madde, baglam);
+    } else if (!tur) {
       const dizin = await veri.hukumlerDizin({ sinyal: baglam.sinyal });
       fihristCiz(kap, dizin, baglam);
     } else if (!TURLER[tur]) {
