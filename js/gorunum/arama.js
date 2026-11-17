@@ -13,11 +13,13 @@ import { veri } from '../cekirdek/veri.js';
 import { sayi, sahife, roma, ad, kisimAdi } from '../cekirdek/bicim.js';
 import { vurguluMetin, aramaYolu, maddeYolu, sonAramalar, tanimMaddesi } from '../bilesen/hizli-arama.js';
 
+import { HUKUMLER_ACIK } from '../cekirdek/ayar.js';
+
 const TURLER = [
   { ad: 'madde', etiket: 'Maddeler', durum: n => `${n} maddede geçiyor`, kisimli: true },
   { ad: 'lugat', etiket: 'Lügat', durum: n => `lügatte ${n} terimde geçiyor` },
   { ad: 'sahis', etiket: 'Hâl tercemeleri', durum: n => `${n} hâl tercemesinde geçiyor` },
-  { ad: 'hukum', etiket: 'Fıkhî hükümler', durum: n => `${n} fıkhî hükümde geçiyor`, kisimli: true },
+  ...(HUKUMLER_ACIK ? [{ ad: 'hukum', etiket: 'Fıkhî hükümler', durum: n => `${n} fıkhî hükümde geçiyor`, kisimli: true }] : []),
   { ad: 'tanim', etiket: 'Tanımlar', durum: n => `kitabın ${n} tanımında geçiyor` },
 ];
 const TUR = Object.fromEntries(TURLER.map(t => [t.ad, t]));
@@ -549,7 +551,7 @@ function durumKur(kap, baglam, fihrist) {
           h('span.fihrist-no', String(i + 1)), h('span.fihrist-ad', h('span', q)), h('span.fihrist-sayfa', '→')))))) : null,
       h('section.as-diger', h('h2.ust-yazi', 'Başka yollar'),
         h('ul.fihrist', [['Fihrist', '/icindekiler', 'Kitabın bütün maddeleri sırasıyla'], ['Dinî lügat', '/sozluk', 'Kelimelerin mânâları'],
-          ['Hâl tercemeleri', '/sahislar', 'Kitapta adı geçen zâtlar'], ['Fıkhî hükümler', '/hukumler', 'Farz, vâcib, sünnet, harâm…']]
+          ['Hâl tercemeleri', '/sahislar', 'Kitapta adı geçen zâtlar'], ...(HUKUMLER_ACIK ? [['Fıkhî hükümler', '/hukumler', 'Farz, vâcib, sünnet, harâm…']] : [])]
           .map(([a, href, alt]) => h('li', h('a.fihrist-satir', { href }, h('span.fihrist-no', '·'), h('span.fihrist-ad', h('span', a)), h('span.fihrist-sayfa'), h('span.fihrist-alt', alt)))))));
     let yer = kap.querySelector('.as-baslangic');
     if (yer) yer.replaceWith(ornekler); else kap.querySelector('.as-kap').append(ornekler);

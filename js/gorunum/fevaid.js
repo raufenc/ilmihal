@@ -2,6 +2,7 @@
    Kart ızgarası yok: her dizin büyük bir fihrist satırıdır (ad, tek cümle açıklama, noktalı kılavuz, sayı).
    Sayılar veriden gelir; satırlar hemen çizilir, sayılar indikçe yerine oturur. */
 
+import { HUKUMLER_ACIK } from '../cekirdek/ayar.js';
 import { h } from '../cekirdek/dom.js';
 import { veri } from '../cekirdek/veri.js';
 import { cssYukle } from '../cekirdek/css.js';
@@ -14,8 +15,8 @@ const GRUPLAR = [
   {
     ad: 'Dizinler',
     satirlar: [
-      { ad: 'Fıkhî hükümler', yol: '/hukumler', aciklama: 'Kitapta geçen farz, vâcib, sünnet, müstehab, mübah, mekruh ve haram hükümler; her cümle kitaptaki yerine bağlı.',
-        say: async s => { const d = await veri.hukumlerDizin({ sinyal: s }); return { sayi: d.turler.reduce((t, k) => t + ((d.sayilar[k] || {}).acik || 0), 0), birim: 'açık hüküm' }; } },
+      ...(HUKUMLER_ACIK ? [{ ad: 'Fıkhî hükümler', yol: '/hukumler', aciklama: 'Kitapta geçen farz, vâcib, sünnet, müstehab, mübah, mekruh ve haram hükümler; her cümle kitaptaki yerine bağlı.',
+        say: async s => { const d = await veri.hukumlerDizin({ sinyal: s }); return { sayi: d.turler.reduce((t, k) => t + ((d.sayilar[k] || {}).acik || 0), 0), birim: 'açık hüküm' }; } }] : []),
       { ad: 'Âyet-i kerîme ve hadîs-i şerîfler', yol: '/ayet-hadis', aciklama: 'Kitapta geçen âyet-i kerîme meâlleri ve hadîs-i şerîfler, kitaptaki yerleriyle.',
         say: async s => { const f = await veri.fihrist({ sinyal: s }); return { sayi: f.sayilar.ayet + f.sayilar.hadis, birim: 'kayıt' }; } },   // sayılar fihrist.json'da; ağır dizini indirmeye gerek yok
       { ad: 'Dinî lügat', yol: '/sozluk', aciklama: 'Kitapta geçen kelimelerin Osmanlıca yazılışları, asılları ve mânâları.',
@@ -57,7 +58,7 @@ export default {
     await cssYukle('/css/sayfa.css');
     const sinyal = baglam.sinyal;
     baglam.metaYaz({
-      aciklama: 'Se’âdet-i Ebediyye’nin içinden derlenen dizinler: fıkhî hükümler, âyet-i kerîme ve hadîs-i şerîfler, dinî lügat, hâl tercemeleri, tablolar ve konu rehberleri.',
+      aciklama: 'Se’âdet-i Ebediyye’nin içinden derlenen dizinler: âyet-i kerîme ve hadîs-i şerîfler, dinî lügat, hâl tercemeleri, tablolar ve konu rehberleri.',
       kanonik: location.origin + '/fevaid'
     });
 

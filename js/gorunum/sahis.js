@@ -199,7 +199,7 @@ export default {
       const satir = dizin.sahislar.find(s => s.slug === k.slug);
       if (satir && satir.giris) baglam.metaYaz({ aciklama: satir.giris, kanonik: location.origin + '/sahis/' + encodeURIComponent(k.slug) });
       if (/ismine bak/.test(k.biyografi || '')) ciz(dizin);
-      const ayni = SINIF_AD[k.kategori] ? dizin.sahislar.filter(s => s.kategori === k.kategori) : dizin.sahislar;
+      const ayni = dizin.sahislar.filter(s => s.kategori === k.kategori);
       const i = ayni.findIndex(s => s.slug === k.slug);
       if (i < 0) return;
       const satirCiz = (s, yon) => s ? h('a.sk-komsu-bag.' + yon, { href: `/sahis/${encodeURIComponent(s.slug)}` },

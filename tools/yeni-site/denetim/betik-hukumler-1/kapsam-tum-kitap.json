@@ -1,0 +1,7274 @@
+{
+ "secilen": [
+  "1-1",
+  "1-10",
+  "1-11",
+  "1-12",
+  "1-13",
+  "1-14",
+  "1-15",
+  "1-16",
+  "1-17",
+  "1-18",
+  "1-19",
+  "1-2",
+  "1-20",
+  "1-21",
+  "1-22",
+  "1-23",
+  "1-24",
+  "1-25",
+  "1-26",
+  "1-27",
+  "1-28",
+  "1-29",
+  "1-3",
+  "1-30",
+  "1-31",
+  "1-32",
+  "1-33",
+  "1-34",
+  "1-35",
+  "1-36",
+  "1-37",
+  "1-38",
+  "1-39",
+  "1-4",
+  "1-40",
+  "1-41",
+  "1-42",
+  "1-43",
+  "1-44",
+  "1-45",
+  "1-46",
+  "1-47",
+  "1-48",
+  "1-49",
+  "1-5",
+  "1-50",
+  "1-51",
+  "1-52",
+  "1-53",
+  "1-54",
+  "1-55",
+  "1-56",
+  "1-57",
+  "1-58",
+  "1-59",
+  "1-6",
+  "1-60",
+  "1-61",
+  "1-62",
+  "1-63",
+  "1-64",
+  "1-65",
+  "1-66",
+  "1-67",
+  "1-68",
+  "1-69",
+  "1-7",
+  "1-70",
+  "1-71",
+  "1-72",
+  "1-73",
+  "1-74",
+  "1-75",
+  "1-76",
+  "1-77",
+  "1-78",
+  "1-79",
+  "1-8",
+  "1-80",
+  "1-81",
+  "1-82",
+  "1-83",
+  "1-84",
+  "1-85",
+  "1-86",
+  "1-87",
+  "1-88",
+  "1-89",
+  "1-9",
+  "1-90",
+  "1-91",
+  "1-92",
+  "1-93",
+  "1-94",
+  "1-95",
+  "1-96",
+  "1-97",
+  "1-98",
+  "2-1",
+  "2-10",
+  "2-11",
+  "2-12",
+  "2-13",
+  "2-14",
+  "2-15",
+  "2-16",
+  "2-17",
+  "2-18",
+  "2-19",
+  "2-2",
+  "2-20",
+  "2-21",
+  "2-22",
+  "2-23",
+  "2-24",
+  "2-25",
+  "2-26",
+  "2-27",
+  "2-28",
+  "2-29",
+  "2-3",
+  "2-30",
+  "2-31",
+  "2-32",
+  "2-33",
+  "2-34",
+  "2-35",
+  "2-36",
+  "2-37",
+  "2-38",
+  "2-39",
+  "2-4",
+  "2-40",
+  "2-41",
+  "2-42",
+  "2-43",
+  "2-44",
+  "2-45",
+  "2-46",
+  "2-47",
+  "2-48",
+  "2-49",
+  "2-5",
+  "2-50",
+  "2-51",
+  "2-52",
+  "2-53",
+  "2-54",
+  "2-55",
+  "2-56",
+  "2-57",
+  "2-58",
+  "2-59",
+  "2-6",
+  "2-60",
+  "2-61",
+  "2-62",
+  "2-63",
+  "2-64",
+  "2-65",
+  "2-66",
+  "2-67",
+  "2-68",
+  "2-69",
+  "2-7",
+  "2-70",
+  "2-71",
+  "2-72",
+  "2-73",
+  "2-8",
+  "2-9",
+  "3-1",
+  "3-10",
+  "3-11",
+  "3-12",
+  "3-13",
+  "3-14",
+  "3-15",
+  "3-16",
+  "3-17",
+  "3-18",
+  "3-19",
+  "3-2",
+  "3-20",
+  "3-21",
+  "3-22",
+  "3-23",
+  "3-24",
+  "3-25",
+  "3-26",
+  "3-27",
+  "3-28",
+  "3-29",
+  "3-3",
+  "3-30",
+  "3-31",
+  "3-32",
+  "3-33",
+  "3-34",
+  "3-35",
+  "3-36",
+  "3-37",
+  "3-38",
+  "3-39",
+  "3-4",
+  "3-40",
+  "3-41",
+  "3-42",
+  "3-43",
+  "3-44",
+  "3-45",
+  "3-46",
+  "3-47",
+  "3-48",
+  "3-49",
+  "3-5",
+  "3-50",
+  "3-51",
+  "3-52",
+  "3-53",
+  "3-54",
+  "3-55",
+  "3-56",
+  "3-57",
+  "3-58",
+  "3-59",
+  "3-6",
+  "3-60",
+  "3-61",
+  "3-62",
+  "3-63",
+  "3-64",
+  "3-65",
+  "3-66",
+  "3-67",
+  "3-68",
+  "3-69",
+  "3-7",
+  "3-70",
+  "3-8",
+  "3-9"
+ ],
+ "maddeler": {
+  "1-1": {
+   "baslik": "Muhammed aleyhisselâma uymak, se’âdete kavuşdurur",
+   "turler": {
+    "farz": {
+     "toplam": 1,
+     "acikta": 1,
+     "tumde": 1,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "1-10": {
+   "baslik": "Din hırsızları",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "1-11": {
+   "baslik": "Îmânın gitmesine sebeb olan şeyler",
+   "turler": {
+    "farz": {
+     "toplam": 2,
+     "acikta": 2,
+     "tumde": 2,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "1-12": {
+   "baslik": "Kalbde îmân bulunmasına alâmet, ahkâm-ı islâmiyyeye uymakdır",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "1-13": {
+   "baslik": "Allahü teâlânın ni’metleri, dünyâda herkesedir",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "1-14": {
+   "baslik": "Âhıretde kâfire merhamet yokdur",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "1-15": {
+   "baslik": "Muhabbetin alâmetleri",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "1-16": {
+   "baslik": "Muhammed “aleyhisselâm”, Allahü teâlânın sevgilisidir",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "1-17": {
+   "baslik": "Peygamberimizin mu’cizeleri. Kur’ân-ı kerîmin üstünlüğü",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "1-18": {
+   "baslik": "Resûle tâbi’ olmak nasıl olur? Evlâd terbiyesi",
+   "turler": {
+    "farz": {
+     "toplam": 2,
+     "acikta": 2,
+     "tumde": 2,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "1-19": {
+   "baslik": "Hubb-i fillah, buğd-i fillah. Kazâya rızâ nasıl olur?",
+   "turler": {
+    "farz": {
+     "toplam": 2,
+     "acikta": 2,
+     "tumde": 2,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "1-2": {
+   "baslik": "Allahü teâlâya itâ’at için, Resûlüne itâ’at lâzımdır",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "1-20": {
+   "baslik": "Kâfirler iki kısmdır",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "1-21": {
+   "baslik": "Cennete girmek için Muhammed aleyhisselâma uymak lâzımdır",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "1-22": {
+   "baslik": "Kâfirlerin iyiliği dünyâda kalır",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "1-23": {
+   "baslik": "Dünyâ, âhıretin tarlasıdır",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "1-24": {
+   "baslik": "Âhıret bilgileri, aklın dışındadır. Bunlara akl ermez",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "1-25": {
+   "baslik": "Kur’ân-ı kerîm nedir? Kur’ân tercemeleri",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "1-26": {
+   "baslik": "İctihâd hatâları. İmâm-ı a’zamın büyüklüğü",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "1-27": {
+   "baslik": "İctihâd ne demekdir? Müctehid kime denir?",
+   "turler": {
+    "farz": {
+     "toplam": 1,
+     "acikta": 1,
+     "tumde": 1,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "1-28": {
+   "baslik": "Sünnet-i müekkede, sünnet-i zevâid",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "1-29": {
+   "baslik": "Kâfirlerin kullandığı şeyler iki dürlüdür",
+   "turler": {
+    "farz": {
+     "toplam": 1,
+     "acikta": 1,
+     "tumde": 1,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "1-3": {
+   "baslik": "Müslimân olmak için, ne yapmalı? Kelime-i şehâdet",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "1-30": {
+   "baslik": "Resûlullaha uymak yedi derecedir",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "1-31": {
+   "baslik": "Ehl-i sünnet i’tikâdı, harâmlar. Tevbe. Mehdî “aleyhirrahme” Fükahâ-i seb’a",
+   "turler": {
+    "farz": {
+     "toplam": 2,
+     "acikta": 2,
+     "tumde": 2,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 1,
+     "acikta": 1,
+     "tumde": 1,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 2,
+     "acikta": 2,
+     "tumde": 2,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 2,
+     "acikta": 2,
+     "tumde": 2,
+     "eksikler": []
+    }
+   }
+  },
+  "1-32": {
+   "baslik": "Bu ümmet yetmişüç fırkaya ayrılacakdır",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "1-33": {
+   "baslik": "Kur’ân-ı kerîmi felsefecilere göre tefsîr câiz değildir",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "1-34": {
+   "baslik": "Sünnete yapışmak, bid’atlerden sakınmak lâzımdır",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "1-35": {
+   "baslik": "Müşriklerin bedenleri pis değildir. İ’tikâdları pisdir",
+   "turler": {
+    "farz": {
+     "toplam": 1,
+     "acikta": 1,
+     "tumde": 1,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "1-36": {
+   "baslik": "Bir üniversiteliye cevâb. Fen bilgileri, bir yaratıcının var olduğunu bildirmekdedir",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "1-37": {
+   "baslik": "Dünyâya, burada kalacak kadar, âhırete de orada kalacak kadar çalışmalıdır",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "1-38": {
+   "baslik": "Dünyâda âhırete yarar iş görmek lâzımdır",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "1-39": {
+   "baslik": "Tenâsuh ve iki rûhluluk yokdur. Âlem-i misâl, Fen adamlarının sözleri",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "1-4": {
+   "baslik": "Ehl-i sünnet âlimleri",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "1-40": {
+   "baslik": "Âlem-i ervâh ve âlem-i misâl ve âlem-i ecsâd. Kabr azâbı",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "1-41": {
+   "baslik": "Emr-i bil-ma’rûf, nehy-i anil-münker ve cihâd sevâbı çokdur",
+   "turler": {
+    "farz": {
+     "toplam": 3,
+     "acikta": 3,
+     "tumde": 3,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 1,
+     "acikta": 1,
+     "tumde": 1,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "1-42": {
+   "baslik": "Vera’ ve takvâ. Hâlis ibâdetin alâmeti nedir?",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 1,
+     "acikta": 1,
+     "tumde": 1,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "1-43": {
+   "baslik": "Tevbe, vera’ ve takvâ",
+   "turler": {
+    "farz": {
+     "toplam": 2,
+     "acikta": 2,
+     "tumde": 2,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "1-44": {
+   "baslik": "Farz, sünnet ve nâfilelerin ehemmiyyetleri ve farkları",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "1-45": {
+   "baslik": "Allahü teâlânın yakın olması ne demekdir?",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "1-46": {
+   "baslik": "Îmân, ibâdetler ve lüzûmlu nasîhatler",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "1-47": {
+   "baslik": "Îmân, ibâdetler, harâmlar",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "1-48": {
+   "baslik": "Gençlikde yapılan ibâdetlerin kıymeti",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "1-49": {
+   "baslik": "Âlemler, herşey yokdan var edildi. Yunan felesofları",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "1-5": {
+   "baslik": "Ehl-i sünnetin reîsi, imâm-ı a’zam Ebû Hanîfedir",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "1-50": {
+   "baslik": "Tesavvuf yolunda çalışmak istiyenin yapması lâzım olan şeyler",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 1,
+     "acikta": 1,
+     "tumde": 1,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "1-51": {
+   "baslik": "Beş vakt nemâz, otuzüç farz",
+   "turler": {
+    "farz": {
+     "toplam": 8,
+     "acikta": 8,
+     "tumde": 8,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 1,
+     "acikta": 1,
+     "tumde": 1,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 1,
+     "acikta": 1,
+     "tumde": 1,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 2,
+     "acikta": 2,
+     "tumde": 2,
+     "eksikler": []
+    }
+   }
+  },
+  "1-52": {
+   "baslik": "Abdest almak. Abdesti bozan şeyler",
+   "turler": {
+    "farz": {
+     "toplam": 14,
+     "acikta": 14,
+     "tumde": 14,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 1,
+     "acikta": 1,
+     "tumde": 1,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 5,
+     "acikta": 5,
+     "tumde": 5,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 7,
+     "acikta": 7,
+     "tumde": 7,
+     "eksikler": []
+    }
+   }
+  },
+  "1-53": {
+   "baslik": "Mest üzerine mesh, özr sâhibi olmak",
+   "turler": {
+    "farz": {
+     "toplam": 2,
+     "acikta": 2,
+     "tumde": 2,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 3,
+     "acikta": 3,
+     "tumde": 3,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 1,
+     "acikta": 1,
+     "tumde": 1,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "1-54": {
+   "baslik": "Gusl abdesti nasıl alınır? Ne zemân alınır?",
+   "turler": {
+    "farz": {
+     "toplam": 20,
+     "acikta": 20,
+     "tumde": 20,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 2,
+     "acikta": 2,
+     "tumde": 2,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 6,
+     "acikta": 6,
+     "tumde": 6,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 6,
+     "acikta": 6,
+     "tumde": 6,
+     "eksikler": []
+    }
+   }
+  },
+  "1-55": {
+   "baslik": "Teyemmüm. Su bulamamak nasıl olur?",
+   "turler": {
+    "farz": {
+     "toplam": 2,
+     "acikta": 2,
+     "tumde": 2,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 1,
+     "acikta": 1,
+     "tumde": 1,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 1,
+     "acikta": 1,
+     "tumde": 1,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 1,
+     "acikta": 1,
+     "tumde": 1,
+     "eksikler": []
+    }
+   }
+  },
+  "1-56": {
+   "baslik": "Necâsetden tahâret. İstincâ. İstibrâ",
+   "turler": {
+    "farz": {
+     "toplam": 5,
+     "acikta": 5,
+     "tumde": 5,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 3,
+     "acikta": 3,
+     "tumde": 3,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 6,
+     "acikta": 6,
+     "tumde": 6,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 4,
+     "acikta": 4,
+     "tumde": 4,
+     "eksikler": []
+    }
+   }
+  },
+  "1-57": {
+   "baslik": "Sular, temiz su, pis su, artıklar",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "1-58": {
+   "baslik": "Setr-i avret. Kadınların örtünmesi",
+   "turler": {
+    "farz": {
+     "toplam": 3,
+     "acikta": 3,
+     "tumde": 3,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 2,
+     "acikta": 2,
+     "tumde": 2,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 1,
+     "acikta": 1,
+     "tumde": 1,
+     "eksikler": []
+    }
+   }
+  },
+  "1-59": {
+   "baslik": "İstikbâl-i kıble. Kıble ta’yîni",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 1,
+     "acikta": 1,
+     "tumde": 1,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "1-6": {
+   "baslik": "İmâm-ı a’zamın büyüklüğü. (Dürr-ül-muhtâr)ın önsözünden ve (Hayrât-ül-hisân)dan alınmışdır",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "1-60": {
+   "baslik": "Nemâz vaktleri. Takvîmler. Ezân",
+   "turler": {
+    "farz": {
+     "toplam": 5,
+     "acikta": 5,
+     "tumde": 5,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 2,
+     "acikta": 2,
+     "tumde": 2,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 2,
+     "acikta": 2,
+     "tumde": 2,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 4,
+     "acikta": 4,
+     "tumde": 4,
+     "eksikler": []
+    }
+   }
+  },
+  "1-61": {
+   "baslik": "Ezân ve ikâmet. Hoparlörle nemâz",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 1,
+     "acikta": 1,
+     "tumde": 1,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 5,
+     "acikta": 5,
+     "tumde": 5,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 2,
+     "acikta": 2,
+     "tumde": 2,
+     "eksikler": []
+    }
+   }
+  },
+  "1-62": {
+   "baslik": "Ezân kelimelerinin ma’nâları",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "1-63": {
+   "baslik": "Nemâzın ehemmiyyeti. Nemâz kılmıyanlar",
+   "turler": {
+    "farz": {
+     "toplam": 1,
+     "acikta": 1,
+     "tumde": 1,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "1-64": {
+   "baslik": "Nemâz nasıl kılınır? Nemâzın beş rüknü, niyyet",
+   "turler": {
+    "farz": {
+     "toplam": 5,
+     "acikta": 5,
+     "tumde": 5,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 4,
+     "acikta": 4,
+     "tumde": 4,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 12,
+     "acikta": 12,
+     "tumde": 12,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 5,
+     "acikta": 5,
+     "tumde": 5,
+     "eksikler": []
+    }
+   }
+  },
+  "1-65": {
+   "baslik": "Yolculukda, otobüsde, gemide, tayyârede nemâz",
+   "turler": {
+    "farz": {
+     "toplam": 1,
+     "acikta": 1,
+     "tumde": 1,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 1,
+     "acikta": 1,
+     "tumde": 1,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "1-66": {
+   "baslik": "Nemâzın vâcibleri, secde-i sehv, secde-i tilâvet ve vitr nemâzı",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 10,
+     "acikta": 9,
+     "tumde": 10,
+     "eksikler": [
+      "Secde-i sehvi bile bile yapmıyan veyâ nemâzın vâciblerinden birini, meselâ Fâtiha okumağı, bilerek terk eden kimsenin, o nemâzı tekrâr kılması vâcib olur.  [yalnız tum]"
+     ]
+    },
+    "sunnet": {
+     "toplam": 3,
+     "acikta": 3,
+     "tumde": 3,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 1,
+     "acikta": 1,
+     "tumde": 1,
+     "eksikler": []
+    }
+   }
+  },
+  "1-67": {
+   "baslik": "Nemâzı bozan şeyler. Kâfirlere teşebbüh",
+   "turler": {
+    "farz": {
+     "toplam": 1,
+     "acikta": 1,
+     "tumde": 1,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 2,
+     "acikta": 2,
+     "tumde": 2,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 2,
+     "acikta": 2,
+     "tumde": 2,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 3,
+     "acikta": 3,
+     "tumde": 3,
+     "eksikler": []
+    }
+   }
+  },
+  "1-68": {
+   "baslik": "Nemâzın mekrûhları, nemâzı bozmak için özr",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 3,
+     "acikta": 3,
+     "tumde": 3,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 1,
+     "acikta": 1,
+     "tumde": 1,
+     "eksikler": []
+    }
+   }
+  },
+  "1-69": {
+   "baslik": "Câmi’de yapılması câiz olmıyan şeyler. Terâvih nemâzı",
+   "turler": {
+    "farz": {
+     "toplam": 2,
+     "acikta": 2,
+     "tumde": 2,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 4,
+     "acikta": 4,
+     "tumde": 4,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 1,
+     "acikta": 1,
+     "tumde": 1,
+     "eksikler": []
+    }
+   }
+  },
+  "1-7": {
+   "baslik": "İslâm âlimlerinin kitâbları",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "1-70": {
+   "baslik": "Cemâ’at ile nemâz kılmak. Hoparlörle, radyo ile nemâz",
+   "turler": {
+    "farz": {
+     "toplam": 5,
+     "acikta": 5,
+     "tumde": 5,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 4,
+     "acikta": 4,
+     "tumde": 4,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 1,
+     "acikta": 1,
+     "tumde": 1,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 5,
+     "acikta": 5,
+     "tumde": 5,
+     "eksikler": []
+    }
+   }
+  },
+  "1-71": {
+   "baslik": "Cum’a nemâzı. İbâdet ne demekdir?",
+   "turler": {
+    "farz": {
+     "toplam": 10,
+     "acikta": 10,
+     "tumde": 10,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 3,
+     "acikta": 3,
+     "tumde": 3,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 12,
+     "acikta": 12,
+     "tumde": 12,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 4,
+     "acikta": 4,
+     "tumde": 4,
+     "eksikler": []
+    }
+   }
+  },
+  "1-72": {
+   "baslik": "Bayram nemâzı. Kurban bayramı tekbîrleri",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 3,
+     "acikta": 3,
+     "tumde": 3,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 4,
+     "acikta": 4,
+     "tumde": 4,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 3,
+     "acikta": 3,
+     "tumde": 3,
+     "eksikler": []
+    }
+   }
+  },
+  "1-73": {
+   "baslik": "Nemâzda otururken parmak kaldırmak",
+   "turler": {
+    "farz": {
+     "toplam": 4,
+     "acikta": 4,
+     "tumde": 4,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 1,
+     "acikta": 1,
+     "tumde": 1,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "1-74": {
+   "baslik": "Kazâ nemâzları. Nemâz kılmıyanın cezâsı",
+   "turler": {
+    "farz": {
+     "toplam": 9,
+     "acikta": 9,
+     "tumde": 9,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 7,
+     "acikta": 7,
+     "tumde": 7,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 6,
+     "acikta": 6,
+     "tumde": 6,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "1-75": {
+   "baslik": "Nemâz ibâdetlerin en üstünüdür",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "1-76": {
+   "baslik": "Nemâzın ta’dîl-i erkânı. Kul hakkı",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "1-77": {
+   "baslik": "Nemâzı doğru kılmalı. Halâl lokma. Şehîd kime denir?",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "1-78": {
+   "baslik": "Zekât vermek. Para, mal, hayvan ve toprak mahsûllerinin zekâtı",
+   "turler": {
+    "farz": {
+     "toplam": 24,
+     "acikta": 24,
+     "tumde": 24,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 2,
+     "acikta": 2,
+     "tumde": 2,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "1-79": {
+   "baslik": "Ramezân-ı şerîfin kıymeti. Oruc nasıl tutulur?",
+   "turler": {
+    "farz": {
+     "toplam": 3,
+     "acikta": 3,
+     "tumde": 3,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 5,
+     "acikta": 5,
+     "tumde": 5,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 4,
+     "acikta": 4,
+     "tumde": 4,
+     "eksikler": []
+    }
+   }
+  },
+  "1-8": {
+   "baslik": "Uydurma tefsîr yazan kâfir olur",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "1-80": {
+   "baslik": "Sadaka-i fıtrı kimler verir? Kimlere vermelidir?",
+   "turler": {
+    "farz": {
+     "toplam": 1,
+     "acikta": 1,
+     "tumde": 1,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 4,
+     "acikta": 4,
+     "tumde": 4,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "1-81": {
+   "baslik": "Kurban kesmek lâzımdır. Kimler keser? Nasıl kesilir?",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 7,
+     "acikta": 7,
+     "tumde": 7,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 2,
+     "acikta": 2,
+     "tumde": 2,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 7,
+     "acikta": 7,
+     "tumde": 7,
+     "eksikler": []
+    }
+   }
+  },
+  "1-82": {
+   "baslik": "Adak ne demekdir? Günâh olan adaklar",
+   "turler": {
+    "farz": {
+     "toplam": 7,
+     "acikta": 7,
+     "tumde": 7,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 2,
+     "acikta": 2,
+     "tumde": 2,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "1-83": {
+   "baslik": "Yemîn nasıl edilir? Yemînin çeşidleri. Yemîn keffâreti",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 5,
+     "acikta": 5,
+     "tumde": 5,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "1-84": {
+   "baslik": "Hacca gitmek. Hac nasıl yapılır?",
+   "turler": {
+    "farz": {
+     "toplam": 13,
+     "acikta": 13,
+     "tumde": 13,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 7,
+     "acikta": 7,
+     "tumde": 7,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 5,
+     "acikta": 5,
+     "tumde": 5,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 3,
+     "acikta": 2,
+     "tumde": 2,
+     "eksikler": [
+      "Her tavâfdan sonra zemzem içmek müstehâbdır."
+     ]
+    }
+   }
+  },
+  "1-85": {
+   "baslik": "Mübârek geceler. Kandiller. Peygamberimizin mi’râcı nasıl oldu?",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 2,
+     "acikta": 2,
+     "tumde": 2,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "1-86": {
+   "baslik": "Şemsî seneleri kamerî seneye çevirmek",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "1-87": {
+   "baslik": "Kamerî seneyi mîlâdî seneye çevirmek",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "1-88": {
+   "baslik": "Hicrî sene başının, hangi gün olduğunu bulmak",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "1-89": {
+   "baslik": "Arabî ayların birinci gününü bulmak",
+   "turler": {
+    "farz": {
+     "toplam": 1,
+     "acikta": 1,
+     "tumde": 1,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "1-9": {
+   "baslik": "Kur’ân tercemelerinden hangisine güvenileceği",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "1-90": {
+   "baslik": "Selâmlaşmak nasıl olur? Müsâfeha nasıl yapılır?",
+   "turler": {
+    "farz": {
+     "toplam": 5,
+     "acikta": 5,
+     "tumde": 5,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 1,
+     "acikta": 1,
+     "tumde": 1,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 4,
+     "acikta": 4,
+     "tumde": 4,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 3,
+     "acikta": 3,
+     "tumde": 3,
+     "eksikler": []
+    }
+   }
+  },
+  "1-91": {
+   "baslik": "Kur’ân-ı kerîm, Allah kelâmıdır",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "1-92": {
+   "baslik": "Îsâ “aleyhisselâm” insan idi, Ona tapılmaz",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "1-93": {
+   "baslik": "Îsâ “aleyhisselâm” Peygamber idi, Ona tapılmaz",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "1-94": {
+   "baslik": "Allahü teâlâ akl ile, hayâl ile anlaşılamaz. Gayba îmân etmek lâzımdır",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "1-95": {
+   "baslik": "Hilye-i se’âdet. Siyer kitâbları. Resûlullahın zevceleri",
+   "turler": {
+    "farz": {
+     "toplam": 2,
+     "acikta": 2,
+     "tumde": 2,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 3,
+     "acikta": 3,
+     "tumde": 3,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 1,
+     "acikta": 1,
+     "tumde": 1,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 1,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": [
+      "Her söyleyince, işitince, okuyunca, yazınca, bir kerre getirmek vâcib, tekrâr edildiklerinde müstehâbdır.)"
+     ]
+    }
+   }
+  },
+  "1-96": {
+   "baslik": "Muhammed aleyhisselâmın güzel ahlâkı",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "1-97": {
+   "baslik": "Resûlullahın ana, baba ve bütün dedeleri hep mü’min, sâlih idi",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 1,
+     "acikta": 1,
+     "tumde": 1,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "1-98": {
+   "baslik": "Sübhâne rabbike âyet-i kerîmesi nasıl okunur?",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 2,
+     "acikta": 2,
+     "tumde": 2,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "2-1": {
+   "baslik": "Unutulmuş sünnetleri meydâna çıkarmağı ve bid’atden sakınmağı teşvîk etmekdedir",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 1,
+     "acikta": 1,
+     "tumde": 1,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 1,
+     "acikta": 1,
+     "tumde": 1,
+     "eksikler": []
+    }
+   }
+  },
+  "2-10": {
+   "baslik": "Üzüntü ve sıkıntıları ni’met bilmelidir",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "2-11": {
+   "baslik": "Zâhir işlerin bozuk olması, kalbin dağılmasına yol açar",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "2-12": {
+   "baslik": "Derd ve belâlar, günâhlara keffâretdir",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "2-13": {
+   "baslik": "Kendi dileklerimizi bırakıp sâhibimizin arzûsuna uymalıyız",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "2-14": {
+   "baslik": "Kibr ve ucb, kalbin tehlükeli hastalığıdır",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "2-15": {
+   "baslik": "Allahü teâlânın ismleri. Yaratmak ne demekdir?",
+   "turler": {
+    "farz": {
+     "toplam": 1,
+     "acikta": 1,
+     "tumde": 1,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 1,
+     "acikta": 1,
+     "tumde": 1,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 5,
+     "acikta": 5,
+     "tumde": 5,
+     "eksikler": []
+    }
+   }
+  },
+  "2-16": {
+   "baslik": "Fıkh ilmi. Mezheb nedir? İmâm-ı a’zam Ebû Hanîfe",
+   "turler": {
+    "farz": {
+     "toplam": 5,
+     "acikta": 5,
+     "tumde": 5,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 1,
+     "acikta": 1,
+     "tumde": 1,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 1,
+     "acikta": 1,
+     "tumde": 1,
+     "eksikler": []
+    }
+   }
+  },
+  "2-17": {
+   "baslik": "Vehhâbîler ve çeşidleri. Kıymetli din kitâblarını okumalı. Bozuk kitâblara aldanmamalı",
+   "turler": {
+    "farz": {
+     "toplam": 1,
+     "acikta": 1,
+     "tumde": 1,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 3,
+     "acikta": 3,
+     "tumde": 3,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 1,
+     "acikta": 1,
+     "tumde": 1,
+     "eksikler": []
+    }
+   }
+  },
+  "2-18": {
+   "baslik": "Kabr ziyâreti lâzımdır. Olgun rûhlardan istifâde edilir",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 1,
+     "acikta": 1,
+     "tumde": 1,
+     "eksikler": []
+    }
+   }
+  },
+  "2-19": {
+   "baslik": "Lüzûmsuz, fâidesiz işlerden vazgeçmelidir",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "2-2": {
+   "baslik": "Düâ etmekdeki gizli bilgileri açıklamakdadır",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "2-20": {
+   "baslik": "Kabr azâbına inanmıyanlara cevâb vermekdedir",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "2-21": {
+   "baslik": "Şâmânîler, Behâîler, Ahmediyye, Dürzîler, Yezîdîler, Selefîler",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "2-22": {
+   "baslik": "Hurûfîlik",
+   "turler": {
+    "farz": {
+     "toplam": 3,
+     "acikta": 3,
+     "tumde": 3,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 2,
+     "acikta": 1,
+     "tumde": 1,
+     "eksikler": [
+      "Alîye mensûb olan, bizzarur ehli sünnetdir."
+     ]
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "2-23": {
+   "baslik": "Resûlullahın vefât ederken kâğıd istemesi, Eshâb-ı kirâmın üstünlüğü",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "2-24": {
+   "baslik": "Eshâb-ı kirâm birbirini çok severdi. Şî’îlerin iftirâları",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "2-25": {
+   "baslik": "Eshâb-ı kirâmın büyüklüğü. Dostlara çok derd gelmesi",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "2-26": {
+   "baslik": "Sosyal adâlet. Sosyalizm. Kapitalizm. Komünizm",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "2-27": {
+   "baslik": "İslâmiyyet, din ve dünyâ se’âdetlerinin kaynağıdır",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "2-28": {
+   "baslik": "Nefs ve akl",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "2-29": {
+   "baslik": "Müslimânlar niçin geri kaldılar?",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "2-3": {
+   "baslik": "Resûlullaha uymağa ve dînini öğrendiği kimseyi sevmeğe teşvîk etmekdedir",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "2-30": {
+   "baslik": "İslâmiyyet fenni emr etmekdedir. Fen yobazları",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "2-31": {
+   "baslik": "Madde, atom üzerinde yeni bilgiler. Radyo-aktivite. Radar",
+   "turler": {
+    "farz": {
+     "toplam": 3,
+     "acikta": 3,
+     "tumde": 3,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "2-32": {
+   "baslik": "Atom kuvveti ve sulh zemânında kullanılması",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "2-33": {
+   "baslik": "Atom bombası yapılması, te’sîri, korunma çâreleri",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "2-34": {
+   "baslik": "İslâmiyyetde nikâh. Evlenmesi câiz olmıyan kadınlar",
+   "turler": {
+    "farz": {
+     "toplam": 2,
+     "acikta": 2,
+     "tumde": 2,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 5,
+     "acikta": 5,
+     "tumde": 5,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 4,
+     "acikta": 4,
+     "tumde": 4,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 3,
+     "acikta": 3,
+     "tumde": 3,
+     "eksikler": []
+    }
+   }
+  },
+  "2-35": {
+   "baslik": "Kâfirlerin evlenmesi. Çocuğa îmânı, islâmı öğretmelidir",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "2-36": {
+   "baslik": "İslâmiyyetdeki talâk. Hul’. Zihâr. Li’ân. İddet. Hıdâne",
+   "turler": {
+    "farz": {
+     "toplam": 1,
+     "acikta": 1,
+     "tumde": 1,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 2,
+     "acikta": 2,
+     "tumde": 2,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 2,
+     "acikta": 2,
+     "tumde": 2,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 1,
+     "acikta": 1,
+     "tumde": 1,
+     "eksikler": []
+    }
+   }
+  },
+  "2-37": {
+   "baslik": "Süt kardeşlik. Süt ile akrabâ olanlar",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 1,
+     "acikta": 1,
+     "tumde": 1,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "2-38": {
+   "baslik": "Nafaka nedir? Kimler verir? Kimlere verilir? Lakît, Komşu hakkı",
+   "turler": {
+    "farz": {
+     "toplam": 17,
+     "acikta": 17,
+     "tumde": 17,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 9,
+     "acikta": 9,
+     "tumde": 9,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 4,
+     "acikta": 4,
+     "tumde": 4,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 3,
+     "acikta": 3,
+     "tumde": 3,
+     "eksikler": []
+    }
+   }
+  },
+  "2-39": {
+   "baslik": "İslâmiyyetde kadının kıymeti ve hakları çok büyükdür",
+   "turler": {
+    "farz": {
+     "toplam": 1,
+     "acikta": 1,
+     "tumde": 1,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 6,
+     "acikta": 6,
+     "tumde": 6,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 1,
+     "acikta": 1,
+     "tumde": 1,
+     "eksikler": []
+    }
+   }
+  },
+  "2-4": {
+   "baslik": "Îmân, akl, zekâ, halâl, harâm, adâlet, zulm, kazâ, kader",
+   "turler": {
+    "farz": {
+     "toplam": 3,
+     "acikta": 3,
+     "tumde": 3,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "2-40": {
+   "baslik": "Halâl, harâm ve şübheli şeyler. Vera’ ve takvâ",
+   "turler": {
+    "farz": {
+     "toplam": 2,
+     "acikta": 2,
+     "tumde": 2,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 7,
+     "acikta": 7,
+     "tumde": 7,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 2,
+     "acikta": 2,
+     "tumde": 2,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 3,
+     "acikta": 3,
+     "tumde": 3,
+     "eksikler": []
+    }
+   }
+  },
+  "2-41": {
+   "baslik": "Yimesi ve kullanması harâm olan şeyler",
+   "turler": {
+    "farz": {
+     "toplam": 5,
+     "acikta": 5,
+     "tumde": 5,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 1,
+     "acikta": 1,
+     "tumde": 1,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 2,
+     "acikta": 2,
+     "tumde": 2,
+     "eksikler": []
+    }
+   }
+  },
+  "2-42": {
+   "baslik": "İçmesi harâm olan içkiler",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 1,
+     "acikta": 1,
+     "tumde": 1,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "2-43": {
+   "baslik": "Tütün, sigara içmek günâh mıdır?",
+   "turler": {
+    "farz": {
+     "toplam": 2,
+     "acikta": 2,
+     "tumde": 2,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 5,
+     "acikta": 5,
+     "tumde": 5,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "2-44": {
+   "baslik": "İsrâf nedir? Tütün isrâf mıdır? Fâiz harâmdır",
+   "turler": {
+    "farz": {
+     "toplam": 1,
+     "acikta": 1,
+     "tumde": 1,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 2,
+     "acikta": 2,
+     "tumde": 2,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "2-45": {
+   "baslik": "Yimek, içmek âdâbı",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 12,
+     "acikta": 12,
+     "tumde": 12,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "2-46": {
+   "baslik": "Hasta yemekleri. Ba’zı hastalıkların tedâvîsi",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 1,
+     "acikta": 1,
+     "tumde": 1,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "2-47": {
+   "baslik": "Tevekkül. Evlilerin tevekkülü. Bekârların tevekkülü",
+   "turler": {
+    "farz": {
+     "toplam": 2,
+     "acikta": 2,
+     "tumde": 2,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 1,
+     "acikta": 1,
+     "tumde": 1,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 1,
+     "acikta": 1,
+     "tumde": 1,
+     "eksikler": []
+    }
+   }
+  },
+  "2-48": {
+   "baslik": "Levh-il-mahfûz ve Ümm-ül-kitâb. İnsan ömrünün değişmesi",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 1,
+     "acikta": 1,
+     "tumde": 1,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 1,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": [
+      "Fekat bunlara da hediyye, selâm yollamak müstehâbdır)."
+     ]
+    }
+   }
+  },
+  "2-49": {
+   "baslik": "İrâde-i cüz’iyye. Bir ihtiyâr müslimânın kızına nasîhatı ve münâcâtı",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "2-5": {
+   "baslik": "Tefsîr, hadîs ne demekdir? Din âlimi kime denir?",
+   "turler": {
+    "farz": {
+     "toplam": 3,
+     "acikta": 3,
+     "tumde": 3,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "2-50": {
+   "baslik": "Ebüssü’ûd efendinin (Kazâ-kader) risâlesi",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "2-51": {
+   "baslik": "Sevgilinin her işi sevilir. Hamd, şükrden üstündür",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "2-52": {
+   "baslik": "Tegannî, müzik. Radyoda, teybde Kur’ân-ı kerîm okumak ve dinlemek. Hoparlörle nemâz kılmak",
+   "turler": {
+    "farz": {
+     "toplam": 2,
+     "acikta": 2,
+     "tumde": 2,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 4,
+     "acikta": 4,
+     "tumde": 4,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 1,
+     "acikta": 1,
+     "tumde": 1,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 1,
+     "acikta": 1,
+     "tumde": 1,
+     "eksikler": []
+    }
+   }
+  },
+  "2-53": {
+   "baslik": "Cin hakkında geniş bilgi. Evliyânın rûhları",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "2-54": {
+   "baslik": "Rûhların hâzır olması. Allahü teâlânın sıfatları",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "2-55": {
+   "baslik": "Allah adamlarının gönlünde zerre kadar dünyâ düşüncesi yokdur",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "2-56": {
+   "baslik": "Rûhlar insan şeklinde görünür. Tenâsüh yokdur",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "2-57": {
+   "baslik": "İnsan medenî olmak için yaratılmışdır. Medenî olmak için ve yaşamak için, başka insanlara muhtâcdır. İnsanın üstünlüğü bu ihtiyâcındandır",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "2-58": {
+   "baslik": "Resûlullaha uygun her iş zikrdir",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "2-59": {
+   "baslik": "Mu’cize. Kerâmet. Firâset. İstidrâc. Sihr",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "2-6": {
+   "baslik": "Hadîs-i şerîflerin çeşidleri ve hadîs âlimleri",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "2-60": {
+   "baslik": "Hârikaların, kerâmetlerin çok veyâ az olmasının sebebi",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 1,
+     "acikta": 1,
+     "tumde": 1,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "2-61": {
+   "baslik": "Velî olmak için hârikalar ve kerâmetler lâzım değildir",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "2-62": {
+   "baslik": "Seçilmişlerin ve câhillerin ve bu ikisi arasında olan tesavvufcuların gaybdan îmânları",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "2-63": {
+   "baslik": "Zâhir âlimlerinin ve tesavvufcuların ve râsih ilmli seçilmişlerin hâlleri",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "2-64": {
+   "baslik": "İnsanın aslı ademdir. Ademde hiç iyilik yokdur",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "2-65": {
+   "baslik": "Güzel sûretlerin tatlı olmalarının sebebi nedir?",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "2-66": {
+   "baslik": "Allahü teâlâ hiçbirşeye benzemez ve akl ile anlaşılamaz",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "2-67": {
+   "baslik": "Cennetde Allahü teâlânın görüleceğine inanmıyanlara cevâbdır",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "2-68": {
+   "baslik": "Tesavvufcuların ve felsefecilerin (İlm-ül yakîn) bilgileri",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "2-69": {
+   "baslik": "Ulemâ-i râsihîn ve diğer din âlimlerinin istidlâlleri",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "2-7": {
+   "baslik": "Dünyâ işlerini yaparken islâmiyyete dikkat etmelidir",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "2-70": {
+   "baslik": "Akla, hayâle gelen ve keşf ile, şühûd ile anlaşılan herşey mahlûkdur",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "2-71": {
+   "baslik": "Abdüllah-i Dehlevî hazretlerinin (Mekâtib-i şerîfe) kitâbından 61. ci mektûbun tercemesidir",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "2-72": {
+   "baslik": "Abdüllah-i Dehlevî hazretlerinin (Mekâtib-i şerîfe) kitâbından 85. ci mektûbun tercemesidir",
+   "turler": {
+    "farz": {
+     "toplam": 1,
+     "acikta": 1,
+     "tumde": 1,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 2,
+     "acikta": 2,
+     "tumde": 2,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "2-73": {
+   "baslik": "Abdüllah-i Dehlevî hazretlerinin (Mekâtib-i şerîfe) kitâbından 88. ci mektubun son kısmının tercemesidir",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "2-8": {
+   "baslik": "Derd ve belânın Allahü teâlâdan geldiğini düşünmelidir",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "2-9": {
+   "baslik": "İnsanlardan gelen sıkıntılara sabretmek lâzımdır",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "3-1": {
+   "baslik": "İşin başı, sünnet-i seniyyeye yapışmak ve bid’atden sakınmakdır",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "3-10": {
+   "baslik": "Selem ile satış",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "3-11": {
+   "baslik": "İstisnâ’, ısmarlama yapdırmak",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 2,
+     "acikta": 2,
+     "tumde": 2,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "3-12": {
+   "baslik": "Karz-ı hasen, ödünç vermek. Kim ödünç isteyebilir?",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 1,
+     "acikta": 1,
+     "tumde": 1,
+     "eksikler": []
+    }
+   }
+  },
+  "3-13": {
+   "baslik": "Kefâlet, havâle, bono, sened kırdırmak. Poliçe",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "3-14": {
+   "baslik": "Vekâlet. Alış-verişde, zekât vermekde vekîl tutmak",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "3-15": {
+   "baslik": "Ticâretde adâlet. İhtikâr nedir?",
+   "turler": {
+    "farz": {
+     "toplam": 1,
+     "acikta": 1,
+     "tumde": 1,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 2,
+     "acikta": 2,
+     "tumde": 2,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "3-16": {
+   "baslik": "Ticâretde ihsân etmek. Borc ödemek. Din kitâbları",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 2,
+     "acikta": 2,
+     "tumde": 2,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 1,
+     "acikta": 1,
+     "tumde": 1,
+     "eksikler": []
+    }
+   }
+  },
+  "3-17": {
+   "baslik": "Ticâretde dînini kayırmak. Harâmdan sakınmak",
+   "turler": {
+    "farz": {
+     "toplam": 2,
+     "acikta": 2,
+     "tumde": 2,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "3-18": {
+   "baslik": "Allahü teâlânın kullarına hizmet etmemiz lâzımdır",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "3-19": {
+   "baslik": "İslâmiyyetde fâiz, bankalar, bono kırdırmak ve vakf",
+   "turler": {
+    "farz": {
+     "toplam": 2,
+     "acikta": 2,
+     "tumde": 2,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 2,
+     "acikta": 2,
+     "tumde": 2,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 1,
+     "acikta": 1,
+     "tumde": 1,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "3-2": {
+   "baslik": "Resûlullahın kadınlarla yapdığı sözleşme: Şirk, insan için hayvan kesmek, hırsızlık, zinâ, çocuk öldürmek, iftirâ, mıska kullanmak",
+   "turler": {
+    "farz": {
+     "toplam": 1,
+     "acikta": 1,
+     "tumde": 1,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 1,
+     "acikta": 1,
+     "tumde": 1,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "3-20": {
+   "baslik": "İslâmiyyetde şirket kurmak. Şirketler",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "3-21": {
+   "baslik": "Kirâ, ücret, işçilik. Sigortacılık. Emânetciye verilen para",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "3-22": {
+   "baslik": "Ukûbât: Zinâ, içki, kazf, sirkat ve yol kesmek cezâları",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 2,
+     "acikta": 2,
+     "tumde": 2,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 1,
+     "acikta": 1,
+     "tumde": 1,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "3-23": {
+   "baslik": "Ta’zîr cezâları, tefsîr kitâblarını değil, fıkh kitâblarını okumak lâzımdır",
+   "turler": {
+    "farz": {
+     "toplam": 9,
+     "acikta": 9,
+     "tumde": 9,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 3,
+     "acikta": 3,
+     "tumde": 3,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 2,
+     "acikta": 2,
+     "tumde": 2,
+     "eksikler": []
+    }
+   }
+  },
+  "3-24": {
+   "baslik": "Cinâyetler, katlin çeşidleri ve cezâları. Kısâs",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 4,
+     "acikta": 4,
+     "tumde": 4,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "3-25": {
+   "baslik": "Diyet cezâları. Katl keffâreti",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "3-26": {
+   "baslik": "İkrâh, zorla yapdırmak. Hicr, birşeyi yasaklamak",
+   "turler": {
+    "farz": {
+     "toplam": 2,
+     "acikta": 2,
+     "tumde": 2,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 2,
+     "acikta": 2,
+     "tumde": 2,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "3-27": {
+   "baslik": "Ahkâm-ı islâmiyyesiz evliyâlık olmaz. Kelime-i tevhîd",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 1,
+     "acikta": 1,
+     "tumde": 1,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "3-28": {
+   "baslik": "Kelime-i tevhîdin ma’nâsını bildirmekdedir",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "3-29": {
+   "baslik": "Kelime-i tevhîdin üstünlüklerini bildirmekdedir",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "3-3": {
+   "baslik": "İslâmiyyetde kesb ve ticâret. Halâl kazanmak",
+   "turler": {
+    "farz": {
+     "toplam": 3,
+     "acikta": 3,
+     "tumde": 3,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 4,
+     "acikta": 4,
+     "tumde": 4,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 1,
+     "acikta": 1,
+     "tumde": 1,
+     "eksikler": []
+    }
+   }
+  },
+  "3-30": {
+   "baslik": "Fenâ ve bekâyı bildirmekdedir. Mahlûkların aslı, hakîkatleri",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "3-31": {
+   "baslik": "Eshâb-ı yemîn, eshâb-ı şimâl ve sâbikûn",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "3-32": {
+   "baslik": "Mü’minin kalbi kıymetlidir. Hiç kimsenin kalbini kırmamalıdır",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "3-33": {
+   "baslik": "Arş ve Kürsî. Kalbin üstünlükleri",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "3-34": {
+   "baslik": "Âlem-i emrdeki beş cevheri açıklamakdadır",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "3-35": {
+   "baslik": "Fenâ-fillâh",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "3-36": {
+   "baslik": "Allahü teâlâya kavuşduran tesavvuf yolu ikidir",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "3-37": {
+   "baslik": "Bir tesavvuf mütehassısının mektûbu",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 1,
+     "acikta": 1,
+     "tumde": 1,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "3-38": {
+   "baslik": "Tesavvuf yolu. Sülûk dereceleri. Fenâ, bekâ",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "3-39": {
+   "baslik": "Allahü teâlânın ihâta, kurb ve ma’iyyet sıfatları",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "3-4": {
+   "baslik": "Bey’ ve şirâ. Halâl ve harâm satışları",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 1,
+     "acikta": 1,
+     "tumde": 1,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "3-40": {
+   "baslik": "Âlem vehm mertebesinde yaratılmışdır",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "3-41": {
+   "baslik": "Âlimlerin kalbleri ile Allahü teâlâyı görmesi. Âlem-i misâl",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "3-42": {
+   "baslik": "Büyüklerin Allahü teâlâ ile konuşmaları",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "3-43": {
+   "baslik": "Allahü teâlânın mahlûklara yakın olması. Adem. İblîs",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "3-44": {
+   "baslik": "Nihâyet, âfâk ve enfüsün dışındadır. Evliyâ kimlere denir?",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "3-45": {
+   "baslik": "Fenâ fillâh, vasl-ı uryânî. Ayn-ül-yakîn",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "3-46": {
+   "baslik": "Kâ’be-i mu’azzamanın ve nemâzın kemâlâtı",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "3-47": {
+   "baslik": "Vahdet-i vücûd bilgisi. Vücûd-i vehmî",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 1,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": [
+      "Hâlbuki, her iki taraf da Ehl-i sünnetdir."
+     ]
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "3-48": {
+   "baslik": "Madde, Allahü teâlâya ayna olamaz",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "3-49": {
+   "baslik": "Dünyâ görünüşdür. Âhıret, dünyânın aslıdır",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "3-5": {
+   "baslik": "Alış-verişde muhayyerlik",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "3-50": {
+   "baslik": "Tesavvuf yolunun başında da, sonunda da islâmiyyete uymak lâzımdır",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "3-51": {
+   "baslik": "Üçüncü cildin seksenyedinci mektûbundaki bilgileri açıklamakdadır",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "3-52": {
+   "baslik": "Zât-ı ilâhînin bu âlem ile ilişiği yokdur. Nemâzda olanın, Allahü teâlâya yakınlığı. Nemâzın hakîkati",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "3-53": {
+   "baslik": "Âlemin, maddenin, zât-i ilâhîden nasîbi yokdur",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "3-54": {
+   "baslik": "Madde üzerinde yeni bilgiler. Hüceyre, hayât, mikrop, zehr",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "3-55": {
+   "baslik": "Ölüm, ölüme hâzırlanmak. Şifâ âyetleri",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 4,
+     "acikta": 4,
+     "tumde": 4,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 10,
+     "acikta": 10,
+     "tumde": 10,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 1,
+     "acikta": 1,
+     "tumde": 1,
+     "eksikler": []
+    }
+   }
+  },
+  "3-56": {
+   "baslik": "Meyyite yapılacak dînî vazîfe, kefen",
+   "turler": {
+    "farz": {
+     "toplam": 2,
+     "acikta": 2,
+     "tumde": 2,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 2,
+     "acikta": 2,
+     "tumde": 2,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 12,
+     "acikta": 12,
+     "tumde": 12,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 1,
+     "acikta": 1,
+     "tumde": 1,
+     "eksikler": []
+    }
+   }
+  },
+  "3-57": {
+   "baslik": "Cenâze nemâzı. Nemâzlarını kılmak câiz olmıyanlar",
+   "turler": {
+    "farz": {
+     "toplam": 1,
+     "acikta": 1,
+     "tumde": 1,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 1,
+     "acikta": 1,
+     "tumde": 1,
+     "eksikler": []
+    }
+   }
+  },
+  "3-58": {
+   "baslik": "Cenâze taşımak ve defn",
+   "turler": {
+    "farz": {
+     "toplam": 3,
+     "acikta": 3,
+     "tumde": 3,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 6,
+     "acikta": 6,
+     "tumde": 6,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 7,
+     "acikta": 7,
+     "tumde": 7,
+     "eksikler": []
+    }
+   }
+  },
+  "3-59": {
+   "baslik": "Kabr ziyâreti, ibâdet sevâbı hediyye edilir",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 3,
+     "acikta": 3,
+     "tumde": 3,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 2,
+     "acikta": 2,
+     "tumde": 2,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 6,
+     "acikta": 5,
+     "tumde": 5,
+     "eksikler": [
+      "(Şir’a)da diyor ki, (Kur’ân-ı kerîmi kırk günde hatm etmek, ya’nî başından sonuna kadar okumak müstehâbdır."
+     ]
+    }
+   }
+  },
+  "3-6": {
+   "baslik": "Bâtıl, fâsid, mekrûh satışlar. Sarraflık",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 1,
+     "acikta": 1,
+     "tumde": 1,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "3-60": {
+   "baslik": "Kabr ziyâretinin fâideleri",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 1,
+     "acikta": 1,
+     "tumde": 1,
+     "eksikler": []
+    }
+   }
+  },
+  "3-61": {
+   "baslik": "Resûlullahın yazdığı baş sağlığı mektûbu",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "3-62": {
+   "baslik": "Baş sağlığı mektûbu. Meyyite yapılacak hediyyeler",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "3-63": {
+   "baslik": "Meyyit için iskat ve devr yapmak. Defn izni nasıl alınır?",
+   "turler": {
+    "farz": {
+     "toplam": 1,
+     "acikta": 1,
+     "tumde": 1,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 4,
+     "acikta": 4,
+     "tumde": 4,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 1,
+     "acikta": 1,
+     "tumde": 1,
+     "eksikler": []
+    }
+   }
+  },
+  "3-64": {
+   "baslik": "Ferâiz bilgisi. Mîrâs alacak kimlerdir? Vasî ta’yîni",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 1,
+     "acikta": 1,
+     "tumde": 1,
+     "eksikler": []
+    }
+   }
+  },
+  "3-65": {
+   "baslik": "Ferâiz hesâbları. Mîrâsı bölmek",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "3-66": {
+   "baslik": "Kabr hayâtı ve tâ’ûndan ölmenin kıymeti",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 1,
+     "acikta": 1,
+     "tumde": 1,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "3-67": {
+   "baslik": "Dünyâ sıkıntılarının fâidesi. Tâ’ûnun sevâbı",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "3-68": {
+   "baslik": "Kazâya râzı olmalıdır, hattâ lezzet duymalıdır",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "3-69": {
+   "baslik": "Sevgiliden gelen sıkıntılar, iyiliklerinden dahâ tatlıdır",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "3-7": {
+   "baslik": "Ölüm hastasının satış ve hediyye yapması",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "3-70": {
+   "baslik": "(Se’âdet-i Ebediyye)nin son sözü",
+   "turler": {
+    "farz": {
+     "toplam": 1,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": [
+      "Fen bilgilerine, san’ate, en modern harb silâhlarını yapmağa uğraşmak, farz-ı kifâyedir."
+     ]
+    },
+    "vacib": {
+     "toplam": 1,
+     "acikta": 1,
+     "tumde": 1,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "3-8": {
+   "baslik": "Komşu, şüf’a ve diğer haklar üzerinde çeşidli bilgiler",
+   "turler": {
+    "farz": {
+     "toplam": 1,
+     "acikta": 1,
+     "tumde": 1,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 1,
+     "acikta": 1,
+     "tumde": 1,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "3-9": {
+   "baslik": "Şart ile söylenen şeyler",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  }
+ },
+ "toplam": {
+  "farz": {
+   "toplam": 254,
+   "acikta": 253,
+   "tumde": 253
+  },
+  "vacib": {
+   "toplam": 176,
+   "acikta": 175,
+   "tumde": 176
+  },
+  "sunnet": {
+   "toplam": 168,
+   "acikta": 166,
+   "tumde": 166
+  },
+  "mustehab": {
+   "toplam": 119,
+   "acikta": 115,
+   "tumde": 115
+  }
+ }
+}

@@ -150,7 +150,7 @@ b("namaz_farzlari / kaynakMetin","D",True,"... Beş farz ise, nemâzın içinded
 b("namaz_farzlari / 6 Niyyet","K",True,"Hangi namazı kıldığını bilmek",
   "Nemâza niyyet etmek demek, ismini, vaktini, kıbleyi, imâma uymağı irâde etmek, kalbinden geçirip, kılmağı tercîh etmek demekdir. Yalnız ilm, ya’nî ne yapacağını bilmek niyyet olmaz.","1-64",214,
   "Kitap niyyetin 'bilmek' olmadığını açıkça söylüyor; tablo niyyeti tam da 'bilmek' diye tarif ediyor.","'ismini, vaktini, kıbleyi, imâma uymağı irâde etmek, kalbinden geçirip, kılmağı tercîh etmek' yaz")
-b("namaz_farzlari / imlâ","B",True,"Hadesten, Necâsetten, Vakit, namaz, rükün, teşehhüd mikdârı","Hadesden tahâret, necâsetden tahâret ... vakt ... (Rükn) ... tehıyyât okuyacak kadar","1-52",122,"Kitabın imlâsı ve ifadesi farklı.","Kitabın imlâsına çevir")
+b("namaz_farzlari / imlâ","B",True,"Hadesten, Necâsetten, Vakit, namaz, rükün, teşehhüd mikdârı","Hadesden tahâret, necâsetden tahâret, setr-i avret, istikbâl-i kıble, vakt, niyyet, tahrîme tekbîri. ... Bu beş farzdan her birine (Rükn) de denir.","1-52",122,"Kitabın imlâsı ve ifadesi farklı.","Kitabın imlâsına çevir")
 
 # 31 otuzuc_farz
 b("otuzuc_farz / kaynakMetin","B",True,"Îmânın şartı : ALTI (6)İslâmın şartı : BEŞ (5)Nemâzın farzı ...","Îmânın şartı             : ALTI          (6)\nİslâmın şartı            : BEŞ           (5)","1-51",121,"Kitaptaki çizelge satırları alıntıda bitişik yazılmış (satır sonları silinmiş). İçerik satırları kitapla aynı.","Satır sonlarını koru")
@@ -167,7 +167,7 @@ b("efali_mukellefin / Müfsid","D",False,"Başlanmış bir ibâdeti bozan şeyle
 b("efali_mukellefin / Mekrûh","Y",False,"Yasak olduğu, açık olmayıp, zan ile anlaşılan işler.",
   "Onun beğenmediği şeylere ve ibâdetin sevâbını gideren şeylere (Mekrûh) denir.","1-1",18,
   "Kaynak madde 1-1'deki mekrûh tarifi farklı; tablodaki tarif 1-68'de yalnız 'tahrîmen mekrûh' için verilmiş, tenzîhen mekrûh ayrıca tarif ediliyor.","1-1'deki tarifi koy ya da tahrîmen/tenzîhen ayrımını ekle")
-b("efali_mukellefin / imlâ","B",True,"Helâl diyen, namaz, oruç, emr ettiği, yaptığı","halâl diyen ... nemâz ... emr etdiği veyâ yapdığı","1-46",None,"Kitap 'halâl', 'nemâz', 'etdiği' yazar.","Kitabın imlâsına çevir")
+b("efali_mukellefin / imlâ","B",True,"Helâl diyen, namaz, oruç, emr ettiği, yaptığı","Günâha, ya’nî harâma halâl diyen kâfir olur.","1-46",None,"Kitap 'halâl', 'nemâz', 'etdiği' yazar.","Kitabın imlâsına çevir")
 
 # 14 namaz_sunnetleri
 b("namaz_sunnetleri / kaynakMetin","Y",True,"İbâdetler yapılırken, yalnız ağız ile söylemeğe niyyet denmez. ...",
@@ -204,7 +204,7 @@ b("namaz_mekruhlari / 7 Esnemek","K",False,"Esnerken ağzını açık bırakmak 
 b("namaz_mekruhlari / 5 Bağdaş","D",True,"Bağdaş kurarak oturmak (özürsüz) — tahrîmen mekrûh","Teşehhüdlerde, sünnete uygun oturmamak, tenzîhen mekrûhdur. Özrü varsa, mekrûh olmaz.","1-68",241,
   "Kitabın mekrûhlar listesinde bağdaş kurmak geçmiyor (bağdaş yalnız hastanın oturuşu olarak 1-64'te anılıyor). En yakın madde 'sünnete uygun oturmamak' ve o da tenzîhen mekrûh.","Kaldır ya da 43. maddeyi aynen al")
 b("namaz_mekruhlari / 9 Secdede kollar","Y",True,"Secdede kollarını yere yayarak yatırmak","Secdede, erkeklerin kollarını yere döşemesi mekrûhdur. Kadınlar ise, kollarını yere yaymalıdır.","1-68",237,"Hüküm erkeklere mahsûs; kadınlar için tersi emr ediliyor. Kayıt düşmüş.","'erkeklerin' kaydını ekle")
-b("namaz_mekruhlari / eksik","Y",False,"11 madde","45 numaralı mekrûh","1-68",236,"Kitap 45 mekrûh sayıyor; tablo 11'ini veriyor ve bunu belirtmiyor.","Başlığa 'ba’zıları' ekle")
+b("namaz_mekruhlari / eksik","Y",False,"11 madde","45 — Farzdan sonra son sünnete hemen kalkmamak mekrûhdur.","1-68",236,"Kitap 45 mekrûh sayıyor; tablo 11'ini veriyor ve bunu belirtmiyor.","Başlığa 'ba’zıları' ekle")
 b("namaz_mekruhlari / imlâ","B",True,"Namazda Mekruh, özürsüz, rek'atte","Nemâzın mekrûhları ... özrsüz ... rek’atde","1-68",236,"Kitap 'nemâz', 'mekrûh', 'özrsüz' yazar.","Kitabın imlâsına çevir")
 
 # 18 cuma_namazi
@@ -230,7 +230,7 @@ b("zekat_nisab / Sığır terimleri","D",False,"tabî' ; müsinne","Otuz sığı
 # 21 zekat_kimlere_verilir
 b("zekat_kimlere_verilir / verilmez 4 karı-koca","Y",True,"Karı-koca birbirine verilmez",
   "Zevceye de zekât verilmez. İmâm-ı a’zam buyurdu ki, kadın da, fakîr olan zevcine zekât veremez. İmâmeyn ise, fakîr zevcine zekât verir dediler.","1-78",308,"Kadının zevcine vermesinde kitabın bildirdiği ihtilâf (İmâmeyn: verir) düşmüş.","Kitabın cümlelerini aynen al")
-b("zekat_kimlere_verilir / imlâ","B",True,"Verilmeyecek, toplıyan","Zekât verilmez ... toplayan (Sâ’î)","1-78",307,"Küçük imlâ farkları.","Kitabın imlâsına çevir")
+b("zekat_kimlere_verilir / imlâ","B",True,"Verilmeyecek, toplıyan","Zimmîye, ya’nî gayr-i müslim vatandaşa zekât verilmez.","1-78",307,"Küçük imlâ farkları.","Kitabın imlâsına çevir")
 
 # 53 sadaka_fitr
 b("sadaka_fitr / Kime vâcibdir","Y",True,"Nisâb mikdârı malı olan her müslimâna",
@@ -284,3 +284,123 @@ b("hac_sartlari / başlık","Y",False,"Haccın Vücûb (8) ... Şartları","A �
 # 39 ibadet_uc_kisim
 b("ibadet_uc_kisim / 3 hac vekâleti","Y",True,"Beden kısmı başkasına verilebilir (bedel hac)",
   "Bir kimse hayâtda iken, ancak devâmlı özrü olduğu zemân, bunun emri ve malı ile yerine başkası hac yapabilir.","1-84",341,"Kitabın 'ancak devâmlı özrü olduğu zemân, emri ve malı ile' şartı düşmüş; 'beden kısmı başkasına verilebilir' ifadesi kitapta yok.","Kitabın cümlesini aynen al")
+
+# 26 mubarek_geceler
+b("mubarek_geceler / imlâ","B",True,"Kadir Gecesi, Kurbân Bayramı, Mübârek","KADR GECESİ ... KURBAN BAYRAMI ... MUBÂREK GECELER","1-85",352,"On satırın hepsi kitapla aynı; yalnız ad yazımları farklı ('Kadir' / kitapta 'Kadr', 'Kurbân' / 'Kurban', başlıkta 'Mübârek' / 'Mubârek'). Kadr gecesinde kitabın andığı İmâm-ı Şâfi'înin 'onyedinci gece' görüşü verilmemiş.","Kitabın imlâsına çevir")
+
+# 27 haram_helal_hayvanlar
+b("haram_helal_hayvanlar / helâl sütunu","D",True,"Koyun, keçi, sığır, manda; Deve; Geyik, ceylan, dağ keçisi; Tavuk, hindi, kaz, ördek; Güvercin, serçe, bıldırcın; Deve kuşu",None,"2-41",619,
+  "Kaynak madde 2-41 bu hayvanların helâlliğini saymıyor (2-41'de helâl diye anılanlar: yabânî eşek, at, tavşan, balık). Ceylan, hindi, bıldırcın, deve kuşu kitabın hiçbir maddesinde bulunamadı. Satırlar sitenin kendi derlemesi.","Kitapta geçmeyen satırları kaldır; 2-41'deki 'Yabânî eşek eti ve sütü halâldir ... At eti ve sütü temizdir, halâldir ... Tavşan eti halâldir' cümlelerini kullan")
+b("haram_helal_hayvanlar / helâl 6 balık","D",True,"Pul ve solungaçlı balıklar (Hanefî'de yalnız balık câiz)","Avlanılan, yakalanan her balığı yimek halâl olduğu, Mâide sûresinde bildirilmekdedir. Su içinde kendiliğinden ölüp, karnı üst tarafda duran balık yinmez.","2-41",620,"'Pul ve solungaç' ölçüsü kitapta yok.","Kitabın cümlesini aynen al")
+b("haram_helal_hayvanlar / harâm 7 ehlî eşek","K",True,"Harâm Hayvanlar sütununda: Ehlî eşek (eti ve sütü tahrîmen mekrûhdur; yaban eşeği helâldir)","Ehlî eşek eti ve sütü tahrîmen mekrûhdur. Yalnız Mâlikî mezhebinde halâldir.","2-41",619,"Kitap ehlî eşeğe harâm değil tahrîmen mekrûh diyor; 'Harâm' sütununa konması sınıfı değiştiriyor. Mâlikî kaydı düşmüş.","Ayrı 'tahrîmen mekrûh' satırı yap; mâlikî kaydını ekle")
+b("haram_helal_hayvanlar / harâm 4-5","D",False,"Kartal, şahin, akbaba ...; Kedi","Avını köpek dişi ile veyâ pençesi ile yakalayan hayvanın etini yimek harâmdır.","2-41",620,"Kitap genel ölçüyü veriyor; tek tek adlar (kartal, şahin, akbaba, kedi, aslan, kaplan, ayı, çakal, tilki) 2-41'de geçmiyor.","Kitabın genel cümlesini kullan")
+b("haram_helal_hayvanlar / mezheb","Y",False,"(helâl/harâm genel hüküm)","Şâfi’î mezhebinde Besmelesiz kesileni yimek de câizdir. Mâlikî mezhebinde, Besmelesi unutulan da yinmez.","2-41",620,"Kitabın bu maddede andığı mezheb farkları tabloda yok.","Kaydı ekle")
+
+# 28 haram_helal_yiyecekler
+b("haram_helal_yiyecekler / kaynakMadde ve içerik","Y",True,"Kaynak 2-42 (içkiler); tablo genel yiyecek listesi",
+  "İçmesi harâm olan içkiler, dörtdür: ... İçmesi, İmâm-ı a’zama ve İmâm-ı Ebû Yûsüfe göre halâl olan içkiler de dörtdür:","2-42",624,
+  "2-42'nin asıl içeriği olan dört harâm içki (şerâb, tılâ, seker, kuru üzüm nakî'i) ve İmâm-ı a'zam ile Ebû Yûsüfe göre halâl dört içki (nebîz vb.) tabloda yok; tablo maddenin anlatmadığı genel bir listeye dönüşmüş.","Tabloyu 2-42'deki iki dörtlü listeye göre yeniden kur")
+b("haram_helal_yiyecekler / helâl 4-6, 8","D",True,"Çekirge (öldükten sonra da yenebilir); Süt, yumurta, bal, tereyağı; Sebze, meyve, tahıllar, baklagiller; Çay, kahve, su, meyve suyu",None,"2-42",None,"Bu satırların hiçbiri 2-41/2-42'de yok; 'çekirge', 'kahve' kitapta hiç geçmiyor.","Kaldır")
+b("haram_helal_yiyecekler / helâl 3 balık","D",False,"ağ, sepet, zehir veya suyun çekilmesi ile ölen balık helâldir","Ağ ile, saçma ile, ilâc ile, sarsıntı ile ölen her balık yinir.","2-41",620,"'sepet' ve 'suyun çekilmesi' kitapta yok; 'saçma', 'sarsıntı' düşmüş.","Kitabın cümlesini aynen al")
+b("haram_helal_yiyecekler / harâm 6 putlar","D",True,"Putlar adına kesilen hayvan",None,"2-41",None,"2-41/2-42'de bu hüküm bulunamadı.","Kaldır ya da kitaptaki yerini göster")
+b("haram_helal_yiyecekler / imlâ","B",True,"Müslüman, Şarap, öldükten, sarhoş","müslimân ... şerâb ... serhoş","2-42",624,"Kitap 'müslimân', 'şerâb', 'serhoş' yazar.","Kitabın imlâsına çevir")
+
+# 29 cenaze_namazi
+b("cenaze_namazi / 3. Tekbîr düâ metni","D",False,"cenâze düâsı okunur (Allahümmagfir lihayyinâ ve meyyitinâ...)","[Cenâze düâsı yerine, Rabbenâ âti-nâ..., veyâ yalnız Allahüm-magfir leh demek veyâhud düâ niyyeti ile besmelesiz Fâtiha-i şerîfe okumak da olur.","3-57",1000,"Tablodaki düâ metni kitapta bulunamadı; kitap başka seçenekler sayıyor.","Parantezi kaldır ya da kitabın seçeneklerini yaz")
+b("cenaze_namazi / Niyet Edilir","D",False,"Allah rızası için cenaze namazı kılmaya ve meyyit için düâ etmeye niyet edilir","Selâm verirken, cenâzeye ve cemâ’ate niyyet edilir.","3-57",1000,"3-57'de nemâza başlarken yapılacak niyyetin sözleri bulunamadı.","Kitapta dayanağı yoksa kaldır")
+b("cenaze_namazi / Cenâze Konur","Y",False,"Cenâze kıbleye doğru konur, imâm göğsü hizasında durur","Cenâzenin başı, imâmın sağına, ayağı soluna gelecekdir. Tersine koymak günâhdır. ... İmâm, cenâzenin göğsü hizâsında durur.","3-57",999,"'kıbleye doğru' belirsiz; kitabın baş-ayak yönü kaydı yok.","Kitabın cümlelerini aynen al")
+
+# 46 kefen_bilgisi — içerik kitapla aynı
+
+# 34 ezanin_kelimeleri
+b("ezanin_kelimeleri / kaynakMetin","B",True,"... ho-parlör ile, tegannî yaparak okunan ezânda ...","Ho-parlör ile, tegannî yaparak okunan ezânda,","1-62",209,"Alıntıda büyük harf küçültülmüş ('Ho-parlör' → 'ho-parlör'); başlık satırı ile metin birleştirilmiş. Yedi satır kitapla aynı anlamda.","Alıntıyı aynen düzelt")
+
+# 35 seferilik_kurallari
+b("seferilik_kurallari / Orucu Bozabilir ve mezheb","Y",False,"Yolculukda orucu bozup sonra kazâ edebilirsin; Üç günlük (104 km)",
+  "Orucunu bozabilir. Kurban kesmesi vâcib olmaz. Müsâfir râhat ise, orucunu bozmamalıdır.","1-65",222,
+  "Kitabın 'râhat ise, orucunu bozmamalıdır' kaydı düşmüş; 104 km Hanefî ölçüsü olup kitap şâfi'î, mâlikî ve hanbelîde mesâfenin 'seksen kilometre altıyüzkırk metre' olduğunu ayrıca bildiriyor.","Kayıtları ekle")
+
+# 40 dua_sartlari
+b("dua_sartlari / 4","B",True,"Farzları yapması, bilhâssa beş vakt nemâz kılması, oruclarını tutması, zekât vermesi","farzları yapması, bilhâssa beş vakt nemâz kılması, Ramezân oruclarını tutması, zekât vermesi","1-36",73,"'Ramezân' kelimesi düşmüş. Öteki satırlar kitapla aynı.","'Ramezân oruclarını' yaz")
+
+# 44 fikh_dort_kisim
+b("fikh_dort_kisim / kaynakMetin","D",True,"Fıkh ilmi, ya'nî ahkâm-ı islâmiyye, dört büyük kısma ayrılır: I — (İbâdât): Nemâz, oruc, zekât, hac ve bunlar gibi Allahü teâlâya karşı yapılan vazîfelerdir. II — (Münâkehât): Evlenme, boşanma gibi hukûk-ı âile. III — (Mu'âmelât): Alış-veriş, kirâlama gibi ekonomi. IV — (Ukûbât): Cezâ kanunları.",
+  "Fıkh ilmi, ya’nî (Ahkâm-ı islâmiyye), dört büyük kısma ayrılır: 1 — (İbâdât) olup beşe ayrılır: Nemâz, oruc, zekât, hac, cihâd.","2-16",437,
+  "'Kitaptan' diye gösterilen alıntı kitapta yok; ilk cümleden sonrası sitenin yazdığı bir özet ('hukûk-ı âile', 'ekonomi', 'Cezâ kanunları' ifadeleri kitapta geçmiyor). Ağaçtaki dört dal ise kitapla aynı.","Alıntıyı kitaptaki cümlelerle değiştir")
+
+# 45 imansiz_on_sebep
+b("imansiz_on_sebep / kaynakMetin","B",True,"isâl yazmak fâideli görüldü: (On şey, ... 5- ... şükretmemek","birkaç misâl yazmak fâideli görüldü: (On şey, son nefesde îmânsız gitmeğe sebeb olur: ... 5- Allahü teâlâya ve iyilik gelmesine sebeb olanlara şükr etmemek,","2-44",641,"Alıntı kelime ortasından ('isâl') başlıyor; 'şükr etmemek' bitişik yazılmış, bu yüzden alıntı kitapta aynen bulunmuyor.","Alıntıyı kitaptaki sınırlarla ve yazımla düzelt")
+b("imansiz_on_sebep / 9","Y",False,"Dînine bağlı olan müslimânları aşağı görmek","9- Dînine bağlı olan müslimânları aşağı görmek. Bunlara gerici gibi şeyler söylemek,","2-44",641,"Maddenin devamı ('Bunlara gerici gibi şeyler söylemek') düşmüş.","Kitabın maddesini tam al")
+
+# 47 katl_turleri
+b("katl_turleri / 1 Amd diyet","Y",True,"Diyet: Velîler affederse","Maktûlün velîlerinden biri afv ederse veyâ velî ile kâtil, belli bir mal, para ile uyuşurlarsa, kısâs yapılmaz. Uyuşulan mal alınır.","3-24",892,"Kitap afv ile mal üzerine uyuşmayı ayrı ayrı sayıyor; afvda mal alınmaz. 'Velîler affederse diyet' ifadesi kitabın söylediğini karıştırıyor; kitap burada 'diyet' kelimesini de kullanmıyor.","'afv ederse kısâs düşer; mal ile uyuşurlarsa uyuşulan mal alınır' anlamında kitabın cümlesini al")
+b("katl_turleri / imlâ","B",True,"Amd (kasıtlı), Şibh-i amd, Hatâya sebep","Amden ... şebehe olan ... Hatâya sebeb olan","3-24",892,"Kitap 'şebeh', 'sebeb' yazar.","Kitabın imlâsına çevir")
+
+# 51 setr_avret
+b("setr_avret / 4 Yabancı kadına bakma","Y",True,"Yüz ve ellere zaruret olmadan bakmak câiz değildir",
+  "Erkeklerin yabancı kadının yüzünden ve avuçlarının içinden ve dışından başka yerine bakmaları dört mezhebde de harâmdır. Kızların yüzlerine şehvet ile bakmaları da harâmdır.","1-58",165,
+  "Kitabın asıl hükmü (yüz ve avuçlar dışına bakmak dört mezhebde harâm) satırda yok; yüz ve avuçlar için kitap şehvet kaydı koyuyor ve başka yerde 'lüzûmsuz olarak şehvetsiz bakmak mekrûhdur' diyor. 'Zaruret olmadan câiz değildir' ifadesi kitabın ayrımını kaybediyor.","Kitabın iki cümlesini aynen al")
+b("setr_avret / 2 Kadın, kendi cinsine karşı","Y",False,"Göbekten diz altına kadar","Kadınların birbirlerine avret yeri, erkeğin erkeğe avret yeri gibidir. ... Gayr-ı müslim ve mürted kadınların ... müslimân kadınlarına bakması, ya’nî müslimân kadınların bunlara görünmeleri, yabancı erkeklere görünmeleri gibi, üç mezhebde de harâmdır.","1-58",167,"Satır doğru, ama kitabın gayr-ı müslim kadınlar için koyduğu istisna yok; okuyucu her kadına karşı aynı hükmü sanabilir.","İstisnayı ekle")
+b("setr_avret / imlâ","B",True,"Namazda, Göbekten","nemâz ... göbekden","1-58",163,"Kitap 'nemâz', 'göbekden' yazar.","Kitabın imlâsına çevir")
+
+# 52 nikah_sartlari
+b("nikah_sartlari / kaynakMetin","Y",True,"Müslimân kadın ile evli olanın da, bunları nikâhlaması câizdir. ... gusl abdesti almağa cebr edemez.",
+  "Nikâhın ikinci şartı, Hanefî mezhebinde, [fıskı belli olsa da] îcâb ve kabûl yapılırken, âkıl ve bâlig müslimân iki erkek veyâ bir erkekle iki kadın şâhid bulunmaları ve îcâb ile kabûlü işitmeleri lâzımdır.","2-34",565,
+  "Alıntı ehl-i kitâb kadınla evlenmeyi anlatıyor; tablodaki şartlarla ilgisi yok. Ayrıca kitapta 'Ni’met-i islâm' yazılırken alıntıda 'Nimet-i islâm' yazılmış.","kaynakMetin'i kitaptaki şartları sayan cümleyle değiştir")
+b("nikah_sartlari / Şâhidler","Y",True,"İki erkek veya bir erkek iki kadın müslimân şâhid bulunmalıdır","Şâfi’î ve Hanbelîde, şâhidlerin erkek olması ve fıskları belli olmaması şartdır. ... Mâlikî mezhebinde, şâhid lâzım olmayıp, velînin bulunması ve nikâhın i’lân edilmesi ... şartdır.","2-34",565,"Kitap bunu 'Hanefî mezhebinde' diye veriyor ve öteki mezheblerin farklı şartlarını sayıyor; tabloda mezheb kaydı yok.","'Hanefî mezhebinde' kaydını ekle")
+
+# 54 kurban_hukumleri
+b("kurban_hukumleri / kaynakMetin","Y",True,"Zekât alması câiz olur). Görülüyor ki, fetvâ imâm-ı Muhammede göre verilmişdir]. ...",
+  "Köyde, çölde, şehrde mukîm olan, âkıl, bâlig, hür ve müslimân erkek ve kadının, ihtiyâcından fazla nisâb mikdârı malı veyâ parası varsa, kurban bayramı için niyyet ederek, belli günlerde, belli bir hayvanı kesmeleri vâcib olur","1-81",324,"Alıntı cümle ortasından başlıyor ve tablodaki hükümlerin hiçbirini içermiyor.","kaynakMetin'i maddenin ilk cümlesiyle değiştir")
+b("kurban_hukumleri / Kime vâcibdir","Y",True,"Nisâb mikdârı malı olan, mukîm, hür, âkıl ve bâliğ müslimâna (vâcib)","Diğer üç mezhebde sünnet-i müekkede olduğu (Mîzân-ı...","1-81",324,"Vâciblik Hanefî hükmüdür; kitap öteki üç mezhebde sünnet-i müekkede olduğunu bildiriyor. Kayıt düşmüş.","'Hanefîde vâcib' kaydını ekle")
+b("kurban_hukumleri / Hayvan çeşitleri manda","D",False,"Koyun, keçi, sığır, manda ve deve kesilebilir","Kurban, koyun, keçi, sığır, deveden birini, kurban bayramının ilk üç gününde, kurban niyyeti ile kesmek demekdir.","1-81",324,"1-81 'manda' saymıyor (manda yalnız 1-78'de zekât için 'sığır gibidir' diye geçiyor).","'manda'yı çıkar ya da kitaptaki dayanağı göster")
+b("kurban_hukumleri / Etin taksîmi","Y",False,"Üçe bölünüp bir kısmı fakirlere, bir kısmı dostlara verilir, bir kısmı evde kalır","Etin üçde birini evine, üçde birini komşulara, gerisini fakîrlere vermek müstehabdır. Hepsini fakîrlere sadaka vermek veyâ kendi evine bırakmak da olur.","1-81",327,"Kitabın 'müstehabdır' hükmü ve 'hepsini ... vermek veyâ evine bırakmak da olur' ruhsatı düşmüş; satır bir zorunluluk gibi okunuyor.","Kitabın cümlesini aynen al")
+
+# 55 hadis_cesitleri
+b("hadis_cesitleri / Hadîs-i mevkûf","K",True,"Eshâb-ı kirâma isnâd edilen sözler",
+  "8 — (Hadîs-i mevkûf): Sahâbîye “radıyallahü teâlâ anhüm ecma’în” kadar söyliyen hep bildirilip, Sahâbînin, Resûl-i ekremden “sallallahü aleyhi ve sellem” işitdim demeyip, böyle buyurmuş dediği hadîs-i şerîflerdir.","2-6",422,
+  "Kitap mevkûfu, sahâbînin 'işitdim' demeden Resûlullahdan naklettiği hadîs diye tarif ediyor; tablo 'sahâbeye isnâd edilen sözler' diyerek kitabın tarifinden başka bir tarif veriyor.","Kitabın tarifini aynen al")
+b("hadis_cesitleri / Hadîs-i meşhûr","Y",False,"İlk tabakada bir veya iki kişiden rivâyet edilip sonra şöhret bulan hadîs","7 — (Hadîs-i meşhûr): İlk zemânda bir kişi bildirmişken, ikinci asrda şöhret bulan hadîs-i şerîflerdir.","2-6",423,"Kitap 'bir kişi' ve 'ikinci asrda' diyor; tablo 'bir veya iki kişi' diyor ve asrı belirtmiyor.","Kitabın tarifini aynen al")
+b("hadis_cesitleri / Hadîs-i sahîh","Y",False,"Râvîleri âdil ve hafızası kuvvetli olan, senedinde kopukluk bulunmayan hadîs","9 — (Hadîs-i sahîh): Âdil ve hadîs ilmini bilen kimselerden işitilen, müsned-i müttasıl ve mütevâtir ve meşhûr hadîslerdir.","2-6",423,"Kitabın tarifi farklı sözlerle ve 'mütevâtir ve meşhûr' kaydıyla veriliyor.","Kitabın tarifini aynen al")
+b("hadis_cesitleri / eksik","Y",False,"9 tür","31 — (Eser): Mevkûf ve maktû’ hadîs veyâ düâ bildiren merfû’ hadîs demekdir.","2-6",422,"Kitap 31 terim sayıyor; tablo 9'unu seçmiş, bunu belirtmiyor (mürsel, müsned, haber-i âhâd, garîb, mevdû' vb. yok).","Başlığa 'ba’zıları' ekle")
+b("hadis_cesitleri / kaynakMetin","B",True,"... Resûl-i ekrem “sallallahü aleyhi ve sellem” buyurdu ki, dedi","buyurdu ki, dediği hadîs-i şerîflerdir.","2-6",422,"Alıntı kelime ortasında kesilmiş ('dedi|ği').","Cümle sonuna kadar al")
+
+# 56 nafile_namazlar
+b("nafile_namazlar / İşrâk ve Duhâ ayrı satır","K",True,"İşrâk (Güneş doğduktan 40-50 dk sonra, 2-4 rek'at) / Duhâ (Kuşluk) (Güneş yükselince, 2-12 rek'at)",
+  "Duhâ vakti olunca, iki rek’at (İşrak nemâzı) kılmak sünnetdir. Bu nemâza (Kuşluk nemâzı) da denir.","1-60",None,
+  "Kitap işrak nemâzı ile kuşluk nemâzını aynı nemâz sayıyor ve 'iki rek’at' diyor; tablo iki ayrı nemâz yapıp kitapta olmayan rek'at aralıkları ve dakîka veriyor.","Tek satıra indir; kitabın cümlesini aynen al")
+b("nafile_namazlar / Evvâbîn","K",True,"Rekat: 6-20; Akşamın farzı ve sünnetinden sonra kılınır","Akşam nemâzının farzından sonra kılınan altı rek’ate (Evvâbîn) nemâzı denir.","1-60",183,"Kitap altı rek'at diyor; '6-20' kitapta yok. 1-51'de bu altı rek'atin ilk ikisinin son sünnet yerine sayıldığı bildiriliyor; tablodaki sıra kitaba uymuyor.","'altı rek’at, farzdan sonra' yaz")
+b("nafile_namazlar / Teheccüd","D",True,"Gece yarısından sonra; 2-12 rek'at; En kıymetli nâfiledir","[Teheccüd, gecenin üçde ikisi geçdikden sonra, kılınan nemâza denir, imsâk vaktinden önce kılınır.","1-46",None,"Kitap teheccüdün vaktini 'gecenin üçde ikisi geçdikden sonra' diye veriyor; rek'at aralığı ve 'en kıymetli nâfile' bulunamadı. 1-60'ta teheccüd geçmiyor.","Kitabın tarifini al; sayıları kaldır")
+b("nafile_namazlar / Hâcet, Abdest namazı","D",True,"Hâcet namazı 2-12 rek'at; Abdest alıp kurulanmadan iki rekat kılmak müstehabdır","23 — Abdestden sonra (Sübha), ya’nî iki rek’at nemâz kılmakdır.","1-52",None,"Hâcet nemâzının rek'at sayısı kitapta bulunamadı (yalnız adı 2-17'de geçiyor). Abdest nemâzı için 'kurulanmadan' kaydı yok; kitap bunu abdestin edebleri arasında sayıyor.","Sayıları ve 'kurulanmadan'ı kaldır")
+b("nafile_namazlar / kaynakMadde","B",True,"kaynakMadde 1-60 (bütün tablo)",None,"1-60",183,"1-60'ta yalnız Evvâbîn tarifi var; tehıyyet-ül-mescid 1-69/1-74'te, istihâre 3-37'de, teheccüd 1-37/1-46'da, abdest nemâzı 1-52'de.","Her satıra kendi atfını ver")
+
+# 57 islamiyyetin_temeli
+b("islamiyyetin_temeli / tamamı","D",False,"İslâmiyyetin temeli üçdür: İlm, amel ve ihlâs. ... İhlâs, ilmin ve amelin Allah rızâsı, Allah sevgisi ile olmasıdır. Mal, mevkı' ve şöhret için olmamasıdır.",
+  "Ahkâm-ı islâmiyyeye tam uyabilmek ise, ilm, amel ve ihlâs ile olur.","3-44",None,
+  "Alıntı ve satırlar 241 maddenin hiçbirinde geçmiyor; gösterilen s. 16 madde metinlerinin dışında (önsöz), veride yok. Bu yüzden denetlenemedi. Kitapta en yakın ifade 3-44'teki cümle. İhlâs satırındaki tarif ('Allah rızâsı, Allah sevgisi ile ... Mal, mevkı' ve şöhret için olmamasıdır') de maddelerde bulunamadı.","PDF'in 16. sahîfesiyle karşılaştırılmalı; doğrulanamazsa kaldırılmalı")
+
+# 58 amel_uce_ayrilir
+b("amel_uce_ayrilir / kaynakMetin","Y",True,"(Miftâh-un-necât)daki (Yâ Alî, ...) ... Hakîkat kitâbevi tarafından basdırılmışdır.",
+  "(Mir’ât-ül-mekâsıd) kitâbı, yetmişüçüncü sahîfede ve İbni Âbidîn “rahmetullahi aleyh” abdestin niyyetinde ve (Milel-Nihal) tercemesi, ellidördüncü sahîfesinde diyor ki, amel, ya’nî iş üçe ayrılır:","1-1",20,
+  "Alıntı farzları tamamlamayı anlatan hadîsler; amelin üçe ayrılmasıyla ilgisi yok. Satırların üçü de kitapla aynen aynı.","kaynakMetin'i 'amel, ya’nî iş üçe ayrılır: ...' paragrafıyla değiştir")
+
+# 59 islam_bilgileri_ikiye
+b("islam_bilgileri_ikiye / kaynakMetin","B",True,"Birincisi (Ulûm-i nakliyye) dir.","Birincisi (Ulûm-i nakliyye)dir.","1-11",25,"Alıntıya kitapta olmayan bir boşluk girmiş. Satırların hepsi kitapla aynı.","Boşluğu kaldır")
+
+# 60 kuran_bilgiler_uc
+b("kuran_bilgiler_uc / kaynakMadde ve kaynakMetin","B",True,"kaynakMadde 1-26, s. 48; kaynakMetin: 26 — Ahkâm-ı islâmiyyenin hepsi Kur’ân-ı kerîmden çıkmakdadır ...",
+  "(Mevdû’ât-ül-ulûm)da diyor ki, (Kur’ân-ı kerîmdeki bilgiler üç kısmdır: Birincisini hiçbir kuluna bildirmemişdir. Kendisini, ismlerini ve sıfatlarını kendinden başka kimse bilemez.","1-25",None,
+  "Tablonun içeriği kitapla aynı, fakat 1-25'ten (Mevdû’ât-ül-ulûm nakli) alınmış; atıf ve alıntı 1-26'yı (ahkâmın üç kısmı) gösteriyor. kaynakMetin bu tabloyla ilgisiz (kuran_ahkam_uc tablosunun alıntısıyla aynı).","Atfı 1-25'e çevir; kaynakMetin'i 1-25'teki cümleyle değiştir")
+
+# 62 resulullah_yaptiklari — içerik kitapla aynı
+# 63 sunnet_tasnifi
+b("sunnet_tasnifi / kaynakMetin","Y",False,"Resûlullahın ... yapdığı ve kaçındığı şeyler iki kısmdır: Birisi, ibâdet olarak yapdığı ve kaçındığı şeylerdir.",
+  "Bunları devâmlı yaparak, nâdiren terk etmiş ve terk edenlere birşey dememiş ise, (Sünnet-i hüdâ) veyâ (Müekked sünnet) denir.","1-28",51,"Alıntı tablonun konusu olan sünnet çeşidlerini değil, madde başındaki iki kısm ayrımını gösteriyor. Satırlar kitapla aynı.","kaynakMetin'i sünnet çeşidlerini sayan İbni Âbidîn naklinden al")
+
+# 64 kafirlerin_yaptiklari
+b("kafirlerin_yaptiklari / kaynakMetin","B",True,"ını anlatırken buyuruyor ki; (Kâfirlerin ...","29 — İbni Âbidîn “rahmetullahi teâlâ aleyh”, nemâzın mekrûhlarını anlatırken buyuruyor ki;","1-29",52,"Alıntı kelime ortasından ('...ını') başlıyor. Satırlar kitapla aynı (ikinci satır Birgivî naklinden).","Alıntıyı cümle başından al")
+
+# 65 bidat_uc_tur
+b("bidat_uc_tur / kaynakMetin","B",True,"... Çünki, hiçbir bid'atde nûr yokdur, ışık yokdur. Çünki, her bid'at, ...",
+  "Çünki, hiçbir bid’atde nûr yokdur, ışık yokdur. Hiçbir hastaya şifâ yokdur. Hiçbir hastaya ilâc olamazlar. Çünki, her bid’at,","1-34",69,
+  "Alıntıda iki cümle sessizce çıkarılıp kalan parçalar birleştirilmiş; bu yüzden kitapta aynen bulunmuyor. Ayrıca alıntı üç dürlü bid'atı anlatan yer değil ('Bid’at üç dürlüdür: 1 — İslâmiyyetin küfr alâmeti dediği şeyleri ...'). Satırlar kitapla aynı.","kaynakMetin'i 'Bid’at üç dürlüdür:' paragrafıyla değiştir")

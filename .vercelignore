@@ -39,3 +39,7 @@
 /arama-sozluk.js
 /okuma-plani.js
 /texts
+
+# Fıkhî hükümler dizini yayından kaldırıldı (js/cekirdek/ayar.js); verisi de sunulmaz
+/veri/hukumler
+/veri-arama/hukum-1.json

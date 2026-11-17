@@ -1,0 +1,392 @@
+{
+ "secilen": [
+  "1-56",
+  "1-60",
+  "1-65",
+  "1-66",
+  "1-67",
+  "1-74",
+  "1-78",
+  "1-79",
+  "1-82",
+  "1-84",
+  "2-34",
+  "3-58"
+ ],
+ "maddeler": {
+  "1-56": {
+   "baslik": "Necâsetden tahâret. İstincâ. İstibrâ",
+   "turler": {
+    "farz": {
+     "toplam": 5,
+     "acikta": 5,
+     "tumde": 5,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 3,
+     "acikta": 3,
+     "tumde": 3,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 6,
+     "acikta": 6,
+     "tumde": 6,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 4,
+     "acikta": 4,
+     "tumde": 4,
+     "eksikler": []
+    }
+   }
+  },
+  "1-60": {
+   "baslik": "Nemâz vaktleri. Takvîmler. Ezân",
+   "turler": {
+    "farz": {
+     "toplam": 5,
+     "acikta": 5,
+     "tumde": 5,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 2,
+     "acikta": 2,
+     "tumde": 2,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 2,
+     "acikta": 2,
+     "tumde": 2,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 4,
+     "acikta": 4,
+     "tumde": 4,
+     "eksikler": []
+    }
+   }
+  },
+  "1-65": {
+   "baslik": "Yolculukda, otobüsde, gemide, tayyârede nemâz",
+   "turler": {
+    "farz": {
+     "toplam": 1,
+     "acikta": 1,
+     "tumde": 1,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 1,
+     "acikta": 1,
+     "tumde": 1,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "1-66": {
+   "baslik": "Nemâzın vâcibleri, secde-i sehv, secde-i tilâvet ve vitr nemâzı",
+   "turler": {
+    "farz": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 10,
+     "acikta": 9,
+     "tumde": 10,
+     "eksikler": [
+      "Secde-i sehvi bile bile yapmıyan veyâ nemâzın vâciblerinden birini, meselâ Fâtiha okumağı, bilerek terk eden kimsenin, o nemâzı tekrâr kılması vâcib olur.  [yalnız tum]"
+     ]
+    },
+    "sunnet": {
+     "toplam": 3,
+     "acikta": 3,
+     "tumde": 3,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 1,
+     "acikta": 1,
+     "tumde": 1,
+     "eksikler": []
+    }
+   }
+  },
+  "1-67": {
+   "baslik": "Nemâzı bozan şeyler. Kâfirlere teşebbüh",
+   "turler": {
+    "farz": {
+     "toplam": 1,
+     "acikta": 1,
+     "tumde": 1,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 2,
+     "acikta": 2,
+     "tumde": 2,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 2,
+     "acikta": 2,
+     "tumde": 2,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 3,
+     "acikta": 3,
+     "tumde": 3,
+     "eksikler": []
+    }
+   }
+  },
+  "1-74": {
+   "baslik": "Kazâ nemâzları. Nemâz kılmıyanın cezâsı",
+   "turler": {
+    "farz": {
+     "toplam": 9,
+     "acikta": 9,
+     "tumde": 9,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 7,
+     "acikta": 7,
+     "tumde": 7,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 6,
+     "acikta": 6,
+     "tumde": 6,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "1-78": {
+   "baslik": "Zekât vermek. Para, mal, hayvan ve toprak mahsûllerinin zekâtı",
+   "turler": {
+    "farz": {
+     "toplam": 24,
+     "acikta": 24,
+     "tumde": 24,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 2,
+     "acikta": 2,
+     "tumde": 2,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "1-79": {
+   "baslik": "Ramezân-ı şerîfin kıymeti. Oruc nasıl tutulur?",
+   "turler": {
+    "farz": {
+     "toplam": 3,
+     "acikta": 3,
+     "tumde": 3,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 5,
+     "acikta": 5,
+     "tumde": 5,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 4,
+     "acikta": 4,
+     "tumde": 4,
+     "eksikler": []
+    }
+   }
+  },
+  "1-82": {
+   "baslik": "Adak ne demekdir? Günâh olan adaklar",
+   "turler": {
+    "farz": {
+     "toplam": 7,
+     "acikta": 7,
+     "tumde": 7,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 2,
+     "acikta": 2,
+     "tumde": 2,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    }
+   }
+  },
+  "1-84": {
+   "baslik": "Hacca gitmek. Hac nasıl yapılır?",
+   "turler": {
+    "farz": {
+     "toplam": 13,
+     "acikta": 13,
+     "tumde": 13,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 7,
+     "acikta": 7,
+     "tumde": 7,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 5,
+     "acikta": 5,
+     "tumde": 5,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 3,
+     "acikta": 2,
+     "tumde": 2,
+     "eksikler": [
+      "Her tavâfdan sonra zemzem içmek müstehâbdır."
+     ]
+    }
+   }
+  },
+  "2-34": {
+   "baslik": "İslâmiyyetde nikâh. Evlenmesi câiz olmıyan kadınlar",
+   "turler": {
+    "farz": {
+     "toplam": 2,
+     "acikta": 2,
+     "tumde": 2,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 5,
+     "acikta": 5,
+     "tumde": 5,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 4,
+     "acikta": 4,
+     "tumde": 4,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 3,
+     "acikta": 3,
+     "tumde": 3,
+     "eksikler": []
+    }
+   }
+  },
+  "3-58": {
+   "baslik": "Cenâze taşımak ve defn",
+   "turler": {
+    "farz": {
+     "toplam": 3,
+     "acikta": 3,
+     "tumde": 3,
+     "eksikler": []
+    },
+    "vacib": {
+     "toplam": 0,
+     "acikta": 0,
+     "tumde": 0,
+     "eksikler": []
+    },
+    "sunnet": {
+     "toplam": 6,
+     "acikta": 6,
+     "tumde": 6,
+     "eksikler": []
+    },
+    "mustehab": {
+     "toplam": 7,
+     "acikta": 7,
+     "tumde": 7,
+     "eksikler": []
+    }
+   }
+  }
+ },
+ "toplam": {
+  "farz": {
+   "toplam": 73,
+   "acikta": 73,
+   "tumde": 73
+  },
+  "vacib": {
+   "toplam": 40,
+   "acikta": 39,
+   "tumde": 40
+  },
+  "sunnet": {
+   "toplam": 40,
+   "acikta": 40,
+   "tumde": 40
+  },
+  "mustehab": {
+   "toplam": 29,
+   "acikta": 28,
+   "tumde": 28
+  }
+ }
+}

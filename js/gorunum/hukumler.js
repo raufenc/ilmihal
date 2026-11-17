@@ -2,6 +2,7 @@
    ve /hukumler/:tur (?katman=tum&ara=…&alt=…&kisim=…&madde=…).
    Her hüküm kitaptaki cümlesiyle aynen basılır; künyesi sahîfeye (kitabın aslı) ve maddeye götürür.
    "Açık" ve "tamamı" katmanları ayrı parçalardır, birleştirilmez. */
+import { HUKUMLER_ACIK } from '../cekirdek/ayar.js';
 import { h, doldur, durum, iskelet } from '../cekirdek/dom.js';
 import { veri, maddeKimlik } from '../cekirdek/veri.js';
 import { cssYukle } from '../cekirdek/css.js';
@@ -401,9 +402,27 @@ async function ciz(kap, p, baglam) {
   }
 }
 
+/* Dizin yayından kaldırıldığında gösterilen not (js/cekirdek/ayar.js → HUKUMLER_ACIK). Veri yüklenmez. */
+function kapaliNot(kap, baglam) {
+  baglam.baslikYaz('Fıkhî hükümler dizini gözden geçiriliyor');
+  baglam.metaYaz({ robots: 'noindex' });
+  kap.append(h('.kap.kap-dar', { style: { paddingBlock: 'var(--a-9)' } },
+    h('p.ust-yazi.surh', 'Kitaptan Derlenenler'),
+    h('h1.baslik-2', { style: { marginTop: 'var(--a-3)' } }, 'Fıkhî hükümler dizini gözden geçiriliyor'),
+    h('p.giris-yazi', { style: { marginTop: 'var(--a-5)' } },
+      'Bu dizin kitabın kendisi değildi; kitaptan sonradan derlenmişti. Yapılan denetimde bazı cümlelerin yanlış başlık altında durduğu görüldü. Dizin düzeltilip yeniden denetlenene kadar yayından kaldırılmıştır.'),
+    h('p.giris-yazi', { style: { marginTop: 'var(--a-4)' } },
+      'Hükümleri kitabın kendi metninden okuyunuz; fihristten ilgili maddeyi açabilir ya da kitabın tamamında arayabilirsiniz.'),
+    h('.sira', { style: { marginTop: 'var(--a-6)' } },
+      h('a.dugme.dugme-ana', { href: '/icindekiler' }, 'Fihrist'),
+      h('a.dugme', { href: '/arama' }, 'Kitapta arayın'),
+      h('a.dugme', { href: '/fevaid' }, 'Kitaptan Derlenenler'))));
+}
+
 export default {
   ad: 'hukumler',
   async kur(kap, p, baglam) {
+    if (!HUKUMLER_ACIK) return kapaliNot(kap, baglam);
     await cssYukle('/css/hukumler.css');
     d = { kap, gozlemciler: [], tur: null };
     const benim = d;
@@ -411,6 +430,7 @@ export default {
     await ciz(kap, p, baglam);
   },
   async guncelle(p, baglam) {
+    if (!HUKUMLER_ACIK) return;
     if (!d) return;
     await ciz(d.kap, p, baglam);
   }

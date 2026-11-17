@@ -5,6 +5,7 @@
    - Sorgu hiçbir yerde HTML'e ya da özniteliğe gömülmez; vurgular DOM düğümleriyle kurulur.
    Arama sayfası (js/gorunum/arama.js) buradaki vurguluMetin, aramaYolu ve sonAramalar'ı da kullanır. */
 
+import { HUKUMLER_ACIK } from '../cekirdek/ayar.js';
 import { h, doldur } from '../cekirdek/dom.js';
 import { cssYukle } from '../cekirdek/css.js';
 import { git } from '../cekirdek/yonlendirici.js';
@@ -80,7 +81,7 @@ const BASLANGIC = [
   ['Fihrist', '/icindekiler', 'Kitabın bütün maddeleri'],
   ['Dinî lügat', '/sozluk', 'Kitaptaki kelimelerin mânâları'],
   ['Hâl tercemeleri', '/sahislar', 'Kitapta adı geçen zâtlar'],
-  ['Fıkhî hükümler', '/hukumler', 'Farz, vâcib, sünnet, harâm…'],
+  ...(HUKUMLER_ACIK ? [['Fıkhî hükümler', '/hukumler', 'Farz, vâcib, sünnet, harâm…']] : []),
 ];
 
 /* ── Pencere ──────────────────────────────────────────────────── */

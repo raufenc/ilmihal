@@ -1,6 +1,7 @@
 User-agent: *
 Allow: /
 Disallow: /arama/
+Disallow: /hukumler
 Disallow: /calisma-alanim
 Disallow: /kitap/
 Disallow: /api/

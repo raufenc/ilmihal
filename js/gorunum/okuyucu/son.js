@@ -2,6 +2,7 @@
    fıkhî hükümler, atıflar), Notlarım ve vurgularım, önceki/sonraki madde.
    Kart yok: başlık + fihrist satırları. Boş bölüm hiç çizilmez. */
 
+import { HUKUMLER_ACIK } from '../../cekirdek/ayar.js';
 import { h, simge, semse } from '../../cekirdek/dom.js';
 import { maddeKimlik } from '../../cekirdek/veri.js';
 import { kullanici } from '../../cekirdek/kullanici.js';
@@ -62,7 +63,7 @@ export function sonBolumCiz(S, kap) {
   if (m.hadisler.length) bolumler.push(bolum(m.hadisler.length > 1 ? 'Hadîs-i şerîfler' : 'Hadîs-i şerîf',
     h('ul.oku-alintilar', m.hadisler.map(x => alinti(S, x, [x.kaynak])))));
 
-  if (m.sahislar.length) bolumler.push(bolum('Adı geçenlerin hâl tercemeleri',   // kitap bu listede kötülediği kişileri de anar; "büyükler" denmez
+  if (m.sahislar.length) bolumler.push(bolum('Adı geçen büyükler',
    
     h('ul.oku-sahislar', m.sahislar.map(s => h('li', h('a', { href: `/sahis/${encodeURIComponent(s.slug)}` }, ad(s.isim), s.unvan ? h('span.oku-unvan', ` (${s.unvan})`) : null))))));
 
@@ -72,7 +73,7 @@ export function sonBolumCiz(S, kap) {
       h('span.fihrist-ad', h('span', ad(t.baslik))),
       h('span.fihrist-sayfa', t.sahife ? String(t.sahife) : '')))))));
 
-  if (m.hukumSayisi && m.hukumSayisi.tum > 0) {
+  if (HUKUMLER_ACIK && m.hukumSayisi && m.hukumSayisi.tum > 0) {
     const { acik, tum } = m.hukumSayisi;
     bolumler.push(bolum('Fıkhî hükümler',
       h('p.oku-hukum',

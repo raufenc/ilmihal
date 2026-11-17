@@ -18,14 +18,16 @@ const fihrist = oku('fihrist.json');
 const sahislar = oku('sahislar/dizin.json');
 const tablolar = oku('tablolar/dizin.json');
 const hukumler = oku('hukumler/dizin.json');
+// Fıkhî hükümler dizini yayında değil (js/cekirdek/ayar.js ile aynı tutulur)
+const HUKUMLER_ACIK = false;
 const rehberler = oku('rehberler.json');
 
 const yollar = [
-  '/', '/icindekiler', '/sozluk', '/sahislar', '/arama', '/fevaid', '/fevaid/tablolar', '/hukumler',
+  '/', '/icindekiler', '/sozluk', '/sahislar', '/arama', '/fevaid', '/fevaid/tablolar', ...(HUKUMLER_ACIK ? ['/hukumler'] : []),
   '/ayet-hadis', '/rehberler', '/gunun-bilgisi', '/quiz', '/hakkinda', '/gizlilik',
   '/silsile-atlasi/', '/namaz-vakitleri/',
   ...fihrist.maddeler.map(m => `/madde/${m.kisim}/${m.no}`),
-  ...hukumler.turler.map(t => `/hukumler/${encodeURIComponent(t)}`),
+  ...(HUKUMLER_ACIK ? hukumler.turler.map(t => `/hukumler/${encodeURIComponent(t)}`) : []),
   ...tablolar.tablolar.map(t => `/fevaid/tablolar/${encodeURIComponent(t.id)}`),
   ...rehberler.rehberler.map(r => `/rehberler?rehber=${encodeURIComponent(r.id)}`),
   ...sahislar.sahislar.map(s => `/sahis/${encodeURIComponent(s.slug)}`)
