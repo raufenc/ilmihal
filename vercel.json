@@ -1,4 +1,8 @@
 {
+  "redirects": [
+    { "source": "/silsile-atlasi", "destination": "/silsile-atlasi/", "permanent": true },
+    { "source": "/namaz-vakitleri", "destination": "/namaz-vakitleri/", "permanent": true }
+  ],
   "rewrites": [
     { "source": "/rss.xml", "destination": "/api/rss" },
     { "source": "/kitap/seadet-i-ebediyye.pdf", "destination": "https://www.hakikatkitabevi.net/downloads/001.pdf" },

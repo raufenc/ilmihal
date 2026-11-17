@@ -1,0 +1,64 @@
+/* Âyet-i Kerîme ve Hadîs-i Şerîf İndeksi — /ayet-hadis */
+
+.ah { padding-block: var(--a-8) var(--a-9); }
+.ah-bas { max-width: 46rem; }
+.ah-ust { display: inline-block; text-decoration: none; }
+.ah-ust:hover { text-decoration: underline; text-decoration-color: currentColor; }
+.ah-bas h1 { margin-top: var(--a-3); max-width: 15ch; }
+.ah-bas .giris-yazi { margin-top: var(--a-4); }
+
+.ah-arac { margin-top: var(--a-7); padding-block: var(--a-5) var(--a-4); border-block: 1px solid var(--cizgi); display: grid; gap: var(--a-4); }
+.ah-sekmeler button { min-height: 42px; line-height: 40px; font-size: var(--boy-2); padding-inline: 1.15em; }
+.ah-secsayi { margin-left: 0.15em; opacity: 0.62; font-size: 0.92em; }
+.ah-suzgec { display: flex; flex-wrap: wrap; gap: var(--a-3) var(--a-4); }
+.ah-ara-kap { flex: 1 1 18rem; max-width: 28rem; }
+.ah-ara { min-height: 44px; }
+.ah-ara::-webkit-search-cancel-button { -webkit-appearance: none; appearance: none; }
+.ah-sec { flex: 0 1 17rem; width: auto; min-width: 0; max-width: 100%; min-height: 44px; font-size: var(--boy-2); }
+
+.ah-sonuc { max-width: 46rem; }
+.ah-sayac { margin-top: var(--a-6); }
+
+.ah-liste { margin-top: var(--a-3); }
+.ah-kayit { padding: var(--a-6) 0 var(--a-5); border-top: 1px solid var(--cizgi-2); }
+.ah-kayit:first-child { border-top-color: var(--cizgi); }
+.ah-meal { position: relative; margin: 0; padding-left: 1.6rem; }
+.ah-meal::before {
+  content: '“'; position: absolute; left: -0.1rem; top: -0.12em;
+  font: 400 2.6rem/1 var(--yazi); color: var(--altin); opacity: 0.75;
+}
+.ah-meal p { font: 400 var(--boy-5)/1.55 var(--yazi); letter-spacing: -0.004em; color: var(--murekkep); text-wrap: pretty; white-space: pre-line; }
+.ah-liste[data-sekme="hadis"] .ah-meal p { font-size: var(--boy-4); line-height: 1.62; }
+.ah-meal mark { padding: 0; }
+
+.ah-kunye { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--a-2) var(--a-4); margin-top: var(--a-3); padding-left: 1.6rem; }
+.ah-kunye-yer { display: inline-flex; flex-wrap: wrap; align-items: baseline; gap: 0 0.55em; font: 500 var(--boy-1)/1.6 var(--arayuz); color: var(--altin-yazi); letter-spacing: 0.01em; }
+.ah-yer + .ah-yer::before { content: '·'; margin-right: 0.55em; color: var(--murekkep-3); }
+.ah-eser { font-style: italic; }
+.ah-kunye .kaynak { min-height: 28px; align-items: center; }
+.ah-madde span { color: var(--murekkep-2); max-width: 24rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ah-madde:hover span { color: var(--yesil-yazi); }
+
+.ah-gozcu { height: 1px; }
+.ah-gozcu .dugme { margin-top: var(--a-5); }
+.ah-bos { display: grid; justify-items: start; gap: var(--a-3); padding: var(--a-7) 0; border-top: 1px solid var(--cizgi); }
+.ah-bos p { font: 400 var(--boy-4)/1.5 var(--yazi); }
+
+@media (max-width: 640px) {
+  .ah { padding-top: var(--a-6); }
+  .ah-bas h1 { font-size: var(--boy-6); }
+  .ah-ara-kap, .ah-sec { flex: 1 1 100%; max-width: none; }
+  .ah-sekmeler { display: grid; grid-template-columns: 1fr 1fr; width: 100%; }
+  .ah-sekmeler button { padding-inline: 0.6em; }
+  .ah-meal { padding-left: 1.2rem; }
+  .ah-meal::before { font-size: 2.1rem; }
+  .ah-meal p { font-size: var(--boy-4); }
+  .ah-liste[data-sekme="hadis"] .ah-meal p { font-size: 1.08rem; }
+  .ah-kunye { padding-left: 1.2rem; }
+  .ah-madde span { max-width: 14rem; }
+}
+
+@media print {
+  .ah-arac, .ah-gozcu { display: none !important; }
+  .ah-kayit { break-inside: avoid; }
+}

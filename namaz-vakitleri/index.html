@@ -1,1726 +1,210 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="tr" dir="ltr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Namaz Vakitleri | Se'âdet-i Ebediyye</title>
-<meta name="description" content="Se'âdet-i Ebediyye'nin &quot;Nemâz Vaktleri&quot; maddesine (1. kısım, 60. madde, s. 175–203) göre beş vakit namazın vakitleri: fecr ve şafak irtifâları, temkin, ta'dîl-i zemân ve kitaptaki hesap usûlü.">
-<link rel="stylesheet" href="/fonts/fontlar.css">
-<link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<link rel="icon" href="/favicon.ico" sizes="any">
-<link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<meta name="theme-color" content="#06091a">
-<style>
-*{margin:0;padding:0;box-sizing:border-box;}
-:root{
-  --bg:#06091a;--bg2:#0c1225;--bg3:#101a35;--card:#0f1830;
-  --sun:#f5c842;--sun2:#e87c2a;--accent:#f5c842;
-  --text:#e8e6df;--text2:#8a8a9a;--text3:#b8b6af;
-  --blue:#3b82f6;--teal:#14b8a6;--green:#4ade80;--red:#f87171;
-  --border:rgba(255,255,255,0.08);
-  --glow:rgba(245,200,66,0.15);
-}
-html{scroll-behavior:smooth;}
-body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;line-height:1.7;overflow-x:hidden;}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Nemâz Vakitleri | Se'âdet-i Ebediyye</title>
+  <meta name="description" content="Se'âdet-i Ebediyye'nin &quot;Nemâz Vaktleri&quot; maddesine (1. kısım, 60. madde, s. 175–203) göre beş vakit nemâzın vakitleri, üç boyutlu bir gök üzerinde: güneşin gün yayı, milin gölgesi, fecr ve şafak irtifâları, temkin, ta'dîl-i zemân ve kitaptaki hesap usûlü.">
+  <link rel="canonical" href="https://www.ilmihal.org/namaz-vakitleri/">
 
-/* NAV */
-.nav-back-a{font-size:0.85rem;color:var(--text2);text-decoration:none;padding:6px 10px;border-radius:6px;transition:all .2s;white-space:nowrap;}
-.nav-back-a:hover,.nav-back-a:focus-visible{color:var(--accent);background:var(--glow);}
-nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(6,9,26,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 1.5rem;}
-.nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:60px;}
-.nav-logo{font-family:'Amiri',serif;font-size:1.15rem;color:var(--accent);letter-spacing:1px;}
-.nav-links{display:flex;gap:0.2rem;flex-wrap:wrap;}
-.nav-links a{color:var(--text2);text-decoration:none;font-size:0.82rem;padding:6px 10px;border-radius:6px;transition:all .2s;}
-.nav-links a:hover{color:var(--accent);background:var(--glow);}
+  <meta property="og:title" content="Nemâz Vakitleri">
+  <meta property="og:description" content="Bulunduğunuz yerin göğü: güneşin gün yayı, milin gölgesi ve Se'âdet-i Ebediyye'de bildirilen hesapla bütün vakitler.">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="tr_TR">
+  <meta property="og:site_name" content="ilmihal.org">
+  <meta property="og:url" content="https://www.ilmihal.org/namaz-vakitleri/">
+  <meta property="og:image" content="https://www.ilmihal.org/og-image.png">
 
-/* HERO */
-#hero{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden;padding-top:60px;}
-#starfield{position:absolute;inset:0;width:100%;height:100%;}
-.hero-content{position:relative;z-index:2;max-width:700px;padding:2rem;}
-.hero-tag{display:inline-block;background:rgba(245,200,66,0.12);border:1px solid rgba(245,200,66,0.3);color:var(--accent);font-size:0.75rem;letter-spacing:2px;padding:5px 14px;border-radius:20px;margin-bottom:1.5rem;text-transform:uppercase;}
-.hero-title{font-size:clamp(2.4rem,6vw,4.5rem);font-weight:700;letter-spacing:-1px;line-height:1.1;margin-bottom:1rem;}
-.hero-title span{color:var(--accent);}
-.hero-sub{font-family:'Amiri',serif;font-size:clamp(1rem,2.5vw,1.4rem);color:var(--text3);margin-bottom:0.5rem;}
-.hero-author{color:var(--text2);font-size:0.9rem;font-style:italic;margin-bottom:2.5rem;}
-.hero-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;}
-.btn{padding:12px 28px;border-radius:10px;font-size:0.9rem;font-weight:600;cursor:pointer;transition:all .2s;text-decoration:none;display:inline-block;}
-.btn-primary{background:var(--accent);color:#06091a;}
-.btn-primary:hover{background:#ffd966;transform:translateY(-2px);}
-.btn-ghost{background:transparent;color:var(--text);border:1px solid var(--border);}
-.btn-ghost:hover{border-color:var(--accent);color:var(--accent);}
-.scroll-hint{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:0.5rem;color:var(--text2);font-size:0.75rem;animation:bounce 2s infinite;}
-@keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0);}50%{transform:translateX(-50%) translateY(8px);}}
-.scroll-arrow{width:1px;height:28px;background:linear-gradient(to bottom,transparent,var(--accent));}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Nemâz Vakitleri",
+    "description": "Se'âdet-i Ebediyye, 1. kısım, 60. madde \"Nemâz Vaktleri\" (s. 175–203) usûlüyle vakitlerin hesabı ve gök üzerinde gösterilişi.",
+    "inLanguage": "tr",
+    "publisher": { "@type": "Organization", "name": "ilmihal.org" }
+  }
+  </script>
 
-/* SECTIONS */
-section{padding:80px 1.5rem;}
-.container{max-width:1100px;margin:0 auto;}
-.section-label{color:var(--accent);font-size:0.75rem;letter-spacing:2px;text-transform:uppercase;margin-bottom:0.6rem;}
-.section-title{font-size:clamp(1.8rem,4vw,2.8rem);font-weight:700;margin-bottom:1rem;line-height:1.2;}
-.section-desc{color:var(--text3);font-size:1.05rem;max-width:650px;margin-bottom:3rem;}
+  <link rel="stylesheet" href="/fonts/fontlar.css">
+  <link rel="preload" href="/fonts/literata-400-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/literata-400-normal-latin-ext.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta name="theme-color" content="#04060c">
 
-/* SOLAR DIAGRAM SECTION */
-#gunes-arc{background:var(--bg2);}
-.diagram-wrap{background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;}
-#solar-canvas{width:100%;display:block;cursor:pointer;}
-.diagram-controls{padding:1rem 1.5rem;border-top:1px solid var(--border);display:flex;align-items:center;gap:1rem;flex-wrap:wrap;}
-.ctrl-btn{background:rgba(255,255,255,0.06);border:1px solid var(--border);color:var(--text);padding:8px 16px;border-radius:8px;font-size:0.82rem;cursor:pointer;transition:all .2s;}
-.ctrl-btn:hover,.ctrl-btn.active{background:var(--glow);border-color:var(--accent);color:var(--accent);}
-.ctrl-btn.play{background:var(--accent);color:#06091a;border:none;font-weight:600;}
-.ctrl-btn.play:hover{background:#ffd966;}
-.timeline-bar{flex:1;min-width:200px;}
-.timeline-track{width:100%;height:8px;background:rgba(255,255,255,0.1);border-radius:4px;cursor:pointer;position:relative;}
-.timeline-fill{height:100%;border-radius:4px;background:linear-gradient(to right,#1a3a6a,#2d6abf,#87ceeb,var(--sun),var(--sun2),#87ceeb,#2d6abf,#1a3a6a);transition:width .05s;}
-.timeline-handle{position:absolute;top:50%;transform:translate(-50%,-50%);width:16px;height:16px;background:var(--accent);border-radius:50%;border:2px solid #06091a;cursor:grab;transition:left .05s;}
-.time-display{font-size:0.85rem;color:var(--text2);margin-top:0.3rem;}
-.prayer-btns{display:flex;gap:0.5rem;flex-wrap:wrap;}
-.prayer-btn{font-size:0.75rem;padding:5px 10px;border-radius:6px;border:1px solid var(--border);background:rgba(255,255,255,0.04);font-family:inherit;cursor:pointer;transition:all .2s;color:var(--text3);display:flex;flex-direction:column;align-items:center;gap:1px;line-height:1.3;}
-.prayer-btn:hover{border-color:var(--accent);color:var(--accent);}
-.pb-time{font-size:0.82rem;font-weight:700;color:var(--accent);font-variant-numeric:tabular-nums;letter-spacing:0.02em;}
-.prayer-btn:hover .pb-time{color:var(--accent);}
-
-/* PRAYER TIME CARDS */
-#vakitler{background:var(--bg);}
-.cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.5rem;}
-.prayer-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.5rem;position:relative;overflow:hidden;transition:all .3s;}
-.prayer-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;}
-.prayer-card:hover{transform:translateY(-4px);border-color:rgba(255,255,255,0.15);box-shadow:0 20px 40px rgba(0,0,0,0.4);}
-.card-icon{font-size:2rem;margin-bottom:0.75rem;}
-.card-name{font-size:1.2rem;font-weight:700;margin-bottom:0.2rem;}
-.card-arabic{font-family:'Amiri',serif;font-size:1rem;color:var(--text2);margin-bottom:0.8rem;direction:rtl;}
-.card-angle{display:inline-flex;align-items:center;gap:0.4rem;background:rgba(255,255,255,0.06);border-radius:6px;padding:3px 10px;font-size:0.8rem;margin-bottom:0.8rem;}
-.card-angle .angle-val{font-weight:700;color:var(--accent);}
-.card-desc{color:var(--text3);font-size:0.88rem;line-height:1.65;}
-.card-detail{color:var(--text2);font-size:0.82rem;margin-top:0.8rem;padding-top:0.8rem;border-top:1px solid var(--border);}
-
-/* TEMKIN */
-#temkin{background:var(--bg2);}
-#temkin-canvas{width:100%;border-radius:16px;background:var(--card);border:1px solid var(--border);display:block;margin-bottom:0.5rem;}
-.temkin-sunset-controls{display:flex;align-items:center;gap:1rem;margin-bottom:2rem;flex-wrap:wrap;}
-.temkin-elev-label{color:var(--text2);font-size:0.88rem;white-space:nowrap;}
-.temkin-elev-label strong{color:var(--accent);font-variant-numeric:tabular-nums;}
-.temkin-sunset-controls .sp-time-slider{flex:1;min-width:120px;}
-.temkin-comps{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-bottom:1.5rem;}
-@media(max-width:700px){.temkin-comps{grid-template-columns:1fr;}}
-.temkin-comp{background:var(--card);border:1px solid var(--border);border-left:3px solid;border-radius:12px;padding:1.4rem;}
-.tc-title{font-weight:700;font-size:0.9rem;margin-bottom:0.5rem;color:var(--text);}
-.tc-val{font-size:2rem;font-weight:700;margin-bottom:0.5rem;font-variant-numeric:tabular-nums;letter-spacing:-1px;transition:color 0.3s;}
-.tc-desc{color:var(--text3);font-size:0.83rem;line-height:1.65;}
-.tc-desc code{background:rgba(255,255,255,0.08);padding:0.15em 0.4em;border-radius:4px;font-size:0.85em;color:var(--text2);}
-.tc-formula{color:var(--text3);font-size:0.78rem;margin-top:0.5rem;padding-top:0.5rem;border-top:1px solid var(--border);font-variant-numeric:tabular-nums;}
-.temkin-formula-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.5rem;margin-bottom:1.5rem;border-top:2px solid var(--accent);}
-.temkin-formula-card h4{color:var(--accent);margin-bottom:1rem;font-size:1rem;}
-.temkin-eq-row{display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap;margin-bottom:0.6rem;font-size:0.92rem;color:var(--text2);font-variant-numeric:tabular-nums;}
-.teq-label{color:var(--text3);min-width:140px;font-size:0.85rem;}
-.temkin-eq-result{padding-top:0.6rem;border-top:1px solid var(--border);margin-top:0.4rem;}
-.temkin-formula-card .tc-note{color:var(--text3);font-size:0.83rem;margin-top:1rem;font-style:italic;}
-
-/* TADIL ZAMAN */
-#tadilzaman{background:var(--bg);}
-.tadil-wrap{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:2rem;}
-#tadil-canvas{width:100%;display:block;}
-.tadil-desc{color:var(--text3);font-size:0.9rem;margin-top:1rem;}
-.tadil-controls{display:flex;gap:1rem;flex-wrap:wrap;align-items:flex-end;margin-bottom:1rem;}
-.tadil-field label{display:block;font-size:0.75rem;color:var(--text2);margin-bottom:0.4rem;letter-spacing:.5px;}
-.tadil-field input[type="date"],.tadil-field select{background:var(--bg);border:1px solid var(--border);color:var(--text);border-radius:10px;padding:9px 12px;font-size:0.88rem;font-family:'Inter',sans-serif;outline:none;}
-.tadil-field input[type="date"]:focus,.tadil-field select:focus{border-color:rgba(245,200,66,0.4);}
-.tadil-btn{background:var(--accent);border:none;color:#06091a;border-radius:10px;padding:9px 18px;font-weight:700;cursor:pointer;font-size:0.88rem;font-family:'Inter',sans-serif;transition:background .2s;}
-.tadil-btn:hover{background:#ffd966;}
-.tadil-slider-box{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:10px 14px;margin-bottom:1rem;}
-.tadil-slider-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;font-size:0.78rem;color:var(--text3);}
-.tadil-slider-top input[type="range"]{width:100%;accent-color:var(--accent);}
-.tadil-kpi{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:1rem;}
-.tadil-kpi-box{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:10px 14px;flex:1;min-width:180px;}
-.tadil-kpi-box .kt{font-size:0.75rem;color:var(--text2);margin-bottom:0.3rem;}
-.tadil-kpi-box .kv{font-size:0.95rem;font-weight:700;color:var(--text);}
-
-.badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:0.75rem;font-weight:600;}
-.badge-yellow{background:rgba(245,200,66,0.15);color:var(--accent);}
-.badge-blue{background:rgba(96,165,250,0.15);color:#60a5fa;}
-.badge-green{background:rgba(74,222,128,0.15);color:#4ade80;}
-.badge-purple{background:rgba(167,139,250,0.15);color:#a78bfa;}
-
-
-/* GLOBAL CONTROLS BAR */
-.global-controls{display:flex;gap:1rem;flex-wrap:wrap;align-items:flex-end;margin-bottom:1.5rem;background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1rem 1.2rem;}
-.gc-field label{display:block;font-size:0.72rem;color:var(--text2);margin-bottom:0.35rem;letter-spacing:.5px;text-transform:uppercase;}
-.gc-field select,.gc-field input[type="date"]{background:var(--bg);border:1px solid var(--border);color:var(--text);border-radius:10px;padding:8px 12px;font-size:0.85rem;font-family:'Inter',sans-serif;outline:none;min-width:140px;}
-.gc-field select:focus,.gc-field input[type="date"]:focus{border-color:rgba(245,200,66,0.4);}
-.gc-info{margin-left:auto;text-align:right;font-size:0.78rem;color:var(--text2);line-height:1.5;}
-.gc-info strong{color:var(--accent);}
-
-/* SUN PATH SECTION */
-#gunes-yolu{background:var(--bg2);}
-.sunpath-layout{display:grid;grid-template-columns:1fr 1fr;gap:2rem;align-items:start;}
-@media(max-width:860px){.sunpath-layout{grid-template-columns:1fr;}}
-.sunpath-canvas-wrap{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.2rem;position:relative;}
-#sunpath-canvas{width:100%;display:block;border-radius:10px;}
-.sunpath-right{display:flex;flex-direction:column;gap:1.5rem;}
-
-/* FORMULA DISPLAY */
-.formula-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.5rem;position:relative;overflow:hidden;}
-.formula-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(to right,var(--accent),var(--sun2));}
-.formula-title{font-family:'Amiri',serif;font-size:1.1rem;color:var(--accent);margin-bottom:1rem;}
-.formula-eq{font-size:1.05rem;color:var(--text);line-height:2.2;font-family:'Inter',sans-serif;text-align:center;padding:0.8rem;background:rgba(0,0,0,0.25);border-radius:10px;margin-bottom:1rem;}
-.formula-eq .fv{display:inline-block;min-width:42px;text-align:center;padding:2px 6px;border-radius:6px;font-weight:700;transition:all 0.4s;}
-.formula-eq .fv-h{color:#4ade80;background:rgba(74,222,128,0.12);}
-.formula-eq .fv-phi{color:#60a5fa;background:rgba(96,165,250,0.12);}
-.formula-eq .fv-dec{color:#f97316;background:rgba(249,115,22,0.12);}
-.formula-eq .fv-ha{color:#a78bfa;background:rgba(167,139,250,0.12);}
-.formula-vars{display:grid;grid-template-columns:1fr 1fr;gap:0.6rem;}
-.formula-var{display:flex;align-items:center;gap:0.5rem;font-size:0.82rem;padding:0.4rem 0.6rem;border-radius:8px;background:rgba(0,0,0,0.15);}
-.formula-var .fv-sym{font-weight:700;min-width:20px;text-align:center;}
-.formula-var .fv-name{color:var(--text2);font-size:0.75rem;}
-.formula-var .fv-val{margin-left:auto;font-weight:600;font-variant-numeric:tabular-nums;}
-
-/* CELESTIAL SPHERE DIAGRAM */
-.sphere-wrap{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.2rem;}
-#sphere-canvas{width:100%;display:block;border-radius:10px;}
-
-/* SUNPATH TIME CONTROLS */
-.sp-controls{display:flex;gap:0.6rem;align-items:center;margin-top:0.8rem;flex-wrap:wrap;}
-.sp-controls .ctrl-btn{background:var(--bg);border:1px solid var(--border);color:var(--text);border-radius:8px;padding:6px 14px;font-size:0.82rem;cursor:pointer;font-family:'Inter',sans-serif;transition:all .2s;}
-.sp-controls .ctrl-btn:hover{border-color:var(--accent);color:var(--accent);}
-.sp-controls .ctrl-btn.play{background:var(--accent);color:#06091a;border-color:var(--accent);font-weight:700;}
-.sp-time-slider{flex:1;min-width:120px;accent-color:var(--accent);}
-.sp-time-label{font-size:0.82rem;color:var(--text2);font-variant-numeric:tabular-nums;}
-
-/* PRAYER TIMES RESULT TABLE */
-.prayer-results{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.2rem;margin-top:1.5rem;}
-.prayer-results h4{font-size:1.05rem;color:var(--accent);margin-bottom:0.8rem;font-family:'Amiri',serif;}
-.pr-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.4rem 1rem;}
-.pr-item{display:flex;justify-content:space-between;padding:0.35rem 0.5rem;border-radius:6px;font-size:0.82rem;}
-.pr-item:nth-child(odd){background:rgba(0,0,0,0.15);}
-.pr-item .pr-name{color:var(--text3);}
-.pr-item .pr-time{font-weight:600;color:var(--text);font-variant-numeric:tabular-nums;}
-
-/* KART ŞERİDİ, CEDVEL */
-.card-serit{position:absolute;top:0;left:0;right:0;height:3px;}
-.pr-item.pr-ana .pr-name{color:var(--text);font-weight:600;}
-.pr-item.pr-ana .pr-time{color:var(--accent);}
-.pr-not{color:var(--text3);font-size:0.82rem;line-height:1.65;margin-top:0.9rem;}
-.pr-not a{color:var(--sun);text-decoration:underline;}
-.pr-not strong{color:var(--text2);}
-.footer-link{color:var(--accent);text-decoration:underline;text-underline-offset:2px;}
-.footer-link:hover{color:#ffd966;}
-
-/* FOOTER */
-footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem 1.5rem;text-align:center;}
-.footer-logo{font-family:'Amiri',serif;font-size:1.2rem;color:var(--accent);margin-bottom:0.5rem;}
-.footer-text{color:var(--text2);font-size:0.85rem;}
-
-/* RESPONSIVE */
-@media(max-width:640px){
-  .diagram-controls{flex-direction:column;align-items:stretch;}
-  .prayer-btns{flex-wrap:wrap;}
-  nav .nav-links{display:none;}
-  .pr-grid{grid-template-columns:1fr;}
-  .gc-info{margin-left:0;text-align:left;}
-  .teq-label{min-width:0;width:100%;}
-}
-
-/* SCROLLBAR */
-::-webkit-scrollbar{width:6px;}
-::-webkit-scrollbar-track{background:var(--bg);}
-::-webkit-scrollbar-thumb{background:var(--bg3);border-radius:3px;}
-
-/* SMOOTH APPEAR */
-.fade-in{opacity:0;transform:translateY(20px);transition:opacity .6s,transform .6s;}
-.fade-in.visible{opacity:1;transform:none;}
-</style>
+  <link rel="stylesheet" href="css/vakit.css?v=2026-11-17a">
+  <script type="importmap">
+  { "imports": { "three": "/vendor/three/three.module.min.js" } }
+  </script>
+  <script defer src="/_vercel/insights/script.js"></script>
+  <script defer src="/_vercel/speed-insights/script.js"></script>
 </head>
-<body>
+<body class="yukleniyor">
 
-<!-- NAV -->
-<nav>
-  <div class="nav-inner">
-    <a href="/" class="nav-back-a">← Se'âdet-i Ebediyye</a>
-    <div class="nav-logo"><svg viewBox="0 0 24 24" style="width:15px;height:15px;stroke:currentColor;stroke-width:1.8;fill:none;stroke-linecap:round;stroke-linejoin:round;vertical-align:-2px;margin-right:6px;" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>Namâz Vakitleri</div>
-    <div class="nav-links">
-      <a href="#gunes-arc">Günün Vakitleri</a>
-      <a href="#vakitler">Vakitlerin Tarifi</a>
-      <a href="#temkin">Temkin</a>
-      <a href="#tadilzaman">Ta'dîl-i Zemân</a>
-    </div>
-  </div>
-</nav>
+  <a href="#levha" class="atla">Vakit cedveline geçin</a>
 
-<!-- HERO -->
-<section id="hero">
-  <canvas id="starfield"></canvas>
-  <div class="hero-content">
-    <div class="hero-tag">Se'âdet-i Ebediyye · 1. kısım, 60. madde</div>
-    <h1 class="hero-title">NAMAZ<br><span>VAKİTLERİ</span></h1>
-    <p class="hero-sub">Beş vakit namazın vakitleri ve<br>kitapta bildirilen hesap usûlü</p>
-    <p class="hero-author">Kaynak: Se'âdet-i Ebediyye, &ldquo;Nemâz Vaktleri&rdquo;, s. 175–203</p>
-    <div class="hero-btns">
-      <a href="#gunes-arc" class="btn btn-primary">Günün Vakitleri</a>
-      <a href="/madde/1/60" class="btn btn-ghost">Maddeyi Oku</a>
-    </div>
-  </div>
-  <div class="scroll-hint"><span>Aşağı kaydır</span><div class="scroll-arrow"></div></div>
-</section>
+  <!-- 3B sahne: bütün bilgiler levhada metin olarak da vardır -->
+  <canvas id="sahne" aria-hidden="true"></canvas>
+  <div id="etiketler" aria-hidden="true"></div>
+  <div class="perde perde-sol" aria-hidden="true"></div>
+  <div class="perde perde-alt" aria-hidden="true"></div>
 
-<!-- SOLAR DIAGRAM -->
-<section id="gunes-arc">
-  <div class="container">
-    <div class="section-label fade-in">Günün Vakitleri</div>
-    <h2 class="section-title fade-in">Güneşin Bir Günlük Seyri</h2>
-    <p class="section-desc fade-in">Kitapta bildirildiği üzere her namazın vakti, güneşin ufka göre belli bir irtifâa gelmesiyle başlar (s. 175). Şehri ve tarihi seçin; vakitler, güneşin seyri üzerinde gösterilir.</p>
+  <!-- Üst çubuk -->
+  <header class="ust" role="banner">
+    <a class="marka" href="/" title="Se'âdet-i Ebediyye — ana sayfa">
+      <svg class="semse" viewBox="-12 -12 24 24" aria-hidden="true"><rect x="-7" y="-7" width="14" height="14"/><rect x="-7" y="-7" width="14" height="14" transform="rotate(45)"/><circle r="2.6"/></svg>
+      <span class="marka-yazi"><b>Nemâz Vakitleri</b><i>ilmihal.org · Se’âdet-i Ebediyye</i></span>
+    </a>
+    <nav class="ust-dugmeler" aria-label="Sayfa denetimleri">
+      <button type="button" id="dg-yer" class="dg" aria-haspopup="dialog">
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 14.4s4.6-4.4 4.6-8A4.6 4.6 0 0 0 3.4 6.4c0 3.6 4.6 8 4.6 8z"/><circle cx="8" cy="6.3" r="1.6"/></svg><span id="dg-yer-ad">İstanbul</span>
+      </button>
+      <button type="button" id="dg-fasil" class="dg dg-altin" aria-pressed="false">
+        <svg viewBox="0 0 16 16" aria-hidden="true" class="ik-oynat"><path d="M5 3.2v9.6L12.6 8z"/></svg>
+        <svg viewBox="0 0 16 16" aria-hidden="true" class="ik-dur"><path d="M4.6 3.4v9.2M11.4 3.4v9.2"/></svg>
+        <span>Sırayla gösterin</span>
+      </button>
+      <a class="dg" href="/silsile-atlasi/">
+        <svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="5.6"/><path d="M2.4 8h11.2M8 2.4c2 2 2 9.2 0 11.2M8 2.4c-2 2-2 9.2 0 11.2"/></svg><span>Silsile Atlası</span>
+      </a>
+    </nav>
+  </header>
 
-    <!-- Global Controls -->
-    <div class="global-controls fade-in">
-      <div class="gc-field">
-        <label>Tarih</label>
-        <input type="date" id="gc-date" />
-      </div>
-      <div class="gc-field">
-        <label>Konum</label>
-        <select id="gc-city"></select>
-      </div>
-      <div class="gc-info">
-        <span id="gc-coords"></span><br>
-        <span id="gc-decl"></span>
-      </div>
-    </div>
+  <!-- Levha -->
+  <main id="levha" tabindex="-1">
+    <div class="levha-kaydir" id="levha-kaydir">
+      <header class="levha-bas">
+        <p class="ust-yazi">Se’âdet-i Ebediyye · 1. kısım, 60. madde</p>
+        <h1 id="lv-yer">İstanbul</h1>
+        <p class="lv-tarih" id="lv-tarih"></p>
+        <p class="lv-konum" id="lv-konum"></p>
+        <div class="lv-sira" aria-live="polite">
+          <span class="lv-sira-bas" id="lv-sira-bas">Sıradaki vakit</span>
+          <span class="lv-sira-ad"><b id="lv-sira-ad">—</b> <em id="lv-sira-saat"></em></span>
+          <span class="lv-sira-kalan" id="lv-sira-kalan"></span>
+        </div>
+      </header>
 
-    <div class="diagram-wrap fade-in">
-      <canvas id="solar-canvas" height="380"></canvas>
-      <div class="diagram-controls">
-        <button class="ctrl-btn play" id="playBtn" onclick="togglePlay()">▶ Başlat</button>
-        <div class="timeline-bar">
-          <div class="timeline-track" id="timelineTrack">
-            <div class="timeline-fill" id="timelineFill" style="width:0%"></div>
-            <div class="timeline-handle" id="timelineHandle" style="left:0%"></div>
+      <!-- Vakit cedveli -->
+      <section id="bolum-cedvel" class="bolum" aria-labelledby="cedvel-baslik">
+        <div class="cedvel-ust">
+          <h2 id="cedvel-baslik">Vakit cedveli</h2>
+          <div class="kip" role="group" aria-label="Gösterilen vakit">
+            <button type="button" id="kip-takvim" aria-pressed="true">Takvim</button>
+            <button type="button" id="kip-hakiki" aria-pressed="false">Hakîkî</button>
           </div>
-          <div class="time-display" id="timeDisplay">İmsâk — fecr-i sâdık</div>
         </div>
-        <div class="prayer-btns">
-          <button class="prayer-btn" onclick="jumpTo(0,'İmsâk')">İmsâk</button>
-          <button class="prayer-btn" onclick="jumpTo(0.10,'Güneş')">Güneş</button>
-          <button class="prayer-btn" onclick="jumpTo(0.50,'Öğle')">Öğle</button>
-          <button class="prayer-btn" onclick="jumpTo(0.64,'İkindi')">İkindi</button>
-          <button class="prayer-btn" onclick="jumpTo(0.90,'Akşam')">Akşam</button>
-          <button class="prayer-btn" onclick="jumpTo(0.956,'Yatsı')">Yatsı</button>
-        </div>
+        <table class="cedvel">
+          <caption class="gorunmez" id="cedvel-aciklama">Seçilen yer ve gün için on iki vakit</caption>
+          <thead><tr><th scope="col">Vakit</th><th scope="col" id="cedvel-saat-bas">Takvim vakti</th></tr></thead>
+          <tbody id="cedvel-govde"></tbody>
+        </table>
+        <p class="cedvel-not" id="cedvel-not"></p>
+        <p class="cedvel-ipucu">Bir vakte dokununca sahne o âna gider ve vaktin nasıl bulunduğu anlatılır.</p>
+
+        <h2 class="fasil-baslik">Vakitler nasıl bulunur</h2>
+        <ol class="fasil-liste" id="fasil-liste"></ol>
+      </section>
+
+      <!-- Bir vaktin anlatımı -->
+      <section id="bolum-vakit" class="bolum" hidden aria-live="polite">
+        <button type="button" class="geri" id="dg-vakit-geri"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M16 10H5M9 5.5 4.5 10 9 14.5"/></svg>Vakit cedveli</button>
+        <p class="ust-yazi" id="vk-ust"></p>
+        <h2 class="vk-ad" id="vk-ad"></h2>
+        <p class="vk-arabi" id="vk-arabi" lang="ar" dir="rtl"></p>
+        <dl class="vk-saat" id="vk-saat"></dl>
+        <div class="vk-metin" id="vk-metin"></div>
+        <section class="vk-hesap" id="vk-hesap" aria-label="Bu günün hesabı"></section>
+      </section>
+
+      <!-- Fasıl -->
+      <section id="bolum-fasil" class="bolum" hidden aria-live="polite">
+        <button type="button" class="geri" id="dg-fasil-geri"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M16 10H5M9 5.5 4.5 10 9 14.5"/></svg>Vakit cedveli</button>
+        <p class="fasil-no"><span id="fs-no">1</span><i>. fasıl</i><em id="fs-toplam">7 fasıldan</em></p>
+        <h2 class="fs-ad" id="fs-ad"></h2>
+        <div class="fs-metin" id="fs-metin"></div>
+        <div class="fs-ek" id="fs-ek"></div>
+      </section>
+
+      <footer class="kunye">
+        <div class="ayrac" aria-hidden="true"><i></i><svg class="semse" viewBox="-12 -12 24 24"><rect x="-7" y="-7" width="14" height="14"/><rect x="-7" y="-7" width="14" height="14" transform="rotate(45)"/></svg><i></i></div>
+        <p id="kunye-metin"></p>
+        <p class="kunye-kaynak">Kaynak: Se’âdet-i Ebediyye (Hakîkat Kitâbevi), 1. kısım, 60. madde “Nemâz Vaktleri”, s. 175–203 · Temkin Cedveli, s. 1244 · <a href="/madde/1/60">Maddeyi okuyun</a></p>
+      </footer>
+    </div>
+    <nav class="lv-gez" id="fasil-gez" aria-label="Fasıllar arasında gezinin" hidden>
+      <button type="button" id="dg-once" class="gez gez-once">
+        <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M16 10H5M9 5.5 4.5 10 9 14.5"/></svg>
+        <span><i>Önceki</i><b id="gz-once-ad"></b></span>
+      </button>
+      <button type="button" id="dg-sonra" class="gez gez-sonra">
+        <span><i>Sonraki</i><b id="gz-sonra-ad"></b></span>
+        <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5.5 15.5 10 11 14.5"/></svg>
+      </button>
+    </nav>
+    <button type="button" id="dg-levha-ac" class="levha-tutamac" aria-label="Levhayı büyütün veya küçültün" aria-expanded="false"><i></i></button>
+  </main>
+
+  <!-- Zaman şeridi -->
+  <nav id="serit" aria-label="Zaman şeridi">
+    <div class="serit-bas">
+      <div class="serit-dugme">
+        <button type="button" id="dg-simdi" class="dg dg-kucuk" aria-pressed="true">Şimdi</button>
+        <button type="button" id="dg-izle" class="dg dg-kucuk dg-altin" aria-pressed="false">
+          <svg viewBox="0 0 16 16" aria-hidden="true" class="ik-oynat"><path d="M5 3.2v9.6L12.6 8z"/></svg>
+          <svg viewBox="0 0 16 16" aria-hidden="true" class="ik-dur"><path d="M4.6 3.4v9.2M11.4 3.4v9.2"/></svg>
+          <span>Günü izleyin</span>
+        </button>
+      </div>
+      <p class="serit-an"><b id="serit-saat">--:--</b><span id="serit-olay"></span></p>
+      <div class="serit-tarih">
+        <button type="button" id="dg-gun-once" class="dg dg-kare" aria-label="Önceki gün"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3.5 5.5 8l4.5 4.5"/></svg></button>
+        <label class="tarih-kutu"><span class="gorunmez">Tarih</span><input type="date" id="tarih-gir"></label>
+        <button type="button" id="dg-gun-sonra" class="dg dg-kare" aria-label="Sonraki gün"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3.5 10.5 8 6 12.5"/></svg></button>
       </div>
     </div>
-
-    <div class="prayer-results fade-in" aria-live="polite">
-      <h4>Vakit cedveli — <span id="pr-baslik"></span></h4>
-      <div class="pr-grid" id="pr-grid"></div>
-      <p class="pr-not">Vakitler, kitaptaki usûle göre hesaplanmıştır: güneş merkezinin hakîkî ufka göre vaktin irtifâına geldiği <em>hakîkî vakit</em> bulunur; imsâk ve güneş vakitlerinden <strong>temkin</strong> çıkarılır, öğle, ikindi, akşam ve yatsı vakitlerine eklenir (s. 187–188). Temkin, kitapta İstanbul için bildirilen vasatî 10 dakikadır (s. 186); kitapta başka şehirlerin vakitleri de İstanbul'un temkiniyle hesaplanmıştır (s. 193). Bir şehrin kendi temkini, en yüksek yerine göre bir-iki dakika farklı olabilir (s. 190). Bu sayfa kitaptaki hesabı anlatmak içindir; buradaki vakitler takvimden birkaç dakika farklı çıkabilir. <strong>Namaz kılarken, oruca başlarken ve iftar ederken âlimlerin tasdîk ettiği takvime uyunuz</strong>; Hakîkat Kitâbevi'nin hazırladığı <a href="https://www.turktakvim.com/" target="_blank" rel="noopener">Türkiye Takvimi</a> bunlardandır.</p>
+    <div class="ray ray-yil" id="ray-yil" role="slider" tabindex="0" aria-label="Senenin günü" aria-valuemin="1" aria-valuemax="366" aria-valuenow="1">
+      <div class="ray-cizgi"></div>
+      <div class="ray-aylar" id="ray-aylar" aria-hidden="true"></div>
+      <div class="ray-tutamak" id="yil-tutamak" aria-hidden="true"></div>
     </div>
-  </div>
-</section>
+    <div class="ray ray-gun" id="ray-gun" role="slider" tabindex="0" aria-label="Günün saati" aria-valuemin="0" aria-valuemax="1440" aria-valuenow="0">
+      <div class="ray-gece" id="ray-gece" aria-hidden="true"></div>
+      <div class="ray-cizgi"></div>
+      <div class="ray-saatler" id="ray-saatler" aria-hidden="true"></div>
+      <ol class="ray-centik" id="ray-centik" aria-hidden="true"></ol>
+      <div class="ray-tutamak" id="gun-tutamak" aria-hidden="true"></div>
+    </div>
+  </nav>
 
-<!-- PRAYER TIME CARDS -->
-<section id="vakitler">
-  <div class="container">
-    <div class="section-label fade-in">Vakitlerin Tarifi</div>
-    <h2 class="section-title fade-in">Beş Vakit Namazın Vakitleri</h2>
-    <p class="section-desc fade-in">Kitapta her namazın evvel vakti, güneşin o yerdeki ufuktan belli bir irtifâa gelmesiyle tarif edilir (s. 175–178). Kartlardaki dereceler, güneş merkezinin hakîkî ufka göre irtifâıdır.</p>
-    <div class="cards-grid">
-
-      <div class="prayer-card fade-in">
-        <div class="card-serit" style="background:linear-gradient(to right,#1e3a8a,#6366f1);"></div>
-        <div class="card-icon" aria-hidden="true">🌑</div>
-        <div class="card-name">İmsâk — Fecr-i sâdık</div>
-        <div class="card-arabic" lang="ar">الفجر الصادق</div>
-        <div class="card-angle">Güneşin irtifâı: <span class="angle-val">−19°</span></div>
-        <div class="card-desc">Sabah namazının ve orucun vakti, şark tarafında zâhirî ufuk hattının bir noktasında beyazlığın (fecr-i sâdık) görülmesiyle başlar (s. 176). Bu anda güneş, ufkun 19 derece altındadır.</div>
-        <div class="card-detail">Fecrin irtifâı dört mezhepte de −19 derecedir (s. 176). İslâm âlimleri imsâkın, beyazlığın ufukta yayıldığı vakit değil, ilk görüldüğü vakit olduğunu bildirmişlerdir; beyazlığın yayılmasını esas alıp −18° veya −16° ile hesap eden takvimlere uyanların orucu sahîh olmaz (s. 176, 198).</div>
+  <!-- Yer seçimi -->
+  <div id="yer-pencere" class="pencere" role="dialog" aria-modal="true" aria-labelledby="yer-baslik" hidden>
+    <div class="pencere-ic">
+      <header>
+        <p class="ust-yazi">Bulunduğunuz yer</p>
+        <h2 id="yer-baslik">Yer seçin</h2>
+        <p class="pencere-alt">Şehirlerin arz ve tûlü eski sayfadaki gibidir; saat dilimi +3 alınır. Konumunuzu kullanırsanız tarayıcınızın saat dilimi kullanılır.</p>
+        <button type="button" id="dg-yer-kapat" class="kapat" aria-label="Pencereyi kapatın"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 5l10 10M15 5 5 15"/></svg></button>
+      </header>
+      <div class="konum-satir">
+        <button type="button" id="dg-konum" class="ana-dugme ana-dugme-kucuk">
+          <svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="3"/><path d="M10 1.8v3M10 15.2v3M1.8 10h3M15.2 10h3"/><circle cx="10" cy="10" r="6.2"/></svg>
+          <span>Konumumu kullanın</span>
+        </button>
+        <p class="konum-durum" id="konum-durum" role="status"></p>
       </div>
-
-      <div class="prayer-card fade-in">
-        <div class="card-serit" style="background:linear-gradient(to right,#f59e0b,#f5c842);"></div>
-        <div class="card-icon" aria-hidden="true">🌅</div>
-        <div class="card-name">Güneş — Tulû'</div>
-        <div class="card-arabic" lang="ar">طُلُوع الشَّمْس</div>
-        <div class="card-angle">Güneşin irtifâı: <span class="angle-val">0°</span></div>
-        <div class="card-desc">Sabah namazının vakti, güneşin üst kenârının zâhirî ufuk hattından doğduğu görülünceye kadardır (s. 176–177). Güneş doğarken kerâhet vakti başlar.</div>
-        <div class="card-detail">Sabah namazını kılarken güneş doğmaya başlarsa bu namaz sahîh olmaz (s. 202). Takvimdeki güneş vakti, hakîkî tulû'dan temkin çıkarılarak bulunur (s. 187).</div>
-      </div>
-
-      <div class="prayer-card fade-in">
-        <div class="card-serit" style="background:linear-gradient(to right,#f59e0b,#fbbf24);"></div>
-        <div class="card-icon" aria-hidden="true">☀️</div>
-        <div class="card-name">Kerâhet Vakitleri ve İşrâk</div>
-        <div class="card-arabic" lang="ar">أَوْقَاتُ الْكَرَاهَة</div>
-        <div class="card-angle">İşrâk: <span class="angle-val">+5°</span></div>
-        <div class="card-desc">Namaz kılmak tahrîmen mekrûh olan üç vakit vardır: güneş doğarken, batarken ve zevâl vaktinde (s. 201). Güneşin merkezi hakîkî ufuktan 5 derece (bir mızrak boyu) yükselince işrâk (kuşluk) vakti olur; bu, tulû'dan takrîben 40 dakika sonradır.</div>
-        <div class="card-detail">Bu üç vakitte başlanan farzlar sahîh olmaz, nâfileler tahrîmen mekrûh olur (s. 201). Güneş batarken yalnız o günün ikindisi kılınır (s. 202). İşrâk vaktinde iki rek'at işrâk (kuşluk) namazı kılmak sünnettir; bayram namazı da bu vakitte kılınır (s. 201).</div>
-      </div>
-
-      <div class="prayer-card fade-in">
-        <div class="card-serit" style="background:linear-gradient(to right,#f5c842,#fde68a);"></div>
-        <div class="card-icon" aria-hidden="true">🔆</div>
-        <div class="card-name">Öğle — Zuhr</div>
-        <div class="card-arabic" lang="ar">الظُّهْر</div>
-        <div class="card-angle">Güneş: <span class="angle-val">zevâlden sonra</span></div>
-        <div class="card-desc">Öğle vakti, güneşin arka kenârı zevâl yerinden ayrılıp gölgenin uzamaya başlamasıyla girer (s. 178). Takvimdeki öğle vakti, hakîkî zevâlden temkin kadar sonradır (s. 188).</div>
-        <div class="card-detail">
-          <strong>Zevâl (kerâhet) vakti:</strong> Güneşin ön kenârının şer'î zevâl dâiresine girdiği ve arka kenârının çıktığı vakit arasıdır; İstanbul için hakîkî zevâlden 10 dakika önce başlar, 10 dakika sonra biter (s. 182, 202).<br><br>
-          <strong>Öğlenin sonu:</strong> Her şeyin gölgesi, zevâl vaktindeki gölgesinden (fey-i zevâl) kendi boyu kadar uzayınca (iki imâma ve diğer üç mezhebe göre) veya iki misli uzayınca (İmâm-ı a'zama göre) öğle vakti çıkar (s. 178).
-        </div>
-      </div>
-
-      <div class="prayer-card fade-in">
-        <div class="card-serit" style="background:linear-gradient(to right,#f97316,#fb923c);"></div>
-        <div class="card-icon" aria-hidden="true">🌤️</div>
-        <div class="card-name">İkindi — Asr</div>
-        <div class="card-arabic" lang="ar">العَصْر</div>
-        <div class="card-angle">Gölge: <span class="angle-val">fey-i zevâl + 1 veya 2 boy</span></div>
-        <div class="card-desc">İkindi vakti, öğle vakti bitince başlar ve güneşin arka kenârı zâhirî ufuk hattından batıncaya kadar sürer (s. 178).</div>
-        <div class="card-detail">
-          <strong>Asr-ı evvel:</strong> Gölge, fey-i zevâlden kendi boyu kadar uzayınca başlar; iki imâma ve diğer üç mezhebe göredir.<br><br>
-          <strong>Asr-ı sânî:</strong> Gölge iki misli uzayınca başlar; İmâm-ı a'zama göredir. Türkiye'deki takvimlerde ikindi, asr-ı evvele göre yazılıdır; bu vakitten kışın 36, yazın 72 dakika sonra kılınınca İmâm-ı a'zama da uyulmuş olur (s. 178). İkindi ve yatsıyı İmâm-ı a'zamın kavline göre kılmak ihtiyâtlıdır (s. 194).<br><br>
-          <strong>İsfirâr:</strong> Güneş sarardıktan, ya'nî alt kenârı ufka bir mızrak boyu yaklaştıktan sonraya ikindiyi geciktirmek harâmdır (s. 178).
-        </div>
-      </div>
-
-      <div class="prayer-card fade-in">
-        <div class="card-serit" style="background:linear-gradient(to right,#ef4444,#f97316);"></div>
-        <div class="card-icon" aria-hidden="true">🌇</div>
-        <div class="card-name">Akşam — Mağrib</div>
-        <div class="card-arabic" lang="ar">المَغْرِب</div>
-        <div class="card-angle">Güneşin irtifâı: <span class="angle-val">0° (gurûb)</span></div>
-        <div class="card-desc">Akşam namazının vakti, güneşin üst kenârının zâhirî ufuk hattından kaybolduğu görülünce başlar ve yatsı vakti girinceye kadar devam eder (s. 178). Takvimdeki akşam vakti, hakîkî gurûba temkin eklenerek bulunan şer'î gurûbdur (s. 186).</div>
-        <div class="card-detail">
-          Akşam namazını vaktin evvelinde kılmak sünnettir. Yıldızlar çoğaldıktan, ya'nî güneşin arka kenârı ufkun 10 derece altına indikten sonraya (<strong>iştibâk-i nücûm</strong>) bırakmak harâmdır; hastalık, seferîlik ve hazır yemeği yemek için bu kadar geciktirilebilir (s. 178).
-        </div>
-      </div>
-
-      <div class="prayer-card fade-in">
-        <div class="card-serit" style="background:linear-gradient(to right,#7c3aed,#4f46e5);"></div>
-        <div class="card-icon" aria-hidden="true">🌃</div>
-        <div class="card-name">Yatsı — İşâ</div>
-        <div class="card-arabic" lang="ar">العِشَاء</div>
-        <div class="card-angle">Güneşin irtifâı: <span class="angle-val">−17° veya −19°</span></div>
-        <div class="card-desc">Yatsı vakti, iki imâma ve diğer üç mezhebe göre batıdaki kırmızılık kaybolunca (işâ-i evvel), İmâm-ı a'zama göre beyazlık da kaybolunca (işâ-i sânî) başlar; Hanefî mezhebinde fecr-i sâdıka kadar sürer (s. 178).</div>
-        <div class="card-detail">
-          Kırmızılık, güneş ufkun 17 derece altına inince; beyazlık, 19 derece altına inince kaybolur (s. 178). Yatsıyı gecenin yarısından sonraya bırakmak Hanefîde mekrûhtur (s. 178, 194).
-        </div>
-      </div>
-
-      <div class="prayer-card fade-in">
-        <div class="card-serit" style="background:linear-gradient(to right,#0ea5e9,#38bdf8);"></div>
-        <div class="card-icon" aria-hidden="true">📐</div>
-        <div class="card-name">Fey-i Zevâl ve İkindi Hesabı</div>
-        <div class="card-arabic" lang="ar">فَيْء الزَّوَال</div>
-        <div class="card-angle">Fey-i zevâl: <span class="angle-val">zevâldeki gölge</span></div>
-        <div class="card-desc">Zevâl vaktindeki en kısa gölgeye fey-i zevâl denir. Fey-i zevâl, yalnız öğle ve ikindi vakitlerini bulurken kullanılır (s. 182).</div>
-        <div class="card-detail">
-          <strong>Hesap:</strong> Fey-i zevâl = tan (90° − gâye irtifâı); asr-ı evvel için tan (temâm-ı irtifâ) = 1 + fey-i zevâl, asr-ı sânî için 2 + fey-i zevâl (s. 196–197).<br><br>
-          Kitaptaki misâl: İstanbul'da 13 Ağustos'ta gâye irtifâı 63° 50′ olduğundan, 1 metrelik çubuğun fey-i zevâli tan 26° 10′ = 0,4913 metredir; asr-ı evvel irtifâı 33° 51′ olur (s. 196).
-        </div>
-      </div>
-
+      <ol class="yer-liste" id="yer-liste"></ol>
     </div>
   </div>
-</section>
 
-<!-- TEMKIN -->
-<section id="temkin">
-  <div class="container">
-    <div class="section-label fade-in">Kitaptaki Hesap</div>
-    <h2 class="section-title fade-in">Temkin</h2>
-    <p class="section-desc fade-in">Bir namazın hakîkî vakti ile şer'î vakti arasındaki zaman farkına <strong>temkin</strong> denir (s. 176). Güneşin merkezi hakîkî ufuktan battıktan sonra, arka kenârının şer'î ufka inerek ziyâsının en yüksek tepeden kaybolması için geçen zamandır (s. 186). Temkin bir ihtiyât payı değildir: kitapta, temkini ihtiyât zannedip imsâkı 3–4 dakika geciktirenin ve iftarı 3–4 dakika öne alanın orucunun fâsid olacağı bildirilir (s. 186).</p>
+  <div class="yukleme" role="status" aria-live="polite"><span class="yukleme-cizgi"><i id="yukleme-dolgu"></i></span><span id="yukleme-yazi">Gök hazırlanıyor…</span></div>
 
-    <canvas id="temkin-canvas" height="480" class="fade-in" role="img" aria-label="Temkin şeması: inhitât-ı ufuk, nısf-ı kutr ve inkisâr"></canvas>
-    <div class="temkin-sunset-controls fade-in">
-      <button class="ctrl-btn play" id="temkinPlayBtn">&#9654; Batışı Göster</button>
-      <label class="temkin-elev-label" for="temkinElevSlider">En yüksek yerin yüksekliği: <strong id="temkinElevVal">267</strong> m</label>
-      <input type="range" class="sp-time-slider" id="temkinElevSlider" min="0" max="2500" step="1" value="267">
-    </div>
+  <noscript>
+    <div class="noscript">Bu sayfa vakitleri tarayıcınızda hesaplar ve JavaScript ile çalışır. Kitaptaki tarif için <a href="/madde/1/60">“Nemâz Vaktleri” maddesini</a> okuyabilirsiniz. Namaz kılarken, oruca başlarken ve iftar ederken âlimlerin tasdîk ettiği takvime uyunuz.</div>
+  </noscript>
 
-    <div class="temkin-comps fade-in">
-      <div class="temkin-comp" style="border-left-color:#60a5fa;">
-        <div class="tc-title">1 · İnhitât-ı ufuk zâviyesi</div>
-        <div class="tc-val" style="color:#60a5fa;" id="temkin-dip-val">—</div>
-        <div class="tc-desc">Şehrin en yüksek yerinden bakan râsıdın ufkunun alçalmasıdır. Ahmed Ziyâ beğe göre açı sâniyesi olarak <code>106,92 × √yükseklik (m)</code> kadardır; İstanbul'da Çamlıca tepesi (267 m) için 29 dakikadır (s. 185).</div>
-        <div class="tc-formula" id="temkin-dip-formula"></div>
-      </div>
-      <div class="temkin-comp" style="border-left-color:#f97316;">
-        <div class="tc-title">2 · İnkisâr (ışığın kırılması)</div>
-        <div class="tc-val" style="color:#f97316;" id="temkin-ref-val">44′ 30″</div>
-        <div class="tc-desc">Ufkun altındaki bu irtifâa âit ziyânın kırılmasıdır; kitapta 44,5 dakika olarak alınmıştır (s. 185). Hava tabakaları ziyâyı kırdığı için güneş, batmasından sonra da bir müddet görünür (s. 179).</div>
-      </div>
-      <div class="temkin-comp" style="border-left-color:#a78bfa;">
-        <div class="tc-title">3 · Nısf-ı kutr-ı zâhirî</div>
-        <div class="tc-val" style="color:#a78bfa;" id="temkin-sd-val">15′ 45″</div>
-        <div class="tc-desc">Güneşin görünen yarıçapıdır; kitapta asgarî değeri olan 15 dakika 45 sâniye alınmıştır (s. 185). Bu üç büyüklükten ihtilâf-ı manzar (8,8 sâniye) çıkarılınca güneşin <em>irtifâ zâviyesi</em> bulunur.</div>
-        <div class="tc-formula" id="temkin-sd-formula"></div>
-      </div>
-    </div>
-
-    <div class="temkin-formula-card">
-      <h4>Temkin hesabı — <span id="teq-yer"></span></h4>
-      <div class="temkin-eq">
-        <div class="temkin-eq-row">
-          <span class="teq-label">İrtifâ zâviyesi:</span>
-          <span id="teq-dip" style="color:#60a5fa">—</span> +
-          <span id="teq-ref" style="color:#f97316">44′ 30″</span> +
-          <span id="teq-sd" style="color:#a78bfa">15′ 45″</span> −
-          <span style="color:var(--text3)">8,8″</span> =
-          <strong id="teq-total" style="color:var(--accent)">—</strong>
-        </div>
-        <div class="temkin-eq-row">
-          <span class="teq-label">Bu gün için hesap:</span>
-          <strong id="teq-minutes" style="color:var(--accent)">—</strong>
-        </div>
-        <div class="temkin-eq-row">
-          <span class="teq-label">Kitaptaki cedvel (s. 1244):</span>
-          <span id="teq-cedvel">—</span>
-        </div>
-        <div class="temkin-eq-row temkin-eq-result">
-          <span class="teq-label">2 dakika ihtiyât ile:</span>
-          <strong id="teq-kabul" style="color:var(--accent);font-size:1.2em">—</strong>
-        </div>
-      </div>
-      <p class="tc-note">Kitapta İstanbul için 21 Mart ve 23 Eylül'de temkin 7 dakika 52 sâniye bulunmuş; hesaptaki küçük farkları gidermek için iki dakika ihtiyât eklenerek İstanbul'un temkini vasatî 10 dakika kabûl edilmiştir (s. 186). Bir şehirde tek bir temkin vardır; her namaz için ayrı temkin yoktur. İmsâk ve güneş vakitlerinde temkin hakîkî vakitten çıkarılır; öğle, ikindi, akşam, iştibâk ve yatsı vakitlerinde eklenir (s. 187–188). Cedveldeki yükseklik, şehrin en yüksek yerinin en aşağı yerinden itibaren yüksekliğidir (s. 1244).</p>
-    </div>
-  </div>
-</section>
-
-<!-- TADIL-I ZAMAN -->
-<section id="tadilzaman">
-  <div class="container">
-    <div class="section-label fade-in">Zaman Düzeltmesi</div>
-    <h2 class="section-title fade-in">Ta'dîl-i Zemân</h2>
-    <p class="section-desc fade-in">Hakîkî güneş ile vasatî güneş arasındaki bir günlük zaman farkına <strong>ta'dîl-i zemân</strong> denir; vasatî güneş ileride ise artı, geride ise eksidir (s. 184). Vasatî saat ile bilinen bir vakte ta'dîl-i zemân eklenince hakîkî zamana göre vakit bulunur; bu yüzden öğle vaktini doğrudan etkiler.</p>
-    <div class="tadil-wrap fade-in">
-
-      <!-- Controls -->
-      <div class="tadil-controls">
-        <div class="tadil-field">
-          <label>Tarih</label>
-          <input id="tadil-date" type="date" />
-        </div>
-        <div class="tadil-field">
-          <label>Grafik Yılı</label>
-          <select id="tadil-year"></select>
-        </div>
-        <button class="tadil-btn" id="tadil-btn">Hesapla &amp; Güncelle</button>
-      </div>
-
-      <!-- Slider -->
-      <div class="tadil-slider-box">
-        <div class="tadil-slider-top">
-          <span><b>Tarihi sürükle:</b> <span id="tadil-sliderDate">—</span></span>
-          <span>Yılın günü: <span id="tadil-doyLabel">—</span></span>
-        </div>
-        <input id="tadil-doy" type="range" min="1" max="365" step="1" value="1" style="width:100%;" />
-      </div>
-
-      <!-- KPI boxes -->
-      <div class="tadil-kpi">
-        <div class="tadil-kpi-box">
-          <div class="kt">Seçili tarih için Ta'dîl-i Zemân</div>
-          <div class="kv" id="tadil-eotVal">—</div>
-        </div>
-        <div class="tadil-kpi-box">
-          <div class="kt">Yıl içi minimum / maksimum</div>
-          <div class="kv" id="tadil-minMax">—</div>
-        </div>
-        <div class="tadil-kpi-box">
-          <div class="kt">Sıfır geçişleri (yaklaşık günler)</div>
-          <div class="kv" id="tadil-zeros">—</div>
-        </div>
-      </div>
-
-      <canvas id="tadil-canvas" height="420"></canvas>
-
-      <div class="tadil-desc">
-        <strong style="color:var(--accent)">Sebepleri</strong> (s. 183–184):<br>
-        1. Yer küresinin güneş etrafındaki yolu dâire değil, beyzî (elips) olduğundan eşit zamanlarda gittiği yaylar eşit değildir; güneşe yaklaştıkça sür'ati artar.<br>
-        2. Yer küresinin mihveri, husûf düzlemine (ekliptik) dik değildir; mihver ile husûf mihveri arasında 23° 27′ açı vardır.<br><br>
-        <strong style="color:var(--accent)">Mikdârı:</strong> Ta'dîl-i zemân bir senede takrîben +16 dakika ile −14 dakika arasında değişir ve senede dört defa sıfır olur (s. 184). Vasatî saat ile zevâl vakti 12'den önce ise ta'dîl-i zemân (+), sonra ise (−) olur (s. 193).
-      </div>
-    </div>
-  </div>
-</section>
-
-<footer>
-  <div class="footer-logo">Namaz Vakitleri</div>
-  <p class="footer-text">Kaynak: Se'âdet-i Ebediyye (Hakîkat Kitâbevi), 1. kısım, 60. madde &ldquo;Nemâz Vaktleri&rdquo;, s. 175–203 · Temkin Cedveli, s. 1244</p>
-  <p class="footer-text"><a href="/madde/1/60" class="footer-link">Maddeyi oku</a> · <a href="/" class="footer-link">← Se'âdet-i Ebediyye ana sayfasına dön</a></p>
-</footer>
-
-<script>
-// ============================================================
-// HESAP — Güneşin yeri (Meeus / NOAA) ve Se'âdet-i Ebediyye'deki vakit usûlü
-// Kaynak: Se'âdet-i Ebediyye, 1. kısım, 60. madde "Nemâz vaktleri" (s. 175–203)
-// ============================================================
-const DEG = Math.PI / 180;
-const RAD = 180 / Math.PI;
-
-// Kitapta İstanbul için kabûl edilen vasatî temkin: 10 dakîka (s. 186). Kitap, başka şehirlerin
-// vakitlerini hesaplarken de İstanbul'un temkinini kullanmıştır (s. 193); şehirlerin temkinleri
-// arasındaki bir-iki dakikalık farkları temkindeki ihtiyât giderir (s. 190).
-const TEMKIN_DK = 10;
-
-const CITIES = [
-  { name:'İstanbul',   lat:41.0082, lon:28.9784, tz:3 },
-  { name:'Ankara',     lat:39.9334, lon:32.8597, tz:3 },
-  { name:'İzmir',      lat:38.4192, lon:27.1287, tz:3 },
-  { name:'Bursa',      lat:40.1885, lon:29.0610, tz:3 },
-  { name:'Antalya',    lat:36.8969, lon:30.7133, tz:3 },
-  { name:'Konya',      lat:37.8746, lon:32.4932, tz:3 },
-  { name:'Adana',      lat:37.0000, lon:35.3213, tz:3 },
-  { name:'Gaziantep',  lat:37.0662, lon:37.3833, tz:3 },
-  { name:'Diyarbakır', lat:37.9144, lon:40.2306, tz:3 },
-  { name:'Trabzon',    lat:41.0027, lon:39.7168, tz:3 },
-  { name:'Erzurum',    lat:39.9043, lon:41.2679, tz:3 },
-  { name:'Samsun',     lat:41.2867, lon:36.3300, tz:3 },
-  { name:'Kayseri',    lat:38.7312, lon:35.4787, tz:3 },
-  { name:'Eskişehir',  lat:39.7767, lon:30.5206, tz:3 },
-  { name:'Edirne',     lat:41.6818, lon:26.5623, tz:3 },
-  { name:'Van',        lat:38.4891, lon:43.3800, tz:3 },
-  { name:'Sivas',      lat:39.7477, lon:37.0179, tz:3 },
-  { name:'Malatya',    lat:38.3554, lon:38.3335, tz:3 },
-  { name:'Şanlıurfa',  lat:37.1591, lon:38.7969, tz:3 },
-  { name:'Hatay',      lat:36.2025, lon:36.1606, tz:3 },
-];
-
-let selectedCity = CITIES[0];
-let selectedDate = new Date();
-
-function julianDay(y, m, d, h){
-  if(m <= 2){ y--; m += 12; }
-  const A = Math.floor(y/100);
-  const B = 2 - A + Math.floor(A/4);
-  return Math.floor(365.25*(y+4716)) + Math.floor(30.6001*(m+1)) + d + (h||0)/24 + B - 1524.5;
-}
-
-function julianCentury(jd){ return (jd - 2451545.0) / 36525.0; }
-
-function solarGeomMeanLon(T){
-  let L0 = (280.46646 + T*(36000.76983 + 0.0003032*T)) % 360;
-  if (L0 < 0) L0 += 360;
-  return L0;
-}
-function solarGeomMeanAnomaly(T){
-  return 357.52911 + T*(35999.05029 - 0.0001537*T);
-}
-function earthEccentricity(T){
-  return 0.016708634 - T*(0.000042037 + 0.0000001267*T);
-}
-function sunEqOfCenter(T){
-  const M = solarGeomMeanAnomaly(T) * DEG;
-  return Math.sin(M)*(1.914602 - T*(0.004817+0.000014*T))
-       + Math.sin(2*M)*(0.019993 - 0.000101*T)
-       + Math.sin(3*M)*0.000289;
-}
-function sunTrueLon(T){ return solarGeomMeanLon(T) + sunEqOfCenter(T); }
-function sunApparentLon(T){
-  const omega = 125.04 - 1934.136*T;
-  return sunTrueLon(T) - 0.00569 - 0.00478*Math.sin(omega*DEG);
-}
-function meanObliquityEcliptic(T){
-  return 23 + (26 + (21.448 - T*(46.815 + T*(0.00059 - T*0.001813)))/60)/60;
-}
-function obliquityCorrection(T){
-  const omega = 125.04 - 1934.136*T;
-  return meanObliquityEcliptic(T) + 0.00256*Math.cos(omega*DEG);
-}
-// Güneşin meyli (derece)
-function solarDeclination(T){
-  const e = obliquityCorrection(T) * DEG;
-  const lambda = sunApparentLon(T) * DEG;
-  return Math.asin(Math.sin(e)*Math.sin(lambda)) * RAD;
-}
-// Ta'dîl-i zemân (dakîka). İşâreti kitaptaki gibidir: + iken hakîkî zevâl, vasatî 12'den öncedir (s. 193).
-function equationOfTime(T){
-  const epsilon = obliquityCorrection(T) * DEG;
-  const L0 = solarGeomMeanLon(T) * DEG;
-  const e = earthEccentricity(T);
-  const M = solarGeomMeanAnomaly(T) * DEG;
-  let y = Math.tan(epsilon/2); y *= y;
-  const eot = y*Math.sin(2*L0) - 2*e*Math.sin(M) + 4*e*y*Math.sin(M)*Math.cos(2*L0)
-            - 0.5*y*y*Math.sin(4*L0) - 1.25*e*e*Math.sin(2*M);
-  return 4 * eot * RAD; // minutes
-}
-
-// Hakîkî zevâl (yerel standart saat, gece yarısından dakîka)
-function solarNoon(lon, tz, eot){
-  return 720 - 4*lon - eot + tz*60;
-}
-
-// Fadl-ı dâir: güneşin merkezi hakîkî ufuktan "alt" irtifâında iken saat açısı (derece) — s. 196–199
-function sunriseHourAngle(lat, dec, alt){
-  const latR = lat * DEG, decR = dec * DEG, altR = alt * DEG;
-  const cosH = (Math.sin(altR) - Math.sin(latR)*Math.sin(decR)) / (Math.cos(latR)*Math.cos(decR));
-  if(cosH > 1 || cosH < -1) return NaN;
-  return Math.acos(cosH) * RAD;
-}
-
-function solarAltitude(lat, dec, hourAngle){
-  const latR = lat*DEG, decR = dec*DEG, haR = hourAngle*DEG;
-  return Math.asin(Math.sin(latR)*Math.sin(decR) + Math.cos(latR)*Math.cos(decR)*Math.cos(haR)) * RAD;
-}
-
-function solarAzimuth(lat, dec, hourAngle, alt){
-  const latR = lat*DEG, decR = dec*DEG, altR = alt*DEG;
-  let cosAz = (Math.sin(decR) - Math.sin(altR)*Math.sin(latR)) / (Math.cos(altR)*Math.cos(latR));
-  cosAz = Math.max(-1, Math.min(1, cosAz));
-  let az = Math.acos(cosAz) * RAD;
-  if(hourAngle > 0) az = 360 - az;
-  return az;
-}
-
-function minutesToHM(m){
-  if(isNaN(m)) return '--:--';
-  m = ((m % 1440) + 1440) % 1440;
-  let h = Math.floor(m/60);
-  let mm = Math.round(m % 60);
-  if(mm === 60){ h++; mm = 0; }
-  return String(h % 24).padStart(2,'0') + ':' + String(mm).padStart(2,'0');
-}
-
-// ─── Vakitler (kitaptaki usûl) ─────────────────────────────
-// 1) Güneş merkezinin hakîkî ufka göre vaktin irtifâına geldiği "hakîkî vakit" hesaplanır.
-// 2) Zevâlden önceki vakitlerden (imsâk, tulû') temkin ÇIKARILIR; zevâlden sonrakilere
-//    (zuhr, asr, gurûb, iştibâk, işâ) temkin EKLENİR (s. 187–188). İşrâk vaktine de temkin
-//    eklenir (s. 200); isfirâr vakti değiştirilmez (s. 201).
-// İrtifâlar: fecr −19° (dört mezhepte), işâ-i evvel −17°, işâ-i sânî −19° (s. 176, 178),
-// iştibâk-i nücûm −10° (s. 178), işrâk ve isfirâr +5° (s. 199–201), tulû' ve gurûb 0° (s. 202).
-const _vakitOnbellek = new Map();
-function calcPrayerTimes(date, city){
-  const y = date.getFullYear(), m = date.getMonth()+1, d = date.getDate();
-  const anahtar = y+'-'+m+'-'+d+'|'+city.name;
-  if (_vakitOnbellek.has(anahtar)) return _vakitOnbellek.get(anahtar);
-  const tz = city.tz, temkin = TEMKIN_DK;
-
-  // Bir vaktin hakîkî zamanını bul; meyl ve ta'dîl o âna göre düzeltilir.
-  function hakikiVakit(isaret, irtifaFn){
-    let dk = 720, sonuc = NaN, dec = 0, eot = 0;
-    for (let i = 0; i < 3; i++) {
-      const T = julianCentury(julianDay(y, m, d, dk/60 - tz));
-      dec = solarDeclination(T); eot = equationOfTime(T);
-      const zeval = solarNoon(city.lon, tz, eot);
-      if (isaret === 0) { sonuc = zeval; }
-      else {
-        const H = sunriseHourAngle(city.lat, dec, irtifaFn(dec));
-        if (isNaN(H)) return { t: NaN, dec, eot };
-        sonuc = zeval + isaret * 4 * H;
-      }
-      dk = sonuc;
-    }
-    return { t: sonuc, dec, eot };
-  }
-  const sabit = a => () => a;
-  const gayeIrtifa = dec => 90 - Math.abs(city.lat - dec);
-  // Asr irtifâı: tan(temâm-ı irtifâ) = kat + fey-i zevâl (s. 196–197)
-  const asrIrtifa = kat => dec => Math.atan(1 / (kat + Math.tan((90 - gayeIrtifa(dec)) * DEG))) * RAD;
-
-  const z = hakikiVakit(0);
-  const sonuc = {
-    dec: z.dec, eot: z.eot, temkin,
-    noon: z.t,                                   // hakîkî zevâl
-    maxAlt: gayeIrtifa(z.dec),                   // gâye irtifâı
-    feyZeval: Math.tan((90 - gayeIrtifa(z.dec)) * DEG),
-    imsak:       hakikiVakit(-1, sabit(-19)).t - temkin,
-    gunes:       hakikiVakit(-1, sabit(0)).t - temkin,
-    israk:       hakikiVakit(-1, sabit(5)).t + temkin,
-    zevalBas:    z.t - temkin,                   // şer'î zevâl (kerâhet) başlangıcı (s. 202)
-    ogle:        z.t + temkin,
-    ikindiEvvel: hakikiVakit(1, asrIrtifa(1)).t + temkin,
-    ikindiSani:  hakikiVakit(1, asrIrtifa(2)).t + temkin,
-    kerahet:     hakikiVakit(1, sabit(5)).t,     // isfirâr-ı şems
-    aksam:       hakikiVakit(1, sabit(0)).t + temkin,
-    istibak:     hakikiVakit(1, sabit(-10)).t + temkin,
-    yatsiIma:    hakikiVakit(1, sabit(-17)).t + temkin,
-    yatsiImam:   hakikiVakit(1, sabit(-19)).t + temkin,
-  };
-  _vakitOnbellek.set(anahtar, sonuc);
-  return sonuc;
-}
-
-// ─── TEMKİN CEDVELİ (kitap, s. 1244) ────────────────────────
-// Kitaptaki cedvel aynen alınmıştır; ara değerler doğrusal hesaplanır.
-// "İrtifâ'": bir mahallin en yüksek yerinin en aşağı yerinden i'tibâren yüksekliği (s. 1244).
-const TEMKIN_CEDVELI = [
-  /*   0 m */ [3.49,3.49,3.51,3.53,3.55,3.58,4.02,4.06,4.12,4.20,4.29,4.42,4.57,5.13,5.33,5.57,6.28,7.09,8.06,9.25,11.44],
-  /*  25 m */ [4.38,4.38,4.39,4.41,4.45,4.49,4.54,5.01,5.08,5.19,5.31,5.41,5.59,6.20,6.42,7.13,7.52,8.40,9.54,11.20,14.20],
-  /*  50 m */ [4.58,4.58,5.00,5.02,5.06,5.10,5.16,5.23,5.31,5.42,5.54,6.08,6.27,6.48,7.14,7.46,8.28,9.19,10.38,12.19,15.27],
-  /*  75 m */ [5.16,5.16,5.18,5.21,5.24,5.29,5.36,5.43,5.52,6.03,6.12,6.27,6.50,7.10,7.38,8.12,8.59,9.54,11.11,13.05,16.26],
-  /* 100 m */ [5.27,5.27,5.29,5.30,5.35,5.40,5.47,5.55,6.05,6.15,6.27,6.44,7.04,7.28,7.56,8.33,9.19,10.16,11.39,13.39,17.06],
-  /* 125 m */ [5.38,5.39,5.40,5.42,5.46,5.53,6.00,6.07,6.17,6.27,6.41,6.58,7.19,7.44,8.14,8.51,9.38,10.39,12.05,14.08,17.42],
-  /* 150 m */ [5.49,5.50,5.52,5.54,5.58,6.03,6.11,6.19,6.29,6.40,6.54,7.12,7.34,7.59,8.30,9.08,9.57,11.00,12.28,14.35,18.17],
-  /* 175 m */ [5.58,5.59,6.01,6.03,6.08,6.14,6.21,6.29,6.40,6.52,7.06,7.24,7.47,8.13,8.45,9.24,10.14,11.18,12.51,15.00,18.49],
-  /* 200 m */ [6.08,6.09,6.10,6.13,6.17,6.23,6.31,6.39,6.50,7.03,7.18,7.36,7.59,8.26,8.59,9.39,10.30,11.36,13.11,15.23,19.21],
-  /* 225 m */ [6.17,6.17,6.18,6.22,6.26,6.32,6.40,6.48,7.00,7.13,7.28,7.46,8.10,8.38,9.12,9.53,10.45,11.53,13.31,15.45,19.51],
-  /* 250 m */ [6.25,6.25,6.26,6.30,6.35,6.41,6.49,6.57,7.09,7.22,7.38,7.57,8.21,8.49,9.24,10.06,10.59,12.09,13.49,16.06,20.20],
-  /* 275 m */ [6.31,6.33,6.34,6.38,6.41,6.47,6.57,7.06,7.18,7.32,7.48,8.06,8.31,9.00,9.35,10.18,11.13,12.25,14.06,16.26,20.48],
-  /* 300 m */ [6.40,6.41,6.42,6.46,6.51,6.57,7.05,7.14,7.26,7.40,7.57,8.16,8.41,9.12,9.46,10.30,11.26,12.40,14.23,16.46,21.15],
-  /* 325 m */ [6.47,6.48,6.49,6.53,6.58,7.05,7.12,7.22,7.34,7.49,8.05,8.25,8.52,9.21,9.57,10.41,11.39,12.54,14.38,17.05,21.41],
-  /* 350 m */ [6.54,6.55,6.56,7.00,7.05,7.13,7.20,7.30,7.42,7.57,8.13,8.32,9.01,9.31,10.07,10.52,11.51,13.07,14.53,17.25,22.05],
-  /* 375 m */ [7.01,7.02,7.04,7.07,7.12,7.19,7.27,7.37,7.49,8.05,8.22,8.42,9.10,9.40,10.17,11.03,12.03,13.20,15.08,17.44,22.31],
-  /* 400 m */ [7.08,7.09,7.11,7.14,7.19,7.25,7.34,7.45,7.57,8.12,8.30,8.51,9.18,9.49,10.27,11.14,12.15,13.32,15.23,18.03,22.55],
-  /* 425 m */ [7.14,7.15,7.17,7.20,7.25,7.32,7.41,7.51,8.04,8.20,8.37,8.58,9.26,9.58,10.34,11.24,12.26,13.44,15.38,18.22,23.17],
-  /* 450 m */ [7.20,7.21,7.23,7.26,7.32,7.38,7.47,7.58,8.11,8.26,8.44,9.06,9.34,10.07,10.42,11.34,12.37,13.56,15.53,18.40,23.38],
-  /* 475 m */ [7.26,7.27,7.29,7.32,7.38,7.44,7.54,8.04,8.18,8.34,8.52,9.13,9.42,10.15,10.50,11.44,12.48,14.08,16.08,18.58,23.59],
-  /* 500 m */ [7.32,7.33,7.35,7.39,7.44,7.51,8.00,8.11,8.25,8.41,8.59,9.21,9.50,10.23,10.58,11.53,12.58,14.20,16.18,19.15,24.20]
-];
-// Satırlar: yükseklik 0–500 m (25 m aralık); sütunlar: arz 0°–60° (3° aralık). Değerler "dakîka.sâniye".
-
-function dkSnDakika(v){ const dk = Math.floor(v); return dk + Math.round((v - dk) * 100) / 60; }
-
-// Cedvelden temkin (dakîka): arz ve yükseklik arasında doğrusal ara değer
-function temkinCedvelden(lat, yukseklik){
-  const a = Math.max(0, Math.min(60, Math.abs(lat))) / 3;
-  const e = Math.max(0, Math.min(500, yukseklik)) / 25;
-  const a0 = Math.min(Math.floor(a), 19), e0 = Math.min(Math.floor(e), 19);
-  const fa = a - a0, fe = e - e0;
-  const v = (i, j) => dkSnDakika(TEMKIN_CEDVELI[i][j]);
-  return v(e0,a0)*(1-fa)*(1-fe) + v(e0,a0+1)*fa*(1-fe) + v(e0+1,a0)*(1-fa)*fe + v(e0+1,a0+1)*fa*fe;
-}
-
-// Temkin unsurları (s. 185–186): inhitât-ı ufuk + inkisâr + nısf-ı kutr − ihtilâf-ı manzar = irtifâ zâviyesi.
-// İstanbul (Çamlıca, 267 m): 29′ + 44,5′ + 15′45″ − 8,8″ = 1° 29′ 6,2″; 21 Mart'ta temkin 7 dk 52 sn (s. 186).
-function calcTemkinComponents(date, city, yukseklik){
-  const Y = Math.max(0, yukseklik);
-  const dipArcmin = 106.92 * Math.sqrt(Y) / 60;     // Ahmed Ziyâ beğ: açı sâniyesi = 106,92 × √(metre)
-  const refractionArcmin = 44.5;                    // ufkun altındaki bu irtifâya âit inkisâr (s. 185)
-  const semiDiamArcmin = 15.75;                     // nısf-ı kutr-ı zâhirî, asgarî 15′ 45″ (s. 185)
-  const parallaxArcmin = 8.8 / 60;                  // ihtilâf-ı manzar 8,8″ (çıkarılır)
-  const totalArcmin = dipArcmin + refractionArcmin + semiDiamArcmin - parallaxArcmin;
-  // Seçili gün ve şehir için: merkezin hakîkî ufuktan bu kadar inmesi için geçen zaman
-  const pt = calcPrayerTimes(date, city);
-  const H0 = sunriseHourAngle(city.lat, pt.dec, 0);
-  const H1 = sunriseHourAngle(city.lat, pt.dec, -totalArcmin / 60);
-  const hesapDk = (H1 - H0) * 4;
-  return {
-    elev: Y, dipArcmin, refractionArcmin, semiDiamArcmin, parallaxArcmin,
-    totalArcmin, totalDeg: totalArcmin / 60,
-    hesapDk,                                        // bu gün için hesap
-    cedvelDk: temkinCedvelden(city.lat, Y),          // kitaptaki cedvel (s. 1244)
-    temkinMin: hesapDk + 2                           // iki dakîka ihtiyât ile (s. 186)
-  };
-}
-
-function getSunPosAtMinute(minute, date, city){
-  const y = date.getFullYear(), m = date.getMonth()+1, d = date.getDate();
-  const h = minute / 60;
-  const jd = julianDay(y, m, d, h - city.tz);
-  const T = julianCentury(jd);
-  const dec = solarDeclination(T);
-  const eot = equationOfTime(T);
-  const noon = solarNoon(city.lon, city.tz, eot);
-  const ha = (minute - noon) / 4; // degrees
-  const alt = solarAltitude(city.lat, dec, ha);
-  const az = solarAzimuth(city.lat, dec, ha, alt);
-  return { alt, az, dec, ha, eot };
-}
-
-// ============================================================
-// STARFIELD
-// ============================================================
-(function(){
-  const c = document.getElementById('starfield');
-  const ctx = c.getContext('2d');
-  function resize(){ c.width=window.innerWidth; c.height=window.innerHeight; }
-  resize();
-  window.addEventListener('resize', resize);
-  const stars = Array.from({length:200}, () => ({
-    x: Math.random(), y: Math.random(),
-    r: Math.random()*1.5+0.2,
-    a: Math.random(), da: (Math.random()-0.5)*0.005
-  }));
-  function drawStars(){
-    ctx.clearRect(0,0,c.width,c.height);
-    stars.forEach(s => {
-      s.a = Math.max(0.1, Math.min(1, s.a + s.da));
-      if(s.a<=0.1||s.a>=1) s.da *= -1;
-      ctx.globalAlpha = s.a * 0.7;
-      ctx.fillStyle = '#fff';
-      ctx.beginPath();
-      ctx.arc(s.x*c.width, s.y*c.height*0.8, s.r, 0, Math.PI*2);
-      ctx.fill();
-    });
-    ctx.globalAlpha = 1;
-    requestAnimationFrame(drawStars);
-  }
-  drawStars();
-})();
-
-// ============================================================
-// SOLAR DIAGRAM
-// ============================================================
-const SC = document.getElementById('solar-canvas');
-const SCX = SC.getContext('2d');
-let W, H, HY; // canvas width, height, horizon Y
-let fraction = 0;
-let playing = false;
-let animId = null;
-
-// Dynamic EVENTS — recalculated when date/city changes
-let EVENTS = [];
-function rebuildEvents(){
-  const pt = calcPrayerTimes(selectedDate, selectedCity);
-  const toF = m => Math.max(0, Math.min(1, m / 1440));
-  EVENTS = [
-    { f:toF(pt.imsak),       name:'İmsâk — fecr-i sâdık (−19°)',       alt:-19, color:'#4f46e5', dot:'#818cf8' },
-    { f:toF(pt.gunes),       name:'Güneş (tulû\') — kerâhet vakti',    alt:0,   color:'#f59e0b', dot:'#fbbf24' },
-    { f:toF(pt.israk),       name:'İşrâk (kuşluk) vakti',              alt:5,   color:'#f5c842', dot:'#fde68a' },
-    { f:toF(pt.zevalBas),    name:'Zevâl — kerâhet vakti',             alt:pt.maxAlt, color:'#fbbf24', dot:'#fef3c7' },
-    { f:toF(pt.ogle),        name:'Öğle (zuhr) vakti',                 alt:pt.maxAlt, color:'#f5c842', dot:'#fef08a' },
-    { f:toF(pt.ikindiEvvel), name:'İkindi — asr-ı evvel',              alt:0,   color:'#f97316', dot:'#fb923c' },
-    { f:toF(pt.ikindiSani),  name:"Asr-ı sânî (İmâm-ı a'zam)",         alt:0,   color:'#f97316', dot:'#fdba74' },
-    { f:toF(pt.kerahet),     name:'İsfirâr — kerâhet vakti',           alt:5,   color:'#ef4444', dot:'#fca5a5' },
-    { f:toF(pt.aksam),       name:'Akşam — şer\'î gurûb',              alt:0,   color:'#dc2626', dot:'#f87171' },
-    { f:toF(pt.istibak),     name:'İştibâk-i nücûm (−10°)',            alt:-10, color:'#9333ea', dot:'#c084fc' },
-    { f:toF(pt.yatsiIma),    name:'Yatsı — işâ-i evvel (−17°)',        alt:-17, color:'#4f46e5', dot:'#818cf8' },
-    { f:toF(pt.yatsiImam),   name:"İşâ-i sânî (−19°)",                 alt:-19, color:'#312e81', dot:'#a5b4fc' },
-  ];
-  // Update prayer buttons with actual times
-  const btns = document.querySelectorAll('.prayer-btn');
-  const fracs = [EVENTS[0].f, EVENTS[1].f, EVENTS[4].f, EVENTS[5].f, EVENTS[8].f, EVENTS[10].f];
-  const btnNames = ['İmsâk','Güneş','Öğle','İkindi','Akşam','Yatsı'];
-  const btnMins  = [pt.imsak, pt.gunes, pt.ogle, pt.ikindiEvvel, pt.aksam, pt.yatsiIma];
-  btns.forEach((b,i) => {
-    if(fracs[i] !== undefined){
-      b.innerHTML = `<span>${btnNames[i]}</span><span class="pb-time">${minutesToHM(btnMins[i])}</span>`;
-      b.onclick = () => jumpTo(fracs[i], btnNames[i]);
-    }
-  });
-}
-
-function resizeSolar(){
-  W = SC.parentElement.clientWidth;
-  H = Math.min(380, Math.max(240, W * 0.48));
-  SC.width = W; SC.height = H;
-  HY = H * 0.64;
-  drawSolar();
-}
-
-function sunXY(f){
-  const margin = 40;
-  const x = margin + (W - margin*2) * f;
-  const alt = getAltitude(f);
-  const pt = calcPrayerTimes(selectedDate, selectedCity);
-  const maxAlt = Math.max(pt.maxAlt, 20);
-  let y, belowH;
-  if(alt <= 0){
-    // Below horizon: map -19..0 to underground area
-    const underground = H - HY - 20;
-    y = HY + underground * Math.min(1, Math.abs(alt) / 19);
-    belowH = true;
-  } else {
-    // Above horizon: map 0..maxAlt to sky area
-    const skyH = HY - 48;
-    y = HY - skyH * (alt / maxAlt);
-    belowH = false;
-  }
-  return { x, y, belowH };
-}
-
-function getSkyColor(f){
-  const alt = getAltitude(f);
-  if(alt < -19) return ['#020510','#04091a'];
-  if(alt < -10) return ['#06091e','#0c1a3a'];
-  if(alt < -2)  return ['#0c1a3a','#1a3a6a','#e87c2a44'];
-  if(alt < 2)   return ['#1a3a6a','#2d6abf','#f5c84244'];
-  if(alt < 10)  return ['#2d6abf','#5b9bd5','#f5c84266'];
-  if(alt > 10)  return ['#87ceeb','#5b9bd5','#2d6abf'];
-  return ['#020510','#04091a'];
-}
-
-function getAltitude(f){
-  // Real astronomical calculation based on selected date and city
-  const minute = f * 1440;
-  const pos = getSunPosAtMinute(minute, selectedDate, selectedCity);
-  return parseFloat(pos.alt.toFixed(1));
-}
-
-function drawSolar(){
-  if(!W) return;
-  SCX.clearRect(0,0,W,H);
-
-  // Sky background
-  const skyGrad = SCX.createLinearGradient(0,0,0,HY);
-  const cols = getSkyColor(fraction);
-  cols.forEach((c,i) => skyGrad.addColorStop(i/(cols.length-1), c));
-  SCX.fillStyle = skyGrad;
-  SCX.fillRect(0,0,W,HY);
-
-  // Sun glow if above horizon
-  const pos = sunXY(fraction);
-  if(!pos.belowH){
-    const glow = SCX.createRadialGradient(pos.x, pos.y, 0, pos.x, pos.y, 80);
-    const alpha = fraction > 0.85 ? (1-fraction)/0.15 : Math.min(1,(fraction-0.12)/0.06);
-    glow.addColorStop(0, `rgba(245,200,66,${0.25 * alpha})`);
-    glow.addColorStop(1, 'transparent');
-    SCX.fillStyle = glow;
-    SCX.fillRect(0,0,W,H);
-  }
-
-  // Ground
-  const gGrad = SCX.createLinearGradient(0,HY,0,H);
-  gGrad.addColorStop(0,'#1e3a1e');
-  gGrad.addColorStop(1,'#0d1a0d');
-  SCX.fillStyle = gGrad;
-  SCX.fillRect(0,HY,W,H-HY);
-
-  // Underground section (dark overlay when sun below)
-  if(pos.belowH){
-    const ugGrad = SCX.createLinearGradient(0,HY,0,H);
-    ugGrad.addColorStop(0,'rgba(0,0,20,0.6)');
-    ugGrad.addColorStop(1,'rgba(0,0,10,0.9)');
-    SCX.fillStyle = ugGrad;
-    SCX.fillRect(0,HY,W,H-HY);
-  }
-
-  // Horizon line
-  SCX.strokeStyle = '#2d5a1a';
-  SCX.lineWidth = 2;
-  SCX.setLineDash([]);
-  SCX.beginPath(); SCX.moveTo(0,HY); SCX.lineTo(W,HY); SCX.stroke();
-
-  // Draw angle reference lines
-  const drawAngleLine = (altDeg, label, col) => {
-    const MAX_ALT = 65;
-    if(altDeg >= 0) {
-      const yOff = (altDeg/MAX_ALT) * (HY - 40);
-      const y = HY - yOff;
-      SCX.strokeStyle = col + '40';
-      SCX.lineWidth = 1;
-      SCX.setLineDash([4,6]);
-      SCX.beginPath(); SCX.moveTo(0,y); SCX.lineTo(W,y); SCX.stroke();
-      SCX.fillStyle = col + '99';
-      SCX.font = '11px Inter';
-      SCX.fillText(label, 6, y-3);
-    } else {
-      const yOff = (Math.abs(altDeg)/25) * (H - HY - 20);
-      const y = HY + yOff;
-      SCX.strokeStyle = col + '40';
-      SCX.lineWidth = 1;
-      SCX.setLineDash([4,6]);
-      SCX.beginPath(); SCX.moveTo(0,y); SCX.lineTo(W,y); SCX.stroke();
-      SCX.fillStyle = col + '88';
-      SCX.font = '11px Inter';
-      SCX.fillText(label, 6, y-3);
-    }
-  };
-  drawAngleLine(5, '+5° (işrâk / isfirâr)', '#f5c842');
-  drawAngleLine(-10, '−10° (iştibâk-i nücûm)', '#c084fc');
-  drawAngleLine(-17, '−17° (işâ-i evvel)', '#818cf8');
-  drawAngleLine(-19, '−19° (fecr / işâ-i sânî)', '#a5b4fc');
-  SCX.setLineDash([]);
-
-  // Sun path (dotted arc)
-  SCX.strokeStyle = 'rgba(245,200,66,0.25)';
-  SCX.lineWidth = 1.5;
-  SCX.setLineDash([3,6]);
-  SCX.beginPath();
-  for(let i=0;i<=200;i++){
-    const p = sunXY(i/200);
-    if(i===0) SCX.moveTo(p.x,p.y); else SCX.lineTo(p.x,p.y);
-  }
-  SCX.stroke();
-  SCX.setLineDash([]);
-
-  // Event tick markers
-  // 6 main events that get HH:MM labels: İmsak, Güneş, Öğle, İkindi(Evvel), Akşam, Yatsı(İmâmeyn)
-  const _pt = calcPrayerTimes(selectedDate, selectedCity);
-  const _labeledIdx = [0,1,4,5,8,10];
-  const _labelMins = [_pt.imsak, _pt.gunes, _pt.ogle, _pt.ikindiEvvel, _pt.aksam, _pt.yatsiIma];
-  EVENTS.forEach((ev, idx) => {
-    const p = sunXY(ev.f);
-    SCX.strokeStyle = ev.dot;
-    SCX.lineWidth = 1.5;
-    SCX.beginPath();
-    SCX.moveTo(p.x, HY - 6); SCX.lineTo(p.x, HY + 6);
-    SCX.stroke();
-    // HH:MM label for main 6 events
-    const li = _labeledIdx.indexOf(idx);
-    if(li >= 0){
-      const timeStr = minutesToHM(_labelMins[li]);
-      SCX.save();
-      SCX.font = 'bold 9px Inter, sans-serif';
-      SCX.textAlign = 'center';
-      SCX.textBaseline = 'bottom';
-      // Alternate vertical position to avoid overlap for close events
-      const yOff = (li === 1) ? 22 : 12; // Güneş slightly lower to avoid İmsak overlap
-      SCX.fillStyle = 'rgba(10,18,40,0.65)';
-      SCX.fillRect(p.x - 16, HY - yOff - 10, 32, 11);
-      SCX.fillStyle = ev.dot;
-      SCX.fillText(timeStr, p.x, HY - yOff);
-      SCX.restore();
-    }
-  });
-
-  // Sun disc
-  const SR = pos.belowH ? 12 : 18;
-  const sunColor = fraction > 0.85 && fraction < 0.92 ? '#e87c2a' : '#f5c842';
-  if(!pos.belowH){
-    // Rays
-    for(let i=0;i<8;i++){
-      const a = (i/8)*Math.PI*2 + Date.now()*0.0005;
-      SCX.strokeStyle = sunColor + '60';
-      SCX.lineWidth = 2;
-      SCX.beginPath();
-      SCX.moveTo(pos.x + Math.cos(a)*(SR+3), pos.y + Math.sin(a)*(SR+3));
-      SCX.lineTo(pos.x + Math.cos(a)*(SR+10), pos.y + Math.sin(a)*(SR+10));
-      SCX.stroke();
-    }
-    const sunGlow = SCX.createRadialGradient(pos.x,pos.y,0,pos.x,pos.y,SR*2);
-    sunGlow.addColorStop(0, sunColor+'cc');
-    sunGlow.addColorStop(1, 'transparent');
-    SCX.fillStyle = sunGlow;
-    SCX.beginPath(); SCX.arc(pos.x,pos.y,SR*2,0,Math.PI*2); SCX.fill();
-  }
-  // Sun body
-  const bodyGrad = SCX.createRadialGradient(pos.x-SR*0.3,pos.y-SR*0.3,1,pos.x,pos.y,SR);
-  bodyGrad.addColorStop(0,'#fff8c0');
-  bodyGrad.addColorStop(0.5, sunColor);
-  bodyGrad.addColorStop(1, pos.belowH ? '#8b4513' : '#e87c2a');
-  SCX.fillStyle = bodyGrad;
-  SCX.beginPath(); SCX.arc(pos.x,pos.y,SR,0,Math.PI*2); SCX.fill();
-  if(pos.belowH){ SCX.globalAlpha=0.5; SCX.fillStyle='#0d1526'; SCX.beginPath(); SCX.arc(pos.x,pos.y,SR,0,Math.PI*2); SCX.fill(); SCX.globalAlpha=1; }
-
-  // Current event label
-  const cur = gecerliOlay();
-  const labelX = Math.min(W-220, Math.max(10, pos.x-100));
-  const labelY = pos.belowH ? HY + 40 : Math.max(50, pos.y - 40);
-  SCX.fillStyle = 'rgba(6,9,26,0.85)';
-  roundRect(SCX, labelX, labelY, 200, 44, 8);
-  SCX.fillStyle = cur.dot;
-  SCX.font = 'bold 13px Inter';
-  SCX.fillText(cur.name, labelX+10, labelY+17);
-  SCX.fillStyle = '#8a8a9a';
-  SCX.font = '11px Inter';
-  const alt = getAltitude(fraction);
-  const altStr = (alt >= 0 ? '+' : '') + alt.toFixed(1) + '°';
-  SCX.fillText(`İrtifâ: ${altStr}  |  ${pos.belowH ? 'Ufkun altında' : 'Ufkun üzerinde'}`, labelX+10, labelY+34);
-
-  // Compass labels
-  SCX.fillStyle = '#ffffff66';
-  SCX.font = 'bold 13px Inter';
-  SCX.fillText('DOĞU', 6, HY + 18);
-  SCX.fillText('BATI', W-36, HY + 18);
-  SCX.fillText('ZENİT', W/2-18, 16);
-}
-
-const GECE_OLAYI = { f:0, name:'Gece — yatsı vakti', alt:-30, color:'#4f46e5', dot:'#a5b4fc' };
-function gecerliOlay(){
-  let cur = GECE_OLAYI;
-  for(let i=EVENTS.length-1;i>=0;i--){ if(fraction >= EVENTS[i].f){ cur=EVENTS[i]; break; } }
-  return cur;
-}
-
-function roundRect(ctx, x, y, w, h, r){
-  ctx.beginPath();
-  ctx.moveTo(x+r,y); ctx.lineTo(x+w-r,y); ctx.quadraticCurveTo(x+w,y,x+w,y+r);
-  ctx.lineTo(x+w,y+h-r); ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h);
-  ctx.lineTo(x+r,y+h); ctx.quadraticCurveTo(x,y+h,x,y+h-r);
-  ctx.lineTo(x,y+r); ctx.quadraticCurveTo(x,y,x+r,y);
-  ctx.closePath(); ctx.fill();
-}
-
-function updateTimeline(){
-  document.getElementById('timelineFill').style.width = (fraction*100) + '%';
-  document.getElementById('timelineHandle').style.left = (fraction*100) + '%';
-  const cur = gecerliOlay();
-  const next = EVENTS.find(e=>e.f>fraction);
-  document.getElementById('timeDisplay').textContent = minutesToHM(fraction*1440) + ' · ' + cur.name + (next ? ' → ' + next.name : '');
-}
-
-let lastTime = null;
-function animate(ts){
-  if(!playing) return;
-  if(!lastTime) lastTime = ts;
-  const delta = (ts - lastTime) / 1000;
-  lastTime = ts;
-  fraction = (fraction + delta * 0.04) % 1;
-  drawSolar();
-  updateTimeline();
-  animId = requestAnimationFrame(animate);
-}
-
-function togglePlay(){
-  playing = !playing;
-  const btn = document.getElementById('playBtn');
-  if(playing){ btn.textContent='⏸ Duraklat'; lastTime=null; animId=requestAnimationFrame(animate); }
-  else { btn.textContent='▶ Başlat'; if(animId) cancelAnimationFrame(animId); }
-}
-
-function jumpTo(f, name){
-  fraction = f;
-  drawSolar();
-  updateTimeline();
-}
-
-// Timeline drag
-(function(){
-  const track = document.getElementById('timelineTrack');
-  let dragging = false;
-  function setFrac(e){
-    const r = track.getBoundingClientRect();
-    const cx = (e.touches ? e.touches[0].clientX : e.clientX);
-    fraction = Math.max(0, Math.min(1, (cx - r.left)/r.width));
-    drawSolar(); updateTimeline();
-  }
-  track.addEventListener('mousedown', e=>{ dragging=true; setFrac(e); });
-  document.addEventListener('mousemove', e=>{ if(dragging) setFrac(e); });
-  document.addEventListener('mouseup', ()=>{ dragging=false; });
-  track.addEventListener('touchstart', e=>{ dragging=true; setFrac(e); }, {passive:true});
-  document.addEventListener('touchmove', e=>{ if(dragging) setFrac(e); }, {passive:true});
-  document.addEventListener('touchend', ()=>{ dragging=false; });
-})();
-
-// Resize
-window.addEventListener('resize', resizeSolar);
-
-// ============================================================
-// GLOBAL CONTROLS INIT (City + Date)
-// ============================================================
-(function initGlobalControls(){
-  const citySelect = document.getElementById('gc-city');
-  CITIES.forEach((c, i) => {
-    const opt = document.createElement('option');
-    opt.value = i; opt.textContent = c.name;
-    if(i === 0) opt.selected = true;
-    citySelect.appendChild(opt);
-  });
-
-  const dateInput = document.getElementById('gc-date');
-  const bugun = new Date();
-  dateInput.value = bugun.getFullYear() + '-' + String(bugun.getMonth()+1).padStart(2,'0') + '-' + String(bugun.getDate()).padStart(2,'0');
-  selectedDate = new Date(dateInput.value + 'T12:00:00');
-
-  function onGlobalChange(){
-    selectedCity = CITIES[parseInt(citySelect.value, 10)] || CITIES[0];
-    const secilen = new Date(dateInput.value + 'T12:00:00');
-    if (!isNaN(secilen)) selectedDate = secilen;
-    const pt = calcPrayerTimes(selectedDate, selectedCity);
-    document.getElementById('gc-coords').textContent =
-      'Arz ' + selectedCity.lat.toFixed(2) + '° · Tûl ' + selectedCity.lon.toFixed(2) + '° · Temkin ' + TEMKIN_DK + ' dk';
-    document.getElementById('gc-decl').innerHTML =
-      'Meyl-i şems: <strong>' + pt.dec.toFixed(2).replace('.', ',') + '°</strong> · Ta\'dîl-i zemân: <strong>' + (pt.eot >= 0 ? '+' : '−') + Math.abs(pt.eot).toFixed(1).replace('.', ',') + ' dk</strong>';
-    rebuildEvents();
-    drawSolar();
-    updateTimeline();
-    if(typeof updatePrayerResults === 'function') updatePrayerResults();
-    if(typeof drawTemkin === 'function') drawTemkin();
-  }
-
-  citySelect.addEventListener('change', onGlobalChange);
-  dateInput.addEventListener('change', onGlobalChange);
-
-  // Initial build
-  rebuildEvents();
-  onGlobalChange();
-  if (EVENTS.length && !isNaN(EVENTS[0].f)) { fraction = EVENTS[0].f; updateTimeline(); }
-  setTimeout(resizeSolar, 100);
-})();
-
-// Animate sun rays periodically
-setInterval(()=>{ if(!playing) drawSolar(); }, 100);
-
-
-// ============================================================
-// VAKİT CEDVELİ (seçili gün ve şehir)
-// ============================================================
-window.updatePrayerResults = function(){
-  const pt = calcPrayerTimes(selectedDate, selectedCity);
-  const grid = document.getElementById('pr-grid');
-  if(!grid) return;
-  const items = [
-    ['İmsâk (fecr-i sâdık)', pt.imsak, true],
-    ['Güneş (şer\'î tulû\')', pt.gunes, true],
-    ['İşrâk (kuşluk)', pt.israk, false],
-    ['Zevâl (kerâhet) başlangıcı', pt.zevalBas, false],
-    ['Öğle (zuhr)', pt.ogle, true],
-    ['İkindi (asr-ı evvel)', pt.ikindiEvvel, true],
-    ['Asr-ı sânî', pt.ikindiSani, false],
-    ['İsfirâr-ı şems', pt.kerahet, false],
-    ['Akşam (şer\'î gurûb)', pt.aksam, true],
-    ['İştibâk-i nücûm', pt.istibak, false],
-    ['Yatsı (işâ-i evvel)', pt.yatsiIma, true],
-    ['İşâ-i sânî', pt.yatsiImam, false],
-  ];
-  grid.innerHTML = items.map(([name, val, ana]) =>
-    `<div class="pr-item${ana ? ' pr-ana' : ''}"><span class="pr-name">${name}</span><span class="pr-time">${minutesToHM(val)}</span></div>`
-  ).join('');
-  const baslik = document.getElementById('pr-baslik');
-  if (baslik) baslik.textContent = selectedCity.name + ' · ' + selectedDate.toLocaleDateString('tr-TR', { day:'numeric', month:'long', year:'numeric' });
-};
-updatePrayerResults();
-
-// ============================================================
-// TEMKIN — İNTERAKTİF SUNSET DİYAGRAMI + HESAPLAR
-// ============================================================
-(function(){
-  const c = document.getElementById('temkin-canvas');
-  if(!c) return;
-  const ctx = c.getContext('2d');
-  const elevSlider = document.getElementById('temkinElevSlider');
-  const elevValEl = document.getElementById('temkinElevVal');
-  const playBtn = document.getElementById('temkinPlayBtn');
-  let temkinElev = 267; // Çamlıca tepesi: İstanbul'daki râsıda en yakın en yüksek yer (s. 185)
-  let sunAnimPhase = 0.5; // 0=above horizon, 1=fully set
-  let tPlaying = false, tAnimId = null;
-
-  function arcminStr(v){
-    const top = Math.round(v * 60); // açı sâniyesi
-    const d = Math.floor(top / 3600), m = Math.floor((top % 3600) / 60), s = top % 60;
-    return (d ? d + "° " : "") + m + "′" + (s > 0 ? " " + String(s).padStart(2,'0') + "″" : "");
-  }
-  function dkSnStr(dk){ const top = Math.round(dk * 60); return Math.floor(top/60) + " dk " + String(top%60).padStart(2,'0') + " sn"; }
-
-  function resize(){
-    c.width = c.parentElement.clientWidth;
-    c.height = 480;
-    drawTemkinCanvas();
-  }
-
-  window.drawTemkin = function(){ resize(); };
-
-  function drawTemkinCanvas(){
-    const W=c.width, H=c.height, S=H/480;
-    ctx.clearRect(0,0,W,H);
-    const tc = calcTemkinComponents(selectedDate, selectedCity, temkinElev);
-    // Pixel scale: total angle maps to a vertical range
-    const zone = H * 0.40; // vertical pixels for total angle zone
-    const skyH = H * 0.38;
-    const pxPerArcmin = zone / Math.max(tc.totalArcmin, 1);
-    const inhitatPx = tc.dipArcmin * pxPerArcmin;
-    const refrPx = tc.refractionArcmin * pxPerArcmin;
-    const sdPx = tc.semiDiamArcmin * pxPerArcmin;
-    const seriY = skyH + inhitatPx;
-    const appY = seriY + sdPx;
-    const realY = appY + refrPx;
-    const sunX = W * 0.20;
-    const obsX = W * 0.74;
-    const brX = W * 0.38;
-    const sunR = Math.max(10, Math.max(12, sdPx * 0.8) * S);
-    // Phase=0: sun center at appY → upper edge exactly at seriY (visible horizon)
-    // Phase=1: sun center at realY → geometric position at end of Temkin
-    const sunCenterY = appY + (realY - appY) * sunAnimPhase;
-
-    // ─── Sky ─────────────────────────────────────────────
-    const skyGrad = ctx.createLinearGradient(0,0,0,seriY);
-    skyGrad.addColorStop(0,'#01040f'); skyGrad.addColorStop(0.4,'#050e28');
-    skyGrad.addColorStop(0.72,'#0d1e48'); skyGrad.addColorStop(0.88,'#5a1c04');
-    skyGrad.addColorStop(1,'#9a3808');
-    ctx.fillStyle=skyGrad; ctx.fillRect(0,0,W,seriY);
-    const glow = ctx.createRadialGradient(sunX,seriY,0,sunX,seriY,W*0.5);
-    glow.addColorStop(0,'rgba(255,130,30,0.40)'); glow.addColorStop(0.35,'rgba(255,80,10,0.16)');
-    glow.addColorStop(1,'transparent');
-    ctx.fillStyle=glow; ctx.fillRect(0,0,W,seriY);
-    if(inhitatPx>2){
-      const st=ctx.createLinearGradient(0,skyH,0,seriY);
-      st.addColorStop(0,'rgba(180,60,5,0.04)'); st.addColorStop(1,'rgba(160,50,5,0.20)');
-      ctx.fillStyle=st; ctx.fillRect(0,skyH,W,inhitatPx);
-    }
-
-    // ─── Ground ──────────────────────────────────────────
-    const gg=ctx.createLinearGradient(0,seriY,0,H);
-    gg.addColorStop(0,'#1a2810'); gg.addColorStop(0.4,'#0f1a0a'); gg.addColorStop(1,'#060d04');
-    ctx.fillStyle=gg; ctx.fillRect(0,seriY,W,H-seriY);
-
-    // ─── Hill (height proportional to elevation) ─────────
-    const hillH = Math.min(inhitatPx + 20*S, H*0.25);
-    const hc=ctx.createLinearGradient(0,skyH,0,H);
-    hc.addColorStop(0,'#263d14'); hc.addColorStop(0.5,'#1c2c0e'); hc.addColorStop(1,'#0c1406');
-    ctx.fillStyle=hc;
-    ctx.beginPath();
-    ctx.moveTo(W*0.50,seriY);
-    ctx.quadraticCurveTo(W*0.61,skyH+hillH*0.3,obsX,skyH);
-    ctx.lineTo(obsX+40*S,skyH-10*S); ctx.lineTo(W,seriY-8*S);
-    ctx.lineTo(W,H); ctx.lineTo(W*0.50,H); ctx.closePath(); ctx.fill();
-    ctx.strokeStyle='rgba(80,130,35,0.55)'; ctx.lineWidth=1.5;
-    ctx.beginPath(); ctx.moveTo(W*0.50,seriY);
-    ctx.quadraticCurveTo(W*0.61,skyH+hillH*0.3,obsX,skyH); ctx.stroke();
-    ctx.lineWidth=1;
-
-    // ─── Riyâzî ufuk (gold dashed) ──────────────────────
-    ctx.strokeStyle='rgba(245,200,66,0.75)'; ctx.lineWidth=1.5; ctx.setLineDash([10,7]);
-    ctx.beginPath(); ctx.moveTo(0,skyH); ctx.lineTo(W,skyH); ctx.stroke(); ctx.setLineDash([]);
-    ctx.fillStyle='rgba(245,200,66,0.85)'; ctx.font=`bold ${Math.max(9,11*S)}px Inter`;
-    ctx.fillText("Üfk-ı hakîkî (hesap) — 0°",W*0.03,skyH-6*S);
-
-    // ─── Şer'î ufuk (orange) ────────────────────────────
-    ctx.strokeStyle='rgba(249,115,22,0.85)'; ctx.lineWidth=2;
-    ctx.beginPath(); ctx.moveTo(0,seriY); ctx.lineTo(W*0.50,seriY); ctx.stroke();
-    ctx.fillStyle='rgba(249,115,22,0.85)'; ctx.font=`bold ${Math.max(9,11*S)}px Inter`;
-    ctx.fillText("Üfk-ı şer'î (en yüksek tepeden)",W*0.03,seriY+16*S);
-
-    // ─── Refracted ray (from sun's upper edge to observer) ──
-    const sunTopY = sunCenterY - sunR;
-    ctx.strokeStyle='rgba(245,200,66,0.80)'; ctx.lineWidth=2.2; ctx.setLineDash([]);
-    ctx.beginPath(); ctx.moveTo(sunX, sunTopY);
-    ctx.bezierCurveTo(W*0.30,seriY+8*S,W*0.52,skyH-4*S,obsX,skyH); ctx.stroke();
-    ctx.strokeStyle='rgba(255,255,255,0.16)'; ctx.lineWidth=1.5; ctx.setLineDash([6,6]);
-    ctx.beginPath(); ctx.moveTo(sunX, sunTopY); ctx.lineTo(obsX,skyH); ctx.stroke();
-    ctx.setLineDash([]);
-
-    // ─── Sun disc (animated position) ───────────────────
-    ctx.save();
-    const sunGlow = ctx.createRadialGradient(sunX,sunCenterY,0,sunX,sunCenterY,sunR*5);
-    sunGlow.addColorStop(0,'rgba(255,150,40,0.45)'); sunGlow.addColorStop(0.3,'rgba(255,90,10,0.18)');
-    sunGlow.addColorStop(1,'transparent');
-    ctx.fillStyle=sunGlow; ctx.beginPath(); ctx.arc(sunX,sunCenterY,sunR*5,0,Math.PI*2); ctx.fill();
-    const sd=ctx.createRadialGradient(sunX-sunR*0.25,sunCenterY-sunR*0.25,sunR*0.05,sunX,sunCenterY,sunR);
-    sd.addColorStop(0,'#fffde0'); sd.addColorStop(0.45,'#ffd84a'); sd.addColorStop(1,'#f59020');
-    ctx.fillStyle=sd; ctx.beginPath(); ctx.arc(sunX,sunCenterY,sunR,0,Math.PI*2); ctx.fill();
-    ctx.strokeStyle='rgba(255,200,80,0.35)'; ctx.lineWidth=1.5;
-    ctx.beginPath(); ctx.arc(sunX,sunCenterY,sunR,0,Math.PI*2); ctx.stroke();
-    ctx.restore();
-    // Labels near sun
-    ctx.fillStyle='#f5c842'; ctx.font=`bold ${Math.max(9,10*S)}px Inter`; ctx.textAlign='center';
-    if(sunAnimPhase < 0.3){
-      ctx.fillText('Üst kenâr şer\'î ufukta',sunX,seriY-sunR-14*S);
-    } else if(sunAnimPhase > 0.7){
-      ctx.fillStyle='rgba(220,130,60,0.80)';
-      ctx.fillText("Merkezin hakîkî yeri",sunX,Math.min(realY+sunR+16*S, H-8*S));
-    }
-    ctx.textAlign='left';
-
-    // ─── Brackets (dynamic values) ──────────────────────
-    function bkt(y1,y2,color,label,val){
-      if(Math.abs(y2-y1)<2) return;
-      const mid=(y1+y2)/2,bw=7*S,lx=brX+12*S,fs=Math.max(9,11*S);
-      ctx.strokeStyle=color; ctx.lineWidth=2; ctx.setLineDash([]);
-      ctx.beginPath(); ctx.moveTo(brX,y1); ctx.lineTo(brX,y2); ctx.stroke();
-      ctx.beginPath(); ctx.moveTo(brX-bw,y1); ctx.lineTo(brX+bw,y1); ctx.stroke();
-      ctx.beginPath(); ctx.moveTo(brX-bw,y2); ctx.lineTo(brX+bw,y2); ctx.stroke();
-      ctx.font=`bold ${fs}px Inter`;
-      const lw=ctx.measureText(label).width;
-      ctx.fillStyle='rgba(6,9,26,0.75)'; ctx.fillRect(lx-3,mid-fs-2,lw+6,fs*2+8);
-      ctx.fillStyle=color; ctx.fillText(label,lx,mid-1);
-      ctx.font=`${fs}px Inter`; ctx.fillStyle=color+'cc'; ctx.fillText(val,lx,mid+fs+1);
-    }
-    bkt(skyH, seriY, '#60a5fa', "İnhitât", arcminStr(tc.dipArcmin));
-    bkt(seriY, appY, '#a78bfa', "Nısf-ı kutr", arcminStr(tc.semiDiamArcmin));
-    bkt(appY, realY, '#f97316', "İnkisâr", arcminStr(tc.refractionArcmin));
-
-    // Total bracket
-    const totX = brX + (W<500?88:112)*S;
-    ctx.strokeStyle='rgba(245,200,66,0.55)'; ctx.lineWidth=1.5; ctx.setLineDash([5,4]);
-    ctx.beginPath(); ctx.moveTo(totX,skyH); ctx.lineTo(totX,realY); ctx.stroke(); ctx.setLineDash([]);
-    ctx.beginPath(); ctx.moveTo(totX-6*S,skyH); ctx.lineTo(totX+6*S,skyH); ctx.stroke();
-    ctx.beginPath(); ctx.moveTo(totX-6*S,realY); ctx.lineTo(totX+6*S,realY); ctx.stroke();
-    const tmid=(skyH+realY)/2;
-    ctx.fillStyle='#f5c842'; ctx.font=`bold ${Math.max(10,13*S)}px Inter`; ctx.textAlign='center';
-    ctx.fillText("≈ "+tc.hesapDk.toFixed(1).replace('.', ',')+" dk",totX,tmid-6*S);
-    ctx.font=`${Math.max(9,10*S)}px Inter`; ctx.fillStyle='rgba(245,200,66,0.65)';
-    ctx.fillText('Temkin',totX,tmid+8*S); ctx.textAlign='left';
-
-    // ─── Observer ────────────────────────────────────────
-    ctx.strokeStyle='#fff'; ctx.fillStyle='#fff'; ctx.lineWidth=2;
-    ctx.beginPath(); ctx.arc(obsX,skyH-10*S,5*S,0,Math.PI*2); ctx.fill();
-    ctx.lineWidth=1.8;
-    ctx.beginPath(); ctx.moveTo(obsX,skyH-5*S); ctx.lineTo(obsX,skyH+8*S);
-    ctx.moveTo(obsX-7*S,skyH-1*S); ctx.lineTo(obsX+7*S,skyH-1*S); ctx.stroke();
-    ctx.fillStyle='rgba(255,255,255,0.90)'; ctx.font=`bold ${Math.max(9,11*S)}px Inter`; ctx.textAlign='center';
-    ctx.fillText('Râsıd',obsX,skyH-22*S);
-    ctx.fillStyle='rgba(255,255,255,0.50)'; ctx.font=`${Math.max(8,9*S)}px Inter`;
-    ctx.fillText('En yüksek yer · '+temkinElev+' m',obsX,skyH-11*S); ctx.textAlign='left';
-
-    // ─── Legend ──────────────────────────────────────────
-    const lgX=W*0.73,lgY=H*0.88;
-    [{c:'rgba(245,200,66,0.80)',d:false,t:'Kırılmış ışın (görünen)'},
-     {c:'rgba(255,255,255,0.22)',d:true,t:'Düz ışın (hakîkî)'}
-    ].forEach((l,i)=>{
-      ctx.strokeStyle=l.c; ctx.lineWidth=2;
-      if(l.d) ctx.setLineDash([5,4]); else ctx.setLineDash([]);
-      const ly=lgY+i*18*S;
-      ctx.beginPath(); ctx.moveTo(lgX,ly); ctx.lineTo(lgX+22*S,ly); ctx.stroke();
-      ctx.setLineDash([]);
-      ctx.fillStyle=l.c; ctx.font=`${Math.max(8,9.5*S)}px Inter`;
-      ctx.fillText(l.t,lgX+26*S,ly+4*S);
-    });
-    ctx.fillStyle='rgba(255,255,255,0.22)'; ctx.font=`${Math.max(9,11*S)}px Inter`;
-    ctx.fillText('← BATI',W*0.02,H-10*S);
-  }
-
-  // ─── Update cards ─────────────────────────────────────
-  window.updateTemkinCards = function(){
-    const tc = calcTemkinComponents(selectedDate, selectedCity, temkinElev);
-    document.getElementById('temkin-dip-val').textContent = arcminStr(tc.dipArcmin);
-    document.getElementById('temkin-ref-val').textContent = arcminStr(tc.refractionArcmin);
-    document.getElementById('temkin-sd-val').textContent = arcminStr(tc.semiDiamArcmin);
-    const dipF = document.getElementById('temkin-dip-formula');
-    if(dipF) dipF.textContent = "106,92″ × √" + temkinElev + " = " + Math.round(tc.dipArcmin*60) + "″ = " + arcminStr(tc.dipArcmin);
-    const sdF = document.getElementById('temkin-sd-formula');
-    if(sdF) sdF.textContent = "Kitapta asgarî değer alınmıştır: 15′ 45″";
-    document.getElementById('teq-dip').textContent = arcminStr(tc.dipArcmin);
-    document.getElementById('teq-ref').textContent = arcminStr(tc.refractionArcmin);
-    document.getElementById('teq-sd').textContent = arcminStr(tc.semiDiamArcmin);
-    document.getElementById('teq-total').textContent = arcminStr(tc.totalArcmin);
-    document.getElementById('teq-minutes').textContent = dkSnStr(tc.hesapDk);
-    const ced = document.getElementById('teq-cedvel');
-    if (ced) ced.textContent = temkinElev > 500 ? 'cedvel 500 metreye kadardır' : dkSnStr(tc.cedvelDk);
-    const kab = document.getElementById('teq-kabul');
-    if (kab) kab.textContent = dkSnStr(tc.temkinMin);
-    const yer = document.getElementById('teq-yer');
-    if (yer) yer.textContent = selectedCity.name + ', ' + selectedDate.toLocaleDateString('tr-TR', { day:'numeric', month:'long' });
-  };
-
-  // ─── Elevation slider ─────────────────────────────────
-  elevSlider.addEventListener('input', ()=>{
-    temkinElev = parseInt(elevSlider.value);
-    elevValEl.textContent = temkinElev;
-    drawTemkinCanvas();
-    updateTemkinCards();
-  });
-
-  // ─── Sunset animation ─────────────────────────────────
-  playBtn.addEventListener('click', ()=>{
-    tPlaying = !tPlaying;
-    if(tPlaying){
-      playBtn.innerHTML = '&#9646;&#9646; Duraklat';
-      sunAnimPhase = 0;
-      let last = null;
-      function anim(ts){
-        if(!tPlaying) return;
-        if(!last) last = ts;
-        const dt = (ts-last)/1000;
-        last = ts;
-        sunAnimPhase = Math.min(1, sunAnimPhase + dt * 0.15);
-        drawTemkinCanvas();
-        if(sunAnimPhase >= 1){ tPlaying = false; playBtn.innerHTML = '&#9654; Batışı Göster'; return; }
-        tAnimId = requestAnimationFrame(anim);
-      }
-      tAnimId = requestAnimationFrame(anim);
-    } else {
-      playBtn.innerHTML = '&#9654; Batışı Göster';
-      if(tAnimId) cancelAnimationFrame(tAnimId);
-    }
-  });
-
-  // ─── Şehir/tarih değişince yeniden çiz ──────────────────
-  function init(){
-    elevSlider.value = temkinElev;
-    elevValEl.textContent = temkinElev;
-    resize();
-    updateTemkinCards();
-  }
-  window.drawTemkin = function(){
-    resize();
-    updateTemkinCards();
-  };
-  window.addEventListener('resize', resize);
-  setTimeout(init, 250);
-})();
-
-// ============================================================
-// TA'DİL-İ ZEMÂN — İnteraktif Grafik
-// ============================================================
-(function(){
-  function eotDOY(date){
-    const s=new Date(date.getFullYear(),0,1);
-    return Math.floor((date-s)/86400000)+1;
-  }
-  function eotIsLeap(y){ return (y%4===0&&y%100!==0)||(y%400===0); }
-  function eotFromDOY(year,N){ return new Date(year,0,N,12,0,0); }
-  function eotMinutes(date){
-    const N=eotDOY(date);
-    const days=eotIsLeap(date.getFullYear())?366:365;
-    const g=2*Math.PI/days*(N-1);
-    return 229.18*(0.000075+0.001868*Math.cos(g)-0.032077*Math.sin(g)-0.014615*Math.cos(2*g)-0.040849*Math.sin(2*g));
-  }
-  function fmtMin(x){ return (x>=0?'+':'−')+Math.abs(x).toFixed(1).replace('.', ',')+' dk'; }
-  function monthTR(m){ return ['Oca','Şub','Mar','Nis','May','Haz','Tem','Ağu','Eyl','Eki','Kas','Ara'][m]||''; }
-  function buildSeries(year){
-    const days=eotIsLeap(year)?366:365, arr=[];
-    for(let i=1;i<=days;i++){ const d=new Date(year,0,i,12,0,0); arr.push({day:i,date:d,eot:eotMinutes(d)}); }
-    return arr;
-  }
-  function findMM(s){ let mn=s[0],mx=s[0]; for(const p of s){if(p.eot<mn.eot)mn=p;if(p.eot>mx.eot)mx=p;} return{mn,mx}; }
-  function findZeros(series){
-    const z=[];
-    for(let i=1;i<series.length;i++){
-      const a=series[i-1],b=series[i];
-      if((a.eot<0&&b.eot>0)||(a.eot>0&&b.eot<0)){
-        const t=Math.abs(a.eot)/(Math.abs(a.eot)+Math.abs(b.eot));
-        z.push({date:new Date(a.date.getTime()+t*86400000)});
-      }
-    }
-    return z.slice(0,6);
-  }
-  function rrEoT(ctx,x,y,w,h,r,fill,stroke){
-    const rr=Math.min(r,w/2,h/2);
-    ctx.beginPath();
-    ctx.moveTo(x+rr,y); ctx.arcTo(x+w,y,x+w,y+h,rr);
-    ctx.arcTo(x+w,y+h,x,y+h,rr); ctx.arcTo(x,y+h,x,y,rr);
-    ctx.arcTo(x,y,x+w,y,rr); ctx.closePath();
-    if(fill) ctx.fill(); if(stroke) ctx.stroke();
-  }
-  function drawChart(canvas,series,selectedDate){
-    const ctx=canvas.getContext('2d');
-    const W=canvas.width, H=canvas.height;
-    ctx.clearRect(0,0,W,H);
-    // Fill background to match card
-    ctx.fillStyle='#0b1020'; ctx.fillRect(0,0,W,H);
-
-    const padL=60,padR=18,padT=24,padB=44;
-    const plotW=W-padL-padR, plotH=H-padT-padB;
-    let yMin=Infinity,yMax=-Infinity;
-    for(const p of series){yMin=Math.min(yMin,p.eot);yMax=Math.max(yMax,p.eot);}
-    yMin-=2; yMax+=2;
-    const xToPx=x=>padL+((x-1)/(series.length-1))*plotW;
-    const yToPx=y=>padT+(1-((y-yMin)/(yMax-yMin)))*plotH;
-
-    // Horizontal grid lines
-    ctx.lineWidth=1;
-    const step=5, y0=Math.floor(yMin/step)*step;
-    for(let v=y0;v<=yMax;v+=step){
-      const py=yToPx(v);
-      ctx.strokeStyle='rgba(255,255,255,0.08)';
-      ctx.beginPath(); ctx.moveTo(padL,py); ctx.lineTo(W-padR,py); ctx.stroke();
-      ctx.fillStyle='rgba(255,255,255,0.55)'; ctx.font='11px Inter';
-      ctx.textAlign='right'; ctx.textBaseline='middle';
-      ctx.fillText(v.toFixed(0)+' dk',padL-8,py);
-    }
-    // Zero line
-    ctx.strokeStyle='rgba(255,255,255,0.28)'; ctx.lineWidth=1.5;
-    ctx.beginPath(); ctx.moveTo(padL,yToPx(0)); ctx.lineTo(W-padR,yToPx(0)); ctx.stroke();
-
-    // Month markers
-    const yr=series[0].date.getFullYear();
-    for(let m=0;m<12;m++){
-      const doy=eotDOY(new Date(yr,m,1,12,0,0));
-      const px=xToPx(doy);
-      ctx.strokeStyle='rgba(255,255,255,0.08)'; ctx.lineWidth=1;
-      ctx.beginPath(); ctx.moveTo(px,padT); ctx.lineTo(px,H-padB); ctx.stroke();
-      ctx.fillStyle='rgba(255,255,255,0.55)'; ctx.font='11px Inter';
-      ctx.textAlign='center'; ctx.textBaseline='top';
-      ctx.fillText(monthTR(m),px,H-padB+10);
-    }
-
-    // Fill areas
-    const z0=yToPx(0);
-    ctx.globalAlpha=0.13;
-    // positive fill (gold)
-    ctx.fillStyle='#f5c842';
-    ctx.beginPath(); ctx.moveTo(xToPx(1),z0);
-    for(let i=0;i<series.length;i++){
-      const p=series[i];
-      if(p.eot>0) ctx.lineTo(xToPx(p.day),yToPx(p.eot)); else ctx.lineTo(xToPx(p.day),z0);
-    }
-    ctx.lineTo(xToPx(series.length),z0); ctx.closePath(); ctx.fill();
-    // negative fill (indigo)
-    ctx.fillStyle='#6366f1';
-    ctx.beginPath(); ctx.moveTo(xToPx(1),z0);
-    for(let i=0;i<series.length;i++){
-      const p=series[i];
-      if(p.eot<0) ctx.lineTo(xToPx(p.day),yToPx(p.eot)); else ctx.lineTo(xToPx(p.day),z0);
-    }
-    ctx.lineTo(xToPx(series.length),z0); ctx.closePath(); ctx.fill();
-    ctx.globalAlpha=1;
-
-    // Main curve
-    ctx.lineWidth=2.5; ctx.strokeStyle='rgba(245,200,66,0.92)';
-    ctx.beginPath();
-    series.forEach((p,i)=>{
-      const x=xToPx(p.day), y=yToPx(p.eot);
-      if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
-    });
-    ctx.stroke();
-
-    // Selected date marker
-    const selDoy=eotDOY(selectedDate);
-    const sel=series[Math.min(series.length-1,Math.max(0,selDoy-1))];
-    const sx=xToPx(sel.day), sy=yToPx(sel.eot);
-    ctx.strokeStyle='rgba(74,222,128,0.65)'; ctx.setLineDash([6,6]); ctx.lineWidth=2;
-    ctx.beginPath(); ctx.moveTo(sx,padT); ctx.lineTo(sx,H-padB); ctx.stroke();
-    ctx.setLineDash([]);
-    ctx.fillStyle='rgba(74,222,128,0.95)';
-    ctx.beginPath(); ctx.arc(sx,sy,5.5,0,Math.PI*2); ctx.fill();
-
-    const lbl=selectedDate.toLocaleDateString('tr-TR')+' • '+fmtMin(sel.eot);
-    ctx.font='12px Inter';
-    const tw=ctx.measureText(lbl).width;
-    const bx=Math.min(W-padR-10-(tw+16),Math.max(padL+10,sx-(tw+16)/2));
-    const by=Math.max(padT+6,sy-36);
-    ctx.fillStyle='rgba(0,0,0,0.55)'; ctx.strokeStyle='rgba(74,222,128,0.4)'; ctx.lineWidth=1;
-    rrEoT(ctx,bx,by,tw+16,24,8,true,true);
-    ctx.fillStyle='rgba(255,255,255,0.92)'; ctx.textAlign='left'; ctx.textBaseline='middle';
-    ctx.fillText(lbl,bx+8,by+12);
-
-    // Chart title
-    ctx.fillStyle='rgba(255,255,255,0.55)'; ctx.font='11px Inter';
-    ctx.textAlign='left'; ctx.textBaseline='top';
-    ctx.fillText("Ta'dîl-i zemân — bir sene içindeki değişimi",padL,8);
-  }
-
-  function eotSetBounds(year){
-    document.getElementById('tadil-doy').max=String(eotIsLeap(year)?366:365);
-  }
-  function eotSyncSlider(){
-    const d=new Date(document.getElementById('tadil-date').value+'T12:00:00');
-    const doy=eotDOY(d);
-    document.getElementById('tadil-doy').value=String(doy);
-    document.getElementById('tadil-doyLabel').textContent=String(doy);
-    document.getElementById('tadil-sliderDate').textContent=d.toLocaleDateString('tr-TR');
-  }
-  function eotSyncDate(){
-    const y=parseInt(document.getElementById('tadil-year').value,10);
-    const N=parseInt(document.getElementById('tadil-doy').value,10);
-    const d=eotFromDOY(y,N);
-    document.getElementById('tadil-date').value=new Date(y,d.getMonth(),d.getDate(),12,0,0).toISOString().slice(0,10);
-    document.getElementById('tadil-doyLabel').textContent=String(N);
-    document.getElementById('tadil-sliderDate').textContent=d.toLocaleDateString('tr-TR');
-  }
-  function eotUpdate(){
-    const d=new Date(document.getElementById('tadil-date').value+'T12:00:00');
-    const y=parseInt(document.getElementById('tadil-year').value,10);
-    document.getElementById('tadil-eotVal').textContent=fmtMin(eotMinutes(d));
-    const series=buildSeries(y);
-    const {mn,mx}=findMM(series);
-    document.getElementById('tadil-minMax').textContent=
-      fmtMin(mn.eot)+' ('+mn.date.toLocaleDateString('tr-TR')+') / '+fmtMin(mx.eot)+' ('+mx.date.toLocaleDateString('tr-TR')+')';
-    const zeros=findZeros(series).slice(0,4).map(z=>z.date.toLocaleDateString('tr-TR')).join(' • ');
-    document.getElementById('tadil-zeros').textContent=zeros||'—';
-    const forChart=new Date(y,d.getMonth(),d.getDate(),12,0,0);
-    const canvas=document.getElementById('tadil-canvas');
-    canvas.width=canvas.parentElement.clientWidth;
-    canvas.height=420;
-    drawChart(canvas,series,forChart);
-    eotSyncSlider();
-  }
-
-  // Init
-  const now=new Date(), curY=now.getFullYear();
-  const yearEl=document.getElementById('tadil-year');
-  for(let y=curY-5;y<=curY+5;y++){
-    const opt=document.createElement('option');
-    opt.value=String(y); opt.textContent=String(y);
-    if(y===curY) opt.selected=true;
-    yearEl.appendChild(opt);
-  }
-  document.getElementById('tadil-date').value=now.toISOString().slice(0,10);
-  eotSetBounds(curY);
-  eotSyncSlider();
-  document.getElementById('tadil-btn').addEventListener('click',eotUpdate);
-  document.getElementById('tadil-date').addEventListener('change',()=>{ eotSyncSlider(); eotUpdate(); });
-  document.getElementById('tadil-year').addEventListener('change',()=>{
-    eotSetBounds(parseInt(document.getElementById('tadil-year').value,10));
-    eotSyncDate(); eotUpdate();
-  });
-  document.getElementById('tadil-doy').addEventListener('input',()=>{ eotSyncDate(); eotUpdate(); });
-  window.addEventListener('resize',eotUpdate);
-  setTimeout(eotUpdate,300);
-})();
-
-// ============================================================
-
-// ============================================================
-// SCROLL ANIMATIONS
-// ============================================================
-const observer = new IntersectionObserver((entries)=>{
-  entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('visible'); });
-}, { threshold:0.1, rootMargin:'0px 0px -40px 0px' });
-document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
-
-// Stagger card animations
-document.querySelectorAll('.cards-grid .prayer-card').forEach((c,i)=>{
-  c.style.transitionDelay = (i*0.08) + 's';
-});
-</script>
+  <script type="module" src="js/vakit-sahne.js?v=2026-11-17a"></script>
 </body>
 </html>

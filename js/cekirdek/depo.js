@@ -2,7 +2,7 @@
    - Gizli gezinti, dolu kota ya da kapalı depolama sayfayı ASLA düşürmez;
      o durumda değerler oturum boyunca bellekte tutulur.
    - Değerler JSON'dur; bozuk kayıt varsayılana düşer.
-   - Anahtar adları eski siteyle aynıdır (kullanıcı verisi korunur): bkz. js/cekirdek/anahtarlar.js */
+   - Anahtar adları eski siteyle aynıdır (kullanıcı verisi korunur): bkz. js/cekirdek/kullanici.js ve tools/yeni-site/KULLANICI.md */
 
 const bellek = new Map();
 let calisiyor = true;

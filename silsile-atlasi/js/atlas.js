@@ -12,6 +12,7 @@ import { OutputPass } from '/vendor/three/addons/postprocessing/OutputPass.js';
    1. Sabitler ve küçük yardımcılar
    ════════════════════════════════════════════════════════════════ */
 const RAD = Math.PI / 180;
+const DOKU = new URL('../doku/', import.meta.url).href;   // sayfa adresi '/silsile-atlasi' (eğik çizgisiz) olsa da doğru yer
 const BOLGE = { bati: 14, dogu: 96, guney: 8, kuzey: 54 };   // tools/silsile-arazi.py ile aynı
 const HMAX = 9000;            // doku yükseklik tavanı (m)
 const KABART = 9;             // dağ kabartma çarpanı
@@ -855,10 +856,10 @@ async function sahneKur() {
   const ilerle = () => { biten++; $('yukleme-dolgu').style.transform = `scaleX(${biten / adim})`; };
   const ek = kucukDoku ? '-k' : '';
   const [tBolge, tKure, tNehir, arazi] = await Promise.all([
-    dokuYukle(`doku/bolge${ek}.webp`, ilerle),
-    dokuYukle('doku/kure.webp', ilerle),
-    dokuYukle(`doku/nehir${ek}.webp`, ilerle),
-    fetch('doku/arazi.json').then(r => r.json()).then(j => { ilerle(); return j; }),
+    dokuYukle(`${DOKU}bolge${ek}.webp`, ilerle),
+    dokuYukle(`${DOKU}kure.webp`, ilerle),
+    dokuYukle(`${DOKU}nehir${ek}.webp`, ilerle),
+    fetch(`${DOKU}arazi.json`).then(r => r.json()).then(j => { ilerle(); return j; }),
     Promise.all([document.fonts.load('600 96px Literata'), document.fonts.load('italic 400 96px Literata')]).catch(() => 0).then(ilerle)
   ]);
   for (const t of [tBolge, tKure, tNehir]) {

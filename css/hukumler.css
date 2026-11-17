@@ -1,0 +1,107 @@
+/* Fıkhî Hükümler — /hukumler ve /hukumler/:tur */
+
+.hk { padding-block: var(--a-8) var(--a-9); }
+.hk-bas { max-width: 46rem; }
+.hk-ust { display: inline-block; text-decoration: none; }
+.hk-ust:hover { text-decoration: underline; text-decoration-color: currentColor; }
+.hk-bas h1 { margin-top: var(--a-3); }
+.hk-bas .giris-yazi { margin-top: var(--a-4); }
+.hk-toplam { margin-top: var(--a-5); }
+
+/* ── Tür fihristi (/hukumler) ── */
+.hk-turfih { margin-top: var(--a-8); max-width: 52rem; border-top: 1px solid var(--cizgi); }
+.hk-tursatir {
+  display: grid; grid-template-columns: 2.4rem minmax(0, 1fr) auto; align-items: baseline; column-gap: var(--a-4);
+  padding: var(--a-5) var(--a-2) var(--a-4); border-bottom: 1px solid var(--cizgi-2);
+  color: var(--murekkep); text-decoration: none;
+  transition: background var(--sure);
+}
+.hk-tursatir:hover { background: color-mix(in srgb, var(--zemin-2) 60%, transparent); }
+.hk-turno { font: 500 var(--boy-2) var(--arayuz); color: var(--surh); font-variant-numeric: lining-nums tabular-nums; text-align: right; }
+.hk-turad { display: flex; align-items: baseline; gap: 0.7em; min-width: 0; font: 500 var(--boy-6)/1.15 var(--yazi); letter-spacing: -0.015em; }
+.hk-turad::after { content: ''; flex: 1 1 2rem; min-width: 2rem; border-bottom: 1px dotted var(--murekkep-3); opacity: 0.5; transform: translateY(-0.3em); }
+.hk-tursatir:hover .hk-turad > span { color: var(--yesil-yazi); }
+.hk-tursayi { display: grid; justify-items: end; line-height: 1.1; }
+.hk-tursayi b { font: 500 var(--boy-5) var(--arayuz); color: var(--murekkep); }
+.hk-tursayi small { font: 500 var(--boy-0) var(--arayuz); letter-spacing: 0.08em; text-transform: uppercase; color: var(--murekkep-3); margin-top: 4px; }
+.hk-turalt { grid-column: 2 / -1; margin-top: var(--a-1); font: 400 var(--boy-1)/1.5 var(--arayuz); color: var(--murekkep-3); font-variant-numeric: lining-nums; }
+.hk-not { margin-top: var(--a-6); max-width: 40rem; font: 400 var(--boy-2)/1.6 var(--arayuz); color: var(--murekkep-3); }
+
+/* ── Tür sayfası ── */
+.hk-turler { margin-top: var(--a-7); padding-top: var(--a-5); border-top: 1px solid var(--cizgi); }
+.hk-secsayi { margin-left: 0.15em; opacity: 0.62; font-size: 0.92em; }
+.secim [aria-current="true"] .hk-secsayi, .secim [aria-pressed="true"] .hk-secsayi { opacity: 0.8; }
+.hk-turler .secim a { min-height: 40px; line-height: 38px; font-size: var(--boy-2); padding-inline: 1.05em; }
+
+.hk-katman { display: flex; flex-wrap: wrap; align-items: center; gap: var(--a-3) var(--a-5); margin-top: var(--a-5); }
+.hk-katman .kunye { flex: 1 1 22rem; max-width: 40rem; }
+
+.hk-suzgec { display: flex; flex-wrap: wrap; align-items: center; gap: var(--a-3) var(--a-4); margin-top: var(--a-6); padding: var(--a-4) 0; border-block: 1px solid var(--cizgi-2); }
+.hk-ara-kap { flex: 1 1 18rem; max-width: 26rem; }
+.hk-ara { min-height: 44px; }
+.hk-altsec { flex: 0 1 16rem; width: auto; min-width: 0; max-width: 100%; min-height: 44px; font-size: var(--boy-2); padding-right: 0.6em; }
+
+.hk-sonuc { max-width: 50rem; }
+.hk-sayac { margin-top: var(--a-6); padding-left: calc(2.6rem + var(--a-4)); }
+
+.hk-liste { margin-top: var(--a-2); }
+.hk-kayit {
+  display: grid; grid-template-columns: 2.6rem minmax(0, 1fr); column-gap: var(--a-4);
+  padding: var(--a-5) 0; border-bottom: 1px solid var(--cizgi-2);
+}
+.hk-no { padding-top: 0.32em; font: 500 var(--boy-1) var(--arayuz); color: var(--surh); text-align: right; }
+.hk-govde { min-width: 0; }
+.hk-metin { font: 400 var(--boy-4)/1.62 var(--yazi); color: var(--murekkep); white-space: pre-line; max-width: var(--olcu); text-wrap: pretty; }
+.hk-metin.kisa { display: -webkit-box; -webkit-line-clamp: 9; -webkit-box-orient: vertical; overflow: hidden; }
+.hk-ac { margin-top: var(--a-2); font: 500 var(--boy-1) var(--arayuz); min-height: 32px; }
+.hk-baglam { margin-top: var(--a-3); max-width: var(--olcu); font-size: var(--boy-2); line-height: 1.6; color: var(--murekkep-3); white-space: pre-line; }
+.hk-baglam.kisa { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.hk-baglam-ad { font: 600 var(--boy-0) var(--arayuz); letter-spacing: 0.16em; text-transform: uppercase; color: var(--altin-yazi); margin-right: 0.35em; }
+.hk-ac-baglam { margin-top: 0; }
+.hk-kunye { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--a-2) var(--a-4); margin-top: var(--a-3); }
+.hk-kunye .kaynak { min-height: 28px; align-items: center; }
+.hk-alt { font-size: var(--boy-0); letter-spacing: 0.03em; }
+.hk-madde span { color: var(--murekkep-2); max-width: 26rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.hk-madde:hover span { color: var(--yesil-yazi); }
+.hk-gozcu { height: 1px; }
+.hk-gozcu .dugme { margin-top: var(--a-5); }
+
+.hk-bos { display: grid; justify-items: start; gap: var(--a-3); padding: var(--a-7) 0 var(--a-6) calc(2.6rem + var(--a-4)); color: var(--murekkep-2); border-bottom: 1px solid var(--cizgi-2); }
+.hk-bos p:first-child { font: 400 var(--boy-4)/1.5 var(--yazi); color: var(--murekkep); }
+
+.hk-yok { padding-block: var(--a-9); }
+.hk-yok h1 { margin-top: var(--a-3); }
+.hk-yok .giris-yazi { margin-top: var(--a-4); }
+.hk-yok .sira { margin-top: var(--a-6); }
+
+@media (max-width: 640px) {
+  .hk { padding-top: var(--a-6); }
+  .hk-turad { font-size: var(--boy-5); }
+  .hk-tursatir { grid-template-columns: 1.6rem minmax(0, 1fr) auto; column-gap: var(--a-3); padding-inline: 0; }
+  .hk-tursayi b { font-size: var(--boy-4); }
+  .hk-turler .secim { flex-wrap: nowrap; overflow-x: auto; margin-inline: calc(-1 * var(--kenar)); padding: 2px var(--kenar) 6px; scrollbar-width: none; }
+  .hk-turler .secim::-webkit-scrollbar { display: none; }
+  .hk-turler .secim a { flex: none; }
+  .hk-kayit { grid-template-columns: 1.9rem minmax(0, 1fr); column-gap: var(--a-3); }
+  .hk-sayac, .hk-bos { padding-left: calc(1.9rem + var(--a-3)); }
+  .hk-metin { font-size: 1.08rem; }
+  .hk-ara-kap, .hk-altsec { flex: 1 1 100%; max-width: none; }
+  .hk-madde span { max-width: 15rem; }
+}
+
+@media print {
+  .hk-turler, .hk-katman .secim, .hk-suzgec, .hk-ac, .hk-gozcu { display: none !important; }
+  .hk-metin.kisa, .hk-baglam.kisa { display: block; -webkit-line-clamp: unset; overflow: visible; }
+  .hk-kayit { break-inside: avoid; }
+}
+
+/* Fasıl başlığı: hükümler madde madde gruplanır */
+.hk-fasil { padding: var(--a-7) 0 var(--a-2) calc(2.6rem + var(--a-4)); border-bottom: 1px solid var(--altin-ince); }
+.hk-liste > .hk-fasil:first-child { padding-top: var(--a-4); }
+.hk-fasil-bag { display: inline-flex; align-items: baseline; gap: 0.7em; color: var(--murekkep-2); text-decoration: none; font: 600 var(--boy-3)/1.4 var(--yazi); }
+.hk-fasil-bag b { font: 600 var(--boy-1) var(--arayuz); color: var(--surh); letter-spacing: 0.02em; }
+a.hk-fasil-bag:hover span { color: var(--yesil-yazi); text-decoration: underline; text-decoration-color: var(--altin-ince); text-underline-offset: 0.2em; }
+@media (max-width: 640px) { .hk-fasil { padding-left: calc(1.9rem + var(--a-3)); } }
+.hk-metin mark, .hk-baglam mark { padding: 0; }
+.hk-ara::-webkit-search-cancel-button { -webkit-appearance: none; appearance: none; }
+.hk-bos-tam { margin-top: var(--a-6); border-top: 1px solid var(--cizgi-2); }

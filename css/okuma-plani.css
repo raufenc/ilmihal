@@ -1,0 +1,120 @@
+/* Okuma planı parçası (js/bilesen/okuma-plani-kutu.js): Çalışma Alanım ve ana sayfa. */
+
+.op { display: grid; gap: var(--a-4); max-width: 44rem; }
+.op .iskelet { padding-block: var(--a-3); }
+.op-bas { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: var(--a-1) var(--a-4); }
+.op-bas .ust-yazi { font-size: var(--boy-0); }
+.op-cumle { font-size: var(--boy-4); line-height: 1.55; color: var(--murekkep); max-width: 34rem; }
+.op-not { color: var(--murekkep-2); }
+.op-hata { font: 400 var(--boy-2) var(--arayuz); color: var(--murekkep-2); }
+
+/* Süre seçenekleri: fihrist satırı (ad …… günde ≈ X) */
+.op-sureler-liste { display: grid; border-top: 1px solid var(--cizgi-2); }
+.op-sure {
+  display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: baseline; column-gap: var(--a-3);
+  width: 100%; min-height: 52px; padding: 0.7em 0.2em; text-align: left;
+  border-bottom: 1px solid var(--cizgi-2); color: var(--murekkep);
+  transition: background var(--sure), color var(--sure);
+}
+.op-sure:hover { background: var(--zemin-2); }
+.op-sure:hover .op-sure-ad span { color: var(--yesil-yazi); }
+.op-sure-ad { display: flex; align-items: baseline; gap: 0.6em; min-width: 0; font: 500 var(--boy-4) var(--yazi); }
+.op-sure-ad::after { content: ''; flex: 1 1 1.5rem; min-width: 1.5rem; border-bottom: 1px dotted var(--murekkep-3); opacity: 0.55; transform: translateY(-0.28em); }
+.op-sure-dk { font: 400 var(--boy-2) var(--arayuz); color: var(--murekkep-2); font-variant-numeric: lining-nums tabular-nums; }
+.op-sureler .op-sure-dk { font-size: inherit; color: inherit; opacity: 0.8; }
+
+/* Bugün */
+.op-bugun { font: 500 var(--boy-5)/1.3 var(--yazi); letter-spacing: -0.01em; color: var(--murekkep); }
+.op-kisa .op-bugun { font-size: var(--boy-4); }
+.op-alt-baslik { font: 600 var(--boy-0)/1.4 var(--arayuz); letter-spacing: 0.16em; text-transform: uppercase; color: var(--murekkep-3); margin-top: var(--a-2); }
+.op-durum { color: var(--murekkep-2); }
+
+/* Bugünün payı */
+.op-pay { display: grid; border-top: 1px solid var(--cizgi-2); }
+.op-pay > li {
+  display: grid; grid-template-columns: 44px 3.4rem minmax(0, 1fr) auto; align-items: center; column-gap: var(--a-2);
+  min-height: 48px; padding: 0.2em 0; border-bottom: 1px solid var(--cizgi-2);
+}
+.op-kisa .op-pay > li { grid-template-columns: 26px 3.2rem minmax(0, 1fr) auto; min-height: 44px; }
+.op-pay .fihrist-no { text-align: left; font-size: var(--boy-1); white-space: nowrap; }
+.op-pay-ad { color: var(--murekkep); text-decoration: none; line-height: 1.4; padding-block: 0.35em; }
+.op-pay-ad:hover span:first-child { color: var(--yesil-yazi); text-decoration: underline; text-decoration-color: var(--altin-ince); text-underline-offset: 0.2em; }
+.op-devami { font: 400 var(--boy-1) var(--arayuz); color: var(--murekkep-3); }
+.op-pay .fihrist-sayfa { font-size: var(--boy-1); }
+.op-pay > li.bitti .op-pay-ad { color: var(--murekkep-3); }
+
+.op-isaret { display: inline-grid; place-items: center; width: 44px; height: 44px; margin-left: -10px; color: var(--murekkep-3); border-radius: 50%; }
+.op-kisa .op-isaret { width: 26px; height: 26px; margin-left: -3px; }
+.op-isaret svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; }
+.op-kisa .op-isaret svg { width: 20px; height: 20px; }
+.op-isaret path { opacity: 0; transition: opacity var(--sure); }
+button.op-isaret:hover { color: var(--yesil-yazi); background: var(--zemin-2); }
+button.op-isaret:hover path { opacity: 0.4; }
+.op-isaret[aria-pressed="true"], .op-isaret[data-bitti="1"] { color: var(--yesil-yazi); }
+.op-isaret[aria-pressed="true"] circle, .op-isaret[data-bitti="1"] circle { fill: var(--vurgu-zemin); stroke: var(--altin); }
+.op-isaret[aria-pressed="true"] path, .op-isaret[data-bitti="1"] path { opacity: 1; stroke-width: 1.8; }
+.op-daha { margin-top: calc(-1 * var(--a-2)); }
+
+/* Kitabın sahîfe şeridi */
+.op-serit { margin: var(--a-3) 0 0; display: grid; gap: var(--a-2); }
+.op-serit-cizgi { position: relative; height: 12px; }
+.op-serit-cizgi::before { content: ''; position: absolute; left: 0; right: 0; top: 5px; height: 2px; background: var(--zemin-3); border-radius: 2px; }
+.op-dolu { position: absolute; top: 4px; height: 4px; background: var(--altin); border-radius: 1px; }
+.op-hedef { position: absolute; top: 0; width: 1px; height: 12px; background: var(--murekkep-2); transform: translateX(-0.5px); }
+.op-hedef::after { content: ''; position: absolute; top: -3px; left: -2.5px; width: 6px; height: 6px; background: var(--murekkep-2); transform: rotate(45deg); }
+.op-yer { position: absolute; top: 2px; width: 8px; height: 8px; margin-left: -4px; border: 1.5px solid var(--surh); background: var(--zemin); border-radius: 50%; }
+.op-serit-olcek { position: relative; height: 1.2em; font: 500 var(--boy-0)/1 var(--arayuz); color: var(--murekkep-3); font-variant-numeric: lining-nums tabular-nums; }
+.op-serit-olcek span { position: absolute; top: 0; transform: translateX(-50%); }
+.op-serit-olcek span:first-child { transform: none; }
+.op-serit-olcek span:last-child { transform: translateX(-100%); }
+.op-serit-olcek .op-kisim { color: var(--altin-yazi); letter-spacing: 0.06em; }
+.op-serit figcaption { color: var(--murekkep-2); }
+
+/* Eylemler */
+.op-eylem { margin-top: var(--a-2); gap: var(--a-3) var(--a-5); }
+.op-araclar { display: grid; gap: var(--a-3); margin-top: var(--a-4); padding-top: var(--a-4); border-top: 1px solid var(--cizgi-2); }
+.op-ikincil { gap: var(--a-2) var(--a-5); font: 500 var(--boy-2) var(--arayuz); }
+.op-ikincil .bag { min-height: 44px; }
+.op-acilir > summary {
+  display: flex; align-items: center; gap: 0.6em; min-height: 44px; cursor: pointer; list-style: none;
+  font: 600 var(--boy-2) var(--arayuz); color: var(--murekkep);
+}
+.op-acilir > summary::-webkit-details-marker { display: none; }
+.op-acilir > summary::before { content: ''; width: 0.45em; height: 0.45em; border-right: 1.5px solid var(--altin); border-bottom: 1.5px solid var(--altin); transform: rotate(-45deg); transition: transform var(--sure) var(--yay); }
+.op-acilir[open] > summary::before { transform: rotate(45deg); }
+.op-acilir > summary:hover { color: var(--yesil-yazi); }
+.op-acilir > .kunye { margin-bottom: var(--a-3); }
+.op-acilir .secim { margin-bottom: var(--a-3); }
+
+/* Takvim */
+.op-takvim { display: grid; max-height: 26rem; overflow-y: auto; overscroll-behavior: contain; border-top: 1px solid var(--cizgi-2); margin-bottom: var(--a-3); }
+.op-takvim > li {
+  display: grid; grid-template-columns: 2.6rem 8.4rem minmax(0, 1fr) 3.6rem; align-items: baseline; column-gap: var(--a-3);
+  padding: 0.5em 0.2em; border-bottom: 1px solid var(--cizgi-2); font: 400 var(--boy-1)/1.45 var(--arayuz); color: var(--murekkep-2);
+}
+.op-takvim-gun { color: var(--surh); text-align: right; font-variant-numeric: lining-nums tabular-nums; }
+.op-takvim-tarih { font-variant-numeric: lining-nums tabular-nums; }
+.op-takvim-madde { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.op-takvim-madde a { font-weight: 600; font-variant-numeric: lining-nums tabular-nums; }
+.op-takvim-baslik { font-family: var(--yazi); color: var(--murekkep-2); }
+.op-takvim-durum { text-align: right; color: var(--murekkep-3); }
+.op-takvim > li.bitti { color: var(--murekkep-3); }
+.op-takvim > li.bitti .op-takvim-durum { color: var(--yesil-yazi); }
+.op-takvim > li.bugun { background: var(--vurgu-zemin); color: var(--murekkep); }
+.op-takvim > li.bugun .op-takvim-durum { color: var(--altin-yazi); font-weight: 600; }
+
+/* Kısa hâl (ana sayfa) */
+.op-kisa { gap: var(--a-3); }
+.op-kisa .op-cumle { font-size: var(--boy-3); color: var(--murekkep-2); }
+.op-sureler button { font-variant-numeric: lining-nums tabular-nums; }
+
+@media (max-width: 560px) {
+  .op-pay > li { grid-template-columns: 40px 3rem minmax(0, 1fr); }
+  .op-pay > li .fihrist-sayfa { display: none; }
+  .op-kisa .op-pay > li { grid-template-columns: 24px 2.9rem minmax(0, 1fr); }
+  .op-takvim > li { grid-template-columns: 2rem minmax(0, 1fr) 3rem; }
+  .op-takvim-tarih { grid-column: 2; }
+  .op-takvim-madde { grid-column: 2 / 4; grid-row: 2; }
+  .op-takvim-durum { grid-column: 3; grid-row: 1; }
+  .op-bugun { font-size: var(--boy-4); }
+}
