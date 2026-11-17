@@ -1,0 +1,550 @@
+#4144 [harâmdır] 2-34 s.570 
+  BAGLAM-ALANI(sitede görünür): Diğer üç mezheb imâmı “rahmetullahi teâlâ aleyhim ecma’în”, ikibuçuk yaşından yukarı iken içince, süt kardeş olmazlar dedi. Nikâh sebebi ile sonradan akrabâ olan dört kadınla da evlenmek ebedî, sonsuz harâmdır. Bir adam, nikâhlandığı veyâ zinâ etdiği kızın ana
+  < … ve erkek kardeşin süt annesi ile evlenebilir. Hanbelîde, her yaşda içen, süt kardeş olur. Diğer üç mezheb imâmı “rahmetullahi teâlâ aleyhim ecma’în”, ikibuçuk yaşından yukarı iken içince, süt kardeş olmazlar dedi. ¶  ¶ 
+  = Nikâh sebebi ile sonradan akrabâ olan dört kadınla da evlenmek ebedî, sonsuz harâmdır.
+  > . Bir adam, nikâhlandığı veyâ zinâ etdiği kızın anası ile ve anasının, babasının anaları ile hiç evlenemez. Nikâhladığı kadın ile vaty olunca, bunun başka erkekden olan kızı ile hi…
+#4145 [harâmdır] 2-34 s.570 
+  BAGLAM-ALANI(sitede görünür): Bunlar, kendi kardeşi, kendi anası gibi değildir. Bunların başlarını, saçlarını, görmesi, sohbet etmeleri, bir odada yalnız kalmaları, uzak yola gitmeleri, harâmdır. Hiçbir tarîkatde halâl değildir.
+  < …ez. Bir kadın, üvey babası ile, üvey oğlu ile, kayınpederi ve dâmâdı ile hiç evlenemez. (Âhıret kardeşi) ve (Âhıret anası) ile ve (Tarîkat kardeşi) ile evlenmek câizdir. Bunlar, kendi kardeşi, kendi anası gibi değildir. 
+  = Bunların başlarını, saçlarını, görmesi, sohbet etmeleri, bir odada yalnız kalmaları, uzak yola gitmeleri, harâmdır.
+  > . Hiçbir tarîkatde halâl değildir. Halâl diyen kâfir olur, zındık olur. ¶  ¶ Yedi kadın dahâ vardır ki, bunlarla muvakkat olarak evlenemez. Aradaki sebeb kalkınca, evlenmesi halâl …
+#4146 [harâmdır] 2-34 s.570 
+  BAGLAM-ALANI(sitede görünür): Aradaki sebeb kalkınca, evlenmesi halâl olur. Bunlardan beşi, nikâh sebebi ile harâmdır. Bir adam, nikâhladığı kadının kız kardeşleri ile görüşemez ve evlenemez.
+  < …arı, uzak yola gitmeleri, harâmdır. Hiçbir tarîkatde halâl değildir. Halâl diyen kâfir olur, zındık olur. ¶  ¶ Yedi kadın dahâ vardır ki, bunlarla muvakkat olarak evlenemez. Aradaki sebeb kalkınca, evlenmesi halâl olur. 
+  = Bunlardan beşi, nikâh sebebi ile harâmdır.
+  > . Bir adam, nikâhladığı kadının kız kardeşleri ile görüşemez ve evlenemez. Nikâhladığı kadın ölürse veyâ boşarsa, bunun kız kardeşi ile, sonra evlenebilir. Bu kızlara adamın baldız…
+#4147 [harâmdır] 2-34 s.570 
+  BAGLAM-ALANI(sitede görünür): Ya’nî eniştesi ve kayın birâderleri bu kadının mahrem akrabaları değildir. Bir kadın nikâhında iken, bu kadının halası veyâ teyzesini veyâ kardeşlerinin kızını da nikâhlamak harâmdır. Bunlar, süt ile olunca da harâmdır.
+  < …ur. Bir kadın, eniştelerinden ve kayın birâderlerinden herhangi birisi ile bir odada yalnız kalamaz, bunlarla sefere, meselâ hacca gidemez. Ya’nî eniştesi ve kayın birâderleri bu kadının mahrem akrabaları değildir. ¶  ¶ 
+  = Bir kadın nikâhında iken, bu kadının halası veyâ teyzesini veyâ kardeşlerinin kızını da nikâhlamak harâmdır.
+  > . Bunlar, süt ile olunca da harâmdır. Hanefî, Mâlikî ve Hanbelî mezheblerinde, vaty sebebi ile nikâh etmesi harâm olanlar, zinâ sebebi ile de harâm olurlar. Şâfi’î mezhebinde ise, …
+#4148 [harâmdır] 2-34 s.570 
+  BAGLAM-ALANI(sitede görünür): Bir kadın nikâhında iken, bu kadının halası veyâ teyzesini veyâ kardeşlerinin kızını da nikâhlamak harâmdır. Bunlar, süt ile olunca da harâmdır. Hanefî, Mâlikî ve Hanbelî mezheblerinde, vaty sebebi ile nikâh etmesi harâm olanlar, zinâ sebebi ile de harâm olurl
+  < … sefere, meselâ hacca gidemez. Ya’nî eniştesi ve kayın birâderleri bu kadının mahrem akrabaları değildir. ¶  ¶ Bir kadın nikâhında iken, bu kadının halası veyâ teyzesini veyâ kardeşlerinin kızını da nikâhlamak harâmdır. 
+  = Bunlar, süt ile olunca da harâmdır.
+  > . Hanefî, Mâlikî ve Hanbelî mezheblerinde, vaty sebebi ile nikâh etmesi harâm olanlar, zinâ sebebi ile de harâm olurlar. Şâfi’î mezhebinde ise, zinâ sebebi ile harâm olmazlar. Zinâ…
+#4149 [harâm olur] 2-34 s.570 OLUMSUZ/SINIR:\bmaliki(de|ye)?\b|\bhanbeli(de|ye)?\b
+  BAGLAM-ALANI(sitede görünür): Bunlar, süt ile olunca da harâmdır. Hanefî, Mâlikî ve Hanbelî mezheblerinde, vaty sebebi ile nikâh etmesi harâm olanlar, zinâ sebebi ile de harâm olurlar. Şâfi’î mezhebinde ise, zinâ sebebi ile harâm olmazlar.
+  < … eniştesi ve kayın birâderleri bu kadının mahrem akrabaları değildir. ¶  ¶ Bir kadın nikâhında iken, bu kadının halası veyâ teyzesini veyâ kardeşlerinin kızını da nikâhlamak harâmdır. Bunlar, süt ile olunca da harâmdır. 
+  = Hanefî, Mâlikî ve Hanbelî mezheblerinde, vaty sebebi ile nikâh etmesi harâm olanlar, zinâ sebebi ile de harâm olurlar.
+  > . Şâfi’î mezhebinde ise, zinâ sebebi ile harâm olmazlar. Zinâ etdiği kadını, kendisi veyâ başkaları nikâh ile alabilirler. Amca kızı, dayı kızı, hala kızı ve teyze kızı ve yenge, y…
+#4150 [harâmdır] 2-34 s.570 
+  BAGLAM-ALANI(sitede görünür): Ya’nî bu beş kadın, yabancı demekdir. Bunların açık yerlerine bakmak, başı kolu açık iken konuşmak, halvet etmek harâmdır. (Halvet), bir evde ikisi yalnız kalmak demekdir.
+  < …olmazlar. Zinâ etdiği kadını, kendisi veyâ başkaları nikâh ile alabilirler. Amca kızı, dayı kızı, hala kızı ve teyze kızı ve yenge, ya’nî kardeş zevcesi (Zî-rahm-i mahrem) değildir. Ya’nî bu beş kadın, yabancı demekdir. 
+  = Bunların açık yerlerine bakmak, başı kolu açık iken konuşmak, halvet etmek harâmdır.
+  > . (Halvet), bir evde ikisi yalnız kalmak demekdir. Kâfir kadınları ile ve başkasının câriyesi ile de halvet yapmak harâmdır. Bu beş kadın yabancı olduğundan, bunlarla evlenmek câiz…
+#4151 [harâmdır] 2-34 s.570 
+  BAGLAM-ALANI(sitede görünür): (Halvet), bir evde ikisi yalnız kalmak demekdir. Kâfir kadınları ile ve başkasının câriyesi ile de halvet yapmak harâmdır. Bu beş kadın yabancı olduğundan, bunlarla evlenmek câizdir.
+  < …’nî kardeş zevcesi (Zî-rahm-i mahrem) değildir. Ya’nî bu beş kadın, yabancı demekdir. Bunların açık yerlerine bakmak, başı kolu açık iken konuşmak, halvet etmek harâmdır. (Halvet), bir evde ikisi yalnız kalmak demekdir. 
+  = Kâfir kadınları ile ve başkasının câriyesi ile de halvet yapmak harâmdır.
+  > . Bu beş kadın yabancı olduğundan, bunlarla evlenmek câizdir. Harâm değildir. Fekat, bunlardan ilk dördü ile evlenmek tenzîhen mekrûhdur. (Kimyâ-i se’âdet)de diyor ki, (Nikâh oluna…
+#4152 [harâm olan] 2-34 s.570 
+  BAGLAM-ALANI(sitede görünür): Mekrûh olmadı. Evlenmesi muvakkat harâm olan yedi kadından altıncısı, müşrik kadındır. Müşrik, kitâbsız kâfir demekdir.
+  < …ürşid-ül-müteehhilîn) kitâbında da bunun gibi yazılıdır. Bu dört kadının kızları ile evlenmek, mekrûh değildir. Hazret-i Alî “radıyallahü anh”, amcasının kızını almadı. Amcasının oğlunun kızını aldı. Mekrûh olmadı. ¶  ¶ 
+  = Evlenmesi muvakkat harâm olan yedi kadından altıncısı, müşrik kadındır.
+  > . Müşrik, kitâbsız kâfir demekdir. Hıristiyanlar, resmlere, heykellere ta’zîm ediyorlar, secde ediyorlar, yalvarıyorlar. Bunların bir kısmı, ellerindeki bozuk İncîllere, Tanrının Î…
+#4153 [harâm olan] 2-34 s.571 
+  BAGLAM-ALANI(sitede görünür): Müslime üzerine kitâbiyye tezevvüc câizdir. Muvakkat harâm olan kadınların yedincisi, hür kadın ile evli iken, câriye ile de nikâhlanmakdır. Câriye ile nikâhlı iken, hür kadını da nikâhlamak câizdir.
+  < …slimân, kitâbî olan zevcesini kiliseye gitmekden ve evde şerâb yapmakdan men’ edebilir. Hayz ve nifâs sonunda, gusl abdesti almağa cebr edemez. Tesettür etmesi iyi olur. Müslime üzerine kitâbiyye tezevvüc câizdir.) ¶  ¶ 
+  = Muvakkat harâm olan kadınların yedincisi, hür kadın ile evli iken, câriye ile de nikâhlanmakdır.
+  > . Câriye ile nikâhlı iken, hür kadını da nikâhlamak câizdir. ¶  ¶ Bu yedi kadına selâm vermek ve selâmlarına cevâb vermek câiz değildir. ¶  ¶ Başkasının zevcesini nikâh etmek câiz …
+#4154 [harâmdır] 2-34 s.571 
+  BAGLAM-ALANI(sitede görünür): (Öldüğünü işitip veyâ boşadığını bildiren mektûbunu alıp, başkası ile evlendikden sonra, birinci zevci gelirse, ikinci nikâhı bâtıl olur [Ni’met-i islâm] ). Hür erkeğin dörtden, kölenin ise ikiden çok kadın nikâhı altında bulundurması harâmdır. İkinci kadınla 
+  < …ne hükm edeceği (Mecelle)nin onuncu maddesi şerhinde yazılıdır. (Öldüğünü işitip veyâ boşadığını bildiren mektûbunu alıp, başkası ile evlendikden sonra, birinci zevci gelirse, ikinci nikâhı bâtıl olur [Ni’met-i islâm]). 
+  = Hür erkeğin dörtden, kölenin ise ikiden çok kadın nikâhı altında bulundurması harâmdır.
+  > . İkinci kadınla evlenmek için, birinci kadından izn almak lâzım değildir. Birinci kadın râzı olmazsa, hattâ kendimi öldürürüm dese de, erkek ikinci kadını nikâhlıyabilir. Fekat, b…
+#4155 [harâm olur] 2-34 s.571 
+  BAGLAM-ALANI(sitede görünür): Fekat, birincinin gönlünü hoş etmesi, hattâ hoş etmek için ikinci nikâhdan vaz geçmesi iyi olur ve sevâb kazanır. Aralarında adâlet yapamazsa, zulm yaparsa, nafaka bulamazsa, bir evlenmek bile harâm olur. [Otuzdokuzuncu maddeye bakınız!
+  < …eğildir. Birinci kadın râzı olmazsa, hattâ kendimi öldürürüm dese de, erkek ikinci kadını nikâhlıyabilir. Fekat, birincinin gönlünü hoş etmesi, hattâ hoş etmek için ikinci nikâhdan vaz geçmesi iyi olur ve sevâb kazanır. 
+  = Aralarında adâlet yapamazsa, zulm yaparsa, nafaka bulamazsa, bir evlenmek bile harâm olur.
+  > . [Otuzdokuzuncu maddeye bakınız!] Şî’îler, dokuz kadınla, vehhâbîler on kadın ile evlenmek câiz diyorlar. Hamîdullah, (İslâma giriş) kitâbında, burasını da, yanlış yazmakdadır. ¶ …
+#4156 [harâmdır] 2-34 s.571 
+  BAGLAM-ALANI(sitede görünür): Düğünde de, erkekler ayrı evde, kadınlar başka evde toplanmalıdır. Gelini, kapalı bile olsa, yabancı erkeğe göstermek harâmdır. Harâma ehemmiyyet vermiyen kâfir olur.
+  < …eden bunu vaty edebilir. ¶  ¶ Sünnet üzere nikâh yapmak: İki veyâ dahâ çok sâlih müslimân erkek toplanır. Erkekler arasında hiçbir kadın bulunmamalıdır. Düğünde de, erkekler ayrı evde, kadınlar başka evde toplanmalıdır. 
+  = Gelini, kapalı bile olsa, yabancı erkeğe göstermek harâmdır.
+  > . Harâma ehemmiyyet vermiyen kâfir olur. Nikâh bozulur. Önce erkek ve kadın tarafından birer kişi konuşma yapmalıdır. Konuşmadan sonra, kadının vekîli mehr olacak altın sayısını sö…
+#4157 [harâmdır] 2-34 s.575 
+  BAGLAM-ALANI(sitede görünür): Evlendikden sonra, harâm mâl toplamağa kalkışmak, harâm kazanmağa çoluk çocuğu behâne etmek, nikâhın sünnet üzere yapılmadığını gösterir. (Müt’a)nikâhı ve (Muvakkat nikâh), dört mezhebde de harâmdır. Müt’a nikâhı, şâhidsiz olarak bir kadına belli para verip, b
+  < …âmın ümmetinin çoğalmasını ve Onun nikâh sünnetine uymağı niyyet etmelidir. Evlendikden sonra, harâm mâl toplamağa kalkışmak, harâm kazanmağa çoluk çocuğu behâne etmek, nikâhın sünnet üzere yapılmadığını gösterir. ¶  ¶ (
+  = (Müt’a) nikâhı ve (Muvakkat nikâh), dört mezhebde de harâmdır.
+  > . Müt’a nikâhı, şâhidsiz olarak bir kadına belli para verip, belli zemân için berâber yaşamağı sözleşmek demekdir. Müt’a nikâhının harâm olduğunda bütün âlimlerin sözbirliği bulund…
+#4158 [harâm olduğu] 2-34 s.575 COKLU:mubah
+  BAGLAM-ALANI(sitede görünür): Müt’a nikâhı, şâhidsiz olarak bir kadına belli para verip, belli zemân için berâber yaşamağı sözleşmek demekdir. Müt’a nikâhının harâm olduğunda bütün âlimlerin sözbirliği bulunduğu, (Mîzân-ül-kübrâ) da ve (İbni Âbidîn) de yazılıdır ve (İmâm-ı Mâlik câiz dedi)
+  < …n sünnet üzere yapılmadığını gösterir. ¶  ¶ (Müt’a) nikâhı ve (Muvakkat nikâh), dört mezhebde de harâmdır. Müt’a nikâhı, şâhidsiz olarak bir kadına belli para verip, belli zemân için berâber yaşamağı sözleşmek demekdir. 
+  = Müt’a nikâhının harâm olduğunda bütün âlimlerin sözbirliği bulunduğu, (Mîzân-ül-kübrâ)da ve (İbni Âbidîn)de yazılıdır ve (İmâm-ı Mâlik câiz dedi) sözünde yanlışlık olduğunu bildirmekdedir.
+  > . Muvakkat nikâh, yüz sene olsa bile, belli bir zemân sonra boşamağı söyliyerek, bütün şartlarına uygun yapılan nikâhdır. Söylemeyip, yalnız kalbinden geçirse, nikâh sahîh olur. ¶ …
+#4159 [harâmdır] 2-34 s.575 
+  BAGLAM-ALANI(sitede görünür): Söylemeyip, yalnız kalbinden geçirse, nikâh sahîh olur. Hacca götürecek erkeği olmıyan bir kadının, hacca gidebilmek için, hacca gitmekde olan bir erkek ile evlenmesi ve hacdan gelince boşanması da, muvakkat nikâh olduğu için harâmdır. Kadınların, hacca yalnız
+  < …nde yanlışlık olduğunu bildirmekdedir. Muvakkat nikâh, yüz sene olsa bile, belli bir zemân sonra boşamağı söyliyerek, bütün şartlarına uygun yapılan nikâhdır. Söylemeyip, yalnız kalbinden geçirse, nikâh sahîh olur. ¶  ¶ 
+  = Hacca götürecek erkeği olmıyan bir kadının, hacca gidebilmek için, hacca gitmekde olan bir erkek ile evlenmesi ve hacdan gelince boşanması da, muvakkat nikâh olduğu için harâmdır.
+  > . Kadınların, hacca yalnız gitmeleri de harâmdır. Ebedî mahrem akrabâsından biri veyâ zevci yanında bulunmıyan kadının üç günlük yola gitmesi câiz değildir. İmâm-ı a’zam Ebû Hanîfe…
+#4160 [harâmdır] 2-34 s.575 
+  BAGLAM-ALANI(sitede görünür): Hacca götürecek erkeği olmıyan bir kadının, hacca gidebilmek için, hacca gitmekde olan bir erkek ile evlenmesi ve hacdan gelince boşanması da, muvakkat nikâh olduğu için harâmdır. Kadınların, hacca yalnız gitmeleri de harâmdır. Ebedî mahrem akrabâsından biri v
+  < …lbinden geçirse, nikâh sahîh olur. ¶  ¶ Hacca götürecek erkeği olmıyan bir kadının, hacca gidebilmek için, hacca gitmekde olan bir erkek ile evlenmesi ve hacdan gelince boşanması da, muvakkat nikâh olduğu için harâmdır. 
+  = Kadınların, hacca yalnız gitmeleri de harâmdır.
+  > . Ebedî mahrem akrabâsından biri veyâ zevci yanında bulunmıyan kadının üç günlük yola gitmesi câiz değildir. İmâm-ı a’zam Ebû Hanîfeden ve imâm-ı Ebû Yûsüfden “rahmetullahi teâlâ a…
+#4161 [harâmdır] 2-34 s.575 
+  BAGLAM-ALANI(sitede görünür): (Hamza efendi risâlesi) nde ve (Fetâvel-hayriyye) de diyor ki, (Nikâh yapmak için, kızın akrabâsının zevcden başlık olarak birşey istemesi rüşvetdir. Alması harâmdır. Dâmâd da, va’d ederse, vermesi lâzım olmaz.
+  < …ri verilmez. İki bayram arasında nikâh yapmak ve düğün yapmak câizdir.) (Hamza efendi risâlesi)nde ve (Fetâvel-hayriyye)de diyor ki, (Nikâh yapmak için, kızın akrabâsının zevcden başlık olarak birşey istemesi rüşvetdir. 
+  = Alması harâmdır.
+  > . Dâmâd da, va’d ederse, vermesi lâzım olmaz. Vermiş ise, geri alabilir). (Bahr-ül-fetâvâ)da diyor ki, (Kadın nikâhdan sonra, zevcin cüzzam [miskin] hastası olduğunu anlasa, imâm-ı…
+#4162 [harâm olur] 2-35 s.577 
+  BAGLAM-ALANI(sitede görünür): 35 — KÂFİRİN EVLENMESİ Aşağıdaki yazı, (Dürr-ül-muhtâr)dan ve bunun şerhi olan İbni Âbidînden (Kâfirin nikâhı) bâbının tercemesidir: Burada üç şey bildirilecekdir: 1 — Müslimânlar arasında sahîh olan her nikâh, kâfirler arasında da sahîhdir. 2 — Şartı noksân o
+  < …, (Dürr-ül-muhtâr)dan ve bunun şerhi olan İbni Âbidînden (Kâfirin nikâhı) bâbının tercemesidir: ¶  ¶ Burada üç şey bildirilecekdir: ¶  ¶ 1 — Müslimânlar arasında sahîh olan her nikâh, kâfirler arasında da sahîhdir. ¶  ¶ 
+  = 2 — Şartı noksân olduğu için, meselâ şâhidler olmazsa veyâ kadın iddet zemânını doldurmamış ise, müslimânların nikâhı harâm olur.
+  > . Hâlbuki, kendi dinlerine uygun olunca, kâfirlerin böyle nikâhları câiz olur. ¶  ¶ 3 — Müslimânın nikâh etmesi harâm olan kadınları, kâfirin, kâfir kadınlardan alması câiz olur. B…
+#4164 [harâmdır] 2-36 s.581 
+  BAGLAM-ALANI(sitede görünür): 567. ci sahîfeye bakınız! Zevceyi bid’at üzere boşamak harâmdır. Hangi lisânda olursa olsun, yalnız boşamakda kullanılan sözlere, (Sarîh) açık söz denir.
+  < …k müstehabdır. Farzı yapmıyan kadını boşamamak günâh değildir. Evlilik vazîfesini yapamıyan, meselâ sihr yapılmış, cimâ’dan âciz olan erkeğin zevcesi ayrılmak isterse, bunu boşaması vâcib olur. 567. ci sahîfeye bakınız! 
+  = Zevceyi bid’at üzere boşamak harâmdır.
+  > . ¶  ¶ Hangi lisânda olursa olsun, yalnız boşamakda kullanılan sözlere, (Sarîh) açık söz denir. Zevcesine karşı, (Seni boşadım), (Sen bana harâmsın) gibi sarîh söz söyleyince veyâ …
+#4165 [harâmdır] 2-36 s.582 
+  BAGLAM-ALANI(sitede görünür): Bir def’ada üç kerre talâk vermeğe, (Bid’at talâk) denir. Özrsüz üç talâkla boşamak harâmdır. Her talâkda iddet zemânı geçinceye kadar, erkeğin kadına nafaka [ev kirâsı, yiyecek, giyecek] vermesi farzdır.
+  < …sa, nikâh fesh olur ki, buna talâk denmez. İslâmiyyete uymıyan, kötü huylu olan kadını boşamak câiz ise de, iyi kadını keyf için boşamağı, Allahü teâlâ beğenmez. Bir def’ada üç kerre talâk vermeğe, (Bid’at talâk) denir. 
+  = Özrsüz üç talâkla boşamak harâmdır.
+  > . Her talâkda iddet zemânı geçinceye kadar, erkeğin kadına nafaka [ev kirâsı, yiyecek, giyecek] vermesi farzdır. Bu zemânda, kadın başka erkekle evlenemez. Serhoşun ve işkence ile …
+#4166 [harâmdır] 2-36 s.583 
+  BAGLAM-ALANI(sitede görünür): İbni Âbidînde diyor ki, (Bir temizlik içinde, bir sözle üç kerre veyâ ayrı ayrı üç kerre yâhud bir sözle iki kerre veyâ ayrı ayrı iki kerre boşamak veyâ temizlik zemânında vatydan sonra veyâ hayz zemânında bir kerre boşamak da bid’atdir. Ya’nî harâmdır. Hayz z
+  < …r ki, (Bir temizlik içinde, bir sözle üç kerre veyâ ayrı ayrı üç kerre yâhud bir sözle iki kerre veyâ ayrı ayrı iki kerre boşamak veyâ temizlik zemânında vatydan sonra veyâ hayz zemânında bir kerre boşamak da bid’atdir. 
+  = Ya’nî harâmdır.
+  > . Hayz zemânında boşayan, günâhdan kurtulmak için rücû’ etmeli, temizlenince, isterse tekrâr boşamalıdır. Nifâs da, hayz gibidir. Bâin olarak boşamak her zemân bid’atdir. Hazret-i …
+#4167 [harâm olan] 2-36 s.584 
+  BAGLAM-ALANI(sitede görünür): Hul’ edince, bir bâin talâk vâkı’ olur. Zıhâr — Erkeğin, zevcesini veyâ yüz, baş, ferc gibi bir uzvunu, mahreminin bakması harâm olan yerine benzetmesidir. (Senin başın anamın sırtı gibidir) demek veyâ (Sen bana teyzemin uyluğu gibisin) demek gibi.
+  < …üncü nikâhda da, yemînini bozmazsa, kadın (Talâk-ı selâse) ile boş olup, artık hullesiz alamaz. ¶  ¶ Hul’ — Mal karşılığı boşamak olup câizdir. Mehrden çok istemek mekrûhdur. Hul’ edince, bir bâin talâk vâkı’ olur. ¶  ¶ 
+  = Zıhâr — Erkeğin, zevcesini veyâ yüz, baş, ferc gibi bir uzvunu, mahreminin bakması harâm olan yerine benzetmesidir.
+  > . (Senin başın anamın sırtı gibidir) demek veyâ (Sen bana teyzemin uyluğu gibisin) demek gibi. Keffâret yapmadıkca, zevcesine sarılması, öpmesi ve vaty harâm olur. Zıhâr keffâreti,…
+#4168 [harâm olur] 2-36 s.584 
+  BAGLAM-ALANI(sitede görünür): (Senin başın anamın sırtı gibidir) demek veyâ (Sen bana teyzemin uyluğu gibisin) demek gibi. Keffâret yapmadıkca, zevcesine sarılması, öpmesi ve vaty harâm olur. Zıhâr keffâreti, oruc keffâreti gibidir.
+  < …olur. ¶  ¶ Zıhâr — Erkeğin, zevcesini veyâ yüz, baş, ferc gibi bir uzvunu, mahreminin bakması harâm olan yerine benzetmesidir. (Senin başın anamın sırtı gibidir) demek veyâ (Sen bana teyzemin uyluğu gibisin) demek gibi. 
+  = Keffâret yapmadıkca, zevcesine sarılması, öpmesi ve vaty harâm olur.
+  > . Zıhâr keffâreti, oruc keffâreti gibidir. ¶  ¶ Li’ân — Zevcesine, ey zânî veyâ türkçesini söylese veyâ bu çocuk benden değildir dese, zevcesi hâkimden li’ân isterse, hâkim, li’ân …
+#4169 [harâm olan] 2-36 s.584 
+  BAGLAM-ALANI(sitede görünür): Li’ân yapıldıkdan sonra, adam sözünden dönerek veyâ başka bir afîf kadını kazf ederek had vurulmadıkca, bu kadınla tekrâr hiçbir zemân nikâhlanamaz. İddet — Talâkdan veyâ feshden veyâ kocası öldükden sonra, vaty veyâ halvet olunmuş zevcenin yeniden evlenmesi h
+  < …ime olsun) der. Sonra hâkim, bunları bir talâk-ı bâin ile ayırır. Li’ân yapıldıkdan sonra, adam sözünden dönerek veyâ başka bir afîf kadını kazf ederek had vurulmadıkca, bu kadınla tekrâr hiçbir zemân nikâhlanamaz. ¶  ¶ 
+  = İddet — Talâkdan veyâ feshden veyâ kocası öldükden sonra, vaty veyâ halvet olunmuş zevcenin yeniden evlenmesi harâm olan zemândır.
+  > . Hanefî ve Hanbelî mezheblerinde, ilk temizlik başından, üçüncü hayzın sonuna kadar olan zemândır. Şâfi’î ve Mâlikî mezheblerinde, üç temizlik geçinceye kadardır. Hayz görmiyorsa,…
+#4170 [harâm olur] 2-37 s.586 
+  BAGLAM-ALANI(sitede görünür): İkibuçuk yaşından küçük çocuk, yabancı bir veyâ birkaç kadından, birer yudum süt emerse, hanefîde ve mâlikîde, bu kadınlar çocuğun süt annesi olur. Bu kadınların mahrem akrabâları, çocuğa (Mahrem) ya’nî evlenmeleri harâm olurlar. Kadının öz birâderi, çocuğun s
+  < …âbının fârisî şerhinde buyuruyor ki, memeden süt emmeğe, (Rıdâ’) denir. İkibuçuk yaşından küçük çocuk, yabancı bir veyâ birkaç kadından, birer yudum süt emerse, hanefîde ve mâlikîde, bu kadınlar çocuğun süt annesi olur. 
+  = Bu kadınların mahrem akrabâları, çocuğa (Mahrem) ya’nî evlenmeleri harâm olurlar.
+  > . Kadının öz birâderi, çocuğun süt dayısı olur. Bu kadına, bu sütün gelmesine sebeb olan kocası da, süt babası olur. Bu adamın öz birâderi de, süt amcası olur. Fekat radî’ın mahrem…
+#4171 [harâmdır] 2-37 s.586 
+  BAGLAM-ALANI(sitede görünür): Bu yaşa gelen çocuğu emzirmek zarûrî olmadığı için, emzirmesi câiz olmaz denildi. Çünki, insan parçasını zarûretsiz kullanmak harâmdır. [ (Dürr-ül-muhtâr) da diyor ki, (Zarûret olmadıkca insanın bir parçasını kullanmak harâmdır.
+  < …n”, iki yaşından sonra süt çocukları olmaz buyurdular. İkibuçuk yaşından sonra emen, hanefî mezhebinin söz birliği ile, süt çocuğu olmaz. Bu yaşa gelen çocuğu emzirmek zarûrî olmadığı için, emzirmesi câiz olmaz denildi. 
+  = Çünki, insan parçasını zarûretsiz kullanmak harâmdır.
+  > . ¶  ¶ [(Dürr-ül-muhtâr)da diyor ki, (Zarûret olmadıkca insanın bir parçasını kullanmak harâmdır. Kullanması harâm olan şeyi ilâc olarak yimek ve içmek de câiz değildir). İbni Âbid…
+#4172 [harâmdır] 2-37 s.586 
+  BAGLAM-ALANI(sitede görünür): Çünki, insan parçasını zarûretsiz kullanmak harâmdır. [ (Dürr-ül-muhtâr) da diyor ki, (Zarûret olmadıkca insanın bir parçasını kullanmak harâmdır. Kullanması harâm olan şeyi ilâc olarak yimek ve içmek de câiz değildir).
+  < …uk yaşından sonra emen, hanefî mezhebinin söz birliği ile, süt çocuğu olmaz. Bu yaşa gelen çocuğu emzirmek zarûrî olmadığı için, emzirmesi câiz olmaz denildi. Çünki, insan parçasını zarûretsiz kullanmak harâmdır. ¶  ¶ [(
+  = [ (Dürr-ül-muhtâr)da diyor ki, (Zarûret olmadıkca insanın bir parçasını kullanmak harâmdır.
+  > . Kullanması harâm olan şeyi ilâc olarak yimek ve içmek de câiz değildir). İbni Âbidîn burasını şöyle açıklıyor: (Kullanılması harâm olan şey, tâhir ya’nî temiz olsun, necs ya’nî p…
+#4173 [harâm olan] 2-37 s.586 COKLU:mubah OLUMSUZ/SINIR:degildir
+  BAGLAM-ALANI(sitede görünür): [ (Dürr-ül-muhtâr) da diyor ki, (Zarûret olmadıkca insanın bir parçasını kullanmak harâmdır. Kullanması harâm olan şeyi ilâc olarak yimek ve içmek de câiz değildir). İbni Âbidîn burasını şöyle açıklıyor: (Kullanılması harâm olan şey, tâhir ya’nî temiz olsun, n
+  < …n çocuğu emzirmek zarûrî olmadığı için, emzirmesi câiz olmaz denildi. Çünki, insan parçasını zarûretsiz kullanmak harâmdır. ¶  ¶ [(Dürr-ül-muhtâr)da diyor ki, (Zarûret olmadıkca insanın bir parçasını kullanmak harâmdır. 
+  = Kullanması harâm olan şeyi ilâc olarak yimek ve içmek de câiz değildir).
+  > ). İbni Âbidîn burasını şöyle açıklıyor: (Kullanılması harâm olan şey, tâhir ya’nî temiz olsun, necs ya’nî pis olsun, ilâc olarak kullanmak harâmdır. Fekat, hastalığa iyi geleceği …
+#4174 [harâmdır] 2-37 s.586 
+  BAGLAM-ALANI(sitede görünür): Kullanması harâm olan şeyi ilâc olarak yimek ve içmek de câiz değildir). İbni Âbidîn burasını şöyle açıklıyor: (Kullanılması harâm olan şey, tâhir ya’nî temiz olsun, necs ya’nî pis olsun, ilâc olarak kullanmak harâmdır. Fekat, hastalığa iyi geleceği bilinir is
+  < …ki, insan parçasını zarûretsiz kullanmak harâmdır. ¶  ¶ [(Dürr-ül-muhtâr)da diyor ki, (Zarûret olmadıkca insanın bir parçasını kullanmak harâmdır. Kullanması harâm olan şeyi ilâc olarak yimek ve içmek de câiz değildir). 
+  = İbni Âbidîn burasını şöyle açıklıyor: (Kullanılması harâm olan şey, tâhir ya’nî temiz olsun, necs ya’nî pis olsun, ilâc olarak kullanmak harâmdır.
+  > . Fekat, hastalığa iyi geleceği bilinir ise ve ondan başka ilâc yok ise, kullanılmasına izn verilmişdir. Müctehid olmıyan müslimâna, (Mukallid) denir. Mukallid olanların, müctehidi…
+#4175 [harâmdır] 2-37 s.586 
+  BAGLAM-ALANI(sitede görünür): Bu fetvâ, Libyâda çıkan (Hedy-ül-islâmî) mecmû’asının 1973 Nisan sayısında yazılıdır]. Çocuğun, süt anası ve süt babası ile ve bunların anaları, babaları ve kardeşleri ve çocukları ve her kuşakdan torunları ile evlenmesi, ebedî harâmdır. Bunlarla neseb ile akr
+  < …îfedir. Çünki, hayâtı korumak, ba’zan kan verilmesine bağlı olmakdadır. Kan vermek, süt kardeşliğe sebeb olmaz. Nikâhı bozmaz). Bu fetvâ, Libyâda çıkan (Hedy-ül-islâmî) mecmû’asının 1973 Nisan sayısında yazılıdır]. ¶  ¶ 
+  = Çocuğun, süt anası ve süt babası ile ve bunların anaları, babaları ve kardeşleri ve çocukları ve her kuşakdan torunları ile evlenmesi, ebedî harâmdır.
+  > . Bunlarla neseb ile akrabâ olsaydı, yine evlenemezdi. Bu çocuğun çocukları, bunun süt anası veyâ süt babası ile evlenemez. Çocuğun zevcesi, çocuğun süt babası ile ve çocuğun zevci…
+#4176 [harâmdır] 2-37 s.586 
+  BAGLAM-ALANI(sitede görünür): Aynı kadından emen oğlan ile kız, süt babaları başka olsa ve başka senelerde emmiş olsalar bile, birbiri ile ve birbirlerinin çocukları ve torunları ile evlenemez. (Dürer) kitâbının sâhibi “rahmetullahi teâlâ aleyh” diyor ki, (Öz kardeşinin süt kızı ile evlenm
+  < … ve çocuğun zevci de, çocuğun süt anası ile evlenemez. Aynı kadından emen oğlan ile kız, süt babaları başka olsa ve başka senelerde emmiş olsalar bile, birbiri ile ve birbirlerinin çocukları ve torunları ile evlenemez. (
+  = (Dürer) kitâbının sâhibi “rahmetullahi teâlâ aleyh” diyor ki, (Öz kardeşinin süt kızı ile evlenmek harâm olduğu gibi, süt kardeşinin öz kızı ile ve süt kardeşinin süt kızı ile de evlenmek harâmdır).
+  > ). Bir adam, kendi annesinden süt emen süt kardeşinin anası veyâ kız kardeşi ile evlenebilir. Fekat, baba bir kardeşinin annesi ile evlenemez. Ya’nî bir kimse, kendi öz kardeşinin …
+#4177 [harâmdır] 2-38 s.589 
+  BAGLAM-ALANI(sitede görünür): Herşeyi erkeğin getirmesi lâzımdır. Kadını çalışıp kazanmağa zorlaması harâmdır. Nâşize olan, ya’nî zevcinden kaçan zevceye nafaka verilmez.
+  < …tın alır. Lâzım olan şeylerin kadında bulunması, bunların nafakadan düşmesine sebeb olmaz. Kadın kendi malını kullanmağa zorlanamaz. Kullanırsa, zevc bunların parasını zevcesine öder. Herşeyi erkeğin getirmesi lâzımdır. 
+  = Kadını çalışıp kazanmağa zorlaması harâmdır.
+  > . Nâşize olan, ya’nî zevcinden kaçan zevceye nafaka verilmez. Geri gelince, nafaka da başlar. Üç günlük yoldan uzakda olan zevce, mahremi olmadığı için, zevcinin yanına gitmezse ve…
+#4178 [harâmdır] 2-38 s.590 
+  BAGLAM-ALANI(sitede görünür): Hediyyeleşmeleri sünnetdir. Anaya, babaya karşı gelmek, sert konuşmak, kalblerini incitmek harâmdır. İslâm kadını, her zemân bir milhafe ile örtünmüşdür.
+  < …âziyye)de diyor ki: (Babası hasta olup, bakacak kimse bulunamazsa, zevcinden iznsiz gidip hizmet eder. Zimmî baba da böyledir. Zengin olan oğul, zengin olan babasına bakmağa mecbûr değildir). Hediyyeleşmeleri sünnetdir. 
+  = Anaya, babaya karşı gelmek, sert konuşmak, kalblerini incitmek harâmdır.
+  > . İslâm kadını, her zemân bir milhafe ile örtünmüşdür. Bu da, geniş manto demekdir. İki parça olan çarşaf sonradan ortaya çıkmışdır. Şimdi çarşaf âdet olan yerlerde çarşafla, manto…
+#4180 [harâmdır] 2-38 s.592 
+  BAGLAM-ALANI(sitede görünür): Fakîr olan anasını, babasını kendi evine alıp, birlikde geçinirler. Zevceyi döğmek, eziyyet etmek, nafakasını tam vermemek, onsuz başka şehre yerleşmek harâmdır. Büyük günâhdır.
+  < … Hayriyye) sâhibi “rahmetullahi teâlâ aleyh” diyor ki: (Kazandığı, geçimini karşılayabilen fakîr kimsenin, fakîr babasına nafaka vermesi farz değildir. Fakîr olan anasını, babasını kendi evine alıp, birlikde geçinirler. 
+  = Zevceyi döğmek, eziyyet etmek, nafakasını tam vermemek, onsuz başka şehre yerleşmek harâmdır.
+  > . Büyük günâhdır. Kıyâmet günü, bunun süâli çok çetin, azâbı da, pek elîm olacakdır. Hâkim tarafından ta’zîr olunması, cezâlandırılması lâzımdır. Gücü yetdiği hâlde, üç cins nafaka…
+#4181 [harâm olan] 2-38 s.592 
+  BAGLAM-ALANI(sitede görünür): Herbiri, o gün için alması lâzım gelen mîrâs mikdârlarına göre ortaklaşa verirler. Bunlar, neseb (soy) bakımından nikâhı ebedî harâm olan yedi kişidir. Bunlardan zengin olanları, fakîr olan zî rahm-i mahremlerine ortaklaşa bakmağa mecbûrdurlar.
+  < …mahremleri üzerine, mîrâs mikdârı ile farz olur. Farz olması için, mahkemede da’vâ açması lâzım olduğu, (Fetâvâ-i Hayriyye)de yazılıdır. Herbiri, o gün için alması lâzım gelen mîrâs mikdârlarına göre ortaklaşa verirler. 
+  = Bunlar, neseb (soy) bakımından nikâhı ebedî harâm olan yedi kişidir.
+  > . Bunlardan zengin olanları, fakîr olan zî rahm-i mahremlerine ortaklaşa bakmağa mecbûrdurlar. Bir kimsenin dayısı ve amcasının oğlu olsa, bunun nafakasını, dayısı verecekdir. Çünk…
+#4182 [harâmdır] 2-38 s.593 
+  BAGLAM-ALANI(sitede görünür): Kanını nakl etmek câizdir. Kadınların ve erkeklerin traşda, tuvalet yapmakda ve giyinmekde birbirlerine benzemeleri harâmdır. Erkeklerin yanak üzerine saç uzatarak kadınlara benzemelerinin harâm olduğu (Hadîka) beşyüzellisekizinci sahîfesinde yazılıdır.
+  < …istân âlimlerinin neşr etdiği (El-muallim) mecmû’ası, 1406 nushasında yazılıdır. Çünki, bir organı kurtarmak, hayâtı kurtarmak gibi zarûrîdir. Diri insanın organını, etini yimek câiz değildir. Kanını nakl etmek câizdir. 
+  = Kadınların ve erkeklerin traşda, tuvalet yapmakda ve giyinmekde birbirlerine benzemeleri harâmdır.
+  > . Erkeklerin yanak üzerine saç uzatarak kadınlara benzemelerinin harâm olduğu (Hadîka) beşyüzellisekizinci sahîfesinde yazılıdır. Kadının, insan saçını, kendi saçı arasına örerek b…
+#4183 [harâm olduğu] 2-38 s.593 
+  BAGLAM-ALANI(sitede görünür): Kadınların ve erkeklerin traşda, tuvalet yapmakda ve giyinmekde birbirlerine benzemeleri harâmdır. Erkeklerin yanak üzerine saç uzatarak kadınlara benzemelerinin harâm olduğu (Hadîka) beşyüzellisekizinci sahîfesinde yazılıdır. Kadının, insan saçını, kendi saçı
+  < …kurtarmak, hayâtı kurtarmak gibi zarûrîdir. Diri insanın organını, etini yimek câiz değildir. Kanını nakl etmek câizdir. Kadınların ve erkeklerin traşda, tuvalet yapmakda ve giyinmekde birbirlerine benzemeleri harâmdır. 
+  = Erkeklerin yanak üzerine saç uzatarak kadınlara benzemelerinin harâm olduğu (Hadîka) beşyüzellisekizinci sahîfesinde yazılıdır.
+  > . Kadının, insan saçını, kendi saçı arasına örerek birleşdirmeyip de, kendi saçına iplikle, bez şeridle bağlamasının ve hayvan kılları eklemenin harâm olmadığı, (İbni Âbidîn) beşin…
+#4184 [harâmdır] 2-38 s.594 
+  BAGLAM-ALANI(sitede görünür): Günâhı yalnız saçını vermiş olana ve bakanadır. İnsanın saçını ve herhangi bir organı satması harâmdır. Peruk takarak sokağa çıkmak, zarûret olmadan câiz değildir.
+  < …ak zarûreti olduğu zemân, kadının başını ve kendi saçlarını peruk takarak örtmesi câiz ve lâzım olur. Zarûret olunca, avret yerlerini mümkin olan herşeyle örtmek lâzımdır. Günâhı yalnız saçını vermiş olana ve bakanadır. 
+  = İnsanın saçını ve herhangi bir organı satması harâmdır.
+  > . Peruk takarak sokağa çıkmak, zarûret olmadan câiz değildir. Çünki, kadınların yabancılara süslenmeleri harâmdır. Zarûret ne demek olduğu, (Mecelle)nin 22 ve 42. ci maddeleri şerh…
+#4185 [harâmdır] 2-38 s.594 
+  BAGLAM-ALANI(sitede görünür): Peruk takarak sokağa çıkmak, zarûret olmadan câiz değildir. Çünki, kadınların yabancılara süslenmeleri harâmdır. Zarûret ne demek olduğu, (Mecelle) nin 22 ve 42. ci maddeleri şerhlerinde bildirilmişdir.
+  < …, avret yerlerini mümkin olan herşeyle örtmek lâzımdır. Günâhı yalnız saçını vermiş olana ve bakanadır. İnsanın saçını ve herhangi bir organı satması harâmdır. Peruk takarak sokağa çıkmak, zarûret olmadan câiz değildir. 
+  = Çünki, kadınların yabancılara süslenmeleri harâmdır.
+  > . Zarûret ne demek olduğu, (Mecelle)nin 22 ve 42. ci maddeleri şerhlerinde bildirilmişdir.] ¶  ¶ (Uyûn-ül-besâir) kitâbının yüzondokuzuncu sahîfesinde diyor ki, (İnsanın kullandığı…
+#4186 [harâmdır] 2-38 s.594 
+  BAGLAM-ALANI(sitede görünür): İhtiyâc olunca, orucu bozmak câiz olur. [ (Bahr-ür-râık) da diyor ki, (Bir ibâdete başlayınca, bunu özr olmadan bozmak harâmdır. Farz olan orucu bozmak için sekiz özr vardır: Hastalık, sefere çıkmak, ikrâh ya’nî zâlimin zorlaması, kadının hâmile olması, çocuk 
+  < …ak şeyi kullanmak zarûret olur. Kullanılmaması sıkıntıya, meşakkate sebeb olursa, ihtiyâc denir. [Fâidesi, menfe’ati olmayıp, yalnız gösteriş için kullanılan şeye, zînet denir.] İhtiyâc olunca, orucu bozmak câiz olur. [(
+  = [ (Bahr-ür-râık)da diyor ki, (Bir ibâdete başlayınca, bunu özr olmadan bozmak harâmdır.
+  > . Farz olan orucu bozmak için sekiz özr vardır: Hastalık, sefere çıkmak, ikrâh ya’nî zâlimin zorlaması, kadının hâmile olması, çocuk emzirmek, açlık, susuzluk ve ihtiyârlık). Kitâb…
+#4187 [harâmdır] 2-38 s.594 
+  BAGLAM-ALANI(sitede görünür): Cemâl için, temiz, güzel giyinmek mubâhdır. Kibr için giyinmek ise, harâmdır. Böyle giyinince, hâlinde, başkalarına karşı davranışında bir değişiklik olması, kibr alâmeti olur).
+  < …österir. (Allahü teâlâ cemîldir. Cemâl sâhiblerini sever) hadîs-i şerîfi, cemâl sâhibi olmağı medh etmekdedir. Cemâl için yapılan birşey, zînete de sebeb olursa, zarar vermez. Cemâl için, temiz, güzel giyinmek mubâhdır. 
+  = Kibr için giyinmek ise, harâmdır.
+  > . Böyle giyinince, hâlinde, başkalarına karşı davranışında bir değişiklik olması, kibr alâmeti olur). Görülüyor ki, cemâl, çirkinliğe, başkalarının iğrenmelerine, hakâret etmelerin…
+#4188 [harâm olduğu] 2-38 s.594 
+  BAGLAM-ALANI(sitede görünür): Cemâl için, bulunduğu yerde âdet olan şeylerden, harâm olmıyan en iyilerini kullanmalıdır. Erkeklere ipek giymek harâm olduğu, ikinci kısm, kırkbirinci madde sonunda bildirilmişdir. Elbisede ve başlıkda dört parmak genişliğinde ipek veyâ altın şeridlerin bulun
+  < …yapmamak, bunları izâle etmekdir. Zînet, başkalarını imrendirecek, onlara üstünlük sağlıyacak, öğünecek şeyleri yapmakdır. Cemâl için, bulunduğu yerde âdet olan şeylerden, harâm olmıyan en iyilerini kullanmalıdır.] ¶  ¶ 
+  = Erkeklere ipek giymek harâm olduğu, ikinci kısm, kırkbirinci madde sonunda bildirilmişdir.
+  > . Elbisede ve başlıkda dört parmak genişliğinde ipek veyâ altın şeridlerin bulunması câizdir. Şerîdler uzun ve sayıları çok olabilir. ¶  ¶ Erkeklerin de her renk elbise giymeleri c…
+#4189 [harâm olan] 2-38 s.595 
+  BAGLAM-ALANI(sitede görünür): Resûlullah “sallallahü aleyhi ve sellem” bin dirhem gümüş kıymetinde cübbe giyerdi). Büyüklere harâm olan şeyleri, çocuğuna yapdıran kimse, harâm işlemiş olur. Birinci kısmda, 18. ci maddeye bakınız!
+  < …i, Emîr-ül-mü’minîn olduğu içindi. Güzel giyinseydi, me’mûrları da güzel giyinirler, fakîrleri, milletden zulm ile mal alırlardı. Resûlullah “sallallahü aleyhi ve sellem” bin dirhem gümüş kıymetinde cübbe giyerdi). ¶  ¶ 
+  = Büyüklere harâm olan şeyleri, çocuğuna yapdıran kimse, harâm işlemiş olur.
+  > . Birinci kısmda, 18. ci maddeye bakınız! ¶  ¶ (Hadîka)da, bütün bedenle yapılan günâhların onbeşincisinde diyor ki, çocuğunu ve nafaka vermek lâzım olan akrabâsını aç bırakarak ve…
+#4190 [harâmdır] 2-38 s.596 OLUMSUZ/SINIR:fetva
+  BAGLAM-ALANI(sitede görünür): (Hadîka) dan terceme burada temâm oldu. (Bezzâziyye) fetvâsında, (Menâhî) yi anlatırken diyor ki, (Her çeşid çalgı dinlemek harâmdır. Fısk anlatan şi’r dinlemek mekrûhdur.
+  < …rahm-i mahrem olmıyan amca oğluna, amca kızına ve hala, dayı ve teyze çocuklarına, sonra nikâh sebebi ile akrabâ olanlara, sonra komşulara yardım ve ihsân etmek çok sevâbdır. (Hadîka)dan terceme burada temâm oldu. ¶  ¶ (
+  = (Bezzâziyye) fetvâsında, (Menâhî)yi anlatırken diyor ki, (Her çeşid çalgı dinlemek harâmdır.
+  > . Fısk anlatan şi’r dinlemek mekrûhdur. Günâh işlemeği istemek günâh olmaz. İşlemeğe karâr verirse, yalnız karâr vermek günâhı yazılır. İşlemek günâhı yazılmaz. Küfr ve küfre sebeb…
+#4191 [harâm olduğu] 2-38 s.597 
+  BAGLAM-ALANI(sitede görünür): Komşunun yapdığı eziyyetlere ve câhilce hareketlerine sabr etmeli, karşılık vermemelidir. [Alkollü içkinin ve kadınların, kızların başı, kolları açık sokağa çıkmalarının harâm olduğunu güler yüz ve tatlı dil ile anlatmalıdır. Komşular, günâh işlediklerini görü
+  < …şartlarına ve insanın yardım kudretine göre değişir. Her tarafdan birer, ikişer ve nihâyet] kırk ev komşuluk hakkına mâlik olur. Komşunun yapdığı eziyyetlere ve câhilce hareketlerine sabr etmeli, karşılık vermemelidir. [
+  = [Alkollü içkinin ve kadınların, kızların başı, kolları açık sokağa çıkmalarının harâm olduğunu güler yüz ve tatlı dil ile anlatmalıdır.
+  > . Komşular, günâh işlediklerini görüp de nasîhat vermiyen] ve kendileri ile görüşmiyen, [Cehennemden kurtulmaları için] yardım etmiyen komşularını, Kıyâmet günü, Allahü teâlâya şik…
+#4192 [harâm olan] 2-38 s.597 
+  BAGLAM-ALANI(sitede görünür): İyi kimsedir diyorlarsa, ind-i ilâhîde iyi olduğunu anlasın!) buyuruldu. Herhangi bir kimseye yapılması harâm olan bir fenâlık, komşuya yapılırsa, günâhı katkat dahâ fazla olur. Herhangi bir kimseye yapılması sevâb olan bir iyilik, komşuya yapılırsa, sevâbı ka
+  < …erîfde, (Kendisinin iyi mi, kötü mü olduğunu anlamak istiyen kimse, sâlih, hâlis olan komşularının kendisi hakkında ne dediklerini öğrensin! İyi kimsedir diyorlarsa, ind-i ilâhîde iyi olduğunu anlasın!) buyuruldu.) ¶  ¶ 
+  = Herhangi bir kimseye yapılması harâm olan bir fenâlık, komşuya yapılırsa, günâhı katkat dahâ fazla olur.
+  > . Herhangi bir kimseye yapılması sevâb olan bir iyilik, komşuya yapılırsa, sevâbı katkat dahâ fazla olur. ¶  ¶ Zâhidâ! Aç gözün, sahraya bak da, ibret al! ¶ Şu direksiz kubbe-i sem…
+#4193 [harâmdır] 2-39 s.598 
+  BAGLAM-ALANI(sitede görünür): Yalnız, bunlarla meşgûl olurken ve ilm öğrenirken, erkekler arasına girmemesi, onlara açık görünmemesi, harâmdan sakınması lâzımdır. Çünki, müslimân kadının başı, kolları, bacakları açık olarak sokağa çıkması, erkeklere göstermesi harâmdır, günâhdır. Ehemmiyye
+  < … mecbûr değil ise de, bunlarla meşgûl olması, para kazanması, yasak ve günâh değildir. Yalnız, bunlarla meşgûl olurken ve ilm öğrenirken, erkekler arasına girmemesi, onlara açık görünmemesi, harâmdan sakınması lâzımdır. 
+  = Çünki, müslimân kadının başı, kolları, bacakları açık olarak sokağa çıkması, erkeklere göstermesi harâmdır, günâhdır.
+  > . Ehemmiyyet vermezse, aldırış etmezse îmânı gider, kâfir [Allahın düşmanı] olur. Cehennem ateşinde sonsuz olarak yakılacağı bildirilmişdir. Sûre-i nisâ otuzbirinci âyet-i kerîmede…
+#4194 [harâmdır] 2-39 s.599 
+  BAGLAM-ALANI(sitede görünür): Huysuzları sevmez. Bir insanı incitmek harâmdır. İşkence yapanın evlenmesi harâmdır.
+  < …anı aynen aşağıda bildiriyoruz: ¶  ¶ Ey azîz! Erkeğin zevcesi ile görüşmesinde, otuz şeyi yapması lâzımdır: ¶  ¶ 1 — Ona karşı her zemân, güzel huylu olmalıdır. [Allahü teâlâ iyi huylu olanları sever. Huysuzları sevmez. 
+  = Bir insanı incitmek harâmdır.
+  > . İşkence yapanın evlenmesi harâmdır.] ¶  ¶ 2 — Ona karşı her zemân, yumuşak davranmalıdır. ¶  ¶ Peygamberimiz “sallallahü aleyhi ve sellem” buyurdu ki, (Müslimânların en iyisi, en…
+#4195 [harâmdır] 2-39 s.599 
+  BAGLAM-ALANI(sitede görünür): Bir insanı incitmek harâmdır. İşkence yapanın evlenmesi harâmdır. 2 — Ona karşı her zemân, yumuşak davranmalıdır.
+  < …: ¶  ¶ Ey azîz! Erkeğin zevcesi ile görüşmesinde, otuz şeyi yapması lâzımdır: ¶  ¶ 1 — Ona karşı her zemân, güzel huylu olmalıdır. [Allahü teâlâ iyi huylu olanları sever. Huysuzları sevmez. Bir insanı incitmek harâmdır. 
+  = İşkence yapanın evlenmesi harâmdır.
+  > .] ¶  ¶ 2 — Ona karşı her zemân, yumuşak davranmalıdır. ¶  ¶ Peygamberimiz “sallallahü aleyhi ve sellem” buyurdu ki, (Müslimânların en iyisi, en fâidelisi, zevcesine karşı iyi ve f…
+#4196 [harâmdır] 2-39 s.600 
+  BAGLAM-ALANI(sitede görünür): İbnî Sîrîn “rahmetullahi teâlâ aleyh” buyuruyor ki, (Hiç olmazsa haftada bir kerre tatlı yidirmelidir. Nafaka te’mininden âciz olanın evlenmesi harâmdır. Yemeği yalnız yimemelidir.
+  < …rin nafakası için sarf edilen altınların en üstünü ve sevâbı çok olanı, evin nafakasına verilen altının sevâbıdır.) İbnî Sîrîn “rahmetullahi teâlâ aleyh” buyuruyor ki, (Hiç olmazsa haftada bir kerre tatlı yidirmelidir.) 
+  = Nafaka te’mininden âciz olanın evlenmesi harâmdır.
+  > . Yemeği yalnız yimemelidir. Çoluk çocukla yimek sevâbdır. En mühim şey, nafakayı halâlden kazanıp, halâlden yidirmekdir).] ¶  ¶ 10 — Zevcesini döğmemelidir. (Dürr-ül-muhtâr) üçünc…
+#4198 [harâmdır] 2-39 s.602 
+  BAGLAM-ALANI(sitede görünür): Def ve kaval, ney çalmak ve dinlemek de böyledir. Hadîs-i şerîfde, (Her dürlü lehv harâmdır. Yalnız, zevce ile oynamak, at ve silâh ile ta’lîm, yarış yapmak câizdir) buyuruldu.
+  < …ay etmek, el çırpmak, hep oyun olup, tahrîmen mekrûhdurlar. Devâmlı yapılırsa veyâ farzları yapmağa mâni’ olurlarsa ve kumâr ile yapılırsa, sözbirliği ile harâm olurlar. Def ve kaval, ney çalmak ve dinlemek de böyledir. 
+  = Hadîs-i şerîfde, (Her dürlü lehv harâmdır.
+  > . Yalnız, zevce ile oynamak, at ve silâh ile ta’lîm, yarış yapmak câizdir) buyuruldu. Harbe hâzırlanmak için, güreş câizdir). Futbol oynamak, çeşidli bakımlardan harâm olmakdadır. …
+#4199 [harâmdır] 2-39 s.602 
+  BAGLAM-ALANI(sitede görünür): [Mevlid dinlemeğe gelmeleri de böyledir. (Hadîka) da, bütün bedenle yapılan günâhların otuzikincisinde diyor ki: Hür olan kadının, yanında zevci veyâ ebedî mahremlerinden biri olmadan yüzdört kilometre uzağa gitmesi harâmdır. Kadınlar çok olsa da harâmdır.
+  < …hcet-ül-fetâvâ) sâhibi “rahmetullahi teâlâ aleyh” diyor ki, (Kadınlar câmi’de, erkeklere verilen va’zı dinlemeğe gelirlerse, vazîfelilerin bunları men’ etmesi lâzım olur). [Mevlid dinlemeğe gelmeleri de böyledir.] ¶  ¶ (
+  = (Hadîka)da, bütün bedenle yapılan günâhların otuzikincisinde diyor ki: Hür olan kadının, yanında zevci veyâ ebedî mahremlerinden biri olmadan yüzdört kilometre uzağa gitmesi harâmdır.
+  > . Kadınlar çok olsa da harâmdır. Yâ Resûlallah, zevcem hacca gidiyor denildikde, (Sen de berâber git!) buyurdu. (Mahrem) demek, kadınla evlenmeleri ebedî harâm olan, soydan, sütden…
+#4200 [harâmdır] 2-39 s.602 
+  BAGLAM-ALANI(sitede görünür): (Hadîka) da, bütün bedenle yapılan günâhların otuzikincisinde diyor ki: Hür olan kadının, yanında zevci veyâ ebedî mahremlerinden biri olmadan yüzdört kilometre uzağa gitmesi harâmdır. Kadınlar çok olsa da harâmdır. Yâ Resûlallah, zevcem hacca gidiyor denildik
+  < …lemeğe gelmeleri de böyledir.] ¶  ¶ (Hadîka)da, bütün bedenle yapılan günâhların otuzikincisinde diyor ki: Hür olan kadının, yanında zevci veyâ ebedî mahremlerinden biri olmadan yüzdört kilometre uzağa gitmesi harâmdır. 
+  = Kadınlar çok olsa da harâmdır.
+  > . Yâ Resûlallah, zevcem hacca gidiyor denildikde, (Sen de berâber git!) buyurdu. (Mahrem) demek, kadınla evlenmeleri ebedî harâm olan, soydan, sütden veyâ nikâhdan akrabâları demek…
+#4201 [harâm olan] 2-39 s.602 
+  BAGLAM-ALANI(sitede görünür): Yâ Resûlallah, zevcem hacca gidiyor denildikde, (Sen de berâber git!) buyurdu. (Mahrem) demek, kadınla evlenmeleri ebedî harâm olan, soydan, sütden veyâ nikâhdan akrabâları demekdir. Kız kardeşin, teyzenin, halanın zevcleri mahrem değildirler.
+  < …olan kadının, yanında zevci veyâ ebedî mahremlerinden biri olmadan yüzdört kilometre uzağa gitmesi harâmdır. Kadınlar çok olsa da harâmdır. Yâ Resûlallah, zevcem hacca gidiyor denildikde, (Sen de berâber git!) buyurdu. (
+  = (Mahrem) demek, kadınla evlenmeleri ebedî harâm olan, soydan, sütden veyâ nikâhdan akrabâları demekdir.
+  > . Kız kardeşin, teyzenin, halanın zevcleri mahrem değildirler. Çünki bu kadın, bunlarla evlenebilir. Birinci kısm, ellisekizinci maddeye bakınız! Zimmî mahremi de, müslimân mahremi…
+#4202 [harâm olduğu] 2-39 s.602 
+  BAGLAM-ALANI(sitede görünür): Bâlig olmamış gösterişli kızlar da, kadın gibidirler. Kadınların mahremsiz olarak sefere gitmelerinin harâm olduğunu hanefî âlimleri sözbirliği ile bildirmişlerdir. Şâfi’î mezhebinde emîn olunan kadınların toplu olarak mahremsiz, yalnız hacca gitmeleri câizdir
+  < …nci maddeye bakınız! Zimmî mahremi de, müslimân mahremi gibidir. Fâsık olan [kötü kimse olan], emîn olmıyan ve bâlig olmamış küçük mahremi ile gitmesi câiz değildir. Bâlig olmamış gösterişli kızlar da, kadın gibidirler. 
+  = Kadınların mahremsiz olarak sefere gitmelerinin harâm olduğunu hanefî âlimleri sözbirliği ile bildirmişlerdir.
+  > . Şâfi’î mezhebinde emîn olunan kadınların toplu olarak mahremsiz, yalnız hacca gitmeleri câizdir. Yanlarında hiçbir erkeğin bulunmaması ve fitne çıkmamasından emîn olmaları lâzımd…
+#4203 [harâmdır] 2-39 s.602 
+  BAGLAM-ALANI(sitede görünür): Dört geceden fazla boş bırakmamalı, denildi. Hayz hâlinde, ya’nî âdet zemânında, ona tekarrüb, ya’nî yaklaşmak harâmdır. Büyük günâhdır. Âdet (regle) on günden sonra kesilirse, gusl etmese bile, muvâka’a câiz olur.
+  < …t edemez. Tekrârını taleb etmek zevcenin de hakkı olup, taleb edince zevc üzerine vâcib olur. Bu husûsda zemân ve aded bildirilmedi). İfrâtı bedene, tefrîti rûha zarar verir. Dört geceden fazla boş bırakmamalı, denildi. 
+  = Hayz hâlinde, ya’nî âdet zemânında, ona tekarrüb, ya’nî yaklaşmak harâmdır.
+  > . Büyük günâhdır. Âdet (regle) on günden sonra kesilirse, gusl etmese bile, muvâka’a câiz olur. On günden önce, fekat âdet temâm olunca, kesilirse, gusl etdikden veyâ bir nemâz vak…
+#4204 [harâmdır] 2-39 s.603 
+  BAGLAM-ALANI(sitede görünür): (Mecma’ul-enhür)deki hadîs-i şerîfde, Peygamberimiz “sallallahü aleyhi ve sellem”, (Hür kadının, yüzünden ve iki eli ayasından başka, bütün bedeni avretdir) buyurdu. Avret yeri açık olarak erkeklerin yanına çıkmak ve başkasının avret yerine şehvetsiz bile bakm
+  < …et-i kerîme, (Hadîka)da ve (Berîka)da uzun yazılıdır. (Mecma’ul-enhür)deki hadîs-i şerîfde, Peygamberimiz “sallallahü aleyhi ve sellem”, (Hür kadının, yüzünden ve iki eli ayasından başka, bütün bedeni avretdir) buyurdu. 
+  = Avret yeri açık olarak erkeklerin yanına çıkmak ve başkasının avret yerine şehvetsiz bile bakmak harâmdır.
+  > . Yabancı kadının yüzüne de şehvet ile bakmak harâmdır. Hadîs-i şerîfde, (Kadının neresine olursa olsun, şehvet ile bakan kimsenin gözlerine kıyâmet günü erimiş kurşun dökülecek, s…
+#4205 [harâmdır] 2-39 s.603 
+  BAGLAM-ALANI(sitede görünür): Avret yeri açık olarak erkeklerin yanına çıkmak ve başkasının avret yerine şehvetsiz bile bakmak harâmdır. Yabancı kadının yüzüne de şehvet ile bakmak harâmdır. Hadîs-i şerîfde, (Kadının neresine olursa olsun, şehvet ile bakan kimsenin gözlerine kıyâmet günü e
+  < …sallallahü aleyhi ve sellem”, (Hür kadının, yüzünden ve iki eli ayasından başka, bütün bedeni avretdir) buyurdu. Avret yeri açık olarak erkeklerin yanına çıkmak ve başkasının avret yerine şehvetsiz bile bakmak harâmdır. 
+  = Yabancı kadının yüzüne de şehvet ile bakmak harâmdır.
+  > . Hadîs-i şerîfde, (Kadının neresine olursa olsun, şehvet ile bakan kimsenin gözlerine kıyâmet günü erimiş kurşun dökülecek, sonra Cehenneme atılacakdır) buyuruldu. Yabancı genç ka…
+#4206 [harâmdır] 2-39 s.603 
+  BAGLAM-ALANI(sitede görünür): Hadîs-i şerîfde, (Kadının neresine olursa olsun, şehvet ile bakan kimsenin gözlerine kıyâmet günü erimiş kurşun dökülecek, sonra Cehenneme atılacakdır) buyuruldu. Yabancı genç kadının elini, yüzünü el ile, şehvetsiz bile tutmak harâmdır. Hadîs-i şerîfde, (Yaba
+  < …r. Yabancı kadının yüzüne de şehvet ile bakmak harâmdır. Hadîs-i şerîfde, (Kadının neresine olursa olsun, şehvet ile bakan kimsenin gözlerine kıyâmet günü erimiş kurşun dökülecek, sonra Cehenneme atılacakdır) buyuruldu. 
+  = Yabancı genç kadının elini, yüzünü el ile, şehvetsiz bile tutmak harâmdır.
+  > . Hadîs-i şerîfde, (Yabancı genc kadının elini tutan kimsenin eline kıyâmet günü ateş doldurulacakdır) buyuruldu. (Zevâcir)deki hadîs-i şerîflerde, (Zevcinin evinden başka yerde ba…
+#4207 [harâm olur] 2-39 s.603 
+  BAGLAM-ALANI(sitede görünür): Hadîs-i şerîfde, (Yabancı genc kadının elini tutan kimsenin eline kıyâmet günü ateş doldurulacakdır) buyuruldu. (Zevâcir) deki hadîs-i şerîflerde, (Zevcinin evinden başka yerde başını açan kadın, Rabbi ile kendi arasındaki perdeyi yırtmış olur) ve (Allaha ve K
+  < …henneme atılacakdır) buyuruldu. Yabancı genç kadının elini, yüzünü el ile, şehvetsiz bile tutmak harâmdır. Hadîs-i şerîfde, (Yabancı genc kadının elini tutan kimsenin eline kıyâmet günü ateş doldurulacakdır) buyuruldu. (
+  = (Zevâcir)deki hadîs-i şerîflerde, (Zevcinin evinden başka yerde başını açan kadın, Rabbi ile kendi arasındaki perdeyi yırtmış olur) ve (Allaha ve Kıyâmet gününe inanan, hamâma gitmesin ve Allaha ve Kıyâmet gününe inanan, zevcesini hamâma göndermesin ve Allaha ve Kıyâmet gününe inanan, şerâb içmesin ve Allaha ve Kıyâmet gününe inanan, şerâb içilen sofrada oturmasın ve Allaha ve Kıyâmet gününe inanan, yabancı bir kadınla, yalnız kalıp halvet etmesin) ve (Âhır zemânda ümmetimin erkeklerinin, avret yerleri örtülü olarak da hamâma gitmeleri harâm olur.
+  > . Çünki, orada avret mahalleri açık olanlar da bulunur. Avret yerlerini açanlara ve başkasının avret yerine bakanlara, Allah la’net eylesin!) ve (Göbekle dizkapağı arası avretdir) …
+#4208 [harâmdır] 2-39 s.604 
+  BAGLAM-ALANI(sitede görünür): Hanefî mezhebinde, erkeğin dizi avretdir. Açması harâmdır. Şâfi’îde diz avret değildir.
+  < …ada avret mahalleri açık olanlar da bulunur. Avret yerlerini açanlara ve başkasının avret yerine bakanlara, Allah la’net eylesin!) ve (Göbekle dizkapağı arası avretdir) buyurdu. Hanefî mezhebinde, erkeğin dizi avretdir. 
+  = Açması harâmdır.
+  > . Şâfi’îde diz avret değildir. Mâlikî ve Hanbelî mezheblerinde, göbek de, diz de avret değildir. Bu iki mezhebde yalnız sev’eteyn avretdir. Bu hadîs-i şerîfler karşısında, müslimân…
+#4209 [harâm olur] 2-39 s.604 
+  BAGLAM-ALANI(sitede görünür): Hanefî ve Şâfi’î mezhebinde olan erkeğin, gusl abdesti almak için veyâ nafakasını, hakkını kurtarmak için veyâ fitne çıkmasını önlemek için, sıkışık durumda kalınca, diğer iki mezhebi taklîd ederek dizlerini, uyluklarını örtmemesi câiz olur. Fekat sıkışık hâl 
+  < …binde olan erkeğin, gusl abdesti almak için veyâ nafakasını, hakkını kurtarmak için veyâ fitne çıkmasını önlemek için, sıkışık durumda kalınca, diğer iki mezhebi taklîd ederek dizlerini, uyluklarını örtmemesi câiz olur. 
+  = Fekat sıkışık hâl geçince, bir dakîka bile açık kalması harâm olur.
+  > . Kadınların sıkışık durumda, mezheb taklîd ederek, hiçbir yerlerini açmaları mümkin değildir. Çünki, dört mezhebde de, kadınların her yerlerini örtmeleri lâzımdır. Kadınları sıkış…
+#4210 [harâmdır] 1-54 s.142 
+  BAGLAM-ALANI(sitede görünür): Sun’î İlkâh: (El-halâl vel-harâm) da diyor ki, (Erkeğin menîsini, bir tüp veyâ başka şey içinde, nikâhlı zevcesi olmıyan yabancı bir kadının rahmine koyup, çocuk hâsıl olmasına, (Sun’î ilkâh) denir. Harâmdır. Çocuk, veled-i zinâ, piç olur).
+  < …e su bulamazsa, teyemmüm edip girer ve çıkar. Kur’ân-ı kerîm okuması ve Mushafı tutması ve Kâ’be-i mu’azzamayı tavâf etmesi, dört mezhebde de harâmdır. Kur’ân-ı kerîmi ve âyet-i kerîme yazılı şeyleri abdestsiz tutmak da 
+  = Harâmdır.
+  > . Yapışık olmıyan birşey içinde, meselâ çantada iken tutmak câizdir. Fâtihayı ve düâ âyetlerini, düâ niyyeti ile okuması ve her düâyı okuması harâm değil ise de, düâyı abdestli oku…
+#4211 [harâmdır] 2-40 s.607 
+  BAGLAM-ALANI(sitede görünür): Cevâbında buyurdular ki, (Düâ kabûl olmak için, halâl lokma yiyiniz!). Bir hadîs-i şerîfde, (Çok kimse vardır ki, yidikleri ve giydikleri harâmdır. Sonra ellerini kaldırıp düâ ederler.
+  < …d bin Ebî Vakkâs “radıyallahü anh” dedi ki, (Yâ Resûlallah “sallallahü aleyhi ve sellem”! Düâ buyur da, Allahü teâlâ, benim her düâmı kabûl etsin!). Cevâbında buyurdular ki, (Düâ kabûl olmak için, halâl lokma yiyiniz!). 
+  = Bir hadîs-i şerîfde, (Çok kimse vardır ki, yidikleri ve giydikleri harâmdır.
+  > . Sonra ellerini kaldırıp düâ ederler. Böyle düâ, nasıl kabûl olunur?). Bir kerre de buyurdu ki, (Harâm yiyenlerin ne farzları, ne de sünnetleri kabûl olmaz). [Ya’nî sevâbına kavuş…
+#4212 [harâmdır] 2-40 s.608 
+  BAGLAM-ALANI(sitede görünür): Bunların da dereceleri vardır. Meselâ, birinin malını, fâsid bey’ ile, gönül rızâsı ile satın almak harâmdır. Fekat, zorla gasb etmek, dahâ harâmdır.
+  < …era’ıdır ki, islâmiyyetin harâm dediği şeylerden kaçınmakdır. Bu en aşağı derecedir. Bu derece vera’dan da nasîbi olmıyanların adâleti yokdur. Bunlara, (Âsî) ve (Fâsık) [kötü kimse] denir. Bunların da dereceleri vardır. 
+  = Meselâ, birinin malını, fâsid bey’ ile, gönül rızâsı ile satın almak harâmdır.
+  > . Fekat, zorla gasb etmek, dahâ harâmdır. Yetîmden, fakîrden almak ise, dahâ şiddetli harâmdır. Fâiz ile satın almak, hepsinden ziyâde harâmdır. Harâmın şiddeti ne kadar fazla ise,…
+#4213 [harâmdır] 2-40 s.608 
+  BAGLAM-ALANI(sitede görünür): Meselâ, birinin malını, fâsid bey’ ile, gönül rızâsı ile satın almak harâmdır. Fekat, zorla gasb etmek, dahâ harâmdır. Yetîmden, fakîrden almak ise, dahâ şiddetli harâmdır.
+  < …edir. Bu derece vera’dan da nasîbi olmıyanların adâleti yokdur. Bunlara, (Âsî) ve (Fâsık) [kötü kimse] denir. Bunların da dereceleri vardır. Meselâ, birinin malını, fâsid bey’ ile, gönül rızâsı ile satın almak harâmdır. 
+  = Fekat, zorla gasb etmek, dahâ harâmdır.
+  > . Yetîmden, fakîrden almak ise, dahâ şiddetli harâmdır. Fâiz ile satın almak, hepsinden ziyâde harâmdır. Harâmın şiddeti ne kadar fazla ise, cezâsı da, o kadar çok olur. Afv olmak …
+#4214 [harâmdır] 2-40 s.608 
+  BAGLAM-ALANI(sitede görünür): Fekat, zorla gasb etmek, dahâ harâmdır. Yetîmden, fakîrden almak ise, dahâ şiddetli harâmdır. Fâiz ile satın almak, hepsinden ziyâde harâmdır.
+  < …anların adâleti yokdur. Bunlara, (Âsî) ve (Fâsık) [kötü kimse] denir. Bunların da dereceleri vardır. Meselâ, birinin malını, fâsid bey’ ile, gönül rızâsı ile satın almak harâmdır. Fekat, zorla gasb etmek, dahâ harâmdır. 
+  = Yetîmden, fakîrden almak ise, dahâ şiddetli harâmdır.
+  > . Fâiz ile satın almak, hepsinden ziyâde harâmdır. Harâmın şiddeti ne kadar fazla ise, cezâsı da, o kadar çok olur. Afv olmak ihtimâli de, o derece az olur. Nitekim, diyabet hastas…
+#4215 [harâmdır] 2-40 s.608 
+  BAGLAM-ALANI(sitede görünür): Yetîmden, fakîrden almak ise, dahâ şiddetli harâmdır. Fâiz ile satın almak, hepsinden ziyâde harâmdır. Harâmın şiddeti ne kadar fazla ise, cezâsı da, o kadar çok olur.
+  < …ü kimse] denir. Bunların da dereceleri vardır. Meselâ, birinin malını, fâsid bey’ ile, gönül rızâsı ile satın almak harâmdır. Fekat, zorla gasb etmek, dahâ harâmdır. Yetîmden, fakîrden almak ise, dahâ şiddetli harâmdır. 
+  = Fâiz ile satın almak, hepsinden ziyâde harâmdır.
+  > . Harâmın şiddeti ne kadar fazla ise, cezâsı da, o kadar çok olur. Afv olmak ihtimâli de, o derece az olur. Nitekim, diyabet hastasına bal zarar verir. Fekat şeker dahâ çok zararlı…
+#4216 [harâmdır] 2-40 s.610 OLUMSUZ/SINIR:bazi(lari|si)
+  BAGLAM-ALANI(sitede görünür): 3 — Halâl ve harâmlar: Çok kimseler, dünyâ malını, hep harâm sanır. Ba’zısı da, dünyâdaki şeylerden çoğu harâmdır der. Burada, insanlar üç dürlüdür: Bir kısmı vera’da ileri gidip, yalnız meyve, balık, av eti gibi şübheli olmıyan şeyleri yiriz der.
+  < …, (İnsanların en kötüsü, köşkler, çeşidli yemekler, renkli elbiseler içinde, boş oturup, herkese hoş gelen, lüzûmsuz sözlerle vakt geçirenlerdir). ¶  ¶ 3 — Halâl ve harâmlar: Çok kimseler, dünyâ malını, hep harâm sanır. 
+  = Ba’zısı da, dünyâdaki şeylerden çoğu harâmdır der.
+  > . Burada, insanlar üç dürlüdür: Bir kısmı vera’da ileri gidip, yalnız meyve, balık, av eti gibi şübheli olmıyan şeyleri yiriz der. Bir kısmı da, tenbel, miskîn oturup, her istediği…
+#4217 [harâm olduğu] 2-40 s.610 OLUMSUZ/SINIR:denildi|denil
+  BAGLAM-ALANI(sitede görünür): Belki, (Halâl olduğunu bildiğinizi yiyiniz!) denildi. Harâm olduğu meydânda olmıyan şeyleri yiyiniz denildi ki, bunu herkes yapabilir. Nitekim, Resûlullah “sallallahü aleyhi ve sellem”, bir müşrikin destisinden abdest aldı.
+  < … uzun bildirdik. ¶  ¶ Şunu iyi bilmelidir ki, insanlara, (Muhakkak halâl olan, Allahü teâlânın halâl bildiği şeyleri yiyiniz!) diye emr olunmadı. Bunu kimse yapamaz. Belki, (Halâl olduğunu bildiğinizi yiyiniz!) denildi. 
+  = Harâm olduğu meydânda olmıyan şeyleri yiyiniz denildi ki, bunu herkes yapabilir.
+  > . Nitekim, Resûlullah “sallallahü aleyhi ve sellem”, bir müşrikin destisinden abdest aldı. Ömer “radıyallahü anh”, hıristiyan kadının destisinden abdest aldı. Eshâb-ı kirâm “aleyhi…
+#4218 [harâmdır] 2-40 s.610 
+  BAGLAM-ALANI(sitede görünür): Eshâb-ı kirâm “aleyhimürrıdvân”, kâfirlerin verdiği suyu içerlerdi. Hâlbuki, pis, necs olan şeyleri yimek harâmdır. Kâfirler ise, çok kerre pis olur.
+  < …im, Resûlullah “sallallahü aleyhi ve sellem”, bir müşrikin destisinden abdest aldı. Ömer “radıyallahü anh”, hıristiyan kadının destisinden abdest aldı. Eshâb-ı kirâm “aleyhimürrıdvân”, kâfirlerin verdiği suyu içerlerdi. 
+  = Hâlbuki, pis, necs olan şeyleri yimek harâmdır.
+  > . Kâfirler ise, çok kerre pis olur. Elleri ve kapları şerâblı olur. Hepsi leş yir. [Ya’nî, Besmelesiz kesilen veyâ kesilmeyip başka sûretle öldürülen hayvânları yirler.] Fekat, pis…
+#4219 [harâm olduğu] 2-40 s.610 
+  BAGLAM-ALANI(sitede görünür): Herkesin elinde bulunanın, kendi malı olduğunu kabûl etmelidir. Harâm olduğunu gösteren bir nişân bulunmadıkca, halâl bilmeli ve satın almalıdır. Böyle kimselerle alış veriş etmeyip, sâlih bildiği birisini aramak vera’ olur.
+  < …mdan insanlar altı kısmdır: ¶  ¶ Birinci kısm — Yabancıdır. Sâlih mi, fâsık mı belli değildir. Meselâ, bir köye gidince, herkesle alış veriş etmek câizdir. Herkesin elinde bulunanın, kendi malı olduğunu kabûl etmelidir. 
+  = Harâm olduğunu gösteren bir nişân bulunmadıkca, halâl bilmeli ve satın almalıdır.
+  > . Böyle kimselerle alış veriş etmeyip, sâlih bildiği birisini aramak vera’ olur. Fekat vâcib değildir. ¶  ¶ İkinci kısm — Sâlih bildiğin kimselerdir. Bunların malını yimek câizdir.…
+#4220 [harâm olduğu] 2-40 s.611 OLUMSUZ/SINIR:\bolmaz\b
+  BAGLAM-ALANI(sitede görünür): Malının çoğu halâl olduğu sanılmıyan kimse ile bunlar câiz olmaz. Çünki, harâm olduğu bilinen mal elden ele geçince, harâmlığı yok olmaz. Harâm mâl vârise kalınca, buna halâl olur denildi ise de, bu kavl za’îfdir.
+  < …ile uymak çok güc oldu. Bu fetvâya göre, malının çoğunun halâl olduğu sanılan kimsenin verdiği hediyyeyi almak, onunla alış veriş ve kirâlamak câiz olur. Malının çoğu halâl olduğu sanılmıyan kimse ile bunlar câiz olmaz. 
+  = Çünki, harâm olduğu bilinen mal elden ele geçince, harâmlığı yok olmaz.
+  > . Harâm mâl vârise kalınca, buna halâl olur denildi ise de, bu kavl za’îfdir. (Kâdîhân) fetvâsında diyor ki, (Zemânımızda, şübheli maldan sakınmak imkânsız oldu. Şimdi, müslimânlar…
+#4221 [harâm olduğu] 2-40 s.611 COKLU:vacib
+  BAGLAM-ALANI(sitede görünür): (Kâdîhân) fetvâsında diyor ki, (Zemânımızda, şübheli maldan sakınmak imkânsız oldu. Şimdi, müslimânların, harâm olduğunu iyice bildiği şeyden sakınmaları vâcibdir). Şimdi ise, iş dahâ güc oldu.
+  < … olduğu bilinen mal elden ele geçince, harâmlığı yok olmaz. Harâm mâl vârise kalınca, buna halâl olur denildi ise de, bu kavl za’îfdir. (Kâdîhân) fetvâsında diyor ki, (Zemânımızda, şübheli maldan sakınmak imkânsız oldu. 
+  = Şimdi, müslimânların, harâm olduğunu iyice bildiği şeyden sakınmaları vâcibdir).
+  > ). Şimdi ise, iş dahâ güc oldu. Çünki hadîs-i şerîfde, (Her yıl, kendinden önceki yıldan dahâ kötü olacakdır) buyuruldu. Bunun için, bugün vera’ ve takvâ, kalbi, dili ve bütün uzvl…
+#4222 [harâm olduğu] 2-40 s.611 COKLU:mubah
+  BAGLAM-ALANI(sitede görünür): Harâmdan topladığı malları, kendi halâl malı ile, yâhud birbirleri ile karışdırsa, (Mülk-i habîs) denir. Bu habîs karışımdan verince, harâm olduğunu tanımadığı malı, parayı almak câiz olur. Çünki, imâm-ı a’zam Ebû Hanîfeye göre, böyle harâmdan gelen [ve emânet
+  < …nu ondan almak, kullanmak, yimek halâl olmaz. Başka malları, mülkü kabûl edilir. Onları verince almak harâm olmaz. Harâmdan topladığı malları, kendi halâl malı ile, yâhud birbirleri ile karışdırsa, (Mülk-i habîs) denir. 
+  = Bu habîs karışımdan verince, harâm olduğunu tanımadığı malı, parayı almak câiz olur.
+  > . Çünki, imâm-ı a’zam Ebû Hanîfeye göre, böyle harâmdan gelen [ve emânet olarak alınan] paraları kendi halâl malı ile veyâ birbirleri ile karışdırıp da ayıramazsa, hepsi habîs mülk…
+#4223 [harâm olduğu] 2-40 s.611 
+  BAGLAM-ALANI(sitede görünür): İmâm-ı Kerhî fetvâsında, (Harâm semeni göstermeden satın alınan mebî’ müşteriye halâl olur. Eğer, söz kesilirken, harâm olduğu bilinen semen hâzır olup, buna işâret edilir ve bâyı’a bu semen verilirse, müşteri mebî’e habîs olarak mâlik olur). (Hadîka) da el âf
+  < …âcirin bir fıkh âlimi bulup, işlerini buna danışarak yapması, böylece fâizden ve fâsid alış verişden kurtulması lâzımdır). ¶  ¶ İmâm-ı Kerhî fetvâsında, (Harâm semeni göstermeden satın alınan mebî’ müşteriye halâl olur. 
+  = Eğer, söz kesilirken, harâm olduğu bilinen semen hâzır olup, buna işâret edilir ve bâyı’a bu semen verilirse, müşteri mebî’e habîs olarak mâlik olur).
+  > ). (Hadîka)da el âfetlerinin sonunda diyor ki, (Gasb edilmiş veyâ hırsızlık, hıyânet gibi harâm yoldan elde edilmiş olduğu bilinen bir malı, hediyye, sadaka, mebî’, semen ve ücret …
+#4224 [harâm olduğu] 2-40 s.611 COKLU:mubah
+  BAGLAM-ALANI(sitede görünür): Yalnız vârisin, mal sâhiblerini bilmediği zemân, mîrâs kalan böyle malları alması halâl olur. Malın böyle harâm olduğu iyi bilinmezse, herkesin alması câiz olur). Dördüncü kısm — Malının çoğu halâl olup, harâm da karışık bulunan kimsedir.
+  < …elde edilmiş olduğu bilinen bir malı, hediyye, sadaka, mebî’, semen ve ücret olarak almak, kirâ ile kullanmak halâl değildir. Yalnız vârisin, mal sâhiblerini bilmediği zemân, mîrâs kalan böyle malları alması halâl olur. 
+  = Malın böyle harâm olduğu iyi bilinmezse, herkesin alması câiz olur).
+  > ). ¶  ¶ Dördüncü kısm — Malının çoğu halâl olup, harâm da karışık bulunan kimsedir. Meselâ köylü, sultâna da hizmet edip birşey almış ise veyâ tüccâr, sultân adamları ile de mu’âme…
+#4225 [harâm olur] 2-40 s.612 
+  BAGLAM-ALANI(sitede görünür): (Bu maldan kaçınmak lâzım değilse de, kıymetli vera’dır) dediğimiz yerlerde, bu malı nereden aldın demek câiz olur. Fekat, sorunca o kimse incinirse, sormak harâm olur. Çünki vera’, ihtiyâtlı olmakdır.
+  < …dı. (Cebrâîl) “aleyhisselâm”, (Na’lının kirli olduğunu haber verdi) buyurdu ve nemâzı kazâ etmedi. ¶  ¶ (Bu maldan kaçınmak lâzım değilse de, kıymetli vera’dır) dediğimiz yerlerde, bu malı nereden aldın demek câiz olur. 
+  = Fekat, sorunca o kimse incinirse, sormak harâm olur.
+  > . Çünki vera’, ihtiyâtlı olmakdır. Müslimânı incitmek ise harâmdır. O hâlde, güzellikle sormalı. İkrâm ediyorsa, bir behâne ile yimemelidir. Çâresiz kalırsa, incitmemek için yimeli…
+#4226 [harâmdır] 2-40 s.612 
+  BAGLAM-ALANI(sitede görünür): Çünki vera’, ihtiyâtlı olmakdır. Müslimânı incitmek ise harâmdır. O hâlde, güzellikle sormalı.
+  < …kazâ etmedi. ¶  ¶ (Bu maldan kaçınmak lâzım değilse de, kıymetli vera’dır) dediğimiz yerlerde, bu malı nereden aldın demek câiz olur. Fekat, sorunca o kimse incinirse, sormak harâm olur. Çünki vera’, ihtiyâtlı olmakdır. 
+  = Müslimânı incitmek ise harâmdır.
+  > . O hâlde, güzellikle sormalı. İkrâm ediyorsa, bir behâne ile yimemelidir. Çâresiz kalırsa, incitmemek için yimelidir. Başkasına da sormamalıdır. Çünki, kendisi işitirse dahâ çok ü…
+#4227 [harâmdır] 2-40 s.612 
+  BAGLAM-ALANI(sitede görünür): Çünki, kendisi işitirse dahâ çok üzülür. Tecessüs ve gıybet ve sû’i zan olur ki, hepsi harâmdır. İhtiyâtlı davranmak için halâl olmazlar.
+  < …. Müslimânı incitmek ise harâmdır. O hâlde, güzellikle sormalı. İkrâm ediyorsa, bir behâne ile yimemelidir. Çâresiz kalırsa, incitmemek için yimelidir. Başkasına da sormamalıdır. Çünki, kendisi işitirse dahâ çok üzülür. 
+  = Tecessüs ve gıybet ve sû’i zan olur ki, hepsi harâmdır.
+  > . İhtiyâtlı davranmak için halâl olmazlar. Resûlullah “sallallahü aleyhi ve sellem” müsâfir olduğu zemân, ne verseler kabûl buyururdu. Nerden aldınız diye sormazdı. Hediyye de kabû…
+#4228 [harâm olduğu] 2-40 s.612 
+  BAGLAM-ALANI(sitede görünür): Sorunca, kimse incinmezdi. Bir yerde, yağma edilmiş, çalınmış şeyler ve hayvânlar satılıyorsa, çoğunun harâm olduğunu bilen kimse, buradan birşey satın almamalıdır. Eğer ihtiyâcı çoksa, nereden aldın diye sormalı.
+  < …ormazdı. Ancak şübheli olduğu meydânda ise, meselâ, Medîne-i münevvereye yeni teşrîf buyurduğu zemân, getirdikleri şeylere, hediyye mi, sadaka mı diye sorardı. Çünki, o zemân şübheli idi. Sorunca, kimse incinmezdi. ¶  ¶ 
+  = Bir yerde, yağma edilmiş, çalınmış şeyler ve hayvânlar satılıyorsa, çoğunun harâm olduğunu bilen kimse, buradan birşey satın almamalıdır.
+  > . Eğer ihtiyâcı çoksa, nereden aldın diye sormalı. Halâlden olduğu anlaşılanı almalıdır. Çoğunun harâm olmadığı biliniyorsa, sormadan almak câiz ise de, sormak vera’ olur. ¶  ¶ İns…
+#4229 [harâmdır] 2-40 s.612 
+  BAGLAM-ALANI(sitede görünür): Çoğunun harâm olmadığı biliniyorsa, sormadan almak câiz ise de, sormak vera’ olur. İnsan necâsetini yalnız başına satmak ve insandan ayrılan herşeyi satmak harâmdır. Hepsini gömmek lâzımdır.
+  < …len kimse, buradan birşey satın almamalıdır. Eğer ihtiyâcı çoksa, nereden aldın diye sormalı. Halâlden olduğu anlaşılanı almalıdır. Çoğunun harâm olmadığı biliniyorsa, sormadan almak câiz ise de, sormak vera’ olur. ¶  ¶ 
+  = İnsan necâsetini yalnız başına satmak ve insandan ayrılan herşeyi satmak harâmdır.
+  > . Hepsini gömmek lâzımdır. İnsan necâsetini yalnız başına da kullanmak câiz değildir. Toprak veyâ başka şeyle karışık satmak ve kullanmak sahîhdir. Hayvân gübresi, yalnız olarak da…
+#4230 [harâmdır] 2-40 s.612 
+  BAGLAM-ALANI(sitede görünür): Bunu satması câiz olur. Mekkedeki binâları hac zemânında, hâcılara kirâya vermek harâmdır. Onlara ücretsiz olarak ikrâm olunur.
+  < …eyhim ecma’în” hayvan gübresi satmak da câiz değildir dedi. ¶  ¶ Mekke-i mükerreme şehrinde, binâ, arsa, tarla satmak câizdir. Bunun gibi, bir kimsenin vakf erâzî üzerine yapdığı binâ mülkü olur. Bunu satması câiz olur. 
+  = Mekkedeki binâları hac zemânında, hâcılara kirâya vermek harâmdır.
+  > . Onlara ücretsiz olarak ikrâm olunur. (Bedâyı’)de, beşinci cild, 146. cı sahîfede diyor ki, (Mekkedeki evleri, hac zemânında, hâcılara kirâ ile vermek mekrûhdur). ¶  ¶ Şerâb yapan…
+#4231 [harâmdır] 2-40 s.612 
+  BAGLAM-ALANI(sitede görünür): Şerâb yapan müslimâna üzüm ve şirâ satmak câizdir. Müslimânların şerâb satması ve bundan aldığı para harâmdır. Hattâ borcunu ödemek için, müslimân şerâb satsa, alacaklının, bu parayı alması harâmdır.
+  < …. Onlara ücretsiz olarak ikrâm olunur. (Bedâyı’)de, beşinci cild, 146. cı sahîfede diyor ki, (Mekkedeki evleri, hac zemânında, hâcılara kirâ ile vermek mekrûhdur). ¶  ¶ Şerâb yapan müslimâna üzüm ve şirâ satmak câizdir. 
+  = Müslimânların şerâb satması ve bundan aldığı para harâmdır.
+  > . Hattâ borcunu ödemek için, müslimân şerâb satsa, alacaklının, bu parayı alması harâmdır. Zimmîdeki borcunu, şerâb parasından alması halâldir. Fekat, tenzîhen mekrûhdur. [İkinci k…
+#4232 [harâmdır] 2-40 s.613 
+  BAGLAM-ALANI(sitede görünür): Müslimânların şerâb satması ve bundan aldığı para harâmdır. Hattâ borcunu ödemek için, müslimân şerâb satsa, alacaklının, bu parayı alması harâmdır. Zimmîdeki borcunu, şerâb parasından alması halâldir.
+  < …cild, 146. cı sahîfede diyor ki, (Mekkedeki evleri, hac zemânında, hâcılara kirâ ile vermek mekrûhdur). ¶  ¶ Şerâb yapan müslimâna üzüm ve şirâ satmak câizdir. Müslimânların şerâb satması ve bundan aldığı para harâmdır. 
+  = Hattâ borcunu ödemek için, müslimân şerâb satsa, alacaklının, bu parayı alması harâmdır.
+  > . Zimmîdeki borcunu, şerâb parasından alması halâldir. Fekat, tenzîhen mekrûhdur. [İkinci kısmda, kırkıncı ve üçüncü kısmda, altıncı maddelere bakınız!] ¶  ¶ İbni Âbidîn, hayvân ze…
+#4233 [harâm olan] 2-40 s.613 COKLU:kufur
+  BAGLAM-ALANI(sitede görünür): [İkinci kısmda, kırkıncı ve üçüncü kısmda, altıncı maddelere bakınız! İbni Âbidîn, hayvân zekâtının sonunda ve Kâdî-zâde Ahmed efendi, (Birgivî vasıyyetnâmesi şerhi) nde diyor ki, (Bir kimse, elindeki kat’î harâm olan maldan sadaka verse, sevâb umsa, alan fakî
+  < …, müslimân şerâb satsa, alacaklının, bu parayı alması harâmdır. Zimmîdeki borcunu, şerâb parasından alması halâldir. Fekat, tenzîhen mekrûhdur. [İkinci kısmda, kırkıncı ve üçüncü kısmda, altıncı maddelere bakınız!] ¶  ¶ 
+  = İbni Âbidîn, hayvân zekâtının sonunda ve Kâdî-zâde Ahmed efendi, (Birgivî vasıyyetnâmesi şerhi)nde diyor ki, (Bir kimse, elindeki kat’î harâm olan maldan sadaka verse, sevâb umsa, alan fakîr, harâmdan olduğunu bilerek, verene Allah râzı olsun dese, veren de veyâ başka bir kimse de âmîn dese, hepsi kâfir olur).
+  > ). İbni Âbidîn, burada buyuruyor ki, (Harâm olduğu bilinen belli mal ile câmi’ yapdırmak ve başka hayr yapdırmak ve bunlara karşılık sevâb beklemek de küfrdür). ¶  ¶ İbni Âbidîn “r…
+#4234 [harâm olduğu] 2-40 s.613 
+  BAGLAM-ALANI(sitede görünür): İbni Âbidîn, hayvân zekâtının sonunda ve Kâdî-zâde Ahmed efendi, (Birgivî vasıyyetnâmesi şerhi) nde diyor ki, (Bir kimse, elindeki kat’î harâm olan maldan sadaka verse, sevâb umsa, alan fakîr, harâmdan olduğunu bilerek, verene Allah râzı olsun dese, veren de v
+  < …hi)nde diyor ki, (Bir kimse, elindeki kat’î harâm olan maldan sadaka verse, sevâb umsa, alan fakîr, harâmdan olduğunu bilerek, verene Allah râzı olsun dese, veren de veyâ başka bir kimse de âmîn dese, hepsi kâfir olur). 
+  = İbni Âbidîn, burada buyuruyor ki, (Harâm olduğu bilinen belli mal ile câmi’ yapdırmak ve başka hayr yapdırmak ve bunlara karşılık sevâb beklemek de küfrdür).
+  > ). ¶  ¶ İbni Âbidîn “rahmetullahi teâlâ aleyh”, zekât verilecek yerlerin sonunda buyuruyor ki, kendisine ve bakması vâcib olanlara lâzım olandan fazla malı bulunan kimsenin sadaka …
+#4235 [harâm olan] 2-40 s.613 OLUMSUZ/SINIR:\bolmaz\b
+  BAGLAM-ALANI(sitede görünür): Satsa, bedeli halâl olur. Hâlbuki, mırdar eti, ya’nî leş eti ve domuz eti ve şerâb gibi kendileri kat’î, açık delîl ile harâm olanlar, hiçbir zemân halâl olmaz. Sâhibi satsa, hediyye etse, halâl etse de, yimek câiz olmaz.
+  < …eyâ hediyye etse, alanın da yimesi, câiz olur. Kıymetini vermeden satması, hediyye, sadaka vermesi harâm ise de, nâfiz [ya’nî sahîh] olur. Fâsid bey’ ile satın aldığı malı kullanmasına benzer. Satsa, bedeli halâl olur.) 
+  = Hâlbuki, mırdar eti, ya’nî leş eti ve domuz eti ve şerâb gibi kendileri kat’î, açık delîl ile harâm olanlar, hiçbir zemân halâl olmaz.
+  > . Sâhibi satsa, hediyye etse, halâl etse de, yimek câiz olmaz. Bunlara halâl diyen, yirken bilerek Besmele çeken kâfir olur. Kat’î harâmların hepsi böyledir. Meselâ, nikâhı harâm o…
+#4236 [harâm olan] 2-40 s.613 COKLU:kufur OLUMSUZ/SINIR:diyen\b
+  BAGLAM-ALANI(sitede görünür): Kat’î harâmların hepsi böyledir. Meselâ, nikâhı harâm olan kadınlarla evlenmeğe halâl diyen kâfir olur. İbni Âbidîn, beşinci cildde buyuruyor ki, (Âlimlerin çoğuna göre, müslimân ölüp, şerâb parası bırakırsa, vârislerin bu parayı alması halâl olmaz.
+  < … kat’î, açık delîl ile harâm olanlar, hiçbir zemân halâl olmaz. Sâhibi satsa, hediyye etse, halâl etse de, yimek câiz olmaz. Bunlara halâl diyen, yirken bilerek Besmele çeken kâfir olur. Kat’î harâmların hepsi böyledir. 
+  = Meselâ, nikâhı harâm olan kadınlarla evlenmeğe halâl diyen kâfir olur.
+  > . ¶  ¶ İbni Âbidîn, beşinci cildde buyuruyor ki, (Âlimlerin çoğuna göre, müslimân ölüp, şerâb parası bırakırsa, vârislerin bu parayı alması halâl olmaz. Gasb edilmiş mal ve zulm il…
+#4237 [harâm olur] 2-40 s.613 
+  BAGLAM-ALANI(sitede görünür): Vârislerin, bu paraları sâhiblerine geri vermesi, sâhibi bilinmiyorsa, fakîrlere dağıtması lâzımdır. Kullanması harâm olur. Ölenin harâm kazandığını bilir, fekat hangi malın harâmdan geldiğini ayıramazlarsa, mîrâsın hepsi halâl olur ise de, fakîrlere vermeleri
+  < …ması halâl olmaz. Gasb edilmiş mal ve zulm ile alınan ve rüşvet, çalgı, tegannî ücretleri, kumâr paraları da böyledir. Vârislerin, bu paraları sâhiblerine geri vermesi, sâhibi bilinmiyorsa, fakîrlere dağıtması lâzımdır. 
+  = Kullanması harâm olur.
+  > . Ölenin harâm kazandığını bilir, fekat hangi malın harâmdan geldiğini ayıramazlarsa, mîrâsın hepsi halâl olur ise de, fakîrlere vermeleri iyi olur. Kullanmaları harâm olan malı ve…
+#4238 [harâm olan] 2-40 s.613 
+  BAGLAM-ALANI(sitede görünür): Ölenin harâm kazandığını bilir, fekat hangi malın harâmdan geldiğini ayıramazlarsa, mîrâsın hepsi halâl olur ise de, fakîrlere vermeleri iyi olur. Kullanmaları harâm olan malı vererek satın aldıklarını yimeleri ve kullanmaları halâl olur. Sâhibleri bilinmiyen 
+  < …âhibi bilinmiyorsa, fakîrlere dağıtması lâzımdır. Kullanması harâm olur. Ölenin harâm kazandığını bilir, fekat hangi malın harâmdan geldiğini ayıramazlarsa, mîrâsın hepsi halâl olur ise de, fakîrlere vermeleri iyi olur. 
+  = Kullanmaları harâm olan malı vererek satın aldıklarını yimeleri ve kullanmaları halâl olur.
+  > . Sâhibleri bilinmiyen harâm malın vârislere halâl olacağı da bildirildi. Tegannî, çalgı ücretleri, pazarlıkla olmayıp, parasız okursa, hediyye olarak aldıkları para habîs olmaz. H…
+#4239 [harâm olur] 2-40 s.613 
+  BAGLAM-ALANI(sitede görünür): Dilencinin birikdirdiği para ve mal habîsdir. Bir kimse, harâm olarak edindiği malı başkasına verse, o da, başka birine verse, harâmdan geldiğini bilenlerin bunu alması harâm olur. Fâsid satış müstesnâdır.
+  < …miyen harâm malın vârislere halâl olacağı da bildirildi. Tegannî, çalgı ücretleri, pazarlıkla olmayıp, parasız okursa, hediyye olarak aldıkları para habîs olmaz. Halâl olur. Dilencinin birikdirdiği para ve mal habîsdir. 
+  = Bir kimse, harâm olarak edindiği malı başkasına verse, o da, başka birine verse, harâmdan geldiğini bilenlerin bunu alması harâm olur.
+  > . Fâsid satış müstesnâdır. Zevce, kocasının harâm para ile satın aldığını, harâm karışık malını yirse, kullanırsa, câiz olur. Günâh kocasına olur. ¶  ¶ Herşey ile yarış etmek ve bi…
+#4240 [harâmdır] 2-40 s.614 
+  BAGLAM-ALANI(sitede görünür): Herşey ile yarış etmek ve bilmece çözmek halâldir. Bunları kumâr ile yapmak harâmdır. Koşarak veyâ at ile ve silâh ile, ok ile hedefe atmak gibi harbde kullanılan şeylerle yapılan yarışlarda, bir tarafdan mal şart etmek de câiz olur.
+  < …alması harâm olur. Fâsid satış müstesnâdır. Zevce, kocasının harâm para ile satın aldığını, harâm karışık malını yirse, kullanırsa, câiz olur. Günâh kocasına olur. ¶  ¶ Herşey ile yarış etmek ve bilmece çözmek halâldir. 
+  = Bunları kumâr ile yapmak harâmdır.
+  > . Koşarak veyâ at ile ve silâh ile, ok ile hedefe atmak gibi harbde kullanılan şeylerle yapılan yarışlarda, bir tarafdan mal şart etmek de câiz olur. Ya’nî iki kişiden yalnız biri,…
+#4241 [harâm olur] 2-40 s.614 
+  BAGLAM-ALANI(sitede görünür): Oyun, gösteriş, övünmek için yapılan her yarış mekrûh olur. Nemâza mâni’ olacak kadar devâm ederse, harâm olurlar. Harbde kullanılan şeyleri öğrenmek mendûbdur.
+  < …yeceksin derse veyâ bir üçüncü kimse, yarışa katılan cemâ’at arasından kazanana ben vereceğim derse, câiz olur. Fekat harbe hâzırlık için yapılmaları lâzımdır. Oyun, gösteriş, övünmek için yapılan her yarış mekrûh olur. 
+  = Nemâza mâni’ olacak kadar devâm ederse, harâm olurlar.
+  > . Harbde kullanılan şeyleri öğrenmek mendûbdur. 2. ci kısmda, 16. cı ve 31. ci maddelerin baş taraflarına bakınız! İki tarafın da mal vermesi şart edilirse, (kumâr) olur. Kumâr oyn…
+#4242 [harâmdır] 2-40 s.614 
+  BAGLAM-ALANI(sitede görünür): İki tarafın da mal vermesi şart edilirse, (kumâr) olur. Kumâr oynamak harâmdır. Bir üçüncü kimse de yarışa katılıp, ikisini de geçerse, ikisinden de alması, ikisini de geçemezse, ondan birşey alınmaması şartı ile, ikisinden geride kalanın, geçene mal vermesini
+  < …za mâni’ olacak kadar devâm ederse, harâm olurlar. Harbde kullanılan şeyleri öğrenmek mendûbdur. 2. ci kısmda, 16. cı ve 31. ci maddelerin baş taraflarına bakınız! İki tarafın da mal vermesi şart edilirse, (kumâr) olur. 
+  = Kumâr oynamak harâmdır.
+  > . Bir üçüncü kimse de yarışa katılıp, ikisini de geçerse, ikisinden de alması, ikisini de geçemezse, ondan birşey alınmaması şartı ile, ikisinden geride kalanın, geçene mal vermesi…
+#4243 [harâm olur] 2-40 s.614 
+  BAGLAM-ALANI(sitede görünür): Kur’â çekmek câizdir ve sünnetdir. Mülk sâhiblerinin haklarının mikdârlarını değişdirmek veyâ ortaklardan birinin hakkını yok etmek yâhud hakkı olmıyana pay vermek için yapılan kur’â (piyango) harâm olur. İki veyâ çok kimse, aralarında para toplayarak bir emân
+  < …sından birini seçmek için, (Kur’a) yapılır). [Bir mekânın, bir malın, buna müşterek mâlik olan ortaklar arasında kur’â ile taksîm edileceğini de, (kısmet) bahsinde uzun bildirmekdedir. Kur’â çekmek câizdir ve sünnetdir. 
+  = Mülk sâhiblerinin haklarının mikdârlarını değişdirmek veyâ ortaklardan birinin hakkını yok etmek yâhud hakkı olmıyana pay vermek için yapılan kur’â (piyango) harâm olur.
+  > . İki veyâ çok kimse, aralarında para toplayarak bir emânetçiye bırakıp, aralarından seçdikleri birinin veyâ vekîlinin, bunu fakîrlere, hayr kuruluşlarına dağıtması câiz olduğu gib…
+#4244 [harâm olduğu] 2-40 s.615 
+  BAGLAM-ALANI(sitede görünür): Fekat, tatbîkatde, yanlış yapmak, bilmiyerek yapmak özr olur. Meselâ, şerâb içmenin harâm olduğunu bilmek lâzımdır. Bilmemek özr değil, suçdur.
+  < … dünyânın her yerindeki müslimânların, ahkâm-ı islâmiyyeyi, ya’nî islâmiyyeti öğrenmesi kolay olup, lüzûmlu şeyleri öğrenmemek, bilmemek özr değil, suç olur. Fekat, tatbîkatde, yanlış yapmak, bilmiyerek yapmak özr olur. 
+  = Meselâ, şerâb içmenin harâm olduğunu bilmek lâzımdır.
+  > . Bilmemek özr değil, suçdur. Fekat, içinde şerâb karışık hoşafı veyâ ilâcı veyâ şerbeti, karışık olduğunu bilmiyerek içmek, günâh olmaz. Karışık olduğunu bilmemesi özr olur. Domuz…
+#4245 [harâm olduğu] 2-40 s.615 OLUMSUZ/SINIR:degildir
+  BAGLAM-ALANI(sitede görünür): Karışık olduğunu bilmemesi özr olur. Domuz etinin harâm olduğunu bilmemek özr değildir, suçdur. Koyun, sığır eti ile pişdi sanarak, domuz eti ile pişmiş yemeği yimek özr olur, afv olur.
+  < … şerâb içmenin harâm olduğunu bilmek lâzımdır. Bilmemek özr değil, suçdur. Fekat, içinde şerâb karışık hoşafı veyâ ilâcı veyâ şerbeti, karışık olduğunu bilmiyerek içmek, günâh olmaz. Karışık olduğunu bilmemesi özr olur. 
+  = Domuz etinin harâm olduğunu bilmemek özr değildir, suçdur.
+  > . Koyun, sığır eti ile pişdi sanarak, domuz eti ile pişmiş yemeği yimek özr olur, afv olur. (Şir’at-ül-islâm) ikiyüzkırkaltıncı sahîfesindeki hadîs-i şerîfde, (Allaha ve Âhıret gün…
+#4246 [harâmdır] 2-40 s.615 
+  BAGLAM-ALANI(sitede görünür): Fekat sonra verilen hediyyesini alması câiz olur. Önceden istemesi harâmdır. Önceden verilen hediyyeyi alması câizdir, denildi.
+  < …temeden verdi ise, geri isteyemez. Fekat alanın geri vermesi vâcib olur. Bir âlime, kendine şefâ’at etmesi veyâ zulmden kurtarması için, önceden verilen şey rüşvet olur. Fekat sonra verilen hediyyesini alması câiz olur. 
+  = Önceden istemesi harâmdır.
+  > . Önceden verilen hediyyeyi alması câizdir, denildi. Hocanın talebesinden hediyye alması da câiz denildi. Dînine, malına, cânına zarâr gelmesinden korkan kimsenin rüşvet vermesi câ…
+#4247 [harâmdır] 2-40 s.616 
+  BAGLAM-ALANI(sitede görünür): Bunları almak günâh olur. Dördüncü cild, üçyüzüncü sahîfede hâkimin rüşvet alması harâm olduğunu anlatırken, rüşveti dörde ayırmakdadır: Müftî, hâkim, vâlî olmak için rüşvet vermek ve birinin, haklı dahî olsa, me’mûra, hâkime rüşvet vermesi ve bunların almalar
+  < … için ve hakkını kurtarmak için birşey vermek rüşvet olmaz. Alana günâh olur). Hac bahsinde bildirildiği gibi, farzları yapabilmek ve harâmlardan kurtulabilmek için verilen mal da rüşvet olmaz. Bunları almak günâh olur. 
+  = Dördüncü cild, üçyüzüncü sahîfede hâkimin rüşvet alması harâm olduğunu anlatırken, rüşveti dörde ayırmakdadır: Müftî, hâkim, vâlî olmak için rüşvet vermek ve birinin, haklı dahî olsa, me’mûra, hâkime rüşvet vermesi ve bunların almaları harâmdır.
+  > . Çünki zâten vâcib olan şeyi yapmak için birşey almak câiz değildir. Bu işleri yapdıkdan sonra, istemeden verilen hediyye, rüşvet olmaz. Me’mûrların zulmünden kurtulmak veyâ hakkı…
+#4248 [harâmdır] 2-40 s.616 
+  BAGLAM-ALANI(sitede görünür): Me’mûrların zulmünden kurtulmak veyâ hakkını almak, malını, cânını, dînini, ırzını korumak için me’mûra veyâ aracıya vermek câizdir. Bunların alması harâmdır. Zulm yapılması için vermek ve almak harâmdır.
+  < …mak câiz değildir. Bu işleri yapdıkdan sonra, istemeden verilen hediyye, rüşvet olmaz. Me’mûrların zulmünden kurtulmak veyâ hakkını almak, malını, cânını, dînini, ırzını korumak için me’mûra veyâ aracıya vermek câizdir. 
+  = Bunların alması harâmdır.
+  > . Zulm yapılması için vermek ve almak harâmdır. ¶  ¶ Bir kimse, halâl mülkü olan mâlından hediyye verse, istenmeden verilen bu hediyyeyi kabûl etmek sünnetdir. (Hediyyeleşiniz, sev…
+#4249 [harâmdır] 2-40 s.616 
+  BAGLAM-ALANI(sitede görünür): Bunların alması harâmdır. Zulm yapılması için vermek ve almak harâmdır. Bir kimse, halâl mülkü olan mâlından hediyye verse, istenmeden verilen bu hediyyeyi kabûl etmek sünnetdir.
+  < …ri yapdıkdan sonra, istemeden verilen hediyye, rüşvet olmaz. Me’mûrların zulmünden kurtulmak veyâ hakkını almak, malını, cânını, dînini, ırzını korumak için me’mûra veyâ aracıya vermek câizdir. Bunların alması harâmdır. 
+  = Zulm yapılması için vermek ve almak harâmdır.
+  > . ¶  ¶ Bir kimse, halâl mülkü olan mâlından hediyye verse, istenmeden verilen bu hediyyeyi kabûl etmek sünnetdir. (Hediyyeleşiniz, sevişiniz!) hadîs-i şerîfi, (Künûz-üddekâık)da ya…
+#4250 [harâmdır] 2-40 s.617 
+  BAGLAM-ALANI(sitede görünür): Bunları, para kazanmağa âlet etmek olur). İbni Âbidînin beşinci cildinde ve (Dürer)de diyor ki, (Bakkala borc para verip, o para bitinceye kadar ondan mal satın almak harâmdır. Çünki, istifâde etmek şartı ile ödünc vermek fâiz olur.
+  < …rkeklerin ve kadınların günâhları afv olur ve çok sevâb verilir) buyuruldu. Tüccârın, malını müşteriye gösterirken, bunları okuması ve kelime-i tevhîd, salevât okuması günâhdır. Bunları, para kazanmağa âlet etmek olur). 
+  = İbni Âbidînin beşinci cildinde ve (Dürer)de diyor ki, (Bakkala borc para verip, o para bitinceye kadar ondan mal satın almak harâmdır.
+  > . Çünki, istifâde etmek şartı ile ödünc vermek fâiz olur. Parayı bakkala emânet olarak vermelidir. Emânet verilen para helâk olursa, bakkal ödemez). ¶  ¶ Aşkın bağında açan güllere…
+#4251 [harâm olan] 2-41 s.618 OLUMSUZ/SINIR:denil
+  BAGLAM-ALANI(sitede görünür): Biz onun talebesi, o sizin tâlibiniz, muhakkak aks yapar, o nûrlu kalbleriniz, belli, birbirinize, âşıksınız ikiniz, ve size âşık olur, (Mektûbât)ı anlıyan! 41 — YİMESİ ve KULLANMASI HARÂM OLAN ŞEYLER (Berîka) da, mi’de âfetlerinde diyor ki, (Yimesi, içmesi ha
+  < 
+  = 41 — YİMESİ ve KULLANMASI HARÂM OLAN ŞEYLER (Berîka)da, mi’de âfetlerinde diyor ki, (Yimesi, içmesi harâm olan şeyler şunlardır: 1 — (Harâm-ı li-aynihi) denilen, kendileri harâm olan şeylerdir.
+  > . Leş, hınzır eti, şerâb böyledir. Çok içince serhoş yapan sıvıların, azını içmek de harâmdır. Mahmasa hâlinde olan, ya’nî açlıkdan ölmek üzere olan ve ikrâh edilen, ya’nî öldürmek…
+#4252 [harâmdır] 2-41 s.618 
+  BAGLAM-ALANI(sitede görünür): Leş, hınzır eti, şerâb böyledir. Çok içince serhoş yapan sıvıların, azını içmek de harâmdır. Mahmasa hâlinde olan, ya’nî açlıkdan ölmek üzere olan ve ikrâh edilen, ya’nî öldürmekle korkutulan kimseden başkalarının bunları yimeleri, içmeleri harâmdır.
+  < …LLANMASI HARÂM OLAN ŞEYLER ¶  ¶ (Berîka)da, mi’de âfetlerinde diyor ki, (Yimesi, içmesi harâm olan şeyler şunlardır: ¶  ¶ 1 — (Harâm-ı li-aynihi) denilen, kendileri harâm olan şeylerdir. Leş, hınzır eti, şerâb böyledir. 
+  = Çok içince serhoş yapan sıvıların, azını içmek de harâmdır.
+  > . Mahmasa hâlinde olan, ya’nî açlıkdan ölmek üzere olan ve ikrâh edilen, ya’nî öldürmekle korkutulan kimseden başkalarının bunları yimeleri, içmeleri harâmdır. ¶  ¶ 2 — Kendileri h…
+#4253 [harâmdır] 2-41 s.618 
+  BAGLAM-ALANI(sitede görünür): Çok içince serhoş yapan sıvıların, azını içmek de harâmdır. Mahmasa hâlinde olan, ya’nî açlıkdan ölmek üzere olan ve ikrâh edilen, ya’nî öldürmekle korkutulan kimseden başkalarının bunları yimeleri, içmeleri harâmdır. 2 — Kendileri harâm olmayıp, Dâr-ül-harbde
+  < …e diyor ki, (Yimesi, içmesi harâm olan şeyler şunlardır: ¶  ¶ 1 — (Harâm-ı li-aynihi) denilen, kendileri harâm olan şeylerdir. Leş, hınzır eti, şerâb böyledir. Çok içince serhoş yapan sıvıların, azını içmek de harâmdır. 
+  = Mahmasa hâlinde olan, ya’nî açlıkdan ölmek üzere olan ve ikrâh edilen, ya’nî öldürmekle korkutulan kimseden başkalarının bunları yimeleri, içmeleri harâmdır.
+  > . ¶  ¶ 2 — Kendileri harâm olmayıp, Dâr-ül-harbdeki kâfirlerden dahî gasb, sirkat, rüşvet yolu ile alınan veyâ Dâr-ül-islâmda kâfirden dahî fâsid akd, ya’nî şartlarına uymadan yapı…
+#4254 [harâmdır] 2-41 s.618 
+  BAGLAM-ALANI(sitede görünür): Bu şey, mülk olur ise de, mülk-i habîsdir. Kullanması harâmdır. Geri vermek, alınmış olan bulunmazsa, fakîrlere sadaka olarak vermek lâzımdır.
+  < …r-ül-harbdeki kâfirlerden dahî gasb, sirkat, rüşvet yolu ile alınan veyâ Dâr-ül-islâmda kâfirden dahî fâsid akd, ya’nî şartlarına uymadan yapılan sözleşme ile satın alınan şey. Bu şey, mülk olur ise de, mülk-i habîsdir. 
+  = Kullanması harâmdır.
+  > . Geri vermek, alınmış olan bulunmazsa, fakîrlere sadaka olarak vermek lâzımdır. ¶  ¶ 3 — Doydukdan sonra yimek harâmdır. ¶  ¶ 4 — Toprak, çamur gibi zararlı şey yimek. ¶  ¶ 5 — Ze…
+#4255 [harâmdır] 2-41 s.618 
+  BAGLAM-ALANI(sitede görünür): Geri vermek, alınmış olan bulunmazsa, fakîrlere sadaka olarak vermek lâzımdır. 3 — Doydukdan sonra yimek harâmdır. 4 — Toprak, çamur gibi zararlı şey yimek.
+  < …id akd, ya’nî şartlarına uymadan yapılan sözleşme ile satın alınan şey. Bu şey, mülk olur ise de, mülk-i habîsdir. Kullanması harâmdır. Geri vermek, alınmış olan bulunmazsa, fakîrlere sadaka olarak vermek lâzımdır. ¶  ¶ 
+  = 3 — Doydukdan sonra yimek harâmdır.
+  > . ¶  ¶ 4 — Toprak, çamur gibi zararlı şey yimek. ¶  ¶ 5 — Zehrli şeyler. Bakır çalığı, zehr karışdırılmış yemek. Zehrli ot, kokmuş et. Kurdlanmış et, meyve, peynir de böyledir. ¶  …
+#4256 [harâmdır] 2-41 s.618 
+  BAGLAM-ALANI(sitede görünür): Zarûret olunca, bir çok yasaklar mubâh olmakdadır. Ölünün de bir yerini kesmek harâmdır. İnsana ölünce de kıymet vermek, saygı göstermek vâcibdir.
+  < … Düşman saldırınca ona karşı koymak, ya’nî cihâd etmek bunun için farzdır. Dirinin veyâ ölünün, diri için bir uzvunu vermesi, dirinin canını vermesinden, dahâ kolaydır. Zarûret olunca, bir çok yasaklar mubâh olmakdadır. 
+  = Ölünün de bir yerini kesmek harâmdır.
+  > . İnsana ölünce de kıymet vermek, saygı göstermek vâcibdir. Fekat, zarûret olunca, bu harâmlık kalkar. Müslimân mütehassıs tabîbler bir hastanın ölümden kurtulması için, kan, dirid…

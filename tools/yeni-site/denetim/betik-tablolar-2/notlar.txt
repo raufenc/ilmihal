@@ -1,0 +1,65 @@
+66 kan_gruplari | doğru | kaynak 3-54 doğru; 4 satır kitapta ("dört dürlü kan gurubu vardır: 1 — 0 [sıfır] grubu…"), ifade yakın özet
+67 uc_vazife | doğru | 3 satır aynen 1-11
+68 dunyayi_terk | doğru | 2 satır 1-11 ("Birisi…", "İkincisi, dünyâda harâm ve şübheli…")
+69 kafirler_iki_tur | doğru | 2 satır 1-11; (ülûhiyyet sıfatı) parantezi düşmüş, önemsiz
+70 gunahlar_ikiye | doğru | 1-31 Rıyâd-un-nâsıhîn nakli; ikinci kısım uzakta (@46166) ama kitapta
+71 yetmisiki_bidat_firka | doğru | 9 fırka aynen Gunye nakli
+72 eshab_iftiracilari | doğru | 3 grup aynen 1-31
+73 din_bilgileri_ikiye | doğru | 3-70 aynen; "Nûr ve Feyz" parantezleri düşmüş
+74 ulum_ogrenme_hukmu | doğru(B) | 3 satır 1-11 aynen; başlıktaki "Üç Tabakadadır" kitapta yok (B)
+75 insanlar_uc_turlu | düzeltilmeli(Y) | 3 satır 2-40 aynen; kitap hemen ardından "Bunların üçü de yanılmakdadır" diyor, tablo bunu vermiyor (kaynakMetin'de var). başlık "Vera' Bahsinde" site yorumu (kitap: "Burada, insanlar üç dürlüdür")
+76 nikah_hukumleri | düzeltilmeli(B,Y) | 6 satır 2-34'te var (s.570-571 tahmini); kaynakMetin maddenin girişi (bekârlık), satırlarla ilgisiz; sahife 564 → 570-571. Satır1 "kitâblı kâfir" tanımı (müşrik olmıyan) düşmüş(önemsiz). Satır6 "ve nafakası vâcib olmaz" + "Nikâhdan hâmile olan kadını… sahîh değildir" devamı eksik (Y)
+77 nikah_niyyet_haram | düzeltilmeli(B,Y) | 5 satır 2-34 @46203-47080 (s.575); kaynakMetin (Süfyân-ı Sevrî/bekârlık) ilgisiz, sahife 565→575. "Muvakkat nikâh" satırında "bütün şartlarına uygun yapılan nikâhdır. Söylemeyip, yalnız kalbinden geçirse, nikâh sahîh olur" düşmüş (Y)
+78 bosama_yetkisi | düzeltilmeli(B,Y) | satır2-3 2-36 aynen (s.583). Satır1 (Temlîk "Sen nefsini ihtiyâr et") 2-36'da değil 2-34 @41951 (s.573-574) ifadesi; "vakt de bildirdi ise, o vakt içinde" kısmı düşmüş. 2-36'da 1. yol "Tefvîd: Buna Temlîk de denir… (İşin, senin elinde olsun) veyâ (Kendini sen boşa) yâhud (Diler isen boşsun)". kaynakMetin (nikâhda şart) tablodaki üç yolun cümlesi değil
+79 talak_ayrilik | doğru | 6 satır 2-36'da (s.580-583); "derhâl bozulur" Mecmû'a-i Zühdiyye nakli, "üçden az bâin" İddet paragrafı
+80 ila_hul | düzeltilmeli(Y,B) | Îlâ: kitap "dört ay veyâ dahâ çok zemân veyâ zemân söylemiyerek", tablo "…zemân söyliyerek" → zamansız îlâ düşmüş; Hul' aynen; kaynakMetin maddenin girişi (ilgisiz), sahife 580 → 584
+81 akika | düzeltilmeli(B) | 8 satır 1-81 @19616 "AKÎKA KESMEK" paragrafında aynen; kaynakMetin fakîrin nezr/nâfile kurbanı cümleleri — akîka ile ilgisiz
+87 zihar | doğru | 4 satır 2-36 aynen (s.584)
+88 lian | düzeltilmeli(Y) | kadının 5. yemîni ("Beşincisinde, (Doğru söyledi ise, Allahın gadabı benim üzerime olsun) der") düşmüş; Netice'de "veyâ başka bir afîf kadını kazf ederek" düşmüş
+89 iddet | doğru | 7 satır 2-36 aynen (s.584)
+90 hidane | doğru | 4 satır 2-36 aynen (s.584-585); kaynakMetin başında iddet cümleleri var (önemsiz)
+82 nikahi_caiz_olmiyanlar | doğru | 3 satır 2-34 @23523 aynen (s.569)
+83 nesebden_yedi_mahrem | doğru | 7 kalem 2-34 aynen
+84 sut_ile_hukum | doğru | 4 satır 2-34 aynen
+85 nikah_sebebi_dort_kadin | doğru | 4 kalem 2-34 aynen (kitap da 3. ve 4.'yü bu cümlelerle veriyor)
+86 muvakkat_haram | düzeltilmeli(Y) | yedincisi eksik: "Muvakkat harâm olan kadınların yedincisi, hür kadın ile evli iken, câriye ile de nikâhlanmakdır" (2-34 @29095, s.570-571); "Başkasının zevcesi" kitapta yedinin dışında ayrı cümle; "Bunlar, süt ile olunca da harâmdır" düşmüş
+91 sut_cocuklugu_mezhebler | doğru | 4 satır 2-37 aynen
+92 sut_akrabaligi | doğru | 5 satır 2-37 aynen
+93 sut_haram_olanlar | düzeltilmeli(Y) | satırlar 2-37'de var; "Aynı kadından emenler" satırında "ve birbirlerinin çocukları ve torunları ile" düşmüş; "İstisnâlar"ın hemen ardındaki "Fekat, baba bir kardeşinin annesi ile evlenemez" düşmüş; kitaptaki diğer harâmlar (çocuğun zevcesi–süt babası, Dürer'in süt kızı hükmü, süt babanın diğer zevceleri) yok
+94 sut_cocuklugu_haller | düzeltilmeli(K,Y) | kaynakMetin kitapta aynen yok: "hanefîde, bu çocuk, o kadınların mahremi olur" (kitap: "hanefîde ve mâlikîde, bu kadınlar çocuğun süt annesi olur") + "Süt çocuğu olmak için: … sütün gerçek anlamda emilmesi ve bağlantı kurulabilmesi şartları aranır" kitapta yok. Satırlar kitapta; "Pişmemiş ise, yarıdan çok olunca" satırına kitabın "İmâm-ı Şâfi’î … süt yarıdan az olunca da, süt çocuğu olur dedi" kaydı eklenmemiş
+95 sut_emme_sabit | düzeltilmeli(Y) | satırlar 2-37 aynen; son satırda "veyâ bir erkekle bir kadın yâhud yalnız âdil olan süt anne" düşmüş
+96 nafaka_bes_sebeb | doğru | 2-38'de "Nafakayı veyâ bunların parasını vermek, beş sebeble farz olur: 1 — Zevcesi … 5 — Kölenin, câriyenin"
+97 zevce_nafakasi | doğru | 7 satır 2-38 (@1538, @8154 nâşize, @13572 iddet) aynen
+98 cocuk_nafakasi | doğru | 5 satır 2-38 @14331-15347; "bâlig olan hasta oğula iyi oluncaya kadar" düşmüş (önemsiz)
+99 anababa_nafaka | doğru | 4 satır 2-38 @16045, @17028 (Fetâvâ-i Hayriyye), @31994
+100 mahrem_nafaka | doğru | 3 satır 2-38 @17488, @18975
+101 nafaka_uc_sey | doğru | 2-38 başı "yiyecek, giyecek ve ev … mutbah masrafı ve giyim eşyâsı masrafı ve ev kirâsı ile ev eşyâsı masrafıdır"
+110 insanin_kullandigi | doğru | 5 satır 2-38 @24566 (Uyûn-ül-besâir nakli) aynen; zînet tarifi kitapta köşeli parantez içinde
+102 olcu_birimleri | doğru(B) | 2 satır 1-78 @15246; satır1 imlâ: "Peygamber Efendimiz (sallallahü aleyhi ve sellem) zamanında" ← kitap "Peygamberimiz “sallallahü teâlâ aleyhi ve sellem” zemânında" (B)
+103 mal_ikiye_ayrilir | doğru | 3-4 aynen
+104 havale_uc_sekil | doğru | 3-13 aynen
+105 ibadetler_on_kisim | doğru | 3-3 Hilyet-ül-evliyâ nakli aynen ("Büyüklerden çoğu buyurdu ki")
+106 alacaklar_uc_turlu | düzeltilmeli(Y) | 3 satır 1-78 @10843 aynen; kitap "İmâm-ı a’zama göre, üç dürlü alacak vardır" diyor, tablo/başlık bu kaydı vermiyor
+107 emval_zahire_batina | doğru | 1-78 @70699 İbni Âbidîn nakli aynen
+108 mulk_sahibi_uc_yol | doğru | 2-29 Mecelle 1248 aynen
+109 muhayyerlik_uc_turlu | düzeltilmeli(B,Y) | içerik 3-5 (s.806) "5 — ALIŞ VERİŞDE MUHAYYERLİK … üç dürlüdür"den; kaynakMadde 3-4/s.797 yanlış, kaynakMetin (çocuğun bey'i) ilgisiz. Satır1 "üç günden fazla olamaz" ardındaki "İmâmeyne göre, müddet belli olmak şartı ile çok uzun zemân muhayyer olabilirler" ve "İmâm-ı Muhammed, câiz olur buyurdu" düşmüş (Y)
+111 miras_alamiyanlar | düzeltilmeli(B,Y) | kaynak yanlış: 3-63 (İskât) değil 3-64 @9620 "9 — Köle, meyyiti öldüren, başka dinden olanlar ve mürtedler mîrâs alamaz" (s.1027-1028 tahmini); kaynakMetin İskât maddesinin başı (ilgisiz). Satır5 kitapta "Babası sâhib çıkmıyan veled-i zinâ, babasına vâris olamaz" — şart düşmüş (Y). 3-65'teki "Katle yardım eden de, kâtil gibi mîrâs alamaz" yok
+113 feraizte_takdiren | doğru | 3-64 Mültekâ nakli aynen
+114 zevil_erham_bes | düzeltilmeli(Y) | 5 sınıf doğru ama III, IV, V sınıflarının kitaptaki üyeleri eksik (III: "anadan erkek kardeş çocukları", torunlar; IV: "Her nev’ amca kızları ve hepsinin çocukları"; V: "babanın anadan amcaları, ananın amcaları…")
+115 zevil_erham_tercih | düzeltilmeli(Y) | satır1'de "veyâ bunlardan yalnız zevc, zevce varsa" düşmüş; son satırda "ve içlerinde vâris ile bağlanan yoksa" şartı düşmüş; kitaptaki "vâris ile bağlanan vâris olur" ve "Yakınlık ciheti farklı ise … üçde iki … üçde bir" kaideleri yok
+116 yemin_keffareti | doğru | 4 şekil 1-83 @10689 aynen
+117 yemin_keffaret_kayitlar | doğru | 4 satır 1-83 (@11950, @12250, @14046) aynen
+118 nezr_iki_turlu | düzeltilmeli(Y,B) | satırlar 1-82 aynen; "Şarta bağlı nezr" satırında kitabın hemen ardındaki köşeli parantez kaydı yok: "[Yerine getirmeyip, yemîn keffâreti yapması da câiz olduğu (Fetâvâ-yı Hayriyye)de yazılıdır…" ve "Hâsıl olmasını istemediği birşeyi şart ederse … isterse yapar. İstemezse, yapmayıp, yemîn keffâreti verir" (Y). kaynakMetin iki paragrafı "1 —" atılarak birleştirmiş (B)
+119 adak_vasiflar | doğru | 3 satır 1-82 aynen; vakf gerekçesi kısaltılmış (kitap: "Çünki vakf, müslimânlar için câmi’ binâ etmeğe benzemekdedir. … vakf başlı başına ibâdetdir")
+120 farz_adamak | doğru(B) | 5 satır 1-82 @7330-9300 aynen; başlıkta "Hac" var ama tablodan hac misâli/hac adağı satırı çıkarılmış (B)
+121 vera_dereceleri | doğru | 5 derece 2-40 (@4873-12126) aynen
+122 subheler_uc_kisim | düzeltilmeli(B) | 3 kalem 2-40 @6496 (s.608) aynen; kaynakMetin maddenin girişi (ilgisiz), sahife 607→608
+123 zaruret_ruhsatlari | düzeltilmeli(B) | 5 satır 2-41 @1318 (Redd-ül-muhtâr nakli) ve Bezzâziyye nakli aynen; kaynakMetin Berîka'nın harâm yiyecekler listesinin başı (ilgisiz); "soğukdan, sıcakdan" → "soğukdan" (önemsiz)
+124 altin_gumus_hukumleri | düzeltilmeli(Y) | 5 satır 2-41 @8806 aynen; "Kadınlarda zînet" satırında hemen ardındaki kayıt düşmüş: "Fekat, bunları [meselâ, parmağındaki yüzüğünü] mahrem olmıyan erkeklere göstermeleri harâmdır"; "zînet olarak" (başka ma'den yüzük) düşmüş
+125 ipek_hukumleri | doğru | 6 satır 2-41 @16966 Dürr/Redd nakli aynen
+126 tutun_gorusleri | düzeltilmeli(K) | "Bahsin sonucu" satırı ("Tütün içmek, nihâyet şübheli kalmakdadır. Şübheliler ise harâm olur. Tütüne tehlükeli demek insâf olur") Berîka (Hâdimî) naklinin içinden (@8739, s.631); kitabın kendi sonucu tersi: "Yukarıdaki örnek yazılardan anlaşılıyor ki, tütün içmek … harâm edilmemişdir … Tütün böyle değildir" (@19657, s.633). Ayrıca Şâfi'î "tenzîhen mekrûh", Nablüsî "mubâhdır, halâldir", Alî Echürî "dört mezheb âlimleri sözbirliği ile" görüşleri tabloda yok
+112 nikah_sartlari_mezhebler | düzeltilmeli(Y) | satırlar 2-34 @7100-13770 var; Hanefî şâhid hücresinde "[fıskı belli olsa da]" düşmüş (Şâfi'î/Hanbelî ile farkı bu); velî sırası kitapta "bu üç mezhebde" (Mâlikî dahil); Şâfi'î "oğul ve onun oğlu velî olmaz" kaydı yok
+127 yimegi_haram_eden | doğru | 2-43 @5101 Berîka nakli aynen
+128 israf_bes_bahs | düzeltilmeli(K) | 5 kalem 2-44 bahs başlıklarıyla aynı; kaynakMetin'in "Kötü bir huydur."dan sonrası uydurma ("İKİNCİ BAHS — Yimekde isrâf. ÜÇÜNCÜ BAHS — İçmekde isrâf. DÖRDÜNCÜ BAHS — Giyinmekde isrâf. BEŞİNCİ BAHS — Binalarda isrâf. Her birinde haddi aşmak isrâfdır.") — kitabın başlıklarıyla çelişiyor
+129 para_vermek_iki_turlu | düzeltilmeli(Y) | 2 satır 2-44 (@24534, @29242); 2. satırda "Lüzûmu olan yere, lüzûmundan fazla vermek de isrâf olur" düşmüş
+130 yimek_adabi | düzeltilmeli(Y) | 11 kalem 2-45'te var; hepsi "sünnet" etiketli ama 3'ü için kitap sünnet demiyor: "Acıkmadan yimemeli, doymadan kalkmalı", "Ekmeği … iki eli ile koparmalıdır", "Lokma küçük olmalı ve iyi çiğnenmelidir"

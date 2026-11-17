@@ -1,0 +1,69 @@
+{
+ "farz-acik": {
+  "toplam": 505,
+  "cok-hukum-kelimesi": 145,
+  "bulunma=madde": 505,
+  "olumsuz/sinir": 125,
+  "kitapta-cumle-ortasinda-basliyor": 46,
+  "kitapta-cumle-ortasinda-bitiyor": 16
+ },
+ "farz-tum": {
+  "toplam": 876,
+  "bulunma=madde": 875,
+  "cok-hukum-kelimesi": 267,
+  "olumsuz/sinir": 244,
+  "kitapta-cumle-ortasinda-basliyor": 77,
+  "kitapta-cumle-ortasinda-bitiyor": 43,
+  "yinelenen": 2,
+  "kismen-bulundu": 1,
+  "bulunma=kismi": 1
+ },
+ "vacib-acik": {
+  "toplam": 226,
+  "cok-hukum-kelimesi": 39,
+  "bulunma=madde": 226,
+  "olumsuz/sinir": 40,
+  "kitapta-cumle-ortasinda-basliyor": 21,
+  "kitapta-cumle-ortasinda-bitiyor": 15
+ },
+ "vacib-tum": {
+  "toplam": 410,
+  "bulunma=madde": 410,
+  "cok-hukum-kelimesi": 101,
+  "olumsuz/sinir": 115,
+  "kitapta-cumle-ortasinda-bitiyor": 20,
+  "kitapta-cumle-ortasinda-basliyor": 29,
+  "yinelenen": 2
+ },
+ "sunnet-acik": {
+  "toplam": 443,
+  "cok-hukum-kelimesi": 129,
+  "olumsuz/sinir": 104,
+  "bulunma=madde": 441,
+  "kitapta-cumle-ortasinda-basliyor": 63,
+  "kitapta-cumle-ortasinda-bitiyor": 29,
+  "kismen-bulundu": 2,
+  "bulunma=kismi": 2,
+  "yalniz-ehl-i-sunnet": 2
+ },
+ "sunnet-tum": {
+  "toplam": 858,
+  "bulunma=madde": 856,
+  "olumsuz/sinir": 182,
+  "cok-hukum-kelimesi": 254,
+  "kitapta-cumle-ortasinda-basliyor": 116,
+  "yalniz-ehl-i-sunnet": 4,
+  "kitapta-cumle-ortasinda-bitiyor": 50,
+  "kismen-bulundu": 2,
+  "bulunma=kismi": 2
+ },
+ "mustehab-acik": {
+  "toplam": 491,
+  "cok-hukum-kelimesi": 48,
+  "bulunma=madde": 491,
+  "kitapta-cumle-ortasinda-basliyor": 35,
+  "olumsuz/sinir": 62,
+  "kitapta-cumle-ortasinda-bitiyor": 16,
+  "tur-kelimesi-yok": 305
+ }
+}

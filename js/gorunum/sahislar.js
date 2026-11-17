@@ -9,9 +9,11 @@ import { sayi, ad } from '../cekirdek/bicim.js';
 import { duzle, duzleEslemeli, asilAralik } from '../cekirdek/metin.js';
 
 export const SINIFLAR = [
-  ['', 'Tümü'], ['peygamber', 'Peygamberler'], ['sahabi', 'Eshâb-ı Kirâm'],
-  ['alim', 'Âlimler'], ['hukumdar', 'Hükümdarlar'], ['diger', 'Diğer']
+  ['', 'Tümü'], ['peygamber', 'Peygamberler'], ['sahabi', 'Eshâb-ı Kirâm']
 ];
+// Verideki 'alim', 'hukumdar', 'diger' sınıfları başlık olarak GÖSTERİLMEZ: kitaptan değil, hürmet ifadesinden
+// otomatik türetilmiştir ve yanıltır (denetim: tools/yeni-site/denetim/sahislar.md). "Âlimler" altında âlim olmayan
+// en az 55 kişi, "Diğer" altında kitabın hürmetle andığı kişiler kitabın kötülediği kişilerle bir arada duruyordu.
 const ALFABE = ['A', 'B', 'C', 'Ç', 'D', 'E', 'F', 'G', 'Ğ', 'H', 'I', 'İ', 'J', 'K', 'L', 'M', 'N', 'O', 'Ö', 'P', 'R', 'S', 'Ş', 'T', 'U', 'Ü', 'V', 'W', 'Y', 'Z'];
 const SAPKA = { 'Â': 'A', 'Î': 'İ', 'Û': 'U', 'Ô': 'O', 'Ê': 'E' };
 

@@ -1,0 +1,392 @@
+abdest → abdest, vudu, vuzu, wudu
+abdest almak → abdest almak, vudu almak
+abdesti bozan → abdesti bozan, abdest bozulur
+abdestsiz → abdestsiz
+abdulkadir geylani → abdulkadir geylani
+abdullah i dehlevi → abdullah i dehlevi
+adak → adak, nezr
+adalet → adalet
+ahiret → ahiret
+akaid → akaid, akaaid, itikad
+aksam namazi → aksam nemazi, magrib
+alim → alim, ulema, aalim
+alis veris → alis veris
+alkol → alkol, serab
+allah → allahu teala
+allahu teala → allahu teala
+amel → amel
+amelisalih → salih amel
+ashab → ashab, eshab
+asure → asure, muharrem
+atom → atom
+avret → avret, setr
+ayet → ayet
+azab → azab, azaab
+azimet → azimet, azime
+banka → banka, bankalar
+barik → barik
+batil → batil
+bayram namazi → bayram nemazi, bayram nemazlari
+berat gecesi → berat gecesi
+bereket → bereket, baraka
+berzah → berzah, barzakh
+bey sira → bey sira
+bid at → bid
+bidat → bid, bidat
+bono → bono
+bosanma → bosanma, talak, hul
+bozar → bozar, bozulur
+buyu → buyu, sihr
+buyuk gunah → buyuk gunah, kebire
+caiz → caiz
+cami → cami, camii
+cehennem → cehennem, jahannam
+cemaat → cema, cemaat
+cenaze → cenaze
+cenaze namazi → cenaze nemazi
+cennet → cennet, jannah
+cihad → cihad, jihad, cihat
+cin → cin
+cinayet → cinayet, cinayetler
+cizye → cizye, jizyah
+cuma → cum, cuma
+cuma hutbesi → cum, hutbe
+cuma namazi → cuma nemazi
+cunub → cunub
+cunup → cunub, cunup
+dalalet → dalalet
+daru l harp → dar harp, darul harp, darul harb
+daru l islam → dar islam, darul islam
+deccal → deccal, dajjal
+defin → defn, defin
+diyet → diyet
+domuz → domuz, hınzır
+dort halife → dort halife
+dua → dua
+ebu hanife → ebu hanife, imam i a zam
+ehl i sunnet → ehl i sunnet
+ehli sunnet → ehl i sunnet, ehli sunnet, ehl-i sunnet, sunni
+emanet → emanet
+emri bil maruf → emr ruf
+esari → esari, esariyye
+eshab i kiram → eshab i kiram
+et → et, yimek
+ettehiyyatu → ettehiyyatu, tahiyyat
+evlenme → nikah, evlenme
+evliya → evliya, veli, veliyy
+ezan → ezan
+faiz → faiz, riba
+farz → farz, fard
+farz namaz → farz nemaz
+fasid → fasid
+fasik → fasik, fisq
+fatiha → fatiha
+fatiha okumak → fatiha okumak
+fen → fen
+fena fillah → fena fillah
+feraiz → feraiz
+fetva → fetva, fetvaa, fatwa
+fidye → fidye
+fikh → fikh, fikih
+firaset → firaset
+fitne → fitne, fitnah
+fitre → fitre, fitr, fitra
+gayba iman → gayba iman
+gazi → gazi, ghazi
+giybet → giybet
+gunah → gunah, gunah midir
+gunahlar → gunahlar
+gusul → gusl, gusul
+gusul abdesti → gusl abdesti, gusul abdesti
+hac → hacc, hac
+hacca gitmek → hacca gitmek
+hadis → hadis
+hadisi serif → hadis i serif, hadis i serifler
+hafiz → hafiz
+hamd → hamd
+hanbeli → hanbeli, hanbeliyye
+hanefi → hanefi, hanifi, hanefi mezhebi, hanefiyye, imami azam
+harac → harac, kharaj
+haram → haram
+hased → hased, haset
+hatim → hatim
+havale → havale
+hayiz → hayz, hayiz
+helal → helal, halal
+hesap gunu → hesap gunu, yevm hisab
+hidane → hidane
+hucre → hucre, huceyre
+hurufilik → hurufilik, hurufi
+hutbe → hutbe
+ibadet → ibadet
+ibni abidin → ibni abidin
+icki → icki, serab
+icma → icma, ijma
+icmek → icmek
+ictihad → ictihad, ijtihaad
+iddet → iddet
+iftar → iftar
+iftitah tekbiri → iftitah tekbiri, tahrime
+ihlas → ihlas, ikhlas
+ihlasi serif → ihlas i serif
+ihram → ihram
+ihtikar → ihtikar
+ihtilaf → ihtilaf, ikhtilaaf
+ikamet → ikamet
+ikindi namazi → ikindi nemazi, asr
+ikrah → ikrah
+ilim → ilm, ilim
+imam → imam
+imam hatip → imam hatip
+imam i azam → imam i a zam, ebu hanife
+imam i rabbani → imam i rabbani
+imam i safii → imam i safi i
+iman → iman, iyman
+iman etmek → iyman
+imanin sartlari → imanin sartlari, iman sartlari
+irade i cuzi → irade i cuz iyye, irade i cuzi
+isa aleyhisselam → isa aleyhisselam, hazreti isa
+iskat → iskat
+israf → israf
+istibra → istibra
+istigfar → istigfar, estagfirullah
+istinca → istinca
+istisna → istisna
+isyan → isyan
+itaat → ita, itaat
+itikad → tikad, itikad, itikat, akaid
+kabir → kabr, kabir, mezar
+kabir azabi → kabr azabi, kabir azabi
+kabir hayati → kabr hayati
+kabir ziyareti → kabr ziyareti
+kade i ahire → kade i ahire
+kader → kader
+kadi → kadi, qadi, hakim
+kadin → kadin
+kadir gecesi → kadir gecesi
+kafir → kafir, kuffar
+kalb → kalb, kalp, qalb
+kalp → kalb, kalp
+kapitalizm → kapitalizm
+kaza → kaza
+kaza kader → kaza kader
+kaza namazi → kaza nemazi, kaza nemazlari
+kebire → kebire
+kefalet → kefalet
+kefen → kefen
+keffaret → keffaret, kefaret
+kelam → kelam
+kelime i sehadet → kelime i sehadet, sehadet
+kelime i tevhid → kelime i tevhid
+keramet → keramet, karama
+kibir → kibr, kibir
+kible → kible
+kilinir → kilinir, kilmak, kilinis
+kira → kira, ucret
+kiyam → kiyam
+kiyamet → kiyamet, qiyama
+kiyas → kiyas, qiyas
+komunizm → komunizm
+kufr → kufr, kufur, kufir
+kunut → kunut
+kunut duasi → kunut duasi
+kuran → kur, kuran
+kurani kerim → kur kerim
+kurban → kurban
+kuud → kuud, oturmak
+levh i mahfuz → levh mahfuz
+lian → lian
+lohusa → lohusa, nifas
+madde → madde
+magfiret → magfiret, mughfira
+mahser → mahser, hashr
+maliki → maliki, malikiyye
+maturidi → maturidi, maturidiyye
+medrese → medrese
+mehdi → mehdi, mahdi
+mehir → mehr, mehir
+mehr → mehr, mehir
+mekruh → mekruh
+mendub → mendub, mustehab
+mest → mest, mesh
+mest uzerine mesh → mest uzerine mesh
+mevlid → mevlid, mevlud
+mezheb → mezheb
+mezhep → mezheb, mezhep, mezhebat
+mihrab → mihrab
+mikrop → mikrop
+minare → minare
+minber → minber
+mirac gecesi → mirac
+miras → miras, feraiz
+mizan → mizan, terazi
+muavvizeteyn → muavvizeteyn
+mubarek → mubarek
+mubarek geceler → mubarek geceler
+mubtedi → mubtedi, bid
+muceddid → muceddid
+mucize → cize, mucize
+muctehid → muctehid, mujtahid
+mudaraba → mudaraba, mudarebe
+muezzin → muezzin
+mufsid → mufsid, bozar
+mufti → mufti
+muftu → muftu, mufti
+muhasebeyi nefs → muhasebe-i nefs, muhasebe
+muhayyer → muhayyer, muhayyerlik
+munafik → munafik, nifak
+murabaha → murabaha, murabehe
+murakabe → murakabe, muraqaba
+murid → murid, muriid
+mursid → mursid, mursi
+mushaf → mushaf
+musluman olmak → musliman, kelime i sehadet
+musrik → musrik
+mustehap → mustehab, mustehap, mendub
+nafaka → nafaka
+nafile namaz → nafile nemaz, nafile
+naksi → naksi, naksibendi, naksibendiyye
+naksibendi → naksibendi, naksibendiyye, naksi
+namaz → nemaz, salat, salah
+namaz kilinir → nemaz kilmak
+namaz kilmak → nemaz kilmak, nemaz kilinir
+namaz vakitleri → nemaz vaktleri, nemaz vakti
+namazi bozan → nemazi bozan, nemaz bozan
+namazin farzlari → nemazin farzlari, nemaz farzlari
+namazin mekruhlari → nemazin mekruhlari
+namazin vacibleri → nemazin vacibleri, nemaz vacibleri
+nass → nass
+nazar → nazar
+necaset → necaset, necasetden
+nefs → nefs, nefis, nafs
+nemaz → nemaz
+nezir → nezr
+nifas → nifas
+nikah → nikah
+nisap → nisab, nisap
+niyet → niyyet, niyet
+odunc → odunc
+ogle namazi → ogle nemazi, zuhr
+olum → olum
+oruc → oruc, savm, sovm
+osur → osr, osur, usur
+otuzuc farz → otuzuc farz
+ozur sahibi → ozr sahibi, ozr
+peygamber → peygamber, resul, resulullah, nebi
+peygamberimiz → peygamberimiz, resulullah, muhammed
+rabbena → rabbena
+rabita → rabita
+rahmet → rahmet, rahmah
+ramazan → ramezan
+ramazan orucu → ramezan orucu
+regaib gecesi → regaib gecesi
+rekat → rek, rekat
+resulullah → resulullah, muhammed
+riba → riba, faiz, ribaa
+riya → riya
+riza → riza, ridha
+ruh → ruh, ruhlar, rooh
+ruhsat → ruhsat, rukhsa
+ruku → ruku
+sabah namazi → sabah nemazi, fecer
+sabir → sabr, sabir
+sabr → sabr, sabir
+sadaka → sadaka, sadaqah
+sadaka i fitr → sadaka i fitr
+safii → safi i, safii, safiiyye
+sagire → sagire
+sahabi → sahabi, eshab, ashab
+sahih → sahih
+sahur → sahur, seher
+sala → sala
+salavat → salavat
+salli → salli
+salli barik → salli barik
+sapik → sapik, dalalet
+sarraflik → sarraflik
+sartlari → sartlari, sart, sartlar
+secde → secde, sucud
+secde i sahv → secde i sehv, sehv secdesi
+secde i tilavet → secde i tilavet, tilavet secdesi
+sefaat → sefa, sefaat, shafaat
+seferi namaz → seferi nemaz, yolculukda nemaz
+sehid → sehid, shahid, sehit
+selam → selam, selamlasmak
+selamlasmak → selamlasmak
+selem → selem
+sena → sena
+serab → serab, icki
+setr i avret → setr i avret, avret yerleri
+sevabi → sevabi, sevab
+sevap → sevab, sevap
+sifa ayetleri → sifa ayetleri
+sigara → sigara, tutun
+sigorta → sigorta, sigortacilik
+sihr → sihr, buyu
+siilik → ilik, siilik
+silsile → silsile
+sirat → sirat
+sirk → sirk, shirk
+sirket → sirket, sirketler
+sosyalizm → sosyalizm
+subhaneke → subhaneke
+sukr → sukr, sukur
+sukur → sukr, sukur
+sunnet → sunnet
+sunnet namaz → sunnet nemaz
+sunneti seniyye → sunnet i seniyye
+sure → sure
+sut kardeslik → sut kardeslik, sut akraba
+taat → taat
+tadili erkan → dil erkan, tadil i erkan
+tagut → tagut, taagut
+taharet → taharet
+tahiyyat → tahiyyat, ettehiyyatu
+tahrime → tahrime
+taklid → taklid, taqlid
+takva → takva, taqwa, taqva
+talak → talak
+tarikat → tarikat, tarikkat, tariqat, tarikaat
+tasavvuf → tesavvuf, tasavvuf
+tavaf → tavaf
+tazir → zir, tazir
+tefsir → tefsir
+tekbir → tekbir
+teravih → teravih
+teravih namazi → teravih nemazi
+tesbih → tesbih
+tesettur → tesettur, setr
+tevbe → tevbe, tewbe, tobe
+tevekkul → tevekkul, tawakkul
+teyemmum → teyemmum
+ticaret → ticaret
+tovbe → tevbe, tovbe
+tutun → tutun
+ucub → ucb, ucub
+ukubat → ukubat, ceza
+ulema → ulema, alimler
+umre → umre
+usur → usur, osr, ushr
+vaaz → vaaz
+vacib → vacib
+vacip → vacib, vacip
+vahdet i vucud → vahdet i vucud
+vaiz → vaiz
+vakif → vakf, vakif, vaqf
+vehhabi → vehhabi, vehhabiyye, vahhabi
+vehhabilik → vehhabilik
+vekalet → vekalet
+veli → veli, evliya, veliyy
+vera → vera, wara
+vitir → vitr, vitir
+vitir namazi → vitr nemazi
+yatsi namazi → yatsi nemazi
+yemek → yimek, yemek
+yemin → yemin
+yolculukta namaz → yolculukda nemaz, seferi
+zammi sure → zammi sure
+zekat → zekat
+zekat nisabi → zekat nisabi
+zihar → zihar
+zikir → zikr, zikir, dhikr
+zuhd → zuhd, zuhd

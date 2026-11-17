@@ -122,7 +122,7 @@ export default {
       ['Fıkhî hükümler', 'Farz, vâcib, sünnet, mekrûh, harâm; her hüküm kitaptaki cümlesiyle', sayilar.hukumAcik, '/hukumler'],
       ['Âyet-i kerîme ve hadîs-i şerîfler', 'Kitapta geçen meâller ve hadîs-i şerîfler, bulundukları yerle', sayilar.ayet + sayilar.hadis, '/ayet-hadis'],
       ['Dinî lügat', 'Kitaptaki kelimelerin Osmanlıca yazılışları ve mânâları', sayilar.lugat, '/sozluk'],
-      ['Hâl tercemeleri', 'Kitapta adı geçen büyüklerin ve şahısların hayatları', sayilar.sahis, '/sahislar'],
+      ['Hâl tercemeleri', 'Kitapta adı geçenlerin, kitabın sonundaki hâl tercemeleri', sayilar.sahis, '/sahislar'],
       ['Tablolar', 'Nemâz rek’atleri, nisâb mikdârları, mezheb farkları ve daha fazlası', sayilar.tablo, '/fevaid/tablolar'],
       ['Konu rehberleri', 'Bir konuyu kitabın sırasıyla adım adım okuma yolları', sayilar.rehber, '/rehberler'],
       ['Günün suâli', 'Her gün kitaptan bir suâl; cevabı ilgili maddede', sayilar.sual, '/gunun-bilgisi'],

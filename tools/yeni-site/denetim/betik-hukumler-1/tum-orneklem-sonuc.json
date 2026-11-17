@@ -1,0 +1,1231 @@
+{
+"farz": {
+"sayim": {
+"uygun geçiş": 77,
+"K": 1,
+"biçim": 1,
+"anlam-farklı": 1
+},
+"detay": [
+[
+51,
+"H",
+"uygun geçiş"
+],
+[
+80,
+"H",
+"uygun geçiş"
+],
+[
+179,
+"H",
+"uygun geçiş"
+],
+[
+200,
+"H",
+"uygun geçiş"
+],
+[
+203,
+"H",
+"uygun geçiş"
+],
+[
+206,
+"H",
+"uygun geçiş"
+],
+[
+213,
+"H",
+"uygun geçiş"
+],
+[
+240,
+"H",
+"uygun geçiş"
+],
+[
+256,
+"H",
+"uygun geçiş"
+],
+[
+286,
+"H",
+"uygun geçiş"
+],
+[
+297,
+"H",
+"uygun geçiş"
+],
+[
+301,
+"H",
+"uygun geçiş"
+],
+[
+311,
+"H",
+"uygun geçiş"
+],
+[
+313,
+"H",
+"uygun geçiş"
+],
+[
+318,
+"H",
+"uygun geçiş"
+],
+[
+323,
+"H",
+"uygun geçiş"
+],
+[
+336,
+"H",
+"uygun geçiş"
+],
+[
+347,
+"H",
+"uygun geçiş"
+],
+[
+398,
+"H",
+"uygun geçiş"
+],
+[
+399,
+"H",
+"uygun geçiş"
+],
+[
+410,
+"H",
+"uygun geçiş"
+],
+[
+413,
+"H",
+"uygun geçiş"
+],
+[
+446,
+"H",
+"uygun geçiş"
+],
+[
+469,
+"H",
+"uygun geçiş"
+],
+[
+488,
+"H",
+"uygun geçiş"
+],
+[
+492,
+"Z",
+"uygun geçiş"
+],
+[
+584,
+"H",
+"uygun geçiş"
+],
+[
+585,
+"H",
+"uygun geçiş"
+],
+[
+633,
+"H",
+"uygun geçiş"
+],
+[
+740,
+"H",
+"uygun geçiş"
+],
+[
+788,
+"H",
+"uygun geçiş"
+],
+[
+799,
+"H",
+"uygun geçiş"
+],
+[
+808,
+"H",
+"uygun geçiş"
+],
+[
+809,
+"H",
+"uygun geçiş"
+],
+[
+810,
+"H",
+"uygun geçiş"
+],
+[
+6763,
+"M",
+"uygun geçiş"
+],
+[
+6778,
+"H",
+"uygun geçiş"
+],
+[
+6779,
+"H",
+"uygun geçiş"
+],
+[
+6781,
+"H",
+"uygun geçiş"
+],
+[
+6785,
+"H",
+"uygun geçiş"
+],
+[
+6789,
+"H",
+"uygun geçiş"
+],
+[
+6858,
+"H",
+"uygun geçiş"
+],
+[
+6869,
+"H",
+"uygun geçiş"
+],
+[
+6874,
+"A",
+"uygun geçiş"
+],
+[
+6947,
+"H",
+"uygun geçiş"
+],
+[
+6953,
+"H",
+"uygun geçiş"
+],
+[
+6965,
+"M",
+"uygun geçiş"
+],
+[
+6970,
+"H",
+"uygun geçiş"
+],
+[
+6999,
+"A",
+"uygun geçiş"
+],
+[
+7001,
+"A",
+"uygun geçiş"
+],
+[
+7004,
+"A",
+"uygun geçiş"
+],
+[
+7028,
+"G",
+"uygun geçiş"
+],
+[
+7032,
+"A",
+"uygun geçiş"
+],
+[
+7035,
+"A",
+"uygun geçiş"
+],
+[
+7047,
+"G",
+"uygun geçiş"
+],
+[
+7052,
+"A",
+"uygun geçiş"
+],
+[
+7058,
+"G",
+"uygun geçiş"
+],
+[
+7063,
+"G",
+"uygun geçiş"
+],
+[
+7078,
+"A",
+"uygun geçiş"
+],
+[
+7081,
+"A",
+"uygun geçiş"
+],
+[
+7098,
+"H",
+"uygun geçiş"
+],
+[
+7107,
+"M",
+"uygun geçiş"
+],
+[
+7112,
+"H",
+"uygun geçiş"
+],
+[
+7118,
+"M",
+"uygun geçiş"
+],
+[
+7133,
+"A",
+"uygun geçiş"
+],
+[
+7156,
+"A",
+"uygun geçiş"
+],
+[
+7157,
+"M",
+"uygun geçiş"
+],
+[
+7164,
+"A",
+"uygun geçiş"
+],
+[
+7190,
+"H",
+"uygun geçiş"
+],
+[
+7192,
+"Z",
+"uygun geçiş"
+],
+[
+7204,
+"H",
+"uygun geçiş"
+],
+[
+7208,
+"H",
+"uygun geçiş"
+],
+[
+7218,
+"KK",
+"K"
+],
+[
+7231,
+"H",
+"uygun geçiş"
+],
+[
+7236,
+"H",
+"uygun geçiş"
+],
+[
+7248,
+"H",
+"uygun geçiş"
+],
+[
+7265,
+"G",
+"uygun geçiş"
+],
+[
+7325,
+"H",
+"uygun geçiş"
+],
+[
+7341,
+"LX",
+"biçim"
+],
+[
+7362,
+"LA",
+"anlam-farklı"
+]
+]
+},
+"vacib": {
+"sayim": {
+"biçim": 6,
+"anlam-farklı": 3,
+"uygun geçiş": 70,
+"mezheb-hulâsası": 1
+},
+"detay": [
+[
+2478,
+"L",
+"biçim"
+],
+[
+2484,
+"F",
+"biçim"
+],
+[
+2493,
+"A",
+"anlam-farklı"
+],
+[
+2501,
+"H",
+"uygun geçiş"
+],
+[
+2503,
+"MK",
+"mezheb-hulâsası"
+],
+[
+2515,
+"H",
+"uygun geçiş"
+],
+[
+2521,
+"H",
+"uygun geçiş"
+],
+[
+2524,
+"Z",
+"uygun geçiş"
+],
+[
+2534,
+"H",
+"uygun geçiş"
+],
+[
+2539,
+"H",
+"uygun geçiş"
+],
+[
+2550,
+"H",
+"uygun geçiş"
+],
+[
+2551,
+"H",
+"uygun geçiş"
+],
+[
+2560,
+"H",
+"uygun geçiş"
+],
+[
+2566,
+"H",
+"uygun geçiş"
+],
+[
+2569,
+"H",
+"uygun geçiş"
+],
+[
+2574,
+"H",
+"uygun geçiş"
+],
+[
+2575,
+"H",
+"uygun geçiş"
+],
+[
+2579,
+"H",
+"uygun geçiş"
+],
+[
+2582,
+"H",
+"uygun geçiş"
+],
+[
+2588,
+"H",
+"uygun geçiş"
+],
+[
+2597,
+"H",
+"uygun geçiş"
+],
+[
+2598,
+"M",
+"uygun geçiş"
+],
+[
+2610,
+"H",
+"uygun geçiş"
+],
+[
+2620,
+"H",
+"uygun geçiş"
+],
+[
+2622,
+"H",
+"uygun geçiş"
+],
+[
+2623,
+"H",
+"uygun geçiş"
+],
+[
+2626,
+"H",
+"uygun geçiş"
+],
+[
+2634,
+"H",
+"uygun geçiş"
+],
+[
+2640,
+"A",
+"uygun geçiş"
+],
+[
+2642,
+"H",
+"uygun geçiş"
+],
+[
+2643,
+"H",
+"uygun geçiş"
+],
+[
+2647,
+"H",
+"uygun geçiş"
+],
+[
+2653,
+"H",
+"uygun geçiş"
+],
+[
+2659,
+"H",
+"uygun geçiş"
+],
+[
+2667,
+"H",
+"uygun geçiş"
+],
+[
+2669,
+"H",
+"uygun geçiş"
+],
+[
+2674,
+"H",
+"uygun geçiş"
+],
+[
+2678,
+"H",
+"uygun geçiş"
+],
+[
+2692,
+"H",
+"uygun geçiş"
+],
+[
+2695,
+"H",
+"uygun geçiş"
+],
+[
+2702,
+"A",
+"anlam-farklı"
+],
+[
+2703,
+"H",
+"uygun geçiş"
+],
+[
+2706,
+"H",
+"uygun geçiş"
+],
+[
+2708,
+"H",
+"uygun geçiş"
+],
+[
+2709,
+"H",
+"uygun geçiş"
+],
+[
+2719,
+"H",
+"uygun geçiş"
+],
+[
+2721,
+"H",
+"uygun geçiş"
+],
+[
+2728,
+"H",
+"uygun geçiş"
+],
+[
+2729,
+"G",
+"uygun geçiş"
+],
+[
+2730,
+"H",
+"uygun geçiş"
+],
+[
+2732,
+"H",
+"uygun geçiş"
+],
+[
+2738,
+"H",
+"uygun geçiş"
+],
+[
+2739,
+"H",
+"uygun geçiş"
+],
+[
+2741,
+"H",
+"uygun geçiş"
+],
+[
+2756,
+"H",
+"uygun geçiş"
+],
+[
+2761,
+"H",
+"uygun geçiş"
+],
+[
+2766,
+"H",
+"uygun geçiş"
+],
+[
+2767,
+"Z",
+"uygun geçiş"
+],
+[
+2769,
+"H",
+"uygun geçiş"
+],
+[
+2779,
+"H",
+"uygun geçiş"
+],
+[
+2788,
+"H",
+"uygun geçiş"
+],
+[
+2795,
+"H",
+"uygun geçiş"
+],
+[
+2804,
+"A",
+"uygun geçiş"
+],
+[
+2817,
+"H",
+"uygun geçiş"
+],
+[
+2820,
+"H",
+"uygun geçiş"
+],
+[
+2821,
+"F",
+"biçim"
+],
+[
+2832,
+"Z",
+"uygun geçiş"
+],
+[
+2833,
+"F",
+"biçim"
+],
+[
+2835,
+"H",
+"uygun geçiş"
+],
+[
+2837,
+"H",
+"uygun geçiş"
+],
+[
+2839,
+"A",
+"uygun geçiş"
+],
+[
+2848,
+"H",
+"uygun geçiş"
+],
+[
+2853,
+"AK",
+"anlam-farklı"
+],
+[
+2859,
+"H",
+"uygun geçiş"
+],
+[
+2862,
+"H",
+"uygun geçiş"
+],
+[
+2867,
+"H",
+"uygun geçiş"
+],
+[
+2877,
+"H",
+"uygun geçiş"
+],
+[
+2883,
+"H",
+"uygun geçiş"
+],
+[
+7763,
+"B",
+"biçim"
+],
+[
+7772,
+"B",
+"biçim"
+]
+]
+},
+"sunnet": {
+"sayim": {
+"uygun geçiş": 69,
+"anlam-farklı": 5,
+"biçim": 6
+},
+"detay": [
+[
+1000,
+"H",
+"uygun geçiş"
+],
+[
+1100,
+"H",
+"anlam-farklı"
+],
+[
+1116,
+"H",
+"uygun geçiş"
+],
+[
+1124,
+"H",
+"uygun geçiş"
+],
+[
+1144,
+"H",
+"uygun geçiş"
+],
+[
+1160,
+"H",
+"uygun geçiş"
+],
+[
+1170,
+"H",
+"uygun geçiş"
+],
+[
+1172,
+"H",
+"anlam-farklı"
+],
+[
+1237,
+"H",
+"uygun geçiş"
+],
+[
+1267,
+"H",
+"uygun geçiş"
+],
+[
+1281,
+"H",
+"uygun geçiş"
+],
+[
+1298,
+"H",
+"uygun geçiş"
+],
+[
+1317,
+"H",
+"uygun geçiş"
+],
+[
+1388,
+"H",
+"uygun geçiş"
+],
+[
+1407,
+"H",
+"uygun geçiş"
+],
+[
+1425,
+"H",
+"uygun geçiş"
+],
+[
+1430,
+"H",
+"uygun geçiş"
+],
+[
+1442,
+"H",
+"uygun geçiş"
+],
+[
+1449,
+"H",
+"uygun geçiş"
+],
+[
+1473,
+"H",
+"uygun geçiş"
+],
+[
+1476,
+"H",
+"uygun geçiş"
+],
+[
+1502,
+"H",
+"uygun geçiş"
+],
+[
+1503,
+"H",
+"uygun geçiş"
+],
+[
+1579,
+"H",
+"uygun geçiş"
+],
+[
+1593,
+"H",
+"uygun geçiş"
+],
+[
+1601,
+"H",
+"anlam-farklı"
+],
+[
+1608,
+"H",
+"anlam-farklı"
+],
+[
+1627,
+"H",
+"uygun geçiş"
+],
+[
+1636,
+"H",
+"uygun geçiş"
+],
+[
+1653,
+"H",
+"uygun geçiş"
+],
+[
+1715,
+"H",
+"uygun geçiş"
+],
+[
+1764,
+"H",
+"uygun geçiş"
+],
+[
+1770,
+"H",
+"uygun geçiş"
+],
+[
+1810,
+"H",
+"uygun geçiş"
+],
+[
+1818,
+"H",
+"uygun geçiş"
+],
+[
+1832,
+"H",
+"uygun geçiş"
+],
+[
+1879,
+"H",
+"uygun geçiş"
+],
+[
+1908,
+"A",
+"uygun geçiş"
+],
+[
+1913,
+"A",
+"uygun geçiş"
+],
+[
+1916,
+"A",
+"uygun geçiş"
+],
+[
+1955,
+"H",
+"uygun geçiş"
+],
+[
+2153,
+"H",
+"uygun geçiş"
+],
+[
+2179,
+"H",
+"uygun geçiş"
+],
+[
+2201,
+"G",
+"uygun geçiş"
+],
+[
+2235,
+"A",
+"uygun geçiş"
+],
+[
+6971,
+"H",
+"uygun geçiş"
+],
+[
+7370,
+"H",
+"uygun geçiş"
+],
+[
+7393,
+"H",
+"uygun geçiş"
+],
+[
+7396,
+"M",
+"uygun geçiş"
+],
+[
+7400,
+"H",
+"uygun geçiş"
+],
+[
+7411,
+"H",
+"uygun geçiş"
+],
+[
+7412,
+"H",
+"uygun geçiş"
+],
+[
+7425,
+"H",
+"uygun geçiş"
+],
+[
+7432,
+"H",
+"uygun geçiş"
+],
+[
+7439,
+"H",
+"uygun geçiş"
+],
+[
+7471,
+"H",
+"uygun geçiş"
+],
+[
+7479,
+"H",
+"uygun geçiş"
+],
+[
+7481,
+"H",
+"uygun geçiş"
+],
+[
+7495,
+"H",
+"uygun geçiş"
+],
+[
+7512,
+"H",
+"uygun geçiş"
+],
+[
+7518,
+"H",
+"uygun geçiş"
+],
+[
+7527,
+"G",
+"uygun geçiş"
+],
+[
+7542,
+"H",
+"uygun geçiş"
+],
+[
+7544,
+"Z",
+"uygun geçiş"
+],
+[
+7568,
+"L",
+"biçim"
+],
+[
+7580,
+"F",
+"biçim"
+],
+[
+7586,
+"F",
+"biçim"
+],
+[
+7592,
+"G",
+"uygun geçiş"
+],
+[
+7593,
+"G",
+"uygun geçiş"
+],
+[
+7602,
+"AF",
+"biçim"
+],
+[
+7606,
+"H",
+"uygun geçiş"
+],
+[
+7622,
+"A",
+"uygun geçiş"
+],
+[
+7677,
+"A",
+"uygun geçiş"
+],
+[
+7684,
+"A",
+"uygun geçiş"
+],
+[
+7700,
+"A",
+"uygun geçiş"
+],
+[
+7717,
+"B",
+"biçim"
+],
+[
+7719,
+"H",
+"uygun geçiş"
+],
+[
+7720,
+"H",
+"uygun geçiş"
+],
+[
+7724,
+"A",
+"anlam-farklı"
+],
+[
+7746,
+"L",
+"biçim"
+]
+]
+}
+}

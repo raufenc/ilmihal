@@ -1,0 +1,203 @@
+{
+ "mubah-acik": {
+  "n": 122,
+  "TAMAM": 53,
+  "K": 5,
+  "Y": 62,
+  "B": 2,
+  "D": 0,
+  "kalip": {
+   "HUKUMSUZ": 33,
+   "BAGLAMSIZ": 10,
+   "CAIZ_AMA_MEKRUH": 7,
+   "SART_EKSIK": 7,
+   "MEZHEP_GORUS": 4,
+   "KESIK": 3,
+   "ALTTUR": 3,
+   "BASKA_TUR": 2
+  },
+  "Y_baglamsiz": 10,
+  "Y_baglamsiz_kesinDegil": 0,
+  "K_kesin": 5
+ },
+ "mubah-tum-orneklem": {
+  "n": 100,
+  "TAMAM": 72,
+  "K": 2,
+  "Y": 24,
+  "B": 2,
+  "D": 0,
+  "kalip": {
+   "ALTTUR": 15,
+   "CAIZ_AMA_MEKRUH": 4,
+   "KESIK": 2,
+   "MEZHEP_GORUS": 2,
+   "SART_EKSIK": 2,
+   "ANLAM_DISI": 2,
+   "BAGLAMSIZ": 1
+  },
+  "Y_baglamsiz": 1,
+  "Y_baglamsiz_kesinDegil": 0,
+  "K_kesin": 2
+ },
+ "mubah-tum-supheli": {
+  "n": 28,
+  "TAMAM": 25,
+  "K": 0,
+  "Y": 3,
+  "B": 0,
+  "D": 0,
+  "kalip": {
+   "ALTTUR": 3
+  },
+  "Y_baglamsiz": 0,
+  "Y_baglamsiz_kesinDegil": 0,
+  "K_kesin": 0
+ },
+ "mekruh-acik": {
+  "n": 420,
+  "TAMAM": 292,
+  "K": 12,
+  "Y": 111,
+  "B": 5,
+  "D": 0,
+  "kalip": {
+   "BAGLAMSIZ": 82,
+   "MEZHEP_GORUS": 12,
+   "ALTTUR": 9,
+   "HUKUMSUZ": 8,
+   "SART_EKSIK": 4,
+   "OLUMSUZ": 4,
+   "KESIK": 3,
+   "ANLAM_DISI": 3,
+   "YINELENME": 2,
+   "BASKA_TUR": 1
+  },
+  "Y_baglamsiz": 82,
+  "Y_baglamsiz_kesinDegil": 23,
+  "K_kesin": 12
+ },
+ "mekruh-tum-orneklem": {
+  "n": 100,
+  "TAMAM": 72,
+  "K": 2,
+  "Y": 26,
+  "B": 0,
+  "D": 0,
+  "kalip": {
+   "BAGLAMSIZ": 20,
+   "ALTTUR": 3,
+   "OLUMSUZ": 2,
+   "MEZHEP_GORUS": 1,
+   "TAHRIMEN": 1,
+   "ANLAM_DISI": 1
+  },
+  "Y_baglamsiz": 20,
+  "Y_baglamsiz_kesinDegil": 7,
+  "K_kesin": 2
+ },
+ "mekruh-tum-supheli": {
+  "n": 133,
+  "TAMAM": 95,
+  "K": 3,
+  "Y": 35,
+  "B": 0,
+  "D": 0,
+  "kalip": {
+   "OLUMSUZ": 17,
+   "BAGLAMSIZ": 13,
+   "ALTTUR": 6,
+   "MEZHEP_GORUS": 2
+  },
+  "Y_baglamsiz": 13,
+  "Y_baglamsiz_kesinDegil": 4,
+  "K_kesin": 2
+ },
+ "haram-acik": {
+  "n": 657,
+  "TAMAM": 395,
+  "K": 43,
+  "Y": 218,
+  "B": 1,
+  "D": 0,
+  "kalip": {
+   "BAGLAMSIZ": 122,
+   "HUKUMSUZ": 68,
+   "MEZHEP_GORUS": 24,
+   "SART_EKSIK": 18,
+   "BASKA_TUR": 16,
+   "OLUMSUZ": 12,
+   "TAHRIMEN": 1,
+   "ATIF": 1
+  },
+  "Y_baglamsiz": 122,
+  "Y_baglamsiz_kesinDegil": 37,
+  "K_kesin": 38
+ },
+ "haram-tum-orneklem": {
+  "n": 100,
+  "TAMAM": 67,
+  "K": 0,
+  "Y": 28,
+  "B": 5,
+  "D": 0,
+  "kalip": {
+   "BAGLAMSIZ": 15,
+   "OLUMSUZ": 6,
+   "KESIK": 5,
+   "ANLAM_DISI": 4,
+   "SART_EKSIK": 2,
+   "MEZHEP_GORUS": 1
+  },
+  "Y_baglamsiz": 15,
+  "Y_baglamsiz_kesinDegil": 7,
+  "K_kesin": 0
+ },
+ "haram-tum-supheli": {
+  "n": 297,
+  "TAMAM": 193,
+  "K": 0,
+  "Y": 94,
+  "B": 10,
+  "D": 0,
+  "kalip": {
+   "OLUMSUZ": 36,
+   "BAGLAMSIZ": 26,
+   "ANLAM_DISI": 24,
+   "KESIK": 10,
+   "BASKA_TUR": 4,
+   "SART_EKSIK": 2,
+   "ALTTUR": 1,
+   "MEZHEP_GORUS": 1
+  },
+  "Y_baglamsiz": 26,
+  "Y_baglamsiz_kesinDegil": 12,
+  "K_kesin": 0
+ },
+ "acik-toplam": {
+  "n": 1199,
+  "TAMAM": 740,
+  "K": 60,
+  "Y": 391,
+  "B": 8,
+  "D": 0,
+  "kalip": {
+   "BAGLAMSIZ": 214,
+   "HUKUMSUZ": 109,
+   "MEZHEP_GORUS": 40,
+   "SART_EKSIK": 29,
+   "BASKA_TUR": 19,
+   "OLUMSUZ": 16,
+   "ALTTUR": 12,
+   "CAIZ_AMA_MEKRUH": 7,
+   "KESIK": 6,
+   "ANLAM_DISI": 3,
+   "YINELENME": 2,
+   "TAHRIMEN": 1,
+   "ATIF": 1
+  },
+  "Y_baglamsiz": 214,
+  "Y_baglamsiz_kesinDegil": 60,
+  "K_kesin": 55
+ }
+}

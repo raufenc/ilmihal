@@ -1,0 +1,230 @@
+229 392
+1 | 1-1 | peygambere uymak / saadet nedir / resulullaha uymak | Peygamber Efendimize (sallallahü aleyhi ve sellem) uymak, insanı ebedî saadete kavuşturur.
+2 | 1-2 | allaha itaat / resule itaat / itaat nedir | Allahü teâlâya itaat, Resûlüne (sallallahü aleyhi ve sellem) itaat etmekle olur.
+3 | 1-3 | musluman nasil olunur / musluman olmak / kelime i sehadet / sehadet getirmek / islam a girmek | Müslüman olmak için Kelime-i şehâdet söylenir; mânâsını bilip kalb ile inanmak şarttır.
+4 | 1-4 | ehli sunnet nedir / ehl i sunnet nedir / ehl i sunnet kimdir / ehli sunnet mezhebi | Ehl-i sünnet, Peygamber Efendimizin (sallallahü aleyhi ve sellem) ve Eshâb-ı kirâmın yolunda olan müslümanların itikad mezhebidir.
+5 | 1-5 | imam i azam kimdir / ebu hanife kimdir / hanefi mezhebi kurucusu | Ehl-i sünnetin reisi, İmâm-ı A'zam Ebû Hanîfe Nu'mân bin Sâbit hazretleridir.
+6 | 1-6 | imam i azam buyuklugu / ebu hanife buyuklugu | İmâm-ı A'zam Ebû Hanîfe hazretlerinin büyüklüğü, Dürr-ül-muhtâr ve Hayrât-ül-hisân kitaplarından nakledilmektedir.
+7 | 1-7 | islam alimleri / islam alimleri kitaplari | İslâm âlimlerinin kitapları, Ehl-i sünnet itikadını ve fıkhını doğru olarak bildirir.
+8 | 1-8 | kuran tefsiri / tefsir nedir / uydurma tefsir | Kur'ân-ı Kerîmi kendi görüşüne göre tefsir etmek büyük günahtır; uydurma tefsir yazan kâfir olur.
+9 | 1-9 | kuran tercumesi / kuran meali / hangi meal guvenilir | Kur'ân-ı Kerîm tercümelerine dikkat edilmelidir; hangisine güvenileceği bildirilmektedir.
+10 | 1-10 | din hirsizlari / sahte hoca / yanlis din anlatan | Din hırsızları, dini yanlış anlatıp müslümanları doğru yoldan ayıran kimselerdir.
+11 | 1-3 | iman nedir / iman ne demek / iman tanimi / iman bilgileri | Îmân, Peygamber Efendimizin (sallallahü aleyhi ve sellem) Allahü teâlâdan getirdiklerinin hepsine kalb ile inanmaktır; müslüman olmak için Kelime-i şehâdet söylenir.
+12 | 1-11 | imani bozan seyler / iman nasil gider / kufre dusurmek / kufur sozleri | Îmânın gitmesine sebep olan söz ve işler bildirilmektedir; küfür sebeplerinden sakınmak lâzımdır.
+13 | 1-12 | imanin alameti nedir / iman nasil belli olur | Kalbde îmân bulunmasının alâmeti, İslâmiyetin hükümlerine (ahkâm-ı islâmiyye) uymaktır.
+14 | 1-13 | allahin nimetleri / nimet nedir / allahun nimetleri | Allahü teâlânın nimetleri dünyada herkese, âhirette ise yalnız mü'minlere verilir.
+15 | 1-14 | kafir ahirette / kafirin akibeti / kafir merhamet | Âhirette kâfir olarak ölenlere merhamet yoktur.
+16 | 1-15 | muhabbet nedir / allah sevgisi alameti / sevginin alameti | Muhabbetin (sevginin) alâmeti, sevilenin isteklerine uymaktır.
+17 | 1-16 | peygamber efendimiz / hz muhammed / peygamberimizin hayati | Peygamber Efendimiz Muhammed (sallallahü aleyhi ve sellem), Allahü teâlânın sevgilisidir.
+18 | 1-17 | mucize nedir / peygamberimizin mucizeleri | Peygamber Efendimizin (sallallahü aleyhi ve sellem) mûcizeleri ve Kur'ân-ı Kerîmin üstünlüğü bildirilmektedir.
+19 | 1-18 | resule tabi olmak / evlad terbiyesi / cocuk terbiyesi / cocuga din ogretmek | Resûlullaha (sallallahü aleyhi ve sellem) tâbi olmanın nasıl olacağı ve evlât terbiyesi anlatılmaktadır.
+20 | 1-19 | hubbi fillah / bugdi fillah / allah icin sevmek / allah icin buzmek | Hubb-i fillah ve buğd-i fillah, yani Allah için sevmek ve Allah için sevmemek anlatılmaktadır.
+21 | 1-19 | kazaya riza / kadere razi olmak / allahtan gelen bela | Kazâya rızânın nasıl olacağı anlatılmaktadır.
+22 | 1-21 | cennet nedir / cennete girmek / cennete nasil girilir | Cennete girmek için Peygamber Efendimize (sallallahü aleyhi ve sellem) uymak lâzımdır.
+23 | 1-22 | kafirlerin iyiligi / kafir iyilik / kafirin sevabi | Kâfirlerin iyilikleri dünyada kalır; âhirette faydası olmaz.
+24 | 1-23 | dunya ahiretin tarlasi / dunya nedir / dunya ahiret | Dünya, âhiretin tarlasıdır; burada ekilen âhirette biçilir.
+25 | 1-24 | ahiret bilgileri / ahirete iman / gayba iman | Âhiret bilgileri aklın dışındadır; bunlara akıl ermez, îmân ile kabul edilir.
+26 | 1-91 | kuran i kerim nedir / kuran allah kelami mi | Kur'ân-ı Kerîm, Allah kelâmıdır; mahlûk değildir.
+27 | 1-94 | allah nedir / allah nasil anlasilir / allahu teala | Allahü teâlâ akıl ile, hayal ile anlaşılamaz; gayba îmân etmek lâzımdır.
+28 | 1-26 | ictihad hatalari / imam i azam ictihad / muctehid hatasi | İctihad hataları ve İmâm-ı A'zam Ebû Hanîfe hazretlerinin büyüklüğü anlatılmaktadır.
+29 | 1-29 | kafirlerin esyasi / gayrimuslim esyasi kullanmak | Kâfirlerin kullandığı şeyler iki türlüdür: âdete ait olanlar ve dine ait olanlar.
+30 | 1-30 | resulullaha uymak dereceleri / sunnete uymak dereceleri | Resûlullaha (sallallahü aleyhi ve sellem) uymak yedi derecedir.
+31 | 1-31 | ehl i sunnet itikadi / itikad nedir / haramlar nelerdir | Ehl-i sünnet itikadı, haramlar ve tevbe anlatılmaktadır.
+32 | 1-32 | yetmisuc firka / 73 firka / firkai naciye / hangi mezhep kurtulur | Bu ümmet yetmiş üç fırkaya ayrılacaktır; kurtulacak olan Ehl-i sünnet vel-cemâattir.
+33 | 1-45 | allahin yakin olmasi / kurbiyet nedir / allaha yakinlik | Allahü teâlânın kullarına yakın olmasının ne demek olduğu anlatılmaktadır.
+34 | 1-36 | fen bilgileri ve din / fen ve iman / yaratici var mi | Bir üniversiteliye cevap: Fen bilgileri, bir yaratıcının var olduğunu göstermektedir.
+35 | 1-33 | felsefecilere gore tefsir / felsefi tefsir caiz mi | Kur'ân-ı Kerîmi felsefecilere göre tefsir etmek câiz değildir.
+36 | 1-39 | tenasuh nedir / reenkarnasyon / ruh gocu var mi | Tenâsüh (ruh göçü) ve iki ruhluluk yoktur; âlem-i misâl anlatılmaktadır.
+37 | 1-28 | sunnet nedir / sunnet i muekkede / sunnet i zevaid | Sünnet-i müekkede ve sünnet-i zevâid anlatılmaktadır.
+38 | 1-34 | sunnete yapismak / sunnet onemi / bid atten sakinmak | Sünnete yapışmak, bid'atlerden sakınmak lâzımdır.
+39 | 1-34 | bidat nedir / bid at nedir / bid at ne demek | Bid'at, Peygamber Efendimizin (sallallahü aleyhi ve sellem) ve Eshâb-ı kirâmın zamanından sonra dinde çıkarılan şeylerdir; bunlardan sakınmak lâzımdır.
+40 | 2-1 | bid at tehlikesi / sunneti terk etmek / bid atlerden sakinmak | Unutulmuş sünnetleri meydana çıkarmak ve bid'atlerden sakınmak teşvik edilmektedir.
+41 | 2-1 | sunneti ihya / unutulmus sunnet / sunneti canlandirmak | Unutulmuş sünnetleri meydana çıkarmak ve bid'atlerden sakınmak teşvik edilmektedir.
+42 | 1-27 | ictihad nedir / muctehid kimdir / ictihad ne demek | İctihad, şer'î hükümleri delillerden çıkarmaktır; müctehid, bunu yapabilecek ilme sahip âlimdir.
+43 | 1-44 | farz sunnet nafile farki / farz sunnet onemi | Farz, sünnet ve nâfilelerin ehemmiyeti ve farkları bildirilmektedir.
+44 | 1-46 | iman ibadet nasihat / iman ve ibadet / luzumlu nasihatler | Îmân, ibadetler ve lüzumlu nasihatler bildirilmektedir.
+45 | 1-47 | haramlar nelerdir / iman ve haram / buyuk gunahlar | Îmân, ibadetler ve haramlar bildirilmektedir.
+46 | 1-49 | alem nasil yaratildi / yoktan yaratma / yunan filozoflari | Âlemler ve her şey yoktan var edilmiştir; Yunan felsefecilerinin yanılgıları bildirilmektedir.
+47 | 1-52 | abdest nasil alinir / abdest almak / abdesti bozan seyler | Abdest almak ve abdesti bozan şeyler bildirilmektedir.
+48 | 1-51 | otuzuc farz / 33 farz / bes vakit namaz farzlari | Beş vakit namaz ve otuz üç farz bildirilmektedir.
+49 | 1-51 | namazin farzlari / namaz farzlari / namazin sartlari | Namazın farzları ve şartları, otuz üç farz içinde bildirilmektedir.
+50 | 1-53 | mest uzerine mesh / meshe mesh / ozur sahibi | Mest üzerine mesh ve özür sahibi olmanın hükümleri bildirilmektedir.
+51 | 1-54 | gusul nasil alinir / gusul abdesti nasil alinir / boy abdesti | Gusül abdestinin nasıl ve ne zaman alınacağı bildirilmektedir; ağıza ve burna su vermek farzdır.
+52 | 1-55 | teyemmum nasil yapilir / teyemmum nasil alinir / teyemmum nedir | Teyemmüm, su bulunamadığı veya kullanılamadığı zaman temiz toprak ile yapılan temizliktir.
+53 | 1-56 | necaset nedir / necaset temizligi / istinca nedir / istibra nedir | Necâsetten tahâret, istincâ ve istibrâ hükümleri bildirilmektedir.
+54 | 1-57 | sular nedir / su cesitleri / temiz su | Sular, temiz su, pis su ve artıklar anlatılmaktadır.
+55 | 1-58 | avret yerleri / setr i avret / avret nedir | Setr-i avret: namazda ve namaz dışında örtülmesi gereken yerler bildirilmektedir.
+56 | 1-59 | kible neresi / kible nasil bulunur / kible tayini | İstikbâl-i kıble, namazda Kâbe-i muazzamaya yönelmektir; kıblenin nasıl tayin edileceği anlatılmaktadır.
+57 | 1-60 | namaz vakitleri / bes vakit namaz saatleri / namaz vakti ne zaman | Namaz vakitleri, takvimler ve ezan anlatılmaktadır.
+58 | 1-61 | ezan nedir / ezan nasil okunur / ezan kelimeleri | Ezan ve ikamet bildirilmektedir.
+59 | 1-62 | ezan anlami / ezan manasi / ezan kelimelerinin manasi | Ezan kelimelerinin mânâları açıklanmaktadır.
+60 | 1-63 | namaz kilmamak gunah mi / namaz kilmayanin cezasi / namaz onemi | Namazın ehemmiyeti büyüktür; namaz kılmayanların hâli bildirilmektedir.
+61 | 1-64 | namaz nasil kilinir / namaz kilinis / namaz rukunleri / namazin bes ruknu | Namazın nasıl kılınacağı, namazın beş rüknü ve niyet açıklanmaktadır.
+62 | 1-65 | yolculukta namaz / seferi namaz / yolcu namazi / misafir namazi | Yolculukta, otobüste, gemide ve uçakta namaz bildirilmektedir; seferî olan, dört rekâtlı farzları iki rekât kılar.
+63 | 1-66 | secde i sahv / sehiv secdesi / namazin vacibleri / vitir namazi | Namazın vâcibleri, secde-i sehv, secde-i tilâvet ve vitir namazı açıklanmaktadır.
+64 | 1-67 | namazi bozan seyler / namaz bozulur mu / namazi ne bozar | Namazı bozan şeyler ve kâfirlere benzemenin (teşebbüh) hükmü bildirilmektedir.
+65 | 1-68 | namazin mekruhlari / namazda mekruh / namazi bozmak icin ozur | Namazın mekruhları ve namazı bozmak için özür sayılan hâller bildirilmektedir.
+66 | 1-69 | teravih namazi nasil kilinir / teravih namazi / camide adab | Câmide yapılması câiz olmayan şeyler ve terâvih namazı anlatılmaktadır.
+67 | 1-70 | cemaatle namaz / cemaat ile namaz / hoparlorle namaz / radyo ile namaz | Cemaat ile namaz kılmanın hükümleri bildirilmektedir; hoparlörle ve radyo ile namaz da ele alınmaktadır.
+68 | 1-71 | cuma namazi nasil kilinir / cuma namazi / cuma farzi | Cuma namazı erkeklere farzdır; cuma namazı ve ibadetin ne demek olduğu anlatılmaktadır.
+69 | 1-72 | bayram namazi nasil kilinir / bayram namazi / bayram namazlari | Bayram namazı vâcibdir; kılınışı ve Kurban bayramı tekbirleri anlatılmaktadır.
+70 | 1-73 | namazda parmak kaldirmak / tesehhudde parmak / otururken parmak | Namazda otururken parmak kaldırmanın hükmü bildirilmektedir.
+71 | 1-74 | kaza namazi / kaza namazi nasil kilinir / namaz borcu / kaza namazlari | Kazâ namazlarını kılmak lâzımdır; namaz kılmayanın cezası bildirilmektedir.
+72 | 1-75 | namaz ibadetlerin en ustunu mu / namaz ustunlugu | Namaz, ibadetlerin en üstünüdür.
+73 | 1-76 | tadili erkan nedir / kul hakki | Namazda ta'dîl-i erkân ve kul hakkı anlatılmaktadır.
+74 | 1-77 | helal lokma / sehid kime denir / sehidlik nedir | Namazı doğru kılmak, helâl lokma ve şehîdin kime denildiği anlatılmaktadır.
+75 | 1-79 | ramazan orucu / oruc nasil tutulur / ramazanin kiymeti | Ramazân-ı şerîfin kıymeti ve orucun nasıl tutulacağı anlatılmaktadır.
+76 | 1-79 | orucu bozan seyler / oruc bozulur mu / orucu ne bozar / ramazan orucu hukmu | Ramazan orucunun hükümleri ve orucu bozan şeyler bildirilmektedir.
+77 | 1-78 | zekat nedir / zekat vermek / zekat hukumleri / zekat farz mi | Zekât vermek farzdır; para, mal, hayvan ve toprak mahsullerinin zekâtı anlatılmaktadır.
+78 | 1-78 | zekat nisabi / zekat nisabi ne kadar / zekat miktari | Hanefî mezhebinde altının zekât nisabı 96 gram, gümüşün nisabı 672 gramdır; hesaplanması anlatılmaktadır.
+79 | 1-78 | zekat kimlere verilir / zekat kimlere farz / zekat verilecek kimseler | Zekât, Kur'ân-ı Kerîmde bildirilen sekiz sınıf insana verilir.
+80 | 1-80 | fitre nedir / sadaka i fitr / fitre ne kadar / fitre kimlere verilir | Sadaka-i fıtr, Ramazan bayramında verilmesi vâcib olan sadakadır; kimlerin vereceği ve kimlere verileceği bildirilmektedir.
+81 | 1-84 | hac nasil yapilir / hac farzi / hacca gitmek / hac ibadetleri | Hac, imkânı olan müslümana ömründe bir kere farzdır; haccın nasıl yapılacağı anlatılmaktadır.
+82 | 1-81 | kurban kesmek / kurban nedir / kurban vacip mi / kurban nasil kesilir | Kurban kesmek, nisaba mâlik olan müslümanlara vâcibdir; kimlerin keseceği ve nasıl kesileceği anlatılmaktadır.
+83 | 1-82 | adak nedir / adak nasil yapilir / nezir nedir | Adağın (nezir) ne demek olduğu ve günah olan adaklar bildirilmektedir; adağı yerine getirmek vâcibdir.
+84 | 1-83 | yemin nedir / yemin keffareti / yemin bozmak | Yemînin nasıl edileceği, yemînin çeşitleri ve yemîn keffâreti bildirilmektedir.
+85 | 1-85 | mubarek geceler / kandil geceleri / kadir gecesi / mirac gecesi | Mübârek geceler, kandiller ve Peygamber Efendimizin (sallallahü aleyhi ve sellem) mîrâcı anlatılmaktadır.
+86 | 1-87 | hicri takvim / kameri sene / hicri yil cevirme | Kamerî seneyi mîlâdî seneye çevirmenin yolu bildirilmektedir.
+87 | 1-90 | selam vermek / selamlasmak / selam nasil verilir | Selâmlaşmak sünnettir; selâm vermenin, almanın ve müsâfehanın âdâbı bildirilmektedir.
+88 | 1-25 | kuran nedir / kuran i kerim / kuran tercemeleri | Kur'ân-ı Kerîmin ne olduğu ve Kur'ân tercümeleri hakkında bilgi verilmektedir.
+89 | 1-91 | kuran mahluk mu / kuran allah kelami / kuran yaratilmis mi | Kur'ân-ı Kerîm, Allah kelâmıdır; mahlûk değildir.
+90 | 1-94 | gayba iman nedir / gayb nedir / allahin sifatlari | Allahü teâlâ akıl ile anlaşılamaz; gayba îmân etmek lâzımdır.
+91 | 1-95 | hilye i saadet / siyer kitaplari / resulullahin zevceleri | Hilye-i saâdet, siyer kitapları ve Peygamber Efendimizin (sallallahü aleyhi ve sellem) mübarek zevceleri anlatılmaktadır.
+92 | 1-96 | peygamberimizin ahlaki / hz muhammed ahlaki | Peygamber Efendimizin (sallallahü aleyhi ve sellem) güzel ahlâkı anlatılmaktadır.
+93 | 2-1 | unutulmus sunnetler / sunneti ihya etmek / sunnetleri canlandirmak | Unutulmuş sünnetleri meydana çıkarmak ve bid'atlerden sakınmak teşvik edilmektedir.
+94 | 1-43 | tevbe nedir / tovbe nasil yapilir / tevbe ve vera | Tevbe, verâ ve takvâ anlatılmaktadır.
+95 | 1-41 | emri bil maruf / iyiligi emretmek / cihad sevabi | Emr-i bil-ma'rûf, nehy-i ani'l-münker ve cihâdın sevabı çoktur.
+96 | 1-58 | tesettur farz mi / kadinlarin ortunmesi / islamda tesettur | Setr-i avret ve kadınların örtünmesi bildirilmektedir; kadınların örtünmesi farzdır.
+97 | 1-50 | tasavvuf nedir / tasavvuf yolu | Tasavvuf yolunda çalışmak isteyenin yapması lâzım olan şeyler bildirilmektedir.
+98 | 1-40 | alemi ervah / alemi misal / alemi ecsad | Âlem-i ervâh, âlem-i misâl, âlem-i ecsâd ve kabir azabı anlatılmaktadır.
+99 | 1-48 | genclikte ibadet / genc ibadet / genclik ibadeti | Gençlikte yapılan ibadetlerin kıymeti büyüktür.
+100 | 1-45 | allahin yakinligi / kurbiyet ilahi / yakin olmak allah | Allahü teâlânın yakın olmasının ne demek olduğu anlatılmaktadır.
+101 | 1-95 | hilye i serif / peygamberimizin dis gorunusu / resulullahin sifatlari | Hilye-i saâdet ve Peygamber Efendimizin (sallallahü aleyhi ve sellem) mübarek vasıfları anlatılmaktadır.
+102 | 2-2 | dua nedir / dua nasil edilir / dua etmenin adabi | Duâ etmekteki gizli bilgiler açıklanmaktadır.
+103 | 2-3 | resulullaha uymak / hocasini sevmek / din alimine hurmet | Resûlullaha (sallallahü aleyhi ve sellem) uymaya ve dinini öğrendiği kimseyi sevmeye teşvik edilmektedir.
+104 | 2-4 | adalet nedir / akil nedir / iman ve akil | Îmân, akıl, zekâ, helâl, haram, adalet, zulüm, kazâ ve kader anlatılmaktadır.
+105 | 1-96 | peygamberimizin guzel ahlaki / resulullahin ahlaki | Peygamber Efendimizin (sallallahü aleyhi ve sellem) güzel ahlâkı anlatılmaktadır.
+106 | 2-6 | hadis nedir / hadis cesitleri / hadis alimleri | Hadîs-i şeriflerin çeşitleri ve hadîs âlimleri bildirilmektedir.
+107 | 2-8 | dert bela allahtan / musibete sabir / bela allahtan gelir | Dert ve belânın Allahü teâlâdan geldiğini düşünmelidir.
+108 | 2-8 | belaya sabretmek / bela sabir / musibet karsi sabir | Dert ve belânın Allahü teâlâdan geldiğini düşünüp sabretmelidir.
+109 | 2-9 | sabir nedir / belaya sabir / derde sabr | İnsanlardan gelen sıkıntılara sabretmek lâzımdır.
+110 | 2-10 | uzuntuyu nimet bilmek / sikinti nimet mi / bela nimet | Üzüntü ve sıkıntıları nimet bilmelidir.
+111 | 2-11 | zahir ameller / kalb dagilmasi / dis islerin bozuklugu | Zâhir işlerin bozuk olması, kalbin dağılmasına yol açar.
+112 | 2-12 | bela gunaha keffaret / dert keffaret / hastalik gunah siler mi | Dert ve belâlar, günahlara keffârettir.
+113 | 2-13 | allahin arzusuna uymak / teslim olmak / irade i rabbani | Kendi dileklerimizi bırakıp Sahibimizin arzusuna uymalıyız.
+114 | 2-14 | kibir nedir / ucub nedir / kibr ve ucb | Kibir ve ucb, kalbin tehlikeli hastalığıdır.
+115 | 2-15 | allahin isimleri / esma ul husna / yaratmak ne demek | Allahü teâlânın isimleri ve yaratmanın ne demek olduğu anlatılmaktadır.
+116 | 2-16 | fikih nedir / mezhep nedir / hanefi mezhebi | Fıkıh ilmi, mezhebin ne olduğu ve İmâm-ı A'zam Ebû Hanîfe hazretleri anlatılmaktadır.
+117 | 2-17 | vehhabilik nedir / vehhabi kimdir / vehhabi inanci | Vehhâbîler ve çeşitleri anlatılmakta; kıymetli din kitaplarını okumak, bozuk kitaplara aldanmamak tavsiye edilmektedir.
+118 | 2-18 | kabir ziyareti lazim mi / olgun ruhlardan istifade / olulere yardim / olulere dua | Kabir ziyaretinin lüzumu ve olgun ruhlardan istifade edildiği anlatılmaktadır.
+119 | 2-20 | kabir azabi / kabir azabi var mi / kabir hayati | Kabir azabı haktır; buna inanmayanlara cevap verilmektedir.
+120 | 2-8 | bela ve sabir / dert ve sabir / beladan ders almak | Dert ve belânın Allahü teâlâdan geldiğini düşünmelidir.
+121 | 2-21 | bozuk dinler / baska dinler / behailik / durziler / yezidiler | Şâmânîler, Behâîler, Ahmediyye, Dürzîler, Yezîdîler ve Selefîler hakkında bilgi verilmektedir.
+122 | 2-22 | hurufilik nedir / hurufilik / hurufiler | Hurûfîlik hakkında bilgi verilmektedir.
+123 | 2-23 | resulullahin vefati / kagit hadisesi / eshabi kiram ihtilafi | Peygamber Efendimizin (sallallahü aleyhi ve sellem) vefatı sırasında kâğıt istemesi ve Eshâb-ı kirâmın üstünlüğü anlatılmaktadır.
+124 | 2-24 | eshab i kiram / sahabe / sahabi kimdir | Eshâb-ı kirâm birbirini çok severdi; Şîîlerin iftiralarına cevap verilmektedir.
+125 | 2-25 | eshab i kiram buyuklugu / sahabe fazileti / sahabelere dert gelmesi | Eshâb-ı kirâmın büyüklüğü ve dostlara çok dert gelmesi anlatılmaktadır.
+126 | 2-26 | sosyal adalet / sosyalizm / kapitalizm / komunizm / islam ekonomisi | Sosyal adalet, sosyalizm, kapitalizm ve komünizm İslâm dinine göre değerlendirilmektedir.
+127 | 2-27 | islam dini nedir / islam dini ozellikleri / islamiyet nedir | İslâmiyet, din ve dünya saadetlerinin kaynağıdır.
+128 | 2-28 | nefs nedir / akil nedir / nefsi terbiye | Nefs ve akıl anlatılmaktadır.
+129 | 2-29 | muslumanlar neden geri kaldi / islamin gerileme sebebi / geri kalma | Müslümanların niçin geri kaldıkları ve sebepleri açıklanmaktadır.
+130 | 2-30 | islamiyet ve fen / din fen catisir mi / islam bilim | İslâmiyet fenni emretmektedir; fen bilgileri dine aykırı değildir.
+131 | 2-31 | atom nedir / madde nedir / atom bilgileri | Madde ve atom üzerinde yeni bilgiler verilmektedir.
+132 | 2-31 | radyoaktivite nedir / radar nedir / radyo aktivite | Madde, atom, radyoaktivite ve radar üzerinde yeni bilgiler verilmektedir.
+133 | 2-34 | nikah nasil kiyilir / evlenme / islamda nikah / nikah hukumleri | İslâmiyette nikâh ve evlenmesi câiz olmayan kadınlar bildirilmektedir.
+134 | 2-35 | kafirlerin evlenmesi / cocuga iman ogretmek / cocuga islami ogretmek | Kâfirlerin evlenmesi ve çocuklara îmânı, İslâmı öğretmenin lüzumu bildirilmektedir.
+135 | 2-36 | bosanma / talak nedir / bosanma hukumleri / uc talak | İslâmiyetteki talâk, hul', zıhâr, liân, iddet ve hıdâne hükümleri açıklanmaktadır.
+136 | 2-37 | sut kardeslik / sut anne / sut emzirmek | Süt kardeşlik ve süt ile akraba olanlar bildirilmektedir.
+137 | 2-38 | nafaka nedir / komsu hakki / nafaka hukumleri | Nafaka, lakît ve komşu hakkı hükümleri açıklanmaktadır.
+138 | 2-39 | kadin hakki / islamda kadin / kadin haklari | İslâmiyette kadının kıymeti ve hakları çok büyüktür.
+139 | 2-40 | helal haram / halal haram / subheli seyler / vera ve takva | Helâl, haram ve şüpheli şeyler ile verâ ve takvâ açıklanmaktadır.
+140 | 2-41 | haram yiyecekler / domuz eti / haram giyecekler | Yenmesi ve kullanılması haram olan şeyler bildirilmektedir.
+141 | 2-42 | icki haram mi / serab icmek / alkol haram mi | İçilmesi haram olan içkiler bildirilmektedir.
+142 | 2-43 | sigara haram mi / tutun gunah mi / tutun icmek | Tütün ve sigara içmenin hükmü ele alınmaktadır.
+143 | 2-44 | faiz haram mi / faiz nedir / riba nedir / faiz yasak mi / israf nedir | İsrafın ne olduğu, tütünün israf olup olmadığı ve faizin haram olduğu bildirilmektedir.
+144 | 2-45 | yemek adabi / sofra adabi / yemek icmek adabi | Yemek ve içmek âdâbı bildirilmektedir.
+145 | 2-46 | hasta yemekleri / hastalik tedavisi / saglik tavsiyeleri | Hasta yemekleri ve bazı hastalıkların tedavisi bildirilmektedir.
+146 | 2-47 | tevekkul nedir / tevekkul ne demek / allaha tevekkul | Tevekkül, sebeplere yapışıp neticeyi Allahü teâlâya bırakmaktır; evlilerin ve bekârların tevekkülü anlatılmaktadır.
+147 | 2-48 | levh i mahfuz / umm ul kitab / insan omru degisir mi | Levh-i mahfûz, Ümmü'l-kitâb ve insan ömrünün değişmesi anlatılmaktadır.
+148 | 2-50 | kaza kader nedir / kaza ve kader / kader inanci | Ebüssuûd Efendi hazretlerinin Kazâ ve Kader risâlesi bildirilmektedir.
+149 | 2-49 | irade i cuziyye nedir / irade i cuzi | İrâde-i cüz'iyye anlatılmakta; bir ihtiyar müslümanın kızına nasihati ve münâcâtı bildirilmektedir.
+150 | 2-51 | hamd nedir / sukur nedir / hamd sukrden ustun mu | Sevgilinin her işi sevilir; hamd, şükürden üstündür.
+151 | 2-52 | muzik haram mi / teganni nedir / sarki soylemek / calgi haram mi | Tegannî, müzik ve radyoda, teypte Kur'ân-ı Kerîm okumak ve dinlemek hakkında hükümler bildirilmektedir.
+152 | 2-53 | cin nedir / cin var mi / cinler hakkinda | Cinler hakkında geniş bilgi ve evliyânın ruhları anlatılmaktadır.
+153 | 2-62 | gayb imani / gaybe iman / secilmislerin imani | Seçilmişlerin, câhillerin ve tasavvuf ehlinin gayba îmânları açıklanmaktadır.
+154 | 2-55 | dunyayi terk / dunya dusuncesi / evliya gonlu | Allah adamlarının gönlünde zerre kadar dünya düşüncesi yoktur.
+155 | 2-56 | ruhlar gorunur mu / tenasuh yoktur / ruh insan seklinde | Ruhlar insan şeklinde görünür; tenâsüh (ruh göçü) yoktur.
+156 | 2-57 | medeniyet nedir / insan neden medeni / toplum hayati | İnsan medenî olmak için yaratılmıştır; yaşamak için başka insanlara muhtaçtır.
+157 | 2-60 | keramet cok az olmasi / harikalarin sebebi | Hârikaların ve kerâmetlerin çok veya az olmasının sebebi açıklanmaktadır.
+158 | 2-59 | mucize keramet fark / keramet nedir / sihr nedir | Mûcize, kerâmet, firâset, istidrâc ve sihir arasındaki farklar açıklanmaktadır.
+159 | 2-61 | veli olmak icin keramet / kerametsiz veli / evliyalik sarti | Velî olmak için hârikalar ve kerâmetler lâzım değildir.
+160 | 2-66 | allah hicbir seye benzemez / allah neye benzer / allah akl ile anlasilir mi | Allahü teâlâ hiçbir şeye benzemez ve akıl ile anlaşılamaz.
+161 | 2-67 | cennetde allahi gormek / ruyetullah / allahu teala gorulecek mi | Cennette Allahü teâlânın görüleceğine inanmayanlara cevap verilmektedir.
+162 | 2-64 | insanin asli / nefs in asli / adem nedir | İnsanın aslı ademdir (yokluktur); ademde hiç iyilik yoktur.
+163 | 2-65 | guzel suretler / guzellik sebebi / guzel yuz | Güzel suretlerin tatlı gelmesinin sebebi açıklanmaktadır.
+164 | 3-2 | kadinlarla sozlesme / peygamberimiz kadinlar / biat nedir | Peygamber Efendimizin (sallallahü aleyhi ve sellem) kadınlarla yaptığı sözleşme (biat) ve şirkin tehlikesi bildirilmektedir.
+165 | 2-71 | abdullah i dehlevi / mekatib i serife / dehlevi hazretleri | Abdullah-i Dehlevî hazretlerinin Mekâtib-i şerîfe kitabından mektuplar tercüme edilmektedir.
+166 | 3-1 | sunnete yapismak onemi / bid at zulmet / sunnet nur | İşin başı, sünnet-i seniyyeye yapışmak ve bid'atten sakınmaktır.
+167 | 3-1 | sunnete bagli olmak / sunnet seniyye / ahkam i islamiyye | İşin başı, sünnet-i seniyyeye yapışmak ve bid'atten sakınmaktır.
+168 | 3-2 | sirk nedir / insanin en buyuk gunahi / sirk tehlikesi | Şirk, insan için en büyük tehlikedir; Peygamber Efendimizin (sallallahü aleyhi ve sellem) kadınlarla yaptığı sözleşmede yasaklanan işler anlatılmaktadır.
+169 | 3-3 | ticaret hukumleri / islami ticaret / alis veris hukumleri | İslâmiyette kazanç (kesb), ticaret ve helâl kazanmak açıklanmaktadır.
+170 | 3-4 | alim satim / bey ve sira / satis hukumleri | Bey' ve şirâ (alım-satım) ile helâl ve haram satışlar bildirilmektedir.
+171 | 3-5 | muhayyerlik nedir / alis veriste muhayyerlik | Alışverişte muhayyerlik hükümleri açıklanmaktadır.
+172 | 3-6 | batil satis / fasid satis / mekruh satis / sarraflik | Bâtıl, fâsid ve mekruh satışlar ile sarraflık hükümleri bildirilmektedir.
+173 | 3-7 | hasta satis / hasta hediyye / hastanin satisi / olum hastasi satis | Ölüm hastasının satış ve hediye yapmasının hükümleri bildirilmektedir.
+174 | 3-8 | cesitli fikih bilgileri / sufa nedir / komsu hakki | Komşu, şüf'a ve diğer haklar üzerinde çeşitli bilgiler verilmektedir.
+175 | 3-9 | sart ile soylemek / sartli satis / sartli muamele | Şart ile söylenen şeylerin hükümleri açıklanmaktadır.
+176 | 3-13 | bono nedir / sened kirdirmak / police / cek nedir | Kefâlet, havâle, bono, senet kırdırmak ve poliçe hükümleri bildirilmektedir.
+177 | 3-11 | istisna nedir / siparis usulu satis / ismarlanmis mal | İstisnâ' (ısmarlama yaptırmak) hükümleri açıklanmaktadır.
+178 | 3-12 | odunc vermek / borc vermek / karz i hasen | Karz-ı hasen (ödünç vermek) ve kimlerin ödünç isteyebileceği bildirilmektedir.
+179 | 3-13 | kefalet nedir / havale nedir | Kefâlet ve havâle hükümleri açıklanmaktadır.
+180 | 3-14 | vekalet nedir / vekil tayin | Vekâlet; alışverişte ve zekât vermekte vekil tutmak bildirilmektedir.
+181 | 3-15 | ticarette adalet / ihtikar nedir / karaborsa | Ticarette adalet ve ihtikâr (karaborsacılık) hükümleri açıklanmaktadır.
+182 | 3-16 | ticarette ihsan / ticarette iyilik / ticaret ahlaki | Ticarette ihsan etmek, borç ödemek ve din kitapları anlatılmaktadır.
+183 | 3-17 | ticarette dinini kayirmak / dindar tacir / ticarette din | Ticarette dinini kayırmak ve haramdan sakınmak anlatılmaktadır.
+184 | 3-21 | kira hukumleri / ucret / iscilik / sigorta | Kira, ücret, işçilik ve sigortacılık hükümleri bildirilmektedir.
+185 | 3-19 | faiz hukmu / banka faizi / bono kirdirmak / islamda faiz | İslâmiyette faiz, bankalar, bono kırdırmak ve vakıf hükümleri açıklanmaktadır.
+186 | 3-20 | sirket hukmu / ortaklik / sirket kurma | İslâmiyette şirket kurmak ve şirketler hakkında hükümler bildirilmektedir.
+187 | 3-21 | emanet nedir / emanete riayet / emanetciye para | Emanetçiye verilen para ile kira, ücret, işçilik ve sigortacılık hükümleri bildirilmektedir.
+188 | 3-22 | ceza hukuku / ukubat / islamda ceza | Ukûbât: zinâ, içki, kazf, hırsızlık ve yol kesme cezaları açıklanmaktadır.
+189 | 3-23 | tazir cezasi / tazir nedir / fikih kitaplari okumak | Ta'zîr cezaları bildirilmektedir; tefsir kitaplarını değil, fıkıh kitaplarını okumak lâzımdır.
+190 | 3-24 | cinayet hukmu / adam oldurme / katl / kisas nedir | Cinayetler, katlin çeşitleri ve cezaları ile kısas hükümleri bildirilmektedir.
+191 | 3-25 | diyet nedir / diyet cezasi / katl keffareti | Diyet cezaları ve katl keffâreti açıklanmaktadır.
+192 | 3-26 | ikrah nedir / zorla yapdirmak / hicr nedir / yasaklamak | İkrâh (zorla yaptırmak) ve hicr (bir şeyi yasaklamak) hükümleri açıklanmaktadır.
+193 | 3-27 | evliyalik ve seriat / ahkam i islamiyyesiz evliyalik / seriat olmadan evliya | Ahkâm-ı islâmiyyesiz evliyâlık olmaz.
+194 | 3-28 | kelime i tevhid / la ilahe illallah / tevhid | Kelime-i tevhîdin mânâsı bildirilmektedir.
+195 | 3-29 | kelime i tevhid ustunlugu / kelime i tevhid fazileti | Kelime-i tevhîdin üstünlükleri açıklanmaktadır.
+196 | 3-30 | fena beka nedir / fena fillah / beka billah | Fenâ ve bekâ ile mahlûkların aslı ve hakîkatleri bildirilmektedir.
+197 | 3-31 | eshab i yemin / eshab i simal / sabikun kimdir | Eshâb-ı yemîn, eshâb-ı şimâl ve sâbikûn açıklanmaktadır.
+198 | 3-32 | muminin kalbi / kalbin kiymeti / kalb kirmak | Mü'minin kalbi kıymetlidir; hiç kimsenin kalbini kırmamalıdır.
+199 | 3-33 | ars nedir / kursi nedir / kalbin ustunlukleri | Arş ve Kürsî ile kalbin üstünlükleri açıklanmaktadır.
+200 | 3-34 | alem i emr nedir / bes cevher / ruh kalb sir | Âlem-i emrdeki beş cevher açıklanmaktadır.
+201 | 3-35 | fena fillah nedir / fenaya kavusmak | Fenâ-fillâh açıklanmaktadır.
+202 | 3-36 | tasavvuf yolu kac tane / iki tasavvuf yolu / naksibendi kadiri | Allahü teâlâya kavuşturan tasavvuf yolu ikidir.
+203 | 3-37 | tasavvuf mutehassisi / tesavvuf mektubu / tasavvuf alimi | Bir tasavvuf mütehassısının mektubu bildirilmektedir.
+204 | 3-38 | suluk dereceleri / suluk nedir / tasavvuf yolu dereceleri | Tasavvuf yolu, sülûk dereceleri, fenâ ve bekâ açıklanmaktadır.
+205 | 3-39 | ihata nedir / kurbiyet nedir / maiyet sifati | Allahü teâlânın ihâta, kurb ve maiyyet sıfatları açıklanmaktadır.
+206 | 3-40 | alem vehim mi / vehm mertebesi / alemi vehm | Âlem, vehm mertebesinde yaratılmıştır.
+207 | 3-50 | tasavvuf ve seriat / tasavvufda islamiyyete uymak | Tasavvuf yolunun başında da sonunda da İslâmiyete uymak lâzımdır.
+208 | 3-44 | evliya kimdir / evliya olmak / nihayet nedir | Nihâyet, âfâk ve enfüsün dışındadır; evliyânın kimlere denildiği açıklanmaktadır.
+209 | 3-47 | vahdet i vucud / vucud i vehmi / panteizm | Vahdet-i vücûd bilgisi ve vücûd-i vehmî açıklanmaktadır.
+210 | 3-46 | kabenin kemalati / namazin hakikati / namazda allaha yakinlik | Kâbe-i muazzamanın ve namazın kemâlâtı açıklanmaktadır.
+211 | 3-52 | namazda yakinlik / namazin hakikati nedir / secde yakinlik | Namazda olanın Allahü teâlâya yakınlığı ve namazın hakîkati bildirilmektedir.
+212 | 3-50 | tasavvufda seriata uymak / evliya seriata uyar | Tasavvuf yolunun başında da sonunda da İslâmiyete uymak lâzımdır.
+213 | 3-55 | olume hazirlik / olum hakki / can cekmek | Ölüm, ölüme hazırlanmak ve şifâ âyetleri bildirilmektedir.
+214 | 3-56 | kefen nedir / kefenleme nasil yapilir / oluye yapilacaklar | Meyyite yapılacak dinî vazifeler ve kefen hükümleri açıklanmaktadır.
+215 | 3-57 | cenaze namazi nasil kilinir / cenaze namazi hukmu | Cenaze namazı farz-ı kifâyedir; kılınışı ve cenaze namazı kılınmayanlar bildirilmektedir.
+216 | 3-58 | cenaze tasima / defin / gomme / mezar | Cenaze taşımak ve defin hükümleri açıklanmaktadır.
+217 | 3-59 | kabir ziyareti / mezar ziyareti / kuran okumak olulere | Kabir ziyareti ve ibadet sevabının ölülere hediye edilmesi bildirilmektedir.
+218 | 3-60 | kabir ziyaretinin faidesi / mezar ziyareti faydalari | Kabir ziyaretinin faydaları bildirilmektedir.
+219 | 3-67 | dunya sikintisi faydasi / taun sevabi / veba hastaligi | Dünya sıkıntılarının faydası ve tâûnun sevabı bildirilmektedir.
+220 | 3-63 | iskat nedir / iskat devir / olu icin iskat | Meyyit için ıskat ve devir yapmak ile defin izninin nasıl alınacağı bildirilmektedir.
+221 | 3-64 | miras hukuku / feraiz nedir / miras nasil paylasilir / miras kimlere kalir | Ferâiz bilgisi, mirası alacak kimseler ve vasî tayini açıklanmaktadır.
+222 | 3-65 | miras hesabi / miras paylari / miras bolumu | Ferâiz hesapları ve mirasın bölünmesi bildirilmektedir.
+223 | 3-66 | kabir hayati / taundan olmenin kiymeti / berzah alemi | Kabir hayatı ve tâûndan ölmenin kıymeti bildirilmektedir.
+224 | 3-67 | dunya sikintilari / sikintinin faydasi / belaya razi olmak | Dünya sıkıntılarının faydası ve tâûnun sevabı bildirilmektedir.
+225 | 3-68 | kazaya razi olmak / kaderden lezzet / riza makami | Kazâya râzı olmalı, hatta lezzet duymalıdır.
+226 | 3-69 | sevgiliden sikinti / dert ceken asik / bela tatliligi | Sevgiliden gelen sıkıntılar, iyiliklerinden daha tatlıdır.
+227 | 3-70 | seadet i ebediyye son soz / kitabin sonu / son soz | Se'âdet-i Ebediyye kitabının son sözü.
+228 | 3-54 | hucre nedir / hayat nedir / mikrop nedir | Madde üzerinde yeni bilgiler: hücre, hayat, mikrop ve zehir açıklanmaktadır.
+229 | 3-53 | madde ilahiden nasibi / alemin nasibi / zat i ilahi | Âlemin ve maddenin, Zât-ı ilâhîden nasibi yoktur.

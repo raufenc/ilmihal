@@ -62,7 +62,8 @@ export function sonBolumCiz(S, kap) {
   if (m.hadisler.length) bolumler.push(bolum(m.hadisler.length > 1 ? 'Hadîs-i şerîfler' : 'Hadîs-i şerîf',
     h('ul.oku-alintilar', m.hadisler.map(x => alinti(S, x, [x.kaynak])))));
 
-  if (m.sahislar.length) bolumler.push(bolum('Adı geçen büyükler',
+  if (m.sahislar.length) bolumler.push(bolum('Adı geçenlerin hâl tercemeleri',   // kitap bu listede kötülediği kişileri de anar; "büyükler" denmez
+   
     h('ul.oku-sahislar', m.sahislar.map(s => h('li', h('a', { href: `/sahis/${encodeURIComponent(s.slug)}` }, ad(s.isim), s.unvan ? h('span.oku-unvan', ` (${s.unvan})`) : null))))));
 
   if (m.tablolar.length) bolumler.push(bolum('Tablolar',

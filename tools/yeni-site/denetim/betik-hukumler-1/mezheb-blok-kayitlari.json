@@ -1,0 +1,506 @@
+[
+ {
+  "id": 135,
+  "tur": "farz",
+  "katman": "acik",
+  "madde": "1-54",
+  "blok": "Mâlikî (El-mukaddemet-ül-izziyye nakli)",
+  "tamamen_icinde": true,
+  "metin": "[1] Gusle başlarken niyyet etmek, bütün vücûdü delk etmek, [avuç içi veyâ havlu ile hafîf sıvamak], muvâlât [aralıksız] ve saçı, sakalı hilâllamak, sık örülü sa"
+ },
+ {
+  "id": 136,
+  "tur": "farz",
+  "katman": "acik",
+  "madde": "1-54",
+  "blok": "Mâlikî (El-mukaddemet-ül-izziyye nakli)",
+  "tamamen_icinde": true,
+  "metin": "Abdeste başlarken veyâ yüzü yıkarken niyyet etmek ve başın hepsini ve sarkan saçları, kulak üstündeki deriyi ve altındaki deri görünen hafîf sakalın altını ısla"
+ },
+ {
+  "id": 137,
+  "tur": "farz",
+  "katman": "acik",
+  "madde": "1-54",
+  "blok": "Mâlikî (El-mukaddemet-ül-izziyye nakli)",
+  "tamamen_icinde": true,
+  "metin": "Mekkede olanın Kâ’beye, Mekkede olmıyanın Kâ’be cihetine dönmesi farzdır."
+ },
+ {
+  "id": 138,
+  "tur": "farz",
+  "katman": "acik",
+  "madde": "1-54",
+  "blok": "Mâlikî (El-mukaddemet-ül-izziyye nakli)",
+  "tamamen_icinde": true,
+  "metin": "Nemâza başlarken (Allahü ekber) demek, Fâtiha okumak, kavmede dikilmek, celsede oturmak, oturarak bir tarafa selâm vermek ve selâm verirken (Esselâmü aleyküm) d"
+ },
+ {
+  "id": 153,
+  "tur": "farz",
+  "katman": "acik",
+  "madde": "1-56",
+  "blok": "Mâlikî (El-fıkh-u alel-mezâhib, Ez-Zehîre, El-müdevvene nakli)",
+  "tamamen_icinde": true,
+  "metin": "Mesh edilmesi farzdır."
+ },
+ {
+  "id": 155,
+  "tur": "farz",
+  "katman": "acik",
+  "madde": "1-56",
+  "blok": "Mâlikî (El-fıkh-u alel-mezâhib, Ez-Zehîre, El-müdevvene nakli)",
+  "tamamen_icinde": true,
+  "metin": "Necâsetden tahâret bir kavle göre farz, diğer kavle göre sünnetdir."
+ },
+ {
+  "id": 156,
+  "tur": "farz",
+  "katman": "acik",
+  "madde": "1-56",
+  "blok": "Mâlikî (El-fıkh-u alel-mezâhib, Ez-Zehîre, El-müdevvene nakli)",
+  "tamamen_icinde": true,
+  "metin": "Nemâzda her rek’atde Fâtiha okumak ve rükü’da, secdelerde tumânînet [sâkin durmak] farzdır."
+ },
+ {
+  "id": 859,
+  "tur": "farz",
+  "katman": "acik",
+  "madde": "1-56",
+  "blok": "Mâlikî (El-fıkh-u alel-mezâhib, Ez-Zehîre, El-müdevvene nakli)",
+  "tamamen_icinde": false,
+  "metin": "(Ez-Zehîre lil Kurâfî) Mâlikî fıkh kitâbının ikinci baskısı, 1402 [m. 1982] de Mısrda yapılmışdır. Buyuruyor ki, (İmâm-ı Mâlik, avâmın müctehidleri taklîd etmel"
+ },
+ {
+  "id": 864,
+  "tur": "farz",
+  "katman": "acik",
+  "madde": "1-73",
+  "blok": "Mâlikî/Şâfi’î/Hanbelî (El-fıkhu alel-mezâhib nakli)",
+  "tamamen_icinde": true,
+  "metin": "Hanbelîde cem’, 80 kilometre seferde ve 203. cü sahîfede bildirdiğimiz hâllerde câiz olduğu gibi, soğuk, kış, yağmur, çamur, fırtınada, yatsıyı akşam ile, evind"
+ },
+ {
+  "id": 6758,
+  "tur": "farz",
+  "katman": "tum",
+  "madde": "1-54",
+  "blok": "Mâlikî (El-mukaddemet-ül-izziyye nakli)",
+  "tamamen_icinde": true,
+  "metin": "Yıkaması farz değil, sünnetdir."
+ },
+ {
+  "id": 6759,
+  "tur": "farz",
+  "katman": "tum",
+  "madde": "1-54",
+  "blok": "Mâlikî (El-mukaddemet-ül-izziyye nakli)",
+  "tamamen_icinde": true,
+  "metin": "Günâh olmıyan seferde dört rek’at farzları iki kılmak sünnetdir."
+ },
+ {
+  "id": 6760,
+  "tur": "farz",
+  "katman": "tum",
+  "madde": "1-54",
+  "blok": "Mâlikî (El-mukaddemet-ül-izziyye nakli)",
+  "tamamen_icinde": false,
+  "metin": "Vitr nemâzı ve bayramda onbeş nemâzın farzından sonra tekbîr-i teşrîk sünnetdir.) Bir ibâdeti yaparken, başka bir mezhebi taklîd etmek, kendi mezhebinden ayrılm"
+ },
+ {
+  "id": 6762,
+  "tur": "farz",
+  "katman": "tum",
+  "madde": "1-56",
+  "blok": "Mâlikî (El-fıkh-u alel-mezâhib, Ez-Zehîre, El-müdevvene nakli)",
+  "tamamen_icinde": true,
+  "metin": "Guslde ağzı ve burnu yıkamak farz değil, sünnetdir."
+ },
+ {
+  "id": 6763,
+  "tur": "farz",
+  "katman": "tum",
+  "madde": "1-56",
+  "blok": "Mâlikî (El-fıkh-u alel-mezâhib, Ez-Zehîre, El-müdevvene nakli)",
+  "tamamen_icinde": true,
+  "metin": "Farzlarda (E’ûzü...) okumak mekrûhdur."
+ },
+ {
+  "id": 6918,
+  "tur": "farz",
+  "katman": "tum",
+  "madde": "1-54",
+  "blok": "Mâlikî (El-mukaddemet-ül-izziyye nakli)",
+  "tamamen_icinde": true,
+  "metin": "[1] Gusle başlarken niyyet etmek, bütün vücûdü delk etmek, [avuç içi veyâ havlu ile hafîf sıvamak], muvâlât [aralıksız] ve saçı, sakalı hilâllamak, sık örülü sa"
+ },
+ {
+  "id": 6919,
+  "tur": "farz",
+  "katman": "tum",
+  "madde": "1-54",
+  "blok": "Mâlikî (El-mukaddemet-ül-izziyye nakli)",
+  "tamamen_icinde": true,
+  "metin": "Abdeste başlarken veyâ yüzü yıkarken niyyet etmek ve başın hepsini ve sarkan saçları, kulak üstündeki deriyi ve altındaki deri görünen hafîf sakalın altını ısla"
+ },
+ {
+  "id": 6920,
+  "tur": "farz",
+  "katman": "tum",
+  "madde": "1-54",
+  "blok": "Mâlikî (El-mukaddemet-ül-izziyye nakli)",
+  "tamamen_icinde": true,
+  "metin": "Mekkede olanın Kâ’beye, Mekkede olmıyanın Kâ’be cihetine dönmesi farzdır."
+ },
+ {
+  "id": 6921,
+  "tur": "farz",
+  "katman": "tum",
+  "madde": "1-54",
+  "blok": "Mâlikî (El-mukaddemet-ül-izziyye nakli)",
+  "tamamen_icinde": true,
+  "metin": "Nemâza başlarken (Allahü ekber) demek, Fâtiha okumak, kavmede dikilmek, celsede oturmak, oturarak bir tarafa selâm vermek ve selâm verirken (Esselâmü aleyküm) d"
+ },
+ {
+  "id": 6933,
+  "tur": "farz",
+  "katman": "tum",
+  "madde": "1-56",
+  "blok": "Mâlikî (El-fıkh-u alel-mezâhib, Ez-Zehîre, El-müdevvene nakli)",
+  "tamamen_icinde": true,
+  "metin": "Mesh edilmesi farzdır."
+ },
+ {
+  "id": 6935,
+  "tur": "farz",
+  "katman": "tum",
+  "madde": "1-56",
+  "blok": "Mâlikî (El-fıkh-u alel-mezâhib, Ez-Zehîre, El-müdevvene nakli)",
+  "tamamen_icinde": true,
+  "metin": "Necâsetden tahâret bir kavle göre farz, diğer kavle göre sünnetdir."
+ },
+ {
+  "id": 6936,
+  "tur": "farz",
+  "katman": "tum",
+  "madde": "1-56",
+  "blok": "Mâlikî (El-fıkh-u alel-mezâhib, Ez-Zehîre, El-müdevvene nakli)",
+  "tamamen_icinde": true,
+  "metin": "Nemâzda her rek’atde Fâtiha okumak ve rükü’da, secdelerde tumânînet [sâkin durmak] farzdır."
+ },
+ {
+  "id": 7346,
+  "tur": "farz",
+  "katman": "tum",
+  "madde": "1-56",
+  "blok": "Mâlikî (El-fıkh-u alel-mezâhib, Ez-Zehîre, El-müdevvene nakli)",
+  "tamamen_icinde": false,
+  "metin": "(Ez-Zehîre lil Kurâfî) Mâlikî fıkh kitâbının ikinci baskısı, 1402 [m. 1982] de Mısrda yapılmışdır. Buyuruyor ki, (İmâm-ı Mâlik, avâmın müctehidleri taklîd etmel"
+ },
+ {
+  "id": 7351,
+  "tur": "farz",
+  "katman": "tum",
+  "madde": "1-73",
+  "blok": "Mâlikî/Şâfi’î/Hanbelî (El-fıkhu alel-mezâhib nakli)",
+  "tamamen_icinde": true,
+  "metin": "Hanbelîde cem’, 80 kilometre seferde ve 203. cü sahîfede bildirdiğimiz hâllerde câiz olduğu gibi, soğuk, kış, yağmur, çamur, fırtınada, yatsıyı akşam ile, evind"
+ },
+ {
+  "id": 2263,
+  "tur": "vacib",
+  "katman": "acik",
+  "madde": "1-54",
+  "blok": "Mâlikî (El-mukaddemet-ül-izziyye nakli)",
+  "tamamen_icinde": true,
+  "metin": "El ile istibrâ vâcibdir."
+ },
+ {
+  "id": 2267,
+  "tur": "vacib",
+  "katman": "acik",
+  "madde": "1-56",
+  "blok": "Mâlikî (El-fıkh-u alel-mezâhib, Ez-Zehîre, El-müdevvene nakli)",
+  "tamamen_icinde": true,
+  "metin": "Buyuruyor ki, (İmâm-ı Mâlik, avâmın müctehidleri taklîd etmeleri vâcibdir buyurdu."
+ },
+ {
+  "id": 2511,
+  "tur": "vacib",
+  "katman": "tum",
+  "madde": "1-54",
+  "blok": "Mâlikî (El-mukaddemet-ül-izziyye nakli)",
+  "tamamen_icinde": true,
+  "metin": "El ile istibrâ vâcibdir."
+ },
+ {
+  "id": 2519,
+  "tur": "vacib",
+  "katman": "tum",
+  "madde": "1-56",
+  "blok": "Mâlikî (El-fıkh-u alel-mezâhib, Ez-Zehîre, El-müdevvene nakli)",
+  "tamamen_icinde": true,
+  "metin": "Buyuruyor ki, (İmâm-ı Mâlik, avâmın müctehidleri taklîd etmeleri vâcibdir buyurdu."
+ },
+ {
+  "id": 139,
+  "tur": "sunnet",
+  "katman": "acik",
+  "madde": "1-54",
+  "blok": "Mâlikî (El-mukaddemet-ül-izziyye nakli)",
+  "tamamen_icinde": true,
+  "metin": "Yıkaması farz değil, sünnetdir."
+ },
+ {
+  "id": 140,
+  "tur": "sunnet",
+  "katman": "acik",
+  "madde": "1-54",
+  "blok": "Mâlikî (El-mukaddemet-ül-izziyye nakli)",
+  "tamamen_icinde": true,
+  "metin": "Günâh olmıyan seferde dört rek’at farzları iki kılmak sünnetdir."
+ },
+ {
+  "id": 141,
+  "tur": "sunnet",
+  "katman": "acik",
+  "madde": "1-54",
+  "blok": "Mâlikî (El-mukaddemet-ül-izziyye nakli)",
+  "tamamen_icinde": false,
+  "metin": "Vitr nemâzı ve bayramda onbeş nemâzın farzından sonra tekbîr-i teşrîk sünnetdir.) Bir ibâdeti yaparken, başka bir mezhebi taklîd etmek, kendi mezhebinden ayrılm"
+ },
+ {
+  "id": 154,
+  "tur": "sunnet",
+  "katman": "acik",
+  "madde": "1-56",
+  "blok": "Mâlikî (El-fıkh-u alel-mezâhib, Ez-Zehîre, El-müdevvene nakli)",
+  "tamamen_icinde": true,
+  "metin": "Guslde ağzı ve burnu yıkamak farz değil, sünnetdir."
+ },
+ {
+  "id": 908,
+  "tur": "sunnet",
+  "katman": "acik",
+  "madde": "1-54",
+  "blok": "Mâlikî (El-mukaddemet-ül-izziyye nakli)",
+  "tamamen_icinde": true,
+  "metin": "İlk iki rek’atde Zamm-ı sûre okumak, iki teşehhüdde oturmak, tehıyyât ve salevât okumak ve ikinci selâm sünnetdir."
+ },
+ {
+  "id": 909,
+  "tur": "sunnet",
+  "katman": "acik",
+  "madde": "1-54",
+  "blok": "Mâlikî (El-mukaddemet-ül-izziyye nakli)",
+  "tamamen_icinde": true,
+  "metin": "Bayram ve cenâze nemâzları sünnetdir."
+ },
+ {
+  "id": 911,
+  "tur": "sunnet",
+  "katman": "acik",
+  "madde": "1-54",
+  "blok": "Mâlikî (El-mukaddemet-ül-izziyye nakli)",
+  "tamamen_icinde": true,
+  "metin": "Vitr nemâzı ve bayramda onbeş nemâzın farzından sonra tekbîr-i teşrîk sünnetdir.)"
+ },
+ {
+  "id": 920,
+  "tur": "sunnet",
+  "katman": "acik",
+  "madde": "1-56",
+  "blok": "Mâlikî (El-fıkh-u alel-mezâhib, Ez-Zehîre, El-müdevvene nakli)",
+  "tamamen_icinde": true,
+  "metin": "Necâsetden tahâret bir kavle göre farz, diğer kavle göre sünnetdir."
+ },
+ {
+  "id": 1174,
+  "tur": "sunnet",
+  "katman": "acik",
+  "madde": "1-54",
+  "blok": "Mâlikî (El-mukaddemet-ül-izziyye nakli)",
+  "tamamen_icinde": true,
+  "metin": "Ağız, burun ve kulak içini ve saçları yıkamak sünnetdir."
+ },
+ {
+  "id": 1177,
+  "tur": "sunnet",
+  "katman": "acik",
+  "madde": "1-54",
+  "blok": "Mâlikî (El-mukaddemet-ül-izziyye nakli)",
+  "tamamen_icinde": true,
+  "metin": "Sünneti unutunca, secde-i sehv lâzım olur."
+ },
+ {
+  "id": 1318,
+  "tur": "sunnet",
+  "katman": "acik",
+  "madde": "1-73",
+  "blok": "Mâlikî/Şâfi’î/Hanbelî (El-fıkhu alel-mezâhib nakli)",
+  "tamamen_icinde": true,
+  "metin": "Kadınların saç örgülerini çözmeleri, cenâbet için sünnet, hayz için farzdır."
+ },
+ {
+  "id": 1317,
+  "tur": "sunnet",
+  "katman": "tum",
+  "madde": "1-73",
+  "blok": "Mâlikî/Şâfi’î/Hanbelî (El-fıkhu alel-mezâhib nakli)",
+  "tamamen_icinde": true,
+  "metin": "Cem’ ederken, sünnetler kılınmaz."
+ },
+ {
+  "id": 6922,
+  "tur": "sunnet",
+  "katman": "tum",
+  "madde": "1-54",
+  "blok": "Mâlikî (El-mukaddemet-ül-izziyye nakli)",
+  "tamamen_icinde": true,
+  "metin": "Yıkaması farz değil, sünnetdir."
+ },
+ {
+  "id": 6923,
+  "tur": "sunnet",
+  "katman": "tum",
+  "madde": "1-54",
+  "blok": "Mâlikî (El-mukaddemet-ül-izziyye nakli)",
+  "tamamen_icinde": true,
+  "metin": "Günâh olmıyan seferde dört rek’at farzları iki kılmak sünnetdir."
+ },
+ {
+  "id": 6924,
+  "tur": "sunnet",
+  "katman": "tum",
+  "madde": "1-54",
+  "blok": "Mâlikî (El-mukaddemet-ül-izziyye nakli)",
+  "tamamen_icinde": false,
+  "metin": "Vitr nemâzı ve bayramda onbeş nemâzın farzından sonra tekbîr-i teşrîk sünnetdir.) Bir ibâdeti yaparken, başka bir mezhebi taklîd etmek, kendi mezhebinden ayrılm"
+ },
+ {
+  "id": 6934,
+  "tur": "sunnet",
+  "katman": "tum",
+  "madde": "1-56",
+  "blok": "Mâlikî (El-fıkh-u alel-mezâhib, Ez-Zehîre, El-müdevvene nakli)",
+  "tamamen_icinde": true,
+  "metin": "Guslde ağzı ve burnu yıkamak farz değil, sünnetdir."
+ },
+ {
+  "id": 7386,
+  "tur": "sunnet",
+  "katman": "tum",
+  "madde": "1-54",
+  "blok": "Mâlikî (El-mukaddemet-ül-izziyye nakli)",
+  "tamamen_icinde": true,
+  "metin": "İlk iki rek’atde Zamm-ı sûre okumak, iki teşehhüdde oturmak, tehıyyât ve salevât okumak ve ikinci selâm sünnetdir."
+ },
+ {
+  "id": 7387,
+  "tur": "sunnet",
+  "katman": "tum",
+  "madde": "1-54",
+  "blok": "Mâlikî (El-mukaddemet-ül-izziyye nakli)",
+  "tamamen_icinde": true,
+  "metin": "Bayram ve cenâze nemâzları sünnetdir."
+ },
+ {
+  "id": 7388,
+  "tur": "sunnet",
+  "katman": "tum",
+  "madde": "1-54",
+  "blok": "Mâlikî (El-mukaddemet-ül-izziyye nakli)",
+  "tamamen_icinde": true,
+  "metin": "Vitr nemâzı ve bayramda onbeş nemâzın farzından sonra tekbîr-i teşrîk sünnetdir.)"
+ },
+ {
+  "id": 7396,
+  "tur": "sunnet",
+  "katman": "tum",
+  "madde": "1-56",
+  "blok": "Mâlikî (El-fıkh-u alel-mezâhib, Ez-Zehîre, El-müdevvene nakli)",
+  "tamamen_icinde": true,
+  "metin": "Necâsetden tahâret bir kavle göre farz, diğer kavle göre sünnetdir."
+ },
+ {
+  "id": 7581,
+  "tur": "sunnet",
+  "katman": "tum",
+  "madde": "1-54",
+  "blok": "Mâlikî (El-mukaddemet-ül-izziyye nakli)",
+  "tamamen_icinde": true,
+  "metin": "Ağız, burun ve kulak içini ve saçları yıkamak sünnetdir."
+ },
+ {
+  "id": 7582,
+  "tur": "sunnet",
+  "katman": "tum",
+  "madde": "1-54",
+  "blok": "Mâlikî (El-mukaddemet-ül-izziyye nakli)",
+  "tamamen_icinde": true,
+  "metin": "Sünneti unutunca, secde-i sehv lâzım olur."
+ },
+ {
+  "id": 7620,
+  "tur": "sunnet",
+  "katman": "tum",
+  "madde": "1-73",
+  "blok": "Mâlikî/Şâfi’î/Hanbelî (El-fıkhu alel-mezâhib nakli)",
+  "tamamen_icinde": true,
+  "metin": "Kadınların saç örgülerini çözmeleri, cenâbet için sünnet, hayz için farzdır."
+ },
+ {
+  "id": 6249,
+  "tur": "mustehab",
+  "katman": "acik",
+  "madde": "1-54",
+  "blok": "Mâlikî (El-mukaddemet-ül-izziyye nakli)",
+  "tamamen_icinde": true,
+  "metin": "Sabâh ikinci rek’atde sessiz kunût okumak, teşehhüdde şehâdet parmağı kaldırmak müstehabdır."
+ },
+ {
+  "id": 6252,
+  "tur": "mustehab",
+  "katman": "acik",
+  "madde": "1-56",
+  "blok": "Mâlikî (El-fıkh-u alel-mezâhib, Ez-Zehîre, El-müdevvene nakli)",
+  "tamamen_icinde": true,
+  "metin": "Çıkmadığı zemân abdest alması müstehab olur."
+ },
+ {
+  "id": 6253,
+  "tur": "mustehab",
+  "katman": "acik",
+  "madde": "1-56",
+  "blok": "Mâlikî (El-fıkh-u alel-mezâhib, Ez-Zehîre, El-müdevvene nakli)",
+  "tamamen_icinde": true,
+  "metin": "İmâmın gizli okuduğu rek’atlerde cemâ’atin Fâtiha okumaları müstehab, âşikâre okuduğu zemân cemâ’atin de okuması mekrûhdur."
+ },
+ {
+  "id": 6254,
+  "tur": "mustehab",
+  "katman": "acik",
+  "madde": "1-56",
+  "blok": "Mâlikî (El-fıkh-u alel-mezâhib, Ez-Zehîre, El-müdevvene nakli)",
+  "tamamen_icinde": true,
+  "metin": "Ayak parmakları arasını hilâllamak müstehabdır."
+ },
+ {
+  "id": 6255,
+  "tur": "mustehab",
+  "katman": "acik",
+  "madde": "1-56",
+  "blok": "Mâlikî (El-fıkh-u alel-mezâhib, Ez-Zehîre, El-müdevvene nakli)",
+  "tamamen_icinde": true,
+  "metin": "Kıyâmda, sağ el sol elin üstünde olarak, göğüs ile göbek arasına koymak veyâ iki eli iki yana salıvermek müstehabdır."
+ },
+ {
+  "id": 6256,
+  "tur": "mustehab",
+  "katman": "acik",
+  "madde": "1-56",
+  "blok": "Mâlikî (El-fıkh-u alel-mezâhib, Ez-Zehîre, El-müdevvene nakli)",
+  "tamamen_icinde": true,
+  "metin": "İstihâza kanı, idrar sızarsa, bir kavle göre bozulmaz ise de, her nemâz için abdest alması müstehab olur."
+ }
+]

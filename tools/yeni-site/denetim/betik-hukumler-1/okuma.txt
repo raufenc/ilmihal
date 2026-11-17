@@ -1,0 +1,1081 @@
+## farz-acik 0-59 OKUNDU
+2|G|farzları yapmak lâzım (genel)
+3|G|
+4|G|
+5|G|farz tanımı
+6|L|ef'âl-i mükellefîn sayımı, hüküm yok
+7|F|başta önceki cümlenin parçası "Hâlbuki halâldir."
+12|G|farzlar kabûl olmaz (genel); başta "Ya'nî böyle kimseler, günâha girer."
+13|A|sünnetlerin kabûlü hakkında
+14|G|
+15|A|hadîs nakli
+16|G|
+17|G|
+20|A|
+21|G|ibâdet tanımı
+27|A|soru cümlesi
+33|G|dört kısm sayımı
+34|G|farz tanımı
+35|X|sünnetin tanımı (farz değil)
+36|A|nâfile tanımı + sevâb kıyası; "]" ile önceki cümle parçası
+44|G|
+45|G|
+46|G|sünnet kelimesinin ma'nâları
+50|A|"Farz nemâz borcu olan geceleri" — hüküm yok
+53|S|sonraki cümle: "Ancak, münkere, fitneye yol açan emr-i ma'rûfu yapmamak lâzım olur" ; başta "Fekat, kabâhatlerini i'tirâf eder oldular."
+55|A|hadîs: farzları kabûl olmaz
+58|A|soru cümlesi
+59|Z|"Bunlar nass ile farzdır" — neyin olduğu yok
+64|G|
+65|G|tanım
+69|A|
+70|G|tanım
+79|G|
+86|G|
+87|G|
+89|A|hadîs-i kudsî
+100|M|"Şâfi'îde çene altını yıkamak farzdır"; önceki cümle "Bunu yıkamak hanefîde farz değildir."
+## farz-acik 60-119 OKUNDU
+102|M|"Başı bu şeklde mesh etmek, Mâlikî mezhebinde farzdır" — mezheb adı kayıtta var (Y)
+107|M|Mâlikîde mestin temizliği farz + sonraki cümle eklenmiş (F)
+108|M|"muvâlât hanefîde sünnet, mâlikîde farzdır" — farz başlığında ama hanefîde sünnet
+110|A|
+115|A|
+120|M|"Niyyet etmek, farzdır." şâfi'î/mâlikî gusl bağlamında (önceki cümle); tek başına genel duruyor — kesin değil
+123|Z|"İkisine de yatsıyı kılmak farzdır" — hayzdan temizlenme hâli, bağlamsız
+127|A|
+131|G|
+132|G|diğer üç mezheb
+143|A|mâlikî taklîdi
+150|M|"Şerâbın damlasını da yıkamak farzdır diyen de vardır" — azınlık kavli
+151|M|"Diğer üç mezhebde ..." (mezheb adlı)
+152|A|
+153|MK|"Mesh edilmesi farzdır" — Mâlikî mezhebi hulâsası içinde (1-56 s157-158); özne de önceki cümlede (kulak üstü cild)
+155|M|"bir kavle göre farz, diğer kavle göre sünnet" + Mâlikî hulâsası
+156|MK|"Nemâzda her rek'atde Fâtiha okumak ... farzdır" — Mâlikî hulâsası (1-56); mezheb adı kayıtta yok
+135|MK|"[1] Gusle başlarken niyyet etmek, delk, muvâlât ... farzdır" — (El-mukaddemet-ül-izziyye) Mâlikî hulâsası (1-54 s146); "[1]" dipnot işareti ile başlıyor
+136|MK|abdestte delk, muvâlât farz — aynı Mâlikî hulâsası
+137|MK|Kâ'beye dönmek — aynı Mâlikî hulâsası (hüküm hanefîde de var ama kaynak Mâlikî bölüm)
+138|MK|"Fâtiha okumak, kavmede dikilmek, celsede oturmak, ... (Esselâmü aleyküm) demek farzdır" — Mâlikî hulâsası
+165|A|
+168|F|başta önceki cümlenin sonu "Öğleyi kazâya bırakdığı için günâha girmez.)"; mâlikî/şâfi'î taklîdi
+175|M|"Ba'zı âlimlere göre ise ... farz olur"; önceki cümle "bu iki nemâz farz olmaz"
+180|A|hanbelî farzlarına uymak
+185|Z|"Farz olduğu ... açıkça bildirilmişdir" (öznesi önceki cümlede)
+191|G|
+196|G|
+197|G|
+199|A|
+202|A|
+## farz-acik 120-179 OKUNDU
+210|F|başta önceki cümle sonu "Hem de günâh olur.]"
+214|M|"Diğer üç mezhebde, her nemâzda ve her rek'atde Fâtiha okumak farzdır." (mezheb adlı)
+216|S|"farzdır veyâ vâcibdir" — sonraki cümle "Sünnet de denilmişdir."
+217|O|"Farz veyâ vâcib diyenlerin hatâ etdiği (Redd-ül-muhtâr)da yazılıdır." — farz OLMADIĞINI bildiriyor (sünnetdir)
+218|F|başta önceki cümle "Önce secde yerlerini ... alışdırıyorlar.]"
+222|A|
+223|A|
+227|A|
+235|A|
+242|A|
+247|G|
+249|A|
+250|A|
+251|A|
+264|A|
+272|G|tanım
+273|Z|
+274|X|vâcib tanımı
+275|G|tanım
+282|G|
+283|A|
+290|A|
+295|A|
+296|A|Ehl-i sünnet imâm + mekrûh cümlesi; farz hükmü yok
+299|A|
+303|A|başta "Günâh olur.]"
+305|G|
+306|M|"Şâfi'îde farzdır." — öznesi (imâm arkasında Fâtiha) önceki cümlede; önceki cümle: "hanefîde tahrîmen mekrûhdur"
+329|G|
+331|A|
+339|A|büyük günâh (harâm) bildiriyor
+340|A|
+342|G|
+348|A|
+351|A|
+353|G|
+354|A|
+355|G|
+356|G|
+357|G|
+358|A|
+## farz-acik 180-239 OKUNDU (çoğu 1-74 kazâ bahsi: farz kelimesi "farz nemâz" anlamında geçiyor)
+361|A|
+362|A|büyük günâh (harâm) bildiriyor
+365|A|
+366|A|
+367|A|
+368|A|
+370|G|
+372|A|büyük günâh
+378|A|
+379|A|
+380|A|
+381|F|kayıt "1896] yılında" diye cümle ortasından başlıyor (kitapta "1313 [m. 1896]")
+383|G|
+384|G|
+385|A|hadîs
+386|G|
+389|A|
+393|A|
+400|A|
+404|G|nâfile tanımı
+407|A|
+418|G|
+424|G|
+426|G|
+430|A|
+431|A|
+436|A|soru cümlesi
+437|G|iki cümle birleşik
+439|G|
+441|A|
+444|A|
+445|A|
+448|G|
+449|A|
+454|A|
+455|A|büyük günâh
+458|A|
+460|A|
+461|A|
+463|A|hadîs: büyük günâh
+464|A|üç cümle birleşik; azâb
+465|G|
+466|A|büyük günâh
+468|A|
+471|A|
+474|A|
+475|A|
+477|A|
+483|G|
+484|A|
+490|G|
+491|A|
+493|A|
+494|A|"zekât vermek farz olduğu günden önce" — borc hesâbı
+496|A|
+## farz-acik 240-299 OKUNDU
+497|A|
+499|A|"câiz değildir"
+503|A|
+505|X|"hîle-i bâtıla yapmak harâm olur" (harâm bildiriyor)
+508|G|
+510|A|
+511|O|"zekât farz olur olmaz, Hanefîde hemen vermesi lâzım değildir" — vücûb değil, gerekmediğini bildiriyor
+512|M|"Şâfi'î ve Mâlikî mezheblerinde ... hemen ayırıp vermek farzdır" (önceki cümle: Hanefîde lâzım değil)
+515|A|
+516|X|"malı helâk etmek, söz birliği ile mekrûhdur"
+522|M|İmâm-ı a'zam ve Züfer'e göre (ihtilâflı vakit)
+524|M|İmâm-ı Ebû Yûsüfe göre
+525|M|İmâm-ı Muhammede göre
+526|Z|"Mahsûlünden uşr vermeleri farz olur" — kimlerin olduğu önceki cümlede
+527|Z|
+530|A|
+532|G|
+533|G|
+536|A|hadîs
+537|A|
+538|A|
+543|A|
+544|M|"Şâfi'î, Mâlikî ve Hanbelî mezheblerinde, bir günlük yiyeceği olanın fıtra vermesi farzdır"
+545|G|
+546|A|
+547|M|"Ba'zıları, farzdır, dedi." — öznesi yok; önceki cümle "nezri yerine getirmek vâcibdir"
+553|A|
+554|G|
+555|A|
+556|A|
+557|A|
+558|A|
+564|A|
+566|A|
+569|A|
+570|A|
+## farz-acik 300-359 OKUNDU
+573|A|
+574|A|
+575|M|"Umre, ömründe bir kerre, hanefî ve mâlikîde müekked sünnet, şâfi'î ve hanbelîde farzdır." — farz başlığında; hanefîde sünnet
+577|A|
+578|L|"2 — Kâfir memleketinde olanın, haccın farz olduğunu işitmesi." şart maddesi parçası
+591|A|
+597|A|
+599|A|"câiz olmaz"
+602|A|
+604|A|
+612|G|
+613|Z|fakîrin Mekke'ye girince — öznesi önceki cümlede
+614|A|
+615|A|
+616|A|
+618|G|
+621|A|
+622|G|nâfile tanımı
+625|G|
+632|Z|"Selâmlarına" — onsekiz kadın, önceki cümlede
+636|G|
+637|F|anlatı içinden kesik: "... farz olduğundan, Ömer de, (Yâ Resûlallah ...!" — cümle yarım
+638|F|başta önceki cümle sonu "Çok sakınmalıdır.)"
+642|A|
+643|Z|"Böyle bir zâtı aramak farzdır"
+657|F|üç cümle + iki köşeli ek birleşik
+ALT|B|altTur "farz-ı kifâye" olan 79 kaydın 53'ünde metinde "kifâye" yok; #645 #648 #650 #652 metinde açıkça "farz-ı ayn" diyor ama "farz-ı kifâye" etiketli; #659 "her müslimâna farzdır" (ayn) ama kifâye etiketli; 1-82 adak bahsi (#545-#570) tamamı kifâye etiketli, içerik farz-ı ayn/adak
+## farz-acik 360-419 OKUNDU
+661|Z|
+662|KK|Vehhâbîlerin "bozuk inanışları" sayımı içinden: "Bir farzı yapmıyan ... kâfir olur diyor." (2-17 s447) — sapık fırka sözü hüküm gibi
+674|A|"Halâl, harâm ve farzlar için delîl olamaz.]" + sonraki cümle
+676|L|"Farz ve vâcib, sünnetü mendûbunu, emr-i bilma'rûfunu, mecmû'unu." manzûme parçası
+677|A|
+678|G|
+682|KK|"Nemâzı bir kerre kılmak farzdır." — (Kâşif-ül-esrâr) nakli, bâtınî "babalar"ın yalanları (2-22 s501): "...derlerdi"
+683|KK|"Oruc da, ömründe bir gün tutmak farzdır." — aynı yalanlar sayımı
+684|KK|"Gusl de, ömründe bir kerre farzdır." — aynı; sonraki cümle "... derlerdi."
+695|O|"Farzı yapmıyan kadını boşamamak günâh değildir."
+701|A|
+703|Z|
+706|F|başta önceki iki cümle "İnsan, hayvanına nafaka ... Otuzdokuzuncu maddeye bakınız!]"
+711|Z|
+714|A|
+732|G|
+733|A|
+738|A|hadîs: kabûl olmaz
+739|G|
+741|G|
+742|A|
+750|Z|"Hâlbuki bildirmesi farzdır." (öznesi önceki soru cümlesinde)
+752|A|"[Vâcib ve farz olduğu yerler de vardır." (ilâc kullanmanın)
+## farz-acik 420-464 OKUNDU
+756|G|
+757|Z|
+760|A|
+761|A|
+764|M|"Kavmenin ve celsenin farz olduğunu bildiren âlimler vardır." — sonraki cümle: Hanefî müftîsi Kâdîhân vâcib olduğunu bildiriyor
+765|G|
+766|G|
+767|G|
+768|G|
+779|G|
+784|F|başta günâhlar sayımı "Yabancı kadına bakmak, ... bu günâhlardandır."
+786|A|fısk
+791|Z|
+792|Z|
+801|F|başta "İbâdeti sahîh olur.]"; mezheb taklîdi
+802|F|başta "(Mektûbât-ı Ma'sûmiyye) ... vardır.]" + "3 —" sayım parçası
+811|G|
+812|G|
+818|G|
+819|A|
+820|A|
+821|A|sonuna "Çocuğun yıkaması da câizdir." eklenmiş
+## farz-acik 465-504 OKUNDU (farz-acik TAMAM)
+826|A|
+831|A|
+838|G|
+841|A|başta önceki maddeden parça; mürted/mîrâs
+842|A|"altı farzdan" — burada farz = mîrâs hissesi (ferâiz), hüküm değil
+849|L|uzun blok (hadîsler, vera') — "Liste bloğu"
+850|L|33 farz sayımı bloğu (+ "Teyemmümün farzına iki diyenler de vardır")
+851|L|blok: vakitler, kazâ, müstehab nemâzlar
+852|L|blok: nemâzın şartları, rükn/illet/sebeb tanımları
+853|L|blok: abdestin farzları + Şâfi'î/Mâlikî notları
+854|LX|blok: abdestin sünnet ve EDEBLERİ (27 madde); "Tertîb şâfi'îde farzdır", "Delk ve muvâlât mâlikîde farzdır" — farz hükmü değil
+855|LX|blok: abdestte "menhî" (harâm/mekrûh) olanlar
+856|L|blok: gusl
+857|LM|blok: diş kaplatma tartışması + Mâlikî (El-mukaddemet-ül-izziyye) hulâsası
+858|L|teyemmümün farzı
+859|LM|blok: Mâlikî fıkh kitâbları (Ez-Zehîre, El-müdevvene) nakli
+860|L|nemâzı bozmak lâzım olan sebebler
+861|L|blok 7239 harf: Cum'a nemâzı
+862|LX|blok: hutbe — çoğu sünnet/mekrûh
+863|LX|blok: sakal — sünnet/vâcib/harâm; farz hükmü yok
+864|LM|blok: Hanbelî mezhebi hulâsası ("Hanbelîde abdestin farzı altıdır ..." , "teşehhüd mikdârı oturmak ve iki tarafa selâm vermek de farzdır") — mezheb adı blok başında
+865|L|blok: kazâya bırakma özrleri
+866|L|blok: sirkat/gasb (harâm) 
+867|L|blok 9296 harf: zekât
+869|L|blok: sekiz dürlü oruc (farz..mekrûh hepsi)
+870|L|blok: keffâret
+871|L|blok: haccın farzları
+872|LF|blok: nafaka; "beş sebeble farz olur:" ile biter, sayım dışarıda kalmış
+873|LX|blok: zarûret/ihtiyâc/zînet sınıfları
+874|LF|blok: cenâze; "Cenâze nemâzının farzı ikidir:" ile biter, sayım dışarıda
+875|LA|blok: ferâiz; "farz" = hisse
+877|LA|blok: zevil-erhâm; farz hükmü yok
+## vacib-acik 0-74 OKUNDU
+332|M|"İmâmeyne göre ... Tekbîr-i teşrîk okuması vâcibdir" (mezheb içi ihtilâf, kayıtta adı var)
+2246|L|ef'âl-i mükellefîn sayımı
+2248|G|dört kısm sayımı
+2249|A|kâfirlik alâmeti olan şeyler; "tahkîr etmemiz vâcib olan"
+2254|F|iki ayrı nakil birleşik (Mecelle + Redd-i vehhâbî), ikinci cümle yarım
+2255|Z|"Üç rek'ati vâcibdir." (vitr; öznesi yok)
+2258|Z|"Sızmağa mâni' olursa, koyması vâcib olur." (pamuk; öznesi önceki cümlede)
+2259|MK|"[Mâlikîde, sağ eli ıslatıp ...]" Mâlikî mest meshi tarifi; kayıtta mezheb adı yok (önceki cümlede) + sonraki cümle eklenmiş
+2262|G|
+2263|MK|"El ile istibrâ vâcibdir." — Mâlikî hulâsası içinde (1-54 s146, El-mukaddemet-ül-izziyye)
+2270|Z|
+2271|Z|
+2277|S|"farzdır veyâ vâcibdir" + sonraki cümle "Sünnet de denilmişdir."
+2288|SK|"Uyuyan ve bayılmış veyâ deli okuyunca, işitenlerin secde etmesi vâcib olur denildi." — sonraki cümle: "Fekat, bunların ve kuşun okuması ile secde edilmemesi doğrudur."
+2291|F|başta "Mâlikî mezhebinde, hastaların, ihtiyârların nemâzları bozulmaz.]"
+2295|M|"Cemâ'at ile kılmak vâcibdir diyenler de çokdur." (asıl hüküm önceki cümlede: sünnet-i müekkede)
+2298|F|başta "[Uyûn-ül-besâir.]"
+2300|Z|
+2301|M|"(Eşi'a)da sakalı bir tutam uzatmak, vâcibdir denilmişdir." — sonraki cümle bu sözü yorumluyor
+2303|G|
+2307|Z|
+2308|Z|
+2310|A|
+2311|Z|"Vâciblerde vâcibdir."
+2314|A|
+2315|A|
+2316|G|
+2318|A|"bakması vâcib olanların nafakası"
+2319|A|
+2322|A|
+## vacib-acik 75-150 OKUNDU
+2323|A|
+2329|A|
+2333|A|
+2334|Z|"Kesmek vâcibdir."
+2337|A|
+2338|M|"bu kavle göre ... vâcib olur"; sonraki: "Diğer kavle göre, nezr olmaz, nâfile olur."
+2340|Z|
+2341|A|
+2343|A|
+2345|A|
+2346|Z|
+2347|G|
+2348|G|
+2349|Z|"Yapması vâcib olur."
+2357|A|hadîs "şefâ'atim vâcib olur" — fıkhî vâcib anlamında değil
+2359|A|aynı hadîs; fıkhî vâcib değil
+2362|F|sonuna ilgisiz manzûme satırı eklenmiş: "Dostlarımın ayrılığından, kalbim kan ağlıyor. onları hâtırladıkca, iliklerim yanıyor."
+2363|G|
+2364|F|iki ayrı nakil birleşik
+2368|F|sonuna "2 — Fıkh ilminin ikinci kısmı (Münâkehât) ..." eklenmiş
+2369|KK|"Müslimân meliklerinin, vâlîlerinin, bu kubbeleri yıkmaları vâcibdir." — Vehhâbî (Feth-ul-mecîd) kitâbının İbni Hacer'e isnâd etdiği söz; kitap hemen ardından "Hâlbuki, İbni Hacer-i Mekkî ... (Zevâcir) kitâbında, (Kabrler üzerine kubbe yapmak büyük günâhdır) demiyor" diyor (2-17 s453)
+2372|L|manzûme parçası
+2373|G|
+2374|LM|manzûme: "Nebîler ismini bilmek, dediler ba'zılar vâcib, ..."
+2379|M|"Ödünc vermekde de, iki şâhid vâcibdir denildi."; sonraki cümle "ödünc vermekde lâzım"
+2382|Z|
+2396|Z|"Böyle mahalleye, böyle şehre hicret etmek vâcibdir." (hangi mahalle önceki cümlelerde)
+2399|Z|
+## vacib-acik 151-225 OKUNDU (vacib-acik TAMAM)
+2407|A|
+2412|Z|
+2417|A|tütün hakkında beş hüküm birden, nakil ("diyor")
+2419|A|
+2424|A|"hârikalar göstermeleri vâcibdir" — Peygamberlik bahsi (kelâm), fıkhî vâcib değil
+2429|A|hadîs "Cennet vâcib olur"
+2430|A|ıyâl tanımı
+2435|F|alıntı ortasından başlıyor: "Buna uymak vâcib olur) yazılıdır."
+2443|G|
+2444|Z|"Sükûnet bulmak için câiz, zinâ tehlükesi olursa, vâcib olur" — neyin olduğu yok (önceki cümlelerde)
+2445|F|başta "[Vakf sonu.]"
+2448|O|"Vâcib olur denilmedi." — vâcib OLMADIĞINI bildiriyor
+2449|A|fısk
+2452|A|
+2454|M|"İki imâma göre ... te'dîb de ta'lîm gibi vâcibdir"
+2455|M|"Aklı olunca, îmân etmesi vâcib olur denildi." + sonraki "... da ihtilâflıdır"
+2458|AK|"Mümkin, hiç Vâcib olur mu?" — burada Vâcib = Vâcib-ül-vücûd (Allahü teâlâ); fıkhî hüküm değil
+2459|AK|"Belki, Vâcib, Mümkine ayna olur denebilir." — aynı (kelâm/tasavvuf terimi)
+2461|AK|"bunları vâcib, [ya'nî Allahü teâlânın kendisi] sanmış" — aynı
+2464|Z|
+2468|A|
+2476|F|sonuna "Burada evlâdına, ahbâbına son nasîhatini yapmalıdır." eklenmiş
+2477|G|
+5983|B|#2395'in sonraki cümleyle birleşik tekrarı (yinelenme)
+6710|B|#2358'in uzun hâli (aynı paragraf, yinelenme)
+## sunnet-acik 0-59 OKUNDU
+139|MK|"Yıkaması farz değil, sünnetdir." — önceki cümle "[1] Mâlikî mezhebinde, ikinci kavle göre, her necâset ... nemâza mâni' değildir." (1-54 s146 dipnot); kayıtta mezheb adı yok
+140|MK|"Günâh olmıyan seferde dört rek'at farzları iki kılmak sünnetdir." — Mâlikî hulâsası (önceki cümle "Mâlikîde sefer mesâfesi ..."); hanefîde vâcib (bkz. vâcib #2278)
+141|MK|"Vitr nemâzı ve ... tekbîr-i teşrîk sünnetdir.)" — Mâlikî hulâsasının son cümlesi; + sonraki cümle eklenmiş
+154|MK|"Guslde ağzı ve burnu yıkamak farz değil, sünnetdir." — Mâlikî hulâsası (1-56 s158, El-fıkh-u alel-mezâhib nakli); kitap hanefîde bunun farz olduğunu bildiriyor (#130, #47)
+422|M|"Şâfi'î mezhebinde ... sünnetleri kazâ etmek sünnetdir" (mezheb adlı)
+879|A|
+880|A|"sünnet olması" = hitân (sünnet olmak); hüküm "şart değildir"
+881|G|tanım
+884|A|
+885|G|tanım
+886|Z|"Fekat, sünnet olduğu dahâ doğrudur." (öznesi önceki cümlede: her rek'atde Besmele)
+890|G|
+892|G|
+893|Z|"Yirmi rek'ati sünnetdir."
+898|SK|"Ağız ile de niyyet etmeğe sünnetdir, müstehabdır veyâ bid'atdir denildiği ... yazılıdır." — kitabın vardığı netice sonraki cümlelerde: "Bunun için, ağız ile de niyyet etmemelidir."
+899|A|"Sünnetdir veyâ bid'atdir denilen bir şeyi yapmamak lâzım" — sünnet hükmü değil
+904|M|Mâlikî (mezheb adlı)
+908|MK|"İlk iki rek'atde Zamm-ı sûre okumak, iki teşehhüdde oturmak, tehıyyât ve salevât okumak ve ikinci selâm sünnetdir." — Mâlikî hulâsası (1-54 s146); kitapta hanefî için bunlar vâcib (#2279)
+909|MK|"Bayram ve cenâze nemâzları sünnetdir." — Mâlikî hulâsası (1-54 s147); hanefîde bayram nemâzı vâcib (#2304), cenâze farz-ı kifâye (#816)
+911|MK|= #141 (aynı cümle, yinelenme) Mâlikî hulâsası
+912|M|mâlikîde mekrûh, hanefîde sünnet (mezheb adlı)
+914|Z|"Az ise, sünnetdir."
+915|MK|"Temizlemek sünnetdir." — önceki cümle "[Mâlikî mezhebinde, ikinci kavle göre, necâset nemâza mâni' değildir."
+920|M|bir kavle göre farz, diğerine göre sünnet (Mâlikî hulâsası)
+921|A|
+926|Z|
+932|M|şâfi'î ve hanbelîde (mezheb adlı)
+## sunnet-acik 60-119 OKUNDU
+941|Z|"Böyle oturmak sünnetdir."
+945|M|"hanefîde vâcib, mâlikîde sünnet-i müekkede, şâfi'îde efdaldir" — sünnet başlığında; hanefîde vâcib
+948|M|"İki imâm ise, sünnetdir dedi." — öznesi (vitr) önceki cümlede; önceki cümle: İmâm-ı a'zam vâcib dedi; kitap vitri vâcib bölümünde veriyor
+949|M|"[Mâlikî ve şâfi'î mezheblerinde de sünnetdir.]" — öznesi yok (vitr)
+950|Z|
+956|A|"elleri sünnet olduğu gibi koymamak mekrûhdur" (mekrûh)
+959|Z|"Sünnet olduğu buradan anlaşıldı."
+977|G|
+981|G|
+982|A|
+983|A|
+986|A|"terk etmeleri câiz değildir"
+992|M|"İşâret etmek sünnetdir denildiği gibi, müstehabdır diyenler de vardır) diyor." — sonraki cümle: "(Fetâvâ-i garâib)de ... doğrusu, işâret etmek harâmdır." (ihtilâf; kitap bölümü bu tartışmayı anlatıyor)
+997|A|"müekked sünnetleri terk etmek günâh olmaz"
+1003|A|
+1004|A|
+1006|G|
+## sunnet-acik 120-179 OKUNDU
+1011|B|kayıt "sebe-tel-ecr" yazıyor, kitapta "sebetel-ecr"; köşeli ayraç kapanışı kitapta "yazılıdır.]," (cümle devam ediyor)
+1012|F|kayıt virgülle başlıyor: ", terâvîh kılmak ve hatm okumak mühim sünnetdir)." — cümlenin yalnız sonu
+1015|M|"Diğer üç mezhebde sünnet-i müekkede olduğu ... yazılıdır." — öznesi (kurban) yok; kitap kurbanı hanefîde vâcib bildiriyor (#2328)
+1021|Z|
+1025|S|"Kirpiklere sürme çekmek sünnetdir." — sonraki cümle: "Fekat, bunu yalnız Aşûre günü yapmak harâmdır)."
+1026|G|tanım
+1035|G|
+1044|AF|nikâh sîgası, yarım ("Fâtıma bint-i Ahmedi, .")
+1046|Z|"Bunların hepsi sünnetdir."
+1047|Z|"Hediyyeleşmeleri sünnetdir." (kimlerin)
+1070|M|"Müekked sünnet olduklarını bildirenler de, vâcibe yakın sünnet demişlerdir." — öznesi (kavme, celse) yok; önceki cümle Hanefî Kâdîhân'ın vâcib dediğini bildiriyor
+1071|G|
+1074|A|sünnet-i hasene (bid'at-i hasene adı)
+1075|A|"Sünnet-i hasenelere de şirk dediler." — Vehhâbîlerin sözü
+## sunnet-acik 180-239 OKUNDU
+1088|Z|
+1092|Z|"Böyle yatırmak sünnetdir."
+1103|Z|
+1112|F|başta madde başlığı "59 — KABR ZİYÂRETİ ve KUR'ÂN-I KERÎM OKUMAK" kayda karışmış
+1114|M|"Mâlikî ve şâfi'î mezheblerinde ... vitr nemâzı sünnet olduğu için" (mezheb adlı)
+1117|G|
+1119|G|sünnet tanımı
+1121|L|ef'âl-i mükellefîn sayımı
+1122|G|
+1123|G|
+1126|G|ibâdet tanımı
+1127|AF|"sünnet olması" = hitân; başta önceki cümle
+1128|A|"sünnet" = hitân
+1132|G|
+1133|A|soru cümlesi
+1134|G|tanım
+1137|G|dört kısm sayımı
+1138|G|sünnet tanımı
+1142|A|nâfile tanımı + sevâb kıyası
+1152|G|
+1156|G|
+1161|M|Mâlikî (mezheb adlı)
+1173|F|başta "Erkeklerde ise, bu zarûret yokdur.)"
+1174|MK|"Ağız, burun ve kulak içini ve saçları yıkamak sünnetdir." — gusl; Mâlikî hulâsası dipnotu (1-54 s146, önceki cümle: delk, muvâlât farzdır); kitap hanefîde guslde ağız ve burnu yıkamanın farz olduğunu bildiriyor
+1177|MK|"Sünneti unutunca, secde-i sehv lâzım olur." — Mâlikî hulâsası (1-54 s147)
+1182|G|
+1183|G|
+1185|A|"sünnetci" (hitân yapan) — hüküm yok, "câizdir"
+1195|F|başta "Günâh olur.]"
+## sunnet-acik 240-299 OKUNDU (çoğu "sünnet nemâz" anlamında anma)
+1197|A|
+1198|A|
+1200|A|"ezânın sünneti olmadığı, bid'at olduğu" — sünnet olmadığını bildiriyor
+1204|F|başta önceki paragraf sonu "Küçük günâha devâm, büyük günâh olmakdadır.]"
+1209|AF|başta önceki cümle; "Sünnete uygun ... ezân ile alay eden ... kâfir olur"
+1210|G|
+1211|G|
+1222|A|
+1223|A|
+1226|A|
+1227|F|"Ba'zı âlimler, sünnet kabûl olmaz." — kitapta cümle "... kabûl olmaz. Evvelki sünneti tekrâr kılmak lâzım olur dedi." diye sürüyor; yarım ve "ba'zı âlimler" görüşü
+1228|F|aynı cümlenin devamı + ilgisiz sonraki nakil
+1229|A|hadîs
+1238|A|
+1240|AF|
+1241|X|vâcibler sayımı (hepsi "vâcibdir"); sünnet yalnız ara notta
+1244|A|
+1245|A|
+1246|MF|"[Mâlikî ve şâfi'î mezheblerinde de sünnetdir.] Buna ezân ve ikâmet okunmaz." — öznesi (vitr) yok
+1247|A|
+1263|F|başta "[Dört mezhebde de yirmi rek'atdir.]"; "Sünnet olduğu buradan anlaşıldı."
+1270|AF|
+1273|A|
+1275|A|
+1276|G|"Sünneti terk ise, günâh olmaz."
+1277|A|Ehl-i sünnet imâm + mekrûh cümlesi
+1286|A|
+1287|A|
+1295|A|
+1302|A|
+1305|AF|alıntı sonu: "Sünneti yapmak lâzım değildir) demekdedir."
+1308|A|"sünnet-i hüdâ olmadığını"
+1312|A|"Kısa sakala sünnet demek, bid'at olup, büyük günâhdır."
+1313|A|"sakal kazımak sünnete muhâlif olur"
+1314|F|sonuna ilgisiz "[(Câmi'ur-rumûz) kitâbı, (Nikâye) kitâbının şerhidir." eklenmiş
+1315|O|işâretin sünnet olduğunu bildiren haberlere karşı "doğrusu işâretin harâm olduğudur" diyen âlimlerden bahsediyor
+1316|O|"işâretin sünnet ve müstehab olduğunu gösteren haberlerin değil, belki yasak olduğunu gösteren vesîkaların doğru olduğunu anlamışlardır" — sünnet başlığında, tersini söylüyor
+1318|MK|"Kadınların saç örgülerini çözmeleri, cenâbet için sünnet, hayz için farzdır." — Hanbelî mezhebi hulâsası içinde (1-73 s271, #864 bloğu)
+1319|A|"Kitâb, sünnet ve icmâ'" (kaynak anlamında)
+1321|A|
+1322|A|
+1323|A|
+1327|A|
+1328|A|
+1329|A|
+1330|A|
+1331|A|
+1333|A|
+1335|A|
+1336|A|
+1337|A|
+1338|A|
+1340|A|
+1341|A|
+1344|A|
+1345|A|
+1346|A|
+1347|A|
+## sunnet-acik 300-359 OKUNDU (1-74 kazâ bahsi; hepsinde 'sünnet' = sünnet nemâzı / sünnet kavramı, hüküm bildirmiyor)
+1348|A|
+1351|A|
+1352|A|
+1353|A|
+1354|A|
+1355|A|
+1356|A|
+1357|A|
+1359|A|
+1363|A|
+1364|A|
+1365|A|
+1366|A|
+1370|A|
+1371|A|
+1374|A|
+1375|A|
+1376|A|
+1377|A|
+1379|A|
+1380|A|
+1381|A|
+1384|A|
+1389|A|
+1401|A|
+1402|A|
+1403|A|
+1411|A|
+1412|A|
+1420|A|
+1421|A|
+1423|A|
+1426|A|
+1427|A|
+1432|A|
+1438|A|
+1439|A|
+1445|A|
+1446|A|
+1450|A|
+1452|A|
+1453|A|
+1454|A|
+1457|A|
+1462|A|
+1463|A|
+1475|A|
+1479|A|
+1480|A|
+1481|A|
+1488|A|
+1489|A|
+1490|A|
+1491|A|
+1492|A|
+1497|A|
+1391|G|
+1422|G|
+1435|G|
+1436|G|
+## sunnet-acik 360-409 OKUNDU
+1498|G|
+1499|G|
+1500|A|
+1501|A|
+1507|G|
+1508|A|
+1510|A|
+1512|A|hadîs
+1518|A|
+1522|M|umre: "hanefî ve mâlikîde müekked sünnet, şâfi'î ve hanbelîde farzdır" (mezheb adlı; aynı cümle farz başlığında da #575)
+1523|A|
+1524|G|
+1525|B|#1023'ün yinelenmesi + başta önceki cümle "Çünki, Resûlullah, kabrinde de diridir."
+1528|A|
+1529|G|tanım
+1534|A|
+1539|B|#1031'in yinelenmesi + sonuna ilgisiz cümle "Resûlullah ... misvâkini ve tarağını yanından ayırmazdı."
+1540|A|"sünnet olmuş" = hitânlı doğmuş
+1545|A|
+1548|A|
+1567|A|"Kitâb, sünnet ve icmâ'" (kaynak)
+1569|A|sünnet = hadîs-i şerîfler
+1571|A|sünnet = hadîs-i şerîfler
+1575|L|manzûme parçası
+1577|G|
+1582|KK|"Bıyık uzatmak hazret-i Alînin sünnetidir derlerdi." — "Sahte Bektâşîler"in sözü (2-22 s502); kitap hemen ardından "Hâlbuki, bıyıkları kısaltmak, hadîs-i şerîflerle emr edildi" diyor; "sünnet-i müekkede" etiketiyle
+1583|KK|"Bıyık kesmek, Mu'âviyenin sünnetidir derlerdi." — aynı sapık söz
+1585|K|"Gençleri aldatmak için, hazret-i Alînin sünnetidir dediler." — sonraki cümle "O büyük imâma iftirâ etdiler." (iftirâ olarak anılan söz, sünnet başlığında)
+1588|G|
+1595|A|nikâh sîgası
+1602|B|#1049'un yinelenmesi + başta köşeli ayraçlı önceki cümle
+1603|A|hadîs: kabûl olmaz
+1628|A|"kitâba ve sünnete" (kaynak)
+1630|A|"sünnet" = hitân düğünü; hüküm "mubâhdır"
+1631|A|
+1635|A|
+1639|G|
+1643|G|
+1647|A|
+1648|G|
+1649|G|
+## sunnet-acik 410-442 OKUNDU (sunnet-acik TAMAM)
+1663|G|
+1664|G|
+1665|G|
+1668|B|#1077'nin yinelenmesi + başta köşeli ayraçlı önceki cümle
+1669|A|"sünnet" = hitân yapan (hacâmat, sünnet, kan almak ... ehliyeti olanlar)
+1670|L|manzûme mısrâı
+1672|G|
+1684|A|
+1685|A|
+1686|A|
+1688|A|
+1691|B|#1108'in yinelenmesi + başta önceki iki cümle (mâtem, siyâh örtü)
+1695|B|#1112'nin yinelenmesi (başlıksız)
+1697|LA|uzun blok: Mektûbât nakli; "sünnet" = ahkâm-ı islâmiyye
+1698|L|= farz #851 bloğu (yinelenme)
+1699|L|abdestin sünnetleri bloğu (ilk 5 madde)
+1700|LX|= farz #854 bloğu; abdestin EDEBLERİ
+1701|LF|teyemmüm bloğu; "Teyemmümün sünnetleri onikidir:" ile biter, sayım dışarıda
+1702|LA|blok 6851 harf: melekler, resim, kabr — sünnet hükmü yok
+1703|L|= farz #862 hutbe bloğu
+1704|L|= farz #863 sakal bloğu
+1705|L|sünnet-i hüdâ/zevâid bloğu
+1706|L|bayram günü sünnetleri bloğu
+1707|LA|= farz #866 (sirkat/gasb)
+1708|L|kazâ/şefâ'at bloğu
+1709|L|= farz #869 sekiz dürlü oruc
+1712|L|sünnet üzere nikâh bloğu
+1713|L|kefen bloğu
+1714|LF|blok 7991 harf; kayıt "Berekât)da diyor ki" diye kitap adının ortasından başlıyor (kitapta tam bulunamadı: başı ve sonu bulundu)
+6469|B|#1616'nın yinelenmesi + başta köşeli ayraçlı önceki cümle
+## mustehab-acik 0-99 OKUNDU
+6226|L|ef'âl-i mükellefîn sayımı
+6229|A|"müstehab zemânlarında"
+6230|A|
+6233|SK|= sünnet #898 (ağız ile niyyet; kitabın vardığı netice "ağız ile de niyyet etmemelidir")
+6234|G|tanım
+6242|Z|"Müstehabları da, aynı olup ..." (guslün müstehabları)
+6249|MK|"Sabâh ikinci rek'atde sessiz kunût okumak, teşehhüdde şehâdet parmağı kaldırmak müstehabdır." — Mâlikî hulâsası (1-54 s147)
+6252|MK|"Çıkmadığı zemân abdest alması müstehab olur." — Mâlikî mezhebi ikinci kavli (1-56 s158)
+6253|MK|"İmâmın gizli okuduğu rek'atlerde cemâ'atin Fâtiha okumaları müstehab ..." — Mâlikî hulâsası (1-56 s158); kitap hanefîde imâm arkasında Fâtiha okumanın tahrîmen mekrûh olduğunu bildiriyor (1-70 s253)
+6254|MK|"Ayak parmakları arasını hilâllamak müstehabdır." — Mâlikî (El-müdevvene) nakli içinde (1-56 s159)
+6255|MK|"Kıyâmda, sağ el sol elin üstünde olarak ... veyâ iki eli iki yana salıvermek müstehabdır." — Mâlikî hulâsası (1-56 s158)
+6256|MK|"İstihâza kanı, idrar sızarsa, bir kavle göre bozulmaz ise de, her nemâz için abdest alması müstehab olur." — Mâlikî (El-müdevvene) nakli
+6257|A|"müstehab olan şeyleri bildirirken"
+6263|S|tırnakları öpüp gözlere sürmek müstehabdır — sonraki cümle: "(İbni Âbidîn) ... bu hadîsin za'îf olduğunu bildirdiği gibi ..."
+6266|Z|
+6269|G|
+6273|G|
+6277|Z|"Hattâ, nemâz içinde de, nemâz dışında da, müstehab olur." (tegannî; öznesi önceki cümlede)
+6278|G|
+6280|G|
+6281|G|
+6282|G|
+6287|M|Mâlikî (mezheb adlı)
+6293|Z|"Bu hadîs-i şerîfler, müstehab olduğunu göstermekdedir." (sakal boyamak)
+6294|A|"terk etmeleri câiz değildir"
+6295|Z|
+6298|M|= sünnet #992 (işâret; ihtilâf, ardından "doğrusu, işâret etmek harâmdır")
+6299|O|= sünnet #1316 (işâretin sünnet ve müstehab olmadığı, yasak olduğu sonucu)
+6300|Z|"Nitekim (Aynî) ve (Tuhfe), müstehab olduğunu bildiriyor, diyor." (işâret)
+6301|O|= sünnet #1315
+6302|F|kayıt iki ayrı hükmü birleştiriyor; asıl cümle "harâm olmaz ise de tahrîmen mekrûhdur"
+6303|G|
+6305|F|"6- Müstehab oruclar: Her arabî ayın 13." — "13." kısaltmasında kesilmiş
+6309|A|"orucun müstehablarını anlatırken" — devamı iftâr vakti
+6314|Z|
+## mustehab-acik 100-199 OKUNDU
+6325|Z|"Hattâ müstehab olur." (müdârâ; öznesi önceki cümlede)
+6332|Z|"Hattâ müstehab olduğu bildirilmişdir." (diriden düâ istemek)
+6334|L|manzûme parçası
+6336|G|
+6348|O|"Birden fazla evlenmek vâcib olmadığı gibi, mendûb da değildir." — mendûb OLMADIĞINI bildiriyor
+6349|M|Şâfi'î (El-envâr) nakli (mezheb adlı)
+6350|Z|"Ba'zısından, müstehabdır." (şübheliler)
+6353|Z|"Bayramlarda herkesin takması müstehabdır." (yüzük)
+6355|A|tütün hakkında beş hüküm, nakil
+6363|A|tasavvufî hâl anlatımı
+6382|Z|
+6385|A|"bu yolun şartlarını ve edeblerini" (tasavvuf yolu)
+6387|A|abdestin bölümleri sayımı
+6389|G|edeb tanımı
+6390|G|liste başlığı + 1. madde
+6392|A|"edebi bozar"
+6394|A|
+6395|A|
+6396|AF|madde başlığı "75 — İKİNCİ CİLD, 20. ci MEKTÛB" + giriş cümlesi
+6397|AK|"âdâb" kelimesi yalnız kitap adında (Kitâb-üt-tibyân fî âdâb-i hamelet-il-Kur'ân); cümle "Kur'ân-ı kerîmde bulunmıyan bir harfi ekliyen ... kâfir olur" — müstehab başlığında
+6398|A|
+6399|G|
+6400|A|"Yedinci fasl, evlenmek edeblerini bildirmekdedir." — başlık cümlesi
+6401|X|"Yimeğe ve içmeğe başlarken, (Besmele) okumalıdır." — kitap iki cümle sonra bunlar için "sünnetdir" diyor (#1058); müstehab başlığında
+6402|A|
+6403|A|
+6404|A|
+6405|L|manzûme mısrâı
+6406|A|
+6407|A|
+6408|E|abdestin edebleri listesi maddesi (1-52 s123-124)
+6409|E|abdestin edebleri listesi maddesi (1-52 s123-124)
+6410|E|abdestin edebleri listesi maddesi (1-52 s123-124)
+6411|E|abdestin edebleri listesi maddesi (1-52 s123-124)
+6412|E|abdestin edebleri listesi maddesi (1-52 s123-124)
+6413|E|abdestin edebleri listesi maddesi (1-52 s123-124)
+6414|E|abdestin edebleri listesi maddesi (1-52 s123-124)
+6415|E|abdestin edebleri listesi maddesi (1-52 s123-124)
+6416|E|abdestin edebleri listesi maddesi (1-52 s123-124)
+6417|E|abdestin edebleri listesi maddesi (1-52 s123-124)
+6418|E|abdestin edebleri listesi maddesi (1-52 s123-124)
+6419|E|abdestin edebleri listesi maddesi (1-52 s123-124)
+6420|E|abdestin edebleri listesi maddesi (1-52 s123-124)
+6421|E|abdestin edebleri listesi maddesi (1-52 s123-124)
+6422|E|abdestin edebleri listesi maddesi (1-52 s123-124)
+6423|E|abdestin edebleri listesi maddesi (1-52 s123-124)
+6424|E|abdestin edebleri listesi maddesi (1-52 s123-124)
+6425|E|abdestin edebleri listesi maddesi (1-52 s123-124)
+6426|E|abdestin edebleri listesi maddesi (1-52 s123-124)
+## mustehab-acik 200-299 OKUNDU (1-52 edeb/tenbîh listeleri; 2-45 YİMEK, İÇMEK ÂDÂBI maddesinin cümle cümle dökümü)
+6427|E|abdestin edebleri listesi
+6428|E|abdestin edebleri listesi
+6429|E|abdestin edebleri listesi
+6430|E|abdestin edebleri listesi
+6431|E|abdestin edebleri listesi
+6432|E|abdestin edebleri listesi
+6433|E|abdestin edebleri listesi
+6434|E|abdestin edebleri listesi
+6435|A|"Tenbîh: ... onbir şeye ri'âyet etmelidir" listesi 1. madde: "İki eli çolak olan, tahâretlenemez ... teyemmüm eder" — müstehab hükmü değil
+6436|A|aynı liste 2. madde: hastaya abdest aldırma
+6437|A|aynı liste 3. madde: "Taş ... ile tahâretlenmek, su yerine geçer."
+6438|A|aynı liste 4. madde: "Deli olan ... nemâzlarını kazâ etmez ... nemâz sâkıt olur." — müstehab başlığında yanıltıcı
+6440|E|Tenbîh listesi (ri'âyet etmelidir); kitap tür bildirmiyor
+6441|E|Tenbîh listesi (ri'âyet etmelidir); kitap tür bildirmiyor
+6442|E|Tenbîh listesi (ri'âyet etmelidir); kitap tür bildirmiyor
+6443|E|Tenbîh listesi (ri'âyet etmelidir); kitap tür bildirmiyor
+6444|E|Tenbîh listesi (ri'âyet etmelidir); kitap tür bildirmiyor
+6445|E|Tenbîh listesi (ri'âyet etmelidir); kitap tür bildirmiyor
+6447|X|"Yimek ve içmek sonunda (Elhamdülillah) demelidir." — sonraki cümle: "Bunları söylemek ... sünnetdir."
+6449|F|köşeli ayraçlı nakil + ayrı cümle birleşik
+6450|X|"Yimekden sonra elleri kâğıda silmek câiz olmadığı ... yazılıdır." — yasak bildiriyor
+6451|A|"söylenebilir" (câiz)
+6452|E|
+6453|E|
+6454|O|"Önce el yıkarken ağzı da yıkamak sünnet değildir."
+6455|X|"cünübün, ağızını yıkamadan yimesi mekrûh olup, hâizin mekrûh değildir"
+6457|X|"Bu ekmek yinirse, mekrûh olmaz." — öznesi önceki cümlede
+6459|X|"[1] Ekmeğin içini yiyip kabuğunu bırakmak ... isrâfdır." — isrâf (yasak); başta dipnot işareti
+6460|A|
+6463|F|köşeli ayraçlı önceki cümle "[Fekat, başkasının önünden almak yine câiz değildir.]" + "Çok sıcak şey yimemeli ..."
+6466|Z|"Ateşe tapanların âdetidir." — önceki cümle "Yirken hiç konuşmamak mekrûhdur." (mekrûhun gerekçesi)
+6467|E|
+6470|A|
+6472|X|"İslâmiyyetde, önce çıkan bid'atden biri, doyuncaya kadar yimekdir." — bid'at bildiriyor
+6473|A|
+6474|Z|"Melekler sevmez."
+6475|A|
+6476|E|"hoş olur"
+6477|A|"Sofra, deriden olur." — tanım
+6478|A|
+6479|A|
+6480|A|
+6481|A|nakil
+6482|E|
+6483|F|hadîs ortadan bölünmüş: "Peygamberimiz ..., (Ben kulum."
+6484|F|hadîsin ikinci yarısı; kitapta "yirim) buyurdu" — kayıtta ayraç düşmüş
+6485|E|
+6486|F|hadîs bölünmüş: "(İyiliklerin başı açlıkdır."
+6487|F|hadîsin ikinci yarısı; ayraç düşmüş
+6488|A|
+6489|A|
+6490|A|
+6491|A|
+6492|E|
+6493|E|
+6494|E|
+6495|F|hadîs bölünmüş: "(Sağ el ile yiyiniz."
+6496|F|hadîsin ikinci yarısı; ayraç düşmüş
+6498|A|anlatı
+6499|E|yemek âdâbı maddesi (-malıdır)
+6500|E|yemek âdâbı maddesi (-malıdır)
+6501|E|yemek âdâbı maddesi (-malıdır)
+6502|E|yemek âdâbı maddesi (-malıdır)
+6503|E|yemek âdâbı maddesi (-malıdır)
+6504|E|yemek âdâbı maddesi (-malıdır)
+6506|E|yemek âdâbı maddesi (-malıdır)
+6507|E|yemek âdâbı maddesi (-malıdır)
+6509|E|yemek âdâbı maddesi (-malıdır)
+6510|E|yemek âdâbı maddesi (-malıdır)
+6511|E|yemek âdâbı maddesi (-malıdır)
+6512|E|yemek âdâbı maddesi (-malıdır)
+6513|E|yemek âdâbı maddesi (-malıdır)
+6514|E|yemek âdâbı maddesi (-malıdır)
+6515|E|yemek âdâbı maddesi (-malıdır)
+6516|E|yemek âdâbı maddesi (-malıdır)
+6518|E|yemek âdâbı maddesi (-malıdır)
+6519|E|yemek âdâbı maddesi (-malıdır)
+6520|E|yemek âdâbı maddesi (-malıdır)
+6521|E|yemek âdâbı maddesi (-malıdır)
+6522|E|yemek âdâbı maddesi (-malıdır)
+6523|E|yemek âdâbı maddesi (-malıdır)
+6524|E|yemek âdâbı maddesi (-malıdır)
+6525|E|yemek âdâbı maddesi (-malıdır)
+6526|E|yemek âdâbı maddesi (-malıdır)
+6527|E|yemek âdâbı maddesi (-malıdır)
+6533|E|yemek âdâbı maddesi (-malıdır)
+6537|E|yemek âdâbı maddesi (-malıdır)
+6539|E|yemek âdâbı maddesi (-malıdır)
+6540|E|yemek âdâbı maddesi (-malıdır)
+6541|E|yemek âdâbı maddesi (-malıdır)
+6505|A|"Ekmek bıçakla kesilebilir." (câiz)
+6528|F|hadîs bölünmüş: "(İnsan kalbi, tarladaki ekin gibidir."
+6529|F|hadîs ortası: "Yemek, yağmur gibidir."
+6530|F|hadîs sonu; ayraç düşmüş
+6531|A|hadîs
+6532|A|
+6534|A|
+6535|A|
+6536|A|nakil (Teshîl-ül-menâfi')
+6538|EF|iki cümle birleşik ("Bir kişilik yemek, iki kişiye yetişir.")
+## mustehab-acik 300-399 OKUNDU (2-45 dökümü sürüyor)
+6543|E|yemek âdâbı maddesi
+6544|E|yemek âdâbı maddesi
+6545|E|yemek âdâbı maddesi
+6550|E|yemek âdâbı maddesi
+6556|E|yemek âdâbı maddesi
+6559|E|yemek âdâbı maddesi
+6560|E|yemek âdâbı maddesi
+6561|E|yemek âdâbı maddesi
+6562|E|yemek âdâbı maddesi
+6563|E|yemek âdâbı maddesi
+6564|E|yemek âdâbı maddesi
+6565|E|yemek âdâbı maddesi
+6567|E|yemek âdâbı maddesi
+6568|E|yemek âdâbı maddesi
+6569|E|yemek âdâbı maddesi
+6570|E|yemek âdâbı maddesi
+6571|E|yemek âdâbı maddesi
+6572|E|yemek âdâbı maddesi
+6573|E|yemek âdâbı maddesi
+6574|E|yemek âdâbı maddesi
+6575|E|yemek âdâbı maddesi
+6577|E|yemek âdâbı maddesi
+6578|E|yemek âdâbı maddesi
+6579|E|yemek âdâbı maddesi
+6580|E|yemek âdâbı maddesi
+6581|E|yemek âdâbı maddesi
+6582|E|yemek âdâbı maddesi
+6587|E|yemek âdâbı maddesi
+6588|E|yemek âdâbı maddesi
+6589|E|yemek âdâbı maddesi
+6590|E|yemek âdâbı maddesi
+6591|E|yemek âdâbı maddesi
+6592|E|yemek âdâbı maddesi
+6593|E|yemek âdâbı maddesi
+6594|E|yemek âdâbı maddesi
+6596|E|yemek âdâbı maddesi
+6597|E|yemek âdâbı maddesi
+6598|E|yemek âdâbı maddesi
+6599|E|yemek âdâbı maddesi
+6600|E|yemek âdâbı maddesi
+6635|E|yemek âdâbı maddesi
+6640|E|yemek âdâbı maddesi
+6646|E|yemek âdâbı maddesi
+6542|A|hüküm yok: anlatı / tıbbî bilgi / Resûlullahın sevdiği yiyecekler
+6546|A|hüküm yok: anlatı / tıbbî bilgi / Resûlullahın sevdiği yiyecekler
+6547|A|hüküm yok: anlatı / tıbbî bilgi / Resûlullahın sevdiği yiyecekler
+6548|A|hüküm yok: anlatı / tıbbî bilgi / Resûlullahın sevdiği yiyecekler
+6552|A|hüküm yok: anlatı / tıbbî bilgi / Resûlullahın sevdiği yiyecekler
+6554|A|hüküm yok: anlatı / tıbbî bilgi / Resûlullahın sevdiği yiyecekler
+6555|A|hüküm yok: anlatı / tıbbî bilgi / Resûlullahın sevdiği yiyecekler
+6558|A|hüküm yok: anlatı / tıbbî bilgi / Resûlullahın sevdiği yiyecekler
+6576|A|hüküm yok: anlatı / tıbbî bilgi / Resûlullahın sevdiği yiyecekler
+6595|A|hüküm yok: anlatı / tıbbî bilgi / Resûlullahın sevdiği yiyecekler
+6602|A|hüküm yok: anlatı / tıbbî bilgi / Resûlullahın sevdiği yiyecekler
+6603|A|hüküm yok: anlatı / tıbbî bilgi / Resûlullahın sevdiği yiyecekler
+6604|A|hüküm yok: anlatı / tıbbî bilgi / Resûlullahın sevdiği yiyecekler
+6605|A|hüküm yok: anlatı / tıbbî bilgi / Resûlullahın sevdiği yiyecekler
+6606|A|hüküm yok: anlatı / tıbbî bilgi / Resûlullahın sevdiği yiyecekler
+6607|A|hüküm yok: anlatı / tıbbî bilgi / Resûlullahın sevdiği yiyecekler
+6608|A|hüküm yok: anlatı / tıbbî bilgi / Resûlullahın sevdiği yiyecekler
+6609|A|hüküm yok: anlatı / tıbbî bilgi / Resûlullahın sevdiği yiyecekler
+6610|A|hüküm yok: anlatı / tıbbî bilgi / Resûlullahın sevdiği yiyecekler
+6611|A|hüküm yok: anlatı / tıbbî bilgi / Resûlullahın sevdiği yiyecekler
+6612|A|hüküm yok: anlatı / tıbbî bilgi / Resûlullahın sevdiği yiyecekler
+6613|A|hüküm yok: anlatı / tıbbî bilgi / Resûlullahın sevdiği yiyecekler
+6615|A|hüküm yok: anlatı / tıbbî bilgi / Resûlullahın sevdiği yiyecekler
+6617|A|hüküm yok: anlatı / tıbbî bilgi / Resûlullahın sevdiği yiyecekler
+6618|A|hüküm yok: anlatı / tıbbî bilgi / Resûlullahın sevdiği yiyecekler
+6619|A|hüküm yok: anlatı / tıbbî bilgi / Resûlullahın sevdiği yiyecekler
+6620|A|hüküm yok: anlatı / tıbbî bilgi / Resûlullahın sevdiği yiyecekler
+6621|A|hüküm yok: anlatı / tıbbî bilgi / Resûlullahın sevdiği yiyecekler
+6622|A|hüküm yok: anlatı / tıbbî bilgi / Resûlullahın sevdiği yiyecekler
+6623|A|hüküm yok: anlatı / tıbbî bilgi / Resûlullahın sevdiği yiyecekler
+6627|A|hüküm yok: anlatı / tıbbî bilgi / Resûlullahın sevdiği yiyecekler
+6628|A|hüküm yok: anlatı / tıbbî bilgi / Resûlullahın sevdiği yiyecekler
+6629|A|hüküm yok: anlatı / tıbbî bilgi / Resûlullahın sevdiği yiyecekler
+6630|A|hüküm yok: anlatı / tıbbî bilgi / Resûlullahın sevdiği yiyecekler
+6631|A|hüküm yok: anlatı / tıbbî bilgi / Resûlullahın sevdiği yiyecekler
+6632|A|hüküm yok: anlatı / tıbbî bilgi / Resûlullahın sevdiği yiyecekler
+6633|A|hüküm yok: anlatı / tıbbî bilgi / Resûlullahın sevdiği yiyecekler
+6634|A|hüküm yok: anlatı / tıbbî bilgi / Resûlullahın sevdiği yiyecekler
+6636|A|hüküm yok: anlatı / tıbbî bilgi / Resûlullahın sevdiği yiyecekler
+6637|A|hüküm yok: anlatı / tıbbî bilgi / Resûlullahın sevdiği yiyecekler
+6638|A|hüküm yok: anlatı / tıbbî bilgi / Resûlullahın sevdiği yiyecekler
+6639|A|hüküm yok: anlatı / tıbbî bilgi / Resûlullahın sevdiği yiyecekler
+6641|A|hüküm yok: anlatı / tıbbî bilgi / Resûlullahın sevdiği yiyecekler
+6642|A|hüküm yok: anlatı / tıbbî bilgi / Resûlullahın sevdiği yiyecekler
+6643|A|hüküm yok: anlatı / tıbbî bilgi / Resûlullahın sevdiği yiyecekler
+6647|A|hüküm yok: anlatı / tıbbî bilgi / Resûlullahın sevdiği yiyecekler
+6648|A|hüküm yok: anlatı / tıbbî bilgi / Resûlullahın sevdiği yiyecekler
+6649|A|hüküm yok: anlatı / tıbbî bilgi / Resûlullahın sevdiği yiyecekler
+6650|A|hüküm yok: anlatı / tıbbî bilgi / Resûlullahın sevdiği yiyecekler
+6557|AF|köşeli ayraçlı cümle + "Dil ile toplanan yutulabilir." (câiz)
+6583|AF|"[Dondurma yimemelidir.] Resûlullah ... serin şerbet içmesini severdi."
+6584|X|"(Ayakda içmeyiniz!) buyururdu." — nehy (yasak) bildiren hadîs, müstehab başlığında
+6585|X|"... ayakda içilebilir." (câiz)
+6586|X|"Yolcu, her suyu ayakda içebilir denildi." (câiz, kavl)
+6601|X|"Sağdakinin izni ile önce soldakine verilebilir." (câiz)
+6614|X|"Tavşan eti halâldir." — halâl/mubâh bildiriyor
+6645|AF|"[(Eczâcılık mecmû'ası) 1970 ...]" haberi + "Her kavun, karpuz ve narda bir damla Cennet suyu vardır."
+## mustehab-acik 400-490 OKUNDU (mustehab-acik TAMAM; 1-31, 1-90, 2-34, 2-45, 3-23 cümle dökümleri)
+6651|A|hüküm yok: tıbbî bilgi / anlatı / tanım / hadîs nakli
+6654|A|hüküm yok: tıbbî bilgi / anlatı / tanım / hadîs nakli
+6655|A|hüküm yok: tıbbî bilgi / anlatı / tanım / hadîs nakli
+6656|A|hüküm yok: tıbbî bilgi / anlatı / tanım / hadîs nakli
+6657|A|hüküm yok: tıbbî bilgi / anlatı / tanım / hadîs nakli
+6658|A|hüküm yok: tıbbî bilgi / anlatı / tanım / hadîs nakli
+6659|A|hüküm yok: tıbbî bilgi / anlatı / tanım / hadîs nakli
+6660|A|hüküm yok: tıbbî bilgi / anlatı / tanım / hadîs nakli
+6661|A|hüküm yok: tıbbî bilgi / anlatı / tanım / hadîs nakli
+6662|A|hüküm yok: tıbbî bilgi / anlatı / tanım / hadîs nakli
+6663|A|hüküm yok: tıbbî bilgi / anlatı / tanım / hadîs nakli
+6665|A|hüküm yok: tıbbî bilgi / anlatı / tanım / hadîs nakli
+6666|A|hüküm yok: tıbbî bilgi / anlatı / tanım / hadîs nakli
+6667|A|hüküm yok: tıbbî bilgi / anlatı / tanım / hadîs nakli
+6668|A|hüküm yok: tıbbî bilgi / anlatı / tanım / hadîs nakli
+6669|A|hüküm yok: tıbbî bilgi / anlatı / tanım / hadîs nakli
+6670|A|hüküm yok: tıbbî bilgi / anlatı / tanım / hadîs nakli
+6671|A|hüküm yok: tıbbî bilgi / anlatı / tanım / hadîs nakli
+6672|A|hüküm yok: tıbbî bilgi / anlatı / tanım / hadîs nakli
+6673|A|hüküm yok: tıbbî bilgi / anlatı / tanım / hadîs nakli
+6676|A|hüküm yok: tıbbî bilgi / anlatı / tanım / hadîs nakli
+6677|A|hüküm yok: tıbbî bilgi / anlatı / tanım / hadîs nakli
+6681|A|hüküm yok: tıbbî bilgi / anlatı / tanım / hadîs nakli
+6682|A|hüküm yok: tıbbî bilgi / anlatı / tanım / hadîs nakli
+6683|A|hüküm yok: tıbbî bilgi / anlatı / tanım / hadîs nakli
+6685|A|hüküm yok: tıbbî bilgi / anlatı / tanım / hadîs nakli
+6686|A|hüküm yok: tıbbî bilgi / anlatı / tanım / hadîs nakli
+6688|A|hüküm yok: tıbbî bilgi / anlatı / tanım / hadîs nakli
+6693|A|hüküm yok: tıbbî bilgi / anlatı / tanım / hadîs nakli
+6696|A|hüküm yok: tıbbî bilgi / anlatı / tanım / hadîs nakli
+6705|A|hüküm yok: tıbbî bilgi / anlatı / tanım / hadîs nakli
+6713|A|hüküm yok: tıbbî bilgi / anlatı / tanım / hadîs nakli
+6718|A|hüküm yok: tıbbî bilgi / anlatı / tanım / hadîs nakli
+6723|A|hüküm yok: tıbbî bilgi / anlatı / tanım / hadîs nakli
+6727|A|hüküm yok: tıbbî bilgi / anlatı / tanım / hadîs nakli
+6728|A|hüküm yok: tıbbî bilgi / anlatı / tanım / hadîs nakli
+6729|A|hüküm yok: tıbbî bilgi / anlatı / tanım / hadîs nakli
+6731|A|hüküm yok: tıbbî bilgi / anlatı / tanım / hadîs nakli
+6732|A|hüküm yok: tıbbî bilgi / anlatı / tanım / hadîs nakli
+6734|A|hüküm yok: tıbbî bilgi / anlatı / tanım / hadîs nakli
+6735|A|hüküm yok: tıbbî bilgi / anlatı / tanım / hadîs nakli
+6736|A|hüküm yok: tıbbî bilgi / anlatı / tanım / hadîs nakli
+6738|A|hüküm yok: tıbbî bilgi / anlatı / tanım / hadîs nakli
+6740|A|hüküm yok: tıbbî bilgi / anlatı / tanım / hadîs nakli
+6741|A|hüküm yok: tıbbî bilgi / anlatı / tanım / hadîs nakli
+6742|A|hüküm yok: tıbbî bilgi / anlatı / tanım / hadîs nakli
+6744|A|hüküm yok: tıbbî bilgi / anlatı / tanım / hadîs nakli
+6745|A|hüküm yok: tıbbî bilgi / anlatı / tanım / hadîs nakli
+6746|A|hüküm yok: tıbbî bilgi / anlatı / tanım / hadîs nakli
+6747|A|hüküm yok: tıbbî bilgi / anlatı / tanım / hadîs nakli
+6748|A|hüküm yok: tıbbî bilgi / anlatı / tanım / hadîs nakli
+6749|A|hüküm yok: tıbbî bilgi / anlatı / tanım / hadîs nakli
+6750|A|hüküm yok: tıbbî bilgi / anlatı / tanım / hadîs nakli
+6751|A|hüküm yok: tıbbî bilgi / anlatı / tanım / hadîs nakli
+6752|A|hüküm yok: tıbbî bilgi / anlatı / tanım / hadîs nakli
+6753|A|hüküm yok: tıbbî bilgi / anlatı / tanım / hadîs nakli
+6754|A|hüküm yok: tıbbî bilgi / anlatı / tanım / hadîs nakli
+6755|A|hüküm yok: tıbbî bilgi / anlatı / tanım / hadîs nakli
+6678|E|âdâb cümlesi (-malıdır); kitap tür bildirmiyor
+6679|E|âdâb cümlesi (-malıdır); kitap tür bildirmiyor
+6692|E|âdâb cümlesi (-malıdır); kitap tür bildirmiyor
+6694|E|âdâb cümlesi (-malıdır); kitap tür bildirmiyor
+6695|E|âdâb cümlesi (-malıdır); kitap tür bildirmiyor
+6697|E|âdâb cümlesi (-malıdır); kitap tür bildirmiyor
+6712|E|âdâb cümlesi (-malıdır); kitap tür bildirmiyor
+6714|E|âdâb cümlesi (-malıdır); kitap tür bildirmiyor
+6715|E|âdâb cümlesi (-malıdır); kitap tür bildirmiyor
+6716|E|âdâb cümlesi (-malıdır); kitap tür bildirmiyor
+6717|E|âdâb cümlesi (-malıdır); kitap tür bildirmiyor
+6720|E|âdâb cümlesi (-malıdır); kitap tür bildirmiyor
+6733|E|âdâb cümlesi (-malıdır); kitap tür bildirmiyor
+6653|AF|"(Patlıcan, zarar niyyeti ile yinirse, zarar verir." — hadîs diye anılan sözün ilk yarısı; kitap sonraki cümlede bunun "sahîh olmadığını, İbni Râvendînin sözü olduğunu" bildiriyor
+6675|Z|"Rengi ve kuvveti giderir." — öznesi önceki cümlede: "Balçık, kil yimemelidir, harâmdır."
+6687|AF|sonuna "Vehhâbîler ... yemekden sonra düâ etmek bid'atdir diyorlar." eklenmiş
+6689|B|yalnız atıf: "Birinci kısmda, 64. cü maddenin sonuna bakınız!"
+6690|AF|düâ metni ortasında kesik
+6691|F|düâ parçası "Allahümme at'im-hüm kemâ at'amûnâ!."
+6698|X|"Âlimin, ana babanın eli öpülür." (câiz)
+6699|X|"Başkasının öpülmez." (yasak) — sonraki cümle "elini öpmek harâmdır"
+6704|X|"selâm alırken eğilmek günâhdır ... rükü' ve secde yapmak harâmdır ... el ile selâm vermek günâhdır" — harâm/günâh
+6706|L|uzun nakil (Mektûbât 265): da'vete gitme şartları; sünnet/vâcib hükümleri
+6707|A|"İkiyüzaltmışbeşinci mektûb tercemesi temâm oldu."
+6708|LX|nakil: "harâm ... gidilmez ... sünnet terk edilir ... büyük günâhdır"
+6711|B|= #6399'un uzun hâli (yinelenme)
+6719|X|"Müslimân kızın kâfir erkekle evlenmesi câiz değildir ... mürted olur" + "kızı görmek sünnetdir"
+6721|EF|"Dört kadından kaçınmalı demişlerdir: 1 — ..." liste bölünmüş
+6722|F|listenin devamı, ilk cümle önceki maddenin açıklaması
+6724|X|"Fuhş söyliyen kimse ta'zîr olunur." — sonraki cümle "tahrîmen mekrûhdur"
+6737|X|hadîs "(Fuhş söyliyenlerin Cennete girmeleri harâmdır)"
+6739|A|"(Hadîka)dan terceme temâm oldu."
+6756|A|"(Berîka)dan terceme temâm oldu."
+## farz-tum: açıkta olmayan şüpheli + örneklem (239 kayıt) OKUNDU — hepsi "farz" kelimesinin gerçek geçişi; aşağıdakiler başka anlam/biçim
+T715|A|"Çünki, bu kimse kadın farz edilirse, dayısı mahremdir." — "farz etmek" = varsaymak
+T847|A|"... bulunduğunu farz edersek ..." — varsaymak
+T845|A|ferâiz hesâbı: "farzının [hissesinin] paydası" — farz = mîrâs hissesi
+T846|A|aynı (farz = hisse)
+T876|LA|ferâiz bloğu; farz = hisse
+T492|Z|"İmâm-ı Ebû Yûsüf ve imâm-ı Şâfi'î [ve Mâlik] ise, farz demişdir." — neyin olduğu yok
+T241|B|kısmen bulundu; iki ayrı paragraf birleşik
+T6763|M|Mâlikî hulâsası (1-56): "Farzlarda (E'ûzü...) okumak mekrûhdur."
+## vacib-tum: açıkta olmayan şüpheli + örneklem (132 kayıt) OKUNDU — hepsi "vâcib" kelimesinin gerçek geçişi; altTur etiketleri ("vâcib değildir", "kelâm ıstılâhı") içeriğe uyuyor
+T2493|A|"Ya'nî (Vâcib-ül vücûd)dur." — kelâm terimi; etiketi "kelâm ıstılâhı" (doğru etiket, ama vâcib hükümleri dizininde)
+T2805|A|Vâcib-ül-vücûd — aynı (etiketli)
+T2727|A|hadîs "şefâ'at etmek bana vâcib oldu" — fıkhî vâcib değil
+T2484|F|başta "Başka dinlerde yokdurlar.]"
+## sunnet-tum: açıkta olmayan şüpheli + örneklem (229 kayıt) OKUNDU — çoğu "sünnet" kelimesinin gerçek geçişi; başka anlamdakiler betikle sayıldı (anlam-tarama.json)
+T1584|K|"Bunlar, seviyoruz dedikleri hazret-i Alînin, bu sünneti yapmadığını ... söylüyorlar." — sapık fırka sözü
+T1917|LF|"FARZLAR VE SÜNNETLER: [Başkasının malını ..." başlık + ilgisiz cümle
+T1945|F|"... 281." kısaltmada kesik
+T6821|F|"[m." kısaltmada kesik

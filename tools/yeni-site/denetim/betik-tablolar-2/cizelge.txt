@@ -1,0 +1,66 @@
+| 66 | `kan_gruplari` | Dört Dürlü Kan Gurubu | tablo | 3-54 s.978 | evet | **doğru** | 0 |
+| 67 | `uc_vazife` | Allahü Teâlâ Kullarına Üç Vazîfe Verdi | tablo | 1-11 s.29 | evet | **doğru** | 0 |
+| 68 | `dunyayi_terk` | Dünyâyı Terk Etmek İki Dürlüdür | tablo | 1-11 s.29 | evet | **doğru** | 0 |
+| 69 | `kafirler_iki_tur` | Bugün, Dünyâdaki Kâfirler İki Dürlüdür | tablo | 1-11 s.27 | evet | **doğru** | 0 |
+| 70 | `gunahlar_ikiye` | Küfrden ve Bid'atden Başka Günâhlar İkiye Ayrılır | tablo | 1-31 s.64 | evet | **doğru** | 0 |
+| 71 | `yetmisiki_bidat_firka` | Yetmişiki Bid'at Yolunun Esâsı, Dokuz Fırkadır | liste | 1-31 s.66 | evet | **doğru** | 0 |
+| 72 | `eshab_iftiracilari` | Eshâb-ı Kirâma İftirâ Edenler Üç Grubda Toplanmakdadır | tablo | 1-31 s.61 | evet | **doğru** | 0 |
+| 73 | `din_bilgileri_ikiye` | Resûlullahdan Gelen Din Bilgileri İkiye Ayrılır | tablo | 3-70 s.1053 | evet | **doğru** | 0 |
+| 74 | `ulum_ogrenme_hukmu` | Ulûm-i İslâmiyyenin Öğrenme Hükmü Üç Tabakadadır | tablo | 1-11 s.25 | evet | **doğru** (B) | 1 |
+| 75 | `insanlar_uc_turlu` | Vera' Bahsinde İnsanlar Üç Dürlüdür | tablo | 2-40 s.610 | evet | **düzeltilmeli** (Y) | 1 |
+| 76 | `nikah_hukumleri` | Nikâh Hakkında Başlıca Hükümler | tablo | 2-34 s.564 | hayır (kaynakMetin, sahîfe) | **düzeltilmeli** (B,Y) | 2 |
+| 77 | `nikah_niyyet_haram` | Nikâhda Niyyet ve Harâm Nikâh Nevileri | tablo | 2-34 s.565 | hayır (kaynakMetin, sahîfe) | **düzeltilmeli** (B,Y) | 2 |
+| 78 | `bosama_yetkisi` | Boşama Yetkisinin Veriliş Yolları | tablo | 2-36 s.583 | kısmen (1. satır 2-34; kaynakMetin) | **düzeltilmeli** (B,Y) | 2 |
+| 79 | `talak_ayrilik` | Talâk ve Ayrılık Nevileri | tablo | 2-36 s.580 | evet | **doğru** | 0 |
+| 80 | `ila_hul` | Îlâ ve Hul' | tablo | 2-36 s.580 | hayır (kaynakMetin, sahîfe) | **düzeltilmeli** (Y,B) | 2 |
+| 81 | `akika` | Akîka Hükümleri | tablo | 1-81 s.329 | hayır (kaynakMetin) | **düzeltilmeli** (B) | 1 |
+| 82 | `nikahi_caiz_olmiyanlar` | Nikâhı Câiz Olmıyanlar | tablo | 2-34 s.569 | evet | **doğru** | 0 |
+| 83 | `nesebden_yedi_mahrem` | Nesebden Olan Yedi Zî-Rahm-i Mahrem | liste | 2-34 s.569 | evet | **doğru** | 0 |
+| 84 | `sut_ile_hukum` | Soydan Olmayıp Süt İle veyâ Zinâ İle Olursa Hüküm | tablo | 2-34 s.569 | evet | **doğru** | 0 |
+| 85 | `nikah_sebebi_dort_kadin` | Nikâh Sebebi İle Sonradan Akrabâ Olan Dört Kadın | liste | 2-34 s.570 | evet | **doğru** | 0 |
+| 86 | `muvakkat_haram` | Muvakkat Harâm Olan Kadınlar | tablo | 2-34 s.570 | evet | **düzeltilmeli** (Y) | 2 |
+| 87 | `zihar` | Zıhâr | tablo | 2-36 s.584 | evet | **doğru** | 0 |
+| 88 | `lian` | Li'ân | tablo | 2-36 s.584 | evet | **düzeltilmeli** (Y) | 2 |
+| 89 | `iddet` | İddet Hükümleri | tablo | 2-36 s.584 | evet | **doğru** | 0 |
+| 90 | `hidane` | Hıdâne (Çocuğu Yetişdirmek) | tablo | 2-36 s.585 | evet | **doğru** | 0 |
+| 91 | `sut_cocuklugu_mezhebler` | Süt Çocukluğu Mezheblere Göre | tablo | 2-37 s.586 | evet | **doğru** | 0 |
+| 92 | `sut_akrabaligi` | Süt Akrabâlığı Nasıl Kuruluyor? | tablo | 2-37 s.586 | evet | **doğru** | 0 |
+| 93 | `sut_haram_olanlar` | Süt Sebebi İle Evlenmesi Harâm Olanlar | tablo | 2-37 s.586 | evet | **düzeltilmeli** (Y) | 2 |
+| 94 | `sut_cocuklugu_haller` | Süt Çocukluğu Olmaz ve Olur Hâller | iki_liste | 2-37 s.586 | hayır (kaynakMetin değiştirilmiş) | **düzeltilmeli** (K,Y) | 2 |
+| 95 | `sut_emme_sabit` | Süt Emmenin Sabit Olması | tablo | 2-37 s.587 | evet | **düzeltilmeli** (Y) | 1 |
+| 96 | `nafaka_bes_sebeb` | Nafakayı Vermek Beş Sebeble Farz Olur | liste | 2-38 s.588 | evet | **doğru** | 0 |
+| 97 | `zevce_nafakasi` | Zevce Nafakası | tablo | 2-38 s.588 | evet | **doğru** | 0 |
+| 98 | `cocuk_nafakasi` | Fakîr Çocuğun Nafakası ve Lakît | tablo | 2-38 s.591 | evet | **doğru** | 0 |
+| 99 | `anababa_nafaka` | Fakîr Ana-Babaya Nafaka | tablo | 2-38 s.591 | evet | **doğru** | 0 |
+| 100 | `mahrem_nafaka` | Fakîr Zî-Rahm-i Mahreme Nafaka | tablo | 2-38 s.592 | evet | **doğru** | 0 |
+| 101 | `nafaka_uc_sey` | Nafaka Üç Şeydir | liste | 2-38 s.588 | evet | **doğru** | 0 |
+| 102 | `olcu_birimleri` | Ölçü Birimleri İkiye Ayrılır | tablo | 1-78 s.295 | evet | **doğru** (B) | 1 |
+| 103 | `mal_ikiye_ayrilir` | Mal, (Ayn) ve (Deyn) Olarak İkiye Ayrılır | tablo | 3-4 s.793 | evet | **doğru** | 0 |
+| 104 | `havale_uc_sekil` | Havâle Üç Şeklde Olabilir | tablo | 3-13 s.831 | evet | **doğru** | 0 |
+| 105 | `ibadetler_on_kisim` | İbâdetler On Kısmdır | tablo | 3-3 s.786 | evet | **doğru** | 0 |
+| 106 | `alacaklar_uc_turlu` | Alacaklar Üç Dürlüdür | tablo | 1-78 s.294 | evet | **düzeltilmeli** (Y) | 1 |
+| 107 | `emval_zahire_batina` | Zekât Mallarından Emvâl-i Zâhire ve Emvâl-i Bâtına | tablo | 1-78 s.309 | evet | **doğru** | 0 |
+| 108 | `mulk_sahibi_uc_yol` | Mülk Sâhibi Olmak Üç Yol İledir | tablo | 2-29 s.536 | evet | **doğru** | 0 |
+| 109 | `muhayyerlik_uc_turlu` | Alış Verişde Muhayyerlik Üç Dürlüdür | tablo | 3-4 s.797 | hayır (3-5 olmalı) | **düzeltilmeli** (B,Y) | 2 |
+| 110 | `insanin_kullandigi` | İnsanın Kullandığı Şeyler Beşe Ayrılır | tablo | 2-38 s.594 | evet | **doğru** | 0 |
+| 111 | `miras_alamiyanlar` | Mîrâs Alamıyanlar | liste | 3-63 s.1019 | hayır (3-64 olmalı) | **düzeltilmeli** (B,Y) | 2 |
+| 112 | `nikah_sartlari_mezhebler` | Nikâhın Şartları ve Mezheblere Göre Kayıtlar | tablo | 2-34 s.566 | evet | **düzeltilmeli** (Y) | 1 |
+| 113 | `feraizte_takdiren` | Ferâizde Takdîren Ölü ve Takdîren Diri Sayılanlar | tablo | 3-64 s.1025 | evet | **doğru** | 0 |
+| 114 | `zevil_erham_bes` | Zevil-Erhâm Beş Sınıfdır | tablo | 3-65 s.1033 | evet | **düzeltilmeli** (Y) | 1 |
+| 115 | `zevil_erham_tercih` | Zevil-Erhâmda Tercih Kaideleri | tablo | 3-65 s.1033 | evet | **düzeltilmeli** (Y) | 2 |
+| 116 | `yemin_keffareti` | Yemîn Keffâreti | tablo | 1-83 s.337 | evet | **doğru** | 0 |
+| 117 | `yemin_keffaret_kayitlar` | Yemîn Keffâretinde Kayıtlar | tablo | 1-83 s.337 | evet | **doğru** | 0 |
+| 118 | `nezr_iki_turlu` | Nezr, Ya'nî Adak, İki Dürlü Olur | tablo | 1-82 s.330 | kısmen (kaynakMetin birleştirilmiş) | **düzeltilmeli** (Y,B) | 2 |
+| 119 | `adak_vasiflar` | Adakta Aranan Vasıflar ve Nezr Olunmayanlar | tablo | 1-82 s.331 | evet | **doğru** | 0 |
+| 120 | `farz_adamak` | Zâten Farz Olanı Adamak ve Hac/Kurban Farkı | tablo | 1-82 s.331 | evet | **doğru** (B) | 1 |
+| 121 | `vera_dereceleri` | Halâl ve Harâmda Vera'ın Dereceleri Beşdir | tablo | 2-40 s.608 | evet | **doğru** | 0 |
+| 122 | `subheler_uc_kisim` | Şübheliler Üç Kısmdır | liste | 2-40 s.607 | hayır (kaynakMetin, sahîfe) | **düzeltilmeli** (B) | 1 |
+| 123 | `zaruret_ruhsatlari` | Zarûret Hâlinde Ruhsatlar | tablo | 2-41 s.618 | hayır (kaynakMetin) | **düzeltilmeli** (B) | 1 |
+| 124 | `altin_gumus_hukumleri` | Altın, Gümüş ve Zînet Hükümleri | tablo | 2-41 s.620 | evet | **düzeltilmeli** (Y) | 1 |
+| 125 | `ipek_hukumleri` | Erkekler İçin İpek Hükümleri | tablo | 2-41 s.622 | evet | **doğru** | 0 |
+| 126 | `tutun_gorusleri` | Tütün Hakkında Görüşler | tablo | 2-43 s.629 | evet | **düzeltilmeli** (K) | 2 |
+| 127 | `yimegi_haram_eden` | Yimeği ve İçmeği Harâm Eden Sebebler Altıdır | tablo | 2-43 s.630 | evet | **doğru** | 0 |
+| 128 | `israf_bes_bahs` | İsrâf Beş Bahs İçinde Anlatılır | liste | 2-44 s.640 | hayır (kaynakMetin uydurma) | **düzeltilmeli** (K) | 1 |
+| 129 | `para_vermek_iki_turlu` | Parayı, Malı, Halâl Yerlere Vermek İki Dürlü Olur | tablo | 2-44 s.646 | evet | **düzeltilmeli** (Y) | 1 |
+| 130 | `yimek_adabi` | Yimek Âdâbında Başlıca Sünnetler | liste | 2-45 s.648 | evet | **düzeltilmeli** (Y) | 1 |
+Counter({'doğru': 40, 'düzeltilmeli': 25})

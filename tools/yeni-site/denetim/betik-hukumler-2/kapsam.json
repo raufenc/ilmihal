@@ -1,0 +1,1051 @@
+{
+ "secilen": [
+  "1-67",
+  "1-74",
+  "1-78",
+  "1-79",
+  "1-84",
+  "2-40",
+  "2-42",
+  "2-44",
+  "3-10",
+  "3-3",
+  "3-4",
+  "3-5"
+ ],
+ "maddeler": {
+  "1-67": {
+   "haram": {
+    "toplam": 3,
+    "olumsuzHaric": 3,
+    "acikta": 3,
+    "tumde": 3,
+    "hicbiri": 0
+   },
+   "mekruh": {
+    "toplam": 6,
+    "olumsuzHaric": 6,
+    "acikta": 6,
+    "tumde": 6,
+    "hicbiri": 0
+   },
+   "mubah": {
+    "toplam": 2,
+    "olumsuzHaric": 1,
+    "acikta": 0,
+    "tumde": 0,
+    "hicbiri": 1
+   }
+  },
+  "1-74": {
+   "haram": {
+    "toplam": 7,
+    "olumsuzHaric": 7,
+    "acikta": 6,
+    "tumde": 7,
+    "hicbiri": 0
+   },
+   "mubah": {
+    "toplam": 6,
+    "olumsuzHaric": 5,
+    "acikta": 3,
+    "tumde": 3,
+    "hicbiri": 2
+   },
+   "mekruh": {
+    "toplam": 11,
+    "olumsuzHaric": 9,
+    "acikta": 9,
+    "tumde": 9,
+    "hicbiri": 0
+   }
+  },
+  "1-78": {
+   "mubah": {
+    "toplam": 34,
+    "olumsuzHaric": 34,
+    "acikta": 0,
+    "tumde": 0,
+    "hicbiri": 34
+   },
+   "haram": {
+    "toplam": 11,
+    "olumsuzHaric": 10,
+    "acikta": 10,
+    "tumde": 10,
+    "hicbiri": 0
+   },
+   "mekruh": {
+    "toplam": 5,
+    "olumsuzHaric": 5,
+    "acikta": 5,
+    "tumde": 5,
+    "hicbiri": 0
+   }
+  },
+  "1-79": {
+   "mekruh": {
+    "toplam": 6,
+    "olumsuzHaric": 6,
+    "acikta": 6,
+    "tumde": 6,
+    "hicbiri": 0
+   },
+   "haram": {
+    "toplam": 2,
+    "olumsuzHaric": 2,
+    "acikta": 2,
+    "tumde": 2,
+    "hicbiri": 0
+   },
+   "mubah": {
+    "toplam": 9,
+    "olumsuzHaric": 9,
+    "acikta": 0,
+    "tumde": 0,
+    "hicbiri": 9
+   }
+  },
+  "1-84": {
+   "mubah": {
+    "toplam": 16,
+    "olumsuzHaric": 16,
+    "acikta": 1,
+    "tumde": 1,
+    "hicbiri": 15
+   },
+   "mekruh": {
+    "toplam": 6,
+    "olumsuzHaric": 5,
+    "acikta": 4,
+    "tumde": 4,
+    "hicbiri": 1
+   },
+   "haram": {
+    "toplam": 5,
+    "olumsuzHaric": 5,
+    "acikta": 5,
+    "tumde": 5,
+    "hicbiri": 0
+   }
+  },
+  "2-40": {
+   "haram": {
+    "toplam": 25,
+    "olumsuzHaric": 25,
+    "acikta": 25,
+    "tumde": 25,
+    "hicbiri": 0
+   },
+   "mubah": {
+    "toplam": 44,
+    "olumsuzHaric": 40,
+    "acikta": 0,
+    "tumde": 0,
+    "hicbiri": 40
+   },
+   "mekruh": {
+    "toplam": 5,
+    "olumsuzHaric": 5,
+    "acikta": 4,
+    "tumde": 4,
+    "hicbiri": 1
+   }
+  },
+  "2-42": {
+   "haram": {
+    "toplam": 24,
+    "olumsuzHaric": 24,
+    "acikta": 24,
+    "tumde": 24,
+    "hicbiri": 0
+   },
+   "mubah": {
+    "toplam": 9,
+    "olumsuzHaric": 8,
+    "acikta": 0,
+    "tumde": 0,
+    "hicbiri": 8
+   },
+   "mekruh": {
+    "toplam": 4,
+    "olumsuzHaric": 4,
+    "acikta": 4,
+    "tumde": 4,
+    "hicbiri": 0
+   }
+  },
+  "2-44": {
+   "haram": {
+    "toplam": 2,
+    "olumsuzHaric": 2,
+    "acikta": 2,
+    "tumde": 2,
+    "hicbiri": 0
+   },
+   "mekruh": {
+    "toplam": 4,
+    "olumsuzHaric": 4,
+    "acikta": 4,
+    "tumde": 4,
+    "hicbiri": 0
+   },
+   "mubah": {
+    "toplam": 3,
+    "olumsuzHaric": 1,
+    "acikta": 1,
+    "tumde": 1,
+    "hicbiri": 0
+   }
+  },
+  "3-10": {
+   "mubah": {
+    "toplam": 2,
+    "olumsuzHaric": 2,
+    "acikta": 0,
+    "tumde": 0,
+    "hicbiri": 2
+   }
+  },
+  "3-3": {
+   "mubah": {
+    "toplam": 10,
+    "olumsuzHaric": 10,
+    "acikta": 1,
+    "tumde": 1,
+    "hicbiri": 9
+   },
+   "haram": {
+    "toplam": 5,
+    "olumsuzHaric": 5,
+    "acikta": 5,
+    "tumde": 5,
+    "hicbiri": 0
+   }
+  },
+  "3-4": {
+   "haram": {
+    "toplam": 5,
+    "olumsuzHaric": 4,
+    "acikta": 4,
+    "tumde": 4,
+    "hicbiri": 0
+   },
+   "mubah": {
+    "toplam": 31,
+    "olumsuzHaric": 31,
+    "acikta": 0,
+    "tumde": 0,
+    "hicbiri": 31
+   }
+  },
+  "3-5": {
+   "mubah": {
+    "toplam": 5,
+    "olumsuzHaric": 5,
+    "acikta": 0,
+    "tumde": 0,
+    "hicbiri": 5
+   },
+   "haram": {
+    "toplam": 1,
+    "olumsuzHaric": 1,
+    "acikta": 1,
+    "tumde": 1,
+    "hicbiri": 0
+   }
+  }
+ },
+ "kacan": [
+  {
+   "madde": "1-67",
+   "tur": "mubah",
+   "cumle": "Görülüyor ki, tegannî, kelimenin ma’nâsını değişdirmezse ve harfler, iki harf kadar uzamazsa, yalnız sesi güzelleşdirip kırâeti süslerse, câiz olur."
+  },
+  {
+   "madde": "1-74",
+   "tur": "mubah",
+   "cumle": "Sağlam iken kılmadığı nemâzları, hasta iken teyemmüm ve îmâ ile kazâ etmek câizdir."
+  },
+  {
+   "madde": "1-74",
+   "tur": "mubah",
+   "cumle": "Hâlbuki, câmi’e girince kılınan herhangi bir nemâz, tehıyyetülmescid yerine de geçdiği için, farz kılarken tehıyyetülmescid olarak da, ayrıca niyyet etmek, imâm-ı Muhammede göre de câiz olur."
+  },
+  {
+   "madde": "1-78",
+   "tur": "mubah",
+   "cumle": "Sâhiblerini buluncıya kadar dayanamayıp bozulacak malı, kendi kullanıp, sonra tazmîn etmesi, ya’nî benzerini, benzeri yoksa kıymetini ödemesi câiz olur."
+  },
+  {
+   "madde": "1-78",
+   "tur": "mubah",
+   "cumle": "Malın zekâtını ayırırken veyâ müslimân fakîre verirken (Allah rızâsı için, zekât vereceğim) diye niyyet edip de fakîre veyâ zekâtını fakîrlere vermek için vekîl etdiği kimseye verirken borç veyâ hediyye veriyorum dese, câiz olur."
+  },
+  {
+   "madde": "1-78",
+   "tur": "mubah",
+   "cumle": "[Bu takdîrde, zekâtın iskâtı yapılmış olur.] Zekâtı ayırırken ve fakîre verirken niyyet etmeyip, verdikden çok sonra niyyet ederse, mal, fakîrde bulunduğu müddetce, câiz olur."
+  },
+  {
+   "madde": "1-78",
+   "tur": "mubah",
+   "cumle": "Zekâtını müslimân fakîre vermesi için, zimmîyi de, ya’nî başka dinde olan vatandaşı da vekîl etmesi câiz olur."
+  },
+  {
+   "madde": "1-78",
+   "tur": "mubah",
+   "cumle": "Vekîline verirken sadaka, keffâret, hediyye dese, vekîli fakîre bu niyyet ile vermeden önce, zengin zekât için niyyet etse câiz olur."
+  },
+  {
+   "madde": "1-78",
+   "tur": "mubah",
+   "cumle": "Zenginlerin izni ile karışdırmış ise veyâ karışdırdıkdan sonra ve fakîrlere vermeden önce izn almış ise, câiz olur."
+  },
+  {
+   "madde": "1-78",
+   "tur": "mubah",
+   "cumle": "Fakîrlerin vekîli olan kimse, aldığı zekâtları, habersiz karışdırıp, sonra fakîrlere dağıtması câizdir."
+  },
+  {
+   "madde": "1-78",
+   "tur": "mubah",
+   "cumle": "Zenginlerin vekîlinin de, bunlardan iznsiz karışdırdıkdan sonra vermesi câiz olur da denildi."
+  },
+  {
+   "madde": "1-78",
+   "tur": "mubah",
+   "cumle": "Bir zengin, bir kimseye benim için, şu kadar altın zekât ver dese [veyâ başka memleketde bulunan bir kimseye mektûbla bildirse], bu kimse de emr olunan bu altınları, kendi kâğıd parası ile satın alıp, fakîrlere verse, câiz olur."
+  },
+  {
+   "madde": "1-78",
+   "tur": "mubah",
+   "cumle": "Vekîl elindeki zekâtı, zenginin emr etmediği fakîrlere verse, sonra zengin kabûl ederse, câiz olur denildi."
+  },
+  {
+   "madde": "1-78",
+   "tur": "mubah",
+   "cumle": "Hac vakti gelmeden önce, ihtiyâc eşyâsı satın almak câizdir."
+  },
+  {
+   "madde": "1-78",
+   "tur": "mubah",
+   "cumle": "İbni Âbidîn “rahmetullahi teâlâ aleyh”, koyunların zekâtını anlatırken buyuruyor ki: Zekât ve uşr ve harâc ve fıtra ve nezr ve keffâret olarak verilecek mallar yerine bunların kıymetlerini de vermek câizdir."
+  },
+  {
+   "madde": "1-78",
+   "tur": "mubah",
+   "cumle": "Hem altını, hem gümüşü olup, her biri ayrı ayrı nisâb mikdârı ise, zekâtları ayrı ayrı dartı ile verilir ise de, yalnız bu takdîrde, ya’nî hem altını, hem gümüşü bulunan bir kimse, nisâb mikdârı oldukları zemân dahî, fukarâya fâideli olmak, ya’nî geçer akça verilmiş olmak şartı ile, kıymeti hesâb edilerek, ikisinden birini vermek de câiz olur."
+  },
+  {
+   "madde": "1-78",
+   "tur": "mubah",
+   "cumle": "Sayısı veyâ ağırlığı belli olan, meselâ bir dirhem ağırlığında fülûs ile mal satın almak câizdir."
+  },
+  {
+   "madde": "1-78",
+   "tur": "mubah",
+   "cumle": "Farz olmadan önce yapılan hîle, imâm-ı Muhammede göre mekrûh, imâm-ı Ebû Yûsüfe göre câiz olur."
+  },
+  {
+   "madde": "1-78",
+   "tur": "mubah",
+   "cumle": "Birine verince, onun alması câiz olur."
+  },
+  {
+   "madde": "1-78",
+   "tur": "mubah",
+   "cumle": "Habîs karışımdan birine verince, onun alması câiz olur."
+  },
+  {
+   "madde": "1-78",
+   "tur": "mubah",
+   "cumle": "Görülüyor ki, halâl malın zekâtını harâm maldan vermek câizdir."
+  },
+  {
+   "madde": "1-78",
+   "tur": "mubah",
+   "cumle": "Hasâddan önce, yerinden koparıp yimesi veyâ başkasına yidirmesi câizdir."
+  },
+  {
+   "madde": "1-78",
+   "tur": "mubah",
+   "cumle": "Eğer ölçü ile çıkarıp, ölçü ile yidikden sonra, yidiğinin de uşrunu hesâb edip verirse, önce yimiş olduğu halâl olur."
+  },
+  {
+   "madde": "1-78",
+   "tur": "mubah",
+   "cumle": "(Mecmû’a-i cedîde)de diyor ki, (Bir zimmî, mülkünü vakf edip, kirâlarının müslimân fakîrlerine verilmesini şart etmesi câiz olur)."
+  },
+  {
+   "madde": "1-78",
+   "tur": "mubah",
+   "cumle": "İbni Âbidîn bunu açıklarken buyuruyor ki, (Câmi-ul-fetâvâ)da bildirilen hadîs-i şerîfde, (İlm öğrenmekde olanın kırk yıllık nafakası olsa da, buna zekât vermek câizdir) buyuruldu."
+  },
+  {
+   "madde": "1-78",
+   "tur": "mubah",
+   "cumle": "Ahmed Tahâvî, (Emâlî) kitâbının şerhinde diyor ki, (İmâm-ı a’zam buyurdu ki, bunlara ganîmet hakları verilmediği için, zekât ve sadaka vermek câizdir)."
+  },
+  {
+   "madde": "1-78",
+   "tur": "mubah",
+   "cumle": "Abdülkâdir Gazzî “rahmetullahi teâlâ aleyh” (Eşbâh hâşiyesi)nde diyor ki, (Debbûsînin (Mültekıt)de bildirdiği gibi, vasîsi bulunduğu yetîme, zekât olarak giyecek ve yiyecek vermek câizdir."
+  },
+  {
+   "madde": "1-78",
+   "tur": "mubah",
+   "cumle": "Çoluk çocuğu olan fakîre, bunların herbirine bölünce, nisâb mikdârı düşmiyecek kadar, çok zekât vermek câizdir."
+  },
+  {
+   "madde": "1-78",
+   "tur": "mubah",
+   "cumle": "Zî-rahm mahrem olan akrabâsına nafaka vermesine mahkemece hükm olunan kimsenin zekât niyyeti ile, zekât malından nafaka vermesi câizdir."
+  },
+  {
+   "madde": "1-78",
+   "tur": "mubah",
+   "cumle": "Zekâtı başka şehre göndermek mekrûh ise de, akrabâya vermek için veyâ kendi şehrinde fakîr müslimân bulamazsa, başka şehre göndermek câizdir."
+  },
+  {
+   "madde": "1-78",
+   "tur": "mubah",
+   "cumle": "İbni Âbidîn, bu satırları açıklarken, onikinci sahîfe başında buyuruyor ki, (Vekîl zenginden aldığı altın ve gümüş yerine, kendi altın ve gümüşünü fakîre verip sonra zenginin verdiğini, kendi kullanması câizdir."
+  },
+  {
+   "madde": "1-78",
+   "tur": "mubah",
+   "cumle": "İstemeden verilmesi ve verileni alması câizdir."
+  },
+  {
+   "madde": "1-78",
+   "tur": "mubah",
+   "cumle": "Bu kimsenin yiyecek, içecekden başka ihtiyâclarını meselâ, elbise, ev eşyâsı, kirâ paraları istemesi câiz olur."
+  },
+  {
+   "madde": "1-78",
+   "tur": "mubah",
+   "cumle": "Aç veyâ hasta olanın, oturacak evi olsa da, yiyecek istemesi câizdir."
+  },
+  {
+   "madde": "1-78",
+   "tur": "mubah",
+   "cumle": "Bir günlük yiyeceği olan, olmasa da, çalışabilecek hâlde olan kimse, ilm öğrenmekle [veyâ öğretmekle] meşgûl ise, yiyecek istemesi, yine câiz olur."
+  },
+  {
+   "madde": "1-78",
+   "tur": "mubah",
+   "cumle": "BEYT-ÜL-MÂL — Uşr ve kırda otlıyan hayvanların zekâtı, fakîrlere verileceği gibi, beyt-ül-mâla da teslîm edilmesi câizdir."
+  },
+  {
+   "madde": "1-78",
+   "tur": "mubah",
+   "cumle": "İbni Âbidîn, ikinci cild, ellialtıncı sahîfede buyuruyor ki, (Beyt-ül-mâldan hakkı olan fakîrler, zekât me’mûrları, âlimler, mu’allimler, vâ’ızlar, din dersi öğrenen talebe, borclular, Ehl-i beyt-i nebevî, ya’nî seyyidler ve şerîfler, askerler, beyt-ül-mâl parası ellerine geçerse, hakları kadar almaları câizdir)."
+  },
+  {
+   "madde": "1-79",
+   "tur": "mubah",
+   "cumle": "Ramezân orucuna niyyet ederken, Ramezân demeyip, yalnız oruc demek veyâ nâfile oruc demek de câizdir."
+  },
+  {
+   "madde": "1-79",
+   "tur": "mubah",
+   "cumle": "Ekmek parası kazanmak için çalışırken hasta olacağını bilen işçinin, hasta olmadan önce orucu bozması câizdir."
+  },
+  {
+   "madde": "1-79",
+   "tur": "mubah",
+   "cumle": "(Behcet-ül-fetâvâ) kitâbının sâhibi “rahmetullahi teâlâ aleyh” diyor ki, (Ramezân-ı şerîf, yaz aylarından birine geldiği zemân, din adamı şekline giren birisi, müslimânlara (Oruca niyyet etmeyip, oruc tutmaz iseniz ve kışın kısa günlerde kazâ ederseniz, câiz olur."
+  },
+  {
+   "madde": "1-79",
+   "tur": "mubah",
+   "cumle": "Sağlam kimse, hasta olacağını çok zan ederse ve nehr temizlemek gibi iş yaparken veyâ devletin emri ile çalışırken, çok sıcak veyâ soğuk te’sîri ile helâk olacağını ve [kimsesiz olup hiçbir yerden yardım görmiyen] kadın [nafakasını kazanmak için] çamaşır yıkamak ve yemek pişirmek ile helâk olacağını, çok zan ederek anlarsa, oruc tutmaması ve niyyetli orucu bozması câiz olur, başka zemân kazâ eder."
+  },
+  {
+   "madde": "1-79",
+   "tur": "mubah",
+   "cumle": "Kâfir ve fâsık, ya’nî büyük günâh işlediği bilinen tabîbe muâyene ve tedâvî câizdir."
+  },
+  {
+   "madde": "1-79",
+   "tur": "mubah",
+   "cumle": "Hafîf iş bulamazsa, işinde çalışarak, orucu bozması câiz olur."
+  },
+  {
+   "madde": "1-79",
+   "tur": "mubah",
+   "cumle": "Bunun gibi, ekin biçen kimseye Ramezân ayının orucu ziyân verirse, ya’nî orucdan dolayı, ekini biçemeyip, ekin telef olursa yâhud çalınırsa, [veyâ binâ yapılamayıp da yağmurdan yıkılmak tehlükesi muhakkak olursa] ve bunları ücret ile yapacak bulamazsa, oruc tutmayıp, bu işlerini yapmak câiz olur."
+  },
+  {
+   "madde": "1-79",
+   "tur": "mubah",
+   "cumle": "Kazâ etmesi câizdir."
+  },
+  {
+   "madde": "1-79",
+   "tur": "mubah",
+   "cumle": "Bunların kıymeti kadar ekmek, başka mal veyâ altın, gümüş vermek veyâ bunları bir fakîre altmış gün devâmlı vermek de câiz olur."
+  },
+  {
+   "madde": "1-84",
+   "tur": "mubah",
+   "cumle": "Hac için ayak basdı parası, vergi, rüşvet vermek câizdir."
+  },
+  {
+   "madde": "1-84",
+   "tur": "mubah",
+   "cumle": "Malını, canını, hakkını kurtarmak için rüşvet vermek, her zemân câizdir."
+  },
+  {
+   "madde": "1-84",
+   "tur": "mubah",
+   "cumle": "İmâm-ı Muhammede ve imâm-ı Şâfi’îye göre, sonraki senelere bırakması câizdir."
+  },
+  {
+   "madde": "1-84",
+   "tur": "mubah",
+   "cumle": "Şâfi’î mezhebinde Mîkât dışındaki heryerden göndermesi câizdir."
+  },
+  {
+   "madde": "1-84",
+   "tur": "mubah",
+   "cumle": "Hattâ, hacca giden birine para vererek, Mekke-i mükerremede bir vekîl bulup, babası için, buna mîkâtdan hac yapdırtması Şâfi’îde câizdir."
+  },
+  {
+   "madde": "1-84",
+   "tur": "mubah",
+   "cumle": "Kendisi hâcı olan vekîl, başkası için hac etdikden sonra, Mekkede kalıp geri gelmezse câizdir."
+  },
+  {
+   "madde": "1-84",
+   "tur": "mubah",
+   "cumle": "Hac vakti gelmeden önce satın alması câiz olur."
+  },
+  {
+   "madde": "1-84",
+   "tur": "mubah",
+   "cumle": "Mîkâtdan geçerken, bir iş için Hilde kalmağı niyyet edenlerin ve Hilde oturanların, hacdan başka niyyet ile, ihrâmsız Hareme girmeleri câizdir."
+  },
+  {
+   "madde": "1-84",
+   "tur": "mubah",
+   "cumle": "İhrâmda iken pire, her dürlü sinek, başkasının üzerinde bulunan biti, fâre, yılan, akreb, kurt, çaylak gibi zararlı ve insana saldıran hayvanları öldürmek, başını sabun ile yıkamak, na’lîn ve onun gibi üstü açık ayakkabı giymek, diş çıkartmak, bit ölmemek ve saç dökülmemek üzere hafîf kaşınmak, renkli ihrâm giymek, gusl abdesti almak, başını dokundurmamak şartı ile, tavan, çadır, şemsiye altında gölgelenmek, başı âdet olmayan şey ile [tas, tepsi] örtmek, paket gibi şeyler koymak, beline kuşak, kemer, para kesesi, kılınç, silâh bağlamak, yüzük takmak, insanların dikip yetişdirdiği sebze ve ağaçları koparmak, düşman ile döğüşmek câizdir."
+  },
+  {
+   "madde": "1-84",
+   "tur": "mubah",
+   "cumle": "Kadınların başını örtmesi lâzım olup, deriye değmemek üzere yüzlerini örtmeleri ve dikilmiş elbise, mest, çorab giymeleri, örtü altına zînet eşyâsı takmaları câizdir."
+  },
+  {
+   "madde": "1-84",
+   "tur": "mubah",
+   "cumle": "Zemzem kuyusunun ve Makâm-ı İbrâhîmin dışından dolaşarak da tavâf etmek câizdir."
+  },
+  {
+   "madde": "1-84",
+   "tur": "mubah",
+   "cumle": "Dıvarın üstüne veyâ insana, hayvana çarpdıkdan sonra dibine düşerse câiz olur."
+  },
+  {
+   "madde": "1-84",
+   "tur": "mubah",
+   "cumle": "Hayvan üstünde taş atmak câizdir."
+  },
+  {
+   "madde": "1-84",
+   "tur": "mekruh",
+   "cumle": "Mekrûh olur."
+  },
+  {
+   "madde": "1-84",
+   "tur": "mubah",
+   "cumle": "Ziyâreti önce yapmak da câizdir."
+  },
+  {
+   "madde": "1-84",
+   "tur": "mubah",
+   "cumle": "Kadınların da, tenhâ zemânlarda, örtülü olarak ziyâret etmeleri câizdir)."
+  },
+  {
+   "madde": "2-40",
+   "tur": "mubah",
+   "cumle": "Ba’zı şey halâldir, ba’zısı halâl ve güzeldir."
+  },
+  {
+   "madde": "2-40",
+   "tur": "mubah",
+   "cumle": "Meselâ, bir köye gidince, herkesle alış veriş etmek câizdir."
+  },
+  {
+   "madde": "2-40",
+   "tur": "mubah",
+   "cumle": "Bunların malını yimek câizdir."
+  },
+  {
+   "madde": "2-40",
+   "tur": "mubah",
+   "cumle": "Ancak, halâl olduğu bilinen veyâ halâl alâmeti bulunan kimsenin malını satın almak câiz olur."
+  },
+  {
+   "madde": "2-40",
+   "tur": "mubah",
+   "cumle": "Bu fetvâya göre, malının çoğunun halâl olduğu sanılan kimsenin verdiği hediyyeyi almak, onunla alış veriş ve kirâlamak câiz olur."
+  },
+  {
+   "madde": "2-40",
+   "tur": "mubah",
+   "cumle": "Harâm mâl vârise kalınca, buna halâl olur denildi ise de, bu kavl za’îfdir."
+  },
+  {
+   "madde": "2-40",
+   "tur": "mubah",
+   "cumle": "Bu habîs karışımdan verince, harâm olduğunu tanımadığı malı, parayı almak câiz olur."
+  },
+  {
+   "madde": "2-40",
+   "tur": "mubah",
+   "cumle": "Tazmînden sonra, bu habîs mülkünü kullanması câiz olur."
+  },
+  {
+   "madde": "2-40",
+   "tur": "mubah",
+   "cumle": "İmâm-ı Kerhî fetvâsında, (Harâm semeni göstermeden satın alınan mebî’ müşteriye halâl olur."
+  },
+  {
+   "madde": "2-40",
+   "tur": "mubah",
+   "cumle": "Yalnız vârisin, mal sâhiblerini bilmediği zemân, mîrâs kalan böyle malları alması halâl olur."
+  },
+  {
+   "madde": "2-40",
+   "tur": "mubah",
+   "cumle": "Malın böyle harâm olduğu iyi bilinmezse, herkesin alması câiz olur)."
+  },
+  {
+   "madde": "2-40",
+   "tur": "mubah",
+   "cumle": "Meselâ köylü, sultâna da hizmet edip birşey almış ise veyâ tüccâr, sultân adamları ile de mu’âmele etdi ise, bunların malı halâldir."
+  },
+  {
+   "madde": "2-40",
+   "tur": "mubah",
+   "cumle": "Mekke-i mükerreme şehrinde, binâ, arsa, tarla satmak câizdir."
+  },
+  {
+   "madde": "2-40",
+   "tur": "mubah",
+   "cumle": "Bunu satması câiz olur."
+  },
+  {
+   "madde": "2-40",
+   "tur": "mubah",
+   "cumle": "Şerâb yapan müslimâna üzüm ve şirâ satmak câizdir."
+  },
+  {
+   "madde": "2-40",
+   "tur": "mubah",
+   "cumle": "Zimmîdeki borcunu, şerâb parasından alması halâldir."
+  },
+  {
+   "madde": "2-40",
+   "tur": "mekruh",
+   "cumle": "Tahrîmen mekrûhdur."
+  },
+  {
+   "madde": "2-40",
+   "tur": "mubah",
+   "cumle": "(Hadîka) sonunda diyor ki, (Bir kimse, sultândan hediyye, sadaka alsa ve bunun, birinden zulm ile alınmış olduğunu bilse, sultân, bu malı, kendi halâl malı ile veyâ başkasından zulm ile aldığı mal ile karışdırmış ise ve birbirlerinden ayrılamaz ise, alması câiz olur."
+  },
+  {
+   "madde": "2-40",
+   "tur": "mubah",
+   "cumle": "Sultân, zulm ile aldığı mal ile, gıdâ maddesi satın alıp, fakîre yidirse, yimesi halâl olur."
+  },
+  {
+   "madde": "2-40",
+   "tur": "mubah",
+   "cumle": "Hükûmet adamlarından hediyye almak câizdir."
+  },
+  {
+   "madde": "2-40",
+   "tur": "mubah",
+   "cumle": "Böyle bir ta’âmı pişirdikden sonra, tazmîn etmek şartı ile, yimesi, satsa veyâ hediyye etse, alanın da yimesi, câiz olur."
+  },
+  {
+   "madde": "2-40",
+   "tur": "mubah",
+   "cumle": "Ölenin harâm kazandığını bilir, fekat hangi malın harâmdan geldiğini ayıramazlarsa, mîrâsın hepsi halâl olur ise de, fakîrlere vermeleri iyi olur."
+  },
+  {
+   "madde": "2-40",
+   "tur": "mubah",
+   "cumle": "Kullanmaları harâm olan malı vererek satın aldıklarını yimeleri ve kullanmaları halâl olur."
+  },
+  {
+   "madde": "2-40",
+   "tur": "mubah",
+   "cumle": "Halâl olur."
+  },
+  {
+   "madde": "2-40",
+   "tur": "mubah",
+   "cumle": "Zevce, kocasının harâm para ile satın aldığını, harâm karışık malını yirse, kullanırsa, câiz olur."
+  },
+  {
+   "madde": "2-40",
+   "tur": "mubah",
+   "cumle": "Herşey ile yarış etmek ve bilmece çözmek halâldir."
+  },
+  {
+   "madde": "2-40",
+   "tur": "mubah",
+   "cumle": "Koşarak veyâ at ile ve silâh ile, ok ile hedefe atmak gibi harbde kullanılan şeylerle yapılan yarışlarda, bir tarafdan mal şart etmek de câiz olur."
+  },
+  {
+   "madde": "2-40",
+   "tur": "mubah",
+   "cumle": "Ben kazanırsam, sen bana vermiyeceksin derse veyâ bir üçüncü kimse, yarışa katılan cemâ’at arasından kazanana ben vereceğim derse, câiz olur."
+  },
+  {
+   "madde": "2-40",
+   "tur": "mubah",
+   "cumle": "Bir üçüncü kimse de yarışa katılıp, ikisini de geçerse, ikisinden de alması, ikisini de geçemezse, ondan birşey alınmaması şartı ile, ikisinden geride kalanın, geçene mal vermesini şart etmek câiz olur."
+  },
+  {
+   "madde": "2-40",
+   "tur": "mubah",
+   "cumle": "İki ilm adamının bir konuda münâkaşa edip, bir taraflı mal şart etmeleri de câizdir."
+  },
+  {
+   "madde": "2-40",
+   "tur": "mubah",
+   "cumle": "Birçok ilm adamından sözü doğru olana, hâricden birinin mal vermesi de câizdir."
+  },
+  {
+   "madde": "2-40",
+   "tur": "mubah",
+   "cumle": "Kur’â çekmek câizdir ve sünnetdir."
+  },
+  {
+   "madde": "2-40",
+   "tur": "mubah",
+   "cumle": "İki veyâ çok kimse, aralarında para toplayarak bir emânetçiye bırakıp, aralarından seçdikleri birinin veyâ vekîlinin, bunu fakîrlere, hayr kuruluşlarına dağıtması câiz olduğu gibi, fakîrler arasında kur’â çekip kazananlarına dağıtması da câizdir."
+  },
+  {
+   "madde": "2-40",
+   "tur": "mubah",
+   "cumle": "Herbirinin, kendi verdiğini geri alması câizdir."
+  },
+  {
+   "madde": "2-40",
+   "tur": "mubah",
+   "cumle": "Fekat sonra verilen hediyyesini alması câiz olur."
+  },
+  {
+   "madde": "2-40",
+   "tur": "mubah",
+   "cumle": "Önceden verilen hediyyeyi alması câizdir, denildi."
+  },
+  {
+   "madde": "2-40",
+   "tur": "mubah",
+   "cumle": "Dînine, malına, cânına zarâr gelmesinden korkan kimsenin rüşvet vermesi câizdir."
+  },
+  {
+   "madde": "2-40",
+   "tur": "mubah",
+   "cumle": "Me’mûrların zulmünden kurtulmak veyâ hakkını almak, malını, cânını, dînini, ırzını korumak için me’mûra veyâ aracıya vermek câizdir."
+  },
+  {
+   "madde": "2-40",
+   "tur": "mubah",
+   "cumle": "Esnâfın hepsi fiyâtları, fâhiş olarak [mal oluş fiyâtının iki misline] artdırdığı, millete zarar ve zulm hâline geldiği zemân, hükûmetin, tüccârlara danışarak uygun bir narh, kâr haddi koyması câiz olur)."
+  },
+  {
+   "madde": "2-40",
+   "tur": "mubah",
+   "cumle": "İbni Âbidîn, beşinci cild, ikiyüzellinci sahîfede diyor ki, (Küçük çocuğun muhtâc olduğu şeylerin, meselâ gıdâsının, elbisesinin, süt anne ücretinin fazlasını, çocuğu evinde beslemekde olan annesinin ve erkek kardeşinin, amcasının ve sokakda görerek alıp evinde besliyen kimsenin, çocukdan kendileri için satın almaları ve kendilerinin böyle mallarını çocuğa satmaları câizdir."
+  },
+  {
+   "madde": "2-40",
+   "tur": "mubah",
+   "cumle": "Çocuk yanlarında olmasa dahî, çocuğun menkûl mallarını her zemân, binâları ise zarûret olunca, herkese, hattâ kendilerine satmaları, kirâya vermeleri ve herkesden ve kendi mallarından çocuğun parası ile, çocuk için satın almaları ve çocuğun malı ile ticâret yapmaları ve ticâret yapması için ona izn vermeleri, ücret ile ve ücretsiz çalışmağa vermeleri câizdir."
+  },
+  {
+   "madde": "2-42",
+   "tur": "mubah",
+   "cumle": "Yalnız sirke yapılması ve susuzlukdan ölmek üzere olanın, ölmiyecek kadar, su yerine, içmesi câizdir."
+  },
+  {
+   "madde": "2-42",
+   "tur": "mubah",
+   "cumle": "Nebîzin tadı keskin olsa da, serhoş yapmadıkca, içmesi halâl olur."
+  },
+  {
+   "madde": "2-42",
+   "tur": "mubah",
+   "cumle": "Tadı keskin olsa da, serhoş yapmadıkca, halâl olur."
+  },
+  {
+   "madde": "2-42",
+   "tur": "mubah",
+   "cumle": "Tadı keskin olsa da, serhoş etmiyecek kadar içmesi halâldir."
+  },
+  {
+   "madde": "2-42",
+   "tur": "mubah",
+   "cumle": "Şira ya’nî tâze üzüm suyu [Moût] ve pekmez [Moût cuit] ve bulama [Raisiné] ve boza [Bosan] içmek halâldir."
+  },
+  {
+   "madde": "2-42",
+   "tur": "mubah",
+   "cumle": "Kuru üzüm veyâ hurma, suya konup biraz kaynatılınca, halâl olur."
+  },
+  {
+   "madde": "2-42",
+   "tur": "mubah",
+   "cumle": "Alkollü meşrûbât içen fâsıkların [kötü kimselerin], (temizdir, içilmesi halâldir) demelerine aldanmamalıdır)."
+  },
+  {
+   "madde": "2-42",
+   "tur": "mubah",
+   "cumle": "Bunları hâricen kullanmak ve ispirtoyu yakıt olarak kullanmak ve bunun için satmak ve satın almak câizdir."
+  },
+  {
+   "madde": "3-10",
+   "tur": "mubah",
+   "cumle": "Meselâ, demirin pamuk ile selem edilmesi câiz olmadığı hâlde, altın ile selem edilmesi câizdir."
+  },
+  {
+   "madde": "3-10",
+   "tur": "mubah",
+   "cumle": "Bunun için, ağırlıkları başka olan bakır leğenin, bakır külçe ile peşin satılması câiz olur."
+  },
+  {
+   "madde": "3-3",
+   "tur": "mubah",
+   "cumle": "Silâhları yok ise, silâhlı olan düşmandan kaçmaları câiz olur."
+  },
+  {
+   "madde": "3-3",
+   "tur": "mubah",
+   "cumle": "[Meselâ füzesi yok ise, füzesi olan düşmandan kaçması câiz olur.] Bunun gibi, bir kişinin üç kişiden kaçması câiz olur."
+  },
+  {
+   "madde": "3-3",
+   "tur": "mubah",
+   "cumle": "Düşmanın silâh ateşi ile hedef aldığı yerden kaçmak câizdir)."
+  },
+  {
+   "madde": "3-3",
+   "tur": "mubah",
+   "cumle": "Muhtâc olduğu malı kazandıkdan sonra, fazla çalışmayıp, ibâdet etmek câizdir."
+  },
+  {
+   "madde": "3-3",
+   "tur": "mubah",
+   "cumle": "Bu hadîs-i şerîfe göre, çocukların, harâm olmıyan oyunları oynaması ve çocuğa birisini çağırmak için güvenilmesi ve ufak işlerin yapdırılması câizdir."
+  },
+  {
+   "madde": "3-3",
+   "tur": "mubah",
+   "cumle": "Kendi küçük oğlunu ve kızını ve torunlarını bir işde kullanmak, fakîr olana veyâ çocuğu yetişdirmek için olursa câizdir."
+  },
+  {
+   "madde": "3-3",
+   "tur": "mubah",
+   "cumle": "Başkasında olan alacağını istemek, söz birliği ile câizdir."
+  },
+  {
+   "madde": "3-3",
+   "tur": "mubah",
+   "cumle": "Bu haklarını istemeleri câizdir."
+  },
+  {
+   "madde": "3-3",
+   "tur": "mubah",
+   "cumle": "Hediyye ve ödünc gelen şeyler halâldir."
+  },
+  {
+   "madde": "3-4",
+   "tur": "mubah",
+   "cumle": "İki maldan yalnız biri ayn olursa da, bey’ câiz olur."
+  },
+  {
+   "madde": "3-4",
+   "tur": "mubah",
+   "cumle": "Bir satışda, söz kesilirken, semenin cinsi söylenmeyip, sonradan, harâm semen verilirse veyâ halâl olan semen söylenip yâhud harâm semen söylenip fekat gösterilmez ve harâm semen verilirse, hepsinde mebî’ halâl olur."
+  },
+  {
+   "madde": "3-4",
+   "tur": "mubah",
+   "cumle": "Gasb edilen veyâ emânet olan paraya işâret olunup başka halâl para verilirse veyâ halâl semene işâret olunup yâhud işâret olunmayıp, emânet veyâ gasb olunan para verilirse, mebî’ halâl olur.)]"
+  },
+  {
+   "madde": "3-4",
+   "tur": "mubah",
+   "cumle": "Görülmiyen mebî’ bir cins ise ve hepsi bir yerde bulunuyorsa, [bunu ta’yîn etmekle, ya’nî] yerini bildirmekle bey’ câiz olur."
+  },
+  {
+   "madde": "3-4",
+   "tur": "mubah",
+   "cumle": "Bu kadar ucuz malın, bir fels değerinde olacak fazla mikdârı için veyâ başka cins mallar ile birlikde tek bir sözleşme yaparak topdan satmak câiz olur]."
+  },
+  {
+   "madde": "3-4",
+   "tur": "mubah",
+   "cumle": "Bunun izn ile alış veriş etmesi câizdir."
+  },
+  {
+   "madde": "3-4",
+   "tur": "mubah",
+   "cumle": "Cinsi, mikdârı ve sıfâtı bildirilmek şartı ile bunlarla peşin ve veresiye mal satın almak câizdir."
+  },
+  {
+   "madde": "3-4",
+   "tur": "mubah",
+   "cumle": "Hayvân ile yalnız peşin almak câizdir."
+  },
+  {
+   "madde": "3-4",
+   "tur": "mubah",
+   "cumle": "Bâyı’ al dese, müşterî, aynen aldım veyâ kabûl etdim dese, câiz olur."
+  },
+  {
+   "madde": "3-4",
+   "tur": "mubah",
+   "cumle": "Bâyı’, bu malı bin liraya sana satdım dese, müşterî dahî birşey söylemiyerek alsa, câiz olur."
+  },
+  {
+   "madde": "3-4",
+   "tur": "mubah",
+   "cumle": "Bâyı’ malı verse, müşterî parasını verse, hiçbirşey söylemeden câiz olur."
+  },
+  {
+   "madde": "3-4",
+   "tur": "mubah",
+   "cumle": "Bey’, peşin semen ile câiz olduğu gibi, semenin te’cîli, ya’nî veresiye olması ile de câizdir."
+  },
+  {
+   "madde": "3-4",
+   "tur": "mubah",
+   "cumle": "Te’cîl, ancak semen ile mebî’ aynı cinsden olmadıkları ve ikisi hacm ile veyâ dartarak ölçülmedikleri ve semen ayn olmayıp, deyn olduğu zemân ve mu’ayyen bir vakte kadar olmak şartı ile, câiz olur."
+  },
+  {
+   "madde": "3-4",
+   "tur": "mubah",
+   "cumle": "Selemde mebî’ deyn olduğu hâlde, selem câizdir."
+  },
+  {
+   "madde": "3-4",
+   "tur": "mubah",
+   "cumle": "Peşin satış yapıp, semeni sonra te’cîl etmesi de câizdir."
+  },
+  {
+   "madde": "3-4",
+   "tur": "mubah",
+   "cumle": "Semen belli günlerde taksîdle olup, taksîdlerin biri vaktinde ödenmezse, sonrakilerin hepsi peşin olması şartı ile bey’ câizdir."
+  },
+  {
+   "madde": "3-4",
+   "tur": "mubah",
+   "cumle": "Bâyı’in, sözleşme yerindeki malı veyâ adamı göstererek, bunu rehn veyâ kefîl isterim demesi câizdir."
+  },
+  {
+   "madde": "3-4",
+   "tur": "mubah",
+   "cumle": "Yüz kile buğday yüz liraya satılsa câizdir."
+  },
+  {
+   "madde": "3-4",
+   "tur": "mubah",
+   "cumle": "İmâmeyn ise, câiz olur buyurdu."
+  },
+  {
+   "madde": "3-4",
+   "tur": "mubah",
+   "cumle": "Bir ağacın tâm belirmiş meyvesini yiyecek hâlde olmasa bile satmak câizdir."
+  },
+  {
+   "madde": "3-4",
+   "tur": "mubah",
+   "cumle": "Meyveyi satın aldıkdan sonra, toplamayıp ağacı kirâlasa, kirâlamak bâtıl olup, meyvenin büyümesi halâl olur."
+  },
+  {
+   "madde": "3-4",
+   "tur": "mubah",
+   "cumle": "Yalnız başına satılması câiz olan birşeyi, mebî’den ayırıp satmamak veyâ bu şeyi kendine bırakıp, geri kalanı satmak câizdir."
+  },
+  {
+   "madde": "3-4",
+   "tur": "mubah",
+   "cumle": "Ağaçda olan veyâ toplanmış olan meyvenin belli bir mikdârını bâyı’a bırakıp, geri kalanı topdan satmak câizdir."
+  },
+  {
+   "madde": "3-4",
+   "tur": "mubah",
+   "cumle": "Buğdayı başağında iken, başka birşey karşılığı satmak câizdir."
+  },
+  {
+   "madde": "3-4",
+   "tur": "mubah",
+   "cumle": "Bakla, pirinc ve susamı da, böylece, ya’nî başka şey karşılığı satmak câizdir."
+  },
+  {
+   "madde": "3-4",
+   "tur": "mubah",
+   "cumle": "Evde dartmadan yimesi câiz olur.] Ağırlıkla ölçülen şeyleri, dara ile dartınca, daranın ağırlığını düşmek lâzımdır."
+  },
+  {
+   "madde": "3-4",
+   "tur": "mubah",
+   "cumle": "Bu müşterî bu malı başkasına satmış veyâ hediyye etmiş ise, ondan satın almak câiz olur."
+  },
+  {
+   "madde": "3-4",
+   "tur": "mubah",
+   "cumle": "Bâyı’ semenin hepsini aldıkdan sonra veyâ satdığı fiyâta veyâ başka cins semenle farklı fiyâtla satın alması da câizdir."
+  },
+  {
+   "madde": "3-4",
+   "tur": "mubah",
+   "cumle": "Fekat hediyye, sadaka veyâ ödünc vermesi câizdir."
+  },
+  {
+   "madde": "3-4",
+   "tur": "mubah",
+   "cumle": "Peşin olan semeni ödenen binâyı teslîm almadan önce, ancak başkasına hediyye etmesi, satması câizdir."
+  },
+  {
+   "madde": "3-4",
+   "tur": "mubah",
+   "cumle": "Fekat her ikisi de câizdir ve iyi olur."
+  },
+  {
+   "madde": "3-5",
+   "tur": "mubah",
+   "cumle": "Üç güne kadar parayı vermez isen, satmakdan vaz geçerim demek câizdir."
+  },
+  {
+   "madde": "3-5",
+   "tur": "mubah",
+   "cumle": "İmâm-ı Muhammed, câiz olur buyurdu."
+  },
+  {
+   "madde": "3-5",
+   "tur": "mubah",
+   "cumle": "Müşterînin, iki veyâ üç maldan birini seçmek için, üç gün veyâ dahâ ziyâde muhayyer olması câizdir."
+  },
+  {
+   "madde": "3-5",
+   "tur": "mubah",
+   "cumle": "2 — Alırken görmediği şey için muhayyer olmakdır: Alış veriş esnâsında, mevcûd olduğu hâlde, bâyı’ın yanında bulunmıyan, ya’nî müşterî görmeden, ya’nî iyi tanımadan satış câizdir."
+  },
+  {
+   "madde": "3-5",
+   "tur": "mubah",
+   "cumle": "A’mânın alıp satması câizdir."
+  }
+ ]
+}

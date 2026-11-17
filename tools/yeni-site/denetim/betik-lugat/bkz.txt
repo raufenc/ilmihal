@@ -1,0 +1,235 @@
+bakiniz alanı dolu 219 hedef 232 bulunan 226 bulunamayan 6
+-- bulunanlar (kaynak | hedef | hedef anlam)
+  13 ABDÂL «“Bedeller” mânâsına dünyanın nizâmı ile vazifeli olup, Allah» → Ebdâl [1554] «“Bedeller” mânâsına dünyanın nizâmı ile vazifeli olup, Allah»
+  16 ABDİYYET «1.Kulluk makamı. 2.İyilikleri Allahü teâlâdan bilip kendinde» → Ubûdiyyet [9299] «Kulluk; Allahü teâlânın emirlerine teslimiyet ve boyun eğmek»
+  21 ÂBİD «1.İbâdet, kulluk eden; ibâdete çok düşkün. Çokluk şekli, âbi» → Ubbâd [9298] «1.Çok ibâdet edenler. 2.Tebe’-i tâbiînden sonra din işlerind»
+  50 Adâlet-i İctimâiyye «Sosyal adâlet; Herkesin çalışması, bilgi ve kâbiliyeti, görd» → Sosyal Adâlet [8490] «Herkesin, bilgi ve kâbiliyeti ve gördüğü iş nisbetinde çalış»
+  65 ÂDİL «1.Adâletli; hakkı gözeterek iş yapan, zulüm ve haksızlık etm» → Adâlet [49] «1.Her işte hakkı gözetme; haklıya hakkını verme, haksızlıkta»
+  76 AF «Suç, kusur, kabahat ve günahı bağışlamak, ceza vermemek, kın» → Afv [88] «Suç, kusur, kabahat ve günahı bağışlamak, ceza vermemek, kın»
+  125 AHİD «Söz vermek; sözleşmek.» → Ahd [115] «Söz vermek; sözleşmek.»
+  136 Âhiret Şehîdi «Bkz. Şehîd-i Âhiret» → Şehîd [8708] «1.Şâhid olan, müşâhade eden. 2.Din yolunda hayatını veren ki»
+  138 AHİT «Söz vermek; sözleşmek.» → Ahd [115] «Söz vermek; sözleşmek.»
+  139 AHİT SANDIĞI «İsrâiloğullarının, içinde Tevrat ve diğer mukaddes emânetler» → Tâbût-i Sekîne [8874] «İsrâiloğullarının, içinde Tevrat ve diğer mukaddes emânetler»
+  144 Ahkâm-ı Fıkhiyye «Fıkıh ile alâkalı hükümler, bedenle yapılması ve sakınılması» → Fıkh [2252] «1.Bilmek, anlamak. 2.İslâmiyet’te inanılması, yapılması ve s»
+  215 AKIL «1.İdrâk kuvveti, doğruyu yanlıştan, iyiyi kötüden, faydalıyı» → Akl [237] «1.İdrâk kuvveti, doğruyu yanlıştan, iyiyi kötüden, faydalıyı»
+  223 ÂKİBET «Son, netice.» → Âkıbet [213] «Son, netice.» +1
+  230 ÂKİL «1.İdrâk kuvveti, doğruyu yanlıştan, iyiyi kötüden, faydalıyı» → Âkıl [215] «1.İdrâk kuvveti, doğruyu yanlıştan, iyiyi kötüden, faydalıyı» +2
+  231 ÂKİLE «Kasıt harici cinayetlerde diyet ödemeyi yüklenen kimseler. M» → Âkıle [218] «Kasıt harici cinayetlerde diyet ödemeyi yüklenen kimseler. M» +1
+  233 AKİT «1.Bağlama. 2.Nikâh, alış-veriş, kefâlet, havâle gibi tarafla» → Akd [205] «1.Bağlama. 2.Nikâh, alış-veriş, kefâlet, havâle gibi tarafla»
+  239 Akl-ı Me‘âd «Ebedî rahata kavuşmak, Cennet’te ebedî kalmak ve Cehennem az» → Akl-ı Selîm [242] «Selîm akıl, hiç yanılmayan, hatâ etmeyen akıl. İslâmiyet’i b»
+  243 AKIL HASTALIĞI «Delilik, akıl hastalığı.» → Cünûn [1239] «Delilik, akıl hastalığı.»
+  426 ARBÛN «Akdi güçlendirmek üzere, alıcı va’dini yerine getirirse seme» → Urbûn [9360] «Akdi güçlendirmek üzere, alıcı va’dini yerine getirirse seme»
+  564 AYÂL «1.Âileler, nafakası üzerine borç olanlar. 2.Zevceler.» → Iyâl [3493] «1.Âileler, nafakası üzerine borç olanlar. 2.Zevceler.» +1
+  580 AYIP «1.Kusur. 2.Utanılacak şey, ayıp.» → Ayb [572] «1.Kusur. 2.Utanılacak şey, ayıp.»
+  592 AYNE «Bir malı veresiye satıp, bunu aynı mecliste, bir müşteriden » → Iyne [3499] «Bir malı veresiye satıp, bunu aynı mecliste, bir müşteriden »
+  657 Bâin Talâk «Ayırıcı boşanma. Boşamada kullanılan sözleri söyler söylemez» → Talâk [8946] «Çözmek. Nikâh bağını çözme, evliliğe son verme, zevcesini bo»
+  754 BELÂDET «İyiyi kötüden, faydalıyı zararlıdan ayıramama; ahmaklık, bön» → Ahmak [164] «Aklı az, görüşü kısa.»
+  936 BUHL «Cimrilik. Cömertliğin zıddı. (Bkz. Cimrilik)» → Cimrilik [1183] «Dinin, vicdânın, mürüvvetin (insanlığın) vermeyi emrettiği y»
+  939 BUHUR «Tütsü, buhur.» → Behûr [747] «Tütsü, buhur.»
+  941 BULUNTU «Yolda veya başka bir yerde bulunup da, sahibi bilinmeyen mal» → Lukata [5168] «Yolda veya başka bir yerde bulunup da, sahibi bilinmeyen mal»
+  942 BULUNMUŞ ÇOCUK «Buluntu çocuk.» → Lakît [5080] «Bir çocuğu, terk edildiği yerden alıp kaldıran kimse. Mültek» +1
+  970 BÜYÜK GÜNAHLAR «Büyük günahlar. Kebîre’nin çokluk hâli.» → Kebâir [4712] «Büyük günahlar. Kebîre’nin çokluk hâli.»
+  1047 CEFR «Arabcada harflerin sayı değerinden mazi veya istikbale dair » → Cifr [1159] «Arabcada harflerin sayı değerinden mazi veya istikbale dair »
+  1056 CELÂBİB «Cilbâblar, uzun ve geniş örtüler, mantolar. Cilbâb’ın çokluk» → Cilbâb [1174] «1.Gömlek; uzun ve geniş örtü. 2.Milhafe, câr, ferâce, kamîs,»
+  1089 CEMERÂT «1.Ateş yumağı. 2.Hacıların şeytân taşlarken attıkları taşlar» → Cemre [1095] «1.Ateş yumağı. 2.Hacıların şeytân taşlarken attıkları taşlar»
+  1148 CEZVİT «Hristiyanlığa dinamizm katmak ve dini yaymak iddiasıyla 1512» → Cizvit [1207] «Hristiyanlığa dinamizm katmak ve dini yaymak iddiasıyla 1512»
+  1195 CİNNET «Aklın örtülmesi, delilik. (Bkz. Cünûn)» → Cünûn [1239] «Delilik, akıl hastalığı.»
+  1210 CU‘ÂLE «Kaybolan bir şeyi bulana va'dedilen ücret.» → Ci‘âle [1149] «Bir kimsenin kaçak hayvanını getirmek veya kayıp malını bulm»
+  1382 DÂYİN «A, deyn’den) Borç veren, alacaklı. (Bkz. Borç)» → Borç [922] «1.Bir hukukî muamele neticesinde kişilerin zimmetinde sâbit »
+  1650 EHL-İ DÜNYÂ «Dünyaya düşkün olanlar, âhireti unutup, dünyaya sarılanlar. » → Dünyâ [1535] «1.Yer küresi. 2.Ölümden önce olan her şey. 3.Allah’ın rızası»
+  1654 EHL-İ HAK «Doğru yolda olanlar. (Bkz. Ehl-i Sünnet)» → Ehl-i Sünnet [1673] «“Sünnet bağlıları” mânâsına itikat ve amelde Peygamber aleyh»
+  1661 EHL-İ İSLÂM «Müslümanlar. Peygamber efendimizin bildirdiklerinin hepsini » → Müslüman [6979] «İslâm dinine mensup; Muhammed aleyhisselâmın dininde olan, m»
+  1830 Erbâb-ı Dil «Gönül sahipleri, velîler. Hâlden anlayan, sözü-sohbeti yerin» → Erbâb-ı Kulûb [1831] «Gönül sahipleri. Tasavvuf yolunda ilerlerken hâlleri değişen»
+  1878 ESHÂB (Ashâb) «1.Arkadaşlar. 2.Hazret-i Peygamber’i görüp, îmân eden ve mü’» → Sahâbe [8026] «Resûlullah aleyhisselâmı sağ iken gören mü’minler. Sahâbî’ni»
+  1917 ESTAĞFİRULLAH «“Allahü teâlâdan istiğfâr ederim, hatâ ve kusurlarımı bağışl» → İstiğfâr [4199] «1.Allahü teâlâdan gufran (mağfiret, bağışlanma) istemek; töv»
+  2011 EZDÎLİK «Güneydoğu Anadolu ve Kuzey Irak’ta esası Zerdüşt dinine daya» → Yezidîlik [9680] «Güneydoğu Anadolu ve Kuzey Irak’ta esası Zerdüşt dinine daya»
+  2080 FARÎZA «1.Farz, Allah’ın emri. 2.Lâzım, vâcip, gerekli. 3.Borç, vazi» → Farîda [2076] «1.Farz, Allah’ın emri. 2.Lâzım, vâcip, gerekli. 3.Borç, vazi»
+  2123 FAZÎHA «Edepsizlik, alçaklık, fazîha.» → Fadîha [2024] «Edepsizlik, alçaklık, fazîha.»
+  2125 FAZL «1.Lütuf, ihsân. 2.Üstünlük, fazilet.» → Fadl [2026] «1.Lütuf, ihsân. 2.Üstünlük, fazilet.»
+  2126 FE‘ÂL «Çok fiil işleyen, dâima harekette bulunan, aktif; gayretli, » → Faal [2018] «Çok fiil işleyen, dâima harekette bulunan, aktif; gayretli, »
+  2127 FE’ÂLİYYET «Fâillik; iş, aktivite, tesir.» → Faaliyet [2019] «Fâillik; iş, aktivite, tesir.»
+  2214 FETEVÂ «.» → fetâvâ [2213] «Müftü tarafından verilen şer’î hüküm veya kararlar. Fetvâ’nı»
+  2255 FIKIH «1.Bilmek, anlamak. 2.İslâmiyet’te inanılması, yapılması ve s» → Fıkh [2252] «1.Bilmek, anlamak. 2.İslâmiyet’te inanılması, yapılması ve s»
+  2302 FİTİL «1.Bükülmüş ince sicim, fitil; lamba fitili. 2.Deriden çıkan » → Fetîl [2222] «1.Bükülmüş ince sicim, fitil; lamba fitili. 2.Deriden çıkan »
+  2376 GARAR «1.Tehlike, zarar. 2.Belirsizlik, meçhullük.» → Garer [2381] «1.Tehlike, zarar. 2.Belirsizlik, meçhullük.»
+  2382 GAREZ «1.Kin, içinden düşmanlık yapmak. 2.Gâye, hedef, maksat, arzu» → Garaz [2377] «1.Kin, içinden düşmanlık yapmak. 2.Gâye, hedef, maksat, arzu»
+  2434 GAZAB «Hiddet, öfke, kızgınlık, dargınlık, gayz.» → Gadab [2338] «Hiddet, öfke, kızgınlık, dargınlık, gayz.»
+  2438 GÂZÎ «Gazâya katılan Müslüman. (Bkz. Mücâhid)» → Mücâhid [6576] «Cihâd eden, Allah yolunda düşman ile çarpışan.»
+  2442 GECE NAMAZI «Daha ziyade gecenin son üçte birinde kılınan sünnet namaz. (» → Teheccüd Namazı [9118] «Gecenin üçte ikisi geçtikten sonra iki ile oniki rek‘at aras»
+  2466 GİZLİ KIYAS «Kıyâs-ı celînin meseleyi çözmemesi hâlinde müracaat edilen v» → Kıyâs-ı Hafî [4895] «Kıyâs-ı celînin meseleyi çözmemesi hâlinde müracaat edilen v»
+  2488 GURUŞ «Bir altın Osmanlı lirasının yüzde biri mikdarında gümüş para» → Kuruş [5003] «Bir altın Osmanlı lirasının yüzde biri mikdarında gümüş para»
+  2503 GÜNÂH «Dinin emirlerine aykırı iş. (Bkz. Harâm)» → Harâm [2860] «1.İslâm dininde yapılması katiyetle yasaklanan şey. 2.Dokunu»
+  2506 Günâh-ı Sagîre «Küçük günah. (Bkz. Küçük Günah)» → Küçük Günah [5025] «Fitne çıkarmak, adam öldürmek, zinâ etmek gibi büyük günahla»
+  2527 Haber-i Vâhid «Her nesilde hep bir kimse tarafından rivâyet edilen, müsned-» → Haber-i Âhad [2524] «Her nesilde hep bir kimse tarafından rivâyet edilen, müsned-»
+  2531 HABÎBULLAH «“Allah’ın sevgilisi” mânâsına Muhammed aleyhisselâm. (Bkz. H» → Habîb [2530] «Sevgili, sevilen.»
+  2536 HAC «1.Kasdetmek, muhterem bir yeri ziyaret istemek. 2.İcab eden » → Hacc [2542] «1.Kasdetmek, muhterem bir yeri ziyaret istemek. 2.İcab eden »
+  2558 Hâce-i Kâinât «“Âlemin, kâinâtın mürşidi, rehberi, yol göstericisi” mânâsın» → Hâce-i Âlem [2557] «“Âlemin, kâinâtın mürşidi, rehberi, yol göstericisi” mânâsın»
+  2610 Hadîs-i Âhad «Her nesilde hep bir kimse tarafından rivâyet edilen, müsned-» → Haber-i Âhad [2524] «Her nesilde hep bir kimse tarafından rivâyet edilen, müsned-»
+  2628 Hadîs-i Mevzû‘ «“Vaz’ olunmuş, konulmuş, uydurulmuş hadîs” mânâsına bir hadî» → Hadîs-i Mevdû‘ [2625] «“Vaz’ olunmuş, konulmuş, uydurulmuş hadîs” mânâsına bir hadî»
+  2687 Hak Teâlâ «“Yüce Hak” mânâsına Allahü teâlâ için kullanılan tazimkâr if» → Allah [317] «Her şeyi yoktan var eden yüce yaratıcı; varlığı muhakkak lâz»
+  2707 HAKK «Toprak.» → Hak [2686] «1.Gerçek, doğru. 2. Vâcibü’l-vücûd yani varlığı lâzım olan, » +1
+  2739 HALÂL «1.Çözülmüş. 2.İndirilmiş. 3.Çıkarılmış. 4.Yasak edilmemiş, d» → Helâl [3094] «1.Çözülmüş. 2.İndirilmiş. 3.Çıkarılmış. 4.Yasak edilmemiş, d»
+  2803 HAMDELE «“Hamd ancak Allah’a mahsustur” mânâsına “Elhamdülillah” sözü» → Hamd [2802] «En üstün senâ, övgü; Allahü teâlânın yaratıp gönderdiğine râ»
+  2837 HÂNGÂH «Tasavvufun öğretildiği; tasavvuf yolcusunun terbiye gördüğü;» → Hânekâh [2836] «Tasavvufun öğretildiği; tasavvuf yolcusunun terbiye gördüğü;»
+  2846 HAPİS «Alıkoyma, tutma; kaçmasına mahal vermemek veya bir şeye zorl» → Habs [2535] «Alıkoyma, tutma; kaçmasına mahal vermemek veya bir şeye zorl»
+  2855 Harâc-ı Vazîfe «Araziden dönüm başına yıllık maktu ve muayyen bir mikdar ola» → Harâc-ı Muvazzaf [2853] «Araziden dönüm başına yıllık maktu ve muayyen bir mikdar ola»
+  2873 HAREC «1.Müslüman olmayan vatandaşlardan seneden seneye alınan topr» → Harâc [2850] «Bir işin yapılmasına mâni olan veya yapılırken karşılaşılan » +1
+  2910 HASEN HADÎS «Râvîleri sâdık ve emîn olmakla beraber, hâfızası, anlayışı s» → Hadîs-i Hasen [2616] «Râvîleri sâdık ve emîn olmakla beraber, hâfızası, anlayışı s»
+  3136 HIDIR (aleyhisselâm) «Kur’ân-ı kerîmde açıkça ismi geçmemekle beraber kendisinden » → Hızır [3186] «Kur’ân-ı kerîmde açıkça ismi geçmemekle beraber kendisinden »
+  3184 HIYN «An, zaman, vakit, sıra.» → Hîn [3248] «An, zaman, vakit, sıra.»
+  3185 HIZÂNE «1.Çocuğu kucağa almak, besleyip büyütmek üzere yanında bulun» → Hıdâne [3135] «1.Çocuğu kucağa almak, besleyip büyütmek üzere yanında bulun» +1
+  3211 HİDÂNE «1.Çocuğu kucağa almak, besleyip büyütmek üzere yanında bulun» → Hıdâne [3135] «1.Çocuğu kucağa almak, besleyip büyütmek üzere yanında bulun» +1
+  3227 HİLÂLLEMEK «Abdest alırken, el ve ayak parmakları ile sakalın ve kadınla» → Tahlîl [8904] «Ayırmak; hilâllemek. Abdest alırken el ve ayak parmakları ar» +1
+  3233 HİLF «1.Yemîn, sözleşme, half, hilf. 2.Birlik, ittifak, yardımlaşm» → Hılf [3141] «1.Yemîn, sözleşme, half, hilf. 2.Birlik, ittifak, yardımlaşm» +1
+  3236 HİLLET «Halîl (dost) olmak, dostluk; Halîlullah İbrâhim aleyhisselâm» → Hıllet [3143] «Halîl (dost) olmak, dostluk; Halîlullah İbrâhim aleyhisselâm» +1
+  3278 HİTÂN «Sünnet olma.» → Hıtân [3165] «Sünnet olma.» +1
+  3314 HUCRE «1.Oda. 2.Medreselerde talebenin kalmasına mahsus oda.» → Hücre [3314] «1.Oda. 2.Medreselerde talebenin kalmasına mahsus oda.» +1
+  3329 HUDÛR (Huzur) «Hâzır olma; kalbde devamlı Allahü teâlâyı bulundurma, Allahü» → Huzûr [3408] «Hâzır olma; rahatlık, sükûnet; kalbde devamlı Allahü teâlâyı»
+  3335 HUKEMÂ «1.Hikmetli söz söyleyenler. 2.Din bilgilerini aklî delillerl» → Hükemâ [3335] «1.Hikmetli söz söyleyenler. 2.Din bilgilerini aklî delillerl» +1
+  3335 HUKEMÂ «1.Hikmetli söz söyleyenler. 2.Din bilgilerini aklî delillerl» → Hakîm [2701] «1.Hikmet sahibi. Eşyanın hakikatini bilen, orijinal söz ve f» +1
+  3412 HÜCCET «1.Sened, vesîka, delil, burhân; mahkemelerde kâdının verdiği» → Huccet [3307] «1.Sened, vesîka, delil, burhân; mahkemelerde kâdının verdiği» +1
+  3413 Hüccet-ül İslâm «Üç yüz bin hadîs-i şerîfi, senedleri (rivâyet edenleri) ile » → Huccetü’l-İslâm [3308] «Üç yüz bin hadîs-i şerîfi, senedleri (rivâyet edenleri) ile » +1
+  3414 HÜCEC «Vesikalar; deliller. Huccet’in çokluk hâli.» → Hucec [3309] «Vesikalar; deliller. Huccet’in çokluk hâli.» +1
+  3420 HÜDÂ «Aldatma, oyun, hîle, dalavere, düzen.» → Hudâ [3320] «Kendi kendi var olan. Allahü teâlâ. Hôday.» +3
+  3422 HÜDÂVENDİGÂR «Efendi, sahip, hükümdar.» → Hudâvendigâr [3323] «Efendi, sahip, hükümdar.» +1
+  3443 HÜRMET «1.İtibar, değer verme, sayma, ikram. 2.Haramlık, bir şeyin d» → Hurmet [3374] «1.İtibar, değer verme, sayma, ikram. 2.Haramlık, bir şeyin d» +1
+  3527 İBÂZIYYE «Bid‘at fırkalarından Hâriciyye’nin bir kolu. (Bkz. Hâricîlik» → İbâdiyye [3516] «Bid‘at fırkalarından Hâriciyye’nin bir kolu. (Bkz. Hâricîlik»
+  3597 İCMÂLÎ ÎMÂN «Kısaca inanmak. Muhammed aleyhisselâm ne bildirmiş ise hepsi» → Îmân [3925] «1.İnanmak, Allahü teâlâdan başka mâbud, ilâh olmadığına, Muh»
+  3742 İHTİRÂS «Şiddetli hırs, arzu, aşırı heves, istek, gözün ve gönlün doy» → Hırs [3156] «Bir şeye aşırı düşkünlük, şiddetli istek, tutku.»
+  3885 İlm-i Vehbî «Çalışmadan öğrenilen, Allahü teâlâ tarafından ihsân edilen i» → İlm-i Ledünnî [3871] «Allahü teâlânın ihsânı olup, çalışmadan kavuşulan ilim olup,»
+  3923 İMÂMİYYE «Hazret-i Ali’nin halîfe olması nass ile açıkça emrolunduğuna» → İsnâ Aşeriyye [4151] «Halîfeliğin Hazret-i Ali ile onun soyundan gelen oniki İmâma»
+  3974 İNÂN ŞİRKETİ «Ortakların birbirine vekil olup, kefil olmadıkları şirket. Ş» → Inân Şirketi [3464] «Ortakların birbirine vekil olup, kefil olmadıkları şirket. Ş» +1
+  4198 İSTİGÂSE «Yardım, imdat, meded isteme; aracı koyma; Allahü teâlâdan bi» → Tevessül [9248] «1.Bir isteğin, bir maksadın hâsıl olması için bir şeyi vesîl»
+  4198 İSTİGÂSE «Yardım, imdat, meded isteme; aracı koyma; Allahü teâlâdan bi» → Teşeffü‘ [9223] «1.Şefaatçi yapma; Bir isteğin yerine gelmesi için, peygamber»
+  4297 İŞÂ «1.Yatsı vakti. 2.Akşam yemeği. (Bkz. Işâ)» → Işâ [3481] «Yatsı vakti.» +2
+  4377 İTTİKÂ «Takvâ sahibi olma, Allahü teâlâdan korkma, haramlardan sakın» → Takvâ [8943] «Allahü teâlâdan korkarak, emrettiklerini yapma ve yasakların»
+  4386 İYÂL «1.Âileler, nafakası üzerine borç olanlar. 2.Zevceler.» → Iyâl [3493] «1.Âileler, nafakası üzerine borç olanlar. 2.Zevceler.» +1
+  4440 KADÂ «1.Vuku bulacağı ezelde Cenâb-ı Hak tarafından irade ve takdi» → Kazâ [4693] «1.Vuku bulacağı ezelde Cenâb-ı Hak tarafından irade ve takdi»
+  4515 Kalb Gözü «Akıl ile anlaşılamayan şeyleri görüp anlayabilen bir kuvvet.» → Basîret [692] «İşlerin iç yüzünü görebilme; seziş; kalb gözü.»
+  4547 KAN ALDIRMA «Kan deverânını düzenleyerek vücudu rahatlatmak ve bazı hasta» → Hacâmat [2537] «Kan deverânını düzenleyerek vücudu rahatlatmak ve bazı hasta»
+  4552 KANDİL «1.İçine sıvı yağ ile fitil bulunan kaptan müteşekkil aydınla» → Mübârek Geceler [6547] «İslâmiyet’in kıymet verdiği ve yapılan ibâdetlerin daha fazi»
+  4623 Kasr-ı Salât «Seferde, yolculuk hâlinde dört rek’atli farzları iki rek’at » → Müsâfir [6929] «(Bkz. Misâfir)»
+  4623 Kasr-ı Salât «Seferde, yolculuk hâlinde dört rek’atli farzları iki rek’at » → Sefer [8234] «1.Yol almak, ibâdet, cihad, gezmek, öğrenmek, ticaret, sıla-»
+  4791 Kerâhet-i Tahrîmiyye «Bir şeyin harama yakın derecede mekrûh olması. (Bkz. Tahrîme» → Tahrîmen Mekrûh [8916] «Harama yakın mekrûh. Âyet-i kerîme veya hadîs-i şerîfteki de»
+  4859 KIRKLAR «Ricâlü’l-Gayb denilen Allahü teâlânın insanlardan gizlediği » → Büdelâ [957] «“Bedeller” mânâsına Ricâlü’l-Gayb denilen Allahü teâlânın in»
+  4859 KIRKLAR «Ricâlü’l-Gayb denilen Allahü teâlânın insanlardan gizlediği » → Ebdâl [1554] «“Bedeller” mânâsına dünyanın nizâmı ile vazifeli olup, Allah»
+  4924 KÎSÂNİYYE «Şia’nın kollarından olup, kurucusu Muhtâr es-Sekâfî’nin bir » → Keysâniyye [4830] «Şia’nın kollarından olup, kurucusu Muhtâr es-Sekâfî’nin bir »
+  5014 Kutbü’l-Aktâb «Âlemin nizâmı ile alâkalanan, bolluk-kıtlık, sağlık-hastalık» → Kutb-i Medâr [5013] «Âlemin nizâmı ile alâkalanan, bolluk-kıtlık, sağlık-hastalık»
+  5018 KUTUB «1.Değirmen taşının mili. 2.Değirmen milin etrafında döndüğü » → Kutb [5009] «1.Değirmen taşının mili. 2.Değirmen milin etrafında döndüğü »
+  5019 KU‘ÛD «Oturma; namazdaki oturuş. (Bkz. Ka’de)» → Ka’de [4444] «Oturuş; namazda teşehhüd (tahiyyat okumak) üzere oturmak.»
+  5056 LÂ HAVLE «Sıkıntılı hâllerde zararı def etmek ve rahatlamak için söyle» → Havl [3015] «Hareket. (Bkz. Lâ havle, Kelime-i Temcîd)»
+  5056 LÂ HAVLE «Sıkıntılı hâllerde zararı def etmek ve rahatlamak için söyle» → Kelime-i Temcîd [4762] «“Yüceltme sözü” mânâsına “Lâ havle ve lâ kuvvete illâ billah»
+  5067 LAĞV YEMİNİ «Boş yere bir işi yaptığı zannı ile yanlış olarak yapılan, gü» → Yemîn [9653] «1.Sağ taraf. 2.Kuvvet. 3.Bir haberi yâhud bir işi yapma veya»
+  5108 LEHEB SÛRESİ «Kur’ân-ı kerîmin yüz on birinci sûresi. Mekke’de nâzil oldu.» → Tebbet sûresi [9050] «Kur’ân-ı kerîmin yüz on birinci sûresi. Mekke’de nâzil oldu.»
+  5122 Leşker-i Duâ «Duâ ordusu. Sıkıntı ve darda kalan Müslümanlara duâları ile » → Duâ Ordusu [1515] «Sıkıntıda olan ve darda kalan Müslümanlara duâları ile yardı»
+  5126 LEVHÜ’L-MAHFÛZ (Levh-i Mahfuz) «“Korunmuş levha” mânâsına Allahü teâlânın takdir ettiği her » → Ümmü’l-kitâb [9409] «1. “Kitabın anası, kitabın esası” mânâsına müteşâbih âyetler»
+  5139 LEYLE-İ Mİ‘RÂC «Resûlullah aleyhisselâmın Mekke-i Mükerreme’den Kudüs-i şerî» → Mi’râc Gecesi [6036] «Resûlullah aleyhisselâmın Mekke’den Kudüs’teki Mescid-i Aksâ»
+  5148 LİFÂFE «1.Sargı. 2.Kefenin bir parçası. (Bkz. Kefen)» → Kefen [4724] «Vefât eden kimsenin yıkandıktan sonra sarılarak defnedildiği»
+  5175 LÜTUF «1.Hoşluk, güzellik, yumuşaklık. 2.İyilik.» → Lûtf [5170] «1.Hoşluk, güzellik, yumuşaklık. 2.İyilik.»
+  5232 MAHÂRİC-İ HURÛF «1.Hurûc edecek, dışarı çıkacak, çıkılacak yer. 2.Osmanlı ule» → Mehâric [5578] «1.Hurûc edecek, dışarı çıkacak, çıkılacak yer. 2.Osmanlı ule»
+  5421 MA‘SÛM «Ismet sahibi, suçsuz, günahsız; günah işlemekten korunmuş ki» → İsmet [3475] «Masumluk; günah işlememe ve günahtan korunmuş olma mânâsına » +1
+  5576 MEHÂREC «1.Hurûc edecek, dışarı çıkacak, çıkılacak yer. 2.Osmanlı ule» → Mehâric [5578] «1.Hurûc edecek, dışarı çıkacak, çıkılacak yer. 2.Osmanlı ule»
+  5577 MEHÂRET «Ustalık, beceriklilik, mâhirlik.» → Mahâret [5231] «Ustalık, beceriklilik, mâhirlik.»
+  5647 MEL‘ÛN «La’netlenmiş, tard olunmuş, kovulmuş; rahmet ve merhametten » → La’net [5086] «Bedduâ, ilenç; bir kimsenin kötülüğünü, Allahü teâlânın af v»
+  5684 MENÂSİK «İbâdetler; haccederken belli zaman ve mekânda yapılması gere» → Nüsük [7613] «İbadet; haccederken belli zaman ve mekânda yapılması gereken»
+  5694 MENFE‘AT «Fayda, kâr, çıkar.» → Menfaat [5693] «Fayda, kâr, çıkar.»
+  5783 Mescid-i Havf «“Hayıflanma mescidi” mânâsına Mekke-i Mükerreme yakınında Mi» → Mescid-i Hîf [5784] «“Hayıflanma mescidi” mânâsına Mekke-i Mükerreme yakınında Mi»
+  5789 Mescid-i Seâdet «Resûlullah aleyhisselâmın Medîne-i Münevvere’de inşâ ettiği » → Mescid-i Nebevî [5787] «Resûlullah aleyhisselâmın Medîne-i Münevvere’de inşâ ettiği »
+  5790 Mescid-i Şerîf «Resûlullah aleyhisselâmın Medîne-i Münevvere’de inşâ ettiği » → Mescid-i Nebevî [5787] «Resûlullah aleyhisselâmın Medîne-i Münevvere’de inşâ ettiği »
+  5859 MEŞRIK «Güneş’in doğduğu taraf, doğu.» → Maşrık [5428] «Güneş’in doğduğu taraf, doğu.»
+  5948 MEVZÛ HADÎS «Peygamber efendimize söylemediği hâlde isnâd edilen uydurma » → Mevdû Hadîs [5905] «Vaz edilmiş, konulmuş hadîs. Bir hadîs imâmının sıhhat şartl»
+  5994 MEZY «Erkekten şehvetlenince gelen beyaz, şeffâf, kokusuz, yapışka» → Mezî [5983] «Erkekten şehvetlenince gelen beyaz, şeffâf, kokusuz, yapışka»
+  5997 MISHÂF «Kur’ân-ı kerîmin tamamının yazılı olduğu kitap.» → Mushaf [6431] «Kur’ân-ı kerîmin tamamının yazılı olduğu kitap.»
+  5998 MISKA «Hastalığa, nazara, cin ve vahşi hayvanlara karşı insanı koru» → Muska [6441] «Hastalığa, nazara, cin ve vahşi hayvanlara karşı insanı koru»
+  5998 MISKA «Hastalığa, nazara, cin ve vahşi hayvanlara karşı insanı koru» → Rukye [7926] «Şifâ âyetleri ve duâlarını yazmak, okuyup hasta üzerine üfle»
+  6090 MUÂHEDE «Ahidleşme, anlaşma, karşılıklı söz verme; iki muharib devlet» → Ahd [115] «Söz vermek; sözleşmek.»
+  6145 MUCÎB «1.İcâbet eden, cevap veren. 2.Kullarının duâlarını kabul ede» → Mücîb [6143] «1.Îcâb eden, lâzımgelen, gereken, gerektiren; sebep, vesîle.» +2
+  6293 MUHTEKİR «İhtikâr eden, insan ve hayvan yiyecek maddelerini piyasadan » → İhtikâr [3726] «İnsan ve hayvan için lüzumlu gıdâ maddelerini toplayıp, stok»
+  6308 MUHTEZAR «İhtizâr eden, hâl-i ihtizârdaki kimse, ölüm alâmetleri belir» → Muhtazar [6290] «İhtizâr eden, hâl-i ihtizârdaki kimse, ölüm alâmetleri belir»
+  6387 MUNKATI‘ «Râvîleri arasında kopukluk bulunan hadîs.» → Münkatı’ [6387] «Râvîleri arasında kopukluk bulunan hadîs.» +1
+  6397 MURÂHIK «Bülûğ yaşına yaklaşmış çocuk. Erkekte 12, kızda 9 yaşını geç» → Mürâhık [6397] «Bülûğ yaşına yaklaşmış çocuk. Erkekte 12, kızda 9 yaşını geç» +1
+  6401 MURDÂR (Mundar) «Pis, kirli; İslâmî kâidelere uymadan kesilmiş hayvan, leş. (» → Leş [5120] «Kendiliğinden ölen veya İslâmiyet’e göre kesilmeyen ve yenme»
+  6401 MURDÂR (Mundar) «Pis, kirli; İslâmî kâidelere uymadan kesilmiş hayvan, leş. (» → Lâşe [5087] «Kendiliğinden ölmüş veya İslâmiyet’in emrine uygun olmayarak»
+  6500 MUTTAKİ «Takvâ sahibi, Allahü teâlâdan korkup, haramlardan, dinde yas» → Müttekî [7218] «Takvâ sahibi, Allahü teâlâdan korkup, haramlardan, dinde yas»
+  6535 MUZÂRA‘A «Zirâat şirketi. Harman yapılan ürünleri yetiştirmek için, ta» → Müzare‘a [7234] «Zirâat şirketi. Harman yapılan ürünleri yetiştirmek için, ta»
+  6609 MÜDÂFA‘A (Müdâfaa) «1.Def‘ etme, bir tecâvüze karşı durma; korunma, savunma. 2.B» → Müdâfe‘a [6611] «1.Def‘ etme, bir tecâvüze karşı durma; korunma, savunma. 2.B»
+  6693 MÜHÂYEE «Nöbetleşme. Bir malın, mülkiyeti bâki kalmak üzere, menfaati» → Muhâyee [6249] «Nöbetleşme. Bir malın, mülkiyeti bâki kalmak üzere, menfaati» +1
+  6705 MÜHTEDÎ «İhtidâ eden, hidâyete eren, Müslüman olan.» → Muhtedî [6292] «İhtidâ eden, hidâyete eren, Müslüman olan.» +1
+  6824 MÜNÂZA‘A «Nizâlaşma, çekişme, anlaşmazlık.» → Münâze‘a [6826] «Nizâlaşma, çekişme, anlaşmazlık.»
+  7036 MÜSTEKIL «Pazarlığın bozulmasını isteyen.» → Müstakil [7001] «İstiklâl sahibi, kendini idare eden, bağımsız.» +1
+  7109 MÜT‘A «1.Temettu‘ edilen şey, faydalanılan şey. 2.Mehr söylenmeden » → Mut‘a [6451] «1.Temettu‘ edilen şey, faydalanılan şey. 2.Mehr söylenmeden » +1
+  7110 MÜT‘A NİKÂHI «Geçici nikâh. Ehl-i sünnet mezheblerinde haramdır.» → Mut’a Nikâhı [6452] «Şâhidsiz olarak bir kadına belli para (mut’a) verip, belli z» +1
+  7220 MÜVAKKİT «1.Tevkît eden; vakit hesaplayan. 2.Eskiden İslâm devletlerin» → Muvakkıt [6519] «1.Tevkît eden; vakit hesaplayan. 2.Eskiden İslâm devletlerin» +1
+  7221 MÜVÂLÂT «1.Dostluk, karşılıklı sevgi; dost görünme. 2.Koruma, himâye;» → Muvâlât [6521] «1.Dostluk, karşılıklı sevgi; dost görünme. 2.Koruma, himâye;» +1
+  7279 NÂİB «1.Niyâbet eden, birinin yerini tutan, vekil. 2.Osmanlılarda » → Niyâbet [7567] «Yerine geçme, yerini tutma, vekillik, nâiblik; kadılık, kadı»
+  7351 NASTURÎLİK «İstanbul patriği Nestorius tarafından kurulan Hrisiyanlığın » → Nestûriyye [7483] «İstanbul patriği Nestorius tarafından kurulan Hrisiyanlığın »
+  7422 NEFHA «1.Üfleme, üfürme. 2.İsrâfil aleyhisselâmın, kıyâmetin kopup » → Kıyâmet [4887] «1.Ayağa kalkmak, dikilmek. 2.Dünya hayatının son bularak büt»
+  7454 Nehy-i Gayr-i İktizâî «Mekrûh. (Bkz. Mekrûh)» → Mekrûh [5608] «1.Kerih görülen, beğenilmeyen. 2.İslâmiyet’in sübûtu veya de»
+  7458 NEKÎR «1.Bilinmeyen, tanınmayan. 2.Kabirde ölüye sual soran melekle» → Münker ve Nekir [6854] «Kabirde insanı sorguya çeken melekler. (İnsanın âşinâ olmadı»
+  7461 NEMAZ «Duâ, hayırla duâ; Müslümanların yaptıkları, tekbir ile başla» → Namaz [7314] «Duâ, hayırla duâ; Müslümanların yaptıkları, tekbir ile başla»
+  7613 NÜSÜK «İbadet; haccederken belli zaman ve mekânda yapılması gereken» → Menâsik [5684] «İbâdetler; haccederken belli zaman ve mekânda yapılması gere»
+  7643 ÖFKE «Kızma, sinirlenme, hiddet. (Bkz. Gadab)» → Gadab [2338] «Hiddet, öfke, kızgınlık, dargınlık, gayz.»
+  7711 RABBÜLÂLEMÎN «“Âlemlerin rabbi” mânâsına Allahü teâlânın sıfatı. (Bkz. Rab» → Rab [7705] «1.Efendi, sahip, mâlik, terbiye eden. 2.Allahü teâlânın sıfa» +1
+  7761 RAMAZÂN BAYRAMI «İslâmiyet’in iki bayramından biri. Şevval ayının birinci, ik» → Fıtr Bayramı [2265] «Ramazan bayramı, Şeker Bayramı. Bugün iftar edildiği, oruç t»
+  7773 RAVDA-İ MUKADDESE «“Mukaddes bahçe” mânâsına Medîne-i Münevvere’deki Mescid-i N» → Ravda-i Mutahhara [7774] «“Temiz bahçe” mânâsına Medîne-i Münevvere’deki Mescid-i Nebe»
+  7906 RUBÛBİYYET «Rablik, efendilik; ilâhlık, ma’bûdluk, her dilediğini yapma » → Rübûbiyyet [7906] «Rablik, efendilik; ilâhlık, ma’bûdluk, her dilediğini yapma » +1
+  7911 RUCÛ‘ «1.Dönme, yönelme. 2.Ric’î talâkla boşadığı zevcesine kavlen » → Rücû‘ [7911] «1.Dönme, yönelme. 2.Ric’î talâkla boşadığı zevcesine kavlen » +1
+  7920 RÛHLAR ÂLEMİ «Maddî olmayan âlem. Ruhların, bedenleri yaratılıncaya kadar » → Âlem [283] «1.Nişan, alâmet. 2.Has isim. 3.Bayrak, sancak. 4.Minare ve m» +1
+  7937 RÛZ-İ MAHŞER «Mahşer günü. Kıyâmet koptuktan sonra insanların diriltilip h» → Mahşer [5286] «Haşr olunacak, toplanılacak yer. Kıyâmet gününde bütün mahlû»
+  7965 SAADET (Se’âdet) «1.Hayra nâil olma; mes'ûd ve bahtiyâr olma. 2.Âhirette ebedî» → Se’âdet [8178] «1.Hayra nail olma; mesud ve bahtiyâr olma; hoşnudluk. 2.Âhir»
+  8049 Sahîh Hadîs «Âdil ve mazbut (rivâyet şartlarını taşıyan) râvîlerin muttas» → Hadîs [2605] «Hudûs eden, ortaya çıkan; eskiden yokken ortaya çıkan, yarat» +1
+  8073 SAKALEYN (Sakalân) «1.İnsanlar ve cinler. Ey sakalân! Yakında (kıyâmet günü) siz» → Sekaleyn [8252] «1.İnsanlar ve cinler. Ey sakalân! Yakında (kıyâmet günü) siz»
+  8237 SEFERÎ «1.Seferde olan, misâfir, yolcu. 2.Bulunduğu şehirden veya kö» → Vatan [9511] «İnsanın yerleştiği, oturduğu yer, memleket, yurt.»
+  8266 SELÂHİYET «Bir işi yapabilme ehliyeti, yetki.» → Salâhiyyet [8087] «Bir işi yapabilme ehliyeti, yetki.»
+  8437 SİHR (Sihir) «Tabiat kanunları dışında gizli sebepler kullanarak, göz boya» → Büyü [969] «İlme, fenne uymayan gizli sebepler kullanarak garip işler ya»
+  8452 SİMÂ’ «Gökyüzü.» → Semâ’ [8290] «Gökyüzü.» +1
+  8510 SUHUF «1.Sahîfeler. 2.Dört büyük ilâhî kitab dışında gönderilen kit» → Amel Defteri [343] «İnsanların dünya hayatında yaptığı bütün işlerinin yazıldığı»
+  8533 SÜAL «1.İsteme, istek. 2.Sorulan şey, soru. Su’âl sormak ilmin yar» → Su'âl [8502] «1.İsteme, istek. 2.Sorulan şey, soru. Su’âl sormak ilmin yar» +1
+  8704 ŞEHÂDET «Şehîdlik, şehîd olmak. (Bkz. Şehîd)» → Şehîd [8708] «1.Şâhid olan, müşâhade eden. 2.Din yolunda hayatını veren ki»
+  8876 TA‘DÎL-İ ERKÂN «“Rüknlerin denkleştirilmesi” mânâsına namazda, kıyâm, rükû’,» → Tumânînet [9292] «Namaz kılarken, rükû‘, secde, kavme ve celsede bütün uzuvlar»
+  8891 TAHARRÎ «Bir şeyi anlamak için araştırmak.» → Teharrî [9113] «Bir şeyi anlamak için araştırmak.»
+  9011 TAVASSUT «Vâsıta olma, araya girme, aracılık etme; bir peygamberi veya» → Tevessül [9248] «1.Bir isteğin, bir maksadın hâsıl olması için bir şeyi vesîl»
+  9011 TAVASSUT «Vâsıta olma, araya girme, aracılık etme; bir peygamberi veya» → Vesîle [9573] «1.Sebep, vasıta, kendisi ile başkasına yaklaşılan şey. 2.Cen»
+  9027 TE‘ADDÎ «1.Zulmetme, adaletsizlik yapma; kusurlu olma; şeriat, örf ve» → Ta‘addî [8854] «1.Zulmetme, adaletsizlik yapma; kusurlu olma; şeriat, örf ve»
+  9028 TE‘ADDÜD «Birden fazla olma.» → Ta‘addüd [8855] «Birden fazla olma.»
+  9030 TE‘AHHÜD «Bir işi üzerine alma; yapılması için söz verme.» → Ta’ahhüd [8857] «Bir işi üzerine alma, yapılması için söz verme.»
+  9031 TE’AKKUL «Akletme, aklını kullanma; akıl erdirme, anlama.» → Ta’akkul [8858] «Akletme, aklını kullanma; akıl erdirme, anlama; hatırlama.»
+  9033 TE‘ALLÛK «Bağlanma.» → Ta‘allûk [8859] «Bağlanma.»
+  9039 TE‘ASSUB «Doğru veya yanlışa bakmaksızın bir fikre, bir inanca, bir gr» → Ta‘assûb [8863] «Doğru veya yanlışa bakmaksızın bir fikre, bir inanca, bir gr»
+  9090 TE’DÎB «1.Edeblendirme, terbiye etme; 2. Suçluyu cezâlandırma. (Bkz.» → Edeb [1600] «1.Güzel huy, iyi hâl ve davranış. Ahlâk, terbiye ve nezâket »
+  9095 TEFE’ÜL «1.Bir şeyi uğur saymak, hayra yormak, bir hâdiseyi hayra alâ» → Teşe’üm [9225] «Bir şeyi uğursuz saymak, kötüye yormak.»
+  9131 Tekbîr-i Teşrîk «Ramazan ve Kurban bayramlarında okunan “Allahü ekber, Allahü» → Teşrîk Tekbîri [9229] «Arefe günü sabah namazından, Kurban bayramının dördüncü günü»
+  9206 TESAVVUF «Kalbi kötü huylardan temizleyip, iyi huylarla doldurmak sure» → Tasavvuf [8992] «Kalbi kötü huylardan temizleyip, iyi huylarla doldurmak sure»
+  9223 TEŞEFFÜ‘ «1.Şefaatçi yapma; Bir isteğin yerine gelmesi için, peygamber» → İstigâse [4198] «Yardım, imdat, meded isteme; aracı koyma; Allahü teâlâdan bi»
+  9223 TEŞEFFÜ‘ «1.Şefaatçi yapma; Bir isteğin yerine gelmesi için, peygamber» → Tevessül [9248] «1.Bir isteğin, bir maksadın hâsıl olması için bir şeyi vesîl»
+  9224 TEŞEHHÜD «Namazın her ka’desinde (oturuşunda) ettehiyyâtü duâsını okum» → Ka‘de [4444] «Oturuş; namazda teşehhüd (tahiyyat okumak) üzere oturmak.»
+  9224 TEŞEHHÜD «Namazın her ka’desinde (oturuşunda) ettehiyyâtü duâsını okum» → Tahiyyât [8895] «(Bkz. Tehiyyât)»
+  9234 TEVÂCÜD «Tasavvuf yolcusunun vecd sahibi olmayı istemesi, bunun için » → Vecd [9519] «1.Bulma, var olma. 2.Tasavvufta sâlikin isteği ve gayreti ol»
+  9285 TRİNİTE «Hristiyanların teslîs inancı. (Bkz. Teslîs)» → Teslîs [9219] «Üçleme; Hristiyanlıkta Tanrı’nın birbirinden ayrılmaz Baba, »
+  9368 USTURLAB «Namaz vakitlerinin hesaplanmasında ve yıldızların arza nazar» → Üstürlab [9368] «Namaz vakitlerinin hesaplanmasında ve yıldızların arza nazar» +1
+  9383 ÜCRET «Bir iş, hizmet veya bir şeyden faydalanma karşılığında veril» → Ecr [1588] «1.İyilik, mükâfât, ücret, karşılık. 2.Allahü teâlânın râzı o»
+  9383 ÜCRET «Bir iş, hizmet veya bir şeyden faydalanma karşılığında veril» → İcâre [3566] «Muayyen bir menfaati muayyen bir bedel karşılığında satma, k»
+  9383 ÜCRET «Bir iş, hizmet veya bir şeyden faydalanma karşılığında veril» → Kirâ [4919] «Bir şeyin menfaatine, yani kullanılmasına bedel olarak veril»
+  9388 Üfkî «Ufka ait; ufka doğru, yatay.» → Ufkî [9304] «Ufka ait; ufka doğru, yatay.» +1
+  9392 ÜLÜ’L-AZM «“Azm (karar ve sabır) sahipleri” mânâsına kararlılık ve sabı» → Ulü’l-azm [9342] «“Azm (karar ve sabır) sahipleri” mânâsına kararlılık ve sabı» +1
+  9393 ÜLÜ’L-EBSÂR «Basîret sahibleri. İleri görüşlüler. Ebsâr, basîret’in çoklu» → Ulü’l-ebsâr [9343] «Basîret sahibleri. İleri görüşlüler. Ebsâr, basîret’in çoklu» +1
+  9394 ÜLÜ’L-ELBÂB «Keskin akıl sahibleri. Elbâb, lübb’ün çokluk hâlidir.» → Ulü’l-elbâb [9344] «Keskin akıl sahibleri. Elbâb, lübb’ün çokluk hâlidir.» +1
+  9395 ÜLÜ’L-EMR «1.“Emir sahipleri” mânâsına devlet reisi ve onun vazife verd» → Ulü’l-emr [9345] «1.“Emir sahipleri” mânâsına devlet reisi ve onun vazife verd» +1
+  9396 ÜLÜ’L-ERHÂM «Rahm sahibleri. Yakın akraba; anne tarafından akrabalar. Erh» → Ulü’l-erhâm [9346] «Rahm sahibleri. Yakın akraba; anne tarafından akrabalar. Erh» +1
+  9419 ÜSTÜRLAB «Namaz vakitlerinin hesaplanmasında ve yıldızların arza nazar» → Rub’-ı Dâire [7905] «Namaz vakitlerinin hesaplanmasında, yükseklik ölçülmesinde v»
+  9442 VAHDÂNİYYET «“Zâtında, sıfatlarında ve işlerinde tek olup, ortağı olmamas» → Sıfat [8400] «Bir şeyin hâli, vasfı, keyfiyeti; nişan, alâmet.»
+  9462 VAKÂR «Ağır başlı olup yerine göre uygun davranmak, şahsiyetli olma» → Vekâr [9544] «Ağır başlı olup yerine göre uygun davranmak, şahsiyetli olma»
+  9516 VA‘Z «Nasihat; dil ile emr-i ma’rûf ve nehy-i münker. (Bkz. Va’z)» → Vaaz [9425] «Nasihat; dil ile emr-i ma’rûf ve nehy-i münker. (Bkz. Va’z)»
+  9550 VELÂDET «1.Doğum, dünyaya gelme. 2.Süleyman Çelebi’nin Mevlid’inde Re» → Vilâdet [9584] «1.Doğum, dünyaya gelme. 2.Süleyman Çelebi’nin Mevlid’inde Re»
+  9623 YAĞMUR DUÂSI «Yağmur yağdırması için Allahü teâlâya yapılan duâ. (Bkz. İst» → İstiskâ [4276] «1.Suya şiddetle ihtiyaç hissetme, susama. 2.Kıtlık, kuraklık»
+  9635 YATSI NAMAZI «Beş vakit namazdan gece kılınan sonuncusu. Salâtü’l-Îşâ Yats» → Îşâ [3481] «Yatsı vakti.» +2
+  9683 YOLCU «Yola çıkan, misafir; seferî. (Bkz. Müsâfir, Seferî)» → Müsâfir [6929] «(Bkz. Misâfir)»
+  9683 YOLCU «Yola çıkan, misafir; seferî. (Bkz. Müsâfir, Seferî)» → Seferî [8237] «1.Seferde olan, misâfir, yolcu. 2.Bulunduğu şehirden veya kö»
+  9764 ZEMÂN «Kefil olma, zâmin olma; bir şeyin mislini veya bedelini ödem» → Zaman [9715] «Vakit, devir, çağ, mevsim, an.» +1
+-- bulunamayanlardan 20
+   2740 HALÂLLAŞMAK → Helâlleşme
+   4405 İZTIRÂB → Izdırâb
+   4467 KADİR GECESİ → Kadr Gecesi
+   6510 MUVÂDA‘A → Muvâzâ
+   8958 Talâkın Tefvîzi → Tevfîz-i Talâk
+   9034 TE‘ALLUKÂT → Ta‘allûkât
